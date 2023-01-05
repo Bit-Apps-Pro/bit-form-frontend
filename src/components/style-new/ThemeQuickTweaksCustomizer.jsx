@@ -18,7 +18,7 @@ import {
   addToBuilderHistory,
   generateHistoryData,
   getLatestState,
-  reCalculateFldHeights
+  reCalculateFldHeights,
 } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'

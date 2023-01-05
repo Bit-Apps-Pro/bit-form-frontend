@@ -405,7 +405,7 @@ function AdvanceFileUpSettings() {
             disableChip={false}
             customValue={false}
             titleClassName={css(ut.mt2, ut.fw500)}
-            title={__('Allowed File Type:')}
+            title={__('Allowed File Mime Type:')}
             isMultiple
             addable
             options={fileFormats}

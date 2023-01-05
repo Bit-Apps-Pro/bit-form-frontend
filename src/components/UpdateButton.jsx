@@ -74,8 +74,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [integrations, setIntegration] = useRecoilState($integrations)
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
-  // const style = useRecoilValue($styles)
-  const [style] = useRecoilState($styles)
+  const styles = useRecoilValue($styles)
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
@@ -177,20 +176,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     return (payFields.length > 0 || btns.length > 0)
   }
 
-  const mergeOtherStylesWithAtomicStyles = atomicStyles => {
-    let {
-      atomicCssText,
-      atomicClassMap,
-      lgLightStyles,
-    } = atomicStyles
-
-    if (lgLightStyles?.font?.fontURL) atomicClassMap.font = lgLightStyles.font.fontURL
-
-    return { atomicCssText, atomicClassMap }
-  }
-
   const generateAndSaveAtomicCss = currentFormId => {
-    const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
+    const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
     const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
     if (isStyleNotLoaded) return { layouts: sortedLayout }
 
@@ -200,9 +187,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     if (!currentFormId) return generatedAtomicStyles
 
-    const generatedAtomicStylesWithFormId = atomicStyleGenarate({ sortedLayout, atomicClassSuffix: currentFormId })
     const { atomicCssText, atomicClassMap, lgLightStyles } = generatedAtomicStyles
-    const { atomicCssText: atomicCssWithFormIdText, atomicClassMap: atomicClassMapWithFormId } = mergeOtherStylesWithAtomicStyles(generatedAtomicStylesWithFormId)
+    const { atomicCssText: atomicCssWithFormIdText, atomicClassMap: atomicClassMapWithFormId } = atomicStyleGenarate({ sortedLayout, atomicClassSuffix: currentFormId })
 
     if (lgLightStyles?.font?.fontURL) {
       atomicClassMap.font = lgLightStyles.font.fontURL
@@ -215,6 +201,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       atomicClassMap,
       atomicClassMapWithFormId,
     }
+
     bitsFetch(atomicData, 'bitforms_save_css')
       .catch(err => console.error('save css error=', err))
 
@@ -255,7 +242,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     // setUpdateBtn(oldUpdateBtn => ({ ...oldUpdateBtn, disabled: true, loading: true }))
 
-    const isStyleNotLoaded = isObjectEmpty(style) || style === undefined
+    const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
 
     const {
       layouts,

@@ -89,25 +89,16 @@ const FormBuilder = ({ isLoading }) => {
   const bits = useRecoilValue($bits)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
-  const [breakpointSize, setBreakpointSize] = useRecoilState($breakpointSize)
+  const setBreakpointSize = useSetRecoilState($breakpointSize)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
-
+  const setStaticStylesState = useSetRecoilState($staticStylesState)
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
-  const [staticStylesState, setStaticStylesState] = useRecoilState($staticStylesState)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setBreakpoint = useSetRecoilState($breakpoint)
-  const setLayouts = useSetRecoilState($layouts)
-  const setFields = useSetRecoilState($fields)
-  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
-  const [builderSettings, setBuilderSettings] = useRecoilState($builderSettings)
-  const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
-  const [customCodes, setCustomCodes] = useRecoilState($customCodes)
-  const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
-  const [formInfo, setFormInfo] = useRecoilState($formInfo)
+  const setBuilderSettings = useSetRecoilState($builderSettings)
+
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
   const isV2Form = useRef(true)
   // eslint-disable-next-line no-console
@@ -122,69 +113,10 @@ const FormBuilder = ({ isLoading }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  const handleSessionStorageStates = () => {
-    let sessionDataNotFound = 0
-    const sessionStorageBreakpoint = getSessionStorageStates(`btcd-breakpoint-bf-${formID}`) ?? (sessionDataNotFound += 1)
-    const sessionStorageAllThemeVars = {
-      lgLightThemeVars: getSessionStorageStates(`btcd-themeVarsLgLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      mdLightThemeVars: getSessionStorageStates(`btcd-themeVarsMdLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      smLightThemeVars: getSessionStorageStates(`btcd-themeVarsSmLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      lgDarkThemeVars: getSessionStorageStates(`btcd-themeVarsLgDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      mdDarkThemeVars: getSessionStorageStates(`btcd-themeVarsMdDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      smDarkThemeVars: getSessionStorageStates(`btcd-themeVarsSmDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-    }
-    const sessionStorageAllThemeColors = {
-      lightThemeColors: getSessionStorageStates(`btcd-lightThemeColors-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      darkThemeColors: getSessionStorageStates(`btcd-darkThemeColors-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-    }
-    const sessionStorageAllStyles = {
-      lgLightStyles: getSessionStorageStates(`btcd-stylesLgLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      mdLightStyles: getSessionStorageStates(`btcd-stylesMdLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      smLightStyles: getSessionStorageStates(`btcd-stylesSmLight-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      lgDarkStyles: getSessionStorageStates(`btcd-stylesLgDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      mdDarkStyles: getSessionStorageStates(`btcd-stylesMdDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-      smDarkStyles: getSessionStorageStates(`btcd-stylesSmDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
-    }
-    const sessionLayouts = getSessionStorageStates(`btcd-layouts-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1)
-    const sessionFields = getSessionStorageStates(`btcd-fields-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1)
-
-    const sessionBreakpointSize = getSessionStorageStates(`btcd-breakpointSize-bf-${formID}`, { strType: 'json' }) ?? breakpointSize
-    const sessionStaticStyle = getSessionStorageStates(`btcd-staticStyles-bf-${formID}`, { strType: 'json' }) ?? staticStylesState
-    const sessionBuilderHelperStates = getSessionStorageStates(`btcd-builderHelperStates-bf-${formID}`, { strType: 'json' }) ?? builderHelperStates
-    const sessionBuilderSettings = getSessionStorageStates(`btcd-builderSettings-bf-${formID}`, { strType: 'json' }) ?? builderSettings
-    const sessionColorScheme = getSessionStorageStates(`btcd-colorScheme-bf-${formID}`) ?? colorScheme
-    const sessionCustomCodes = getSessionStorageStates(`btcd-customCodes-bf-${formID}`, { strType: 'json' }) ?? customCodes
-    const sessionDeletedFldKey = getSessionStorageStates(`btcd-deletedFldKey-bf-${formID}`, { strType: 'json' }) ?? deletedFldKey
-    const sessionFormInfo = getSessionStorageStates(`btcd-formInfo-bf-${formID}`, { strType: 'json' }) ?? formInfo
-
-    if (sessionDataNotFound === 0) {
-      setBreakpoint(sessionStorageBreakpoint)
-      setAllThemeVars(sessionStorageAllThemeVars)
-      setAllThemeColors(sessionStorageAllThemeColors)
-      setAllStyles(sessionStorageAllStyles)
-      setStaticStylesState(sessionStaticStyle)
-      setSavedStylesAndVars({ allThemeVars: sessionStorageAllThemeVars, allThemeColors: sessionStorageAllThemeColors, allStyles: sessionStorageAllStyles })
-      setBuilderHelperStates(sessionBuilderHelperStates)
-      setBuilderSettings(sessionBuilderSettings)
-      setColorScheme(sessionColorScheme)
-      setCustomCodes(sessionCustomCodes)
-      setDeletedFldKey(sessionDeletedFldKey)
-      setFormInfo(sessionFormInfo)
-      setUpdateBtn({ unsaved: true })
-      setBreakpointSize(sessionBreakpointSize)
-      setStyleLoading(false)
-      setIsNewThemeStyleLoaded(true)
-      return true
-    }
-
-    return false
-  }
-
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
 
-    if (!isNewForm) {
-      if (handleSessionStorageStates()) return
+    if (!isNewForm && !isNewThemeStyleLoaded) {
       bitsFetch({ formID }, 'bitforms_form_helpers_state')
         .then(({ data }) => {
           setIsFetchingV2Styles(false)

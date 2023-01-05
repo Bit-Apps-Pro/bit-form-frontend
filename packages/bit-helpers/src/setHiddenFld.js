@@ -2,7 +2,7 @@ export default function setHiddenFld(data, form) {
   let hdnFld = bfSelect(`input[name="${data.name}"]`, form)
   if (!hdnFld) {
     hdnFld = document.createElement('input')
-    hdnFld.type = 'hidden'
+    hdnFld.type = 'text'
     hdnFld.className = 'd-none'
     form.append(hdnFld)
   }

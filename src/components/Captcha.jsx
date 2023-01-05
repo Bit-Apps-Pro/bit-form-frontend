@@ -51,6 +51,9 @@ export default function Captcha() {
     }
   }
 
+  // remove http & https from site url
+  const siteURL = bits.siteURL.replace(/(^\w+:|^)\/\//, '')
+
   return (
     <div className="btcd-captcha">
       <SnackMsg snack={snack} setSnackbar={setsnack} />
@@ -78,7 +81,7 @@ export default function Captcha() {
             <br />
 
             <div className="mt-3">{__('Domain URL:')}</div>
-            <CopyText value={bits.siteURL} className="field-key-cpy ml-0" />
+            <CopyText value={siteURL} className="field-key-cpy ml-0" />
             <div className="mt-2">
               <label htmlFor="captcha-key">
                 {__('Site Key')}
