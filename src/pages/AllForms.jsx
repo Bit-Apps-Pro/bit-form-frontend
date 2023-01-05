@@ -1,10 +1,11 @@
+/* eslint-disable react/no-unstable-nested-components */
 // eslint-disable-next-line import/no-extraneous-dependencies
+import loadable from '@loadable/component'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import loadable from '@loadable/component'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
@@ -15,8 +16,6 @@ import SingleToggle2 from '../components/Utilities/SingleToggle2'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import { $bits, $forms, $newFormId } from '../GlobalStates/GlobalStates'
-import CopyIcn from '../Icons/CopyIcn'
-import DownloadIcon from '../Icons/DownloadIcon'
 import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import app from '../styles/app.style'
@@ -95,20 +94,25 @@ function AllFroms() {
       Header: 'Actions',
       accessor: 't_action',
       Cell: val => (
-        <OptionMenu title="Actions" w={150} h={164}>
-          <Link to={`/form/builder/edit/${val.row.original.formID}/fields-list`} type="button" className="flx" aria-label="actions">
+        <OptionMenu title="Actions" w={150} h={105}>
+          <Link
+            to={`/form/builder/edit/${val.row.original.formID}/fields-list`}
+            type="button"
+            className="flx"
+            aria-label="actions"
+          >
             <EditIcn size={18} />
             &nbsp;
             Edit
           </Link>
-          <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
+          {/* <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
             <CopyIcn size={18} />
             &nbsp;Duplicate
           </button>
           <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
             <DownloadIcon size={18} />
             &nbsp;Export
-          </button>
+          </button> */}
           <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
             <TrashIcn size={16} />
             &nbsp;Delete
@@ -290,7 +294,14 @@ function AllFroms() {
         <>
           <div className={css(app.af_header)}>
             <h2>{__('Forms')}</h2>
-            <button onClick={() => setModal(true)} type="button" data-testid="create-form-btn" className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}>{__('Create Form')}</button>
+            <button
+              onClick={() => setModal(true)}
+              type="button"
+              data-testid="create-form-btn"
+              className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}
+            >
+              {__('Create Form')}
+            </button>
           </div>
           <div>
             <Table

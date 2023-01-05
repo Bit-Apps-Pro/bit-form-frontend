@@ -3,7 +3,6 @@ import { useFela } from 'react-fela'
 import { useNavigate } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $newFormId } from '../GlobalStates/GlobalStates'
-import DownloadIcon from '../Icons/DownloadIcon'
 import FormIcn from '../Icons/FormIcn'
 import app from '../styles/app.style'
 import { __ } from '../Utils/i18nwrap'
@@ -44,13 +43,19 @@ export default function FormTemplates({ setTempModal, setSnackbar }) {
         </div>
       ))}
 
-      <div className="btcd-tem flx">
+      {/* <div className="btcd-tem flx">
         <DownloadIcon size="60" />
         <div>Form Import</div>
         <div className="btcd-hid-btn">
-          <button onClick={() => setModal(true)} className={`${css(app.btn)} btn-white sh-sm`} type="button">{__('Import')}</button>
+          <button
+            onClick={() => setModal(true)}
+            className={`${css(app.btn)} btn-white sh-sm`}
+            type="button"
+          >
+            {__('Import')}
+          </button>
         </div>
-      </div>
+      </div> */}
 
       <Modal
         show={modal}
