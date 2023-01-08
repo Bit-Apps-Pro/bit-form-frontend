@@ -95,6 +95,8 @@ export default class BitAdvanceFileUpload {
       this.on_select_upload = this.#configSetting.instantUpload
       uri.searchParams.append('_ajax_nonce', this.#nonce)
 
+      let serverResponse = null
+
       this.#filePondRef.setOptions({
         server: {
           process: (
@@ -113,19 +115,21 @@ export default class BitAdvanceFileUpload {
             }
             uri.searchParams.append('action', 'bitforms_file_upload')
 
-            formData.append(`${fieldName}`, file, file.name)
+            formData.append(this.#fieldKey, file, file.name)
+            formData.append('fieldKey', this.#fieldKey)
+            formData.append('formID', this.#formID)
             const request = new XMLHttpRequest()
             request.open('POST', uri.href)
             request.upload.onprogress = (e) => {
               progress(e.lengthComputable, e.loaded, e.total)
             }
             request.onload = () => {
+              serverResponse = JSON.parse(request.responseText)
               if (request.status >= 200 && request.status < 300) {
-                const response = JSON.parse(request.responseText)
-                this.uploaded_files.push(response?.data?.file_name)
-                load(response?.data?.file_name)
+                this.uploaded_files.push(serverResponse?.data?.file_name)
+                load(serverResponse?.data?.file_name)
               } else {
-                error('oh no')
+                error()
               }
             }
 
@@ -170,6 +174,7 @@ export default class BitAdvanceFileUpload {
             }
           },
         },
+        labelFileProcessingError: () => serverResponse?.data,
       })
 
       this.#filePondRef.on('updatefiles', () => {
