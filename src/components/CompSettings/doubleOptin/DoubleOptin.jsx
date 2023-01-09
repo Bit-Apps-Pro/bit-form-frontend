@@ -13,6 +13,7 @@ import bitsFetch from '../../../Utils/bitsFetch'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { dblOptinTamplate } from '../../../Utils/StaticData/tamplate'
+import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import Loader from '../../Loaders/Loader'
 import Btn from '../../Utilities/Btn'
 import Cooltip from '../../Utilities/Cooltip'
@@ -127,11 +128,11 @@ export default function DoubleOptin() {
       <h5>
         How to setup Double Opt-In & Send Email Notification:
         &nbsp;
-        <a href="#" target="_blank" rel="noreferrer" className="yt-txt">
+        <a href={tutorialLinks.doubleOptIn.link} target="_blank" rel="noreferrer" className="yt-txt">
           YouTube
         </a>
         &nbsp;
-        <a href="#" target="_blank" rel="noreferrer" className="doc-txt">
+        <a href={tutorialLinks.doubleOptInDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
           Documentation
         </a>
       </h5>
