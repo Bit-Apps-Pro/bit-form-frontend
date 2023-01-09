@@ -81,12 +81,14 @@ export default function App() {
                   </NavLink>
                 </nav>
               </div>
-              <NavLink
-                to="/doc-support"
-                className={css(appStyle.supportLink)}
-              >
-                {__('Doc & Support')}
-              </NavLink>
+              <nav className="top-nav mr-2">
+                <NavLink
+                  to="/doc-support"
+                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                >
+                  {__('Doc & Support')}
+                </NavLink>
+              </nav>
             </div>
           </div>
 

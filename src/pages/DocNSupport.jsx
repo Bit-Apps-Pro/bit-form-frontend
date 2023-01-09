@@ -22,7 +22,7 @@ export default function DocNSupport() {
         <p className={css(style.fs)}>
           Explore our extensive documentation. From beginners to developers - everyone will get an answer
           {' '}
-          <a target="_blank" href="https://docs.form.bitapps.pro/" rel="noreferrer">
+          <a target="_blank" href="https://docs.form.bitapps.pro/" rel="noreferrer" className={css(style.linkTxt)}>
             here
             {' '}
             <ExternalLinkIcn size="15" />
@@ -35,7 +35,7 @@ export default function DocNSupport() {
             <MailIcn size="18" />
           </span>
           <span className={css(style.pb)}>
-            <a href="mailto:support@bitapps.pro" rel="noreferrer">
+            <a href="mailto:support@bitapps.pro" rel="noreferrer" className={css(style.linkTxt)}>
               support@bitapps.pro
             </a>
           </span>
@@ -45,7 +45,7 @@ export default function DocNSupport() {
             <MessagesCircle size="20" />
           </span>
           <span className={css(style.pb)}>
-            <a href="https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e" target="_blank" rel="noreferrer">
+            <a href="https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
               Chat here
               {' '}
               <ExternalLinkIcn size="15" />
@@ -57,7 +57,7 @@ export default function DocNSupport() {
             <YoutubeIcn size="20" />
           </span>
           <span className={css(style.pb)}>
-            <a href="https://www.youtube.com/channel/UCjUl8UGn-G6zXZ-Wpd7Sc3g" target="_blank" rel="noreferrer">
+            <a href="https://www.youtube.com/channel/UCjUl8UGn-G6zXZ-Wpd7Sc3g" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
               You tube channel
               {' '}
               <ExternalLinkIcn size="15" />
@@ -89,13 +89,14 @@ const style = {
     fs: 14,
     fw: 700,
     mt: 20,
-    mb: 10,
+    mb: 5,
   },
   container: {
     m: 10,
   },
   fs: {
     fs: 14,
+    my: 5,
   },
   suprt: {
     flx: 'align-center',
@@ -103,5 +104,8 @@ const style = {
   },
   pb: {
     pb: 7,
+  },
+  linkTxt: {
+    td: 'underline !important',
   },
 }
