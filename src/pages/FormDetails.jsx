@@ -212,6 +212,7 @@ function FormDetails() {
       setFormInfo(sessionFormInfo)
       setUpdateBtn({ unsaved: true })
       setBreakpointSize(sessionBreakpointSize)
+      setIsNewThemeStyleLoaded(true)
       return true
     }
 
