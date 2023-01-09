@@ -119,7 +119,7 @@ function Table(props) {
       columns,
       data,
       manualPagination: typeof props.pageCount !== 'undefined',
-      pageCount: props.pageCount,
+      pageCount: props.pageCount || Math.ceil(data.length / (props.pageSize || 10)),
       initialState: {
         pageIndex: 0,
         hiddenColumns: (currentReportData && 'details' in currentReportData && typeof currentReportData.details === 'object' && 'hiddenColumns' in currentReportData.details) ? currentReportData.details.hiddenColumns : [],
