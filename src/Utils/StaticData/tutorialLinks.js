@@ -139,5 +139,13 @@ const tutorialLinks = {
     title: 'How to Setup Zoho Work Drive integration',
     link: 'https://www.youtube.com/watch?v=27v1F-cZLgg&ab_channel=BitApps',
   },
+  doubleOptIn: {
+    title: 'How to Configure Double Opt-In',
+    link: 'https://youtu.be/JCo2PsZBsVk',
+  },
+  doubleOptInDoc: {
+    title: 'How to Configure Double Opt-In',
+    link: 'https://docs.form.bitapps.pro/wpbitform-double-opt-in',
+  },
 }
 export default tutorialLinks

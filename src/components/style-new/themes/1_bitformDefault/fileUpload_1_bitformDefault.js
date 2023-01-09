@@ -44,7 +44,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         padding: 'var(--btn-p) !important',
         'font-size': 'var(--btn-fs) !important',
         gap: '5px',
-        'line-height': 1,
+        'line-height': '1',
       },
 
       [`.${fk}-inp-btn:focus-visible`]: {
@@ -53,7 +53,7 @@ export default function fileUploadStyle_1_BitformDefault({ fk, breakpoint, color
         transition: 'outline-offset 0.2s ease',
       },
       [`.${fk}-inp-btn:active:focus-visible`]: {
-        'outline-offset': 0,
+        'outline-offset': '0',
       },
       [`.${fk}-pre-i`]: {
         width: '15px',

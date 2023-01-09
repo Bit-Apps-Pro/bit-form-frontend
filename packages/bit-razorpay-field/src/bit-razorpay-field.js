@@ -54,12 +54,11 @@ export default class BitRazorpayField {
     if (fldKey) {
       const fldName = window.bf_globals[this.#getContentId()].fields[fldKey].fieldName
       let elm = this.#select(`[name="${fldName}"]`, this.#formSelector)
-      if (elm) {
-        if (elm.type === 'radio') {
-          elm = this.#select(`[name="${fldName}"]:checked`, this.#formSelector)
-        }
-
-        return elm.value || ''
+      if (elm && elm.type === 'radio') {
+        elm = this.#select(`[name="${fldName}"]:checked`, this.#formSelector)
+      }
+      if (elm && elm.value) {
+        return elm.value
       }
     }
     return ''
