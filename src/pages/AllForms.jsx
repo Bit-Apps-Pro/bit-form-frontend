@@ -16,10 +16,13 @@ import SingleToggle2 from '../components/Utilities/SingleToggle2'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import { $bits, $forms, $newFormId } from '../GlobalStates/GlobalStates'
+import CopyIcn from '../Icons/CopyIcn'
+import DownloadIcon from '../Icons/DownloadIcon'
 import EditIcn from '../Icons/EditIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
+import { JCOF } from '../Utils/globalHelpers'
 import { dateTimeFormatter } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
@@ -94,7 +97,7 @@ function AllFroms() {
       Header: 'Actions',
       accessor: 't_action',
       Cell: val => (
-        <OptionMenu title="Actions" w={150} h={105}>
+        <OptionMenu title="Actions" w={150} h={165}>
           <Link
             to={`/form/builder/edit/${val.row.original.formID}/fields-list`}
             type="button"
@@ -105,14 +108,14 @@ function AllFroms() {
             &nbsp;
             Edit
           </Link>
-          {/* <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
+          <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
             <CopyIcn size={18} />
             &nbsp;Duplicate
           </button>
           <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
             <DownloadIcon size={18} />
             &nbsp;Export
-          </button> */}
+          </button>
           <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
             <TrashIcn size={16} />
             &nbsp;Delete
@@ -202,34 +205,62 @@ function AllFroms() {
 
     toast.promise(loadDuplicate, {
       success: msg => msg,
-      error: __('Error Occured'),
-      loading: __('duplicate...'),
+      error: __('Error Occurred'),
+      loading: __('Duplicate...'),
     })
   }
 
   const handleExport = (formID) => {
-    const uri = new URL(bits.ajaxURL)
-    uri.searchParams.append('action', 'bitforms_export_aform')
-    uri.searchParams.append('_ajax_nonce', bits.nonce)
-    uri.searchParams.append('id', formID)
-    toast.loading('loading...')
-    fetch(uri)
-      .then(response => {
-        if (response.ok) {
-          response.blob().then(blob => {
-            const url = window.URL.createObjectURL(blob)
-            const a = document.createElement('a')
-            a.href = url
-            a.download = `bitform_${formID}_export.json`
-            document.body.appendChild(a)
-            a.click()
-            a.remove()
-          })
-        } else {
-          response.json()
-            .then(error => { error.data && setSnackbar({ show: true, msg: error.data }) })
+    const formExport = bitsFetch({ id: formID }, 'bitforms_export_aform').then(response => {
+      if (response.success) {
+        console.log(response.data)
+        const themeColors = JCOF.parse(response.data.themeColors)
+        const themeVars = JCOF.parse(response.data.themeVars)
+        const style = JCOF.parse(response.data.style)
+        const workFlows = response.data.workFlows
+        const reports = response.data.reports
+        const layout = response.data.layout
+        const form_name = response.data.form_name
+        const form_id = response.data.form_id
+        const formSettings = response.data.formSettings
+        const fields = response.data.fields
+        const breakpointSize = response.data.breakpointSize
+        const additional = response.data.additional
+        const staticStyles = response.data.staticStyles || {}
+
+        const exportFormData = {
+          themeColors,
+          themeVars,
+          staticStyles,
+          style,
+          workFlows,
+          reports,
+          layout,
+          form_name,
+          form_id,
+          formSettings,
+          fields,
+          breakpointSize,
+          additional,
         }
-      })
+        const stringData = JSON.stringify(exportFormData);
+        const blob = new Blob([stringData], { type: "application/json" });
+        const urlBlob = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = urlBlob;
+        a.download = `bitform_export-${form_id}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        return 'Exported Successfully'
+      }
+    })
+
+    toast.promise(formExport, {
+      success: msg => msg,
+      error: __('Error Occurred'),
+      loading: __('Exporting...'),
+    })
   }
 
   const setTableCols = useCallback(newCols => { setCols(newCols) }, [])
