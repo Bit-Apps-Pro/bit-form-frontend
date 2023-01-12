@@ -7,7 +7,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
-import { assignNestedObj, getValueByObjPath } from './styleHelpers'
+import { assignNestedObj, getValueByObjPath, getValueFromStateVar } from './styleHelpers'
 
 export default function SpaceControlMenu({ objectPaths, id }) {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
@@ -52,10 +52,9 @@ export default function SpaceControlMenu({ objectPaths, id }) {
       const realValue = value?.replace(/!important/gi, '')
       const isCssVar = value?.match(/var/gi)?.[0]
       if (isCssVar === 'var') {
-        const getVarProperty = value.replace(/\(|var|,.*|\)/gi, '')
-        value = themeVars[getVarProperty]
+        value = getValueFromStateVar(themeVars, realValue)
       }
-      return value || realValue
+      return value
     }
   }
 
