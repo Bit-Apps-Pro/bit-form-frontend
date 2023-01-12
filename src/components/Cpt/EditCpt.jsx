@@ -66,7 +66,7 @@ export default function AllCpt({ posts, types }) {
         }}
       >
         <div className="mt-2"><b>{__('Post Type')}</b></div>
-        <select name="post_type" className="btcd-paper-inp mt-1" onChange={(e) => searchPostHandle(e.target.value)} value="">
+        <select name="post_type" className="btcd-paper-inp mt-1" onChange={(e) => searchPostHandle(e.target.value)} value={slugName}>
           <option disabled value="">{__('Select Type *')}</option>
           {Object.values(types).map((type, key) => (
             <option key={`k${key * 43}`} value={type}>{type}</option>
