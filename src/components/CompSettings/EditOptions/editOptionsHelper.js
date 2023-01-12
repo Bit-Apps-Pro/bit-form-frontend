@@ -10,7 +10,7 @@ export const flattenOptions = (optns, optKey) => {
   let groupCount = 1
   optns.forEach(opt => {
     if (opt.type === 'group') {
-      newOpts.push({ id: newOptKey(optKey), groupLbl: opt.title, type: `group-${groupCount}-start` })
+      newOpts.push({ ...opt, id: newOptKey(optKey), groupLbl: opt.title, type: `group-${groupCount}-start` })
       opt.childs.map(ot => {
         newOpts.push({ id: newOptKey(optKey), ...ot })
       })
@@ -30,7 +30,7 @@ export const formatOptions = (optns, lblKey) => {
   for (let i = 0; i < optns.length; i += 1) {
     if ('type' in optns[i] && optns[i].type.includes('start')) {
       const groupIndex = optns[i].type.split('-')[1]
-      const { groupLbl } = optns[i]
+      const { groupLbl, disabled } = optns[i]
       const childs = []
       for (let j = i + 1; j < optns.length; j += 1) {
         if ('type' in optns[j] && optns[j].type === `group-${groupIndex}-end`) {
@@ -43,7 +43,7 @@ export const formatOptions = (optns, lblKey) => {
         }
       }
       if (childs.length) {
-        newOpts.push({ title: groupLbl, type: 'group', childs })
+        newOpts.push({ title: groupLbl, type: 'group', childs, disabled })
       }
     } else {
       const opt = { ...optns[i] }

@@ -46,6 +46,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                     className={`${fieldKey}-slct-opt-grp ${getCustomClsName(fieldKey, 'slct-opt-grp')}`}
                     key={opt.title}
                     label={opt.title}
+                    {... opt.disabled && { disabled: opt.disabled }}
                     {... { ...getCustomAttributes(fieldKey, 'slct-opt-grp') }}
                   >
                     {opt.childs.map(opt2 => (
@@ -55,6 +56,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                         key={opt2.val || opt2.lbl}
                         value={opt2.val}
                         selected={opt2.check}
+                        {... opt2.disabled && { disabled: opt2.disabled }}
                         {... { ...getCustomAttributes(fieldKey, 'slct-optn') }}
                       >
                         {opt2.lbl}
@@ -69,6 +71,7 @@ export default function HtmlSelect({ fieldKey, formID, styleClasses }) {
                   key={opt.val || opt.lbl}
                   value={opt.val}
                   selected={opt.check}
+                  {... opt.disabled && { disabled: opt.disabled }}
                   {... { ...getCustomAttributes(fieldKey, 'slct-optn') }}
                 >
                   {opt.lbl}
