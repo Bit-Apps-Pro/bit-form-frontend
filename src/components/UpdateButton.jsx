@@ -170,6 +170,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
   }
 
+  useEffect(() => { if (updateBtn.unsaved && buttonDisabled) setbuttonDisabled(false) }, [updateBtn])
+
   const checkSubmitBtn = () => {
     const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
     const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
@@ -227,7 +229,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       mdl.title = __('Sorry')
       mdl.btnTxt = __('Close')
       mdl.msg = __('Please add a submit button')
+      mdl.cancelBtn = false
       setModal(mdl)
+      setbuttonDisabled(false)
       return
     }
     if (!lay.md.length || typeof lay === 'undefined') {
@@ -236,7 +240,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       mdl.title = __('Sorry')
       mdl.btnTxt = __('Close')
       mdl.msg = __('You can not save a blank form')
+      mdl.cancelBtn = false
       setModal(mdl)
+      setbuttonDisabled(false)
       return
     }
 
