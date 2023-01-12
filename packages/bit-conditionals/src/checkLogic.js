@@ -16,7 +16,7 @@ const compareValueLogic = (logics, fields, targetFieldValue, logicsVal) => {
     case 'not_equal':
       return checkNotEqualLogic(logics, fields, targetFieldValue, logicsVal)
     case 'null':
-      return targetFieldValue && targetFieldValue.length === 0
+      return !targetFieldValue && targetFieldValue.length === 0
     case 'not_null':
       return targetFieldValue && targetFieldValue.length > 0
     case 'contain':
