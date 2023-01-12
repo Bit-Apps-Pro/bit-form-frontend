@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/no-unstable-nested-components */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import loadable from '@loadable/component'
@@ -213,20 +214,20 @@ function AllFroms() {
   const handleExport = (formID) => {
     const formExport = bitsFetch({ id: formID }, 'bitforms_export_aform').then(response => {
       if (response.success) {
-        console.log(response.data)
-        const themeColors = JCOF.parse(response.data.themeColors)
-        const themeVars = JCOF.parse(response.data.themeVars)
-        const style = JCOF.parse(response.data.style)
-        const workFlows = response.data.workFlows
-        const reports = response.data.reports
-        const layout = response.data.layout
-        const form_name = response.data.form_name
-        const form_id = response.data.form_id
-        const formSettings = response.data.formSettings
-        const fields = response.data.fields
-        const breakpointSize = response.data.breakpointSize
-        const additional = response.data.additional
-        const staticStyles = response.data.staticStyles || {}
+        const { data } = response
+        const themeColors = JCOF.parse(data.themeColors)
+        const themeVars = JCOF.parse(data.themeVars)
+        const style = JCOF.parse(data.style)
+        const { workFlows } = data
+        const { reports } = data
+        const { layout } = data
+        const { form_name } = data
+        const { form_id } = data
+        const { formSettings } = data
+        const { fields } = data
+        const { breakpointSize } = data
+        const { additional } = data
+        const staticStyles = data.staticStyles || {}
 
         const exportFormData = {
           themeColors,
@@ -243,15 +244,22 @@ function AllFroms() {
           breakpointSize,
           additional,
         }
-        const stringData = JSON.stringify(exportFormData);
-        const blob = new Blob([stringData], { type: "application/json" });
-        const urlBlob = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = urlBlob;
-        a.download = `bitform_export-${form_id}.json`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        exportFormData.customCode = {}
+        if (data.customCode.customJs) {
+          exportFormData.customCode.customJs = data.customCode.customJs
+        }
+        if (data.customCode.customCss) {
+          exportFormData.customCode.customCss = data.customCode.customCss
+        }
+        const stringData = JSON.stringify(exportFormData)
+        const blob = new Blob([stringData], { type: 'application/json' })
+        const urlBlob = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = urlBlob
+        a.download = `bitform_export-${form_id}.json`
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
         return 'Exported Successfully'
       }
     })
