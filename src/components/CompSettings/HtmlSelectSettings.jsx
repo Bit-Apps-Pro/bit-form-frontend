@@ -121,6 +121,7 @@ export default function HtmlSelectSettings() {
         setModal={() => setOptionMdl(false)}
         className="o-v"
         title={__('Options')}
+        width="730px"
       >
         <div className="pos-rel">
           {!isPro && (

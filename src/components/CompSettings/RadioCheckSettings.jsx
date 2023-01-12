@@ -9,7 +9,6 @@ import { getRecoil } from 'recoil-nexus'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
-import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory, reCalculateFldHeights, setRequired } from '../../Utils/FormBuilderHelper'
@@ -470,8 +469,9 @@ function RadioCheckSettings() {
         setModal={closeOptionModal}
         className="o-v"
         title={__('Options')}
+        width="755px"
       >
-        <div className="pos-rel" style={{ width: '725px' }}>
+        <div className="pos-rel">
           {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">

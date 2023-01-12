@@ -7,7 +7,6 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
-import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -380,7 +379,8 @@ const PhoneNumberFieldSettings = () => {
         show={optionMdl}
         setModal={closeOptionModal}
         className="o-v"
-        title={__('Options')}
+        title={__('Options 2')}
+        width="730px"
       >
         <div className="pos-rel">
           <EditOptions

@@ -424,7 +424,7 @@ export default function DropdownFieldSettings() {
         setModal={() => setOptionMdl(false)}
         className="o-v "
         title={__('Options')}
-        width="720px"
+        width="730px"
       >
         <div className="pos-rel">
           <EditOptions
