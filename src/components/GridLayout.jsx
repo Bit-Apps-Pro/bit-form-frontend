@@ -200,7 +200,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
       const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
       if (!payFields.length) {
-        setAlertMdl({ show: true, msg: __('Submit button cannot be removed') })
+        setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
         return false
       }
     }
@@ -253,17 +253,17 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const handleFieldExtraAttr = (fieldData) => {
     const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2)
     if (extraAttr.validType === 'pro') {
-      setProModal({ show: true, msg: extraAttr.msg })
+      setProModal({ show: true, msg: extraAttr.msg, cancelBtn: false })
       return 0
     }
 
     if (extraAttr.validType === 'onlyOne') {
-      setAlertMdl({ show: true, msg: extraAttr.msg })
+      setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
       return 0
     }
 
     if (extraAttr.validType === 'keyEmpty') {
-      setAlertMdl({ show: true, msg: extraAttr.msg })
+      setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
       return 0
     }
 

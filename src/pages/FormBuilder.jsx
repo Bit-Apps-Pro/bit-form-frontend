@@ -391,6 +391,7 @@ const FormBuilder = ({ isLoading }) => {
         btnClass="red"
         btnTxt="Close"
         show={alertMdl.show}
+        cancelBtn={alertMdl.cancelBtn}
         close={clsAlertMdl}
         action={clsAlertMdl}
         title="Sorry"

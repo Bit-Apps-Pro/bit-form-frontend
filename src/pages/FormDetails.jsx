@@ -341,6 +341,7 @@ function FormDetails() {
           show={modal.show}
           body={modal.msg}
           btnTxt={modal.btnTxt}
+          cancelBtn={modal.cancelBtn}
           close={closeModal}
         />
         <nav className={css(navbar.btct_bld_nav)}>
