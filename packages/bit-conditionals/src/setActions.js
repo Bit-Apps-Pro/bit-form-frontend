@@ -54,29 +54,27 @@ const setActionHide = (actionDetail, props, val) => {
     const selector = document.querySelector(`.btcd-fld-itm.${fldKey}`)
     const fld = window.getComputedStyle(selector)
     let heightCount = 0
-    if (fld.boxSizing === 'border-box') {
-      heightCount = selector.offsetHeight
-    } else {
-      heightCount = (
-        parseInt(fld.paddingTop)
-        + parseInt(fld.paddingBottom)
-        + selector.offsetHeight
-        + parseInt(fld.marginTop)
-        + parseInt(fld.marginBottom)
-        + parseInt(fld.borderTopWidth)
-        + parseInt(fld.borderBottomWidth)
-      )
-    }
     if (val) {
+      selector.style.height = `${heightCount}px`
       selector.classList.add('fld-hide')
-      if (selector.style.height) {
-        selector.style.removeProperty('height')
-      }
     } else {
-      selector.style.height = heightCount
       selector.classList.remove('fld-hide')
+
+      if (fld.boxSizing === 'border-box') {
+        heightCount = selector.scrollHeight
+      } else {
+        heightCount = (
+          parseInt(fld.paddingTop)
+          + parseInt(fld.paddingBottom)
+          + selector.scrollHeight
+          + parseInt(fld.marginTop)
+          + parseInt(fld.marginBottom)
+          + parseInt(fld.borderTopWidth)
+          + parseInt(fld.borderBottomWidth)
+        )
+      }
+      selector.style.height = `${heightCount}px`
     }
-    console.log(heightCount)
   }
 }
 
