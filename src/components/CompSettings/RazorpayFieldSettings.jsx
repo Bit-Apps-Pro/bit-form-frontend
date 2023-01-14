@@ -184,7 +184,7 @@ export default function RazorpayFieldSettings() {
   const getSpecifiedFields = type => {
     let pattern
     if (type === 'amount') {
-      pattern = /number|radio/g
+      pattern = /^(radio|number|currency)/
     } else if (type === 'desc') {
       pattern = /text|username/g
     } else if (type === 'email') {

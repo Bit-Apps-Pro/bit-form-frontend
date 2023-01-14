@@ -117,7 +117,7 @@ export default function PaypalFieldSettings() {
   }
 
   const getAmountFields = () => {
-    const filteredFields = formFields.filter(field => field[1].typ.match(/number|radio/g))
+    const filteredFields = formFields.filter(field => field[1].typ.match(/^(radio|number|currency)/))
     return filteredFields.map(itm => (<option key={itm[0]} value={itm[0]}>{itm[1].adminLbl || itm[1].lbl}</option>))
   }
 
