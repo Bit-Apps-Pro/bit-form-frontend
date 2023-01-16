@@ -218,15 +218,9 @@ function AllFroms() {
         const themeColors = JCOF.parse(data.themeColors)
         const themeVars = JCOF.parse(data.themeVars)
         const style = JCOF.parse(data.style)
-        const { workFlows } = data
-        const { reports } = data
-        const { layout } = data
-        const { form_name } = data
-        const { form_id } = data
-        const { formSettings } = data
-        const { fields } = data
-        const { breakpointSize } = data
-        const { additional } = data
+        const {
+          workFlows, reports, layout, form_name, form_id, formSettings, fields, breakpointSize, additional, builderSettings,
+        } = data
         const staticStyles = data.staticStyles || {}
 
         const exportFormData = {
@@ -243,6 +237,7 @@ function AllFroms() {
           fields,
           breakpointSize,
           additional,
+          builderSettings,
         }
         exportFormData.customCode = {}
         if (data.customCode.customJs) {

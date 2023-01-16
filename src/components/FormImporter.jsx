@@ -7,6 +7,7 @@ import { $forms } from '../GlobalStates/GlobalStates'
 import ut from '../styles/2.utilities'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
+import { JCOF } from '../Utils/globalHelpers'
 import { deepCopy } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
@@ -77,6 +78,11 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       file.value = ''
     }
   }
+  const replaceFormId = (data) => {
+    const convertString = JSON.stringify(data)
+    const replaceData = convertString.replace(/b([0-9]+)/g, `b${newFormId}`)
+    return JSON.parse(replaceData)
+  }
   const handleImport = () => {
     if (!importProp.formDetail?.layout || !importProp.formDetail?.fields) {
       setError({ ...error, formDetail: 'Please select an exported json file' })
@@ -99,13 +105,22 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       })
     }
     setLoading(true)
+    formDetail.style = JCOF.stringify(replaceFormId(formDetail.style))
+    formDetail.fields = replaceFormId(formDetail.fields)
+    formDetail.themeVars = JCOF.stringify(formDetail.themeVars)
+    formDetail.themeColors = JCOF.stringify(formDetail.themeColors)
+    formDetail.staticStyles = JCOF.stringify(formDetail.staticStyles)
+    formDetail.layout = replaceFormId(formDetail.layout)
+
     bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {
       if (response.success) {
         const { data } = response
-        setForms(allforms => formsReducer(allforms, { type: 'add',
+        setForms(allforms => formsReducer(allforms, {
+          type: 'add',
           data: {
             formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at,
-          } }))
+          },
+        }))
         setSnackbar({ show: true, msg: data.message })
         setTempModal(false)
         setModal(false)
