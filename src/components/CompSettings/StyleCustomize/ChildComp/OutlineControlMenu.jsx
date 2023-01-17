@@ -13,7 +13,7 @@ import ut from '../../../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
 import {
-  getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj, splitValueBySpaces, unitConverter,
+  getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, getValueFromStateVar, setStyleStateObj, splitValueBySpaces, unitConverter
 } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SizeControl from './SizeControl'
@@ -127,7 +127,7 @@ export default function OutlineControlMenu({ objectPaths, id }) {
     if (value) {
       const preUnit = getStrFromStr(oldVal)
       const convertedVal = unitConverter(unit, value, preUnit)
-      const val = `${convertedVal}${unit}`
+      const val = `${convertedVal}${unit || 'px'}`
       onValueChange(val, prop)
     }
   }
