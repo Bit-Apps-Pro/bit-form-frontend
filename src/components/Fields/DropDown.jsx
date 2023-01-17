@@ -274,29 +274,30 @@ function DropDown({
                         role="listbox"
                         {...getCustomAttributes(fieldKey, 'option-list')}
                       >
-                        {allowCustomOption && (
-                          <li
-                            data-testid={`${fieldKey}-opt-${dataIndex}`}
-                            data-dev-option={fieldKey}
-                            data-index={dataIndex++}
-                            data-value="create-opt"
-                            className="option create-opt"
-                            role="option"
-                            aria-selected="false"
-                            tabIndex="-1"
-                            {...getCustomAttributes(fieldKey, 'option')}
-                            style={{ display: 'none !important' }}
+                        {/* {allowCustomOption && ( */}
+                        <li
+                          key={`option-${(index + 1)}`}
+                          data-testid={`${fieldKey}-opt-${dataIndex}`}
+                          data-dev-option={fieldKey}
+                          data-index={dataIndex++}
+                          data-value="create-opt"
+                          className="option create-opt"
+                          role="option"
+                          aria-selected="false"
+                          tabIndex="-1"
+                          {...getCustomAttributes(fieldKey, 'option')}
+                          style={{ display: 'none' }}
+                        >
+                          <span
+                            data-dev-opt-lbl-wrp={fieldKey}
+                            className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
+                            {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
                           >
-                            <span
-                              data-dev-opt-lbl-wrp={fieldKey}
-                              className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
-                              {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
-                            >
-                              <span data-dev-opt-lbl={fieldKey} className="opt-lbl">Create: </span>
-                            </span>
-                            <span className="opt-prefix" />
-                          </li>
-                        )}
+                            <span data-dev-opt-lbl={fieldKey} className="opt-lbl">Create: </span>
+                          </span>
+                          <span className="opt-prefix" />
+                        </li>
+                        {/* )} */}
                         {
                           options.map((opt, indx) => {
                             if (opt.type) {
