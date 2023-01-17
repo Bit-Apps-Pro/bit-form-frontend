@@ -2,7 +2,7 @@ import { createContext, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 
-export const AppSettings = createContext()
+export const AppSettings = createContext({})
 
 export default function AppSettingsProvider({ children }) {
   const bits = useRecoilValue($bits)
