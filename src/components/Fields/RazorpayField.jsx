@@ -88,6 +88,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
         fieldData={attr}
         fieldKey={fieldKey}
         noLabel
+        noErrMsg
         isBuilder={isBuilder}
       >
         {loaded && clientID && (

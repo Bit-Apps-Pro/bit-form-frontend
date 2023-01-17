@@ -100,6 +100,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
         fieldData={attr}
         fieldKey={fieldKey}
         noLabel
+        noErrMsg
         isBuilder={isBuilder}
       >
         {loaded && clientID && (

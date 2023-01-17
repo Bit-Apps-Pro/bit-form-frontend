@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -10,7 +10,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { deepCopy, sortArrOfObj } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData'
@@ -34,6 +34,27 @@ export default function RazorpayFieldSettings() {
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = fieldData?.payType === 'subscription'
   const isDynamicAmount = fieldData.options.amountType === 'dynamic'
+  const location = useLocation()
+
+  useEffect(() => {
+    removeFormUpdateError(fldKey, 'razorpayAmountFldMissing')
+    removeFormUpdateError(fldKey, 'razorpayAmountMissing')
+    if (isDynamicAmount && !fieldData.options?.amountFld) {
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'razorpayAmountFldMissing',
+        errorMsg: __('Razorpay Dyanmic Amount Field is not Selected'),
+        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+      })
+    } else if (!isDynamicAmount && (!fieldData.options?.amount || fieldData.options?.amount <= 0)) {
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'razorpayAmountMissing',
+        errorMsg: __('Razorpay Fixed Amount is not valid'),
+        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+      })
+    }
+  }, [fieldData.options?.amountType, fieldData.options?.amount, fieldData.options?.amountFld])
 
   const pos = [
     { name: __('Left'), value: 'left' },

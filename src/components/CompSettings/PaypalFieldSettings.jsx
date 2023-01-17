@@ -1,14 +1,14 @@
 import produce from 'immer'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { AppSettings } from '../../Utils/AppSettingsContext'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
@@ -30,8 +30,28 @@ export default function PaypalFieldSettings() {
   const isDynamicAmount = fieldData?.amountType === 'dynamic'
   const isDynamicShipping = fieldData?.shippingType === 'dynamic'
   const isDynamicTax = fieldData?.taxType === 'dynamic'
+  const location = useLocation()
 
   const { css } = useFela()
+  useEffect(() => {
+    removeFormUpdateError(fldKey, 'paypalAmountFldMissing')
+    removeFormUpdateError(fldKey, 'paypalAmountMissing')
+    if (isDynamicAmount && !fieldData.amountFld) {
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'paypalAmountFldMissing',
+        errorMsg: __('PayPal Dyanmic Amount Field is not Selected'),
+        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+      })
+    } else if (!isDynamicAmount && (!fieldData.amount || fieldData.amount <= 0)) {
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'paypalAmountMissing',
+        errorMsg: __('PayPal Fixed Amount is not valid'),
+        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+      })
+    }
+  }, [fieldData?.amountType, fieldData?.amount, fieldData?.amountFld])
 
   const handleInput = (name, value) => {
     if (value) {
