@@ -205,7 +205,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
       case 'border':
         return (
           <StylePropertyBlock
-            delPropertyHandler={() => delPropertyHandler('border')}
+            delPropertyHandler={() => delPropertyHandler(['border', 'border-style', 'border-color', 'border-width', 'border-radius'])}
             title="Border"
           >
             <span className={css(ut.flxc)}>
