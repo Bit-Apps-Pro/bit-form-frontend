@@ -23,7 +23,7 @@ function SmartTags({ fieldName }) {
 
   return (
     <div className={css(style.main)}>
-      {!!fieldsList.length && (
+      {/* {!!fieldsList.length && (
         <ul className={css(style.ul)}>
           <h4 style={{ margin: 0 }}>Form Fields</h4>
           {formFields !== null && formFields.map(f => !f.type.match(/^(file-up|recaptcha|title)$/)
@@ -40,7 +40,7 @@ function SmartTags({ fieldName }) {
               </li>
             ))}
         </ul>
-      )}
+      )} */}
 
       <ul className={css(style.ul)}>
         <h4 style={{ margin: 0 }}>Smart Tags</h4>
