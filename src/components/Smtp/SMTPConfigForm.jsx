@@ -123,7 +123,7 @@ export default function SMTPConfigForm({ mail, settab, setMail, status, smtpStat
           <div className="mt-2">
             <label htmlFor="encryption">
               <b>{__('Type of Encryption')}</b>
-              <CheckBox radio name="encryption" id="encryption" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.encryption === 'none' || mail.encryption !== 'tls' || mail.encryption !== 'ssl'} title={<small className="txt-dp"><b>NONE</b></small>} value="none" />
+              <CheckBox radio name="encryption" id="encryption" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.encryption === 'none'} title={<small className="txt-dp"><b>NONE</b></small>} value="none" />
               <CheckBox radio name="encryption" id="encryption" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.encryption === 'tls'} title={<small className="txt-dp"><b>TLS</b></small>} value="tls" />
               <CheckBox radio name="encryption" id="encryption" onChange={e => handleInput(e.target.name, e.target.value)} checked={mail.encryption === 'ssl'} title={<small className="txt-dp"><b>SSL</b></small>} value="ssl" />
             </label>
