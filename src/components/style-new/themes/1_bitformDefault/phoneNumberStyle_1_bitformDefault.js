@@ -180,8 +180,8 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
       },
 
       [`.${fk}-phone-number-input`]: {
-        border: '0 !important',
-        outline: 0,
+        'border-width': '0 !important',
+        outline: '0',
         width: 'calc(100% - 50px)',
         ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
         ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },

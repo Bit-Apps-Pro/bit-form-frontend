@@ -12,7 +12,6 @@ import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../
 import { deepCopy } from '../../Utils/Helpers'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
-import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import ButtonQuickTweaks from './QuickTweaks/ButtonQuickTweaks'
 import PaypalFieldQuickTweaks from './QuickTweaks/PaypalFieldQuickTweaks'
 import RazorpayFieldQuickTweaks from './QuickTweaks/RazorpayFieldQuickTweaks'
@@ -20,6 +19,7 @@ import TitleFieldQuickTweaks from './QuickTweaks/TitleFieldQuickTweaks'
 import SimpleColorPicker from './SimpleColorPicker'
 import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 import ThemeControl from './ThemeControl'
+import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import ThemeStyleReset from './ThemeStyleReset'
 
 export default function FieldQuickTweaks({ fieldKey }) {
@@ -51,74 +51,9 @@ export default function FieldQuickTweaks({ fieldKey }) {
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Size', value, { styles: getLatestState('styles') }))
   }
 
-  const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
-    const convertvalue = unitConverter(unit, value, prvUnit)
-    const v = `${convertvalue}${unit}`
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
-      const fld = prvStyle.fields[fieldKey]
-      let elemntKey
-      switch (fld.fieldType) {
-        case 'text':
-        case 'date':
-        case 'html-select':
-        case 'number':
-        case 'password':
-        case 'username':
-        case 'email':
-        case 'url':
-        case 'time':
-        case 'datetime-local':
-        case 'month':
-        case 'week':
-        case 'color':
-        case 'textarea':
-          elemntKey = 'fld'
-          break
-
-        case 'check':
-          elemntKey = 'ck'
-          break
-
-        case 'radio':
-          elemntKey = 'rdo'
-          break
-
-        case 'button':
-          elemntKey = 'btn'
-          break
-
-        case 'currency':
-        case 'country':
-          elemntKey = `${fld.fieldType}-fld-wrp`
-          break
-
-        case 'image':
-          elemntKey = 'fld-wrp'
-          break
-
-        case 'phone-number':
-          elemntKey = 'phone-fld-wrp'
-          break
-
-        case 'paypal':
-          elemntKey = 'paypal-wrp'
-          break
-
-        case 'select':
-          elemntKey = 'dpd-fld-wrp'
-          break
-
-        default:
-          break
-      }
-      assignNestedObj(drftStyle, propertyPath(elemntKey, prop), v)
-    }))
-    addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
-  }
-  const getPropValue = (prop = 'border-radius') => {
-    const fldType = styles.fields[fieldKey].fieldType
-    let elementKey = ''
-    switch (fldType) {
+  const getElementKeyByFieldType = () => {
+    let elementKey = 'fld'
+    switch (fieldType) {
       case 'text':
       case 'date':
       case 'html-select':
@@ -150,9 +85,11 @@ export default function FieldQuickTweaks({ fieldKey }) {
 
       case 'currency':
       case 'country':
-        elementKey = `${fldType}-fld-wrp`
+        elementKey = `${fieldType}-fld-wrp`
         break
-
+      case 'advanced-file-up':
+        elementKey = 'inp-wrp .filepond--panel-root'
+        break
       case 'image':
         elementKey = 'fld-wrp'
         break
@@ -172,7 +109,18 @@ export default function FieldQuickTweaks({ fieldKey }) {
       default:
         break
     }
-    let brsValue = getValueByObjPath(styles, propertyPath(elementKey, prop))
+    return elementKey
+  }
+  const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
+    const convertvalue = unitConverter(unit, value, prvUnit)
+    const v = `${convertvalue}${unit}`
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, propertyPath(getElementKeyByFieldType(), prop), v)
+    }))
+    addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
+  }
+  const getPropValue = (prop = 'border-radius') => {
+    let brsValue = getValueByObjPath(styles, propertyPath(getElementKeyByFieldType(), prop))
     brsValue = getValueFromStateVar(themeVars, brsValue)
     if (!brsValue) brsValue = '0px'
     return [getNumFromStr(brsValue), getStrFromStr(brsValue)]

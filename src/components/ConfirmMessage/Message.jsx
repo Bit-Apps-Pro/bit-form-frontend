@@ -250,7 +250,7 @@ function Message({ id, msgItem }) {
                 onChange={handleMsgAnimation}
               >
                 {
-                  animations[msgItem.config?.msgType]?.map((value, indx) => <option key={`opt-key${indx + 2}`} value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
+                  animations[msgItem.config?.msgType]?.map((value, indx) => <option key={`opt-key${indx + 2}`} value={(value === 'Please Select') ? '' : value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
                 }
               </select>
             </div>
@@ -264,7 +264,7 @@ function Message({ id, msgItem }) {
                   onChange={handlePositionChange}
                 >
                   {
-                    (positions[msgType][animation] || positions[msgType])?.map(value => <option key={value} value={value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
+                    (positions[msgType][animation] || positions[msgType])?.map(value => <option key={value} value={(value === 'Please Select') ? '' : value}>{value.replace(/-/g, ' ').replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase())}</option>)
                   }
                 </select>
               </div>
@@ -592,7 +592,9 @@ function Message({ id, msgItem }) {
 export default memo(Message)
 
 const positions = {
-  snackbar: ['top-left',
+  snackbar: [
+    'Please Select',
+    'top-left',
     'top-center',
     'top-right',
     'bottom-left',
@@ -600,26 +602,32 @@ const positions = {
     'bottom-right'],
   modal: {
     'slide-up': [
+      'Please Select',
       'center-center',
       'bottom-center'],
     'slide-down': [
+      'Please Select',
       'top-center',
       'center-center'],
   },
 }
 const animations = {
-  snackbar: ['fade',
+  snackbar: [
+    'Please Select',
+    'fade',
     'scale',
     'slide-up',
     'slide-down',
     'slide-left',
     'slide-right'],
   modal: [
+    'Please Select',
     'fade',
     'scale',
     'slide-up',
     'slide-down'],
   below: [
+    'Please Select',
     'fade',
     'scale'],
 }
