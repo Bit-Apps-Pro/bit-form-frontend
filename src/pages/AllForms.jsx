@@ -190,17 +190,47 @@ function AllFroms() {
     })
   }
 
+  const replaceFormId = (data) => {
+    const convertString = JSON.stringify(data)
+    const replaceData = convertString.replace(/b([0-9]+)/g, `b${newFormId}`)
+    return JSON.parse(replaceData)
+  }
+
   const handleDuplicate = (formID) => {
-    const loadDuplicate = bitsFetch({ id: formID, newFormId }, 'bitforms_duplicate_aform').then(response => {
-      if (response.success) {
-        const { data } = response
-        setAllForms(allforms => formsReducer(allforms, {
-          type: 'add',
-          data: {
-            formID: data.id, status: true, formName: data.form_name, shortcode: `bitform id='${data.id}'`, entries: 0, views: 0, conversion: 0.00, created_at: data.created_at,
-          },
-        }))
-        return 'Form Duplicated Successfully.'
+    const loadDuplicate = getFormDetails(formID).then(response => {
+      if (response) {
+        const formDetail = JSON.parse(response)
+        const { themeColors, themeVars, style, layout, fields } = formDetail
+
+        const newFormName = `${formDetail.form_name} (Duplicate)`
+        formDetail.themeColors = JCOF.stringify(themeColors)
+        formDetail.themeVars = JCOF.stringify(themeVars)
+        formDetail.style = JCOF.stringify(replaceFormId(style))
+        formDetail.form_name = newFormName
+        formDetail.layout = replaceFormId(layout)
+        formDetail.fields = replaceFormId(fields)
+        formDetail.formSettings.formName = newFormName
+
+        return bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(res => {
+          if (res.success) {
+            const { data } = res
+            setAllForms(allforms => formsReducer(allforms, {
+              type: 'add',
+              data: {
+                formID: data.id,
+                status: true,
+                formName: data.form_name,
+                shortcode: `bitform id='${data.id}'`,
+                entries: 0,
+                views: 0,
+                conversion: 0.00,
+                created_at: data.created_at,
+              },
+            }))
+            return 'Duplicated Successfully.'
+          }
+          return res.data
+        })
       }
     })
 
@@ -211,7 +241,7 @@ function AllFroms() {
     })
   }
 
-  const handleExport = (formID) => {
+  const getFormDetails = (formID) => {
     const formExport = bitsFetch({ id: formID }, 'bitforms_export_aform').then(response => {
       if (response.success) {
         const { data } = response
@@ -246,19 +276,24 @@ function AllFroms() {
         if (data.customCode.customCss) {
           exportFormData.customCode.customCss = data.customCode.customCss
         }
-        const stringData = JSON.stringify(exportFormData)
-        const blob = new Blob([stringData], { type: 'application/json' })
-        const urlBlob = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = urlBlob
-        a.download = `bitform_export-${form_id}.json`
-        document.body.appendChild(a)
-        a.click()
-        a.remove()
-        return 'Exported Successfully'
+        return JSON.stringify(exportFormData)
       }
     })
+    return formExport
+  }
 
+  const handleExport = (formID) => {
+    const formExport = getFormDetails(formID).then((formDetails) => {
+      const blob = new Blob([formDetails], { type: 'application/json' })
+      const urlBlob = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = urlBlob
+      a.download = `bitform_export-${formID}.json`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      return 'Exported Successfully'
+    })
     toast.promise(formExport, {
       success: msg => msg,
       error: __('Error Occurred'),
@@ -322,7 +357,11 @@ function AllFroms() {
         title={__('Create Form')}
         subTitle=""
       >
-        <FormTemplates setTempModal={setModal} newFormId={newFormId} setSnackbar={setSnackbar} />
+        <FormTemplates
+          setTempModal={setModal}
+          newFormId={newFormId}
+          setSnackbar={setSnackbar}
+        />
       </Modal>
       {allForms.length ? (
         <>
