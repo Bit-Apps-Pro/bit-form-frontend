@@ -1,7 +1,6 @@
-import { useRecoilValue } from 'recoil'
-import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy } from '../../Utils/Helpers'
+import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
 
@@ -9,18 +8,16 @@ import RenderHtml from '../Utilities/RenderHtml'
 export default function Button({
   fieldKey, attr: fieldData, styleClasses, buttonDisabled, handleReset, formID, data,
 }) {
-  const breakpoint = useRecoilValue($breakpoint)
-  const { styleMode } = useRecoilValue($flags)
-  const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />
-      <div
-        data-testid={`${fieldKey}-fld-wrp`}
-        data-dev-fld-wrp={fieldKey}
-        className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${isHidden ? 'fld-hide' : ''} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
-        {...getCustomAttributes(fieldKey, 'fld-wrp')}
+      <InputWrapper
+        formID={formID}
+        fieldKey={fieldKey}
+        fieldData={fieldData}
+        noLabel
+        noErrMsg
       >
         <button
           data-testid={fieldKey}
@@ -55,42 +52,7 @@ export default function Button({
             />
           )}
         </button>
-        {
-          (fieldData.helperTxt) && (
-            <div
-              data-testid={`${fieldKey}-hlp-txt`}
-              data-dev-hlp-txt={fieldKey}
-              {...getCustomAttributes(fieldKey, 'hlp-txt')}
-              className={`${fieldKey}-hlp-txt ${getCustomClsName(fieldKey, 'hlp-txt')}`}
-            >
-              {/* Prefix icon */}
-              {fieldData.hlpPreIcn && (
-                <img
-                  data-testid={`${fieldKey}-hlp-txt-pre-i`}
-                  data-dev-hlp-txt-pre-i={fieldKey}
-                  className={`${fieldKey}-hlp-txt-pre-i ${getCustomClsName(fieldKey, 'hlp-txt-pre-i')}`}
-                  src={fieldData.hlpPreIcn}
-                  alt=""
-                  {...getCustomAttributes(fieldKey, 'hlp-txt-pre-i')}
-                />
-              )}
-              {/* Helper text */}
-              <RenderHtml html={fieldData.helperTxt || ''} />
-              {/* suffix icon */}
-              {fieldData.hlpSufIcn && (
-                <img
-                  data-testid={`${fieldKey}-hlp-txt-suf-i`}
-                  data-dev-hlp-txt-suf-i={fieldKey}
-                  className={`${fieldKey}-hlp-txt-suf-i ${getCustomClsName(fieldKey, 'hlp-txt-suf-i')}`}
-                  src={fieldData.hlpSufIcn}
-                  alt=""
-                  {...getCustomAttributes(fieldKey, 'hlp-txt-suf-i')}
-                />
-              )}
-            </div>
-          )
-        }
-      </div>
+      </InputWrapper>
     </>
   )
 }
