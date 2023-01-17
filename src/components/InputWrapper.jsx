@@ -8,7 +8,7 @@ import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'
 import RenderHtml from './Utilities/RenderHtml'
 
-export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, isBuilder }) {
+export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, noErrMsg, isBuilder }) {
   const { '*': rightBarUrl } = useParams()
   const fieldDirection = useRecoilValue($fieldsDirection)
   const flages = useRecoilValue($flags)
@@ -189,7 +189,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
           )
         }
         {
-          (showAllErrorMsg || showOnlyThisFldErrMsg) && (
+          (!noErrMsg && (showAllErrorMsg || showOnlyThisFldErrMsg)) && (
             <div
               data-testid={`${fieldKey}-err-msg`}
               data-dev-err-msg={fieldKey}
