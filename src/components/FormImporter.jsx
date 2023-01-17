@@ -109,7 +109,6 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
     formDetail.fields = replaceFormId(formDetail.fields)
     formDetail.themeVars = JCOF.stringify(formDetail.themeVars)
     formDetail.themeColors = JCOF.stringify(formDetail.themeColors)
-    formDetail.staticStyles = JCOF.stringify(formDetail.staticStyles)
     formDetail.layout = replaceFormId(formDetail.layout)
 
     bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {
