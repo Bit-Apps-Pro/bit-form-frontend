@@ -311,7 +311,7 @@ function Message({ id, msgItem }) {
         setModal={setModal}
         className={css({ h: '500px !important', w: '550px !important' })}
       >
-        <div className="layout-wrapper confirmation-style">
+        <div className={`layout-wrapper confirmation-style ${css({ w: '100%' })}`}>
           <div className={`style-preview ${css({ h: '250px', p: '40px 20px', ow: 'auto', bd: '#E8E8E8' })}`}>
             <div className={`${css(msgStyles.msgContainer)}`}>
               <div className={`${css(msgStyles.msgBackground)}`}>
