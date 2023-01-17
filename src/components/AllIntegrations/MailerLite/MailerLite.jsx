@@ -88,26 +88,14 @@ function MailerLite({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <NextBtn
-          nextPage={() => nextPage(3)}
+          nextPageHanlder={() => nextPage(3)}
         />
-
-        {/* <button
-          onClick={() => nextPage(3)}
-          className="btn f-right btcd-btn-lg green sh-sm flx"
-          type="button"
-        >
-          {__('Next')}
-          {' '}
-          &nbsp;
-          <div className="btcd-icn icn-arrow_back rev-icn d-in-b" />
-        </button> */}
       </div>
 
       {/* STEP 3 */}
       <IntegrationStepThree
         step={step}
         saveConfig={() => saveConfig()}
-
       />
     </div>
   )

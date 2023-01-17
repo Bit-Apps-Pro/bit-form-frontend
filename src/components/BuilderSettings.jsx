@@ -23,9 +23,9 @@ export default function BuilderSettings() {
   const [brkpnt, setBrkpnt] = useState(breakpoints)
   const [{ atomicClassPrefix, darkModeConfig, addImportantRuleToStyles }, setBuilderSettings] = useRecoilState($builderSettings)
   let darkModePrefereceInitialValue = 'disabled'
-  if (darkModeConfig.preferSystemColorScheme) darkModePrefereceInitialValue = 'system-preference'
-  if (darkModeConfig.darkModeSelector) darkModePrefereceInitialValue = 'selector'
-  if (darkModeConfig.darkModeSelector && darkModeConfig.preferSystemColorScheme) darkModePrefereceInitialValue = 'selector-and-system-preference'
+  if (darkModeConfig?.preferSystemColorScheme) darkModePrefereceInitialValue = 'system-preference'
+  if (darkModeConfig?.darkModeSelector) darkModePrefereceInitialValue = 'selector'
+  if (darkModeConfig?.darkModeSelector && darkModeConfig?.preferSystemColorScheme) darkModePrefereceInitialValue = 'selector-and-system-preference'
 
   const [darkModePreference, setDarkModePreference] = useState(darkModePrefereceInitialValue)
   const formWidth = staticStylesState.styleMergeWithAtomicClasses[`${brkpnt}LightStyles`]?.form?.[`._frm-bg-${formID}`]?.width
