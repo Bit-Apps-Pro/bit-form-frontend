@@ -1,7 +1,7 @@
 import produce from 'immer'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
@@ -11,7 +11,6 @@ import { __ } from '../../../Utils/i18nwrap'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function FieldNameSettings() {
-  const location = useLocation()
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -34,7 +33,7 @@ export default function FieldNameSettings() {
         fieldKey: fldKey,
         errorKey: 'duplicateFieldName',
         errorMsg: __('Duplicate field name'),
-        errorUrl: location.pathname,
+        errorUrl: `field-settings/${fldKey}`,
       }
       addFormUpdateError(errorData)
     } else {
@@ -50,7 +49,7 @@ export default function FieldNameSettings() {
         fieldKey: fldKey,
         errorKey: 'fieldNameEmpty',
         errorMsg: __('Field name cannot be empty'),
-        errorUrl: location.pathname,
+        errorUrl: `field-settings/${fldKey}`,
       }
       addFormUpdateError(errorData)
     } else {

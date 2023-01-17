@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import BitRazorpayField from 'bit-razorpay-field/src/bit-razorpay-field'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
@@ -19,7 +18,6 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
   const razorpayElemntRef = useRef(null)
   const razorpayFldWrpRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
-  const location = useLocation()
 
   useEffect(() => {
     if (!clientID) {
@@ -27,7 +25,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
         fieldKey,
         errorKey: 'razorpayClientIdMissing',
         errorMsg: __('Razorpay Client ID is missing'),
-        errorUrl: location.pathname.replace('fields-list', `field-settings/${fieldKey}`),
+        errorUrl: `field-settings/${fieldKey}`,
       })
       return
     }

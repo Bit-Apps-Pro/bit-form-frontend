@@ -638,7 +638,6 @@ function Toolbar({ setNewData }) {
         typ: 'paypal',
         adminLbl: __('Paypal'),
         currency: 'USD',
-        amount: 1,
         style: {
           layout: 'vertical',
           color: 'gold',

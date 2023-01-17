@@ -2,7 +2,7 @@
 import produce from 'immer'
 import { useContext, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -34,7 +34,8 @@ export default function RazorpayFieldSettings() {
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = fieldData?.payType === 'subscription'
   const isDynamicAmount = fieldData.options.amountType === 'dynamic'
-  const location = useLocation()
+
+  console.log({ fieldData })
 
   useEffect(() => {
     removeFormUpdateError(fldKey, 'razorpayAmountFldMissing')
@@ -44,14 +45,14 @@ export default function RazorpayFieldSettings() {
         fieldKey: fldKey,
         errorKey: 'razorpayAmountFldMissing',
         errorMsg: __('Razorpay Dyanmic Amount Field is not Selected'),
-        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+        errorUrl: `field-settings/${fldKey}`,
       })
-    } else if (!isDynamicAmount && (!fieldData.options?.amount || fieldData.options?.amount <= 0)) {
+    } else if (!isDynamicAmount && (!fieldData.options?.amount || parseInt(fieldData.options?.amount, 10) <= 0)) {
       addFormUpdateError({
         fieldKey: fldKey,
         errorKey: 'razorpayAmountMissing',
         errorMsg: __('Razorpay Fixed Amount is not valid'),
-        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+        errorUrl: `field-settings/${fldKey}`,
       })
     }
   }, [fieldData.options?.amountType, fieldData.options?.amount, fieldData.options?.amountFld])
@@ -60,13 +61,6 @@ export default function RazorpayFieldSettings() {
     { name: __('Left'), value: 'left' },
     { name: __('Center'), value: 'center' },
     { name: __('Right'), value: 'right' },
-  ]
-
-  const btnTheme = [
-    { name: __('Razorpay Dark'), value: 'dark' },
-    { name: __('Razorpay Light'), value: 'light' },
-    { name: __('Razorpay Outline'), value: 'outline' },
-    { name: __('Brand Color'), value: 'brand' },
   ]
 
   const setPayIntegId = e => {

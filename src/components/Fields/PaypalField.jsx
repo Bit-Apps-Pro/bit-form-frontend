@@ -1,6 +1,5 @@
 import BitPaypalField from 'bit-paypal-field/src/bit-paypal-field'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
@@ -15,7 +14,6 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   const [clientID, setClientID] = useState('')
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
-  const location = useLocation()
 
   const paypalElemnRaf = useRef(null)
   const paypalFldWrapRef = useRef(null)
@@ -37,7 +35,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
         fieldKey,
         errorKey: 'paypalClientIdMissing',
         errorMsg: __('PayPal Client ID is missing'),
-        errorUrl: location.pathname.replace('fields-list', `field-settings/${fieldKey}`),
+        errorUrl: `field-settings/${fieldKey}`,
       })
       return
     }

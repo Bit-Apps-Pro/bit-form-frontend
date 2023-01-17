@@ -2,7 +2,7 @@ import produce from 'immer'
 import { useContext, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
@@ -30,7 +30,6 @@ export default function PaypalFieldSettings() {
   const isDynamicAmount = fieldData?.amountType === 'dynamic'
   const isDynamicShipping = fieldData?.shippingType === 'dynamic'
   const isDynamicTax = fieldData?.taxType === 'dynamic'
-  const location = useLocation()
 
   const { css } = useFela()
   useEffect(() => {
@@ -41,14 +40,14 @@ export default function PaypalFieldSettings() {
         fieldKey: fldKey,
         errorKey: 'paypalAmountFldMissing',
         errorMsg: __('PayPal Dyanmic Amount Field is not Selected'),
-        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+        errorUrl: `field-settings/${fldKey}`,
       })
     } else if (!isDynamicAmount && (!fieldData.amount || fieldData.amount <= 0)) {
       addFormUpdateError({
         fieldKey: fldKey,
         errorKey: 'paypalAmountMissing',
         errorMsg: __('PayPal Fixed Amount is not valid'),
-        errorUrl: location.pathname.replace('fields-list', `field-settings/${fldKey}`),
+        errorUrl: `field-settings/${fldKey}`,
       })
     }
   }, [fieldData?.amountType, fieldData?.amount, fieldData?.amountFld])

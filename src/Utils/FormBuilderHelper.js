@@ -419,6 +419,17 @@ export const removeFormUpdateError = (fieldKey, errorKey) => {
   const errIndex = checkErrKeyIndex(fieldKey, errorKey)
 
   if (errIndex < 0) return
+  if (fieldKey && !errorKey) {
+    const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+      // delete all matched fieldKey errors
+      draftUpdateBtn.errors = draftUpdateBtn.errors.filter(({ fieldKey: fldKey }) => fldKey !== fieldKey)
+      if (draftUpdateBtn.errors.length === 0) {
+        delete draftUpdateBtn.errors
+      }
+    })
+    setRecoil($updateBtn, newUpdateBtn)
+    return
+  }
   const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
     draftUpdateBtn.errors.splice(errIndex, 1)
 
@@ -858,4 +869,14 @@ export const getSessionStorageStates = (key, { strType } = {}) => {
   if (strType === 'json') return JSON.parse(state)
   if (strType === 'jcof') return JCOF.parse(state)
   return state
+}
+
+export const getCurrentFormUrl = () => {
+  const formID = getRecoil($formId)
+  const { hash } = window.location
+  const url = hash.replace('#', '')
+  const regex = new RegExp(`/(.*?)${formID}`)
+  const matchedUrl = url.match(regex)
+  if (matchedUrl) return matchedUrl[0]
+  return null
 }

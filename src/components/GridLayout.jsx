@@ -5,14 +5,13 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
-  $additionalSettings,
   $breakpoint,
   $builderHookStates,
   $deletedFldKey,
@@ -22,7 +21,7 @@ import {
   $isNewThemeStyleLoaded,
   $layouts,
   $selectedFieldId,
-  $uniqueFieldId
+  $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
@@ -30,6 +29,7 @@ import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import {
+  addFormUpdateError,
   addNewItemInLayout,
   addToBuilderHistory,
   calculateFormGutter,
@@ -39,14 +39,13 @@ import {
   filterNumber,
   fitAllLayoutItems,
   fitSpecificLayoutItem,
-  getAbsoluteElmHeight,
-  getLatestState,
+  getAbsoluteElmHeight, getLatestState,
   getResizableHandles,
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -89,7 +88,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
-  const additional = useRecoilValue($additionalSettings)
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
@@ -286,16 +284,48 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     return fldData.lbl
   }
 
+  const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
+    const { typ: fldType } = fieldData
+
+    if (fldType === 'paypal') {
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'paypalClientIdMissing',
+        errorMsg: 'PayPal Client ID is missing',
+        errorUrl: `field-settings/${fldKey}`,
+      })
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'paypalAmountMissing',
+        errorMsg: __('PayPal Fixed Amount is not valid'),
+        errorUrl: `field-settings/${fldKey}`,
+      })
+    } else if (fldType === 'razorpay') {
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'razorpayClientIdMissing',
+        errorMsg: __('Razorpay Client ID is missing'),
+        errorUrl: `field-settings/${fldKey}`,
+      })
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'razorpayAmountMissing',
+        errorMsg: __('Razorpay Fixed Amount is not valid'),
+        errorUrl: `field-settings/${fldKey}`,
+      })
+    }
+  }
+
   function addNewField(fieldData, fieldSize, addPosition) {
     let processedFieldData = handleFieldExtraAttr(fieldData)
     if (!processedFieldData) return
-    const { w, h, minH, maxH, minW } = fieldSize
+    processedFieldData = { ...processedFieldData, fieldName: `${processedFieldData.typ}-${formID}-${uniqueFieldId}` }
+    const newBlk = `b${formID}-${uniqueFieldId}`
+    setUpdateErrorMsgByDefault(newBlk, processedFieldData)
     // eslint-disable-next-line prefer-const
     let { x, y } = addPosition
     if (y !== 0) { y -= 1 }
-    const newBlk = `b${formID}-${uniqueFieldId}`
-    const fk = `${processedFieldData.typ}-${formID}-${uniqueFieldId}`
-    processedFieldData = { ...processedFieldData, fieldName: fk }
+    const { w, h, minH, maxH, minW } = fieldSize
     const newLayoutItem = {
       i: newBlk, x, y, w, h, minH, maxH, minW,
     }

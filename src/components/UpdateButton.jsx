@@ -39,7 +39,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import navbar from '../styles/navbar.style'
 import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
-import { prepareLayout, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
+import { getCurrentFormUrl, prepareLayout, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
 import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -138,16 +138,17 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const checkUpdateBtnErrors = () => {
     if (updateBtn.errors) {
-      const firstErr = updateBtn.errors[0]
-      if (firstErr.errorMsg) toast.error(firstErr.errorMsg)
+      const lastErr = updateBtn.errors[updateBtn.errors.length - 1]
+      if (lastErr.errorMsg) toast.error(lastErr.errorMsg)
       else toast.error(__('Please fix the errors'))
-      if (firstErr.errorUrl) {
-        navigate(firstErr.errorUrl)
+      if (lastErr.errorUrl) {
+        const currentFormUrl = getCurrentFormUrl()
+        navigate(`${currentFormUrl}/${lastErr.errorUrl}`)
       }
-      if (firstErr.fieldKey) {
-        setSelectedFieldId(firstErr.fieldKey)
+      if (lastErr.fieldKey) {
+        setSelectedFieldId(lastErr.fieldKey)
         setTimeout(() => {
-          selectInGrid(`[data-key="${firstErr.fieldKey}"]`)?.focus()
+          selectInGrid(`[data-key="${lastErr.fieldKey}"]`)?.focus()
         }, 500)
       }
       return true
@@ -388,7 +389,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           sessionStorage.removeItem('btcd-fs')
           sessionStorage.removeItem('btcd-rh')
         } else if (!response?.success && response?.data === 'Token expired') {
-          sessionStorage.setItem('bitformData', bitCipher(JSON.stringify(formData)))
           window.location.reload()
         } else if (!response?.success) {
           setTimeout(() => { window.location.reload() }, 2000)
