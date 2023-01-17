@@ -1,4 +1,4 @@
-import { memo, useState, useRef } from 'react'
+import { memo, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -20,7 +20,7 @@ import SnackMsg from './Utilities/SnackMsg'
 
 function WebHooks({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState({ id: 0, loading: false })
   const [snack, setSnackbar] = useState({ show: false })
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useRecoilValue($fieldsArr)
@@ -132,11 +132,11 @@ function WebHooks({ removeIntegration }) {
   }
 
   const testWebhook = webHookId => {
-    setIsLoading(true)
+    setIsLoading({ id: webHookId, loading: true })
     const confirmation = deepCopy(allConf)
     bitsFetch({ hookDetails: confirmation.type.webHooks[webHookId] }, 'bitforms_test_webhook').then(response => {
       if (response && response.success) {
-        setIsLoading(false)
+        setIsLoading({ id: webHookId, loading: false })
         if ((response.data.response).length === 0) {
           testResponseRef.current[webHookId].innerHTML = __('No response from the server')
         } else {
@@ -146,10 +146,10 @@ function WebHooks({ removeIntegration }) {
       } else if (response && response.data) {
         const msg = typeof response.data === 'string' ? response.data : 'Unknown error'
         setSnackbar({ show: true, msg: `${msg}. ${__('please try again')}` })
-        setIsLoading(false)
+        setIsLoading({ id: webHookId, loading: false })
       } else {
         setSnackbar({ show: true, msg: __('Webhook tests failed. please try again') })
-        setIsLoading(false)
+        setIsLoading({ id: webHookId, loading: false })
       }
     })
   }
@@ -257,7 +257,7 @@ function WebHooks({ removeIntegration }) {
               </div>
               <Button onClick={() => testWebhook(i)} className={css(app.btn, app.btn_blue_otln)}>
                 {__('Test Webhook')}
-                {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
+                {(isLoading.id === i && isLoading.loading) && <LoaderSm size={14} clr="#022217" className="ml-2" />}
                 <ExternalLinkIcn size={18} className="ml-1" />
               </Button>
               <br />
