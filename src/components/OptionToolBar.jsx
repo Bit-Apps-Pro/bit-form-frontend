@@ -235,7 +235,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
               tipPlace="bottom"
               defaultActive={colorScheme}
               onChange={handleColorSchemeSwitch}
-              className={css(ut.mr2, { vy: (darkModeConfig.darkModeSelector === '' && !darkModeConfig.preferSystemColorScheme) ? 'hidden' : 'visible' })}
+              className={css(ut.mr2, { vy: (darkModeConfig?.darkModeSelector === '' && !darkModeConfig?.preferSystemColorScheme) ? 'hidden' : 'visible' })}
               options={[
                 { icn: <LightIcn size="19" />, label: 'light', tip: 'Light Mode' },
                 { icn: <DarkIcn size="19" />, label: 'dark', tip: 'Dark Mode' },

@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from './IntegrationHelpers'
-import MailerLiteFieldMap from './MailerLiteFieldMap'
 import MailerLiteActions from './MailerLiteActions'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
+import MailerLiteFieldMap from './MailerLiteFieldMap'
 
 export default function MailerLiteIntegLayout({ formFields, mailerLiteConf, setMailerLiteConf, isLoading, setIsLoading, setSnackbar }) {
   const [isAuthorized, setisAuthorized] = useState(false)

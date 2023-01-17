@@ -72,12 +72,12 @@ export default function GetgistAuthorization({ getgistConf, setGetgistConf, step
         name="api_key"
         value={getgistConf.api_key}
         type="text"
-        placeholder={__('Integration Name...')}
+        placeholder={__('Integration API Key...')}
         disabled={isInfo}
       />
       <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>
       <small className="d-blk mt-5">
-        {__('To get API , Please Visit')}
+        {__('To get API, Please Visit')}
         {' '}
         <a
           className="btcd-link"
@@ -108,7 +108,6 @@ export default function GetgistAuthorization({ getgistConf, setGetgistConf, step
             handleAuthorize={handleAuthorize}
             isLoading={isLoading}
           />
-
           <br />
           <NextBtn
             nextPageHanlder={() => nextPage(2)}
