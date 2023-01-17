@@ -120,27 +120,7 @@ function FormDetails() {
       setNewFormInitialStates()
       return
     }
-
-    if (sessionStorage.getItem('bitformData')) {
-      const formData = JSON.parse(bitDecipher(sessionStorage.getItem('bitformData')))
-      if (formData.layout !== undefined) {
-        setLayouts(formData.layout)
-        addToBuilderHistory({ state: { layouts: formData.layout } }, false, 0)
-      }
-      setFields(formData.fields)
-      addToBuilderHistory({ state: { fields: formData.fields } }, false, 0)
-      setFormInfo(oldInfo => ({ ...oldInfo, formName: formData.form_name }))
-      setworkFlows(formData.workFlows)
-      setAdditional(formData.additional)
-      setIntegration(formData.formSettings.integrations)
-      setConfirmations(formData.formSettings.confirmation)
-      setMailTem(formData.formSettings.mailTem)
-      sessionStorage.removeItem('bitformData')
-      toast.error(__('Please try again. Token was expired'))
-      if (isLoading) { setisLoading(!isLoading) }
-    } else {
-      setOldFormStates()
-    }
+    setOldFormStates()
   }
 
   const onUnmount = () => {
@@ -220,28 +200,6 @@ function FormDetails() {
   }
 
   const setOldFormStates = () => {
-    // if (formType === 'new' && formInfo.template !== 'Blank') {
-    //   bitsFetch({ template: formID, newFormId }, 'bitforms_get_template')
-    //     .then(res => {
-    //       if (res?.success && componentMounted) {
-    //         let responseData = JSON.parse(res.data)
-    //         if (typeof data !== 'object') { responseData = JSON.parse(res.data) }
-    //         if (responseData.form_content.layout !== undefined) {
-    //           setLay(responseData.form_content.layout)
-    //           setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.layouts = responseData.form_content.layout }))
-    //         }
-    //         setFields(responseData.form_content.fields)
-    //         // setBuilderHistory(oldHistory => oldHistory.histories[0].state.fields = responseData.form_content.fields)
-    //         setBuilderHistory(oldHistory => produce(oldHistory, draft => { draft.histories[0].state.fields = responseData.form_content.fields }))
-    //         setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
-    //         setisLoading(false)
-    //         sessionStorage.setItem('btcd-lc', '-')
-    //       } else {
-    //         setisLoading(false)
-    //       }
-    //     })
-    //     .catch(() => { setisLoading(false) })
-    // } else
     if (formType === 'edit') {
       bitsFetch({ id: formID }, 'bitforms_get_a_form')
         .then(res => {
