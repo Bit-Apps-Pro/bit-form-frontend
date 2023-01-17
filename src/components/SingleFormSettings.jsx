@@ -46,7 +46,7 @@ export default function SingleFormSettings() {
   const bits = useRecoilValue($bits)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   // const setStaticStyle = useSetRecoilState($staticStylesState)
-  const setStaticStyleState = useRecoilValue($staticStylesState)
+  const setStaticStyleState = useSetRecoilState($staticStylesState)
   const { isPro } = bits
   const [proModal, setProModal] = useState({ show: false, msg: '' })
 

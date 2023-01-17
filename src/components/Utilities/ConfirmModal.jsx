@@ -5,7 +5,7 @@ import Btn from './Btn'
 import Modal from './Modal'
 
 function ConfirmModal({
-  close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning,
+  close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning, cancelBtn = true,
 }) {
   const { css } = useFela()
   return (
@@ -23,7 +23,7 @@ function ConfirmModal({
           {children}
         </div>
         <div className={`d-flx flx-center ${warning && 'mt-3'}`}>
-          {!btn2Txt && (
+          {(!btn2Txt && cancelBtn) && (
             <Btn size="md" width="150px" onClick={close} rounded variant="default" className={css(ut.mr2)}>
               {__('Cancel')}
             </Btn>
