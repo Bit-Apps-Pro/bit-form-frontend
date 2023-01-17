@@ -99,9 +99,9 @@ export default function PaymentSettings({ setSnackbar }) {
       />
       <h2>{__('Payment Settings')}</h2>
       <div className="btcd-hr" />
-      <div className={css(style.integWrp)}>
+      <div className={`pos-rel ${css(style.integWrp)}`}>
         {!isPro && (
-          <div className="pro-blur flx w-10" style={{ top: 5, left: -10 }}>
+          <div className="pro-blur flx w-10" style={{ top: -10, left: -10 }}>
             <div className="pro">
               {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
