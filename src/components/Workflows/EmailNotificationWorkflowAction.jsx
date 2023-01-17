@@ -1,11 +1,11 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import produce from 'immer'
 import { useFela } from 'react-fela'
-import TableCheckBox from '../Utilities/TableCheckBox'
-import { __ } from '../../Utils/i18nwrap'
-import DropDown from '../Utilities/DropDown'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
+import { __ } from '../../Utils/i18nwrap'
+import DropDown from '../Utilities/DropDown'
+import TableCheckBox from '../Utilities/TableCheckBox'
 
 export default function EmailNotificationWorkflowAction({
   lgcGrpInd,
@@ -26,21 +26,14 @@ export default function EmailNotificationWorkflowAction({
   const fileInFormField = () => {
     const file = []
     fieldsArr.map(field => {
-      if (field.type === 'file-up') {
+      if (field.type === 'file-up' || field.type === 'advanced-file-up') {
         file.push({ label: field.name, value: field.key })
       }
     })
     return file
   }
 
-  const emailInFormField = () => {
-    fieldsArr.map(field => {
-      if (field.type === 'email') {
-        return true
-      }
-    })
-    return false
-  }
+  const emailInFormField = () => fieldsArr.filter(field => field.type === 'email').length > 0
 
   const mailOptions = () => {
     const mail = []
