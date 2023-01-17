@@ -93,7 +93,7 @@ export default function SpaceControl({
           <ResetStyle stateObjName={stateObjName} propertyPath={propertyPath} />
           <StyleSegmentControl
             square
-            defaultActive="All"
+            defaultActive={controller}
             options={options}
             values={60}
             component="button"

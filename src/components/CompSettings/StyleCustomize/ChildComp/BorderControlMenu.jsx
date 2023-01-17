@@ -139,7 +139,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
           <span className={css(ut.fs12, ut.fw500)}>Type</span>
           <SimpleDropdown
             options={options}
-            value={borderValue}
+            value={borderValue.replace('!important', '').trim()}
             onChange={val => onValueChange(obj.border, borderPath, val)}
             w={130}
             h={30}

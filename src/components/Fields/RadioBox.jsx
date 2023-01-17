@@ -66,7 +66,6 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
     setvalue(e.target.value)
     setOtherOptValue(e.target.value)
   }
-
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -103,7 +102,7 @@ export default function RadioBox({ attr, onBlurHandler, resetFieldValue, formID,
                 {...'name' in attr && { name: attr.name }}
                 // {...{ checked: value === (itm.val || itm.lbl) }}
                 // {...'readonly' in attr.valid && { readOnly: attr.valid.readonly }}
-                checked={value === (itm.val || itm.lbl)}
+                checked={(value === (itm.val || itm.lbl)) || (!value && itm.check)}
                 onChange={onChangeHandler}
                 onBlur={handleBlur}
                 {...getCustomAttributes(fieldKey, 'ci')}

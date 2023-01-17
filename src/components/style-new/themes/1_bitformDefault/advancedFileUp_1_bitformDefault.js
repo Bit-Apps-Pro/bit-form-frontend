@@ -21,6 +21,7 @@ export default function advancedFileUp_1_bitformDefault({ fk, breakpoint, colorS
       /* filepond-root */
       [`.${fk}-inp-wrp .filepond--root`]: {
         'min-height': '40px',
+        'margin-bottom': '0px',
       },
 
       /* the text color of the drop label */

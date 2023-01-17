@@ -28,7 +28,7 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import editorConfig from './NewStyleEditorConfig'
-import { assignNestedObj } from './styleHelpers'
+import { assignNestedObj, getActualElementKey } from './styleHelpers'
 import atlassianTheme from './themes/2_atlassian'
 import bitformDefaultTheme from './themes/1_bitformDefault'
 
@@ -200,15 +200,16 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               break
 
             default:
-              const allDefaltStyle = getElementStyleClasses[`.${fieldKey}-${elmnt}`] || {}
-              assignNestedObj(drft, getPath(elmnt), allDefaltStyle)
-              const states = [...editorConfig[fieldType][elmnt].states]
+              const actualElmnt = getActualElementKey(elmnt)
+              const allDefaltStyle = getElementStyleClasses[`.${fieldKey}-${actualElmnt}`] || {}
+              assignNestedObj(drft, getPath(actualElmnt), allDefaltStyle)
+              const states = [...editorConfig[fieldType][actualElmnt].states]
               states?.map(state => {
-                const tempDefault = getElementStyleClasses[`.${fieldKey}-${elmnt}:${state}`]
+                const tempDefault = getElementStyleClasses[`.${fieldKey}-${actualElmnt}:${state}`]
                 if (tempDefault) {
-                  assignNestedObj(drft, getPath(`${elmnt}:${state}`), tempDefault)
+                  assignNestedObj(drft, getPath(`${actualElmnt}:${state}`), tempDefault)
                 } else {
-                  deleteStyle(drft, elmnt, `:${state}`)
+                  deleteStyle(drft, actualElmnt, `:${state}`)
                 }
               })
               break
