@@ -6,8 +6,9 @@ export default function buttonStyle_1_bitformDefault({
 }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
-      [`.${fk}-fld-wrp`]: {
-        ...inputWrapperClasses(fk)[`.${fk}-fld-wrp`],
+      ...inputWrapperClasses(fk),
+      [`.${fk}-inp-wrp`]: {
+        ...inputWrapperClasses(fk)[`.${fk}-inp-wrp`],
         display: 'flex',
         ...align && { 'justify-content': align },
       },
