@@ -108,7 +108,7 @@ function TransformControlMenu({ propertyPath, id }) {
       </div>
       <div className={css(c.overFlowScroll)}>
         {arrOfExtractedTransformObj.map((transformObj, indx) => (
-          <div key={`transformObj-${indx * 5}`} className={css(ut.p1, c.containerHover)}>
+          <div key={`transformObj-${indx * 5}`} className={css(ut.p1, c.containerHover, arrOfExtractedTransformObj.length === 1 && { mnh: 90 })}>
             <div className={css(ut.flxcb, ut.mt1)}>
               <span className={css(ut.flxcb, ut.fs12, ut.fw500)}>
                 {arrOfExtractedTransformObj.length > 1 && (
