@@ -113,7 +113,7 @@
     "build-pkg": "turbo run build",
     "hot": "vite --force",
     "build": "vite build",
-    "build-bit-advance-file-upload-field": "cd ./packages/bit-advance-file-upload-field && pnpm run build && cp -r ./dist/* ../../../assets"
+    "build-bit-validation": "cd ./packages/bit-validation && pnpm run build && cp -r ./dist/* ../../../assets"
   },
   "husky": {
     "hooks": {

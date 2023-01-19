@@ -4,12 +4,11 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
-import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
 import {
-  assignNestedObj, getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, unitConverter,
+  assignNestedObj, getNumFromStr, getObjByKey, getStrFromStr, getValueByObjPath, setStyleStateObj, unitConverter
 } from '../../../style-new/styleHelpers'
 import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SizeControl from './SizeControl'
@@ -43,16 +42,16 @@ export default function TextDecorationControlMenu({ objectPaths, id }) {
   }
 
   const styleOptions = [
-    { icn: <ChevronDownIcn size={12} />, label: 'Solid', value: 'solid' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Dashed', value: 'dashed' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Dotted', value: 'dotted' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Double', value: 'double' },
+    { label: 'Solid', value: 'solid' },
+    { label: 'Dashed', value: 'dashed' },
+    { label: 'Dotted', value: 'dotted' },
+    { label: 'Double', value: 'double' },
   ]
 
   const lineOptions = [
-    { icn: <ChevronDownIcn size={12} />, label: 'Overline', value: 'overline' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Underline', value: 'underline' },
-    { icn: <ChevronDownIcn size={12} />, label: 'Line Through', value: 'line-through' },
+    { label: 'Overline', value: 'overline' },
+    { label: 'Underline', value: 'underline' },
+    { label: 'Line Through', value: 'line-through' },
   ]
 
   return (

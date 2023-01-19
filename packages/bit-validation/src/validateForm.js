@@ -28,6 +28,12 @@ export default function validateForm({ form, input }) {
     const fldType = fldData.typ
     const fldValue = typeof formEntries[fldKey] === 'string' ? formEntries[fldKey].trim() : formEntries[fldKey]
 
+    const fldDiv = document.querySelector(`#form-${contentId} .${fldKey}.fld-hide`)
+    if (fldDiv) {
+      generateErrMsg('', fldKey)
+      continue
+    }
+
     let errKey = ''
     if (fldType === 'check') {
       errKey = typeof checkFldValidation !== 'undefined' ? checkFldValidation(fldValue, fldData) : ''
