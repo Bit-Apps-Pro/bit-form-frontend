@@ -189,7 +189,8 @@ export default class BitCountryField {
   }
 
   #detectCountryCodeFromIpAddress() {
-    fetch('https://www.cloudflare.com/cdn-cgi/trace')
+    const { protocol } = this.#window.location
+    fetch(`${protocol}//www.cloudflare.com/cdn-cgi/trace`)
       .then(resp => resp.text())
       .then(data => {
         const ipinfo = data.trim().split('\n').reduce((obj, pair) => {
@@ -204,7 +205,8 @@ export default class BitCountryField {
   #detectCountryCodeFromGeoLocation() {
     navigator.geolocation.getCurrentPosition(pos => {
       const { latitude, longitude } = pos.coords
-      fetch(`http://api.geonames.org/countryCodeJSON?username=bitcodezoho1&lat=${latitude}&lng=${longitude}`)
+      const { protocol } = this.#window.location
+      fetch(`${protocol}//api.geonames.org/countryCodeJSON?username=bitcodezoho1&lat=${latitude}&lng=${longitude}`)
         .then(resp => resp.json())
         .then(data => {
           this.setSelectedCountryItem(data.countryCode)
