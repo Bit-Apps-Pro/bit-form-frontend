@@ -258,7 +258,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   const bits = getRecoil($bits)
   setisLoading(true)
   const scopes = 'ZohoRecruit.users.ALL,ZohoRecruit.modules.all'
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect?redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'zohoRecruit', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -289,7 +289,8 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
+  const bits = getRecoil($bits)
+  tokenRequestParams.redirectURI = encodeURIComponent(bits.zohoRedirectURL)
   bitsFetch(tokenRequestParams, 'bitforms_zrecruit_generate_token')
     .then(result => result)
     .then(result => {

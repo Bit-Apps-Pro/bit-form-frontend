@@ -365,11 +365,11 @@ function Integrations() {
             </>
           )}
         />
-        <Route path="new/:integUrlName" element={<NewInteg allIntegURL={allIntegURL} />} />
+        <Route path="new/:integUrlName/*" element={<NewInteg allIntegURL={allIntegURL} />} />
         {integrations?.length
-          && (<Route path="/edit/:id" element={<EditInteg allIntegURL={allIntegURL} />} />)}
+          && (<Route path="/edit/:id/*" element={<EditInteg allIntegURL={allIntegURL} />} />)}
         {integrations && integrations.length > 0
-          && (<Route path="/info/:id" element={<IntegInfo allIntegURL={allIntegURL} />} />)}
+          && (<Route path="/info/:id/*" element={<IntegInfo allIntegURL={allIntegURL} />} />)}
       </Routes>
     </div>
   )
