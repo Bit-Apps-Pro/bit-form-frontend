@@ -279,6 +279,7 @@ export default class BitDropdownField {
       const { value } = opt.dataset
       obj.lbl = lblElm.textContent
       if (value) obj.val = value
+      else obj.val = obj.lbl
       if (this.#containsClass(opt, 'disabled-opt')) obj.disabled = true
       const imgElm = opt.querySelector('.opt-icn')
       if (this.#config.optionIcon && imgElm?.src) {
@@ -396,7 +397,8 @@ export default class BitDropdownField {
       const chipLblCustomAttributes = this.#config.customAttributes?.['chip-lbl']
       if (chipLblCustomAttributes) this.#setCustomAttr(chipLbl, chipLblCustomAttributes)
 
-      this.#setTextContent(chipLbl, val)
+      const optObj = this.#searchOptionObjByVal(val)
+      this.#setTextContent(chipLbl, optObj ? optObj.lbl : val)
       this.#appendChild(chipWrp, chipLbl)
 
       const chipClearBtn = this.#createElm('button')
