@@ -1,8 +1,8 @@
 /* eslint-disable no-else-return */
 import toast from 'react-hot-toast'
-import { __ } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { sortArrOfObj } from '../../../Utils/Helpers'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, oneDriveConf, setOneDriveConf, formID, setIsLoading, setSnackbar, i = 0) => {
   let newConf = { ...oneDriveConf }
@@ -36,7 +36,7 @@ export const folderChange = (oneDriveConf, formID, setOneDriveConf, setIsLoading
   return newConf
 }
 
-export const getAllOneDriveFolders = (flowID, oneDriveConf, setOneDriveConf, setIsLoading, setSnackbar) => {
+export const getAllOneDriveFolders = (flowID, oneDriveConf, setOneDriveConf, setIsLoading) => {
   setIsLoading(true)
   const queryParams = {
     flowID: flowID ?? null,
@@ -124,7 +124,7 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading,
   setIsLoading(true)
   const scopes = 'onedrive.readwrite offline_access Files.ReadWrite.All'
   // eslint-disable-next-line no-undef
-  const apiEndpoint = `https://login.live.com/oauth20_authorize.srf?client_id=${confTmp.clientId}&scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.oneDriveRedirectURL)}`
+  const apiEndpoint = `https://login.live.com/oauth20_authorize.srf?client_id=${confTmp.clientId}&scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect?redirect_uri=${encodeURIComponent(bits.oneDriveRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'oneDrive', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
