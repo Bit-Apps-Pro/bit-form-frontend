@@ -232,6 +232,8 @@ function Integrations() {
       }).catch(() => toast.error(__('Integration clone failed.')))
   }
 
+  const avoidIntegsForInfo = ['WooCommerce']
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -306,16 +308,24 @@ function Integrations() {
 
                 {integrations.map((inte, i) => (
                   <div role="button" className={css(style.itegCard)} key={`inte-${i + 3}`}>
-                    <Link to={`${allIntegURL}/info/${i}`}>
-                      {getLogo(inte.type)}
-                    </Link>
-                    <div className="py-1" title={`${inte.name} | ${inte.type}`}>
-                      <Link
-                        to={`${allIntegURL}/info/${i}`}
-                        className={css(style.integTitle)}
-                      >
-                        {inte.name}
+                    {!avoidIntegsForInfo.includes(inte.type) ? (
+                      <Link to={`${allIntegURL}/info/${i}`}>
+                        {getLogo(inte.type)}
                       </Link>
+                    ) : (
+                      <>{getLogo(inte.type)}</>
+                    )}
+                    <div className="py-1" title={`${inte.name} | ${inte.type}`}>
+                      {!avoidIntegsForInfo.includes(inte.type) ? (
+                        <Link
+                          to={`${allIntegURL}/info/${i}`}
+                          className={css(style.integTitle)}
+                        >
+                          {inte.name}
+                        </Link>
+                      ) : (
+                        <p className={css(style.integTitle)}>{inte.name}</p>
+                      )}
                       <small className={css(style.integSubtitle)}>{inte.type}</small>
                     </div>
                     <div className={`${css(style.actionWrp)} action-wrp`}>
