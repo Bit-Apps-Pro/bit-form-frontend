@@ -1,7 +1,7 @@
-import { __ } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
 import { getRecoil } from 'recoil-nexus'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __ } from '../../../Utils/i18nwrap'
 
 export const setGrantTokenResponse = () => {
   const grantTokenResponse = {}
@@ -32,7 +32,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   const bits = getRecoil($bits)
   setisLoading(true)
   const scopes = 'ZohoCampaigns.contact.READ,ZohoCampaigns.contact.CREATE,ZohoCampaigns.contact.UPDATE'
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect?redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'zohoCampaigns', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {

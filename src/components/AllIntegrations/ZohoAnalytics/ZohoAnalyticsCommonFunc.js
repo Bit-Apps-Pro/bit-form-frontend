@@ -37,7 +37,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   const bits = getRecoil($bits)
   setisLoading(true)
   const scopes = 'ZohoAnalytics.metadata.read,ZohoAnalytics.data.read,ZohoAnalytics.data.create,ZohoAnalytics.data.update,ZohoAnalytics.usermanagement.read,ZohoAnalytics.share.create'
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect?redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'zohoAnalytics', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
