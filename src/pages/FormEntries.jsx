@@ -13,7 +13,7 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $bits, $fieldLabels, $forms, $reportId, $reports, $reportSelector } from '../GlobalStates/GlobalStates'
+import { $bits, $fieldLabels, $fieldsArr, $forms, $reportId, $reports, $reportSelector } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
@@ -401,7 +401,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     [rowDtl],
   )
 
-  const filterEntryLabels = () => entryLabels.filter(el => el.accessor !== 'sl' && el.accessor !== 'table_ac')
+  const filterEntryLabels = () => entryLabels.filter(el => !['sl', 'table_ac'].includes(el.accessor) && !['title', 'image', 'divider'].includes(el.fieldType))
 
   const getUploadedFilesArr = files => {
     try {
