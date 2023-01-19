@@ -5,6 +5,7 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
+import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
@@ -42,7 +43,7 @@ function SmartTags({ fieldName }) {
         </ul>
       )} */}
 
-      <ul className={css(style.ul)}>
+      <ul className={css(style.ul, ut.mb0)}>
         <h4 style={{ margin: 0 }}>Smart Tags</h4>
         {SmartTagField.map((f, indx) => (
           <li key={`smart-tag-${indx * 2}`} className={css(style.li)}>
@@ -65,7 +66,7 @@ const style = {
     h: 300,
     ow: 'scroll',
   },
-  ul: { mt: 10 },
+  ul: { mt: 10, pb: 0 },
   li: {
     mb: 0,
     mt: 5,
