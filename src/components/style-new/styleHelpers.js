@@ -1031,4 +1031,4 @@ export const getActualElementKey = (elmKey, fldType = '') => {
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
 }
 
-export const truncatedString = (str) => (str.length > 100 ? (`${str.substring(0, 100)}...`) : str)
+export const truncatedString = (str = '', len = 100) => (str.length > len ? (`${str.substring(0, len)}...`) : str)
