@@ -22,7 +22,7 @@ export const setGrantTokenResponse = (integ) => {
   // console.log('this is setGrant')
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href
-  const queryParams = authWindowLocation.replace(`${window.opener.location.href}/redirect`, '').split('&')
+  const queryParams = authWindowLocation.replace(`${window.opener.location.href}?redirect`, '').split('&')
   // console.log(queryParams)
   if (queryParams) {
     queryParams.forEach(element => {
