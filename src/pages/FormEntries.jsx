@@ -419,7 +419,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   }
 
   const splitFileName = (fileId) => {
-    const fileName = fileId?.split('_')
+    const fileName = fileId?.split(bits?.configs?.bf_separator)
     if (fileName.length > 1) {
       return fileName[1]
     }
@@ -427,7 +427,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   }
 
   const splitFileLink = (fileId) => {
-    const fileName = fileId?.split('_')
+    const fileName = fileId?.split(bits?.configs?.bf_separator)
     if (fileName.length > 1) {
       return fileName[0]
     }
