@@ -79,7 +79,7 @@ export default function ButtonSettings() {
   function setButtonAlign(e) {
     const { value } = e.target
     setStyles(preStyle => produce(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-inp-wrp`]['justify-content'] = value
+      drftStyle.fields[fldKey].classes[`.${fldKey}-inp-fld-wrp`]['justify-content'] = value
     }))
     fieldData.align = value
     setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
