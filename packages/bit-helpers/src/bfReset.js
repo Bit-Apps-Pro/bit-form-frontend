@@ -15,9 +15,9 @@ export default function bfReset(contentId, customHook = false) {
   Object.keys(props.fields).forEach(fk => {
     const errWrp = bfSelect(`#form-${contentId} .${fk}-err-wrp`)
     if (errWrp) {
-      errWrp.style.height = '0px'
-      errWrp.style.opacity = 0
-      bfSelect(`.${fk}-err-msg`, errWrp).style.display = 'none'
+      setStyleProperty(errWrp, 'height', '0px')
+      setStyleProperty(errWrp, 'opacity', 0)
+      setStyleProperty(bfSelect(`.${fk}-err-msg`, errWrp), 'display', 'none')
     }
   })
 

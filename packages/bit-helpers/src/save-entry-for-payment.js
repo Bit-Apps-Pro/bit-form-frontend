@@ -226,8 +226,8 @@ function dispatchFieldError(fldErrors, contentId) {
   Object.keys(fldErrors).forEach((fk) => {
     const errFld = bfSelect(`#form-${contentId} .${fk}-err-txt`)
     errFld.innerHTML = fldErrors[fk]
-    errFld.parentElement.style.marginTop = '5px'
-    errFld.parentElement.style.height = `${errFld.offsetHeight}px`
+    setStyleProperty(errFld.parentElement, 'margin-top', '5px')
+    setStyleProperty(errFld.parentElement, 'height', `${errFld.offsetHeight}px`)
     errFld.parentElement.style.removeProperty('display')
   })
 }

@@ -55,7 +55,7 @@ const setActionHide = (actionDetail, props, val) => {
     const fld = window.getComputedStyle(selector)
     let heightCount = 0
     if (val) {
-      selector.style.height = `${heightCount}px`
+      setStyleProperty(selector, 'height', `${heightCount}px`)
       selector.classList.add('fld-hide')
     } else {
       selector.classList.remove('fld-hide')
@@ -73,7 +73,7 @@ const setActionHide = (actionDetail, props, val) => {
           + parseInt(fld.borderBottomWidth)
         )
       }
-      selector.style.height = `${heightCount}px`
+      setStyleProperty(selector, 'height', `${heightCount}px`)
     }
   }
 }
