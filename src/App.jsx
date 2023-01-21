@@ -17,7 +17,7 @@ const FormDetails = loadable(() => import('./pages/FormDetails'), { fallback: <B
 const Error404 = loadable(() => import('./pages/Error404'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
 
 const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
-document.querySelector('#wpbody').style.backgroundColor = backgroundColor
+// document.querySelector('#wpbody').style.backgroundColor = backgroundColor
 
 const Nav = ({ setActive }) => {
   const { pathname } = useLocation()
