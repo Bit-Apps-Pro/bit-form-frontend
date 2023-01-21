@@ -116,8 +116,8 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
     } else {
       errTxt.innerHTML = ''
       setStyleProperty(errMsg, 'display', 'none')
-      setStyleProperty(errMsg, 'height', 0)
-      setStyleProperty(errMsg, 'opacity', 0)
+      setStyleProperty(errWrp, 'height', 0)
+      setStyleProperty(errWrp, 'opacity', 0)
     }
   }
 }
