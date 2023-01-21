@@ -4,8 +4,8 @@ function dispatchFieldError(fldErrors, contentId) {
     const errTxt = bfSelect(`.${fk}-err-txt`, errWrp)
     bfSelect(`.${fk}-err-msg`, errWrp).style.removeProperty('display')
     errTxt.innerHTML = fldErrors[fk]
-    errWrp.style.height = `${errTxt.offsetHeight}px`
-    errWrp.style.opacity = 1
+    setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
+    setStyleProperty(errWrp, 'opacity', 1)
   })
 }
 
