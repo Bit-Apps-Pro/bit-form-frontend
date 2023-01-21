@@ -193,7 +193,7 @@ export default function inputWrapperClasses(fk) {
       height: 'var(--err-h)',
     },
     [`.${fk}-err-txt`]: {
-      display: 'initial',
+      display: 'block',
     },
     [`.${fk}-err-txt-pre-i`]: {
       width: 'var(--err-txt-pre-i-w)',
