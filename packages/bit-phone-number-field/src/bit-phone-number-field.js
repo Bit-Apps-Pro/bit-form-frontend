@@ -606,6 +606,7 @@ export default class BitPhoneNumberField {
       this.#selectedCountryImgElm.src = this.#placeholderImage
     }
     this.value = ''
+    if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'none')
     this.#reRenderVirtualOptions()
   }
 

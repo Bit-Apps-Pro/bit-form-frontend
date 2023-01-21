@@ -631,6 +631,8 @@ export default class BitCurrencyField {
     if (this.#config.selectedFlagImage) {
       this.#selectedCurrencyImgElm.src = this.#placeholderImage
     }
+    this.#setAttribute(this.#currencyInputElm, 'data-num-value', '')
+    if (this.#config.selectedCurrencyClearable) this.#setStyleProperty(this.#clearCurrencyInputElm, 'display', 'none')
     this.#setAttribute(this.#currencyHiddenInputElm, 'value', this.#config.defaultValue)
     this.#reRenderVirtualOptions()
   }
