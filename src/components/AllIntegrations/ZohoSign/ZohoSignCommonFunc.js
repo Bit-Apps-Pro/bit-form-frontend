@@ -107,7 +107,7 @@ export const refreshTemplateDetails = (formID, signConf, setSignConf, setisLoadi
 export const setGrantTokenResponse = (integ) => {
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href
-  const queryParams = authWindowLocation.replace(`${window.opener.location.href}/redirect`, '').split('&')
+  const queryParams = authWindowLocation.replace(`${window.opener.location.href}?redirect`, '').split('&')
   if (queryParams) {
     queryParams.forEach(element => {
       const gtKeyValue = element.split('=')
@@ -133,7 +133,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   const bits = getRecoil($bits)
   setisLoading(true)
   const scopes = 'ZohoSign.templates.CREATE,ZohoSign.templates.READ,ZohoSign.templates.UPDATE'
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect?redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}?redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'zohoSign', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -160,11 +160,13 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 }
 
 const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading, setSnackbar) => {
+  const bits = getRecoil($bits)
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
+  // tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
+  tokenRequestParams.redirectURI = bits.zohoRedirectURL
   bitsFetch(tokenRequestParams, 'bitforms_zsign_generate_token')
     .then(result => result)
     .then(result => {
