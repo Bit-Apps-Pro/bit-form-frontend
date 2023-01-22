@@ -82,7 +82,7 @@ export default function SendinBlueAuthorization({ sendinBlueConf, setSendinBlueC
           name="api_key"
           value={sendinBlueConf.api_key}
           type="text"
-          placeholder={__('Integration Name...')}
+          placeholder={__('API Key...')}
           disabled={isInfo}
         />
         <div style={{ color: 'red', fontSize: '15px' }}>{error.api_key}</div>

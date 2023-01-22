@@ -210,17 +210,12 @@ function Toolbar({ setNewData }) {
         mul: false,
         phHide: true,
         ph: 'Select a Option',
-        options: [
-          { lbl: 'Option 1', val: 'Option 1' },
-          { lbl: 'Option 2', val: 'Option 2' },
-          { lbl: 'Option 3', val: 'Option 3' },
-        ],
         optionsList: [
           {
             'List-1': [
-              { lbl: 'Option 1 1', val: 'Option 1 1' },
-              { lbl: 'Option 1 2', val: 'Option 1 2' },
-              { lbl: 'Option 1 3', val: 'Option 1 3' },
+              { lbl: 'Option 1 1' },
+              { lbl: 'Option 1 2' },
+              { lbl: 'Option 1 3' },
             ],
           },
         ],

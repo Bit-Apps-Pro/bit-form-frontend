@@ -114,6 +114,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-helpers/dist/setStyleProperty.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-helpers/dist/setBFMsg.min.js'),
         dest: absPath('../assets'),
       },
@@ -199,6 +203,10 @@ function copyStatics(mode) {
       },
       {
         src: absPath('packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-validation/dist/advanceFileUpFldValidation.min.js'),
         dest: absPath('../assets'),
       },
       {

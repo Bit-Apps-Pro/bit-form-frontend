@@ -40,6 +40,7 @@ const style = {
     dy: 'block',
     fw: 500,
     cr: 'var(--dp-blue)',
+    m: 0,
     ':hover': { cr: 'var(--blue)' },
     ':focus-visible': { focusOutline: 1 },
 

@@ -1,9 +1,9 @@
 export default class BitPhoneNumberField {
   #placeholderImage = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"
 
-  #countryByIpApiURL = 'https://www.cloudflare.com/cdn-cgi/trace'
+  #countryByIpApiURL = 'www.cloudflare.com/cdn-cgi/trace'
 
-  #countryByGeoApiURL = 'http://api.geonames.org/countryCodeJSON?username=bitcodezoho1'
+  #countryByGeoApiURL = 'api.geonames.org/countryCodeJSON?username=bitcodezoho1'
 
   #phoneNumberFieldWrapper = null
 
@@ -139,7 +139,8 @@ export default class BitPhoneNumberField {
   }
 
   #detectCountryCodeFromIpAddress() {
-    fetch(this.#countryByIpApiURL)
+    const { protocol } = this.#window.location
+    fetch(`${protocol}//${this.#countryByIpApiURL}`)
       .then(resp => resp.text())
       .then(data => {
         const ipinfo = data.trim().split('\n').reduce((obj, pair) => {
@@ -153,7 +154,8 @@ export default class BitPhoneNumberField {
   #detectCountryCodeFromGeoLocation() {
     navigator.geolocation.getCurrentPosition(pos => {
       const { latitude, longitude } = pos.coords
-      fetch(`${this.#countryByGeoApiURL}&lat=${latitude}&lng=${longitude}`)
+      const { protocol } = this.#window.location
+      fetch(`${protocol}//${this.#countryByGeoApiURL}&lat=${latitude}&lng=${longitude}`)
         .then(resp => resp.json())
         .then(data => {
           this.setSelectedCountryItem(data.countryCode)
@@ -604,6 +606,7 @@ export default class BitPhoneNumberField {
       this.#selectedCountryImgElm.src = this.#placeholderImage
     }
     this.value = ''
+    if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'none')
     this.#reRenderVirtualOptions()
   }
 

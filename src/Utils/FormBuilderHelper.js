@@ -852,6 +852,7 @@ export const generateSessionKey = key => {
 }
 
 export async function addToSessionStorage(key, value, { strType } = {}) {
+  return false
   if (!key) return
   let newVal = value
   if (typeof value !== 'string') {

@@ -1,5 +1,7 @@
 /* eslint-disable no-else-return */
 import toast from 'react-hot-toast'
+import { getRecoil } from 'recoil-nexus'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { sortArrOfObj } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -123,8 +125,8 @@ export const handleAuthorize = (confTmp, setConf, setIsAuthorized, setIsLoading,
   }
   setIsLoading(true)
   const scopes = 'onedrive.readwrite offline_access Files.ReadWrite.All'
-  // eslint-disable-next-line no-undef
-  const apiEndpoint = `https://login.live.com/oauth20_authorize.srf?client_id=${confTmp.clientId}&scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect?redirect_uri=${encodeURIComponent(bits.oneDriveRedirectURL)}`
+  const bits = getRecoil($bits)
+  const apiEndpoint = `https://login.live.com/oauth20_authorize.srf?client_id=${confTmp.clientId}&scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.oneDriveRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'oneDrive', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -154,7 +156,7 @@ const tokenHelper = (grantToken, confTmp, setConf, setIsAuthorized, setIsLoading
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  // eslint-disable-next-line no-undef
+  const bits = getRecoil($bits)
   tokenRequestParams.redirectURI = bits.oneDriveRedirectURL
   bitsFetch(tokenRequestParams, 'bitforms_oneDrive_authorization')
     .then(result => {

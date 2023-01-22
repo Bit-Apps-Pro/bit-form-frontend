@@ -55,12 +55,13 @@ export default function PaypalFieldSettings() {
   const handleInput = (name, value) => {
     if (value) {
       fieldData[name] = value
+
+      if (name === 'locale') {
+        const localeArr = fieldData.locale.split(' - ')
+        fieldData.locale = localeArr[localeArr.length - 1]
+      }
     } else {
       delete fieldData[name]
-    }
-    if (name === 'locale') {
-      const localeArr = fieldData.locale.split(' - ')
-      fieldData.locale = localeArr[localeArr.length - 1]
     }
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })

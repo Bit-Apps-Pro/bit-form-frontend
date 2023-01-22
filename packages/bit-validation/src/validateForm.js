@@ -110,14 +110,14 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
     if (errKey && fldData?.err?.[errKey]?.show) {
       errMsg.style.removeProperty('display')
       errTxt.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
-      errWrp.style.height = `${errTxt.parentElement.scrollHeight}px`
-      errWrp.style.opacity = 1
+      setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
+      setStyleProperty(errWrp, 'opacity', 1)
       scrollToFld(fldKey)
     } else {
       errTxt.innerHTML = ''
-      errMsg.style.display = 'none'
-      errWrp.style.height = 0
-      errWrp.style.opacity = 0
+      setStyleProperty(errMsg, 'display', 'none')
+      setStyleProperty(errWrp, 'height', 0)
+      setStyleProperty(errWrp, 'opacity', 0)
     }
   }
 }

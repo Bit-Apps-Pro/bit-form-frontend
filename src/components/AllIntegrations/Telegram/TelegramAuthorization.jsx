@@ -87,7 +87,7 @@ export default function TelegramAuthorization({ telegramConf, setTelegramConf, s
           name="bot_api_key"
           value={telegramConf.bot_api_key}
           type="text"
-          placeholder={__('Integration Name...')}
+          placeholder={__('Bot API Key...')}
           disabled={isInfo}
         />
         <div style={{ color: 'red', fontSize: '15px', marginTop: '5px' }}>{error.bot_api_key}</div>

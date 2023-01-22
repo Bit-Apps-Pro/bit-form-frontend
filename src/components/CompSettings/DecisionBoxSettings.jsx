@@ -9,6 +9,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
+import ErrorMessages from '../../styles/ErrorMessages.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -94,9 +95,13 @@ export default function DecisionBoxSettings() {
           </span>
         </div>
         <div
-          className={css(FieldStyle.input, ut.px10, ut.py5, sc.childPmargin0)}
+          className={`${css(ErrorMessages.errMsgBox)} ${css(ut.mt2)}`}
+          tabIndex="0"
+          role="button"
+          onClick={() => setLabelModal(true)}
+          onKeyDown={() => setLabelModal(true)}
         >
-          <RenderHtml html={truncatedString(fieldData.lbl || fieldData?.info?.lbl)} />
+          <p className={css(ut.m0)}>Click to edit decision box label</p>
         </div>
       </div>
 

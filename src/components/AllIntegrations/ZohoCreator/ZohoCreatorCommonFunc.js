@@ -6,7 +6,7 @@ import { __ } from '../../../Utils/i18nwrap'
 export const setGrantTokenResponse = () => {
   const grantTokenResponse = {}
   const authWindowLocation = window.location.href
-  const queryParams = authWindowLocation.replace(`${window.opener.location.href}?redirect`, '').split('&')
+  const queryParams = authWindowLocation.replace(`${window.opener.location.href}/redirect`, '').split('&')
   if (queryParams) {
     queryParams.forEach(element => {
       const gtKeyValue = element.split('=')
@@ -32,7 +32,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   const bits = getRecoil($bits)
   setisLoading(true)
   const scopes = 'ZohoCreator.dashboard.READ,ZohoCreator.meta.application.READ,ZohoCreator.meta.form.READ,ZohoCreator.form.CREATE,ZohoCreator.report.CREATE,ZohoCreator.report.UPDATE'
-  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}?redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
+  const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
   const authWindow = window.open(apiEndpoint, 'zohoCreator', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
     if (authWindow.closed) {
@@ -64,8 +64,7 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  // tokenRequestParams.redirectURI = `${encodeURIComponent(window.location.href)}/redirect`
-  tokenRequestParams.redirectURI = bits.zohoRedirectURL
+  tokenRequestParams.redirectURI = encodeURIComponent(bits.zohoRedirectURL)
   bitsFetch(tokenRequestParams, 'bitforms_zcreator_generate_token')
     .then(result => result)
     .then(result => {

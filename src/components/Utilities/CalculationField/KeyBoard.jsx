@@ -3,16 +3,15 @@
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { $fields } from '../../../GlobalStates/GlobalStates'
+import { $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
-import { makeFieldsArrByLabel } from '../../../Utils/Helpers'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 
 function KeyBoard({ clickAction, options }) {
-  const fields = useRecoilValue($fields)
-  const fieldArr = makeFieldsArrByLabel(fields)
-  const keyList = [{ id: 25, type: 'back', content: <BackIcn size="18" /> },
+  const fieldArr = useRecoilValue($fieldsArr)
+  const keyList = [
+    { id: 25, type: 'back', content: <BackIcn size="18" /> },
     { id: 6, type: 'operator', content: '(' },
     { id: 7, type: 'operator', content: ')' },
     { id: 8, type: 'empty', content: '' },

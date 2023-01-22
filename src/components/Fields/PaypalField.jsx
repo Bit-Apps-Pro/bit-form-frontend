@@ -18,6 +18,10 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
   const paypalElemnRaf = useRef(null)
   const paypalFldWrapRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const isSubscription = fieldData?.payType === 'subscription'
+  const { locale, currency, disableFunding } = fieldData || {}
 
   useEffect(() => {
     if (!attr.payIntegID) { setClientID(''); return }
@@ -39,8 +43,19 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       })
       return
     }
+    setIsLoading(true)
     removeFormUpdateError(fieldKey, 'paypalClientIdMissing')
-    const src = `https://www.paypal.com/sdk/js?client-id=${clientID}`
+    const urlQueryParams = { 'client-id': clientID }
+    if (fieldData?.locale) urlQueryParams.locale = fieldData.locale
+    if (fieldData?.disableFunding) urlQueryParams['disable-funding'] = fieldData.disableFunding
+    if (isSubscription) {
+      urlQueryParams['intent'] = 'subscription'
+      urlQueryParams['vault'] = 'true'
+    }
+    if (!isSubscription && fieldData?.currency) {
+      urlQueryParams['currency'] = fieldData.currency
+    }
+    const src = `https://www.paypal.com/sdk/js?${new URLSearchParams(urlQueryParams).toString()}`
     const srcData = {
       src,
       integrity: '',
@@ -50,6 +65,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
       callback: () => {
         reCalculateFldHeights(fieldKey)
         setLoaded(true)
+        setIsLoading(false)
       },
     }
     loadScript(srcData)
@@ -57,10 +73,10 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
     return () => {
       removeScript('bf-paypal-script')
     }
-  }, [clientID])
+  }, [clientID, locale, currency, disableFunding])
 
   useEffect(() => {
-    if (!loaded) return
+    if (!loaded || isLoading) return
     if (!paypalElemnRaf?.current) {
       paypalElemnRaf.current = selectInGrid(`#${fieldKey}-paypal-wrp`)
     }
@@ -88,7 +104,7 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
     }
 
     paypalFldWrapRef.current = new BitPaypalField(fldElemnt, config)
-  }, [loaded, fieldData])
+  }, [loaded, isLoading])
 
   return (
     <>
@@ -101,12 +117,13 @@ export default function PaypalField({ fieldKey, formID, attr, isBuilder, styleCl
         noErrMsg
         isBuilder={isBuilder}
       >
-        {loaded && clientID && (
+        {(loaded && clientID && !isLoading) && (
           <div className={`${fieldKey}-paypal-wrp`}>
             <div ref={paypalElemnRaf} id={`${fieldKey}-paypal-wrp`} />
           </div>
         )}
-        {(!loaded || !clientID) && <p>Select a config from field settings to render the PayPal.</p>}
+        {(!isLoading && (!loaded || !clientID)) && <p>Select a config from field settings to render the PayPal.</p>}
+        {isLoading && <p>Loading PayPal...</p>}
       </InputWrapper>
     </>
   )
