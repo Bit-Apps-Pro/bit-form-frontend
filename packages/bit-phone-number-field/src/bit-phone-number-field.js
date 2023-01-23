@@ -359,9 +359,9 @@ export default class BitPhoneNumberField {
       if (valueFormat) {
         const unformattedPhoneNumber = this.#unformatPhoneNumber(value)
         const formattedValue = this.#formatPhoneNumber(code, unformattedPhoneNumber, valueFormat)
-        this.#setAttribute(this.#phoneHiddenInputElm, 'value', formattedValue)
+        this.value = formattedValue
       } else {
-        this.#setAttribute(this.#phoneHiddenInputElm, 'value', value)
+        this.value = value
       }
 
       this.#phoneInputElm.value = formattedInputValue
