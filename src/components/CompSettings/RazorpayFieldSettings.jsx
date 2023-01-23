@@ -18,6 +18,7 @@ import CheckBox from '../Utilities/CheckBox'
 import SelectBox2 from '../Utilities/SelectBox2'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -539,7 +540,8 @@ export default function RazorpayFieldSettings() {
           <FieldSettingsDivider />
         </>
       )}
-
+      <FieldSettingsDivider />
+      <FieldHideSettings />
     </div>
   )
 }

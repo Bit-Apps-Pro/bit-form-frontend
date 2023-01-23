@@ -15,6 +15,7 @@ import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/pa
 import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -441,6 +442,8 @@ export default function PaypalFieldSettings() {
         </>
       )}
 
+      <FieldSettingsDivider />
+      <FieldHideSettings />
     </div>
   )
 }
