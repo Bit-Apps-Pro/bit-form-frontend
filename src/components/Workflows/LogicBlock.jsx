@@ -40,7 +40,7 @@ function LogicBlock({
   let fieldKey = ''
   formFields?.find?.(itm => {
     if (itm.key === fieldVal) {
-      if (itm.type.match(/^(check|radio|select)$/)) {
+      if (itm.type.match(/^(check|radio|select|html-select)$/)) {
         type = 'text'
       } else {
         type = itm.type
@@ -57,21 +57,20 @@ function LogicBlock({
   ]
 
   const getOptions = () => {
-    if (type === 'razorpay') return
+    if (fldType === 'razorpay') return
     let options
-    if (type === 'user') {
+    if (fldType === 'user') {
       options = checkLoginOption
     } else {
       options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     }
-    if (type === 'select') {
+    if (fldType === 'select') {
       const selectOpt = fields?.[fieldKey]?.optionsList[fields?.[fieldKey].config.activeList]
       options = Object.values(selectOpt)[0].map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     }
     if (!options) {
       options = fields?.[fieldKey]?.options?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.code || opt.i || opt.lbl) }))
     }
-
     return options
   }
 
