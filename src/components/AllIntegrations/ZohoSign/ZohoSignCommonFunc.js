@@ -160,12 +160,12 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 }
 
 const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading, setSnackbar) => {
+  const bits = getRecoil($bits)
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  const bits = getRecoil($bits)
-  tokenRequestParams.redirectURI = bits.zohoRedirectURL
+  tokenRequestParams.redirectURI = encodeURIComponent(bits.zohoRedirectURL)
   bitsFetch(tokenRequestParams, 'bitforms_zsign_generate_token')
     .then(result => result)
     .then(result => {
