@@ -46,13 +46,22 @@ function KeyBoard({ clickAction, options }) {
                 role="button"
                 className={css(style.field)}
                 key={`${option.value}${index + 1}`}
-                onClick={() => clickAction(`${index + 1}`, 'letters', { label: option.label, content: option.value })}
+                onClick={() => clickAction(`${index + 1}`, 'option', { label: option.label, content: option.value }, option.value.length)}
                 tabIndex={0}
                 onKeyDown={undefined}
               >
                 {option.label}
               </div>
             ))}
+            <div
+              role="button"
+              className={css(style.field)}
+              onClick={() => clickAction(199, 'field', { label: 'Separator', content: '_bf_separator' })}
+              tabIndex={0}
+              onKeyDown={undefined}
+            >
+              Separator
+            </div>
           </>
         )}
         <h4 className={css({ m: 0 })}>Form Fields</h4>

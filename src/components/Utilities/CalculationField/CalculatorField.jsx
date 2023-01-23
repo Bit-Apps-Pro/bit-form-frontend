@@ -224,7 +224,7 @@ function CalculatorField({
   }
 
   /* Click Action For keyboard button/Field click */
-  const keyboardClickAction = (id, btnType, dataObj) => {
+  const keyboardClickAction = (id, btnType, dataObj, valueLength) => {
     if (btnType === 'clear') {
       setExpressions([])
       setCaretPosition(0)
@@ -234,21 +234,21 @@ function CalculatorField({
     if (expressions.length === 0) {
       if (btnType === 'back' && value) {
         onChange(value.slice(0, caretPosition - 1) + value.slice(caretPosition))
-        setCaretPosition(oldPosition => oldPosition -= 1)
+        setCaretPosition(oldPosition => oldPosition -= (valueLength || 1))
       } else if (btnType !== 'field') {
         const newValue = value.slice(0, caretPosition) + dataObj.content + value.slice(caretPosition)
-        setCaretPosition(oldPosition => oldPosition += 1)
+        setCaretPosition(oldPosition => oldPosition += (valueLength || 1))
         onChange(newValue)
       } else {
         const newValue = `${value.slice(0, caretPosition) }\${${dataObj.content}}${ value.slice(caretPosition)}`
         const newExp = initialExpression(newValue, fieldArr)
         setExpressions(newExp)
-        setCaretPosition(oldPosition => oldPosition += 1)
+        setCaretPosition(oldPosition => oldPosition += (valueLength || 1))
       }
     } else if (btnType === 'back') {
       if (caretPosition > 0) {
         setExpressions(oldExpression => oldExpression = oldExpression.slice(0, caretPosition - 1).concat(oldExpression.slice(caretPosition)))
-        setCaretPosition(oldPosition => oldPosition -= 1)
+        setCaretPosition(oldPosition => oldPosition -= (valueLength || 1))
       }
     } else if (dataObj.isFunction) {
       dataObj.content = dataObj.content.slice(0, dataObj.content.indexOf('('))
@@ -256,11 +256,11 @@ function CalculatorField({
         oldExpression = oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }, { id: id + 1, type: 'operator', dataObj: { content: '(' } }], oldExpression.slice(caretPosition, caretPosition + 1), [{ id: id + 2, type: 'operator', dataObj: { content: ')' } }], oldExpression.slice(caretPosition + 1))
         return oldExpression
       })
-      setCaretPosition(oldPosition => oldPosition += 2)
+      setCaretPosition(oldPosition => oldPosition += (valueLength || 2))
     } else {
       setExpressions(oldExpression => oldExpression = oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }], oldExpression.slice(caretPosition)))
 
-      setCaretPosition(oldPosition => oldPosition += 1)
+      setCaretPosition(oldPosition => oldPosition += (valueLength || 1))
     }
     setTimeout(() => expRef.current?.focus(), 0)
   }
@@ -345,7 +345,6 @@ function initialExpression(value, fieldArr) {
   const expArr = []
   if (/\${\w[^ ${}]*}|^\(/g.test(value)) {
     const tempArr = value.match(/\${\w[^ ${}]*}|\d|\D/g)
-
     tempArr?.map((content, id) => {
       if (/^\s{1}/g.test(content)) {
         expArr.push({ id, type: 'space', dataObj: { content } })
@@ -374,7 +373,8 @@ function initialExpression(value, fieldArr) {
           expArr.push({ id, type: 'field', dataObj: { label: fldData?.name, content: fldData?.key } })
         } else {
           const smartTag = SmartTagField.find(fld => fld.name === fldKey)
-          expArr.push({ id, type: 'field', dataObj: { label: smartTag?.label, content: smartTag?.name } })
+          if (smartTag) expArr.push({ id, type: 'field', dataObj: { label: smartTag?.label, content: smartTag?.name } })
+          else expArr.push({ id, type: 'field', dataObj: { label: 'Separator', content } })
         }
       }
     })
@@ -431,6 +431,17 @@ const style = {
     fs: '15px',
     jc: 'center',
     brs: '8px',
+  },
+  option: {
+    p: '1px 7px',
+    bc: '#e6e6e6',
+    m: '0px 1px',
+    dy: 'flex',
+    lh: '1.4',
+    ai: 'center',
+    fs: '15px',
+    jc: 'center',
+    brs: '11px',
   },
   operator: {
     fs: '17px',
