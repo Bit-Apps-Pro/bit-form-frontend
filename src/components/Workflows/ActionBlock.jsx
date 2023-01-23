@@ -29,6 +29,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   }
 
   const getOptions = () => {
+    if (type === 'razorpay') return
     let options
     options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     if (type === 'select') {

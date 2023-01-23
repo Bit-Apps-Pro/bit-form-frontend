@@ -57,6 +57,7 @@ function LogicBlock({
   ]
 
   const getOptions = () => {
+    if (type === 'razorpay') return
     let options
     if (type === 'user') {
       options = checkLoginOption
