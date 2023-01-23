@@ -71,6 +71,18 @@ export default function General() {
         </div>
       </div>
 
+      <div className="w-8 mt-3">
+        <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
+          <div className="flx">
+            <span className="mr-2">
+              <CacheIcn size="16" />
+            </span>
+            <b>{__('Delete all data table when delete plugin.')}</b>
+          </div>
+          <SingleToggle2 action={handler} name="delete_dataTable" checked={appConf?.delete_dataTable || ''} className="flx" />
+        </div>
+      </div>
+
     </div>
   )
 }

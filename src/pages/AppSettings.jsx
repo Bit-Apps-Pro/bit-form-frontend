@@ -14,7 +14,6 @@ import GoogleAdIcn from '../Icons/GoogleAdIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
 import PaymentsIcn from '../Icons/PaymentsIcn'
 import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
-import Settings2 from '../Icons/Settings2'
 import SettingsIcn from '../Icons/SettingsIcn'
 import { __ } from '../Utils/i18nwrap'
 
