@@ -306,7 +306,7 @@ export default class BitCountryField {
   }
 
   #handleInputValueChange(oldVal, newVal) {
-    const searchedOption = this.#initialOptions.find(option => (option.val === newVal || option.lbl === newVal))
+    const searchedOption = this.#initialOptions.find(option => (option.i === newVal || option.lbl === newVal))
     if (searchedOption && oldVal !== newVal) {
       this.setSelectedCountryItem(searchedOption.i)
     }
