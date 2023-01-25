@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import loadable from '@loadable/component'
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
@@ -31,8 +30,6 @@ const Nav = ({ setActive }) => {
 
 export default function App() {
   const [active, setActive] = useState(false)
-  const { css } = useFela()
-
   useEffect(removeUnwantedCSS, [])
 
   return (
@@ -82,6 +79,13 @@ export default function App() {
                 </nav>
               </div>
               <nav className="top-nav mr-2">
+                <a
+                  target="_blank"
+                  href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post"
+                  rel="noreferrer"
+                >
+                  {__('Review Us')}
+                </a>
                 <NavLink
                   to="/doc-support"
                   className={({ isActive }) => (isActive ? 'app-link-active' : '')}
@@ -119,20 +123,4 @@ function removeUnwantedCSS() {
       }
     }
   }
-}
-
-const appStyle = {
-  supportLink: {
-    cr: 'var(--white)',
-    mr: '13px',
-    bd: 'linear-gradient(145deg, var(--b-50), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) + 10%))) !important',
-    p: '12px 15px',
-    fw: 700,
-    fs: 13,
-    brs: 12,
-    ':hover': {
-      cr: 'var(--white)',
-      bd: 'linear-gradient(145deg, hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 5%)), hsl(var(--blue-h), var(--blue-s), calc(var(--blue-l) - 10%))) !important',
-    },
-  },
 }

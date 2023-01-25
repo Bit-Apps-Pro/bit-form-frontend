@@ -5,6 +5,7 @@ import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import FacebookIcn from '../Icons/FacebookIcn'
 import MailIcn from '../Icons/MailIcn'
 import MessagesCircle from '../Icons/MessagesCircle'
+import ReviewStarIcn from '../Icons/ReviewStarIcn'
 import YoutubeIcn from '../Icons/YoutubeIcn'
 import ut from '../styles/2.utilities'
 
@@ -72,6 +73,18 @@ export default function DocNSupport() {
           <span className={css(style.pb)}>
             <a href="https://www.facebook.com/groups/3308027439209387" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
               Facebook support group
+              {' '}
+              <ExternalLinkIcn size="15" />
+            </a>
+          </span>
+        </div>
+        <div className={css(style.suprt)}>
+          <span className={css(ut.mr2, style.icnW)}>
+            <ReviewStarIcn size="15" />
+          </span>
+          <span className={css(style.pb)}>
+            <a href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
+              Rate us on WordPress
               {' '}
               <ExternalLinkIcn size="15" />
             </a>
