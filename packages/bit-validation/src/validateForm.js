@@ -112,7 +112,8 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
       errTxt.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
       setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
       setStyleProperty(errWrp, 'opacity', 1)
-      scrollToFld(fldKey)
+      const fld = document.querySelector(`#form-${contentId} .btcd-fld-itm.${fldKey}`)
+      scrollToFld(fld)
     } else {
       errTxt.innerHTML = ''
       setStyleProperty(errMsg, 'display', 'none')
@@ -120,23 +121,4 @@ const generateErrMsg = (errKey, fldKey, fldData) => {
       setStyleProperty(errWrp, 'opacity', 0)
     }
   }
-}
-
-const scrollToFld = fldKey => {
-  const fld = document.querySelector(`#form-${contentId} .btcd-fld-itm.${fldKey}`)
-  const bodyRect = document.body.getBoundingClientRect()
-  const fldRect = fld.getBoundingClientRect()
-  const offsetTop = fldRect.top - bodyRect.top
-  if (!isElementInViewport(fld)) window.scroll({ top: offsetTop, behavior: 'smooth' })
-}
-
-const isElementInViewport = elm => {
-  const rect = elm.getBoundingClientRect()
-
-  return (
-    rect.top >= 0
-    && rect.left >= 0
-    && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-    && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  )
 }

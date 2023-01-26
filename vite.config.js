@@ -138,6 +138,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-helpers/dist/scrollToFld.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-filepond/dist/bit-filepond.min.js'),
         dest: absPath('../assets'),
       },

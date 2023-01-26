@@ -1,7 +1,7 @@
 export default function setBFMsg(msgObj) {
   let msgWrpr = bfSelect(`#bf-form-msg-wrp-${msgObj.contentId}`)
 
-  msgWrpr.innerHTML = `<div class="form-msg deactive ${msgObj.type}">${msgObj.msg}</div>`
+  msgWrpr.innerHTML = `<div class="form-msg deactive ${msgObj.type} scroll">${msgObj.msg}</div>`
   msgWrpr = bfSelect('.form-msg', msgWrpr)
   let duration = 5000
   if (msgObj.msgId) {
@@ -12,6 +12,9 @@ export default function setBFMsg(msgObj) {
   }
   if (msgWrpr) {
     msgWrpr.classList.replace('active', 'deactive')
+  }
+  if (msgWrpr.classList.contains('scroll')) {
+    scrollToFld(msgWrpr)
   }
   if (!msgWrpr) { return }
   setTimeout(() => {
