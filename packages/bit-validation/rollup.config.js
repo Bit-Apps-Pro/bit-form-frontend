@@ -18,6 +18,7 @@ export default function generateRollupConfig() {
     'urlFldValidation',
     'validateForm',
     'regexPatternValidation',
+    'phoneNumberFldValidation',
   ]
 
   const external = [

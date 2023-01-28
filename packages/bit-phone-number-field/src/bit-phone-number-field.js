@@ -407,12 +407,16 @@ export default class BitPhoneNumberField {
       const phoneNumberWithoutCode = value.substring(selectedCountry.code.length)
       if (selectedCountry.ptrn) {
         const regex = new RegExp(selectedCountry.ptrn)
-        return console.log('pattern test', regex.test(phoneNumberWithoutCode))
+        return regex.test(phoneNumberWithoutCode)
       }
-      return console.log(true, 'pattern not given')
+      return true
     }
 
-    return console.log(false, 'country not selected')
+    return false
+  }
+
+  isValidated() {
+    return this.#handlePhoneValidation({ target: this.#phoneInputElm })
   }
 
   #getSelectedCountryIndex() {

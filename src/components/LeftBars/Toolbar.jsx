@@ -427,7 +427,7 @@ function Toolbar({ setNewData }) {
         },
         options: phoneNumberList,
         valid: {},
-        err: {},
+        err: { invalid: { dflt: '<p style="margin:0">Please enter a valid phone number</p>', show: true } },
         customClasses: {},
         customAttributes: {},
       },
