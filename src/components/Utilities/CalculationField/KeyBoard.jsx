@@ -6,6 +6,7 @@ import { hideAll } from 'tippy.js'
 import { $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
+import ut from '../../../styles/2.utilities'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 
 function KeyBoard({ clickAction, options }) {
@@ -41,7 +42,23 @@ function KeyBoard({ clickAction, options }) {
         {options && (
           <>
             <h4 className={css({ m: 0, td: 'underline', mt: 5 })}>Options</h4>
-            {options.map((option, index) => (
+            {options.map((option, index) => (option.type === 'group' ? (
+              <>
+                <h4 className={css({ m: 0 })}>{option.title}</h4>
+                {option.childs.map((child) => (
+                  <div
+                    role="button"
+                    className={css(style.field, ut.ml1)}
+                    key={`${child.value}${index + 1}`}
+                    onClick={() => clickAction(`${index + 1}`, 'option', { label: child.label, content: child.value }, child.value.length)}
+                    tabIndex={0}
+                    onKeyDown={undefined}
+                  >
+                    {child.label}
+                  </div>
+                ))}
+              </>
+            ) : (
               <div
                 role="button"
                 className={css(style.field)}
@@ -52,7 +69,7 @@ function KeyBoard({ clickAction, options }) {
               >
                 {option.label}
               </div>
-            ))}
+            )))}
             <div
               role="button"
               className={css(style.field)}
@@ -122,6 +139,7 @@ const style = {
     p: 2,
     brs: 5,
     dy: 'flex',
+    ta: 'left',
   },
   leftSlider: {
     w: '40%',

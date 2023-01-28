@@ -240,7 +240,7 @@ function CalculatorField({
         setCaretPosition(oldPosition => oldPosition += (valueLength || 1))
         onChange(newValue)
       } else {
-        const newValue = `${value.slice(0, caretPosition) }\${${dataObj.content}}${ value.slice(caretPosition)}`
+        const newValue = `${value.slice(0, caretPosition)}\${${dataObj.content}}${value.slice(caretPosition)}`
         const newExp = initialExpression(newValue, fieldArr)
         setExpressions(newExp)
         setCaretPosition(oldPosition => oldPosition += (valueLength || 1))

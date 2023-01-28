@@ -33,8 +33,29 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
     let options
     options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     if (type === 'select') {
-      const selectOpt = fields?.[fieldKey]?.optionsList[fields?.[fieldKey].config.activeList]
-      options = Object.values(selectOpt)[0].map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
+      const { optionsList } = fields?.[fieldKey] || {}
+      if (action.action === 'value') {
+        return optionsList.reduce((acc, optObj) => {
+          const key = Object.keys(optObj)[0]
+          const val = Object.values(optObj)[0]
+          acc.push({ type: 'group', title: key, childs: val.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) })) })
+          return acc
+        }, [])
+      }
+      if (action.action === 'activelist') {
+        return optionsList.reduce((acc, cur) => {
+          const key = Object.keys(cur)[0]
+          acc.push({ label: key, value: key })
+          return acc
+        }, [])
+      }
+    }
+    if (type === 'decision-box') {
+      const fldData = fields?.[fieldKey]
+      return [
+        { label: fldData?.msg?.checked, value: fldData?.msg?.checked },
+        { label: fldData?.msg?.unchecked, value: fldData?.msg?.unchecked },
+      ]
     }
     if (!options) {
       options = fields?.[fieldKey]?.options?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.code || opt.i || opt.lbl) }))
@@ -78,6 +99,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
+  const fldType = fields[action.field]?.typ || ''
   const isNotFileUpField = fields[action.field]?.typ !== 'file-up'
   const isNotButtonField = fields[action.field]?.typ !== 'button'
   const isNotSubmitAction = actionType !== 'onsubmit'
@@ -127,9 +149,10 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
         {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show')}</option>}
         {actionType === 'onvalidate' && <option value="required">{__('Required')}</option>}
         {actionType === 'onvalidate' && <option value="notrequired">{__('Not Required')}</option>}
+        {fldType === 'select' && <option value="activelist">{__('Active List')}</option>}
       </MtSelect>
 
-      {action.action === 'value' && (
+      {(action.action === 'value' || action.action === 'activelist') && (
         <>
           <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
             <div className={css({ w: '100%', bd: '#b9c5ff', h: '0.5px' })} />

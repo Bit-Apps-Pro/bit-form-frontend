@@ -65,8 +65,20 @@ function LogicBlock({
       options = fields?.[fieldKey]?.opt?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
     }
     if (fldType === 'select') {
-      const selectOpt = fields?.[fieldKey]?.optionsList[fields?.[fieldKey].config.activeList]
-      options = Object.values(selectOpt)[0].map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) }))
+      const { optionsList } = fields?.[fieldKey] || {}
+      return optionsList.reduce((acc, optObj) => {
+        const key = Object.keys(optObj)[0]
+        const val = Object.values(optObj)[0]
+        acc.push({ type: 'group', title: key, childs: val.map(opt => ({ label: opt.lbl, value: (opt.val || opt.lbl) })) })
+        return acc
+      }, [])
+    }
+    if (type === 'decision-box') {
+      const fldData = fields?.[fieldKey]
+      return [
+        { label: fldData?.msg?.checked, value: fldData?.msg?.checked },
+        { label: fldData?.msg?.unchecked, value: fldData?.msg?.unchecked },
+      ]
     }
     if (!options) {
       options = fields?.[fieldKey]?.options?.map(opt => ({ label: opt.lbl, value: (opt.val || opt.code || opt.i || opt.lbl) }))
@@ -164,7 +176,7 @@ function LogicBlock({
                 {!!formFields.length && (
                   <optgroup label="Form Fields">
                     {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
-                    && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
+                      && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
                   </optgroup>
                 )}
               </MtSelect>
