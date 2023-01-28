@@ -123,9 +123,9 @@ export default function DropdownFieldSettings() {
     fieldData.optionsList = [
       ...optionsList, {
         [newKey]: [
-          { lbl: 'Option 1', val: 'Option 1' },
-          { lbl: 'Option 2', val: 'Option 2' },
-          { lbl: 'Option 3', val: 'Option 3' },
+          { lbl: 'Option 1' },
+          { lbl: 'Option 2' },
+          { lbl: 'Option 3' },
         ],
       },
     ]
