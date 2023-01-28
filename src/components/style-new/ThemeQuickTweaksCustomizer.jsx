@@ -6,7 +6,7 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { $fields, $formId } from '../../GlobalStates/GlobalStates'
+import { $builderSettings, $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $allThemeColors, $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -24,6 +24,7 @@ import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
 import CheckBox from '../Utilities/CheckBox'
+import Cooltip from '../Utilities/Cooltip'
 import Downmenu from '../Utilities/Downmenu'
 import SingleToggle from '../Utilities/SingleToggle'
 import BorderControl from './BorderControl'
@@ -62,6 +63,7 @@ export default function ThemeQuickTweaksCustomizer() {
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
+  const [{ addImportantRuleToStyles }, setBuilderSettings] = useRecoilState($builderSettings)
 
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
@@ -153,6 +155,10 @@ export default function ThemeQuickTweaksCustomizer() {
 
   const changeStyleResetTo = e => {
     setStyleResetTo(e.target.value)
+  }
+
+  const handleImportantStyles = e => {
+    setBuilderSettings(prv => ({ ...prv, addImportantRuleToStyles: e.target.checked }))
   }
 
   return (
@@ -305,6 +311,16 @@ export default function ThemeQuickTweaksCustomizer() {
       <div className={css(ut.flxcb, ut.mt3)}>
         <span className={css(ut.fw500)}>Direction Right To Left (RTL)</span>
         <SingleToggle id="rtl" isChecked={direction === 'rtl'} action={handleDir} />
+      </div>
+
+      <div className={css(ut.flxcb, ut.mt3)}>
+        <span className={css(ut.fw500)}>Add !important rule to all styles</span>
+        <div className={css(ut.flxcb)}>
+          <SingleToggle id="important-rule" action={handleImportantStyles} isChecked={addImportantRuleToStyles} />
+          <Cooltip>
+            Add important rule to all styles to override the conflicting styles in frontend.
+          </Cooltip>
+        </div>
       </div>
 
       {/* <SimpleColorPicker
