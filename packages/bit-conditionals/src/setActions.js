@@ -17,10 +17,26 @@ const setFieldValue = (fldData, val) => {
     return
   }
 
+  if (typ === 'decision-box') {
+    const fld = document.querySelector(`input[name="${fieldName}"]`)
+    if (fld) {
+      fld.checked = val === fldData.msg.checked
+    }
+    return
+  }
+
   const fld = document.querySelector(`[name^='${fieldName}']`)
   if (fld.value === val) return
   fld.value = val
   fld.setAttribute('value', val)
+}
+
+const setActiveList = (actionDetail, props, fieldValues) => {
+  const fldKey = actionDetail.field
+  if (props.inits && props.inits[fldKey]) {
+    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props) : ''
+    props.inits[fldKey].activelist = actionValue
+  }
 }
 
 const setDisabled = (fldKey, props, val) => {
@@ -112,6 +128,12 @@ export const setActions = (actionDetail, fldKey, props, fieldValues) => {
       case 'show':
         if (props.fields[actionDetail.field]) {
           return setActionHide(actionDetail, props, false)
+        }
+        break
+
+      case 'activelist':
+        if (props.fields[actionDetail.field]) {
+          setActiveList(actionDetail, props, fieldValues)
         }
         break
       default:
