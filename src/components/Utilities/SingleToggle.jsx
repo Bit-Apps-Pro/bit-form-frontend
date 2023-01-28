@@ -16,9 +16,9 @@ export default function SingleToggle({
           </Cooltip>
         )}
       </span>
-      <label data-testid={`${id}-sngl-tgl`} className={css(c.toggle_control)} htmlFor={`s-ck-${title || name}-${isChecked}`}>
+      <label data-testid={`${id}-sngl-tgl`} className={css(c.toggle_control)} htmlFor={`s-ck-${id || title || name}-${isChecked}`}>
         <input
-          id={`s-ck-${title || name}-${isChecked}`}
+          id={`s-ck-${id || title || name}-${isChecked}`}
           onChange={action || (() => { })}
           className={css(c.input)}
           type="checkbox"
