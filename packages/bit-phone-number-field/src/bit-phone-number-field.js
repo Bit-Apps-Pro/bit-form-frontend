@@ -283,7 +283,6 @@ export default class BitPhoneNumberField {
   }
 
   #searchCountryCodeFromValue(value) {
-    if (this.#countrySelectedFromList) return ''
     let inputValue = value
     if (inputValue[0] === '+') inputValue = inputValue.substring(1, 4)
     let currentSearchCode = ''
@@ -298,8 +297,15 @@ export default class BitPhoneNumberField {
   }
 
   #detectCountryCodeByInputValue(value) {
-    const searchedCountryCode = this.#searchCountryCodeFromValue(value)
-    if (searchedCountryCode) {
+    let searchedCountryCode = this.#searchCountryCodeFromValue(value)
+    if (searchedCountryCode && searchedCountryCode[0] !== '+') {
+      searchedCountryCode = `+${searchedCountryCode}`
+    }
+    let selectedCountryCode = this.#getSelectedCountryItem()?.code || ''
+    if (selectedCountryCode && selectedCountryCode[0] !== '+') {
+      selectedCountryCode = `+${selectedCountryCode}`
+    }
+    if (searchedCountryCode !== selectedCountryCode) {
       this.setSelectedCountryItem(this.#callingCodes[searchedCountryCode])
       return searchedCountryCode
     }
@@ -325,12 +331,8 @@ export default class BitPhoneNumberField {
 
   #handlePhoneInput(e) {
     const { value } = e.target
-    if (value) {
-      if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'grid')
-    } else {
-      if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'none')
-      this.#countrySelectedFromList = false
-    }
+    if (value && this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'grid')
+    else if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'none')
 
     if (!this.#countrySelectedFromList && (value.length < 4 || e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward')) return
 
@@ -590,17 +592,23 @@ export default class BitPhoneNumberField {
 
   #setNewCountryCodeWithInputValue(selectedCode) {
     const value = this.#unformatPhoneNumber(this.#phoneInputElm.value)
-
-    const code = this.#searchCountryCodeFromValue(value)
-
-    if (code) {
+    if (value) {
       let inputFormat = this.#getSelectedCountryItem().frmt
       if (!inputFormat) {
         inputFormat = (this.#config.inputFormat || '')
       }
-      this.#phoneInputElm.value = this.#formatPhoneNumber(selectedCode, value, inputFormat)
+      const unformattedVal = this.#unformatPhoneNumber(value)
+      this.#phoneInputElm.value = this.#formatPhoneNumber(selectedCode, unformattedVal, inputFormat)
     } else {
       this.#phoneInputElm.value = selectedCode
+    }
+
+    if (!value) {
+      this.value = selectedCode
+    } else {
+      const valueFormat = this.#config.valueFormat || ''
+      const unformattedVal = this.#unformatPhoneNumber(this.#phoneInputElm.value)
+      this.value = valueFormat ? this.#formatPhoneNumber(selectedCode, unformattedVal, valueFormat) : this.#phoneInputElm.value
     }
   }
 
