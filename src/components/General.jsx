@@ -7,7 +7,10 @@ import { __ } from '../Utils/i18nwrap'
 import SingleToggle2 from './Utilities/SingleToggle2'
 
 export default function General() {
-  const [appConf, setAppConf] = useState({})
+  const [appConf, setAppConf] = useState({
+    cache_plugin: false,
+    delete_table: false,
+  })
 
   const saveSettings = (name) => {
     const config = { ...appConf }
@@ -79,7 +82,7 @@ export default function General() {
             </span>
             <b>{__('Delete all data table when delete plugin.')}</b>
           </div>
-          <SingleToggle2 action={handler} name="delete_dataTable" checked={appConf?.delete_dataTable || ''} className="flx" />
+          <SingleToggle2 action={handler} name="delete_table" checked={appConf?.delete_table || ''} className="flx" />
         </div>
       </div>
 
