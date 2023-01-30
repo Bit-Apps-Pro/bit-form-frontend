@@ -407,6 +407,13 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         color: 'var(--bg-10) !important',
         opacity: '0.5',
       },
+
+      [`.${fk}-option-list .disable-on-max`]: {
+        'pointer-events': 'none',
+        cursor: 'not-allowed',
+        color: 'var(--bg-10) !important',
+        opacity: '0.8',
+      },
     }
   }
   return {}

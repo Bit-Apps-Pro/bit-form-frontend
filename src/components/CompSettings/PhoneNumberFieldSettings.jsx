@@ -57,6 +57,7 @@ const PhoneNumberFieldSettings = () => {
     noCountryFoundText,
     inputFormat,
     valueFormat,
+    maxHeight,
   } = fieldData.config
 
   const toggleSearchPlaceholder = (e) => {
@@ -354,6 +355,25 @@ const PhoneNumberFieldSettings = () => {
 
       <FieldHideSettings />
 
+      <FieldSettingsDivider />
+
+      <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)}>
+        <div className={css({ mx: 5 })}>
+          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+            <span>{__('Maximum:')}</span>
+            <input
+              data-testid="nmbr-stng-min-inp"
+              title="Maximum height of Option List"
+              aria-label="Maximum height of Option List"
+              placeholder="Type Maximum Height..."
+              className={css(FieldStyle.input, FieldStyle.w140)}
+              type="number"
+              value={maxHeight}
+              onChange={e => handleConfigChange(e.target.value, 'maxHeight', 'config')}
+            />
+          </div>
+        </div>
+      </SimpleAccordion>
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>

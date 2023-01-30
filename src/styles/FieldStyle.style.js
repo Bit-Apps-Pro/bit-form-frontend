@@ -186,6 +186,12 @@ const FieldStyle = {
     ':hover': { '& div[data-tipbtn]': { tm: 'scale(1)' } },
   },
   w140: { w: 140 },
+  w60: { w: 60 },
+  labelInput: {
+    flx: 'center-between',
+    py: 0,
+    px: 5,
+  },
 }
 
 export default FieldStyle

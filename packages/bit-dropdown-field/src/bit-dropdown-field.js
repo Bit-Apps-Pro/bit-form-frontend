@@ -114,7 +114,7 @@ export default class BitDropdownField {
 
     this.#searchInputElm.placeholder = this.#config.searchPlaceholder
     this.#searchInputElm.value = ''
-    this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
+    this.#addEvent(this.#searchInputElm, 'keypress', e => { this.#handleSearchInput(e) })
 
     this.#allowCustomOption = this.#config.allowCustomOption
     // if (this.allowCustomOption) {
@@ -169,12 +169,12 @@ export default class BitDropdownField {
       const optsLength = this.#options.length
       for (let i = activeIndex + 1; i < optsLength; i += 1) {
         const opt = this.#options[i]
-        if (opt.type !== 'group' && !opt.disabled) return i
+        if (opt.type !== 'group' && !opt.disabled && !opt.disableOnMax) return i
       }
     } else if (direction === 'previous') {
       for (let i = activeIndex - 1; i >= 0; i -= 1) {
         const opt = this.#options[i]
-        if (opt.type !== 'group' && !opt.disabled) return i
+        if (opt.type !== 'group' && !opt.disabled && !opt.disableOnMax) return i
       }
     }
   }
@@ -339,7 +339,7 @@ export default class BitDropdownField {
     if (this.#config.multipleSelect && this.#config.showChip) this.#generateSelectedOptChips([])
     if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
     if (this.#config.selectedOptClearable) this.#setStyleProperty(this.#selectedOptClearBtnElm, 'display', 'none')
-    this.#reRenderVirtualOptions()
+    this.#disableOptOnMaxSelection()
   }
 
   #searchOptionObjByVal(val) {
@@ -438,6 +438,28 @@ export default class BitDropdownField {
     }
   }
 
+  #disableOptOnMaxSelection(idDisable = false) {
+    if (idDisable) {
+      const selectedValues = this.#selectedOptValue.split(this.#config.separator)
+      this.#options = this.#options.map(opt => {
+        const newOpt = opt
+        if (!opt.disabled && !selectedValues.includes(opt.val)) {
+          newOpt.disableOnMax = true
+        } else {
+          newOpt.disableOnMax = false
+        }
+        return newOpt
+      })
+    } else {
+      this.#options = this.#options.map(opt => {
+        const newOpt = opt
+        delete newOpt.disableOnMax
+        return newOpt
+      })
+    }
+    this.#reRenderVirtualOptions()
+  }
+
   setSelectedOption(values) {
     let selectedItem = null
     let valueArr = values.split(this.#config.separator)
@@ -447,6 +469,11 @@ export default class BitDropdownField {
         selectedItem = this.#searchOptionObjByVal(valueArr[0])
       } else if (valueArr.length > 1) {
         selectedItem = { lbl: `${valueArr.length} options selected` }
+      }
+      if (this.#config.disableOnMax && this.#config.mx && valueArr.length >= this.#config.mx) {
+        this.#disableOptOnMaxSelection(true)
+      } else {
+        this.#disableOptOnMaxSelection(false)
       }
     } else {
       selectedItem = this.#searchOptionObjByVal(values)
@@ -706,6 +733,8 @@ export default class BitDropdownField {
         this.#setTabIndex(li, this.#isMenuOpen() ? '0' : '-1')
         if (opt.disabled) {
           this.#setClassName(li, 'disabled-opt')
+        } else if (opt.disableOnMax) {
+          this.#setClassName(li, 'disable-on-max')
         } else {
           this.#addEvent(li, 'click', e => { this.#handleOptionValue(e) })
           this.#addEvent(li, 'keyup', e => { e.key === 'Enter' && this.#handleOptionValue(e) })
@@ -986,6 +1015,8 @@ export default class BitDropdownField {
 //   searchPlaceholder: 'Search option',
 //   maxHeight: 400,
 //   multipleSelect: true,
+//   mn,
+//   mx,
 //   selectedOptImgSrc: 'test.png',
 //   closeOnSelect: false,
 //   activeList: 'dp1',

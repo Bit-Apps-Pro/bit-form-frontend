@@ -14,6 +14,7 @@ import { isDev } from '../../Utils/config'
 import { addToBuilderHistory, reCalculateFldHeights, setRequired } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { assignNestedObj } from '../style-new/styleHelpers'
 import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
@@ -435,6 +436,15 @@ function RadioCheckSettings() {
           </div>
         </>
       </SimpleAccordion> */}
+      <UniqFieldSettings
+        type="entryUnique"
+        title="Unique Entry"
+        tipTitle={tippyHelperMsg.uniqueEntry}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        isUnique="show"
+      />
+
+      <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
         <Btn
@@ -450,16 +460,6 @@ function RadioCheckSettings() {
           </span>
         </Btn>
       </div>
-      <FieldSettingsDivider />
-
-      <UniqFieldSettings
-        type="userUnique"
-        title="Validate as User Unique"
-        tipTitle="Enabling this option will check from the user database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        isUnique="show"
-      />
-
       <FieldSettingsDivider />
 
       <Modal

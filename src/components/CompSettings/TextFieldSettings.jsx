@@ -18,7 +18,6 @@ import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
-import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
@@ -38,7 +37,6 @@ import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -702,7 +700,7 @@ function TextFieldSettings() {
         {
           fieldData.typ === 'number' && (
             <>
-              <SimpleAccordion id="nmbr-stng" title="Number:" className={css(FieldStyle.fieldSection)}>
+              <SimpleAccordion id="nmbr-stng" title="Number Range(Min/Max):" className={css(FieldStyle.fieldSection)}>
                 {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
                 <div className={css({ mx: 5 })}>
                   <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
@@ -756,15 +754,21 @@ function TextFieldSettings() {
             </>
           )
         }
-        {/* {
-        fieldData.typ.match(/^(url|number|email|)$/) && (
-          <ErrorMessageSettings
-            type="invalid"
-            title="Invalid Error Message"
-            tipTitle={`By enabling this feature, user will see the error message when input value is not any ${fieldData.typ}`}
-          />
-        )
-      } */}
+        {
+          fieldData.typ.match(/^(url|number|email|)$/) && (
+            <>
+              <SimpleAccordion id="nmbr-stng" title="Invalid Error Message:" className={css(FieldStyle.fieldSection)}>
+                <ErrorMessageSettings
+                  id="invalid-err-msg"
+                  type="invalid"
+                  title="Invalid Error Message"
+                  tipTitle="By enabling this feature, user will see the error message when input value is Invalid"
+                />
+              </SimpleAccordion>
+              <FieldSettingsDivider />
+            </>
+          )
+        }
         {
           fieldData.typ === 'password' && (
             <>
