@@ -8,7 +8,9 @@ import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'
 import RenderHtml from './Utilities/RenderHtml'
 
-export default function InputWrapper({ formID, fieldKey, fieldData, children, noLabel, noErrMsg, isBuilder }) {
+export default function InputWrapper({
+  formID, fieldKey, fieldData, children, noLabel, noErrMsg, isBuilder,
+}) {
   const { '*': rightBarUrl } = useParams()
   const fieldDirection = useRecoilValue($fieldsDirection)
   const flages = useRecoilValue($flags)
@@ -212,7 +214,7 @@ export default function InputWrapper({ formID, fieldKey, fieldData, children, no
                 className={`${fieldKey}-err-txt ${getCustomClsName(fieldKey, 'err-txt')}`}
                 {...getCustomAttributes(fieldKey, 'err-txt')}
               >
-                {err || 'This is an example of an error message. this message will vary by a condition or validation check.'}
+                <RenderHtml html={`${err || 'This is an example of an error message. this message will vary by a condition or validation check.'} `} />
               </div>
               {fieldData.errSufIcn && (
                 <img
