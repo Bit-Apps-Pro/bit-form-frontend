@@ -7,6 +7,7 @@ export default function validateForm({ form, input }) {
   else if (input?.form?.id) [, contentId] = input.form.id.split('form-')
   if (typeof window?.bf_globals?.[contentId] === 'undefined') return false
   let formEntries = {}
+  const bfSeparator = window?.bf_globals?.[contentId].configs.bf_separator
   fields = window?.bf_globals?.[contentId].fields
   const modifiedFields = window?.bf_globals?.[contentId].modifiedFields
   if (modifiedFields) Object.assign(fields, modifiedFields)
@@ -53,7 +54,7 @@ export default function validateForm({ form, input }) {
     else if (fldType === 'email' && typeof emailFldValidation !== 'undefined') errKey = emailFldValidation(fldValue, fldData)
     else if (fldType === 'url' && typeof urlFldValidation !== 'undefined') errKey = urlFldValidation(fldValue, fldData)
     else if (fldType === 'decision-box' && typeof dcsnbxFldValidation !== 'undefined') errKey = dcsnbxFldValidation(fldValue, fldData)
-    else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData)
+    else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData, bfSeparator)
     else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
     else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
     else if (fldType === 'phone-number' && typeof phoneNumberFldValidation !== 'undefined') errKey = phoneNumberFldValidation(getFieldInstance(fldKey))
