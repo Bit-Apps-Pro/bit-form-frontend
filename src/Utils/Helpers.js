@@ -294,13 +294,18 @@ export const isType = (type, val) => !!(val?.constructor && val.constructor.name
 
 export const firstCharCap = str => str.charAt(0).toUpperCase() + str.slice(1)
 
-export const getFormsFromPhpVariable = () => {
+export const getFormsFromPhpVariable = (status) => {
   let allForms = []
   if (typeof bits !== 'undefined'
     //  eslint-disable-next-line no-undef
     && bits.allForms !== null) {
+    if (status) {
+      allForms = bits.allForms.filter(form => form.status === status)
+    } else {
+      allForms = bits.allForms.filter(form => ['0', '1'].includes(form.status))
+    }
     //  eslint-disable-next-line no-undef
-    allForms = bits?.allForms?.map(form => (
+    allForms = allForms.map(form => (
       {
         formID: form.id,
         status: form.status !== '0',

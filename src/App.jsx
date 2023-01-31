@@ -7,6 +7,7 @@ import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import AllForms from './pages/AllForms'
+import ArchivedForms from './pages/ArchivedForms'
 import DocNSupport from './pages/DocNSupport'
 import { __ } from './Utils/i18nwrap'
 
@@ -76,6 +77,13 @@ export default function App() {
                   >
                     {__('App Settings')}
                   </NavLink>
+
+                  <NavLink
+                    to="/archived-forms"
+                    className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                  >
+                    {__('Archived Forms')}
+                  </NavLink>
                 </nav>
               </div>
               <nav className="top-nav mr-2">
@@ -99,9 +107,10 @@ export default function App() {
           <div className="route-wrp">
             <Routes>
               <Route path="/" element={<AllForms />} />
-              <Route path="/doc-support" element={<DocNSupport />} />
               <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
+              <Route path="/archived-forms" element={<ArchivedForms />} />
               <Route path="/app-settings/*" element={<AppSettings />} />
+              <Route path="/doc-support" element={<DocNSupport />} />
               <Route path="*" element={<Error404 />} />
             </Routes>
           </div>

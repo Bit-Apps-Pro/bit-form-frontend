@@ -338,6 +338,8 @@ function AllFroms() {
     setconfMdl({ ...confMdl })
   }
 
+  const notArchivedForms = allForms.filter(form => form.status !== '2')
+
   return (
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -363,7 +365,7 @@ function AllFroms() {
           setSnackbar={setSnackbar}
         />
       </Modal>
-      {allForms.length ? (
+      {notArchivedForms.length ? (
         <>
           <div className={css(app.af_header)}>
             <h2>{__('Forms')}</h2>
