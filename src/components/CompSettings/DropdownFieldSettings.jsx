@@ -2,13 +2,12 @@ import produce from 'immer'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -19,6 +18,7 @@ import CheckBox from '../Utilities/CheckBox'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -36,6 +36,8 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function DropdownFieldSettings() {
   const { fieldKey: fldKey } = useParams()
+  const bits = useRecoilValue($bits)
+  const { isPro } = bits
   if (!fldKey) return <>No field exist with this field key</>
   const { css } = useFela()
   const [fields, setFields] = useRecoilState($fields)
@@ -56,8 +58,9 @@ export default function DropdownFieldSettings() {
     selectedOptImage, selectedOptClearable, searchClearable,
     optionIcon,
     showSearchPh,
-    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList, showChip,
+    searchPlaceholder, multipleSelect, allowCustomOption, closeOnSelect, activeList, showChip, maxHeight,
   } = fieldData.config
+  const { mn, mx } = fieldData
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val
@@ -163,6 +166,39 @@ export default function DropdownFieldSettings() {
       e.preventDefault()
       setDuplicateListName(index)
     }
+  }
+
+  function setMinMaxValue(propName, val) {
+    const value = isNaN(val) ? '' : Number(val)
+    if (value >= 0) {
+      if (propName === 'mx' && mn && value < mn && mn) {
+        fieldData.mn = value
+        fieldData.err.mn.dflt = `Minimum ${value} Option Required`
+      } else if (propName === 'mn' && value > mx && mx) {
+        fieldData.mx = value
+        fieldData.err.mx.dflt = `Maximum ${value} Option can select.`
+      }
+      if (propName === 'mn') fieldData.err.mn.dflt = `Minimum ${value} Option Required`
+      else if (propName === 'mx') fieldData.err.mx.dflt = `Maximum ${value} Option can select.`
+
+      fieldData[propName] = value
+      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      setFields(allFields)
+      addToBuilderHistory({ event: `${propNameLabel[propName]} '${String(value || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${propName}_changed`, state: { fields: allFields, fldKey } })
+      // fieldData.mn > 0 && setRequired({ target: { checked: true } })
+    }
+  }
+
+  const setDisabledOnMax = e => {
+    if (!isPro) return
+    if (e.target.checked) {
+      fieldData.valid.disableOnMax = true
+    } else {
+      delete fieldData.valid.disableOnMax
+    }
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_disable_on_max', state: { fields: allFields, fldKey } })
   }
 
   if (isDev) {
@@ -275,7 +311,7 @@ export default function DropdownFieldSettings() {
       <SingleToggle
         id="opt-icn-stng"
         className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Option Icon:')}
+        title={__('Option Icon/Image:')}
         action={e => handleConfigChange(e.target.checked, 'optionIcon')}
         isChecked={optionIcon}
         tip="By disabling this option, the field option icon will be hidden"
@@ -294,14 +330,64 @@ export default function DropdownFieldSettings() {
 
       <FieldSettingsDivider />
 
-      <SingleToggle
-        id="mltpl-slct-stng"
-        className={css(FieldStyle.fieldSection, FieldStyle.singleOption)}
-        title={__('Multiple Select:')}
-        action={e => handleMultiSelect(e.target.checked, 'multipleSelect')}
-        isChecked={multipleSelect}
-        tip="By disabling this option, the field multiple will be hidden"
-      />
+      <SimpleAccordion
+        id="alw-mltpl-stng"
+        title={__('Allow Multiple Select:')}
+        // eslint-disable-next-line react/jsx-no-bind
+        toggleAction={e => handleMultiSelect(e.target.checked, 'multipleSelect')}
+        toggleChecked={multipleSelect}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        switching
+        tip="By enabling this feature, you wil enable to select Multiple Options"
+        tipProps={{ width: 200, icnSize: 17 }}
+        open={multipleSelect}
+        disable={!multipleSelect}
+      >
+        <div className={css(ut.ml1, ut.mr1)}>
+          <div className={css(ut.flxc)}>
+            <span>Minimum Option</span>
+            <input
+              data-testid="alw-mltpl-min-inp"
+              className={css(FieldStyle.input, ut.w5, ut.mt1)}
+              type="number"
+              value={mn}
+              onChange={e => setMinMaxValue('mn', e.target.value)}
+            />
+          </div>
+          {!!mn && (
+            <ErrorMessageSettings
+              className={css(ut.mt0)}
+              id="min-fil-err-msg"
+              type="mn"
+              defaultMsg={`Minimum ${mn} Option Required`}
+              allowIcons={false}
+            />
+          )}
+          <div className={css(ut.flxc, ut.mt2)}>
+            <span>Maximum Option</span>
+            <input
+              data-testid="alw-mltpl-max-inp"
+              className={css(FieldStyle.input, ut.w5, ut.mt1)}
+              type="number"
+              value={mx}
+              onChange={e => setMinMaxValue('mx', e.target.value)}
+            />
+          </div>
+          {!!mx && (
+            <>
+              <ErrorMessageSettings
+                className={css(ut.mt0)}
+                id="max-fil-err-msg"
+                type="mx"
+                defaultMsg={`Maximum ${mx} Option can select`}
+                allowIcons={false}
+              />
+              <SingleToggle id="mxmm-slctd" title={__('Disable if maximum selected:')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+            </>
+          )}
+
+        </div>
+      </SimpleAccordion>
 
       {multipleSelect && (
         <>
@@ -334,6 +420,34 @@ export default function DropdownFieldSettings() {
 
       <FieldSettingsDivider />
 
+      <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)}>
+        <div className={css({ mx: 5 })}>
+          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+            <span>{__('Maximum:')}</span>
+            <input
+              data-testid="nmbr-stng-min-inp"
+              title="Maximum height of Option List"
+              aria-label="Maximum height of Option List"
+              placeholder="Type Maximum Height..."
+              className={css(FieldStyle.input, FieldStyle.w140)}
+              type="number"
+              value={maxHeight}
+              onChange={e => handleConfigChange(e.target.value, 'maxHeight')}
+            />
+          </div>
+        </div>
+      </SimpleAccordion>
+      <FieldSettingsDivider />
+
+      <UniqFieldSettings
+        type="entryUnique"
+        title="Validate as Entry Unique"
+        tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        isUnique="show"
+      />
+      <FieldSettingsDivider />
+
       <SimpleAccordion
         id="lst-n-opt"
         title="Lists & Options"
@@ -363,11 +477,13 @@ export default function DropdownFieldSettings() {
                     onChange={e => handleOptionList(e, index)}
                     checked={index === activeList}
                     value={index}
+                    tip="Select this list as active"
                   />
                   <button
                     data-testid={`lst-opt-edt-btn-${index}`}
                     type="button"
                     className={css(c.delBtn)}
+                    title="Edit List Options"
                     onClick={() => {
                       setCurrentOptList(index)
                       openOptionModal()
@@ -381,6 +497,7 @@ export default function DropdownFieldSettings() {
                       type="button"
                       className={css(c.delBtn)}
                       onClick={() => handleRemoveList(index)}
+                      title="Delete List"
                     >
                       <TrashIcn size={19} />
                     </button>
@@ -406,15 +523,6 @@ export default function DropdownFieldSettings() {
         </div>
       </SimpleAccordion>
 
-      <FieldSettingsDivider />
-
-      <UniqFieldSettings
-        type="entryUnique"
-        title="Validate as Entry Unique"
-        tipTitle="Enabling this option will check from the entry database whether its value is duplicate."
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        isUnique="show"
-      />
       <FieldSettingsDivider />
 
       <Modal

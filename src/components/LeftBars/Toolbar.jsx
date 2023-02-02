@@ -238,7 +238,16 @@ function Toolbar({ setNewData }) {
           // onChange: val => { console.log(val) },
         },
         valid: {},
-        err: {},
+        err: {
+          mn: {
+            dflt: '<p style="margin:0">Minimum 0 file required</p>',
+            show: true,
+          },
+          mx: {
+            dflt: '<p style="margin:0">Maximum 0 file can uploaded</p>',
+            show: true,
+          },
+        },
         customClasses: {},
         customAttributes: {},
       },
@@ -398,7 +407,16 @@ function Toolbar({ setNewData }) {
         },
         options: currencyList,
         valid: {},
-        err: {},
+        err: {
+          minVlaue: {
+            dflt: '<p style="margin:0">File Size is Exceeded</p>',
+            show: true,
+          },
+          maxValue: {
+            dflt: '<p style="margin:0">Minimum 0 file required</p>',
+            show: true,
+          },
+        },
         customClasses: {},
         customAttributes: {},
       },

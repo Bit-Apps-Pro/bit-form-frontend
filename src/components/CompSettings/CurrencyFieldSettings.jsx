@@ -15,6 +15,7 @@ import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -47,11 +48,20 @@ const CurrencyFieldSettings = () => {
     showSearchPh,
     searchPlaceholder,
     noCurrencyFoundText,
+    maxHeight,
+    minimumFractionDigits,
+    maximumFractionDigits,
+    decimalSeparator,
+    numberFormat,
+    minValue,
+    maxValue,
   } = fieldData.config
 
   const { showCurrencySymbol,
     roundToClosestInteger,
-    roundToClosestFractionDigits } = fieldData.inputFormatOptions
+    roundToClosestFractionDigits, formatter: inputFormatter } = fieldData.inputFormatOptions
+
+  const { formatter: valueFormatter, symbolPosition, currencyPosition } = fieldData.valueFormatOptions
 
   const openOptionModal = () => {
     setOptionMdl(true)
@@ -151,25 +161,66 @@ const CurrencyFieldSettings = () => {
 
       <FieldSettingsDivider />
 
+      <SimpleAccordion id="nmbr-stng" title="Input Amount Range(Min/Max):" className={css(FieldStyle.fieldSection)}>
+        <div className={css({ mx: 5 })}>
+          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+            <span>{__('Minimum amount:')}</span>
+            <input
+              data-testid="nmbr-stng-min-inp"
+              title="Minimum amount for this field"
+              aria-label="Minimum amount for this field"
+              placeholder="Type minimum amount here..."
+              className={css(FieldStyle.input, FieldStyle.w140)}
+              type="number"
+              value={minValue}
+              onChange={e => handleConfigChange(e.target.value, 'minValue', 'config')}
+            />
+          </div>
+          {minValue && (
+            <ErrorMessageSettings
+              id="nmbr-stng-min"
+              type="minValue"
+              title="Minimum amount Error Message"
+              tipTitle={`By enabling this feature, user will see the error message when input amount is less than ${minValue}`}
+            />
+          )}
+          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+            <span>{__('Maximum amount:')}</span>
+            <input
+              data-testid="nmbr-stng-max-inp"
+              title="Maximum amount for this field"
+              aria-label="Maximum amount for this field"
+              placeholder="Type maximun amount here..."
+              className={css(FieldStyle.input, FieldStyle.w140)}
+              type="number"
+              value={maxValue}
+              onChange={e => handleConfigChange(e.target.value, 'maxValue', 'config')}
+            />
+          </div>
+
+          {maxValue && (
+            <ErrorMessageSettings
+              id="nmbr-stng-max"
+              type="maxValue"
+              title="Max Error Message"
+              tipTitle={`By enabling this feature, user will see the error message when input amount is greater than ${maxValue}`}
+            />
+          )}
+        </div>
+      </SimpleAccordion>
+      <FieldSettingsDivider />
+
       <SimpleAccordion
         id="inp-frmt-opt-stng"
         title={__('Input Format Options')}
         className={css(FieldStyle.fieldSection)}
-        // switching
-        // toggleAction={hideAdminLabel}
-        // toggleChecked={fieldData?.adminLblHide}
-        open
-      // disable={!fieldData?.adminLblHide}
       >
         <div className={css(FieldStyle.placeholder)}>
-          <div className={css(ut.ml1, ut.mt1)}>
-            <h4 className={css(ut.m0, FieldStyle.title)}>
-              {__('Formatter')}
-              :
-            </h4>
+          <div className={css(FieldStyle.labelInput)}>
+            <span className={css(ut.m0, FieldStyle.title)}>{__('Formatter:')}</span>
             <select
               data-testid="frmtr-slct"
-              className={css(FieldStyle.input)}
+              className={css(FieldStyle.input, ut.wdt100)}
               aria-label="Formatter"
               value={fieldData?.inputFormatOptions?.formatter}
               onChange={e => handleConfigChange(e.target.value, 'formatter', 'inputFormatOptions')}
@@ -180,7 +231,7 @@ const CurrencyFieldSettings = () => {
             </select>
           </div>
 
-          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '10px', m: 0 })}>
             <SingleToggle
               id="crncy-symbl"
               tip="By disabling this option, the currency symbol will be show"
@@ -190,7 +241,7 @@ const CurrencyFieldSettings = () => {
             />
           </div>
 
-          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '10px', m: 0 })}>
             <SingleToggle
               id="rnd-to-clsst-int"
               tip="By disabling this option, the currency symbol will be show"
@@ -199,16 +250,267 @@ const CurrencyFieldSettings = () => {
               isChecked={roundToClosestInteger}
             />
           </div>
+          {
+            inputFormatter === 'custom' && (
+              <>
+                <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '10px', m: 0 })}>
+                  <SingleToggle
+                    id="rnd-to-clsst-frc-dgt"
+                    tip="By Enabling this option, the Fraction Will Rounded"
+                    title={__('Round to Closest Fraction Digits:')}
+                    action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'inputFormatOptions')}
+                    isChecked={roundToClosestFractionDigits}
+                    className={css(ut.m0, FieldStyle.title)}
+                  />
+                </div>
 
-          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '26px !important', m: 0 })}>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Minimum Fraction Digit:')}</span>
+                  <input
+                    data-testid="mnmm-frctn-dgt"
+                    title="Minimum Fraction Digit"
+                    aria-label="Minimum Fraction Digit"
+                    placeholder="Minimum Fraction Digit"
+                    className={css(FieldStyle.input, FieldStyle.w60, ut.mt1)}
+                    type="number"
+                    value={minimumFractionDigits}
+                    onChange={e => handleConfigChange(e.target.value, 'minimumFractionDigits', 'inputFormatOptions')}
+                  />
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Maximum Fraction Digit:')}</span>
+                  <input
+                    data-testid="mxmm-frctn-dgt"
+                    title="Maximum Fraction Digit"
+                    aria-label="Maximum Fraction Digit"
+                    placeholder="Maximum Fraction Digit"
+                    className={css(FieldStyle.input, FieldStyle.w60, ut.mt1)}
+                    type="number"
+                    value={maximumFractionDigits}
+                    onChange={e => handleConfigChange(e.target.value, 'maximumFractionDigits', 'inputFormatOptions')}
+                  />
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Decimal Separator:')}</span>
+                  <input
+                    data-testid="dcml-sprtr"
+                    title="Decimal Separator"
+                    aria-label="Decimal Separator"
+                    placeholder="Decimal Separator"
+                    className={css(FieldStyle.input, FieldStyle.w60, ut.mt1)}
+                    type="text"
+                    value={decimalSeparator}
+                    onChange={e => handleConfigChange(e.target.value, 'decimalSeparator', 'inputFormatOptions')}
+                  />
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Number Format:')}</span>
+                  <input
+                    data-testid="inp-frmt-opt-inp"
+                    title="Number Format"
+                    aria-label="Input Number Format"
+                    placeholder="Ex: ###,###,###"
+                    className={css(FieldStyle.input, ut.mt1, { w: 120 })}
+                    type="text"
+                    value={numberFormat}
+                    onChange={e => handleConfigChange(e.target.value, 'numberFormat', 'inputFormatOptions')}
+                  />
+                </div>
+              </>
+            )
+          }
+          {
+            (inputFormatter === 'custom' || inputFormatter === 'none') && (
+              <>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Currency Position:')}</span>
+                  <select
+                    data-testid="crncy-pstn"
+                    className={css(FieldStyle.input, ut.mt1, { w: 120 })}
+                    aria-label="Currency Position"
+                    value={fieldData?.inputFormatOptions?.currencyPosition}
+                    onChange={e => handleConfigChange(e.target.value, 'currencyPosition', 'inputFormatOptions')}
+                  >
+                    <option value="right">{__('Right')}</option>
+                    <option value="left">{__('Left')}</option>
+                  </select>
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Symbol Position:')}</span>
+                  <select
+                    data-testid="smbl-pstn"
+                    className={css(FieldStyle.input, ut.mt1, { w: 120 })}
+                    aria-label="Symbol Position"
+                    value={fieldData?.inputFormatOptions?.symbolPosition}
+                    onChange={e => handleConfigChange(e.target.value, 'symbolPosition', 'inputFormatOptions')}
+                  >
+                    <option value="left-number">{__('Left Number')}</option>
+                    <option value="right-number">{__('Right Number')}</option>
+                    <option value="left-currency">{__('Left Currency')}</option>
+                    <option value="right-currency">{__('Right Currency')}</option>
+                  </select>
+                </div>
+              </>
+            )
+          }
+        </div>
+      </SimpleAccordion>
+
+      <FieldSettingsDivider />
+
+      <SimpleAccordion
+        id="inp-frmt-opt-stng"
+        title={__('Value Format Options')}
+        className={css(FieldStyle.fieldSection)}
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <div className={css(FieldStyle.labelInput)}>
+            <span className={css(ut.m0, FieldStyle.title)}>{__('Formatter:')}</span>
+            <select
+              data-testid="frmtr-slct"
+              className={css(FieldStyle.input, ut.wdt100)}
+              aria-label="Formatter"
+              value={fieldData?.valueFormatOptions?.formatter}
+              onChange={e => handleConfigChange(e.target.value, 'formatter', 'valueFormatOptions')}
+            >
+              <option value="none">{__('None')}</option>
+              <option value="browser">{__('Browser')}</option>
+              <option value="custom">{__('Custom')}</option>
+            </select>
+          </div>
+
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '10px', m: 0 })}>
             <SingleToggle
-              id="rnd-to-clsst-frc-dgt"
-              tip="By Enabling this option, the Fraction Will Rounded"
-              title={__('Round to Closest Fraction Digits:')}
-              action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'inputFormatOptions')}
-              isChecked={roundToClosestFractionDigits}
+              id="crncy-symbl"
+              tip="By disabling this option, the currency symbol will be show"
+              title={__('Currency Symbol:')}
+              action={e => handleConfigChange(e.target.checked, 'showCurrencySymbol', 'valueFormatOptions')}
+              isChecked={showCurrencySymbol}
             />
           </div>
+
+          <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '10px', m: 0 })}>
+            <SingleToggle
+              id="rnd-to-clsst-int"
+              tip="By disabling this option, the currency symbol will be show"
+              title={__('Round to Closest Integer:')}
+              action={e => handleConfigChange(e.target.checked, 'roundToClosestInteger', 'valueFormatOptions')}
+              isChecked={roundToClosestInteger}
+            />
+          </div>
+          {
+            valueFormatter === 'custom' && (
+              <>
+
+                <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '10px', m: 0 })}>
+                  <SingleToggle
+                    id="rnd-to-clsst-frc-dgt"
+                    tip="By Enabling this option, the Fraction Will Rounded"
+                    title={__('Round to Closest Fraction Digits:')}
+                    action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'valueFormatOptions')}
+                    isChecked={roundToClosestFractionDigits}
+                  />
+                </div>
+                <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, { pr: '10px', m: 0 })}>
+                  <SingleToggle
+                    id="rnd-to-clsst-frc-dgt"
+                    tip="By Enabling this option, the Fraction Will Rounded"
+                    title={__('Round to Closest Fraction Digits:')}
+                    action={e => handleConfigChange(e.target.checked, 'roundToClosestFractionDigits', 'valueFormatOptions')}
+                    isChecked={roundToClosestFractionDigits}
+                    className={css(ut.m0, FieldStyle.title)}
+                  />
+                </div>
+
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Minimum Fraction Digit:')}</span>
+                  <input
+                    data-testid="mnmm-frctn-dgt"
+                    title="Minimum Fraction Digit"
+                    aria-label="Minimum Fraction Digit"
+                    placeholder="Minimum Fraction Digit"
+                    className={css(FieldStyle.input, FieldStyle.w60, ut.mt1)}
+                    type="number"
+                    value={minimumFractionDigits}
+                    onChange={e => handleConfigChange(e.target.value, 'minimumFractionDigits', 'valueFormatOptions')}
+                  />
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Maximum Fraction Digit:')}</span>
+                  <input
+                    data-testid="mxmm-frctn-dgt"
+                    title="Maximum Fraction Digit"
+                    aria-label="Maximum Fraction Digit"
+                    placeholder="Maximum Fraction Digit"
+                    className={css(FieldStyle.input, FieldStyle.w60, ut.mt1)}
+                    type="number"
+                    value={maximumFractionDigits}
+                    onChange={e => handleConfigChange(e.target.value, 'maximumFractionDigits', 'valueFormatOptions')}
+                  />
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Decimal Separator:')}</span>
+                  <input
+                    data-testid="dcml-sprtr"
+                    title="Decimal Separator"
+                    aria-label="Decimal Separator"
+                    placeholder="Decimal Separator"
+                    className={css(FieldStyle.input, FieldStyle.w60, ut.mt1)}
+                    type="text"
+                    value={decimalSeparator}
+                    onChange={e => handleConfigChange(e.target.value, 'decimalSeparator', 'valueFormatOptions')}
+                  />
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Number Format:')}</span>
+                  <input
+                    data-testid="inp-frmt-opt-inp"
+                    title="Number Format"
+                    aria-label="Input Number Format"
+                    placeholder="Ex: ###,###,###"
+                    className={css(FieldStyle.input, ut.mt1, { w: 120 })}
+                    type="text"
+                    value={numberFormat}
+                    onChange={e => handleConfigChange(e.target.value, 'numberFormat', 'valueFormatOptions')}
+                  />
+                </div>
+              </>
+            )
+          }
+          {
+            (valueFormatter === 'custom' || valueFormatter === 'none') && (
+              <>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Currency Position:')}</span>
+                  <select
+                    data-testid="crncy-pstn"
+                    className={css(FieldStyle.input, ut.mt1, { w: 120 })}
+                    aria-label="Currency Position"
+                    value={currencyPosition}
+                    onChange={e => handleConfigChange(e.target.value, 'currencyPosition', 'valueFormatOptions')}
+                  >
+                    <option value="right">{__('Right')}</option>
+                    <option value="left">{__('Left')}</option>
+                  </select>
+                </div>
+                <div className={css(FieldStyle.labelInput)}>
+                  <span className={css(ut.m0, FieldStyle.title)}>{__('Symbol Position:')}</span>
+                  <select
+                    data-testid="smbl-pstn"
+                    className={css(FieldStyle.input, ut.mt1, { w: 120 })}
+                    aria-label="Symbol Position"
+                    value={symbolPosition}
+                    onChange={e => handleConfigChange(e.target.value, 'symbolPosition', 'valueFormatOptions')}
+                  >
+                    <option value="left-number">{__('Left Number')}</option>
+                    <option value="right-number">{__('Right Number')}</option>
+                    <option value="left-currency">{__('Left Currency')}</option>
+                    <option value="right-currency">{__('Right Currency')}</option>
+                  </select>
+                </div>
+              </>
+            )
+          }
         </div>
       </SimpleAccordion>
 
@@ -307,6 +609,25 @@ const CurrencyFieldSettings = () => {
         isChecked={optionFlagImage}
       />
 
+      <FieldSettingsDivider />
+
+      <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)}>
+        <div className={css({ mx: 5 })}>
+          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+            <span>{__('Maximum:')}</span>
+            <input
+              data-testid="nmbr-stng-min-inp"
+              title="Maximum height of Option List"
+              aria-label="Maximum height of Option List"
+              placeholder="Type Maximum Height..."
+              className={css(FieldStyle.input, FieldStyle.w140)}
+              type="number"
+              value={maxHeight}
+              onChange={e => handleConfigChange(e.target.value, 'maxHeight', 'config')}
+            />
+          </div>
+        </div>
+      </SimpleAccordion>
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>

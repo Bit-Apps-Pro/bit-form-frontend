@@ -516,6 +516,7 @@ export default class BitCountryField {
   }
 
   #handleSearchInput(e) {
+    e.stopPropagation()
     if (e.key === 'Enter' && this.#listOptions.length) {
       const optKey = this.#listOptions?.[0].i
       if (optKey) {

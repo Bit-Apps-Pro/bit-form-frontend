@@ -96,6 +96,7 @@ const ut = {
   // padding
   pr8: { pr: 40 },
   px10: { px: 10 },
+  py0: { py: 0 },
   py5: { py: 5 },
   p0: { p: 0 },
   p1: { p: 5 },

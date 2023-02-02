@@ -786,6 +786,8 @@ export default class BitCurrencyField {
 //   maxHeight: 400,
 //   placeholder: 'asdf',
 //   selectedFlagImage: false,
+//   minValue: 0, // all
+//   maxValue: 0, // all
 //   inputFormatOptions: {
 //     formatter: 'browser', // browser, custom, none
 //     showCurrencySymbol: true, // all
@@ -797,10 +799,9 @@ export default class BitCurrencyField {
 //     decimalSeparator: '.', // custom
 //     currencyPosition: 'right', // custom & none
 //     symbolPosition: 'left-number', // custom & none
-//     // minValue: 0, // all
-//     // maxValue: 0, // all
 //   },
 //   valueFormatOptions: {
+//     formatter: 'browser', // browser, custom, none
 //     showCurrencySymbol: true, // all
 //     roundToClosestInteger: false, // all
 //     roundToClosestFractionDigits: false, // custom [based on minimum & maximum fraction digits]
