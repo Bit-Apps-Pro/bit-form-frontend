@@ -1,12 +1,18 @@
 import produce from 'immer'
+import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
+import Button from '../Utilities/Button'
+import Downmenu from '../Utilities/Downmenu'
+import Tip from '../Utilities/Tip'
 import LogicBlock from './LogicBlock'
 import LogicChip from './LogicChip'
 import { accessToNested } from './WorkflowHelpers'
 
 export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
+  const { css } = useFela()
   const [workflows, setWorkflows] = useRecoilState($workflows)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const fields = useRecoilValue($fields)
@@ -17,7 +23,6 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
 
     if (isGroup) logicData.push([logicObj, typ, logicObj])
     else logicData.push(logicObj)
-
     setWorkflows(prvSt => produce(prvSt, prv => {
       let tmp = prv[lgcGrpInd].conditions[condGrpInd].logics
       tmp = accessToNested(tmp, path)
@@ -202,7 +207,18 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     const fldExistsInLogic = logics.findIndex(lgc => lgc.field && (lgc.field in fields))
     return fldExistsInLogic >= 0 && fldExistsInLogic !== indx
   }
+  const addNestedLogic = (typ, indx, isGroup = 0) => {
+    const logicData = [typ]
+    const logicObj = { field: '', logic: '', val: '' }
+    if (isGroup) logicData.push([logicObj, typ, logicObj])
+    else logicData.push(logicObj)
 
+    setWorkflows(prvSt => produce(prvSt, prv => {
+      const { logics } = prvSt[lgcGrpInd].conditions[condGrpInd]
+      const newLogics = [...logics[indx], ...logicData]
+      prv[lgcGrpInd].conditions[condGrpInd].logics[indx] = newLogics
+    }))
+  }
   return (
     condGrp?.logics?.map((logic, ind) => (
       <span key={`logic-${ind + 44}`}>
@@ -294,9 +310,74 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                 )}
               </span>
             ))}
+            <Downmenu
+              place="bottom"
+            >
+              <Tip msg="Add Logic">
+                <Button
+                  icn
+                  className="blue sh-sm"
+                >
+                  <CloseIcn size="14" className="icn-rotate-45" />
+                </Button>
+              </Tip>
+              <div>
+                <button
+                  type="button"
+                  className={css(accordionStyle.addItemBtn)}
+                  onClick={() => addNestedLogic('and', ind)}
+                >
+                  <CloseIcn size="9" className="icn-rotate-45 mr-1" />
+                  Add AND
+                </button>
+                <button
+                  type="button"
+                  className={css(accordionStyle.addItemBtn)}
+                  onClick={() => addNestedLogic('or', ind)}
+                >
+                  <CloseIcn size="9" className="icn-rotate-45 mr-1" />
+                  Add OR
+                </button>
+                <button
+                  type="button"
+                  className={css(accordionStyle.addItemBtn)}
+                  onClick={() => addNestedLogic('and', ind, 1)}
+                >
+                  <CloseIcn size="9" className="icn-rotate-45 mr-1" />
+                  Add AND Group
+                </button>
+                <button
+                  type="button"
+                  className={css(accordionStyle.addItemBtn)}
+                  onClick={() => addNestedLogic('or', ind, 1)}
+                >
+                  <CloseIcn size="9" className="icn-rotate-45 mr-1" />
+                  Add OR Group
+                </button>
+              </div>
+            </Downmenu>
           </div>
         )}
       </span>
     ))
   )
+}
+
+const accordionStyle = {
+  addItemBtn: {
+    dy: 'block',
+    w: '100%',
+    b: 0,
+    oe: 0,
+    brs: 8,
+    ta: 'left',
+    cr: '#444',
+    fs: 12,
+    fw: 500,
+    p: 5,
+    pr: 20,
+    bd: 'none',
+    curp: 1,
+    ':hover': { bc: '#EFEFEF' },
+  },
 }
