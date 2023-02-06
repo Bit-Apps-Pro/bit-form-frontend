@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 
-import { resetRecoil } from 'recoil-nexus'
+import { resetRecoil, setRecoil } from 'recoil-nexus'
 import {
   $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $reportId, $reports, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
@@ -9,6 +9,7 @@ import {
 } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import { addToBuilderHistory } from './FormBuilderHelper'
 
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
@@ -302,7 +303,7 @@ export const getFormsFromPhpVariable = (status) => {
     if (status) {
       allForms = bits.allForms.filter(form => form.status === status)
     } else {
-      allForms = bits.allForms.filter(form => ['0', '1'].includes(form.status))
+      allForms = bits.allForms
     }
     //  eslint-disable-next-line no-undef
     allForms = allForms.map(form => (
@@ -581,4 +582,47 @@ export const debouncer = (name, func, wait = 300) => {
   }, wait)
 
   return debouncer[name]
+}
+
+export const setFormReponseDataToStates = (responseData) => {
+  const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
+  const formsSessionDataFound = false
+  if (!formsSessionDataFound) {
+    // setLayouts(responseData.form_content.layout)
+    setRecoil($layouts, responseData.form_content.layout)
+    addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
+  }
+  if (!formsSessionDataFound) {
+    // setFields(responseData.form_content.fields)
+    setRecoil($fields, responseData.form_content.fields)
+    addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
+  }
+  if (!formsSessionDataFound) {
+    // setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+    setRecoil($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+  }
+  // setworkFlows(responseData.workFlows)
+  setRecoil($workflows, responseData.workFlows)
+  // setAdditional(responseData.additional)
+  setRecoil($additionalSettings, responseData.additional)
+  // setIntegration(responseData.formSettings.integrations)
+  setRecoil($integrations, responseData.formSettings.integrations)
+  // setConfirmations(responseData.formSettings.confirmation)
+  setRecoil($confirmations, responseData.formSettings.confirmation)
+  // setMailTem(responseData.formSettings.mailTem)
+  setRecoil($mailTemplates, responseData.formSettings.mailTem)
+  // if (!formsSessionDataFound && responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
+  if (!formsSessionDataFound && responseData.builderSettings) setRecoil($builderSettings, responseData.builderSettings)
+  // setReportId({
+  //   id: responseData?.form_content?.report_id || defaultReport?.id,
+  //   isDefault: responseData?.form_content?.report_id === null,
+  // })
+  setRecoil($reportId, {
+    id: responseData?.form_content?.report_id || defaultReport?.id,
+    isDefault: responseData?.form_content?.report_id === null,
+  })
+  // setFieldLabels(responseData.Labels)
+  setRecoil($fieldLabels, responseData.Labels)
+  // setReports(responseData.reports || [])
+  setRecoil($reports, responseData.reports || [])
 }
