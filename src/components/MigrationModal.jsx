@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
+import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
-import { setFormReponseDataToStates } from '../Utils/Helpers'
+import { prepareLayout } from '../Utils/FormBuilderHelper'
+import { generateAndSaveAtomicCss, generateUpdateFormData, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Loader from './Loaders/Loader'
 import themeProvider from './style-new/themes/themeProvider'
@@ -19,14 +21,16 @@ export default function MigrationModal() {
 
       bitsFetch({}, 'bitforms_migrate_form_contents')
         .then((res) => {
-          console.log({ res })
           if (res.success && res.data.length) {
             res.data.forEach(formData => {
               const { id: formID } = formData
               const fieldsArr = Object.entries(formData.form_content.fields)
               const { themeVars, themeColors, styles } = themeProvider('bitformDefault', fieldsArr, formID)
-              console.log({ themeVars, themeColors, styles })
-              const { layouts } = formData.form_content
+              setFormReponseDataToStates(formData)
+              setStyleRelatedStates({ themeVars, themeColors, styles })
+              generateAndSaveAtomicCss(formID)
+              const migratedFormData = generateUpdateFormData(formID)
+              bitsFetch(migratedFormData, 'bitforms_update_form')
             })
           }
         })

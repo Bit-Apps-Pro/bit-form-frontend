@@ -1,15 +1,20 @@
 /* eslint-disable no-nested-ternary */
 
-import { resetRecoil, setRecoil } from 'recoil-nexus'
+import { getRecoil, resetRecoil, setRecoil } from 'recoil-nexus'
+import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import {
-  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $reportId, $reports, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
+  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows
 } from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import {
-  $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight,
+  $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight
 } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
-import { addToBuilderHistory } from './FormBuilderHelper'
+import atomicStyleGenarate from './atomicStyleGenarate'
+import bitsFetch from './bitsFetch'
+import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
+import { JCOF } from './globalHelpers'
 
 /* eslint-disable no-param-reassign */
 export const hideWpMenu = () => {
@@ -625,4 +630,161 @@ export const setFormReponseDataToStates = (responseData) => {
   setRecoil($fieldLabels, responseData.Labels)
   // setReports(responseData.reports || [])
   setRecoil($reports, responseData.reports || [])
+}
+
+export const setStyleRelatedStates = ({ themeVars, themeColors, styles }) => {
+  setRecoil($themeVarsLgLight, themeVars.lgLightThemeVars)
+  setRecoil($themeVarsLgDark, themeVars.lgDarkThemeVars)
+  setRecoil($themeVarsMdLight, themeVars.mdLightThemeVars)
+  setRecoil($themeVarsMdDark, themeVars.mdDarkThemeVars)
+  setRecoil($themeVarsSmLight, themeVars.smLightThemeVars)
+  setRecoil($themeVarsSmDark, themeVars.smDarkThemeVars)
+
+  setRecoil($lightThemeColors, themeColors.lightThemeColors)
+  setRecoil($darkThemeColors, themeColors.darkThemeColors)
+
+  setRecoil($stylesLgLight, styles.lgLightStyles)
+  setRecoil($stylesLgDark, styles.lgDarkStyles)
+  setRecoil($stylesMdLight, styles.mdLightStyles)
+  setRecoil($stylesMdDark, styles.mdDarkStyles)
+  setRecoil($stylesSmLight, styles.smLightStyles)
+  setRecoil($stylesSmDark, styles.smDarkStyles)
+}
+
+export const generateAndSaveAtomicCss = currentFormId => {
+  const styles = getRecoil($styles)
+  const lay = getRecoil($layouts)
+  const builderHelperStates = getRecoil($builderHelperStates)
+  const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
+  const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+  if (isStyleNotLoaded) return { layouts: sortedLayout }
+
+  const generatedAtomicStyles = atomicStyleGenarate({ sortedLayout })
+
+  generatedAtomicStyles.layouts = sortedLayout
+
+  if (!currentFormId) return generatedAtomicStyles
+
+  const { atomicCssText, atomicClassMap, lgLightStyles } = generatedAtomicStyles
+  const { atomicCssText: atomicCssWithFormIdText, atomicClassMap: atomicClassMapWithFormId } = atomicStyleGenarate({ sortedLayout, atomicClassSuffix: currentFormId })
+
+  if (lgLightStyles?.font?.fontURL) {
+    atomicClassMap.font = lgLightStyles.font.fontURL
+    atomicClassMapWithFormId.font = lgLightStyles.font.fontURL
+  }
+  const atomicData = {
+    form_id: currentFormId,
+    atomicCssText,
+    atomicCssWithFormIdText,
+    atomicClassMap,
+    atomicClassMapWithFormId,
+  }
+
+  bitsFetch(atomicData, 'bitforms_save_css')
+    .catch(err => console.error('save css error=', err))
+
+  return generatedAtomicStyles
+}
+
+export const generateUpdateFormData = (savedFormId) => {
+  const newFormId = getRecoil($newFormId)
+  const currentReport = getRecoil($reportSelector)
+  const fields = getRecoil($fields)
+  const formInfo = getRecoil($formInfo)
+  const reportId = getRecoil($reportId)
+  const additionalSettings = getRecoil($additionalSettings)
+  const workFlows = getRecoil($workflows)
+  const styles = getRecoil($styles)
+  const staticStylesState = getRecoil($staticStylesState)
+  const breakpointSize = getRecoil($breakpointSize)
+  const customCodes = getRecoil($customCodes)
+  const confirmations = getRecoil($confirmations)
+  const mailTemplates = getRecoil($mailTemplates)
+  const allIntegrations = getRecoil($integrations)
+  const builderSettings = getRecoil($builderSettings)
+  const deletedFldKey = getRecoil($deletedFldKey)
+  const { formName } = formInfo
+  const {
+    layouts,
+    lightThemeColors,
+    darkThemeColors,
+    lgLightThemeVars,
+    lgDarkThemeVars,
+    mdLightThemeVars,
+    mdDarkThemeVars,
+    smLightThemeVars,
+    smDarkThemeVars,
+    lgLightStyles,
+    lgDarkStyles,
+    mdLightStyles,
+    mdDarkStyles,
+    smLightStyles,
+    smDarkStyles,
+  } = generateAndSaveAtomicCss(savedFormId)
+
+  const allThemeColors = {
+    lightThemeColors,
+    darkThemeColors,
+  }
+  const allThemeVars = {
+    lgLightThemeVars,
+    lgDarkThemeVars,
+    mdLightThemeVars,
+    mdDarkThemeVars,
+    smLightThemeVars,
+    smDarkThemeVars,
+  }
+  let allStyles = {
+    lgLightStyles,
+    lgDarkStyles,
+    mdLightStyles,
+    mdDarkStyles,
+    smLightStyles,
+    smDarkStyles,
+  }
+
+  allStyles = updateGoogleFontUrl(allStyles)
+
+  let formStyle = sessionStorage.getItem('btcd-fs')
+  formStyle = formStyle && (bitDecipher(formStyle))
+
+  const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
+
+  const formData = {
+    ...(savedFormId && { id: savedFormId }),
+    ...(!savedFormId && { form_id: newFormId }),
+    ...(savedFormId && { currentReport }),
+    layout: layouts,
+    fields,
+    // saveStyle && style obj
+    form_name: formName,
+    report_id: reportId.id,
+    additional: additionalSettings,
+    workFlows,
+    formStyle,
+    // style: isStyleNotLoaded ? undefined : allStyles,
+    // themeColors: isStyleNotLoaded ? undefined : allThemeColors,
+    // themeVars: isStyleNotLoaded ? undefined : allThemeVars,
+    // atomicClassMap: isStyleNotLoaded ? undefined : atomicClassMap,
+    ...(!isStyleNotLoaded && { style: JCOF.stringify(allStyles) }),
+    ...(!isStyleNotLoaded && { staticStyles: JCOF.stringify(staticStylesState) }),
+    ...(!isStyleNotLoaded && { themeColors: JCOF.stringify(allThemeColors) }),
+    ...(!isStyleNotLoaded && { themeVars: JCOF.stringify(allThemeVars) }),
+    breakpointSize,
+    customCodes,
+    layoutChanged: sessionStorage.getItem('btcd-lc'),
+    rowHeight: sessionStorage.getItem('btcd-rh'),
+    formSettings: {
+      formName,
+      confirmation: confirmations,
+      mailTem: mailTemplates,
+      integrations: allIntegrations,
+    },
+    builderSettings,
+  }
+  if (savedFormId && deletedFldKey.length !== 0) {
+    formData.deletedFldKey = deletedFldKey
+  }
+
+  return formData
 }

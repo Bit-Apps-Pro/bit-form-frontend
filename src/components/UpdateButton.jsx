@@ -41,7 +41,7 @@ import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
 import { getCurrentFormUrl, prepareLayout, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher, isObjectEmpty } from '../Utils/Helpers'
+import { bitCipher, bitDecipher, generateAndSaveAtomicCss, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
@@ -179,38 +179,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     return (payFields.length > 0 || btns.length > 0)
   }
 
-  const generateAndSaveAtomicCss = currentFormId => {
-    const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
-    const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
-    if (isStyleNotLoaded) return { layouts: sortedLayout }
-
-    const generatedAtomicStyles = atomicStyleGenarate({ sortedLayout })
-
-    generatedAtomicStyles.layouts = sortedLayout
-
-    if (!currentFormId) return generatedAtomicStyles
-
-    const { atomicCssText, atomicClassMap, lgLightStyles } = generatedAtomicStyles
-    const { atomicCssText: atomicCssWithFormIdText, atomicClassMap: atomicClassMapWithFormId } = atomicStyleGenarate({ sortedLayout, atomicClassSuffix: currentFormId })
-
-    if (lgLightStyles?.font?.fontURL) {
-      atomicClassMap.font = lgLightStyles.font.fontURL
-      atomicClassMapWithFormId.font = lgLightStyles.font.fontURL
-    }
-    const atomicData = {
-      form_id: currentFormId,
-      atomicCssText,
-      atomicCssWithFormIdText,
-      atomicClassMap,
-      atomicClassMapWithFormId,
-    }
-
-    bitsFetch(atomicData, 'bitforms_save_css')
-      .catch(err => console.error('save css error=', err))
-
-    return generatedAtomicStyles
-  }
-
   const saveForm = (type, updatedData) => {
     if (savedFormId) setbuttonDisabled(true)
 
@@ -327,10 +295,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       },
       builderSettings,
     }
-    const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
     if (savedFormId && deletedFldKey.length !== 0) {
       formData.deletedFldKey = deletedFldKey
     }
+    const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
 
     const formSavePromise = bitsFetch(formData, action)
       .then(response => {

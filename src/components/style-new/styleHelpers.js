@@ -421,7 +421,7 @@ const filterUnusedStyles = (styles) => {
       if (!fld.err) deleteStyles(draftStyle, styleClasses.err, fldkey)
       if (!fld.errPreIcn) deleteStyles(draftStyle, styleClasses.errPreIcn, fldkey)
       if (!fld.errSufIcn) deleteStyles(draftStyle, styleClasses.errSufIcn, fldkey)
-      if (!fld.valid.reqShow) deleteStyles(draftStyle, styleClasses.reqSmbl, fldkey)
+      if (!fld?.valid?.reqShow) deleteStyles(draftStyle, styleClasses.reqSmbl, fldkey)
 
       switch (fld.typ) {
         case 'button':
