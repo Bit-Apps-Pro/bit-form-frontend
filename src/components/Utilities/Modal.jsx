@@ -4,7 +4,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import { searchKey } from '../style-new/styleHelpers'
 
 export default function Modal({
-  show, setModal, sm, lg, style, className, title, warning, hdrActn: headerAction, children, subTitle, autoHeight, closeOnOutsideClick, onCloseMdl = null, width,
+  show, setModal, sm, lg, style, className, title, warning, hdrActn: headerAction, children, subTitle, autoHeight, closeOnOutsideClick, onCloseMdl = null, width, showCloseBtn = true,
 }) {
   const nodeRef = useRef(null)
   const handleClickOutside = e => {
@@ -75,15 +75,17 @@ export default function Modal({
         >
           <div data-testid="mdl-cntnt" className="btcd-modal-content" style={{ width }}>
             {headerAction}
-            <button
-              data-testid="mdl-cls-btn"
-              onClick={handleCloseBtnClick}
-              className="icn-btn btcd-mdl-close"
-              aria-label="modal-close"
-              type="button"
-            >
-              <CloseIcn size={16} stroke={3} />
-            </button>
+            {typeof showCloseBtn !== 'undefined' && showCloseBtn && (
+              <button
+                data-testid="mdl-cls-btn"
+                onClick={handleCloseBtnClick}
+                className="icn-btn btcd-mdl-close"
+                aria-label="modal-close"
+                type="button"
+              >
+                <CloseIcn size={16} stroke={3} />
+              </button>
+            )}
             {typeof title === 'string' && <h2 className="btcd-mdl-title flx" style={{ color: warning ? 'red' : '' }}>{title}</h2>}
             {typeof title === 'object' && title}
             <small className="btcd-mdl-subtitle">{subTitle}</small>
