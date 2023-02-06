@@ -207,7 +207,6 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'select',
         lbl: __('Dropdown'),
-        mul: false,
         phHide: true,
         ph: 'Select a Option',
         optionsList: [
@@ -614,7 +613,6 @@ function Toolbar({ setNewData }) {
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
       elm: {
         typ: 'recaptcha',
-        theme: 'light',
         valid: {},
         config: {
           theme: 'light',
