@@ -1,5 +1,5 @@
 import produce from 'immer'
-import { useState, Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
@@ -44,7 +44,6 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
 
     if (isGroup) logicData.push([logicObj, typ, logicObj])
     else logicData.push(logicObj)
-
     setWorkflows(prvSt => produce(prvSt, prv => {
       let tmp = prv[lgcGrpInd].conditions[condGrpInd].logics
       tmp = accessToNested(tmp, logicPath)
