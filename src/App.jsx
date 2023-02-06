@@ -6,6 +6,7 @@ import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-rou
 import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
+import MigrationModal from './components/MigrationModal'
 import AllForms from './pages/AllForms'
 import ArchivedForms from './pages/ArchivedForms'
 import DocNSupport from './pages/DocNSupport'
@@ -50,6 +51,8 @@ export default function App() {
           },
         }}
       />
+
+      <MigrationModal />
 
       <HashRouter>
         <div className="Btcd-App" style={{ backgroundColor }}>
