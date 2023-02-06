@@ -17,6 +17,7 @@ import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
+import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
@@ -214,6 +215,16 @@ const PhoneNumberFieldSettings = () => {
         </div>
       </SimpleAccordion>
 
+      <FieldSettingsDivider />
+
+      <SimpleAccordion id="nmbr-stng" title="Invalid Error Message:" className={css(FieldStyle.fieldSection)}>
+        <ErrorMessageSettings
+          id="invalid-err-msg"
+          type="invalid"
+          title="Invalid Error Message"
+          tipTitle="By enabling this feature, user will see the error message when input value is Invalid"
+        />
+      </SimpleAccordion>
       <FieldSettingsDivider />
 
       <SimpleAccordion
