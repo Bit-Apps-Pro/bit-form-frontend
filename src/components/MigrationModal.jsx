@@ -1,9 +1,7 @@
 import { useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
-import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
 import bitsFetch from '../Utils/bitsFetch'
-import { prepareLayout } from '../Utils/FormBuilderHelper'
 import { generateAndSaveAtomicCss, generateUpdateFormData, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Loader from './Loaders/Loader'
@@ -28,7 +26,6 @@ export default function MigrationModal() {
               const { themeVars, themeColors, styles } = themeProvider('bitformDefault', fieldsArr, formID)
               setFormReponseDataToStates(formData)
               setStyleRelatedStates({ themeVars, themeColors, styles })
-              generateAndSaveAtomicCss(formID)
               const migratedFormData = generateUpdateFormData(formID)
               bitsFetch(migratedFormData, 'bitforms_update_form')
             })
