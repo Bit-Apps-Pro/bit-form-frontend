@@ -42,6 +42,13 @@ export default function MigrationModal() {
     }
   }, [])
 
+  const backToV1 = () => {
+    bitsFetch({}, 'bitforms_migrate_back_to_v1')
+      .then(() => {
+        window.location.reload()
+      })
+  }
+
   return (
     <Modal sm show={bits.isMigratingToV2} showCloseBtn={false}>
       <div className="flx flx-col flx-center">
@@ -50,6 +57,7 @@ export default function MigrationModal() {
         <Loader />
         <p className="m-0 mt-2">{__('This may take a few minutes...')}</p>
         <p className="mt-0 mb-2">{__('Meanwhile do not close this window.')}</p>
+        <button type="button" onClick={backToV1}>Back to v1</button>
       </div>
     </Modal>
   )
