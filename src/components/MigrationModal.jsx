@@ -17,9 +17,10 @@ export default function MigrationModal() {
       // do not close this window
       window.onbeforeunload = () => true
 
-      bitsFetch({}, 'bitforms_migrate_form_contents')
+      bitsFetch({}, 'bitforms_get_all_form_contents')
         .then((res) => {
           if (res.success && res.data.length) {
+            const updateFormPromises = []
             res.data.forEach(formData => {
               const { id: formID } = formData
               const fieldsArr = Object.entries(formData.form_content.fields)
@@ -27,8 +28,15 @@ export default function MigrationModal() {
               setFormReponseDataToStates(formData)
               setStyleRelatedStates({ themeVars, themeColors, styles })
               const migratedFormData = generateUpdateFormData(formID)
-              bitsFetch(migratedFormData, 'bitforms_update_form')
+              updateFormPromises.push(bitsFetch(migratedFormData, 'bitforms_update_form'))
             })
+            Promise.all(updateFormPromises)
+              .then(() => {
+                bitsFetch({}, 'bitforms_migrate_to_v2_complete')
+                  .then(() => {
+                    window.location.reload()
+                  })
+              })
           }
         })
     }
