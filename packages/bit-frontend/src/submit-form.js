@@ -178,13 +178,7 @@ function triggerIntegration(hitCron, newNonce, contentId) {
 function disabledSubmitButton(contentId, disabled) {
   bfSelect('button[type="submit"]', bfSelect(`#form-${contentId}`)).disabled = disabled
   const spanner = bfSelect('button[type="submit"] span', bfSelect(`#form-${contentId}`))
-
-  if (spanner && disabled) {
-    spanner.classList.remove('d-none')
-  } else {
-    spanner.classList.add('d-none')
-  }
-
+  if (spanner) spanner.classList.toggle('d-none')
 }
 
 document.querySelectorAll('form').forEach((frm) => {
