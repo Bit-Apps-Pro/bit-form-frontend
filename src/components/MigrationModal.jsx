@@ -60,7 +60,7 @@ export default function MigrationModal() {
   }
 
   return (
-    <Modal sm show showCloseBtn={false}>
+    <Modal sm show={bits.isMigratingToV2} showCloseBtn={false}>
       <div className="flx flx-col flx-center">
         <h3 className="mb-0">{__('Migrating to V2')}</h3>
         <p className="mb-2">{__('Please wait while we migrate your data to V2')}</p>
