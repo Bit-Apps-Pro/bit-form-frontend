@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 
 import { getRecoil, resetRecoil, setRecoil } from 'recoil-nexus'
+import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import {
   $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows
@@ -630,6 +631,21 @@ export const setFormReponseDataToStates = (responseData) => {
   setRecoil($fieldLabels, responseData.Labels)
   // setReports(responseData.reports || [])
   setRecoil($reports, responseData.reports || [])
+}
+
+export const getConfirmationStyle = (formData) => {
+  const confirmations = []
+  formData?.formSettings?.confirmation?.type?.successMsg?.forEach((msgObj) => {
+    if (msgObj.id && msgObj.config) {
+      const { config } = msgObj
+      confirmations.push({
+        confMsgId: msgObj.id,
+        style: confirmMsgCssStyles(formData.id, msgObj.id, config.msgType, config.position, config.animation, config.styles),
+      })
+    }
+  })
+
+  return confirmations
 }
 
 export const setStyleRelatedStates = ({ themeVars, themeColors, styles }) => {

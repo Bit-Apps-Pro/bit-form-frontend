@@ -31,7 +31,7 @@ export default function ConfirmMsgPreview({
   }
   useEffect(() => {
     setStyles(prvStyle => produce(prvStyle, drft => {
-      drft.confirmations.filter(confMsgObj => {
+      drft.confirmations?.filter(confMsgObj => {
         if (confMsgObj.confMsgId === msgId) {
           confMsgObj.style = styleObject()
         }
