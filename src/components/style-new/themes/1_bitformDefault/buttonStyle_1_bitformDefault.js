@@ -68,6 +68,18 @@ export default function buttonStyle_1_bitformDefault({
         ...direction !== 'rtl' && { margin: '0px 0px 0px 5px' },
         ...direction === 'rtl' && { margin: '0px 5px 0px 0px' },
       },
+      ...btnTyp === 'submit' && {
+        [`.${fk}-spanner`]: {
+          'margin-left': '5px',
+          width: '15px',
+          height: '15px',
+          'border-radius': '50%',
+          // display: 'inline-block',
+          'border-top': '2px solid',
+          'border-right': '2px solid transparent',
+          animation: 'rotation 1s linear infinite',
+        },
+      },
     }
   }
   return {}

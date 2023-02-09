@@ -45,6 +45,14 @@ export const $staticStylesState = atom({
         height: 0,
         overflow: 'hidden',
       },
+      '@keyframes rotation': {
+        '0%': {
+          transform: 'rotate(0deg)',
+        },
+        '100%': {
+          transform: 'rotate(360deg)',
+        },
+      },
     },
   },
   effects: [({ onSet }) => {
