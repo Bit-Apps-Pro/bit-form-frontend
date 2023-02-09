@@ -340,6 +340,13 @@ function AllFroms() {
 
   const notArchivedForms = allForms.filter(form => form.status !== '2')
 
+  const backToV1 = () => {
+    bitsFetch({}, 'bitforms_migrate_back_to_v1')
+      .then(() => {
+        window.location.reload()
+      })
+  }
+
   return (
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -377,6 +384,7 @@ function AllFroms() {
             >
               {__('Create Form')}
             </button>
+            <button onClick={backToV1}>back to v1</button>
           </div>
           <div>
             <Table
