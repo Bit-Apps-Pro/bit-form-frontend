@@ -4,7 +4,6 @@ import { $bits } from '../GlobalStates/GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { generateUpdateFormData, getConfirmationStyle, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
-import Loader from './Loaders/Loader'
 import themeProvider from './style-new/themes/themeProvider'
 import Modal from './Utilities/Modal'
 import Progressbar from './Utilities/Progressbar'
@@ -20,7 +19,7 @@ export default function MigrationModal() {
       // do not close this window
       window.onbeforeunload = () => true
 
-      bitsFetch({}, 'bitforms_get_all_form_contents')
+      bitsFetch({}, 'bitforms_get_migrated_form_contents')
         .then((res) => {
           if (res.success && res.data.length) {
             setTotalForms(res.data.length)
@@ -40,6 +39,7 @@ export default function MigrationModal() {
               .then(() => {
                 bitsFetch({}, 'bitforms_migrate_to_v2_complete')
                   .then(() => {
+                    window.onbeforeunload = null
                     window.location.reload()
                   })
               })
@@ -49,6 +49,9 @@ export default function MigrationModal() {
   }, [])
 
   const backToV1 = () => {
+    sessionStorage.removeItem('btcd-fs')
+    sessionStorage.removeItem('btcd-lc')
+    sessionStorage.removeItem('btcd-rh')
     bitsFetch({}, 'bitforms_migrate_back_to_v1')
       .then(() => {
         window.location.reload()

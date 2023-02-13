@@ -341,6 +341,9 @@ function AllFroms() {
   const notArchivedForms = allForms.filter(form => form.status !== '2')
 
   const backToV1 = () => {
+    sessionStorage.removeItem('btcd-fs')
+    sessionStorage.removeItem('btcd-lc')
+    sessionStorage.removeItem('btcd-rh')
     bitsFetch({}, 'bitforms_migrate_back_to_v1')
       .then(() => {
         window.location.reload()
