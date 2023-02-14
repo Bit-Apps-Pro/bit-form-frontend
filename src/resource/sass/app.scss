@@ -1824,6 +1824,72 @@ nav.top-nav {
   background: #1e1e1e;
   height: 230px;
   padding: 10px 10px 0 18px;
+
+  & .top-wrp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & .migrate-wrp {
+      & .migrate-txt {
+        color: #fff;
+      }
+
+      & .migrate-btn {
+        margin-left: 10px;
+        font-weight: 600;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        outline: none;
+      }
+
+      & .confirm-content {
+        padding: 0;
+      }
+
+      & .migrate-modal {
+        text-align: justify;
+        margin: 5px 0;
+
+        & h3 {
+          font-size: 15px;
+          font-weight: 600;
+          margin-top: 10px;
+          margin-bottom: 8px;
+        }
+
+        & p {
+          font-size: 14px;
+          margin: 0;
+          margin-bottom: 8px;
+        }
+
+        & small {
+          text-align: left;
+        }
+
+        & input {
+          width: 100%;
+          border-radius: 8px;
+          margin-top: 8px;
+          font-family: "Montserrat";
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          height: 35px;
+          background: #F3F3F3 !important;
+          border: 1px solid #E5E5E5 !important;
+        }
+
+        & .migrate-err {
+          color: red;
+
+        }
+      }
+    }
+  }
 }
 
 .route-wrp {

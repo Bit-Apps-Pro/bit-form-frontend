@@ -4,6 +4,7 @@ import { $bits } from '../GlobalStates/GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { generateUpdateFormData, getConfirmationStyle, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import Loader from './Loaders/Loader'
 import themeProvider from './style-new/themes/themeProvider'
 import Modal from './Utilities/Modal'
 import Progressbar from './Utilities/Progressbar'
@@ -48,16 +49,6 @@ export default function MigrationModal() {
     }
   }, [])
 
-  const backToV1 = () => {
-    sessionStorage.removeItem('btcd-fs')
-    sessionStorage.removeItem('btcd-lc')
-    sessionStorage.removeItem('btcd-rh')
-    bitsFetch({}, 'bitforms_migrate_back_to_v1')
-      .then(() => {
-        window.location.reload()
-      })
-  }
-
   const getMigratedPercentage = () => {
     if (migratingCount === 0) return 0
     return Math.round((migratingCount / totalForms) * 100)
@@ -68,12 +59,15 @@ export default function MigrationModal() {
       <div className="flx flx-col flx-center">
         <h3 className="mb-0">{__('Migrating to V2')}</h3>
         <p className="mb-2">{__('Please wait while we migrate your data to V2')}</p>
-        {/* <Loader /> */}
-        <div className="flx flx-center" style={{ width: '70%' }}><Progressbar value={getMigratedPercentage()} /></div>
-        <p className="m-0">{`Migrated ${migratingCount} out of ${totalForms} forms`}</p>
+        {!totalForms && <Loader />}
+        {!!totalForms && (
+          <>
+            <div className="flx flx-center" style={{ width: '70%' }}><Progressbar value={getMigratedPercentage()} /></div>
+            <p className="m-0">{`Migrated ${migratingCount} out of ${totalForms} forms`}</p>
+          </>
+        )}
         <p className="m-0 mt-2">{__('This may take a few minutes...')}</p>
         <p className="mt-0 mb-2">{__('Meanwhile do not close this window.')}</p>
-        <button type="button" onClick={backToV1}>Back to v1</button>
       </div>
     </Modal>
   )

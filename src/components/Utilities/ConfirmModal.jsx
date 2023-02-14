@@ -1,11 +1,12 @@
 import { useFela } from 'react-fela'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
+import LoaderSm from '../Loaders/LoaderSm'
 import Btn from './Btn'
 import Modal from './Modal'
 
 function ConfirmModal({
-  close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning, cancelBtn = true,
+  close, action, mainMdlCls, show, btnTxt, body, btn2Txt, btn2Action, btnClass, title, className, children, warning, isLoading = false, cancelBtn = true,
 }) {
   const { css } = useFela()
   return (
@@ -34,8 +35,9 @@ function ConfirmModal({
             </Btn>
           )}
 
-          <Btn size="md" width="150px" variant="danger" rounded onClick={action} className={css(ut.mr2)}>
+          <Btn size="md" width="200px" variant="danger" rounded onClick={action} className={`${css(ut.mr2)} ${btnClass}`} disabled={isLoading}>
             {btnTxt}
+            {isLoading && <LoaderSm size={17} clr="#fff" className="ml-2" />}
           </Btn>
         </div>
       </div>

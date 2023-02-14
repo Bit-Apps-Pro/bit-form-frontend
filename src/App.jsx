@@ -7,8 +7,8 @@ import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import MigrationModal from './components/MigrationModal'
+import RollbackButton from './components/RollbackButton'
 import AllForms from './pages/AllForms'
-import ArchivedForms from './pages/ArchivedForms'
 import DocNSupport from './pages/DocNSupport'
 import { __ } from './Utils/i18nwrap'
 
@@ -57,53 +57,49 @@ export default function App() {
       <HashRouter>
         <div className="Btcd-App" style={{ backgroundColor }}>
           <div className="nav-wrp" style={{ backgroundColor }}>
-            <div className="flx flx-between">
-              <Nav setActive={setActive} />
-              <div className="flx">
-                <div className="logo flx" title={__('Bit Form')}>
-                  <Link to="/" className="flx">
-                    <img src={logo} alt="bit form logo" className="ml-2" />
-                    <span className="ml-2">Bit Form</span>
-                  </Link>
+            <div className="top-wrp">
+              <div className="flx flx-between">
+                <Nav setActive={setActive} />
+                <div className="flx">
+                  <div className="logo flx" title={__('Bit Form')}>
+                    <Link to="/" className="flx">
+                      <img src={logo} alt="bit form logo" className="ml-2" />
+                      <span className="ml-2">Bit Form</span>
+                    </Link>
+                  </div>
+                  <nav className="top-nav ml-2">
+                    <NavLink
+                      to="/"
+                      className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                    >
+                      {__('My Forms')}
+                    </NavLink>
+
+                    <NavLink
+                      to="/app-settings/recaptcha"
+                      className={active ? 'app-link-active' : ''}
+                    >
+                      {__('App Settings')}
+                    </NavLink>
+                  </nav>
                 </div>
-                <nav className="top-nav ml-2">
+                <nav className="top-nav mr-2">
+                  <a
+                    target="_blank"
+                    href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post"
+                    rel="noreferrer"
+                  >
+                    {__('Review Us')}
+                  </a>
                   <NavLink
-                    to="/"
+                    to="/doc-support"
                     className={({ isActive }) => (isActive ? 'app-link-active' : '')}
                   >
-                    {__('My Forms')}
-                  </NavLink>
-
-                  <NavLink
-                    to="/app-settings/recaptcha"
-                    className={active ? 'app-link-active' : ''}
-                  >
-                    {__('App Settings')}
-                  </NavLink>
-
-                  <NavLink
-                    to="/archived-forms"
-                    className={({ isActive }) => (isActive ? 'app-link-active' : '')}
-                  >
-                    {__('Archived Forms')}
+                    {__('Doc & Support')}
                   </NavLink>
                 </nav>
               </div>
-              <nav className="top-nav mr-2">
-                <a
-                  target="_blank"
-                  href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post"
-                  rel="noreferrer"
-                >
-                  {__('Review Us')}
-                </a>
-                <NavLink
-                  to="/doc-support"
-                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
-                >
-                  {__('Doc & Support')}
-                </NavLink>
-              </nav>
+              <RollbackButton />
             </div>
           </div>
 
@@ -111,7 +107,6 @@ export default function App() {
             <Routes>
               <Route path="/" element={<AllForms />} />
               <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
-              <Route path="/archived-forms" element={<ArchivedForms />} />
               <Route path="/app-settings/*" element={<AppSettings />} />
               <Route path="/doc-support" element={<DocNSupport />} />
               <Route path="*" element={<Error404 />} />
