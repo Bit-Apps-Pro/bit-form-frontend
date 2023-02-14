@@ -338,18 +338,6 @@ function AllFroms() {
     setconfMdl({ ...confMdl })
   }
 
-  const notArchivedForms = allForms.filter(form => form.status !== '2')
-
-  const backToV1 = () => {
-    sessionStorage.removeItem('btcd-fs')
-    sessionStorage.removeItem('btcd-lc')
-    sessionStorage.removeItem('btcd-rh')
-    bitsFetch({}, 'bitforms_migrate_back_to_v1')
-      .then(() => {
-        window.location.reload()
-      })
-  }
-
   return (
     <div id="all-forms">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -375,7 +363,7 @@ function AllFroms() {
           setSnackbar={setSnackbar}
         />
       </Modal>
-      {notArchivedForms.length ? (
+      {allForms.length ? (
         <>
           <div className={css(app.af_header)}>
             <h2>{__('Forms')}</h2>
@@ -387,7 +375,6 @@ function AllFroms() {
             >
               {__('Create Form')}
             </button>
-            <button onClick={backToV1}>back to v1</button>
           </div>
           <div>
             <Table
