@@ -171,6 +171,8 @@ export default function DropdownFieldSettings() {
   function setMinMaxValue(propName, val) {
     const value = isNaN(val) ? '' : Number(val)
     if (value >= 0) {
+      if (!fieldData.err.mn && propName === 'mn') fieldData.err.mn = { show: true }
+      if (!fieldData.err.mx && propName === 'mx') fieldData.err.mx = { show: true }
       if (propName === 'mx' && mn && value < mn && mn) {
         fieldData.mn = value
         fieldData.err.mn.dflt = `Minimum ${value} Option Required`
