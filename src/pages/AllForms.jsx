@@ -24,7 +24,7 @@ import TrashIcn from '../Icons/TrashIcn'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { JCOF } from '../Utils/globalHelpers'
-import { dateTimeFormatter } from '../Utils/Helpers'
+import { dateTimeFormatter, generateAndSaveAtomicCss, generateUpdateFormData, replaceFormId, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
@@ -190,30 +190,45 @@ function AllFroms() {
     })
   }
 
-  const replaceFormId = (data) => {
-    const convertString = JSON.stringify(data)
-    const replaceData = convertString.replace(/b([0-9]+)/g, `b${newFormId}`)
-    return JSON.parse(replaceData)
-  }
-
   const handleDuplicate = (formID) => {
     const loadDuplicate = getFormDetails(formID).then(response => {
       if (response) {
         const formDetail = JSON.parse(response)
-        const { themeColors, themeVars, style, layout, fields } = formDetail
+        const oldFormId = formDetail.form_id
+        const newFormDetail = replaceFormId(formDetail, `b${oldFormId}`, `b${newFormId}`)
+        const { style, themeVars, themeColors } = newFormDetail
+        newFormDetail.style = JCOF.stringify(style)
+        newFormDetail.themeVars = JCOF.stringify(themeVars)
+        newFormDetail.themeColors = JCOF.stringify(themeColors)
+        const newFormName = `${formDetail.form_name} (duplicate)`
+        newFormDetail.form_name = newFormName
+        newFormDetail.formSettings.formName = newFormName
 
-        const newFormName = `${formDetail.form_name} (Duplicate)`
-        formDetail.themeColors = JCOF.stringify(themeColors)
-        formDetail.themeVars = JCOF.stringify(themeVars)
-        formDetail.style = JCOF.stringify(replaceFormId(style))
-        formDetail.form_name = newFormName
-        formDetail.layout = replaceFormId(layout)
-        formDetail.fields = replaceFormId(fields)
-        formDetail.formSettings.formName = newFormName
+        console.log({ newFormDetail })
 
-        return bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(res => {
+        return bitsFetch({ formDetail: newFormDetail, newFormId }, 'bitforms_import_aform').then(res => {
           if (res.success) {
             const { data } = res
+
+            const newConfirmations = data.formSettings.confirmation.type.successMsg
+            const oldConfirmationStyles = style.lgLightStyles.confirmations
+            oldConfirmationStyles.forEach((oldConfirmationStyle, index) => {
+              const newConfirmation = newConfirmations[index]
+              const { id: newConfirmationId } = newConfirmation
+              const { confMsgId: oldConfirmationId } = oldConfirmationStyle
+              const newConfirmationStyle = { ...oldConfirmationStyle }
+              newConfirmationStyle.confMsgId = newConfirmationId
+              newConfirmationStyle.style = replaceFormId(oldConfirmationStyle.style, `-${oldConfirmationId}`, `-${newConfirmationId}`)
+              style.lgLightStyles.confirmations[index] = newConfirmationStyle
+            })
+
+            setFormReponseDataToStates(data)
+            setStyleRelatedStates({ styles: style, themeVars, themeColors })
+            generateAndSaveAtomicCss(data.id)
+            const updatedFormData = generateUpdateFormData(newFormId)
+            bitsFetch(updatedFormData, 'bitforms_update_form')
+            resetRecoilStates()
+
             setAllForms(allforms => formsReducer(allforms, {
               type: 'add',
               data: {

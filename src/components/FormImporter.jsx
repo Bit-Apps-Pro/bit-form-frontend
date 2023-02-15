@@ -8,7 +8,7 @@ import ut from '../styles/2.utilities'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { JCOF } from '../Utils/globalHelpers'
-import { deepCopy } from '../Utils/Helpers'
+import { deepCopy, generateAndSaveAtomicCss, generateUpdateFormData, replaceFormId, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
 import CustomFileUpload from './Utilities/CustomFileUpload'
@@ -78,11 +78,6 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       file.value = ''
     }
   }
-  const replaceFormId = (data) => {
-    const convertString = JSON.stringify(data)
-    const replaceData = convertString.replace(/b([0-9]+)/g, `b${newFormId}`)
-    return JSON.parse(replaceData)
-  }
   const handleImport = () => {
     if (!importProp.formDetail?.layout || !importProp.formDetail?.fields) {
       setError({ ...error, formDetail: 'Please select an exported json file' })
@@ -105,16 +100,38 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
       })
     }
     setLoading(true)
-    formDetail.style = JCOF.stringify(replaceFormId(formDetail.style))
-    formDetail.fields = replaceFormId(formDetail.fields)
-    formDetail.themeVars = JCOF.stringify(formDetail.themeVars)
-    formDetail.themeColors = JCOF.stringify(formDetail.themeColors)
-    formDetail.layout = replaceFormId(formDetail.layout)
-    formDetail.form_name += ' (imported)'
-
-    bitsFetch({ formDetail, newFormId }, 'bitforms_import_aform').then(response => {
+    const { form_id: oldFormId } = formDetail
+    const newFormDetail = replaceFormId(formDetail, `b${oldFormId}`, `b${newFormId}`)
+    const { style, themeVars, themeColors } = newFormDetail
+    newFormDetail.style = JCOF.stringify(style)
+    newFormDetail.themeVars = JCOF.stringify(themeVars)
+    newFormDetail.themeColors = JCOF.stringify(themeColors)
+    const newFormName = `${formDetail.form_name} (imported)`
+    newFormDetail.form_name = newFormName
+    formDetail.formSettings.formName = newFormName
+    bitsFetch({ formDetail: newFormDetail, newFormId }, 'bitforms_import_aform').then(response => {
       if (response.success) {
         const { data } = response
+
+        const newConfirmations = data.formSettings.confirmation.type.successMsg
+        const oldConfirmationStyles = style.lgLightStyles.confirmations
+        oldConfirmationStyles.forEach((oldConfirmationStyle, index) => {
+          const newConfirmation = newConfirmations[index]
+          const { id: newConfirmationId } = newConfirmation
+          const { confMsgId: oldConfirmationId } = oldConfirmationStyle
+          const newConfirmationStyle = { ...oldConfirmationStyle }
+          newConfirmationStyle.confMsgId = newConfirmationId
+          newConfirmationStyle.style = replaceFormId(oldConfirmationStyle.style, `-${oldConfirmationId}`, `-${newConfirmationId}`)
+          style.lgLightStyles.confirmations[index] = newConfirmationStyle
+        })
+
+        setFormReponseDataToStates(data)
+        setStyleRelatedStates({ styles: style, themeVars, themeColors })
+        generateAndSaveAtomicCss(data.id)
+        const updatedFormData = generateUpdateFormData(newFormId)
+        bitsFetch(updatedFormData, 'bitforms_update_form')
+        resetRecoilStates()
+
         setForms(allforms => formsReducer(allforms, {
           type: 'add',
           data: {
