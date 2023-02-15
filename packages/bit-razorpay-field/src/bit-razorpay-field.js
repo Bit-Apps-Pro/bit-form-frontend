@@ -165,7 +165,7 @@ export default class BitRazorpayField {
     const { confirm_close } = modal
     const { contentId } = this.#config
 
-    const totalAmount = Number(amountType === 'fixed' ? amount : this.#getDynamicValue(amountFld)) * 100
+    const totalAmount = Number(amountType === 'dynamic' ? this.#getDynamicValue(amountFld) : amount) * 100
 
     const options = {
       key: this.#config.clientId,
