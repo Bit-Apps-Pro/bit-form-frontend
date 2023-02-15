@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
-import { generateUpdateFormData, getConfirmationStyle, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
+import { generateUpdateFormData, getConfirmationStyle, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Loader from './Loaders/Loader'
 import themeProvider from './style-new/themes/themeProvider'
@@ -35,6 +35,7 @@ export default function MigrationModal() {
               const migratedFormData = generateUpdateFormData(formID)
               const updateFormPromise = bitsFetch(migratedFormData, 'bitforms_update_form').then(() => { setMigratingCount(prevCount => prevCount + 1) })
               updateFormPromises.push(updateFormPromise)
+              resetRecoilStates()
             })
             Promise.all(updateFormPromises)
               .then(() => {
