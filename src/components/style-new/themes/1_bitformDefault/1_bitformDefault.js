@@ -509,18 +509,18 @@ export const defaultFont = {
 }
 
 export const defaultLgLightform = ({ formId }) => ({
-  [`._frm-bg-${formId} *`]: {
+  [`._frm-bg-b${formId} *`]: {
     'box-sizing': 'border-box !important',
     'font-family': 'var(--g-font-family)',
   },
-  [`._frm-bg-${formId}`]: {
+  [`._frm-bg-b${formId}`]: {
     background: 'var(--global-bg-color)',
     // 'background-color': 'var(--global-bg-color)', // discuss with rubel vaiya about this
     // outline: 'var(--g-o-w) var(--g-o-s) var(--g-o-c)',
     // outline: '1px solid hsla(217, 100%, 50%, 100)',
     // 'outline-offset': '10px',
   },
-  [`._frm-${formId}`]: {
+  [`._frm-b${formId}`]: {
     direction: 'var(--dir)',
   },
 })
