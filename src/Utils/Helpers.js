@@ -4,11 +4,11 @@ import { getRecoil, resetRecoil, setRecoil } from 'recoil-nexus'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import {
-  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows
+  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import {
-  $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight
+  $styles, $stylesLgDark, $stylesLgLight, $stylesMdDark, $stylesMdLight, $stylesSmDark, $stylesSmLight,
 } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
@@ -137,6 +137,25 @@ export const omitByObj = (mainObj, omitObj) => {
   })
 
   return newObj
+}
+
+export const replaceFormId = (data, oldFormId, newFormId) => {
+  const oldFormIdRegex = new RegExp(oldFormId, 'g')
+  if (typeof data === 'object' && data !== null) {
+    if (Array.isArray(data)) {
+      return data.map(item => replaceFormId(item, oldFormId, newFormId))
+    }
+    const newObj = {}
+    forEach(Object.keys(data), key => {
+      const newKey = key.replace(oldFormIdRegex, newFormId)
+      newObj[newKey] = replaceFormId(data[key], oldFormId, newFormId)
+    })
+    return newObj
+  }
+  if (typeof data === 'string') {
+    return data.replace(oldFormIdRegex, newFormId)
+  }
+  return data
 }
 
 export const sortArrOfObj = (data, sortLabel) => data.sort((a, b) => {
