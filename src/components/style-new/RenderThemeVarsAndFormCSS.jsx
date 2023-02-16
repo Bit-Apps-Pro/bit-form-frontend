@@ -17,8 +17,8 @@ export default function RenderThemeVarsAndFormCSS() {
       <link rel="stylesheet" href={styles?.font?.fontURL} />
       <style>{json2CssStr('.layout-wrapper', themeVars)}</style>
       <style>{json2CssStr('.layout-wrapper', themeColors)}</style>
-      <style>{json2CssStr(`._frm-bg-${formID}`, styles.form?.[`._frm-bg-${formID}`])}</style>
-      <style>{json2CssStr(`._frm-${formID}`, styles.form?.[`._frm-${formID}`])}</style>
+      <style>{json2CssStr(`._frm-bg-b${formID}`, styles.form?.[`._frm-bg-b${formID}`])}</style>
+      <style>{json2CssStr(`._frm-b${formID}`, styles.form?.[`._frm-b${formID}`])}</style>
     </>
   )
 }

@@ -264,13 +264,13 @@ const FormBuilder = ({ isLoading }) => {
   }
 
   function recheckStyleById(oldStyleText) {
-    if (!new RegExp(`._frm-bg-${formID}|._frm-${formID}`, 'g').test(oldStyleText)
-      || oldStyleText.match(/._frm-bg-\d+/g)?.[0] !== `._frm-bg-${formID}`) {
+    if (!new RegExp(`._frm-bg-b${formID}|._frm-b${formID}`, 'g').test(oldStyleText)
+      || oldStyleText.match(/._frm-bg-b\d+/g)?.[0] !== `._frm-bg-b${formID}`) {
       let replaceId
       if (/._frm-bg-Blank/gi.test(oldStyleText)) {
         replaceId = 'Blank'
       } else {
-        replaceId = oldStyleText.match(/._frm-bg-\d+/g)?.[0].replace(/._frm-bg-/g, '')
+        replaceId = oldStyleText.match(/._frm-bg-b\d+/g)?.[0].replace(/._frm-bg-b/g, '')
       }
       if (replaceId !== undefined) {
         oldStyleText = oldStyleText.replace(new RegExp(`-${replaceId}`, 'g'), `-${formID}`)

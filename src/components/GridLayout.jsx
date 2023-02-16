@@ -740,8 +740,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
       <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
         <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, margin: '23px 13px 400px 0', border: '1px solid lightblue' }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
-          <div className={`_frm-bg-${formID}`} data-dev-_frm-bg={formID}>
-            <div className={`_frm-${formID}`} data-dev-_frm={formID}>
+          <div className={`_frm-bg-b${formID}`} data-dev-_frm-bg={formID}>
+            <div className={`_frm-b${formID}`} data-dev-_frm={formID}>
 
               {!styleMode ? (
                 <ResponsiveReactGridLayout

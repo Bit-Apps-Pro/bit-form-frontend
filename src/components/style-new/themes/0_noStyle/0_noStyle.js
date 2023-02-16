@@ -503,14 +503,14 @@ export const font = {
 }
 
 export const lgLightform = ({ formId }) => ({
-  [`._frm-bg-${formId} *`]: {
+  [`._frm-bg-b${formId} *`]: {
     'box-sizing': 'border-box !important',
     'font-family': 'var(--g-font-family)',
   },
-  [`._frm-bg-${formId}`]: {
+  [`._frm-bg-b${formId}`]: {
     background: 'var(--global-bg-color)',
   },
-  [`._frm-${formId}`]: {
+  [`._frm-b${formId}`]: {
     direction: 'var(--dir)',
   },
 })
