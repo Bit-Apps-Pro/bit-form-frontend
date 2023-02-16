@@ -58,7 +58,7 @@ const RollbackButton = () => {
           </p>
           <p>
             <CheckMarkIcn size={14} cls={css(ut.mr1)} />
-            <span>Do not close the browser tab during the process.</span>
+            <span>After the rollback, you can choose to migrate to Bit Form v2 again.</span>
           </p>
           <p>
             <CheckMarkIcn size={14} cls={css(ut.mr1)} />
@@ -66,7 +66,7 @@ const RollbackButton = () => {
           </p>
           <p>
             <CheckMarkIcn size={14} cls={css(ut.mr1)} />
-            <span>After the rollback, you can choose to migrate to Bit Form v2 again.</span>
+            <span>Do not close the browser tab during the process.</span>
           </p>
           <small>Type &quot;CONFIRM&quot; in the input box below to proceed:</small>
           <input ref={confirmTxtBox} type="text" placeholder="Type CONFIRM" onChange={handleConfirmTxt} />
