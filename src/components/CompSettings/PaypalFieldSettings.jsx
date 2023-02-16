@@ -58,8 +58,9 @@ export default function PaypalFieldSettings() {
       fieldData[name] = value
 
       if (name === 'locale') {
-        const localeArr = fieldData.locale.split(' - ')
+        const localeArr = value.split(' - ')
         fieldData.locale = localeArr[localeArr.length - 1]
+        fieldData.language = value
       }
     } else {
       delete fieldData[name]
@@ -232,6 +233,7 @@ export default function PaypalFieldSettings() {
                   className="w-10 btcd-paper-drpdwn mt-1"
                   options={localeCodeOptions()}
                   onChange={val => handleInput('locale', val)}
+                  defaultValue={fieldData.language}
                   largeData
                   singleSelect
                 />
@@ -242,6 +244,7 @@ export default function PaypalFieldSettings() {
                   className="w-10 btcd-paper-drpdwn mt-1 btcd-ttc"
                   options={fundOptions()}
                   onChange={val => handleInput('disableFunding', val)}
+                  defaultValue={fieldData.disableFunding}
                 />
               </div>
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
