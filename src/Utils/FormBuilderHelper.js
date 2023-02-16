@@ -691,12 +691,12 @@ const genaratePropertyName = (propertyName) => {
 export const calculateFormGutter = (styles, formId) => {
   let gutter = 0
   if (!styles) return gutter
-  if (styles[`._frm-${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-${formId}`]['border-width']) }
-  if (styles[`._frm-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-${formId}`].padding) }
-  if (styles[`._frm-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-${formId}`].margin) }
-  if (styles[`._frm-bg-${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`]['border-width']) }
-  if (styles[`._frm-bg-${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].padding) }
-  if (styles[`._frm-bg-${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-bg-${formId}`].margin) }
+  if (styles[`._frm-b${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-b${formId}`]['border-width']) }
+  if (styles[`._frm-b${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-b${formId}`].padding) }
+  if (styles[`._frm-b${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-b${formId}`].margin) }
+  if (styles[`._frm-bg-b${formId}`]?.['border-width']) { gutter += propertyValueSumX(styles[`._frm-bg-b${formId}`]['border-width']) }
+  if (styles[`._frm-bg-b${formId}`]?.padding) { gutter += propertyValueSumX(styles[`._frm-bg-b${formId}`].padding) }
+  if (styles[`._frm-bg-b${formId}`]?.margin) { gutter += propertyValueSumX(styles[`._frm-bg-b${formId}`].margin) }
   return gutter
 }
 

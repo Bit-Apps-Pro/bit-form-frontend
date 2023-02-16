@@ -28,7 +28,7 @@ export default function BuilderSettings() {
   if (darkModeConfig?.darkModeSelector && darkModeConfig?.preferSystemColorScheme) darkModePrefereceInitialValue = 'selector-and-system-preference'
 
   const [darkModePreference, setDarkModePreference] = useState(darkModePrefereceInitialValue)
-  const formWidth = staticStylesState.styleMergeWithAtomicClasses[`${brkpnt}LightStyles`]?.form?.[`._frm-bg-${formID}`]?.width
+  const formWidth = staticStylesState.styleMergeWithAtomicClasses[`${brkpnt}LightStyles`]?.form?.[`._frm-bg-b${formID}`]?.width
 
   const handleDarkModePreference = (value) => {
     setDarkModePreference(value)
@@ -79,7 +79,7 @@ export default function BuilderSettings() {
     const preUnit = getStrFromStr(formWidth)
     const convertValue = unitConverter(unit, val, preUnit)
     setStaticStyleState(preStyle => produce(preStyle, draft => {
-      const path = `styleMergeWithAtomicClasses->${brkpnt}LightStyles->form->._frm-bg-${formID}->width`
+      const path = `styleMergeWithAtomicClasses->${brkpnt}LightStyles->form->._frm-bg-b${formID}->width`
       const value = convertValue + unit
       if (val === '') {
         deleteNestedObj(draft, path)

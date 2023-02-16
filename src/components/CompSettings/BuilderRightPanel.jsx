@@ -91,11 +91,11 @@ function BuilderRightPanel({ style, styleDispatch }) {
               </Route> */}
                 <Route
                   path={`${pathname}/style/bg`}
-                  element={<StyleEditor editorLabel={__('Form Background')} compStyle={style} cls={`._frm-bg-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />}
+                  element={<StyleEditor editorLabel={__('Form Background')} compStyle={style} cls={`._frm-bg-b${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.formbg} formID={formID} />}
                 />
                 <Route
                   path={`${pathname}/style/f`}
-                  element={<StyleEditor editorLabel={__('Form style')} compStyle={style} cls={`._frm-${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />}
+                  element={<StyleEditor editorLabel={__('Form style')} compStyle={style} cls={`._frm-b${formID}`} styleDispatch={styleDispatch} brkPoint={brkPoint} setResponsiveView={setResponsiveView} styleConfig={styleEditorConfig.form} formID={formID} />}
                 />
                 <Route
                   path={`${pathname}/style/fb`}

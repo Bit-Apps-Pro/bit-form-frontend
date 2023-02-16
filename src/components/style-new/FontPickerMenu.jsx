@@ -135,7 +135,7 @@ export default function FontPickerMenu({ id }) {
       draft.font.fontWeightVariants = weight
       draft.font.fontStyle = style
       draft.font.fontURL = url
-      draft.form[`._frm-bg-${formID}`]['font-family'] = fontFamily
+      draft.form[`._frm-bg-b${formID}`]['font-family'] = fontFamily
     }))
     setThemeVars(prvState => produce(prvState, draft => {
       draft['--g-font-family'] = fontFamily

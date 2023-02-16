@@ -562,7 +562,7 @@ export default function Bitforms(props) {
       <form
         noValidate
         id={`form-${props.contentID}`}
-        className={`_frm-bg-${props.formID}`}
+        className={`_frm-bg-b${props.formID}`}
         ref={props.refer}
         method="POST"
         encType={props.file ? 'multipart/form-data' : ''}
