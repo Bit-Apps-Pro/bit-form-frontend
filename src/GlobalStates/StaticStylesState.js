@@ -12,7 +12,7 @@ export const $staticStylesState = atom({
       smLightStyles: { form: {} },
     },
     staticStyles: {
-      '.d-none': { display: 'none' },
+      '.d-none': { display: 'none !important' },
       '.form-msg': {
         background: '#ffe8c3',
         'border-radius': '6px',
@@ -41,9 +41,9 @@ export const $staticStylesState = atom({
         transition: 'all 0.2s ease',
       },
       '.fld-hide': {
-        'min-height': '0px',
-        height: 0,
-        overflow: 'hidden',
+        'min-height': '0px !important',
+        height: '0px !important',
+        overflow: 'hidden !important',
       },
       '@keyframes rotation': {
         '0%': {
