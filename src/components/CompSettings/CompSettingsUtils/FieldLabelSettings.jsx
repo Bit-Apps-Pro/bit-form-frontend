@@ -110,6 +110,7 @@ export default function FieldLabelSettings() {
         toggleChecked={!fieldData.valid.hideLbl}
         open={!fieldData.valid.hideLbl}
         disable={fieldData.valid.hideLbl}
+        proTip="Use this feature? please buy pro version."
       >
         <div>
           <div className={css({ w: '97%', mx: 5 })}>

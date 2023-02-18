@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import { useRecoilValue } from 'recoil'
@@ -7,8 +7,8 @@ import { $bits } from '../../../../GlobalStates/GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
-import { __ } from '../../../../Utils/i18nwrap'
 import Cooltip from '../../../Utilities/Cooltip'
+import ProBadge from '../../../Utilities/ProBadge'
 import RenderHtml from '../../../Utilities/RenderHtml'
 import SingleToggle from '../../../Utilities/SingleToggle'
 
@@ -31,6 +31,7 @@ export default function SimpleAccordion({
   actionComponent,
   icnStrok = 2,
   onClick,
+  proTip,
 }) {
   const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState((!disable && open) || false)
@@ -74,12 +75,10 @@ export default function SimpleAccordion({
     height = parseFloat(height)
     marginBlock = parseFloat(marginBlock)
     element.style.overflow = overflow
-
     return Math.round(height + marginBlock)
   }
 
   const setAccHeight = () => setH(getAbsoluteHeight(nodeRef.current))
-
   return (
     <div
       role="button"
@@ -100,6 +99,14 @@ export default function SimpleAccordion({
         <div className={css(SimpleAccordionStyle.flxbwn)}>
           <span className={`title ${css(SimpleAccordionStyle.dflx)} ${titleCls}`}>
             {title}
+            {/* {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>} */}
+            {!isPro && !bits.isPro && proTip && (
+              <ProBadge width="18">
+                <div className="txt-body">
+                  <RenderHtml html={proTip} />
+                </div>
+              </ProBadge>
+            )}
             {tip && (
               <Cooltip {...{ ...tipProps, className: 'hover-tip' }}>
                 <div className="txt-body">
@@ -108,7 +115,6 @@ export default function SimpleAccordion({
               </Cooltip>
             )}
 
-            {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>}
           </span>
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             <div onClick={cancelBubble} onKeyDown={cancelBubble} role="button" tabIndex="-1">
