@@ -37,6 +37,8 @@ const customProperties = {
     '-webkit-appearance': $ || 'none',
     '-moz-appearance': $ || 'none',
   }),
+  bpf: $ => ({ backdropFilter: $ || 'none',
+    '-webkit-backdrop-filter': $ || 'none' }),
   fr: $ => ({ filter: $ }),
   bs: $ => ({ boxShadow: $ }),
   ls: $ => ({ listStyle: $ }),
