@@ -7,6 +7,7 @@ import { $bits } from '../../../../GlobalStates/GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
+import { IS_PRO } from '../../../../Utils/Helpers'
 import Cooltip from '../../../Utilities/Cooltip'
 import ProBadge from '../../../Utilities/ProBadge'
 import RenderHtml from '../../../Utilities/RenderHtml'
@@ -101,7 +102,7 @@ export default function SimpleAccordion({
           <span className={`title ${css(SimpleAccordionStyle.dflx)} ${titleCls}`}>
             {title}
             {/* {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>} */}
-            {isPro && !bits.isPro && (
+            {isPro && !IS_PRO && (
               <ProBadge width="18">
                 <div className="txt-body">
                   <RenderHtml html={proTip || 'this is pro feature'} />
@@ -146,7 +147,7 @@ export default function SimpleAccordion({
             onClick={cancelBubble}
             onKeyDown={cancelBubble}
           >
-            {isPro && !bits.isPro && <PremiumOverlay />}
+            {isPro && !IS_PRO && <PremiumOverlay />}
             {children}
           </div>
         </CSSTransition>
