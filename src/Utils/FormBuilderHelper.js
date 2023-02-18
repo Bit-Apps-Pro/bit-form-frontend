@@ -6,7 +6,7 @@ import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
   $additionalSettings,
   $bits,
-  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $selectedFieldId, $updateBtn,
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $selectedFieldId, $updateBtn
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
@@ -221,6 +221,7 @@ export const propertyValueSumX = (propertyValue = '') => {
 const FIELDS_EXTRA_ATTR = {
   paypal: { pro: true, onlyOne: true, setDefaultPayConfig: true },
   razorpay: { pro: true, onlyOne: true, setDefaultPayConfig: true },
+  'advanced-file-up': { pro: true },
   recaptcha: { onlyOne: true },
   submit: { onlyOne: true },
   reset: { onlyOne: true },
