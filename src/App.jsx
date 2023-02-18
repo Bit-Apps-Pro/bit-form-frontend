@@ -3,11 +3,13 @@ import loadable from '@loadable/component'
 import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { useRecoilValue } from 'recoil'
 import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import MigrationModal from './components/MigrationModal'
 import RollbackButton from './components/RollbackButton'
+import { $bits } from './GlobalStates/GlobalStates'
 import AllForms from './pages/AllForms'
 import DocNSupport from './pages/DocNSupport'
 import { __ } from './Utils/i18nwrap'
@@ -31,6 +33,7 @@ const Nav = ({ setActive }) => {
 }
 
 export default function App() {
+  const bits = useRecoilValue($bits)
   const [active, setActive] = useState(false)
   useEffect(removeUnwantedCSS, [])
 
@@ -99,7 +102,9 @@ export default function App() {
                   </NavLink>
                 </nav>
               </div>
-              <RollbackButton />
+              {bits.canRollbackToV1 && (
+                <RollbackButton />
+              )}
             </div>
           </div>
 
