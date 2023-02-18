@@ -30,7 +30,8 @@ export default function templateProvider(templateSlug, formId) {
 
   fldKeys.forEach((fldKey, i) => {
     const newKey = `b${formId}-${i + 1}`
-    const fldData = fields[fldKey]
+    const fldData = { ...fields[fldKey] }
+    fldData.fieldName = `${fldData.typ}-${newKey}`
     fieldsWithKey[newKey] = fldData
     const lgLayoutData = layouts.lg.find(lay => lay.i === fldKey)
     const mdLayoutData = layouts.md.find(lay => lay.i === fldKey)
