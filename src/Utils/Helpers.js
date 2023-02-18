@@ -4,7 +4,7 @@ import { getRecoil, resetRecoil, setRecoil } from 'recoil-nexus'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import {
-  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
+  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import {
@@ -823,3 +823,13 @@ export const generateUpdateFormData = (savedFormId) => {
 
   return formData
 }
+
+export const IS_PRO = (() => {
+  let bits = {}
+  try {
+    bits = getRecoil($bits)
+  } catch (_) {
+    bits = window?.bits
+  }
+  return !!bits?.isPro
+})()
