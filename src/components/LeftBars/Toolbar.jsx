@@ -47,6 +47,8 @@ import currencyList from '../../Utils/StaticData/currencies.json'
 import phoneNumberList from '../../Utils/StaticData/phone-number-code.json'
 import { searchKey } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
+import ProBadge from '../Utilities/ProBadge'
+import RenderHtml from '../Utilities/RenderHtml'
 import Tools from './Tools'
 
 function Toolbar({ setNewData }) {
@@ -304,6 +306,7 @@ function Toolbar({ setNewData }) {
       keywords: 'Advanced File Upload, Attachment, photo, image, video, audio, file, document, doc, pdf, excel, ppt',
       icn: <AdvanceFileUpIcn w="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+      pro: 'This field is available only in pro version',
       elm: {
         typ: 'advanced-file-up',
         lbl: __('Advanced File Upload'),
@@ -645,6 +648,7 @@ function Toolbar({ setNewData }) {
       keywords: 'Paypal, payment, credit card, credit card payment',
       icn: <PaypalIcn w="23" />,
       pos: { h: 200, w: 60, i: 'shadow_block', minW: 20 },
+      pro: 'This field is available only in pro version',
       elm: {
         typ: 'paypal',
         adminLbl: __('Paypal'),
@@ -664,6 +668,7 @@ function Toolbar({ setNewData }) {
       keywords: 'Razorpay, payment, credit card, credit card payment',
       icn: <RazorPayIcn w="17" h="23" />,
       pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+      pro: 'This field is available only in pro version',
       elm: {
         typ: 'razorpay',
         lbl: __('Razorpay'),
@@ -928,6 +933,13 @@ function Toolbar({ setNewData }) {
                   <Cooltip className={`${css(ut.w1)} hover-tip`} icnSize={15}>
                     <div className="txt-body">{tool.tip}</div>
                   </Cooltip>
+                )}
+                {tool.pro && (
+                  <ProBadge width="18">
+                    <div className="txt-body">
+                      <RenderHtml html={tool.pro} />
+                    </div>
+                  </ProBadge>
                 )}
               </Tools>
             ))}
