@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../../Utils/Helpers'
+import { deepCopy, IS_PRO } from '../../../Utils/Helpers'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import ErrorMessageSettings from './ErrorMessageSettings'
 
@@ -14,6 +14,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
   const fieldData = deepCopy(fields[fldKey])
 
   const setShowErrMsg = e => {
+    if (!IS_PRO) return
     const { checked } = e.target
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err[type]) fieldData.err[type] = {}
@@ -41,7 +42,9 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
       switching
       tipProps={{ width: 200, icnSize: 17 }}
       open={fieldData?.err?.[type]?.[isUnique]}
-      disable={!fieldData?.err?.[type]?.[isUnique]}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...IS_PRO && { disable: !fieldData?.err?.[type]?.[isUnique] }}
+      isPro
     >
       <ErrorMessageSettings
         id={`${type}-stng`}

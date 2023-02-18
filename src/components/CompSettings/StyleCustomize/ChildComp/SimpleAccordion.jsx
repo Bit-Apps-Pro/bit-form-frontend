@@ -11,6 +11,7 @@ import Cooltip from '../../../Utilities/Cooltip'
 import ProBadge from '../../../Utilities/ProBadge'
 import RenderHtml from '../../../Utilities/RenderHtml'
 import SingleToggle from '../../../Utilities/SingleToggle'
+import PremiumOverlay from './PremiumSettingsOverlay'
 
 export default function SimpleAccordion({
   className,
@@ -100,10 +101,10 @@ export default function SimpleAccordion({
           <span className={`title ${css(SimpleAccordionStyle.dflx)} ${titleCls}`}>
             {title}
             {/* {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>} */}
-            {!isPro && !bits.isPro && proTip && (
+            {isPro && !bits.isPro && (
               <ProBadge width="18">
                 <div className="txt-body">
-                  <RenderHtml html={proTip} />
+                  <RenderHtml html={proTip || 'this is pro feature'} />
                 </div>
               </ProBadge>
             )}
@@ -141,10 +142,11 @@ export default function SimpleAccordion({
         >
           <div
             ref={nodeRef}
-            className="body"
+            className="body pos-rel"
             onClick={cancelBubble}
             onKeyDown={cancelBubble}
           >
+            {isPro && !bits.isPro && <PremiumOverlay />}
             {children}
           </div>
         </CSSTransition>
