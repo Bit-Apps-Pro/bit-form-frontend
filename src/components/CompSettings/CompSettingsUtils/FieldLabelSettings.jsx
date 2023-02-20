@@ -129,6 +129,7 @@ export default function FieldLabelSettings() {
               styleRoute="lbl-pre-i"
               setIcon={() => setIconModel('lblPreIcn')}
               removeIcon={() => removeIcon('lblPreIcn')}
+              isPro
             />
 
             <FieldIconSettings
@@ -137,6 +138,7 @@ export default function FieldLabelSettings() {
               styleRoute="lbl-suf-i"
               setIcon={() => setIconModel('lblSufIcn')}
               removeIcon={() => removeIcon('lblSufIcn')}
+              isPro
             />
           </div>
         </div>

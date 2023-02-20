@@ -63,7 +63,6 @@ export default function EditOptions({
             defaultActive={editOptionType}
             wideTab
           />
-
           {editOptionType === 'Visual' && (
             <VisualOptionsTab
               optKey={optKey}
@@ -79,6 +78,7 @@ export default function EditOptions({
               hideNDisabledOptions={hideNDisabledOptions}
             />
           )}
+
           {editOptionType === 'Text' && (
             <TextOptionsTab
               options={options}
@@ -87,6 +87,7 @@ export default function EditOptions({
               lblKey={lblKey}
               valKey={valKey}
               imgKey={imgKey}
+              isPro
             />
           )}
           {editOptionType === 'Import' && (
@@ -95,6 +96,7 @@ export default function EditOptions({
               lblKey={lblKey}
               valKey={valKey}
               setEditOptionType={setEditOptionType}
+              isPro
             />
           )}
         </>

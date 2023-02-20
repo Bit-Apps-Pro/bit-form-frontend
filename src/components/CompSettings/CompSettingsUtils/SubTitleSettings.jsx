@@ -120,6 +120,7 @@ export default function SubTitleSettings() {
           styleRoute="sub-titl-pre-i"
           setIcon={() => setIconModel('subTlePreIcn')}
           removeIcon={() => removeIcon('subTlePreIcn')}
+          isPro
         />
 
         <FieldIconSettings
@@ -128,6 +129,7 @@ export default function SubTitleSettings() {
           styleRoute="sub-titl-suf-i"
           setIcon={() => setIconModel('subTleSufIcn')}
           removeIcon={() => removeIcon('subTleSufIcn')}
+          isPro
         />
 
       </SimpleAccordion>

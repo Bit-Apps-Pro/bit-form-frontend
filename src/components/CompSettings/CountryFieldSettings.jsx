@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
@@ -5,7 +6,6 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -21,6 +21,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import OptionsListHeightSettings from './CompSettingsUtils/OptionsListHeightSettings'
 import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
@@ -157,6 +158,7 @@ const CountryFieldSettings = () => {
         toggleChecked={showSearchPh}
         open={showSearchPh}
         disable={!showSearchPh}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -177,10 +179,11 @@ const CountryFieldSettings = () => {
         id="cntry-nt-fund-stng"
         title={__('Country Not Found Text')}
         className={css(FieldStyle.fieldSection)}
-      // switching
-      // toggleAction={hideAdminLabel}
-      // toggleChecked={fieldData?.adminLblHide}
-      // disable={!fieldData?.adminLblHide}
+        // switching
+        // toggleAction={hideAdminLabel}
+        // toggleChecked={fieldData?.adminLblHide}
+        // disable={!fieldData?.adminLblHide}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -204,6 +207,7 @@ const CountryFieldSettings = () => {
         title={__('Show Selected Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage')}
         isChecked={selectedFlagImage}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -237,6 +241,7 @@ const CountryFieldSettings = () => {
         title={__('Option Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage')}
         isChecked={optionFlagImage}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -248,6 +253,7 @@ const CountryFieldSettings = () => {
         title={__('Detect Country By IP')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp')}
         isChecked={detectCountryByIp}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -259,6 +265,7 @@ const CountryFieldSettings = () => {
         title={__('Detect Country By Geo')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo')}
         isChecked={detectCountryByGeo}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -267,23 +274,8 @@ const CountryFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)}>
-        <div className={css({ mx: 5 })}>
-          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
-            <span>{__('Maximum:')}</span>
-            <input
-              data-testid="nmbr-stng-min-inp"
-              title="Maximum height of Option List"
-              aria-label="Maximum height of Option List"
-              placeholder="Type Maximum Height..."
-              className={css(FieldStyle.input, FieldStyle.w140)}
-              type="number"
-              value={maxHeight}
-              onChange={e => handleConfigChange(e.target.value, 'maxHeight')}
-            />
-          </div>
-        </div>
-      </SimpleAccordion>
+      <OptionsListHeightSettings />
+
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>

@@ -2,11 +2,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
-import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../../GlobalStates/GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
+import { IS_PRO } from '../../../../Utils/Helpers'
 import Cooltip from '../../../Utilities/Cooltip'
 import ProBadge from '../../../Utilities/ProBadge'
 import RenderHtml from '../../../Utilities/RenderHtml'
@@ -34,7 +33,6 @@ export default function SimpleAccordion({
   onClick,
   proTip,
 }) {
-  const bits = useRecoilValue($bits)
   const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
   const nodeRef = useRef(null)
@@ -65,7 +63,7 @@ export default function SimpleAccordion({
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (disable !== undefined) setTgl(!disable) }, [disable])
-
+  const allowToggleAction = !isPro || IS_PRO
   const cancelBubble = (e) => e.stopPropagation()
 
   const getAbsoluteHeight = (el) => {
@@ -101,10 +99,10 @@ export default function SimpleAccordion({
           <span className={`title ${css(SimpleAccordionStyle.dflx)} ${titleCls}`}>
             {title}
             {/* {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>} */}
-            {isPro && !bits.isPro && (
+            {isPro && !IS_PRO && (
               <ProBadge width="18">
                 <div className="txt-body">
-                  <RenderHtml html={proTip || 'this is pro feature'} />
+                  <RenderHtml html={proTip} />
                 </div>
               </ProBadge>
             )}
@@ -120,7 +118,13 @@ export default function SimpleAccordion({
           <div className={css(SimpleAccordionStyle.flxbwn)}>
             <div onClick={cancelBubble} onKeyDown={cancelBubble} role="button" tabIndex="-1">
               {switching && (
-                <SingleToggle id={id} className={css(ut.mr2)} name={toggleName || title} action={toggleAction} isChecked={toggleChecked || ''} />
+                <SingleToggle
+                  id={id}
+                  className={css(ut.mr2)}
+                  name={toggleName || title}
+                  {...allowToggleAction && { action: toggleAction }}
+                  isChecked={toggleChecked || ''}
+                />
               )}
               {actionComponent && actionComponent}
             </div>
@@ -146,7 +150,7 @@ export default function SimpleAccordion({
             onClick={cancelBubble}
             onKeyDown={cancelBubble}
           >
-            {isPro && !bits.isPro && <PremiumOverlay />}
+            {isPro && !IS_PRO && <PremiumOverlay />}
             {children}
           </div>
         </CSSTransition>

@@ -119,6 +119,7 @@ export default function HelperTxtSettings() {
           styleRoute="hlp-txt-pre-i"
           setIcon={() => setIconModel('hlpPreIcn')}
           removeIcon={() => removeIcon('hlpPreIcn')}
+          isPro
         />
         <FieldIconSettings
           label="Trailing Icon"
@@ -126,6 +127,7 @@ export default function HelperTxtSettings() {
           styleRoute="hlp-txt-suf-i"
           setIcon={() => setIconModel('hlpSufIcn')}
           removeIcon={() => removeIcon('hlpSufIcn')}
+          isPro
         />
 
       </SimpleAccordion>
