@@ -335,7 +335,7 @@ export default class BitDropdownField {
       this.#selectedOptImgElm.src = this.#placeholderImage
       this.#handlePlaceholderImgCls(this.#selectedOptImgElm)
     }
-    this.value = this.#config.defaultValue || ''
+    this.value = ''
     if (this.#config.multipleSelect && this.#config.showChip) this.#generateSelectedOptChips([])
     if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
     if (this.#config.selectedOptClearable) this.#setStyleProperty(this.#selectedOptClearBtnElm, 'display', 'none')
@@ -577,6 +577,9 @@ export default class BitDropdownField {
 
       this.#selectedOptValue = this.#generateStringFromArr(valueArr)
     } else {
+      const prevSelected = this.#select('.selected-opt')
+      if (prevSelected) this.#removeClassName(prevSelected, 'selected-opt')
+      this.#setClassName(optElm, 'selected-opt')
       this.#selectedOptValue = val
     }
 
@@ -928,9 +931,9 @@ export default class BitDropdownField {
   }
 
   set activelist(name) {
-    const listElm = this.#select(`.${this.fieldKey}-option-list[data-list=${name}]`)
+    const listElm = this.#select(`.${this.fieldKey}-option-list[data-list="${name}"]`)
     if (listElm) {
-      const notActiveListElms = this.#selectAll(`.${this.fieldKey}-option-list:not([data-list=${name}])`)
+      const notActiveListElms = this.#selectAll(`.${this.fieldKey}-option-list:not([data-list="${name}"])`)
       notActiveListElms.forEach(elm => this.#removeClassName(elm, 'active-list'))
       this.#setClassName(listElm, 'active-list')
       this.setSelectedOption('')
