@@ -73,10 +73,9 @@ export default function Apikey() {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '135%', left: -12, width: '104%', marginTop: 10 }}>
             <div className="pro">
-              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
-                  {__('Premium')}
+                  {__('Available On Pro')}
                 </span>
               </a>
             </div>

@@ -135,11 +135,10 @@ export default function GCLID() {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', top: -3 }}>
             <div className="pro">
-              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
-                  {__('Premium')}
+                  {__('Available On Pro')}
                 </span>
               </a>
             </div>
