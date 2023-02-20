@@ -127,6 +127,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
         width: '17px',
         'background-color': 'var(--bg-20) !important',
         color: 'var(--global-font-color) !important',
+        padding: '0px',
       },
 
       [`.${fk}-selected-opt-lbl .chip-clear-btn:hover`]: {
