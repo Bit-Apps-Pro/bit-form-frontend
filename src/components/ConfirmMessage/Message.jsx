@@ -10,6 +10,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
+import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
@@ -21,6 +22,7 @@ import SliderModal from '../Utilities/SliderModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import TinyMCE from '../Utilities/TinyMCE'
 import ConfirmMsgPreview from './ConfirmMsgPreview'
+import ProOverlay from './ProOverlay'
 
 function Message({ id, msgItem }) {
   const { css } = useFela()
@@ -78,6 +80,7 @@ function Message({ id, msgItem }) {
   }
 
   const handleColorTypeChange = ({ target: { name, value } }) => {
+    if (!IS_PRO) return
     if (name === 'closeColorType') {
       setCloseColorType(value)
     } else if (name === 'closeIconColorType') {
@@ -86,6 +89,7 @@ function Message({ id, msgItem }) {
   }
 
   const handleConfirmationStyle = ({ target: { name, value } }) => {
+    if (!IS_PRO) return
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.styles[name] = value
     }))
@@ -93,6 +97,7 @@ function Message({ id, msgItem }) {
   }
 
   const handleConfirmationShadow = ({ target: { name, value } }, index) => {
+    if (!IS_PRO) return
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.styles.boxShadow[index][name] = value
     }))
@@ -107,6 +112,7 @@ function Message({ id, msgItem }) {
   }
 
   const handleAddShadow = () => {
+    if (!IS_PRO) return
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.styles.boxShadow.push({
         x: '0px',
@@ -129,6 +135,7 @@ function Message({ id, msgItem }) {
 
   let values = styles?.padding?.trim().split(' ')
   const handleValues = ({ value: val, unit, id: index }) => {
+    if (!IS_PRO) return
     values = styles?.padding?.trim().split(' ')
     const preUnit = getStrFromStr(values[index] || 'px')
     const convertvalue = unitConverter(unit, val, preUnit)
@@ -236,9 +243,30 @@ function Message({ id, msgItem }) {
           </div>
           <div>
             <span className={css({ w: 130, fw: 500 })}>{__('Message Type')}</span>
-            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'snackbar'} title={<small className="txt-dp"><b>Snackbar</b></small>} value="snackbar" />
-            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'modal'} title={<small className="txt-dp"><b>Modal</b></small>} value="modal" />
-            <CheckBox radio name={`msg-type-${id}`} onChange={handleMsgType} checked={msgType === 'below'} title={<small className="txt-dp"><b>Below of Form</b></small>} value="below" />
+            <CheckBox
+              radio
+              name={`msg-type-${id}`}
+              onChange={handleMsgType}
+              checked={msgType === 'snackbar'}
+              title={<small className="txt-dp"><b>Snackbar</b></small>}
+              value="snackbar"
+            />
+            <CheckBox
+              radio
+              name={`msg-type-${id}`}
+              onChange={handleMsgType}
+              checked={msgType === 'modal'}
+              title={<small className="txt-dp"><b>Modal</b></small>}
+              value="modal"
+            />
+            <CheckBox
+              radio
+              name={`msg-type-${id}`}
+              onChange={handleMsgType}
+              checked={msgType === 'below'}
+              title={<small className="txt-dp"><b>Below of Form</b></small>}
+              value="below"
+            />
           </div>
           <div className={css({ flx: 1, cg: 5 })}>
             <div className={css({ flx: 'align-center' })}>
@@ -332,235 +360,408 @@ function Message({ id, msgItem }) {
           </div>
           <div className={css({ h: '210px', bd: 'white', bt: '1px solid #abaaaa' })}>
             <div className={css({ p: '10px 20px' })}>
-              <button type="button" name="background" className={`${css(uiStyles.styleButton)} ${activePeperties === 'background' && 'active'}`} onClick={handleActiveProperties}>
+              <button
+                type="button"
+                name="background"
+                className={`${css(uiStyles.styleButton)} ${activePeperties === 'background' && 'active'}`}
+                onClick={handleActiveProperties}
+              >
                 Background
               </button>
-              <button type="button" name="border" className={`${css(uiStyles.styleButton)} ${activePeperties === 'border' && 'active'}`} onClick={handleActiveProperties}>
+              <button
+                type="button"
+                name="border"
+                className={`${css(uiStyles.styleButton)} ${activePeperties === 'border' && 'active'}`}
+                onClick={handleActiveProperties}
+              >
                 Border
               </button>
-              <button type="button" name="shadow" className={`${css(uiStyles.styleButton)} ${activePeperties === 'shadow' && 'active'}`} onClick={handleActiveProperties}>
+              <button
+                type="button"
+                name="shadow"
+                className={`${css(uiStyles.styleButton)} ${activePeperties === 'shadow' && 'active'}`}
+                onClick={handleActiveProperties}
+              >
                 Shadow
               </button>
-              <button type="button" name="width" className={`${css(uiStyles.styleButton)} ${activePeperties === 'width' && 'active'}`} onClick={handleActiveProperties}>
+              <button
+                type="button"
+                name="width"
+                className={`${css(uiStyles.styleButton)} ${activePeperties === 'width' && 'active'}`}
+                onClick={handleActiveProperties}
+              >
                 Width
               </button>
-              <button type="button" name="padding" className={`${css(uiStyles.styleButton)} ${activePeperties === 'padding' && 'active'}`} onClick={handleActiveProperties}>
+              <button
+                type="button"
+                name="padding"
+                className={`${css(uiStyles.styleButton)} ${activePeperties === 'padding' && 'active'}`}
+                onClick={handleActiveProperties}
+              >
                 Padding
               </button>
             </div>
-            <div className="properties-container">
+            <div className={`properties-container ${css({ pn: 'relative' })}`}>
               {activePeperties === 'background' && (
-                <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px', rg: 5 })}>
-                  <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Message Background Color</span>
-                    <input type="color" name="background" className={css({ ml: 88 }, uiStyles.input, uiStyles.colorInput)} value={styles?.background} onChange={handleConfirmationStyle} />
-                    <input type="text" name="background" className={css({ w: 165 }, uiStyles.input)} value={styles?.background} onChange={handleConfirmationStyle} />
+                <>
+                  <ProOverlay />
+                  <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px', rg: 5 })}>
+                    <div className={css({ flx: 'align-center', cg: 5 })}>
+                      <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Message Background Color</span>
+                      <input
+                        type="color"
+                        name="background"
+                        className={css({ ml: 88 }, uiStyles.input, uiStyles.colorInput)}
+                        value={styles?.background}
+                        onChange={handleConfirmationStyle}
+                      />
+                      <input
+                        type="text"
+                        name="background"
+                        className={css({ w: 165 }, uiStyles.input)}
+                        value={styles?.background}
+                        onChange={handleConfirmationStyle}
+                      />
+                    </div>
+                    <div className={css({ flx: 'align-center', cg: 5 })}>
+                      <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Message Text Color</span>
+                      <input
+                        type="color"
+                        name="color"
+                        className={css({ ml: 88 }, uiStyles.input, uiStyles.colorInput)}
+                        value={styles?.color}
+                        onChange={handleConfirmationStyle}
+                      />
+                      <input
+                        type="text"
+                        name="color"
+                        className={css({ w: 165 }, uiStyles.input)}
+                        value={styles?.color}
+                        onChange={handleConfirmationStyle}
+                      />
+                    </div>
+                    <div className={css({ flx: 'align-center', cg: 5 })}>
+                      <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Close Button Background Color</span>
+                      <select
+                        name="closeColorType"
+                        className={css({ w: 80 }, uiStyles.selectInput)}
+                        value={closeColorType}
+                        onChange={handleColorTypeChange}
+                      >
+                        <option value="default">Default</option>
+                        <option value="hover">Hover</option>
+                      </select>
+                      <input
+                        type="color"
+                        name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'}
+                        className={css(uiStyles.input, uiStyles.colorInput)}
+                        value={closeColorType === 'default' ? styles?.closeBackground : styles?.closeHover}
+                        onChange={handleConfirmationStyle}
+                      />
+                      <input
+                        type="text"
+                        name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'}
+                        className={css({ w: 165 }, uiStyles.input)}
+                        value={closeColorType === 'default' ? styles?.closeBackground : styles?.closeHover}
+                        onChange={handleConfirmationStyle}
+                      />
+                    </div>
+                    <div className={css({ flx: 'align-center', cg: 5 })}>
+                      <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Close icon color</span>
+                      <select
+                        name="closeIconColorType"
+                        className={css({ w: 80 }, uiStyles.selectInput)}
+                        value={closeIconColorType}
+                        onChange={handleColorTypeChange}
+                      >
+                        <option value="default">Default</option>
+                        <option value="hover">Hover</option>
+                      </select>
+                      <input
+                        type="color"
+                        name={closeIconColorType === 'default' ? 'closeIconColor' : 'closeIconHover'}
+                        className={css(uiStyles.input, uiStyles.colorInput)}
+                        value={closeIconColorType === 'default' ? styles?.closeIconColor : styles?.closeIconHover}
+                        onChange={handleConfirmationStyle}
+                      />
+                      <input
+                        type="text"
+                        name={closeIconColorType === 'default' ? 'closeIconColor' : 'closeIconHover'}
+                        className={css({ w: 165 }, uiStyles.input)}
+                        value={closeIconColorType === 'default' ? styles?.closeIconColor : styles?.closeIconHover}
+                        onChange={handleConfirmationStyle}
+                      />
+                    </div>
                   </div>
-                  <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Message Text Color</span>
-                    <input type="color" name="color" className={css({ ml: 88 }, uiStyles.input, uiStyles.colorInput)} value={styles?.color} onChange={handleConfirmationStyle} />
-                    <input type="text" name="color" className={css({ w: 165 }, uiStyles.input)} value={styles?.color} onChange={handleConfirmationStyle} />
-                  </div>
-                  <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Close Button Background Color</span>
-                    <select name="closeColorType" className={css({ w: 80 }, uiStyles.selectInput)} value={closeColorType} onChange={handleColorTypeChange}>
-                      <option value="default">Default</option>
-                      <option value="hover">Hover</option>
-                    </select>
-                    <input type="color" name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'} className={css(uiStyles.input, uiStyles.colorInput)} value={closeColorType === 'default' ? styles?.closeBackground : styles?.closeHover} onChange={handleConfirmationStyle} />
-                    <input type="text" name={closeColorType === 'default' ? 'closeBackground' : 'closeHover'} className={css({ w: 165 }, uiStyles.input)} value={closeColorType === 'default' ? styles?.closeBackground : styles?.closeHover} onChange={handleConfirmationStyle} />
-                  </div>
-                  <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(uiStyles.label, uiStyles.backgrounLabel)}>Close icon color</span>
-                    <select name="closeIconColorType" className={css({ w: 80 }, uiStyles.selectInput)} value={closeIconColorType} onChange={handleColorTypeChange}>
-                      <option value="default">Default</option>
-                      <option value="hover">Hover</option>
-                    </select>
-                    <input
-                      type="color"
-                      name={closeIconColorType === 'default' ? 'closeIconColor' : 'closeIconHover'}
-                      className={css(uiStyles.input, uiStyles.colorInput)}
-                      value={closeIconColorType === 'default' ? styles?.closeIconColor : styles?.closeIconHover}
-                      onChange={handleConfirmationStyle}
-                    />
-                    <input
-                      type="text"
-                      name={closeIconColorType === 'default' ? 'closeIconColor' : 'closeIconHover'}
-                      className={css({ w: 165 }, uiStyles.input)}
-                      value={closeIconColorType === 'default' ? styles?.closeIconColor : styles?.closeIconHover}
-                      onChange={handleConfirmationStyle}
-                    />
-                  </div>
-                </div>
+                </>
               )}
 
               {activePeperties === 'border' && (
-                <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
-                  <div className={css({ flx: 'align-center' })}>
-                    <span className={css(uiStyles.valueLabel, { ml: 102 })}>Color</span>
-                    <span className={css(uiStyles.valueLabel, { ml: 124 })}>Thickness</span>
-                    <span className={css(uiStyles.valueLabel, { ml: 30 })}>Type</span>
-                  </div>
-                  <div className={css({ flx: 'align-center', mb: 5, cg: 5 })}>
-                    <span className={css({ w: 55 }, uiStyles.label)}>Border</span>
-                    <input type="color" name="borderColor" className={css(uiStyles.input, uiStyles.colorInput)} value={styles?.borderColor} onChange={handleConfirmationStyle} />
-                    <input type="text" name="borderColor" className={css({ w: 150 }, uiStyles.input)} value={styles?.borderColor} onChange={handleConfirmationStyle} />
-                    <input type="text" name="borderWidth" className={css({ w: 80 }, uiStyles.input)} value={styles?.borderWidth} onChange={handleConfirmationStyle} />
-                    <select name="borderType" className={css({ w: 80 }, uiStyles.selectInput)} value={styles?.borderType} onChange={handleConfirmationStyle}>
-                      <option value="none">None</option>
-                      <option value="hidden">Hidden</option>
-                      <option value="dotten">Dotted</option>
-                      <option value="dashed">Dashed</option>
-                      <option value="solid">Solid</option>
-                      <option value="double">Double</option>
-                      <option value="groove">Groove</option>
-                      <option value="ridge">Ridge</option>
-                      <option value="inset">Inset</option>
-                      <option value="outset">Outset</option>
-                      <option value="initial">Inital</option>
-                      <option value="inherit">Inherit</option>
-                    </select>
-                  </div>
-                  <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css({ w: 55 }, uiStyles.label)}>Radius</span>
-                    <input type="text" name="borderRadius" className={css({ w: 80 }, uiStyles.input)} value={styles?.borderRadius} onChange={handleConfirmationStyle} />
-                  </div>
-                </div>
-              )}
-              {activePeperties === 'shadow' && (
-                <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
-                  <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(uiStyles.valueLabel, { ml: 48 })}>Color</span>
-                    <span className={css(uiStyles.valueLabel, { ml: 92 })}>X</span>
-                    <span className={css(uiStyles.valueLabel, { ml: 45 })}>Y</span>
-                    <span className={css(uiStyles.valueLabel, { ml: 42 })}>Blur</span>
-                    <span className={css(uiStyles.valueLabel, { ml: 25 })}>Spread</span>
-                    <span className={css(uiStyles.valueLabel, { ml: 12 })}>Inset</span>
-                  </div>
-                  <div className={css({ flx: 'space-between' })}>
-                    <div className={css({ h: 110, ow: 'auto', px: 5, pt: 2, w: '100%' })}>
-                      {styles?.boxShadow?.map((shadow, index) => (
-                        <div key={`inp-${index + 9}`} className={css({ flx: 'align-center', mb: 5, cg: 5 })}>
-                          <input type="color" name="color" className={css(uiStyles.input, uiStyles.colorInput)} value={shadow.color} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="color" className={css({ w: 120 }, uiStyles.input)} value={shadow.color} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="x" className={css({ w: 50 }, uiStyles.input)} value={shadow.x} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="y" className={css({ w: 50 }, uiStyles.input)} value={shadow.y} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="blur" className={css({ w: 50 }, uiStyles.input)} value={shadow.blur} onChange={(e) => handleConfirmationShadow(e, index)} />
-                          <input type="text" name="spread" className={css({ w: 50 }, uiStyles.input)} value={shadow.spread} onChange={(e) => handleConfirmationShadow(e, index)} />
-
-                          <select name="inset" className={css({ w: 72 }, uiStyles.selectInput)} value={shadow.inset} onChange={(e) => handleConfirmationShadow(e, index)}>
-                            <option value="">Outset</option>
-                            <option value="inset">Inset</option>
-                          </select>
-                          <span role="button" tabIndex={0} onKeyDown={(e) => handleShadowDelete(e, index)} onClick={(e) => handleShadowDelete(e, index)}>
-                            <CloseIcn size="12" className={css({ curp: 1 })} />
-                          </span>
-                        </div>
-                      ))}
+                <>
+                  <ProOverlay />
+                  <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
+                    <div className={css({ flx: 'align-center' })}>
+                      <span className={css(uiStyles.valueLabel, { ml: 102 })}>Color</span>
+                      <span className={css(uiStyles.valueLabel, { ml: 124 })}>Thickness</span>
+                      <span className={css(uiStyles.valueLabel, { ml: 30 })}>Type</span>
+                    </div>
+                    <div className={css({ flx: 'align-center', mb: 5, cg: 5 })}>
+                      <span className={css({ w: 55 }, uiStyles.label)}>Border</span>
+                      <input
+                        type="color"
+                        name="borderColor"
+                        className={css(uiStyles.input, uiStyles.colorInput)}
+                        value={styles?.borderColor}
+                        onChange={handleConfirmationStyle}
+                      />
+                      <input
+                        type="text"
+                        name="borderColor"
+                        className={css({ w: 150 }, uiStyles.input)}
+                        value={styles?.borderColor}
+                        onChange={handleConfirmationStyle}
+                      />
+                      <input
+                        type="text"
+                        name="borderWidth"
+                        className={css({ w: 80 }, uiStyles.input)}
+                        value={styles?.borderWidth}
+                        onChange={handleConfirmationStyle}
+                      />
+                      <select
+                        name="borderType"
+                        className={css({ w: 80 }, uiStyles.selectInput)}
+                        value={styles?.borderType}
+                        onChange={handleConfirmationStyle}
+                      >
+                        <option value="none">None</option>
+                        <option value="hidden">Hidden</option>
+                        <option value="dotten">Dotted</option>
+                        <option value="dashed">Dashed</option>
+                        <option value="solid">Solid</option>
+                        <option value="double">Double</option>
+                        <option value="groove">Groove</option>
+                        <option value="ridge">Ridge</option>
+                        <option value="inset">Inset</option>
+                        <option value="outset">Outset</option>
+                        <option value="initial">Inital</option>
+                        <option value="inherit">Inherit</option>
+                      </select>
+                    </div>
+                    <div className={css({ flx: 'align-center', cg: 5 })}>
+                      <span className={css({ w: 55 }, uiStyles.label)}>Radius</span>
+                      <input
+                        type="text"
+                        name="borderRadius"
+                        className={css({ w: 80 }, uiStyles.input)}
+                        value={styles?.borderRadius}
+                        onChange={handleConfirmationStyle}
+                      />
                     </div>
                   </div>
-                  <div className={css({ flx: 'center', pt: 5 })}>
-                    <span className={css({ curp: 1 })} role="button" tabIndex={0} onKeyDown={handleAddShadow} onClick={handleAddShadow}>
-                      <CloseIcn size="12" className={css({ curp: 1, tm: 'rotate(45deg)' })} />
-                    </span>
+                </>
+              )}
+              {activePeperties === 'shadow' && (
+                <>
+                  <ProOverlay />
+                  <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
+                    <div className={css({ flx: 'align-center', cg: 5 })}>
+                      <span className={css(uiStyles.valueLabel, { ml: 48 })}>Color</span>
+                      <span className={css(uiStyles.valueLabel, { ml: 92 })}>X</span>
+                      <span className={css(uiStyles.valueLabel, { ml: 45 })}>Y</span>
+                      <span className={css(uiStyles.valueLabel, { ml: 42 })}>Blur</span>
+                      <span className={css(uiStyles.valueLabel, { ml: 25 })}>Spread</span>
+                      <span className={css(uiStyles.valueLabel, { ml: 12 })}>Inset</span>
+                    </div>
+                    <div className={css({ flx: 'space-between' })}>
+                      <div className={css({ h: 110, ow: 'auto', px: 5, pt: 2, w: '100%' })}>
+                        {styles?.boxShadow?.map((shadow, index) => (
+                          <div key={`inp-${index + 9}`} className={css({ flx: 'align-center', mb: 5, cg: 5 })}>
+                            <input
+                              type="color"
+                              name="color"
+                              className={css(uiStyles.input, uiStyles.colorInput)}
+                              value={shadow.color}
+                              onChange={(e) => handleConfirmationShadow(e, index)}
+                            />
+                            <input
+                              type="text"
+                              name="color"
+                              className={css({ w: 120 }, uiStyles.input)}
+                              value={shadow.color}
+                              onChange={(e) => handleConfirmationShadow(e, index)}
+                            />
+                            <input
+                              type="text"
+                              name="x"
+                              className={css({ w: 50 }, uiStyles.input)}
+                              value={shadow.x}
+                              onChange={(e) => handleConfirmationShadow(e, index)}
+                            />
+                            <input
+                              type="text"
+                              name="y"
+                              className={css({ w: 50 }, uiStyles.input)}
+                              value={shadow.y}
+                              onChange={(e) => handleConfirmationShadow(e, index)}
+                            />
+                            <input
+                              type="text"
+                              name="blur"
+                              className={css({ w: 50 }, uiStyles.input)}
+                              value={shadow.blur}
+                              onChange={(e) => handleConfirmationShadow(e, index)}
+                            />
+                            <input
+                              type="text"
+                              name="spread"
+                              className={css({ w: 50 }, uiStyles.input)}
+                              value={shadow.spread}
+                              onChange={(e) => handleConfirmationShadow(e, index)}
+                            />
+
+                            <select
+                              name="inset"
+                              className={css({ w: 72 }, uiStyles.selectInput)}
+                              value={shadow.inset}
+                              onChange={(e) => handleConfirmationShadow(e, index)}
+                            >
+                              <option value="">Outset</option>
+                              <option value="inset">Inset</option>
+                            </select>
+                            <span
+                              role="button"
+                              tabIndex={0}
+                              onKeyDown={(e) => handleShadowDelete(e, index)}
+                              onClick={(e) => handleShadowDelete(e, index)}
+                            >
+                              <CloseIcn size="12" className={css({ curp: 1 })} />
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className={css({ flx: 'center', pt: 5 })}>
+                      <span
+                        className={css({ curp: 1 })}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={handleAddShadow}
+                        onClick={handleAddShadow}
+                      >
+                        <CloseIcn size="12" className={css({ curp: 1, tm: 'rotate(45deg)' })} />
+                      </span>
+                    </div>
                   </div>
-                </div>
+                </>
               )}
               {activePeperties === 'width' && (
-                <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
-                  <div className={css({ flx: 'align-center', cg: 5 })}>
-                    <span className={css(uiStyles.label, { w: 55 })}>Width</span>
-                    <input type="text" name="width" className={css({ w: '100px' }, uiStyles.input)} value={styles?.width} onChange={handleConfirmationStyle} />
+                <>
+                  <ProOverlay />
+                  <div className={css({ dy: 'flex', fd: 'column', p: '0px 20px' })}>
+                    <div className={css({ flx: 'align-center', cg: 5 })}>
+                      <span className={css(uiStyles.label, { w: 55 })}>Width</span>
+                      <input
+                        type="text"
+                        name="width"
+                        className={css({ w: '100px' }, uiStyles.input)}
+                        value={styles?.width}
+                        onChange={handleConfirmationStyle}
+                      />
+                    </div>
                   </div>
-                </div>
+                </>
               )}
               {activePeperties === 'padding'
                 && (
-                  <div className={css(uiStyles.segmentWrapper)}>
-                    <div className={css(uiStyles.titlecontainer)}>
-                      <span className={css(uiStyles.title)}>Padding</span>
-                      <StyleSegmentControl
-                        square
-                        defaultActive="All"
-                        options={options}
-                        values={60}
-                        component="button"
-                        onChange={lbl => setController(lbl)}
-                        show={['icn']}
-                        variant="lightgray"
-                        noShadow
-                      />
+                  <>
+                    <ProOverlay />
+                    <div className={css(uiStyles.segmentWrapper)}>
+                      <div className={css(uiStyles.titlecontainer)}>
+                        <span className={css(uiStyles.title)}>Padding</span>
+                        <StyleSegmentControl
+                          square
+                          defaultActive="All"
+                          options={options}
+                          values={60}
+                          component="button"
+                          onChange={lbl => setController(lbl)}
+                          show={['icn']}
+                          variant="lightgray"
+                          noShadow
+                        />
+                      </div>
+                      <div className={css(uiStyles.segmentcontainer)}>
+                        <Grow open={controller === 'All'}>
+                          <div className={css({ p: 2 })}>
+                            <SizeControl
+                              min="0"
+                              inputHandler={handleValues}
+                              sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
+                              id="0"
+                              label={<BoxFullIcon size={14} />}
+                              value={getNumFromStr(values[0]) || 0}
+                              unit={getStrFromStr(values[0]) || 'px'}
+                              options={unitOption}
+                              width="110px"
+                            />
+                          </div>
+                        </Grow>
+                        <Grow open={controller === 'Individual'}>
+                          <div className={css(ut.flxc, { flxp: 'wrap', jc: 'end', p: 2 })}>
+                            <SizeControl
+                              min="0"
+                              inputHandler={handleValues}
+                              sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
+                              id="0"
+                              label={<BoxIcon size="14" variant="top" />}
+                              width="100px"
+                              value={getNumFromStr(values[0]) || 0}
+                              unit={getStrFromStr(values[0]) || 'px'}
+                              options={unitOption}
+                              className={css(ut.mr1, ut.mb1)}
+                            />
+                            <SizeControl
+                              min="0"
+                              inputHandler={handleValues}
+                              sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
+                              id="1"
+                              label={<BoxIcon size="14" variant="right" />}
+                              width="100px"
+                              value={getNumFromStr(values[1]) || 0}
+                              unit={getStrFromStr(values[1]) || 'px'}
+                              options={unitOption}
+                              className={css(ut.mr1, ut.mb1)}
+                            />
+                            <SizeControl
+                              min="0"
+                              inputHandler={handleValues}
+                              sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
+                              id="2"
+                              label={<BoxIcon size="14" variant="bottom" />}
+                              width="100px"
+                              value={getNumFromStr(values[2]) || 0}
+                              unit={getStrFromStr(values[2]) || 'px'}
+                              options={unitOption}
+                              className={css(ut.mr1, ut.mb1)}
+                            />
+                            <SizeControl
+                              min="0"
+                              inputHandler={handleValues}
+                              sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
+                              id="3"
+                              label={<BoxIcon size="14" variant="left" />}
+                              width="100px"
+                              value={getNumFromStr(values[3]) || 0}
+                              unit={getStrFromStr(values[3]) || 'px'}
+                              options={unitOption}
+                              className={css(ut.mr1, ut.mb1)}
+                            />
+                          </div>
+                        </Grow>
+                      </div>
                     </div>
-                    <div className={css(uiStyles.segmentcontainer)}>
-                      <Grow open={controller === 'All'}>
-                        <div className={css({ p: 2 })}>
-                          <SizeControl
-                            min="0"
-                            inputHandler={handleValues}
-                            sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
-                            id="0"
-                            label={<BoxFullIcon size={14} />}
-                            value={getNumFromStr(values[0]) || 0}
-                            unit={getStrFromStr(values[0]) || 'px'}
-                            options={unitOption}
-                            width="110px"
-                          />
-                        </div>
-                      </Grow>
-                      <Grow open={controller === 'Individual'}>
-                        <div className={css(ut.flxc, { flxp: 'wrap', jc: 'end', p: 2 })}>
-                          <SizeControl
-                            min="0"
-                            inputHandler={handleValues}
-                            sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
-                            id="0"
-                            label={<BoxIcon size="14" variant="top" />}
-                            width="100px"
-                            value={getNumFromStr(values[0]) || 0}
-                            unit={getStrFromStr(values[0]) || 'px'}
-                            options={unitOption}
-                            className={css(ut.mr1, ut.mb1)}
-                          />
-                          <SizeControl
-                            min="0"
-                            inputHandler={handleValues}
-                            sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
-                            id="1"
-                            label={<BoxIcon size="14" variant="right" />}
-                            width="100px"
-                            value={getNumFromStr(values[1]) || 0}
-                            unit={getStrFromStr(values[1]) || 'px'}
-                            options={unitOption}
-                            className={css(ut.mr1, ut.mb1)}
-                          />
-                          <SizeControl
-                            min="0"
-                            inputHandler={handleValues}
-                            sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
-                            id="2"
-                            label={<BoxIcon size="14" variant="bottom" />}
-                            width="100px"
-                            value={getNumFromStr(values[2]) || 0}
-                            unit={getStrFromStr(values[2]) || 'px'}
-                            options={unitOption}
-                            className={css(ut.mr1, ut.mb1)}
-                          />
-                          <SizeControl
-                            min="0"
-                            inputHandler={handleValues}
-                            sizeHandler={({ unitKey, unitValue, indexId }) => handleValues({ value: unitValue, unit: unitKey, indexId })}
-                            id="3"
-                            label={<BoxIcon size="14" variant="left" />}
-                            width="100px"
-                            value={getNumFromStr(values[3]) || 0}
-                            unit={getStrFromStr(values[3]) || 'px'}
-                            options={unitOption}
-                            className={css(ut.mr1, ut.mb1)}
-                          />
-                        </div>
-                      </Grow>
-                    </div>
-                  </div>
+                  </>
                 )}
             </div>
           </div>

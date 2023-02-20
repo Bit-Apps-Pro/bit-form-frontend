@@ -3,6 +3,7 @@ import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $integrations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
+import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import DropDown from '../Utilities/DropDown'
 import TableCheckBox from '../Utilities/TableCheckBox'
@@ -27,7 +28,6 @@ export default function IntegrationWorkflowAction({ lgcGrpInd,
     setWorkflows(tmpWorkflows)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
-
   return (
     <div className={css(ut.mt2)}>
       <TableCheckBox
@@ -43,7 +43,7 @@ export default function IntegrationWorkflowAction({ lgcGrpInd,
           value={getValueFromArr('integ', 'id')}
           titleClassName={css({ mt: 5, ml: 28, w: '67.5%' })}
           className="w-10"
-          isMultiple
+          isMultiple={IS_PRO}
           options={integrations?.map((itm, i) => ({
             label: itm.name,
             value: itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) }),

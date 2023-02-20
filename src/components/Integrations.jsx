@@ -277,7 +277,7 @@ function Integrations() {
                           tabIndex="0"
                           className={`${css(style.thumb)} ${inte.disable && !inte.pro && css(style.integCardDisabled)}`}
                         >
-                          {(inte.pro && !isPro) && (
+                          {/* {(inte.pro && !isPro) && (
                             <div className={css(style.thumbPro)}>
                               <a className={css(style.thumbProTxt)} href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                                 {__('Available on')}
@@ -285,7 +285,7 @@ function Integrations() {
                                 {__('Pro')}
                               </a>
                             </div>
-                          )}
+                          )} */}
                           <img className={css(style.thumbImg)} loading="lazy" src={inte.logo} alt="" />
                           <div className={css(style.thumbTitle)}>
                             {inte.type}

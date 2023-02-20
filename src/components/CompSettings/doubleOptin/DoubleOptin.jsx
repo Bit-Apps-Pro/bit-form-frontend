@@ -10,7 +10,7 @@ import { $bits, $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { deepCopy } from '../../../Utils/Helpers'
+import { deepCopy, IS_PRO } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { dblOptinTamplate } from '../../../Utils/StaticData/tamplate'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
@@ -74,6 +74,7 @@ export default function DoubleOptin() {
   }
 
   const handleStatus = (e) => {
+    if (!IS_PRO) return
     if (e.target.checked) {
       setStatus(1)
     } else {
@@ -83,6 +84,7 @@ export default function DoubleOptin() {
 
   const saveSettings = (e) => {
     e.preventDefault()
+    if (!IS_PRO) return
 
     if (tem.dflt_temp && (tem?.fldkey === undefined || tem?.fldkey === '')) {
       setSnackbar({ show: true, msg: __('Email field is mandatory for double opt-in.') })

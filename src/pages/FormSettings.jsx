@@ -22,7 +22,6 @@ const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/Do
 
 function FormSettings({ setProModal }) {
   // const { path } = useMatch()
-  const path = ''
   const { formType, formID } = useParams()
 
   return (
