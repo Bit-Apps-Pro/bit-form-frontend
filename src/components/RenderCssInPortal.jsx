@@ -110,12 +110,12 @@ export default function RenderCssInPortal() {
  }
 
  .blk:focus .blk-icn-wrp,.itm-focus .blk-icn-wrp {
-  top: -30px;
+  top: -25px;
   right: -3px;
  }
 
  .blk:not(.itm-focus):hover:not(:focus) .blk-icn-wrp {
-  top: -30px;
+  top: -25px;
   right: 0px;
  }
  
@@ -166,7 +166,7 @@ export default function RenderCssInPortal() {
     background-color: hsl(215deg 100% 50%);
     color: white;
     right: 0;
-    top: -30px;
+    top: -25px;
     visibility: hidden;
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
@@ -177,8 +177,8 @@ export default function RenderCssInPortal() {
     color: var(--white-100);
     cursor: pointer;
     outline: 0;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 7px;
     border: 0;
     display: flex;
