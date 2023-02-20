@@ -5,6 +5,7 @@ import { useSetRecoilState } from 'recoil'
 import { $builderHookStates } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
+import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
 import MoveIcn from '../Icons/MoveIcn'
 import { deepCopy } from '../Utils/Helpers'
@@ -46,7 +47,7 @@ export default function FieldBlockWrapper({
           title={__('Move')}
           data-testid={`${layoutItem.i}-move-btn`}
         >
-          <MoveIcn size="19" stroke="3" />
+          <MoveIcn size="15" stroke="3" />
         </button>
         <button
           type="button"
@@ -55,7 +56,7 @@ export default function FieldBlockWrapper({
           onClick={styleNavigation}
           data-testid={`${layoutItem.i}-style-btn`}
         >
-          <BrushIcn stroke={2.3} height="17" width="14" />
+          <BrushIcn stroke={2.3} height="15" width="13" />
         </button>
         <button
           type="button"
@@ -64,7 +65,16 @@ export default function FieldBlockWrapper({
           onClick={navigateToFieldSettings}
           data-testid={`${layoutItem.i}-settings-btn`}
         >
-          <EditIcn size="20" stroke={2} />
+          <EditIcn size="18" stroke={2} />
+        </button>
+        <button
+          type="button"
+          className="g-c drag curp us-n no-drg blk-wrp-btn"
+          title={__('Clone')}
+          onClick={() => cloneLayoutItem(layoutItem.i)}
+          data-testid={`${layoutItem.i}-copy-btn`}
+        >
+          <CopyIcn size="17" stroke={2} />
         </button>
         <FieldDeleteButton
           className="g-c drag us-n no-drg blk-wrp-btn"
