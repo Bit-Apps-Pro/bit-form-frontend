@@ -421,7 +421,7 @@ function TextFieldSettings() {
           toggleAction={hideAdminLabel}
           toggleChecked
           open
-        // disable={!fieldData?.adminLbl}
+          // disable={!fieldData?.adminLbl}
           isPro
         >
           <div className={css(ut.mt2)}>
@@ -590,6 +590,7 @@ function TextFieldSettings() {
                 title={__('RegEx Pattern')}
                 className={css(FieldStyle.fieldSection)}
                 isPro
+                tip={tippyHelperMsg.pattern}
               >
                 <>
                   <div className={css(ut.mr2, ut.mt3, ut.pl1)}>
@@ -645,7 +646,6 @@ function TextFieldSettings() {
                     />
                   </div>
                   <div className={css({ mr: 5 }, ut.pl1)}>
-
                     <SingleInput
                       id="ptrn-stng-flg"
                       inpType="text"
@@ -687,23 +687,6 @@ function TextFieldSettings() {
         <FieldDisabledSettings />
 
         <FieldSettingsDivider />
-
-        {/* {
-          fieldData.typ.match(/^(text|url|password|number|email|)$/) && (
-            <>
-              <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
-                <SingleToggle
-                  id="ato-fil-stng"
-                  tip={tippyHelperMsg.autoFill}
-                  title={__('Auto Fill')}
-                  action={setAutoComplete}
-                  isChecked={isAutoComplete}
-                />
-              </div>
-              <FieldSettingsDivider />
-            </>
-          )
-        } */}
 
         {
           fieldData.typ === 'number' && (

@@ -8,6 +8,7 @@ import FieldStyle from '../../../styles/FieldStyle.style'
 import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function FieldNameSettings() {
@@ -72,6 +73,7 @@ export default function FieldNameSettings() {
       id="nam-stng"
       title={__('Name')}
       className={css(FieldStyle.fieldSection)}
+      tip={tippyHelperMsg.name}
     >
       <div className={css(FieldStyle.placeholder)}>
         <input

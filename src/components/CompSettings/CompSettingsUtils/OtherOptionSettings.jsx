@@ -95,7 +95,7 @@ export default function OtherOptionSettings() {
       title={__('Allow Other Option')}
       className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
       switching
-      tip="By enable this settings, a option will added with name 'Other'"
+      tip="An option will be added as labelled 'Other...' to get custom input from the user"
       tipProps={{ width: 250, icnSize: 17 }}
       toggleAction={toggleAddOtherOption}
       toggleChecked={fieldData?.addOtherOpt}

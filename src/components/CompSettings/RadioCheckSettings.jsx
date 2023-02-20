@@ -267,6 +267,7 @@ function RadioCheckSettings() {
         title={__('Options Column')}
         className={css(FieldStyle.fieldSection)}
         isPro
+        tip={__('Specify the number of columns to display the options in. Leave blank to display the options as needed space.')}
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -282,16 +283,6 @@ function RadioCheckSettings() {
       </SimpleAccordion>
       <FieldSettingsDivider />
 
-      {/* <SingleInput inpType="text" title={__('Admin Label:')} value={adminLabel} action={setAdminLabel} /> */}
-
-      {/* <SingleToggle title={__('Required:')} action={setRadioRequired} isChecked={isRadioRequired} disabled={isOptionRequired} className="mt-3" />
-      {(isRadioRequired || isOptionRequired) && (
-        <ErrorMessageSettings
-          type="req"
-          title="Error Message"
-          tipTitle="By enabling this feature, user will see the error message when required option is not checked"
-        />
-      )} */}
       {
         fieldData.typ === 'check' && (
           <>
