@@ -41,6 +41,7 @@ import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
 import ut from '../../styles/2.utilities'
 import Toolbars from '../../styles/Toolbars.style'
+import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
 import currencyList from '../../Utils/StaticData/currencies.json'
@@ -934,7 +935,7 @@ function Toolbar({ setNewData }) {
                     <div className="txt-body">{tool.tip}</div>
                   </Cooltip>
                 )}
-                {tool.pro && (
+                {!IS_PRO && tool.pro && (
                   <ProBadge width="18">
                     <div className="txt-body">
                       <RenderHtml html={tool.pro} />
