@@ -169,6 +169,7 @@ export default function ErrorMessageSettings({
                 styleRoute="err-txt-pre-i"
                 setIcon={() => setIconModel('errPreIcn')}
                 removeIcon={() => removeIcon('errPreIcn')}
+                isPro
               />
 
               <FieldIconSettings
@@ -177,6 +178,7 @@ export default function ErrorMessageSettings({
                 styleRoute="err-txt-suf-i"
                 setIcon={() => setIconModel('errSufIcn')}
                 removeIcon={() => removeIcon('errSufIcn')}
+                isPro
               />
             </div>
           )}

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
@@ -12,7 +13,7 @@ import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory, setRequired } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { deepCopy, IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import CheckBoxMini from '../Utilities/CheckBoxMini'
@@ -43,7 +44,6 @@ export default function FileUploadSettings() {
   const { css } = useFela()
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
-
   const fieldData = deepCopy(fields[fldKey])
   const {
     multiple, allowMaxSize, showMaxSize, maxSizeLabel, maxSize, sizeUnit, isItTotalMax, showSelectStatus, fileSelectStatus, allowedFileType, showFileList, fileExistMsg, showFilePreview, showFileSize, duplicateAllow,
@@ -312,7 +312,8 @@ export default function FileUploadSettings() {
         tip="By enabling this feature, you will see file select status"
         tipProps={{ width: 200, icnSize: 17 }}
         open={showSelectStatus}
-        disable={!showSelectStatus}
+        {...IS_PRO && { disable: !showSelectStatus }}
+        isPro
       >
         <div className={css({ m: 2 })}>
           <input
@@ -338,7 +339,8 @@ export default function FileUploadSettings() {
         tip="By disabling this option, the field show maximum size will be hidden"
         tipProps={{ width: 200, icnSize: 17 }}
         open={showMaxSize}
-        disable={!showMaxSize}
+        {...IS_PRO && { disable: !showMaxSize }}
+        isPro
       >
         <div className={css({ m: 2 })}>
           <input
@@ -411,6 +413,8 @@ export default function FileUploadSettings() {
         tipProps={{ width: 200, icnSize: 17 }}
         open={showFileList}
         disable={!showFileList}
+        {...IS_PRO && { disable: !showFileList }}
+        isPro
       >
         <div className={css(ut.ml1)}>
           <CheckBoxMini
@@ -437,6 +441,7 @@ export default function FileUploadSettings() {
         title={__('File Exist Message')}
         className={css(FieldStyle.fieldSection)}
         open
+        isPro
       >
         <div className={css({ m: 2 })}>
           <input

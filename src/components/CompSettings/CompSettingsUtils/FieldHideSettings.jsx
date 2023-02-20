@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
+import { IS_PRO } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SingleToggle from '../../Utilities/SingleToggle'
@@ -17,6 +18,7 @@ export default function FieldHideSettings({ cls }) {
   const { css } = useFela()
 
   const setHidden = ({ target }) => {
+    if (!IS_PRO) return
     const { checked } = target
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
@@ -39,6 +41,7 @@ export default function FieldHideSettings({ cls }) {
         title={__('Hidden')}
         action={setHidden}
         isChecked={isHidden}
+        isPro
       />
     </div>
   )

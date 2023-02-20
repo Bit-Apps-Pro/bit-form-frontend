@@ -266,6 +266,7 @@ function RadioCheckSettings() {
         id="opt-clm-stng"
         title={__('Options Column')}
         className={css(FieldStyle.fieldSection)}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -471,29 +472,14 @@ function RadioCheckSettings() {
         title={__('Options')}
         width="755px"
       >
-        <div className="pos-rel">
-          {!isPro && (
-            <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
-              <div className="pro">
-                {__('Available On')}
-                <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-                  <span className="txt-pro">
-                    &nbsp;
-                    {__('Premium')}
-                  </span>
-                </a>
-              </div>
-            </div>
-          )}
-          <EditOptions
-            optionMdl={optionMdl}
-            options={options}
-            setOptions={newOpts => handleOptions(newOpts)}
-            lblKey="lbl"
-            valKey="val"
-            type={fieldData.typ}
-          />
-        </div>
+        <EditOptions
+          optionMdl={optionMdl}
+          options={options}
+          setOptions={newOpts => handleOptions(newOpts)}
+          lblKey="lbl"
+          valKey="val"
+          type={fieldData.typ}
+        />
       </Modal>
       {/* <Modal
         md

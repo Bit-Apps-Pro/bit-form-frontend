@@ -1,15 +1,20 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useFela } from 'react-fela'
+import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Cooltip from './Cooltip'
+import ProBadge from './ProBadge'
 
 export default function SingleToggle({
-  id, className, tip, title, isChecked, name, action = () => { }, disabled,
+  id, className, tip, title, isChecked, name, action = () => { }, disabled, isPro,
 }) {
   const { css } = useFela()
+  const allowToggleAction = !isPro || IS_PRO
   return (
     <div className={`flx flx-between ${className}`}>
       <span className={`font-w-m ${css(c.titleWrp)}`}>
         {title}
+        {isPro && !IS_PRO && (<ProBadge width="18" />)}
         {tip && (
           <Cooltip width="200" icnSize="17" className="hover-tip">
             <div className="txt-body">{__(tip)}</div>
@@ -19,7 +24,7 @@ export default function SingleToggle({
       <label data-testid={`${id}-sngl-tgl`} className={css(c.toggle_control)} htmlFor={`s-ck-${id || title || name}-${isChecked}`}>
         <input
           id={`s-ck-${id || title || name}-${isChecked}`}
-          onChange={action || (() => { })}
+          {...allowToggleAction && { onChange: action || (() => { }) }}
           className={css(c.input)}
           type="checkbox"
           name={name || 'check'}

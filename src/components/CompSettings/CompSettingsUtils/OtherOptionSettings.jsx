@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -6,7 +7,7 @@ import { $fields } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../../Utils/Helpers'
+import { deepCopy, IS_PRO } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 import SingleToggle from '../../Utilities/SingleToggle'
@@ -22,6 +23,7 @@ export default function OtherOptionSettings() {
   const adminLabel = fieldData.adminLbl || ''
 
   const toggleAddOtherOption = (e) => {
+    if (!IS_PRO) return
     if (e.target.checked) {
       fieldData.addOtherOpt = true
       fieldData.valid.otherOptReq = true
@@ -98,7 +100,8 @@ export default function OtherOptionSettings() {
       toggleAction={toggleAddOtherOption}
       toggleChecked={fieldData?.addOtherOpt}
       open={fieldData?.addOtherOpt}
-      disable={!fieldData?.addOtherOpt}
+      {...IS_PRO && { disable: !fieldData?.addOtherOpt }}
+      isPro
     >
       <div className={css(FieldStyle.placeholder)}>
         <div className={css({ flx: 'center-between', my: 5 })}>

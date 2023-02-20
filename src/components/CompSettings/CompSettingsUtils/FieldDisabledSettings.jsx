@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
+import { IS_PRO } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SingleToggle from '../../Utilities/SingleToggle'
@@ -16,6 +17,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
   const isDiasabled = fields[fldKey].valid.disabled || false
   const { css } = useFela()
   const setDiasabled = e => {
+    if (!IS_PRO) return
     const { checked } = e.target
 
     const allFields = produce(fields, draft => {
@@ -39,6 +41,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
         title={__('Disabled')}
         action={setDiasabled}
         isChecked={isDiasabled}
+        isPro
       />
     </div>
   )

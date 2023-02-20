@@ -24,6 +24,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import OptionsListHeightSettings from './CompSettingsUtils/OptionsListHeightSettings'
 import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
@@ -173,10 +174,11 @@ const PhoneNumberFieldSettings = () => {
         id="inp-frmt-opt-stng"
         title={__('Input Format Option')}
         className={css(FieldStyle.fieldSection)}
-      // switching
-      // toggleAction={hideAdminLabel}
-      // toggleChecked={fieldData?.adminLblHide}
-      // disable={!fieldData?.adminLblHide}
+        // switching
+        // toggleAction={hideAdminLabel}
+        // toggleChecked={fieldData?.adminLblHide}
+        // disable={!fieldData?.adminLblHide}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -197,10 +199,11 @@ const PhoneNumberFieldSettings = () => {
         id="val-frmt-opt-stng"
         title={__('Value Format Option')}
         className={css(FieldStyle.fieldSection)}
-      // switching
-      // toggleAction={hideAdminLabel}
-      // toggleChecked={fieldData?.adminLblHide}
-      // disable={!fieldData?.adminLblHide}
+        // switching
+        // toggleAction={hideAdminLabel}
+        // toggleChecked={fieldData?.adminLblHide}
+        // disable={!fieldData?.adminLblHide}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -238,6 +241,7 @@ const PhoneNumberFieldSettings = () => {
         toggleChecked={showSearchPh}
         open={showSearchPh}
         disable={!showSearchPh}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -258,10 +262,11 @@ const PhoneNumberFieldSettings = () => {
         id="cntry-nt-fund-stng"
         title={__('Country Not Found Text')}
         className={css(FieldStyle.fieldSection)}
-      // switching
-      // toggleAction={hideAdminLabel}
-      // toggleChecked={fieldData?.adminLblHide}
-      // disable={!fieldData?.adminLblHide}
+        // switching
+        // toggleAction={hideAdminLabel}
+        // toggleChecked={fieldData?.adminLblHide}
+        // disable={!fieldData?.adminLblHide}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -285,6 +290,7 @@ const PhoneNumberFieldSettings = () => {
         title={__('Show Selected Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
         isChecked={selectedFlagImage}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -318,6 +324,7 @@ const PhoneNumberFieldSettings = () => {
         title={__('Option Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage', 'config')}
         isChecked={optionFlagImage}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -329,6 +336,7 @@ const PhoneNumberFieldSettings = () => {
         title={__('Detect Country By IP')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp', 'config')}
         isChecked={detectCountryByIp}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -340,6 +348,7 @@ const PhoneNumberFieldSettings = () => {
         title={__('Detect Country By Geo')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo', 'config')}
         isChecked={detectCountryByGeo}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -368,23 +377,8 @@ const PhoneNumberFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)}>
-        <div className={css({ mx: 5 })}>
-          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
-            <span>{__('Maximum:')}</span>
-            <input
-              data-testid="nmbr-stng-min-inp"
-              title="Maximum height of Option List"
-              aria-label="Maximum height of Option List"
-              placeholder="Type Maximum Height..."
-              className={css(FieldStyle.input, FieldStyle.w140)}
-              type="number"
-              value={maxHeight}
-              onChange={e => handleConfigChange(e.target.value, 'maxHeight', 'config')}
-            />
-          </div>
-        </div>
-      </SimpleAccordion>
+      <OptionsListHeightSettings />
+
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>

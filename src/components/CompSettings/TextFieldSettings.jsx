@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable indent */
 /* eslint-disable no-console */
@@ -13,14 +14,14 @@ import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $bits, $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { deepCopy, IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import autofillList from '../../Utils/StaticData/autofillList'
 import predefinedPatterns from '../../Utils/StaticData/patterns.json'
@@ -52,7 +53,6 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function TextFieldSettings() {
-  const bits = useRecoilValue($bits)
   const { fieldKey: fldKey } = useParams()
 
   if (!fldKey) return <>No field exist with this field key</>
@@ -105,6 +105,7 @@ function TextFieldSettings() {
   }
 
   const hideDefalutValue = (e) => {
+    if (!IS_PRO) return
     if (e.target.checked) {
       fieldData.defaultValue = fieldData.lbl || fldKey
       fieldData.defaultValueHide = true
@@ -119,6 +120,7 @@ function TextFieldSettings() {
   }
 
   const setDefaultValue = ({ target: { value } }) => {
+    if (!IS_PRO) return
     if (value === '') delete fieldData.defaultValue
     else fieldData.defaultValue = value
 
@@ -158,7 +160,7 @@ function TextFieldSettings() {
   }
 
   const setRegexr = e => {
-    if (!bits.isPro) return
+    if (!IS_PRO) return
     const { value } = e.target
     console.log(value)
     if (value === '') {
@@ -183,7 +185,7 @@ function TextFieldSettings() {
   const setRegexrValue = value => {
     // eslint-disable-next-line no-underscore-dangle
     patternTippy?.current?._tippy?.hide()
-    if (!bits.isPro) return
+    if (!IS_PRO) return
     if (value === '') {
       delete fieldData.valid.regexr
     } else {
@@ -204,7 +206,7 @@ function TextFieldSettings() {
   }
 
   const setFlags = e => {
-    if (!bits.isPro) return
+    if (!IS_PRO) return
     if (e.target.value === '') {
       delete fieldData.valid.flags
     } else {
@@ -232,7 +234,7 @@ function TextFieldSettings() {
   }).join(', ').replace(/, ([^,]*)$/, ' and $1')}</p>`
 
   const setPasswordValidation = e => {
-    if (!bits.isPro) return
+    if (!IS_PRO) return
     const { checked, name, value } = e.target
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err.regexr) fieldData.err.regexr = {}
@@ -265,7 +267,7 @@ function TextFieldSettings() {
     addToBuilderHistory({ event: `Password validation updated: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_password_validation_${validations}`, state: { fields: allFields, fldKey } })
   }
   const setPasswordLimit = e => {
-    if (!bits.isPro) return
+    if (!IS_PRO) return
     const { name, value } = e.target
     const { validations } = fieldData.valid
     if (value) {
@@ -374,6 +376,7 @@ function TextFieldSettings() {
   }
 
   const hideSuggestionVal = ({ target: { checked } }) => {
+    if (!IS_PRO) return
     if (checked) {
       fieldData.suggestionHide = true
     } else {
@@ -419,6 +422,7 @@ function TextFieldSettings() {
           toggleChecked
           open
         // disable={!fieldData?.adminLbl}
+          isPro
         >
           <div className={css(ut.mt2)}>
             <FieldIconSettings
@@ -461,7 +465,8 @@ function TextFieldSettings() {
               toggleAction={hideDefalutValue}
               toggleChecked={fieldData?.defaultValueHide}
               open={fieldData?.defaultValueHide}
-              disable={!fieldData?.defaultValueHide}
+              {...IS_PRO && { disable: !fieldData?.defaultValueHide }}
+              isPro
             >
               <div className={css(FieldStyle.placeholder)}>
                 <input
@@ -499,7 +504,8 @@ function TextFieldSettings() {
                 toggleAction={hideSuggestionVal}
                 toggleChecked={fieldData?.suggestionHide}
                 open={fieldData?.suggestionHide}
-                disable={!fieldData?.suggestionHide}
+                {...IS_PRO && { disable: !fieldData?.suggestionHide }}
+                isPro
               >
                 <div className={css(FieldStyle.placeholder, ut.mb1)}>
                   <Btn
@@ -556,6 +562,7 @@ function TextFieldSettings() {
                 className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
                 tip={tippyHelperMsg.inputMode}
                 tipProps={{ width: 250, icnSize: 17 }}
+                isPro
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <select
@@ -582,6 +589,7 @@ function TextFieldSettings() {
                 id="ptrn-stng"
                 title={__('RegEx Pattern')}
                 className={css(FieldStyle.fieldSection)}
+                isPro
               >
                 <>
                   <div className={css(ut.mr2, ut.mt3, ut.pl1)}>
@@ -590,7 +598,7 @@ function TextFieldSettings() {
                         {__('Expression')}
                         :
                       </h4>
-                      {!bits.isPro && <span className={css(ut.proBadge, ut.ml2)}>{__('Pro')}</span>}
+                      {/* {!IS_PRO && (<ProBadge width="18" />)} */}
                       <Downmenu instance={patternTippy}>
                         <button
                           data-testid="ptrn-stng-exprsn-btn"
@@ -631,7 +639,7 @@ function TextFieldSettings() {
                       ariaLabel="Pattern for input field"
                       placeholder="e.g. ([A-Z])\w+"
                       list="patterns"
-                      disabled={!bits.isPro}
+                      disabled={!IS_PRO}
                       value={generateBackslashPattern(regexr)}
                       changeAction={setRegexr}
                     />
@@ -646,7 +654,7 @@ function TextFieldSettings() {
                       action={setFlags}
                       placeholder="e.g. g"
                       cls={css(FieldStyle.input)}
-                      disabled={!bits.isPro}
+                      disabled={!IS_PRO}
                     />
                   </div>
                   {regexr && (
@@ -779,9 +787,9 @@ function TextFieldSettings() {
                 isPro
               >
                 <div className={css(ut.mt1, ut.flxClm)}>
-                  <TableCheckBox id="pass-vldsn-stng-dgt" className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox id="pass-vldsn-stng-lwr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)')} onChange={setPasswordValidation} disabled={!bits.isPro} />
-                  <TableCheckBox id="pass-vldsn-stng-upr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)')} onChange={setPasswordValidation} disabled={!bits.isPro} />
+                  <TableCheckBox id="pass-vldsn-stng-dgt" className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)')} onChange={setPasswordValidation} disabled={!IS_PRO} />
+                  <TableCheckBox id="pass-vldsn-stng-lwr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="lower" checked={fieldData.valid?.validations?.lower || false} value="(?=.*[a-z])" title={__('At least one lowercase character (a-z)')} onChange={setPasswordValidation} disabled={!IS_PRO} />
+                  <TableCheckBox id="pass-vldsn-stng-upr" className={css(ut.w10, ut.mt2)} cls={css(ut.mr2)} name="upper" checked={fieldData.valid?.validations?.upper || false} value="(?=.*[A-Z])" title={__('At least one uppercase character (A-Z)')} onChange={setPasswordValidation} disabled={!IS_PRO} />
                   <TableCheckBox
                     id="pass-vldsn-stng-spcl"
                     className={css(ut.w10, ut.mt2)}
@@ -791,7 +799,7 @@ function TextFieldSettings() {
                     value="(?=.*[~!@#$%^&*(){}[$_bf_$]<>+$_bf_$-_=$_bf_$$_bf_$/|;:,.])"
                     title={__('At least one special character (~!@#$%^&*(){}[]<>+-_=/\\|;:,.)')}
                     onChange={setPasswordValidation}
-                    disabled={!bits.isPro}
+                    disabled={!IS_PRO}
                   />
                   <TableCheckBox
                     id="pass-vldsn-stng-lmt"
@@ -802,7 +810,7 @@ function TextFieldSettings() {
                     value=".{8,32}"
                     title={__('Limit Password Length')}
                     onChange={setPasswordValidation}
-                    disabled={!bits.isPro}
+                    disabled={!IS_PRO}
                   />
                   {fieldData.valid?.validations?.limit && (
                     <div>

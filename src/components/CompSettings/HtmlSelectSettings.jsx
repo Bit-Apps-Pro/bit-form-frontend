@@ -2,10 +2,9 @@ import produce from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState } from 'recoil'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import app from '../../styles/app.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -15,7 +14,6 @@ import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
-import FieldNameSettings from './CompSettingsUtils/FieldNameSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
@@ -28,8 +26,6 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function HtmlSelectSettings() {
-  const bits = useRecoilValue($bits)
-  const { isPro } = bits
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
   const { css } = useFela()
@@ -123,8 +119,8 @@ export default function HtmlSelectSettings() {
         title={__('Options')}
         width="730px"
       >
-        <div className="pos-rel">
-          {!isPro && (
+        {/* <div className="pos-rel"> */}
+        {/* {!isPro && (
             <div className="pro-blur flx" style={{ top: -7, width: '105%', left: -17 }}>
               <div className="pro">
                 {__('Available On')}
@@ -136,17 +132,17 @@ export default function HtmlSelectSettings() {
                 </a>
               </div>
             </div>
-          )}
-          <EditOptions
-            optionMdl={optionMdl}
-            options={options}
-            setOptions={newOpts => handleOptions(newOpts)}
-            lblKey="lbl"
-            valKey="val"
-            type="radio"
-            hasGroup
-          />
-        </div>
+          )} */}
+        <EditOptions
+          optionMdl={optionMdl}
+          options={options}
+          setOptions={newOpts => handleOptions(newOpts)}
+          lblKey="lbl"
+          valKey="val"
+          type="radio"
+          hasGroup
+        />
+        {/* </div> */}
       </Modal>
     </>
   )

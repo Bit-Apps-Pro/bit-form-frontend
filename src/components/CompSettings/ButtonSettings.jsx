@@ -166,6 +166,7 @@ export default function ButtonSettings() {
             styleRoute="btn-pre-i"
             setIcon={() => setIconModel('btnPreIcn')}
             removeIcon={() => removeIcon('btnPreIcn')}
+            isPro
           />
           <FieldIconSettings
             label="Trailing Icon"
@@ -173,6 +174,7 @@ export default function ButtonSettings() {
             styleRoute="btn-suf-i"
             setIcon={() => setIconModel('btnSufIcn')}
             removeIcon={() => removeIcon('btnSufIcn')}
+            isPro
           />
         </SimpleAccordion>
 

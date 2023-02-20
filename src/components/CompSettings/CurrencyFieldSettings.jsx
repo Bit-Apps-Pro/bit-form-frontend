@@ -22,6 +22,7 @@ import FieldLabelSettings from './CompSettingsUtils/FieldLabelSettings'
 import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
+import OptionsListHeightSettings from './CompSettingsUtils/OptionsListHeightSettings'
 import PlaceholderSettings from './CompSettingsUtils/PlaceholderSettings'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SubTitleSettings from './CompSettingsUtils/SubTitleSettings'
@@ -161,7 +162,7 @@ const CurrencyFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion id="nmbr-stng" title="Input Amount Range(Min/Max):" className={css(FieldStyle.fieldSection)}>
+      <SimpleAccordion id="nmbr-stng" title="Input Amount Range(Min/Max):" className={css(FieldStyle.fieldSection)} isPro>
         <div className={css({ mx: 5 })}>
           <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
             <span>{__('Minimum amount:')}</span>
@@ -214,6 +215,7 @@ const CurrencyFieldSettings = () => {
         id="inp-frmt-opt-stng"
         title={__('Input Format Options')}
         className={css(FieldStyle.fieldSection)}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <div className={css(FieldStyle.labelInput)}>
@@ -362,6 +364,7 @@ const CurrencyFieldSettings = () => {
         id="inp-frmt-opt-stng"
         title={__('Value Format Options')}
         className={css(FieldStyle.fieldSection)}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <div className={css(FieldStyle.labelInput)}>
@@ -527,6 +530,7 @@ const CurrencyFieldSettings = () => {
         toggleChecked={showSearchPh}
         open={showSearchPh}
         disable={!showSearchPh}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -547,10 +551,11 @@ const CurrencyFieldSettings = () => {
         id="cntry-nt-fund-stng"
         title={__('Currency Not Found Text')}
         className={css(FieldStyle.fieldSection)}
-      // switching
-      // toggleAction={hideAdminLabel}
-      // toggleChecked={fieldData?.adminLblHide}
-      // disable={!fieldData?.adminLblHide}
+        // switching
+        // toggleAction={hideAdminLabel}
+        // toggleChecked={fieldData?.adminLblHide}
+        // disable={!fieldData?.adminLblHide}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -574,6 +579,7 @@ const CurrencyFieldSettings = () => {
         title={__('Show Selected Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
         isChecked={selectedFlagImage}
+        isPro
       />
 
       <FieldSettingsDivider />
@@ -607,27 +613,13 @@ const CurrencyFieldSettings = () => {
         title={__('Option Flag Image')}
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage', 'config')}
         isChecked={optionFlagImage}
+        isPro
       />
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)}>
-        <div className={css({ mx: 5 })}>
-          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
-            <span>{__('Maximum:')}</span>
-            <input
-              data-testid="nmbr-stng-min-inp"
-              title="Maximum height of Option List"
-              aria-label="Maximum height of Option List"
-              placeholder="Type Maximum Height..."
-              className={css(FieldStyle.input, FieldStyle.w140)}
-              type="number"
-              value={maxHeight}
-              onChange={e => handleConfigChange(e.target.value, 'maxHeight', 'config')}
-            />
-          </div>
-        </div>
-      </SimpleAccordion>
+      <OptionsListHeightSettings />
+
       <FieldSettingsDivider />
 
       <div className={css(FieldStyle.fieldSection)}>
