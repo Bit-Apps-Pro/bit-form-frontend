@@ -9,7 +9,7 @@ import IconStyleBtn from '../../IconStyleBtn'
 import ProBadgeOverlay from './ProBadgeOverlay'
 
 export default function FieldIconSettings({
-  classNames, labelClass, label, alt, iconSrc, styleRoute, setIcon, removeIcon, isPro,
+  classNames, labelClass, label, alt, iconSrc, styleRoute, setIcon, removeIcon, isPro, proProperty,
 }) {
   const { css } = useFela()
   const enableAction = !isPro || (isPro && IS_PRO)
@@ -17,7 +17,7 @@ export default function FieldIconSettings({
     <div className={`${css(ut.flxcb)} ${classNames} pos-rel`}>
       <div className={css({ flx: 'align-center' })}>
         <span className={`${css(ut.fw500, ut.ml2)} ${labelClass}`}>{label}</span>
-        {isPro && !IS_PRO && <ProBadgeOverlay />}
+        {isPro && !IS_PRO && <ProBadgeOverlay proProperty={proProperty} />}
       </div>
       <div className={css(ut.flxcb)}>
         {iconSrc && (

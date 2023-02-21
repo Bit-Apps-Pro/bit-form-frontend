@@ -179,6 +179,7 @@ const PhoneNumberFieldSettings = () => {
         // toggleChecked={fieldData?.adminLblHide}
         // disable={!fieldData?.adminLblHide}
         isPro
+        proProperty="inputFormatOptions"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -204,6 +205,7 @@ const PhoneNumberFieldSettings = () => {
         // toggleChecked={fieldData?.adminLblHide}
         // disable={!fieldData?.adminLblHide}
         isPro
+        proProperty="valueFormatOptions"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -242,6 +244,7 @@ const PhoneNumberFieldSettings = () => {
         open={showSearchPh}
         disable={!showSearchPh}
         isPro
+        proProperty="searchPlaceholder"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -267,6 +270,7 @@ const PhoneNumberFieldSettings = () => {
         // toggleChecked={fieldData?.adminLblHide}
         // disable={!fieldData?.adminLblHide}
         isPro
+        proProperty="countryNotFoundText"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -291,6 +295,7 @@ const PhoneNumberFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
         isChecked={selectedFlagImage}
         isPro
+        proProperty="selectedOptImage"
       />
 
       <FieldSettingsDivider />
@@ -325,6 +330,7 @@ const PhoneNumberFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage', 'config')}
         isChecked={optionFlagImage}
         isPro
+        proProperty="optionFlagImage"
       />
 
       <FieldSettingsDivider />
@@ -337,6 +343,7 @@ const PhoneNumberFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp', 'config')}
         isChecked={detectCountryByIp}
         isPro
+        proProperty="detectCountryByIp"
       />
 
       <FieldSettingsDivider />
@@ -349,6 +356,7 @@ const PhoneNumberFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo', 'config')}
         isChecked={detectCountryByGeo}
         isPro
+        proProperty="detectCountryByGeo"
       />
 
       <FieldSettingsDivider />

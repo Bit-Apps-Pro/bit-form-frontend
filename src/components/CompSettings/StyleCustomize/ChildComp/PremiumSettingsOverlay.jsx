@@ -3,26 +3,28 @@
 import { useFela } from 'react-fela'
 import { __ } from '../../../../Utils/i18nwrap'
 
-export default function PremiumOverlay({ classes }) {
+export default function PremiumOverlay({ classes, hideText }) {
   const { css } = useFela()
   return (
     <>
-      <div className={css(style.content)}>
-        {__('Note: This is a Pro Feature. to unlock this feature, please ')}
-        <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-          <span className={css(style.textLink)}>
-            {__('Upgrade to Pro')}
-          </span>
-        </a>
-        {__('. Please ')}
-        <a href="https://docs.form.bitapps.pro" target="_blank" rel="noreferrer">
-          <span className={css(style.textLink)}>
-            {__('Click Here ')}
-          </span>
-        </a>
-        {__('to learn more about BitForm Pro.')}
-      </div>
-      <div className={css(style.overlay)} />
+      { !hideText && (
+        <div className={css(style.content)}>
+          {__('Note: This feature is only available to BitForm Pro users.')}
+          <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+            <span className={css(style.textLink)}>
+              {__('Upgrade now')}
+            </span>
+          </a>
+          {__(' to unlock it. Check out our')}
+          <a href="https://docs.form.bitapps.pro" target="_blank" rel="noreferrer">
+            <span className={css(style.textLink)}>
+              {__(' documentation ')}
+            </span>
+          </a>
+          {__(' to learn more about BitForm Pro.')}
+        </div>
+      )}
+      <div className={css(style.overlay, hideText && { h: '100%', tp: 0 })} />
     </>
   )
 }

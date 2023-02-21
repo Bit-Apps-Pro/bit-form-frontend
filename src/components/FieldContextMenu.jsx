@@ -14,6 +14,9 @@ import EditIcn from '../Icons/EditIcn'
 import EyeOffIcon from '../Icons/EyeOffIcon'
 import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
 import FieldDeleteButton from './FieldDeleteButton'
+import ProBadge from './Utilities/ProBadge'
+import { IS_PRO } from '../Utils/Helpers'
+import ProBadgeOverlay from './CompSettings/StyleCustomize/ChildComp/ProBadgeOverlay'
 
 const MenuItemWrapper = ({ isContextMenu, children }) => {
   function handleItemClick(event) {
@@ -155,13 +158,14 @@ export default function FieldContextMenu({
   )
 }
 
-function ContextMenuItem({ onClick, label, icn, postIcn }) {
+function ContextMenuItem({ onClick, label, icn, postIcn, isPro }) {
   return (
     <li className="context-item">
       <button type="button" className="context-btn" onClick={onClick}>
         {icn}
         <span>{label}</span>
         {postIcn}
+        {isPro && !IS_PRO && <ProBadgeOverlay />}
       </button>
     </li>
   )

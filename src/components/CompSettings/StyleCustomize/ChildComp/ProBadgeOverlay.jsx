@@ -1,12 +1,12 @@
 import { useFela } from 'react-fela'
 import ProBadge from '../../../Utilities/ProBadge'
 
-export default function ProBadgeOverlay({ badgeWidth = '18' }) {
+export default function ProBadgeOverlay({ badgeWidth = '18', proProperty }) {
   const { css } = useFela()
   return (
     <>
       <div className={css(style.overlay)} />
-      <ProBadge className={css(style.badge)} width={badgeWidth} />
+      <ProBadge className={css(style.badge)} width={badgeWidth} proProperty={proProperty} />
     </>
   )
 }

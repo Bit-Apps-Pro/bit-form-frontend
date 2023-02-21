@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -20,8 +20,9 @@ import {
   $flags,
   $isNewThemeStyleLoaded,
   $layouts,
+  $proModal,
   $selectedFieldId,
-  $uniqueFieldId,
+  $uniqueFieldId
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
@@ -45,13 +46,13 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError,
+  removeFormUpdateError
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
-import { ShowProModalContext } from '../Utils/StaticData/Contexts'
+import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
@@ -71,7 +72,7 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   const { formType } = useParams()
   const { payments, reCaptchaV2 } = useContext(AppSettings)
-  const setProModal = useContext(ShowProModalContext)
+  const setProModal = useSetRecoilState($proModal)
   const [fields, setFields] = useRecoilState($fields)
   const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
   const [layouts, setLayouts] = useState(rootLayouts)
@@ -251,7 +252,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const handleFieldExtraAttr = (fieldData) => {
     const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2)
     if (extraAttr.validType === 'pro') {
-      setProModal({ show: true, msg: extraAttr.msg, cancelBtn: false })
+      setProModal({ show: true, ...proHelperData[fieldData.typ] })
       return 0
     }
 

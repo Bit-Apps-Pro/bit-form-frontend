@@ -163,3 +163,5 @@ export const $reportSelector = selector({
     draft[rportIndx] = newReport
   })),
 })
+
+export const $proModal = atom({ key: '$proModal', default: { show: false } })

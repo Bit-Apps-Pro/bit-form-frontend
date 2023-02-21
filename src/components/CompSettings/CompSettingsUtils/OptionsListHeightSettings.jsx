@@ -25,7 +25,7 @@ export default function OptionsListHeightSettings({ cls }) {
   }
 
   return (
-    <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)} isPro>
+    <SimpleAccordion id="nmbr-stng" title="Options List Height:" className={css(FieldStyle.fieldSection)} isPro proProperty="listHeight">
       <div className={css({ mx: 5 })}>
         <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
           <span>{__('Maximum:')}</span>

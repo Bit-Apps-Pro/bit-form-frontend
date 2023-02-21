@@ -162,7 +162,13 @@ const CurrencyFieldSettings = () => {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion id="nmbr-stng" title="Input Amount Range(Min/Max):" className={css(FieldStyle.fieldSection)} isPro>
+      <SimpleAccordion
+        id="nmbr-stng"
+        title="Input Amount Range(Min/Max):"
+        className={css(FieldStyle.fieldSection)}
+        isPro
+        proProperty="minMaxValue"
+      >
         <div className={css({ mx: 5 })}>
           <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
             <span>{__('Minimum amount:')}</span>
@@ -216,6 +222,7 @@ const CurrencyFieldSettings = () => {
         title={__('Input Format Options')}
         className={css(FieldStyle.fieldSection)}
         isPro
+        proProperty="inputFormatOptions"
       >
         <div className={css(FieldStyle.placeholder)}>
           <div className={css(FieldStyle.labelInput)}>
@@ -365,6 +372,7 @@ const CurrencyFieldSettings = () => {
         title={__('Value Format Options')}
         className={css(FieldStyle.fieldSection)}
         isPro
+        proProperty="valueFormatOptions"
       >
         <div className={css(FieldStyle.placeholder)}>
           <div className={css(FieldStyle.labelInput)}>
@@ -531,6 +539,7 @@ const CurrencyFieldSettings = () => {
         open={showSearchPh}
         disable={!showSearchPh}
         isPro
+        proProperty="searchPlaceholder"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -556,6 +565,7 @@ const CurrencyFieldSettings = () => {
         // toggleChecked={fieldData?.adminLblHide}
         // disable={!fieldData?.adminLblHide}
         isPro
+        proProperty="currencyNotFoundText"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -580,6 +590,7 @@ const CurrencyFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage', 'config')}
         isChecked={selectedFlagImage}
         isPro
+        proProperty="selectedOptImage"
       />
 
       <FieldSettingsDivider />
@@ -614,6 +625,7 @@ const CurrencyFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage', 'config')}
         isChecked={optionFlagImage}
         isPro
+        proProperty="optionIcon"
       />
 
       <FieldSettingsDivider />

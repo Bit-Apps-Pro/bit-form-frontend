@@ -10,12 +10,12 @@ import Tip from '../Utilities/Tip'
 
 export default function ThemeStyleReset({ id, fk }) {
   const { css } = useFela()
-  const saveStyles = useRecoilValue($savedStyles)
+  const saveStyles = useRecoilValue($savedStyles) || {}
   const [styles, setStyles] = useRecoilState($styles)
   const setThemeVars = useSetRecoilState($themeVars)
   const savedThemeVars = useRecoilValue($savedThemeVars)
 
-  const previousFieldsStyle = Object.keys(saveStyles.fields)
+  const previousFieldsStyle = Object.keys(saveStyles?.fields || {})
   let show = false
 
   if (!((styles && 'fields' in styles) || (saveStyles && 'fields' in saveStyles))) {
@@ -23,7 +23,7 @@ export default function ThemeStyleReset({ id, fk }) {
   }
 
   if (fk) {
-    show = ('fields' in styles && styles.fields[fk]?.fieldSize) !== ('fields' in saveStyles && saveStyles.fields[fk]?.fieldSize)
+    show = ('fields' in styles && styles.fields[fk]?.fieldSize) !== ('fields' in saveStyles && saveStyles?.fields[fk]?.fieldSize)
   } else {
     show = ('fields' in styles && styles?.fieldsSize) !== ('fields' in saveStyles && saveStyles?.fieldsSize)
   }
@@ -31,13 +31,13 @@ export default function ThemeStyleReset({ id, fk }) {
   const resetStyle = () => {
     setStyles(prvStyle => produce(prvStyle, draft => {
       if (fk) {
-        draft.fields[fk].fieldSize = saveStyles.fields[fk].fieldSize
-        draft.fields[fk].classes = saveStyles.fields[fk].classes
+        draft.fields[fk].fieldSize = saveStyles?.fields[fk].fieldSize
+        draft.fields[fk].classes = saveStyles?.fields[fk].classes
       } else {
-        draft.fieldsSize = saveStyles.fieldsSize
+        draft.fieldsSize = saveStyles?.fieldsSize
         previousFieldsStyle.forEach(fldKey => {
-          draft.fields[fldKey].fieldSize = saveStyles.fields[fldKey].fieldSize
-          draft.fields[fldKey].classes = saveStyles.fields[fldKey].classes
+          draft.fields[fldKey].fieldSize = saveStyles?.fields[fldKey].fieldSize
+          draft.fields[fldKey].classes = saveStyles?.fields[fldKey].classes
         })
       }
     }))

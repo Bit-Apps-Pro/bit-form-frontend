@@ -18,7 +18,7 @@ import {
   iconElementLabel,
   isStyleExist,
   setIconFilterValue,
-  styleClasses,
+  styleClasses
 } from '../../style-new/styleHelpers'
 import Modal from '../../Utilities/Modal'
 import Icons from '../Icons'
@@ -130,6 +130,7 @@ export default function FieldLabelSettings() {
               setIcon={() => setIconModel('lblPreIcn')}
               removeIcon={() => removeIcon('lblPreIcn')}
               isPro
+              proProperty="leadingIcon"
             />
 
             <FieldIconSettings
@@ -139,6 +140,7 @@ export default function FieldLabelSettings() {
               setIcon={() => setIconModel('lblSufIcn')}
               removeIcon={() => removeIcon('lblSufIcn')}
               isPro
+              proProperty="trailingIcon"
             />
           </div>
         </div>

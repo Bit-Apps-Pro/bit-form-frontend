@@ -1,20 +1,24 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useFela } from 'react-fela'
+import { useSetRecoilState } from 'recoil'
+import { $proModal } from '../../GlobalStates/GlobalStates'
 import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import proHelperData from '../../Utils/StaticData/proHelperData'
 import Cooltip from './Cooltip'
 import ProBadge from './ProBadge'
 
 export default function SingleToggle({
-  id, className, tip, title, isChecked, name, action = () => { }, disabled, isPro,
+  id, className, tip, title, isChecked, name, action = () => { }, disabled, isPro, proProperty,
 }) {
   const { css } = useFela()
+  const setProModal = useSetRecoilState($proModal)
   const allowToggleAction = !isPro || IS_PRO
   return (
     <div className={`flx flx-between ${className}`}>
       <span className={`font-w-m ${css(c.titleWrp)}`}>
         {title}
-        {isPro && !IS_PRO && (<ProBadge width="18" />)}
+        {isPro && !IS_PRO && (<ProBadge width="18" proProperty={proProperty} />)}
         {tip && (
           <Cooltip width="200" icnSize="17" className="hover-tip">
             <div className="txt-body">{__(tip)}</div>
@@ -25,6 +29,7 @@ export default function SingleToggle({
         <input
           id={`s-ck-${id || title || name}-${isChecked}`}
           {...allowToggleAction && { onChange: action || (() => { }) }}
+          {...!allowToggleAction && { onChange: () => { setProModal({ show: true, ...proHelperData[proProperty] }) } }}
           className={css(c.input)}
           type="checkbox"
           name={name || 'check'}

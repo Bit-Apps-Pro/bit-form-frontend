@@ -5,7 +5,7 @@ import {
   createRef, StrictMode, useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState,
+  useReducer, useRef, useState
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
@@ -20,8 +20,9 @@ import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
+import ProModal from '../components/Utilities/ProModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHookStates, $builderSettings, $colorScheme, $customCodes, $deletedFldKey, $fields, $flags, $formInfo, $isNewThemeStyleLoaded, $layouts, $newFormId, $updateBtn,
+  $bits, $breakpoint, $breakpointSize, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -31,7 +32,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, calculateFormGutter, getSessionStorageStates } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, calculateFormGutter } from '../Utils/FormBuilderHelper'
 import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
@@ -70,6 +71,7 @@ const SPLIT_BAR = 8
 const BUILDER_WIDTH = window.innerWidth - LEFT_MENU_WIDTH - RIGHT_MENU_WIDTH - (SPLIT_BAR * 2)
 
 const FormBuilder = ({ isLoading }) => {
+  const [proModal, setProModal] = useRecoilState($proModal)
   const newFormId = useRecoilValue($newFormId)
   const { element, fieldKey, formType, formID: pramsFormId } = useParams()
   const isNewForm = formType !== 'edit'
@@ -398,6 +400,7 @@ const FormBuilder = ({ isLoading }) => {
       >
         <div className="txt-center">{alertMdl.msg}</div>
       </ConfirmModal>
+      <ProModal />
     </>
   )
 }

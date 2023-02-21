@@ -2,10 +2,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
+import { useSetRecoilState } from 'recoil'
+import { $proModal } from '../../../../GlobalStates/GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
 import SimpleAccordionStyle from '../../../../styles/SimpleAccordion.style'
 import { IS_PRO } from '../../../../Utils/Helpers'
+import proHelperData from '../../../../Utils/StaticData/proHelperData'
 import Cooltip from '../../../Utilities/Cooltip'
 import ProBadge from '../../../Utilities/ProBadge'
 import RenderHtml from '../../../Utilities/RenderHtml'
@@ -27,12 +30,15 @@ export default function SimpleAccordion({
   toggleAction,
   toggleChecked,
   isPro,
+  proProperty,
+  allowToggle,
   disable,
   actionComponent,
   icnStrok = 2,
   onClick,
   proTip,
 }) {
+  const setProModal = useSetRecoilState($proModal)
   const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
   const nodeRef = useRef(null)
@@ -63,7 +69,7 @@ export default function SimpleAccordion({
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (disable !== undefined) setTgl(!disable) }, [disable])
-  const allowToggleAction = !isPro || IS_PRO
+  const allowToggleAction = !isPro || IS_PRO || allowToggle
   const cancelBubble = (e) => e.stopPropagation()
 
   const getAbsoluteHeight = (el) => {
@@ -100,7 +106,7 @@ export default function SimpleAccordion({
             {title}
             {/* {isPro && !bits.isPro && <span className={`${css(ut.proBadge)} ${css(ut.ml2)}`}>{__('Pro')}</span>} */}
             {isPro && !IS_PRO && (
-              <ProBadge width="18">
+              <ProBadge width="18" proProperty={proProperty}>
                 <div className="txt-body">
                   <RenderHtml html={proTip} />
                 </div>
@@ -123,6 +129,7 @@ export default function SimpleAccordion({
                   className={css(ut.mr2)}
                   name={toggleName || title}
                   {...allowToggleAction && { action: toggleAction }}
+                  {...!allowToggleAction && { action: () => setProModal({ show: true, ...proHelperData[proProperty] }) }}
                   isChecked={toggleChecked || ''}
                 />
               )}

@@ -267,6 +267,7 @@ function RadioCheckSettings() {
         title={__('Options Column')}
         className={css(FieldStyle.fieldSection)}
         isPro
+        proProperty="optionColumn"
         tip={__('Specify the number of columns to display the options in. Leave blank to display the options as needed space.')}
       >
         <div className={css(FieldStyle.placeholder)}>
@@ -292,6 +293,7 @@ function RadioCheckSettings() {
               className={css(FieldStyle.fieldSection)}
               tip="Set minimum number to be selected for checkbox option"
               isPro
+              proProperty="mimimumOption"
             >
               {/* <div>
                 <div className="flx mt-2 mb-2">
@@ -333,6 +335,7 @@ function RadioCheckSettings() {
               className={css(FieldStyle.fieldSection)}
               tip="Set maximum number to be selected for checkbox option"
               isPro
+              proProperty="maximumOption"
             >
               <div className={css(FieldStyle.placeholder)}>
                 <input

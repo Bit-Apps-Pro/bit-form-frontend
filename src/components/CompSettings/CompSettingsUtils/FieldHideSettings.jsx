@@ -42,6 +42,7 @@ export default function FieldHideSettings({ cls }) {
         action={setHidden}
         isChecked={isHidden}
         isPro
+        proProperty="hidden"
       />
     </div>
   )

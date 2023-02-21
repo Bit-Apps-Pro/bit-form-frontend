@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-case-declarations */
@@ -19,18 +20,21 @@ import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { IS_PRO } from '../../Utils/Helpers'
 import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
 import AutoResizeInput from '../CompSettings/CompSettingsUtils/AutoResizeInput'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
+import PremiumOverlay from '../CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
+import ProBadge from '../Utilities/ProBadge'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import FieldQuickTweaks from './FieldQuickTweaks'
 import IndividualCustomStyle from './IndividualCustomStyle'
 import editorConfig from './NewStyleEditorConfig'
 import { assignNestedObj, getActualElementKey } from './styleHelpers'
-import atlassianTheme from './themes/2_atlassian'
 import bitformDefaultTheme from './themes/1_bitformDefault'
+import atlassianTheme from './themes/2_atlassian'
 
 export default function FieldStyleCustomizeHOC() {
   const { formType, formID, '*': rightParams } = useParams()
@@ -297,7 +301,15 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
         <div className={css(ut.flxc)}>
           <h5 className={css(cls.subTitle)}>{fields[fieldKey]?.adminLbl}</h5>
           <span title="Field Key" className={css(cls.pill)}>{fieldKey}</span>
+          {!IS_PRO && (
+            <ProBadge />
+          )}
         </div>
+        {!IS_PRO && (
+          <div className="pos-rel">
+            <PremiumOverlay />
+          </div>
+        )}
       </div>
       <div className={css(cls.divider)} />
       <div className={css(cls.wrp)}>
@@ -321,9 +333,10 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
               <SingleToggle
                 id="overrideGlobalTheme-style"
                 title="Override form theme styles"
-                action={(e) => overrideGlobalThemeHandler(e, element)}
+                {...IS_PRO && { action: (e) => overrideGlobalThemeHandler(e, element) }}
                 isChecked={isFieldElemetOverrided}
                 className={css(ut.m10)}
+                isPro
               />
               <div className={css(cls.container)}>
                 {renderIndividualCustomStyleComp()}
@@ -331,81 +344,85 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
             </Grow>
 
             <Grow open={controller === 'classes'}>
-              <div className={css(ut.m10)}>
-                <label className={css({ fs: 14, fw: 600 })}>Custom Class Names</label>
-                <AutoResizeInput
-                  ariaLabel="Custom Class Names"
-                  placeholder="e.g. class1 class2 class3"
-                  value={customClsName?.[element] || ''}
-                  changeAction={customClsNamHandler}
-                  rows="3"
-                  id={`${fieldKey}-${element}`}
-                />
-              </div>
-              <div className={css(ut.m10)}>
-                <span className={css({ fs: 14, fw: 600 })}>Custom Attributes</span>
-                <div className={css({ w: '80%', ml: 18 })}>
-                  <div className={css(cls.customAttrContainer)}>
-                    <div className={css({ w: '50%' })}>
-                      <span className={css({ fs: 13, fw: 500 })}>Key</span>
-                    </div>
-                    <div className={css({ w: '50%' })}>
-                      <span className={css({ fs: 13, fw: 500 })}>Value</span>
+              <div className="pos-rel">
+                {!IS_PRO && (<PremiumOverlay hideText />)}
+
+                <div className={css(ut.m10)}>
+                  <label className={css({ fs: 14, fw: 600 })}>Custom Class Names</label>
+                  <AutoResizeInput
+                    ariaLabel="Custom Class Names"
+                    placeholder="e.g. class1 class2 class3"
+                    value={customClsName?.[element] || ''}
+                    changeAction={customClsNamHandler}
+                    rows="3"
+                    id={`${fieldKey}-${element}`}
+                  />
+                </div>
+                <div className={css(ut.m10)}>
+                  <span className={css({ fs: 14, fw: 600 })}>Custom Attributes</span>
+                  <div className={css({ w: '80%', ml: 18 })}>
+                    <div className={css(cls.customAttrContainer)}>
+                      <div className={css({ w: '50%' })}>
+                        <span className={css({ fs: 13, fw: 500 })}>Key</span>
+                      </div>
+                      <div className={css({ w: '50%' })}>
+                        <span className={css({ fs: 13, fw: 500 })}>Value</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                {fields[fieldKey]?.customAttributes?.[element] && fields[fieldKey]?.customAttributes[element].map((attr, indx) => (
-                  <div
-                    key={`custon-attribute-${indx + 1}`}
-                    className={css(cls.customAttrItem, ut.mx10)}
-                  >
-                    <div className={css({ w: '40%' })}>
-                      <input
-                        placeholder="Key"
-                        aria-label="custom attribute key"
-                        name="key"
-                        onChange={e => attributeHandler(e, indx)}
-                        value={attr.key}
-                        className={css(FieldStyle.input)}
-                        type="text"
-                        data-testid={`${fieldKey}-${element}-atrbut-key`}
-                      />
-                    </div>
-                    <span className={css(cls.pair)}>=</span>
-                    <div className={css({ w: '40%' })}>
-                      <input
-                        aria-label="custom attribute value"
-                        placeholder="Value"
-                        name="value"
-                        onChange={e => attributeHandler(e, indx)}
-                        value={attr.value}
-                        className={css(FieldStyle.input)}
-                        type="text"
-                        data-testid={`${fieldKey}-${element}-atrbut-value`}
-                      />
-                    </div>
-                    <button
-                      className={css(cls.addBtn, cls.delBtnHover, ut.ml1, ut.mt1)}
-                      type="button"
-                      aria-label="Delete Custom Attribute"
-                      onClick={() => deleteCustomAttribute(indx)}
-                      data-testid={`${fieldKey}-${element}-attbut-delete`}
+                  {fields[fieldKey]?.customAttributes?.[element] && fields[fieldKey]?.customAttributes[element].map((attr, indx) => (
+                    <div
+                      key={`custon-attribute-${indx + 1}`}
+                      className={css(cls.customAttrItem, ut.mx10)}
                     >
-                      <TrashIcn size="12" />
+                      <div className={css({ w: '40%' })}>
+                        <input
+                          placeholder="Key"
+                          aria-label="custom attribute key"
+                          name="key"
+                          onChange={e => attributeHandler(e, indx)}
+                          value={attr.key}
+                          className={css(FieldStyle.input)}
+                          type="text"
+                          data-testid={`${fieldKey}-${element}-atrbut-key`}
+                        />
+                      </div>
+                      <span className={css(cls.pair)}>=</span>
+                      <div className={css({ w: '40%' })}>
+                        <input
+                          aria-label="custom attribute value"
+                          placeholder="Value"
+                          name="value"
+                          onChange={e => attributeHandler(e, indx)}
+                          value={attr.value}
+                          className={css(FieldStyle.input)}
+                          type="text"
+                          data-testid={`${fieldKey}-${element}-atrbut-value`}
+                        />
+                      </div>
+                      <button
+                        className={css(cls.addBtn, cls.delBtnHover, ut.ml1, ut.mt1)}
+                        type="button"
+                        aria-label="Delete Custom Attribute"
+                        onClick={() => deleteCustomAttribute(indx)}
+                        data-testid={`${fieldKey}-${element}-attbut-delete`}
+                      >
+                        <TrashIcn size="12" />
+                      </button>
+                    </div>
+                  ))}
+                  <div className={css(cls.addContainer)}>
+
+                    <button
+                      className={css(cls.addBtn, cls.addBtnHover)}
+                      type="button"
+                      aria-label="Add Custom Attribute"
+                      onClick={addCustomAttribute}
+                      data-testid={`${fieldKey}-${element}-attbut-add`}
+                    >
+                      <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
                     </button>
                   </div>
-                ))}
-                <div className={css(cls.addContainer)}>
-
-                  <button
-                    className={css(cls.addBtn, cls.addBtnHover)}
-                    type="button"
-                    aria-label="Add Custom Attribute"
-                    onClick={addCustomAttribute}
-                    data-testid={`${fieldKey}-${element}-attbut-add`}
-                  >
-                    <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
-                  </button>
                 </div>
               </div>
             </Grow>

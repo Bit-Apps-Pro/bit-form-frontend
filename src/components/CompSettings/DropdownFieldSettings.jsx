@@ -3,8 +3,8 @@ import produce from 'immer'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $bits, $fields } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $fields, $proModal } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import TrashIcn from '../../Icons/TrashIcn'
@@ -14,6 +14,7 @@ import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy, IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import proHelperData from '../../Utils/StaticData/proHelperData'
 import Btn from '../Utilities/Btn'
 import CheckBox from '../Utilities/CheckBox'
 import Modal from '../Utilities/Modal'
@@ -38,8 +39,7 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function DropdownFieldSettings() {
   const { fieldKey: fldKey } = useParams()
-  const bits = useRecoilValue($bits)
-  const { isPro } = bits
+  const setProModal = useSetRecoilState($proModal)
   if (!fldKey) return <>No field exist with this field key</>
   const { css } = useFela()
   const [fields, setFields] = useRecoilState($fields)
@@ -123,6 +123,10 @@ export default function DropdownFieldSettings() {
   }
 
   const handleAddNewOptionList = () => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.optionList })
+      return
+    }
     let newKey = `List-${Object.keys(optionsList).length + 1}`
     while (isListNameExist(newKey)) { newKey = `${newKey}1` }
     fieldData.optionsList = [
@@ -194,7 +198,7 @@ export default function DropdownFieldSettings() {
   }
 
   const setDisabledOnMax = e => {
-    if (!isPro) return
+    if (!IS_PRO) return
     if (e.target.checked) {
       fieldData.valid.disableOnMax = true
     } else {
@@ -264,6 +268,7 @@ export default function DropdownFieldSettings() {
         open={showSearchPh}
         {... IS_PRO && { disable: !showSearchPh }}
         isPro
+        proProperty="searchPlaceholder"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -288,6 +293,7 @@ export default function DropdownFieldSettings() {
         isChecked={selectedOptImage}
         tip="By disabling this option, the field show selected option image will be hidden"
         isPro
+        proProperty="selectedOptImage"
       />
 
       <FieldSettingsDivider />
@@ -322,6 +328,7 @@ export default function DropdownFieldSettings() {
         isChecked={optionIcon}
         tip="By disabling this option, the field option icon will be hidden"
         isPro
+        proProperty="optionIcon"
       />
 
       <FieldSettingsDivider />
@@ -350,6 +357,8 @@ export default function DropdownFieldSettings() {
         open={multipleSelect}
         disable={!multipleSelect}
         isPro
+        allowToggle
+        proProperty="minMaxOpt"
       >
         <div className={css(ut.ml1, ut.mr1)}>
           <div className={css(ut.flxc)}>
@@ -390,7 +399,7 @@ export default function DropdownFieldSettings() {
                 defaultMsg={`Maximum ${mx} Option can select`}
                 allowIcons={false}
               />
-              <SingleToggle id="mxmm-slctd" title={__('Disable if maximum selected:')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!isPro} className="mt-3 mb-2" />
+              <SingleToggle id="mxmm-slctd" title={__('Disable if maximum selected:')} action={setDisabledOnMax} isChecked={fieldData.valid.disableOnMax} disabled={!IS_PRO} className="mt-3 mb-2" />
             </>
           )}
 

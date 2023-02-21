@@ -45,6 +45,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...IS_PRO && { disable: !fieldData?.err?.[type]?.[isUnique] }}
       isPro
+      proProperty={type}
     >
       <ErrorMessageSettings
         id={`${type}-stng`}

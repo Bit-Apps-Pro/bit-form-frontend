@@ -121,6 +121,7 @@ export default function SubTitleSettings() {
           setIcon={() => setIconModel('subTlePreIcn')}
           removeIcon={() => removeIcon('subTlePreIcn')}
           isPro
+          proProperty="leadingIcon"
         />
 
         <FieldIconSettings
@@ -130,6 +131,7 @@ export default function SubTitleSettings() {
           setIcon={() => setIconModel('subTleSufIcn')}
           removeIcon={() => removeIcon('subTleSufIcn')}
           isPro
+          proProperty="trailingIcon"
         />
 
       </SimpleAccordion>

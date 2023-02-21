@@ -42,6 +42,7 @@ export default function FieldReadOnlySettings({ cls }) {
         action={setReadOnly}
         isChecked={isReadOnly}
         isPro
+        proProperty="readOnly"
       />
     </div>
   )

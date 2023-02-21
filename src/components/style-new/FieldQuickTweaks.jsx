@@ -9,7 +9,8 @@ import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
 import sc from '../../styles/commonStyleEditorStyle'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { deepCopy, IS_PRO } from '../../Utils/Helpers'
+import PremiumOverlay from '../CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import SingleToggle from '../Utilities/SingleToggle'
 import ButtonQuickTweaks from './QuickTweaks/ButtonQuickTweaks'
@@ -207,7 +208,8 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   return (
-    <>
+    <div className="pos-rel">
+      {!IS_PRO && (<PremiumOverlay hideText />)}
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|)$/gi) && (
         <SimpleColorPicker
           title="Accent Color"
@@ -281,7 +283,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
       {fieldType === 'razorpay' && (
         <RazorpayFieldQuickTweaks />
       )}
-    </>
+    </div>
   )
 }
 

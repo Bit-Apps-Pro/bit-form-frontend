@@ -170,6 +170,7 @@ export default function ErrorMessageSettings({
                 setIcon={() => setIconModel('errPreIcn')}
                 removeIcon={() => removeIcon('errPreIcn')}
                 isPro
+                proProperty="leadingIcon"
               />
 
               <FieldIconSettings
@@ -179,6 +180,7 @@ export default function ErrorMessageSettings({
                 setIcon={() => setIconModel('errSufIcn')}
                 removeIcon={() => removeIcon('errSufIcn')}
                 isPro
+                proProperty="trailingIcon"
               />
             </div>
           )}

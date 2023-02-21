@@ -120,6 +120,7 @@ export default function HelperTxtSettings() {
           setIcon={() => setIconModel('hlpPreIcn')}
           removeIcon={() => removeIcon('hlpPreIcn')}
           isPro
+          proProperty="leadingIcon"
         />
         <FieldIconSettings
           label="Trailing Icon"
@@ -128,6 +129,7 @@ export default function HelperTxtSettings() {
           setIcon={() => setIconModel('hlpSufIcn')}
           removeIcon={() => removeIcon('hlpSufIcn')}
           isPro
+          proProperty="trailingIcon"
         />
 
       </SimpleAccordion>

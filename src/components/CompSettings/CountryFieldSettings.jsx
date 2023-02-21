@@ -159,6 +159,7 @@ const CountryFieldSettings = () => {
         open={showSearchPh}
         disable={!showSearchPh}
         isPro
+        proProperty="searchPlaceholder"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -184,6 +185,7 @@ const CountryFieldSettings = () => {
         // toggleChecked={fieldData?.adminLblHide}
         // disable={!fieldData?.adminLblHide}
         isPro
+        proProperty="countryNotFoundText"
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
@@ -208,6 +210,7 @@ const CountryFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'selectedFlagImage')}
         isChecked={selectedFlagImage}
         isPro
+        proProperty="selectedFlagImage"
       />
 
       <FieldSettingsDivider />
@@ -242,6 +245,7 @@ const CountryFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'optionFlagImage')}
         isChecked={optionFlagImage}
         isPro
+        proProperty="optionIcon"
       />
 
       <FieldSettingsDivider />
@@ -254,6 +258,7 @@ const CountryFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp')}
         isChecked={detectCountryByIp}
         isPro
+        proProperty="detectCountryByIp"
       />
 
       <FieldSettingsDivider />
@@ -266,6 +271,7 @@ const CountryFieldSettings = () => {
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo')}
         isChecked={detectCountryByGeo}
         isPro
+        proProperty="detectCountryByGeo"
       />
 
       <FieldSettingsDivider />

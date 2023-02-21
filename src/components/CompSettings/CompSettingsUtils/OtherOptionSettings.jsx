@@ -102,6 +102,7 @@ export default function OtherOptionSettings() {
       open={fieldData?.addOtherOpt}
       {...IS_PRO && { disable: !fieldData?.addOtherOpt }}
       isPro
+      proProperty="otherOption"
     >
       <div className={css(FieldStyle.placeholder)}>
         <div className={css({ flx: 'center-between', my: 5 })}>

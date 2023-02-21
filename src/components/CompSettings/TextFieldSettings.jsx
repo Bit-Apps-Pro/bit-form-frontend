@@ -423,6 +423,7 @@ function TextFieldSettings() {
           open
           // disable={!fieldData?.adminLbl}
           isPro
+          proProperty="inputIcons"
         >
           <div className={css(ut.mt2)}>
             <FieldIconSettings
@@ -467,6 +468,7 @@ function TextFieldSettings() {
               open={fieldData?.defaultValueHide}
               {...IS_PRO && { disable: !fieldData?.defaultValueHide }}
               isPro
+              proProperty="defaultValue"
             >
               <div className={css(FieldStyle.placeholder)}>
                 <input
@@ -506,6 +508,7 @@ function TextFieldSettings() {
                 open={fieldData?.suggestionHide}
                 {...IS_PRO && { disable: !fieldData?.suggestionHide }}
                 isPro
+                proProperty="suggestion"
               >
                 <div className={css(FieldStyle.placeholder, ut.mb1)}>
                   <Btn
@@ -563,6 +566,7 @@ function TextFieldSettings() {
                 tip={tippyHelperMsg.inputMode}
                 tipProps={{ width: 250, icnSize: 17 }}
                 isPro
+                proProperty="inputMode"
               >
                 <div className={css(FieldStyle.placeholder)}>
                   <select
@@ -591,6 +595,7 @@ function TextFieldSettings() {
                 className={css(FieldStyle.fieldSection)}
                 isPro
                 tip={tippyHelperMsg.pattern}
+                proProperty="regexPattern"
               >
                 <>
                   <div className={css(ut.mr2, ut.mt3, ut.pl1)}>
@@ -768,6 +773,7 @@ function TextFieldSettings() {
                 title={__('Validations')}
                 className={css(FieldStyle.fieldSection)}
                 isPro
+                proProperty="validation"
               >
                 <div className={css(ut.mt1, ut.flxClm)}>
                   <TableCheckBox id="pass-vldsn-stng-dgt" className={css(ut.w10)} cls={css(ut.mr2)} name="digit" checked={fieldData.valid?.validations?.digit || false} value="(?=.*[0-9])" title={__('At least one digit (0-9)')} onChange={setPasswordValidation} disabled={!IS_PRO} />

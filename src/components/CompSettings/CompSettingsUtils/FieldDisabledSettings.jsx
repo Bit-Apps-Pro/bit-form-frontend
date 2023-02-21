@@ -42,6 +42,7 @@ export default function FieldDisabledSettings({ cls, tip }) {
         action={setDiasabled}
         isChecked={isDiasabled}
         isPro
+        proProperty="disabled"
       />
     </div>
   )
