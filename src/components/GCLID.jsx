@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
+import { IS_PRO } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import { setGrantTokenResponse } from './AllIntegrations/IntegrationHelpers/IntegrationHelpers'
 import LoaderSm from './Loaders/LoaderSm'
@@ -43,6 +44,7 @@ export default function GCLID() {
   }, [])
 
   const handleAuthorize = () => {
+    if (!IS_PRO) return false
     if (!gclidConf.clientId) {
       setError({ clientId: !gclidConf.clientId ? __('Client ID cann\'t be empty') : '' })
       return
@@ -107,7 +109,7 @@ export default function GCLID() {
         setisLoading(false)
       })
   }
-  const saveGoogleConfig = e => {
+  const saveGoogleConfig = () => {
     bitsFetch(gclidConf, 'bitforms_save_google_refresh_token')
       .then(result => result)
       .then(result => {
@@ -133,11 +135,10 @@ export default function GCLID() {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', top: -3 }}>
             <div className="pro">
-              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   {' '}
-                  {__('Premium')}
+                  {__('Available On Pro')}
                 </span>
               </a>
             </div>
@@ -152,14 +153,30 @@ export default function GCLID() {
         <div className="mt-2">
           <label htmlFor="client_id">
             <b>{__('Client ID')}</b>
-            <input id="clientId" name="clientId" onChange={(e) => handleInput(e.target.name, e.target.value)} value={gclidConf.clientId} className="btcd-paper-inp mt-1" placeholder="Client ID" type="text" />
+            <input
+              id="clientId"
+              name="clientId"
+              onChange={(e) => handleInput(e.target.name, e.target.value)}
+              value={gclidConf.clientId}
+              className="btcd-paper-inp mt-1"
+              placeholder="Client ID"
+              type="text"
+            />
           </label>
           <div style={{ color: 'red' }}>{error.clientId}</div>
         </div>
         <div className="mt-2">
           <label htmlFor="client_secret">
             <b>{__('Client Secret')}</b>
-            <input id="clientSecret" name="clientSecret" onChange={(e) => handleInput(e.target.name, e.target.value)} value={gclidConf.clientSecret} className="btcd-paper-inp mt-1" placeholder="Client Secret" type="text" />
+            <input
+              id="clientSecret"
+              name="clientSecret"
+              onChange={(e) => handleInput(e.target.name, e.target.value)}
+              value={gclidConf.clientSecret}
+              className="btcd-paper-inp mt-1"
+              placeholder="Client Secret"
+              type="text"
+            />
           </label>
           <div style={{ color: 'red' }}>{error.clientSecret}</div>
         </div>
@@ -171,14 +188,29 @@ export default function GCLID() {
           <small className="d-blk mt-2">
             {__('To get Client ID and SECRET , Please Visit Google API Console')}
             {' '}
-            <a className="btcd-link" href="https://console.developers.google.com/apis/credentials" target="_blank" rel="noreferrer">{__('Google API Console')}</a>
+            <a
+              className="btcd-link"
+              href="https://console.developers.google.com/apis/credentials"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {__('Google API Console')}
+            </a>
           </small>
         </div>
 
         <div className="mt-4">
           <label htmlFor="clientCustomerId">
             <b>{__('Customer Id (non manager account)')}</b>
-            <input id="clientCustomerId" name="clientCustomerId" onChange={(e) => handleInput(e.target.name, e.target.value)} value={gclidConf.clientCustomerId} className="btcd-paper-inp mt-1" placeholder="client Customer Id" type="text" />
+            <input
+              id="clientCustomerId"
+              name="clientCustomerId"
+              onChange={(e) => handleInput(e.target.name, e.target.value)}
+              value={gclidConf.clientCustomerId}
+              className="btcd-paper-inp mt-1"
+              placeholder="client Customer Id"
+              type="text"
+            />
           </label>
           <div style={{ color: 'red' }}>{error.clientCustomerId}</div>
         </div>
@@ -187,21 +219,37 @@ export default function GCLID() {
           <small className="d-blk mt-2">
             {__('To get Customer ID , Please Visit')}
             {' '}
-            <a className="btcd-link" href="https://ads.google.com/home/tools/manager-accounts/" target="_blank" rel="noreferrer">{__('Google Ads Manager Account')}</a>
+            <a
+              className="btcd-link"
+              href="https://ads.google.com/home/tools/manager-accounts/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {__('Google Ads Manager Account')}
+            </a>
           </small>
         </div>
 
-        <button onClick={handleAuthorize} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
+        <button
+          onClick={handleAuthorize}
+          className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`}
+          type="button"
+          disabled={isAuthorized}
+        >
           {isAuthorized ? __('Authorized ✔') : __('Authorize')}
           {isLoading && <LoaderSm size={20} clr="#022217" className="ml-2" />}
         </button>
         <br />
         {isAuthorized && (
-          <button onClick={e => saveGoogleConfig(e)} className={`${css(app.btn)} f-right btcd-btn-lg blue sh-sm flx`} type="button" disabled={!isAuthorized}>
+          <button
+            onClick={e => saveGoogleConfig(e)}
+            className={`${css(app.btn)} f-right btcd-btn-lg blue sh-sm flx`}
+            type="button"
+            disabled={!isAuthorized}
+          >
             Save
           </button>
         )}
-
       </div>
     </div>
   )

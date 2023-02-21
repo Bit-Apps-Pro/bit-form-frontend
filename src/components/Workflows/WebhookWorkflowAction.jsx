@@ -6,6 +6,7 @@ import { __ } from '../../Utils/i18nwrap'
 import DropDown from '../Utilities/DropDown'
 import { $confirmations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
+import { IS_PRO } from '../../Utils/Helpers'
 
 export default function WebhookWorkflowAction({ lgcGrpInd,
   condGrpInd,
@@ -42,7 +43,7 @@ export default function WebhookWorkflowAction({ lgcGrpInd,
           value={getValueFromArr('webHooks', 'id')}
           titleClassName={css({ mt: 5, ml: 28, w: '67.5%' })}
           className="w-10"
-          isMultiple
+          isMultiple={IS_PRO}
           options={confirmations?.type?.webHooks?.map((itm, i) => ({
             label: itm.title,
             value: itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) }),

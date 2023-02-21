@@ -1,25 +1,26 @@
 /* eslint-disable no-param-reassign */
+import produce from 'immer'
 import { useEffect, useState } from 'react'
+import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
-import toast from 'react-hot-toast'
-import produce from 'immer'
-import { useFela } from 'react-fela'
-import { __ } from '../Utils/i18nwrap'
 import { $bits, $fieldsArr } from '../GlobalStates/GlobalStates'
-import CheckBox from './Utilities/CheckBox'
-import Login from './WPAuth/Login'
-import Forgot from './WPAuth/Forgot'
-import ResetPassword from './WPAuth/ResetPassword'
-import Register from './WPAuth/Registration/Registration'
-import bitsFetch from '../Utils/bitsFetch'
-import LoaderSm from './Loaders/LoaderSm'
-import SingleToggle2 from './Utilities/SingleToggle2'
-import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
-import SnackMsg from './Utilities/SnackMsg'
-import Loader from './Loaders/Loader'
-import { fogotPassTamplate, activationTamplate, activationMessage } from '../Utils/StaticData/tamplate'
 import app from '../styles/app.style'
+import bitsFetch from '../Utils/bitsFetch'
+import { IS_PRO } from '../Utils/Helpers'
+import { __ } from '../Utils/i18nwrap'
+import { activationTamplate, fogotPassTamplate } from '../Utils/StaticData/tamplate'
+import Loader from './Loaders/Loader'
+import LoaderSm from './Loaders/LoaderSm'
+import CheckBox from './Utilities/CheckBox'
+import SingleToggle2 from './Utilities/SingleToggle2'
+import SnackMsg from './Utilities/SnackMsg'
+import Forgot from './WPAuth/Forgot'
+import Login from './WPAuth/Login'
+import Register from './WPAuth/Registration/Registration'
+import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
+import ResetPassword from './WPAuth/ResetPassword'
 
 export default function AdditionalSettings() {
   const bits = useRecoilValue($bits)
@@ -82,6 +83,7 @@ export default function AdditionalSettings() {
   }, [])
 
   const handleInput = e => {
+    if (!IS_PRO) return
     const { name, value } = e.target
     setType(value)
     const tmpData = { ...dataConf }
@@ -90,6 +92,7 @@ export default function AdditionalSettings() {
   }
 
   const handleStatus = (e) => {
+    if (!IS_PRO) return
     if (e.target.checked) {
       setStatus(1)
     } else {
@@ -123,6 +126,7 @@ export default function AdditionalSettings() {
 
   const saveSettings = (e) => {
     e.preventDefault()
+    if (!IS_PRO) return
     setIsLoading(true)
     const tmpConf = produce(dataConf, draft => {
       Object.keys(draft).forEach(key => type !== key && delete draft[key])

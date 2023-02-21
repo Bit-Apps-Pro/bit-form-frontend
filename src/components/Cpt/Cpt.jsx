@@ -28,11 +28,10 @@ export default function Cpt() {
         {!isPro && (
           <div className="pro-blur flx" style={{ height: '100%', left: -15, width: '104%', marginTop: 15 }}>
             <div className="pro">
-              {__('Available On')}
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
                 <span className="txt-pro">
                   &nbsp;
-                  {__('Premium')}
+                  {__('Available On Pro')}
                 </span>
               </a>
             </div>

@@ -27,6 +27,8 @@ const app = {
   btcd_inte_dis: {
     pe: 'none',
     us: 'none',
+    h: 150,
+    w: 120,
     '&>img': { fr: 'grayscale(1) !important' },
     '&::before': {
       flx: 'center',

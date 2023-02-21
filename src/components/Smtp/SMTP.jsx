@@ -28,18 +28,6 @@ export default function SMTP({ setsnack }) {
   return (
     <div className="btcd-captcha w-5" style={{ padding: 10 }}>
       <div className="pos-rel">
-        {!isPro && (
-          <div className="pro-blur flx" style={{ height: '111%', left: -15, width: '104%' }}>
-            <div className="pro">
-              {__('Available On')}
-              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-                <span className="txt-pro">
-                  {__('Premium')}
-                </span>
-              </a>
-            </div>
-          </div>
-        )}
         <Tabs
           selectedTabClassName="s-t-l-active"
         >

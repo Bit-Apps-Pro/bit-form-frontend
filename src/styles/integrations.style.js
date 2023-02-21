@@ -92,6 +92,7 @@ const style = {
     w: '105%',
     py: 5,
     fs: 12,
+    ta: 'center',
   },
   thumbImg: {
     mxw: '100px !important',
@@ -112,6 +113,7 @@ const style = {
     fs: 14,
     fw: 500,
     cr: 'var(--white)',
+    ta: 'center',
     ':hover': {
       textDecoration: 'underline',
       cr: 'hsl(214deg 100% 88%)',

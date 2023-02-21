@@ -1,30 +1,27 @@
 import { useContext, useState } from 'react'
 import { useFela } from 'react-fela'
+import toast from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
-import { $bits } from '../GlobalStates/GlobalStates'
 import EditIcn from '../Icons/EditIcn'
 import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
-import app from '../styles/app.style'
 import style from '../styles/integrations.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
+import { IS_PRO } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import Tip from './Utilities/Tip'
 
 export default function PaymentSettings({ setSnackbar }) {
-  const bits = useRecoilValue($bits)
   const navigate = useNavigate()
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const { css } = useFela()
   const { payments, setPayments } = useContext(AppSettings)
-  const { isPro } = bits
   const { pathname } = useLocation()
 
   const pays = [
@@ -33,6 +30,10 @@ export default function PaymentSettings({ setSnackbar }) {
   ]
 
   const setNewInteg = (type) => {
+    if (!IS_PRO) {
+      toast.error('This payment is only available in Bit Form Pro.')
+      return false
+    }
     setShowMdl(false)
     navigate(`${pathname}/${type}`)
   }
@@ -100,50 +101,38 @@ export default function PaymentSettings({ setSnackbar }) {
       <h2>{__('Payment Settings')}</h2>
       <div className="btcd-hr" />
       <div className={`pos-rel ${css(style.integWrp)}`}>
-        {!isPro && (
-          <div className="pro-blur flx w-10" style={{ top: -10, left: -10 }}>
-            <div className="pro">
-              {__('Available On')}
-              <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
-                <span className="txt-pro">
-                  {' '}
-                  {__('Premium')}
-                </span>
-              </a>
-            </div>
-          </div>
-        )}
         <Modal
           title={__('Available Payments')}
           show={showMdl}
           setModal={setShowMdl}
           style={{ width: 700 }}
         >
-          <div className="d-flx flx-wrp btcd-inte-wrp">
+          <div className="flx flx-center flx-wrp pb-3">
             {pays.map((pay, i) => (
               <div
-                key={`-${i + 2}`}
-                onClick={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
-                onKeyDown={() => !pay.disable && !pay.pro && setNewInteg(pay.type)}
+                key={`payment-${i + 2}`}
+                onClick={() => !IS_PRO && setNewInteg(pay)}
+                onKeyDown={() => !IS_PRO && setNewInteg(pay)}
                 role="button"
                 tabIndex="0"
-                className={`btcd-inte-card  mr-4 mt-3 ${pay.disable && !pay.pro && css([app.btcd_inte_dis, 'btcd-inte-dis'])} ${pay.pro && 'btcd-inte-pro'}`}
+                className={`${css(style.thumb)} ${pay.disable && !IS_PRO && css(style.integCardDisabled)}`}
               >
-                {pay.pro && (
-                  <div className="pro-filter">
-                    <span className="txt-pro">
-                      <a
-                        href="https://www.bitapps.pro/bit-form"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {__('Premium')}
-                      </a>
-                    </span>
+                {!IS_PRO && (
+                  <div className={css(style.thumbPro)}>
+                    <a
+                      className={css(style.thumbProTxt)}
+                      href="https://www.bitapps.pro/bit-form"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {__('Available on')}
+                      <br />
+                      {__('Pro')}
+                    </a>
                   </div>
                 )}
-                <img src={pay.logo} alt="" style={{ padding: 0 }} />
-                <div className="txt-center" style={{ fontSize: 14 }}>
+                <img className={css(style.thumbImg)} loading="lazy" src={pay.logo} alt="" />
+                <div className={css(style.thumbTitle)}>
                   {pay.type}
                 </div>
               </div>
