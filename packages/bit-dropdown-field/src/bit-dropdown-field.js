@@ -57,6 +57,7 @@ export default class BitDropdownField {
     options: [],
     attributes: {},
     classNames: {},
+    activeList: 0,
     onChange: () => { },
   }
 
@@ -114,7 +115,7 @@ export default class BitDropdownField {
 
     this.#searchInputElm.placeholder = this.#config.searchPlaceholder
     this.#searchInputElm.value = ''
-    this.#addEvent(this.#searchInputElm, 'keypress', e => { this.#handleSearchInput(e) })
+    this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
 
     this.#allowCustomOption = this.#config.allowCustomOption
     // if (this.allowCustomOption) {
@@ -126,9 +127,10 @@ export default class BitDropdownField {
   }
 
   #initOptionsList() {
+    const activeListElm = this.#select(`.${this.fieldKey}-option-list[data-list-index="${this.#config.activeList}"]`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list.active-list`)
+    this.#optionListElm.innerHTML = activeListElm.innerHTML
     this.#addOnClickOptionsEvent()
-
     this.#config.options = this.#generateOptionsObjFromHtml()
     this.#options = [...this.#config.options]
   }
@@ -264,11 +266,7 @@ export default class BitDropdownField {
   }
 
   #activeOptionList() {
-    const activeList = this.#optionListElm?.dataset.list
-    if (activeList) {
-      return `.${this.fieldKey}-option-list[data-list="${activeList}"]`
-    }
-    return `.${this.fieldKey}-option-list`
+    return `.${this.fieldKey}-option-list.active-list`
   }
 
   #generateOptionsObjFromHtml() {
@@ -933,9 +931,8 @@ export default class BitDropdownField {
   set activelist(name) {
     const listElm = this.#select(`.${this.fieldKey}-option-list[data-list="${name}"]`)
     if (listElm) {
-      const notActiveListElms = this.#selectAll(`.${this.fieldKey}-option-list:not([data-list="${name}"])`)
-      notActiveListElms.forEach(elm => this.#removeClassName(elm, 'active-list'))
-      this.#setClassName(listElm, 'active-list')
+      const listIndex = listElm.getAttribute('data-list-index')
+      this.#config.activeList = listIndex
       this.setSelectedOption('')
       this.#initOptionsList()
     }
@@ -996,8 +993,6 @@ export default class BitDropdownField {
   }
 
   destroy() {
-    // this.#optionListElm.innerHTML = ''
-    // this.#options = []
     this.value = ''
     this.#detachAllEvents()
   }

@@ -229,7 +229,7 @@ export default function dropdownStyle_1_BitformDefault({ fk, direction, breakpoi
       },
 
       [`.${fk}-option-list:not(.active-list)`]: {
-        display: 'none',
+        display: 'none !important',
       },
 
       [`.${fk}-option-search-wrp`]: {
