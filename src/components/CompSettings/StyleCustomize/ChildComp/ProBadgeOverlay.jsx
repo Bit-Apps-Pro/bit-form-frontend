@@ -1,11 +1,16 @@
 import { useFela } from 'react-fela'
+import { useSetRecoilState } from 'recoil'
+import { $proModal } from '../../../../GlobalStates/GlobalStates'
+import proHelperData from '../../../../Utils/StaticData/proHelperData'
 import ProBadge from '../../../Utilities/ProBadge'
 
 export default function ProBadgeOverlay({ badgeWidth = '18', proProperty }) {
+  const setProModal = useSetRecoilState($proModal)
   const { css } = useFela()
+  const showProModal = () => setProModal({ show: true, ...proHelperData[proProperty] })
   return (
     <>
-      <div className={css(style.overlay)} />
+      <span aria-label="premium-overlay" className={css(style.overlay)} role="button" onClick={showProModal} onKeyUp={showProModal} tabIndex="0" />
       <ProBadge className={css(style.badge)} width={badgeWidth} proProperty={proProperty} />
     </>
   )

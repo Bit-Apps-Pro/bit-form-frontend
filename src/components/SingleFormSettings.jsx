@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { $additionalSettings, $bits, $fields, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import BlockIcn from '../Icons/BlockIcn'
 import CloseIcn from '../Icons/CloseIcn'
@@ -26,15 +26,18 @@ import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import { deleteNestedObj } from '../Utils/FormBuilderHelper'
-import { dateTimeFormatter, deepCopy } from '../Utils/Helpers'
+import { dateTimeFormatter, deepCopy, IS_PRO } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import proHelperData from '../Utils/StaticData/proHelperData'
 import { assignNestedObj } from './style-new/styleHelpers'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
 import Downmenu from './Utilities/Downmenu'
-import Modal from './Utilities/Modal'
+import ProBadge from './Utilities/ProBadge'
+import ProModal from './Utilities/ProModal'
+// import Modal from './Utilities/Modal'
 import SingleToggle2 from './Utilities/SingleToggle2'
 
 export default function SingleFormSettings() {
@@ -43,12 +46,12 @@ export default function SingleFormSettings() {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
-  const bits = useRecoilValue($bits)
+  // const bits = useRecoilValue($bits)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   // const setStaticStyle = useSetRecoilState($staticStylesState)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
-  const { isPro } = bits
-  const [proModal, setProModal] = useState({ show: false, msg: '' })
+  const setProModal = useSetRecoilState($proModal)
+  // const [proModal, setProModal] = useState({ show: false, msg: '' })
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }
@@ -57,6 +60,10 @@ export default function SingleFormSettings() {
   }
 
   const addMoreBlockIp = () => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.blocked_ip })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if ('blocked_ip' in additional.settings) {
       additional.settings.blocked_ip.push({ ip: '', status: false })
@@ -70,6 +77,10 @@ export default function SingleFormSettings() {
   }
 
   const addMorePrivateIp = () => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.private_ip })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if ('private_ip' in additional.settings) {
       additional.settings.private_ip.push({ ip: '', status: false })
@@ -96,6 +107,10 @@ export default function SingleFormSettings() {
   }
 
   const setEntryLimit = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.entryLimit })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if (e.target.value > 0) {
       additional.settings.entry_limit = e.target.value
@@ -105,6 +120,10 @@ export default function SingleFormSettings() {
   }
 
   const setOnePerIp = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.singleEntry })
+      return
+    }
     const additionalSettings = deepCopy(additionalSetting)
     if (e.target.checked) {
       additionalSettings.enabled.onePerIp = true
@@ -119,8 +138,8 @@ export default function SingleFormSettings() {
 
   const storeSubmission = e => {
     const additionalSettings = deepCopy(additionalSetting)
-    if (!isPro) {
-      setProModal({ show: true, msg: 'Disable entry storing is in Pro Version!' })
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.disableEntryStoring })
       return
     }
     if (e.target.checked) {
@@ -181,11 +200,11 @@ export default function SingleFormSettings() {
   }
 
   const toggleCaptureGCLID = e => {
-    const additional = deepCopy(additionalSetting)
-    if (!isPro) {
-      setProModal({ show: true, msg: 'Google Ads is in Pro Version!' })
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.captureGCLID })
       return false
     }
+    const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.captureGCLID = true
     } else {
@@ -211,6 +230,10 @@ export default function SingleFormSettings() {
   }
 
   const handleEntryLimit = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.entryLimit })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.entry_limit = true
@@ -507,8 +530,8 @@ export default function SingleFormSettings() {
 
   const setAccordingEnable = (e, type, title) => {
     const additional = deepCopy(additionalSetting)
-    if (!isPro) {
-      setProModal({ show: true, msg: `${title} is in Pro Version!` })
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData[type] })
       return true
     }
 
@@ -545,6 +568,7 @@ export default function SingleFormSettings() {
               <IpBlockIcn size="22" />
             </span>
             <b>{__('Allow single entry for each IP address')}</b>
+            {!IS_PRO && <ProBadge proProperty="singleEntry" />}
           </div>
           <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additionalSetting.enabled} className="flx" />
         </div>
@@ -560,6 +584,8 @@ export default function SingleFormSettings() {
         action={(e) => setAccordingEnable(e, 'is_login', 'User Require Login')}
         checked={additionalSetting?.enabled?.is_login}
         cls="w-6 mt-3"
+        isPro
+        proProperty="is_login"
       >
         <div className="mb-2 ml-2">
           <b>Error message</b>
@@ -580,6 +606,8 @@ export default function SingleFormSettings() {
         toggle
         action={(e) => setAccordingEnable(e, 'empty_submission', 'Empty Submission')}
         checked={additionalSetting?.enabled?.empty_submission || undefined}
+        isPro
+        proProperty="empty_submission"
       >
         <div className="mb-2 ml-2">
           <b>Error message</b>
@@ -613,7 +641,7 @@ export default function SingleFormSettings() {
               {__('Disable entry storing in WordPress database')}
             </b>
           </div>
-          <SingleToggle2 disabled={!isPro} action={storeSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
+          <SingleToggle2 disabled={!IS_PRO} action={storeSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
       <Accordions
@@ -675,7 +703,7 @@ export default function SingleFormSettings() {
       </Accordions>
 
       <div className="w-6 mt-3">
-        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt cooltip-box ${!isPro && 'btcd-inte-pro'}`}>
+        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt cooltip-box ${!IS_PRO && 'btcd-inte-pro'}`}>
           <div className="">
             <div className="flx">
               <HoneypotIcn w="20" h="19" />
@@ -693,7 +721,7 @@ export default function SingleFormSettings() {
             </div>
           </div>
           <div className="flx">
-            <SingleToggle2 disabled={!isPro} action={tolggleHoneypot} checked={'honeypot' in additionalSetting.enabled} className="flx" />
+            <SingleToggle2 disabled={!IS_PRO} action={tolggleHoneypot} checked={'honeypot' in additionalSetting.enabled} className="flx" />
           </div>
         </div>
       </div>
@@ -705,6 +733,7 @@ export default function SingleFormSettings() {
               <span className="mr-2"><NoneIcn size="15" /></span>
               {__('Disable this form after limited entry')}
             </b>
+            {!IS_PRO && (<ProBadge proProperty="entryLimit" />)}
           </div>
           <div className="flx">
             <input aria-label="Disable this form after limited entry" onChange={setEntryLimit} value={additionalSetting.settings.entry_limit} disabled={!('entry_limit' in additionalSetting.enabled)} className="btcd-paper-inp mr-2 wdt-200" placeholder="Limit" type="number" min="1" />
@@ -723,6 +752,8 @@ export default function SingleFormSettings() {
           </b>
         )}
         cls="w-6 mt-3"
+        isPro
+        proProperty="restrict_form"
       >
         <div className="flx mb-2 ml-2">
           <SingleToggle2 cls="flx" action={handleRestrictFrom} checked={'restrict_form' in additionalSetting.enabled} />
@@ -839,6 +870,8 @@ export default function SingleFormSettings() {
           </b>
         )}
         cls="w-6 mt-3"
+        isPro
+        proProperty="blocked_ip"
       >
         {'blocked_ip' in additionalSetting.settings && additionalSetting.settings.blocked_ip.length > 0 && (
           <div className="flx mb-2">
@@ -869,6 +902,8 @@ export default function SingleFormSettings() {
           </b>
         )}
         cls="w-6 mt-3"
+        isPro
+        proProperty="private_ip"
       >
         <div>
           <b>
@@ -899,16 +934,17 @@ export default function SingleFormSettings() {
       </Accordions>
 
       <div className="w-6 mt-3">
-        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!isPro && 'btcd-inte-pro'}`}>
+        <div className={`flx flx-between sh-sm br-10 btcd-setting-opt ${!IS_PRO && 'btcd-inte-pro'}`}>
           <div className="flx">
             <GoogleAdIcn size={18} />
             <b className="ml-2">{__('Capture Google Ads (Click ID)')}</b>
+            {!IS_PRO && (<ProBadge proProperty="captureGCLID" />)}
           </div>
-          <SingleToggle2 disabled={!isPro} action={toggleCaptureGCLID} checked={'captureGCLID' in additionalSetting.enabled} className="flx" />
+          <SingleToggle2 action={toggleCaptureGCLID} checked={'captureGCLID' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <Modal
           sm
           show={proModal.show}
@@ -924,7 +960,7 @@ export default function SingleFormSettings() {
           </div>
 
         </Modal>
-      </div>
+      </div> */}
       <div className="mb-4 mt-4"><br /></div>
 
       <ConfirmModal
@@ -941,6 +977,7 @@ export default function SingleFormSettings() {
           {alertMdl.msg}
         </div>
       </ConfirmModal>
+      <ProModal />
     </div>
   )
 }

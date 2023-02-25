@@ -13,7 +13,7 @@ import Cooltip from '../../../Utilities/Cooltip'
 import ProBadge from '../../../Utilities/ProBadge'
 import RenderHtml from '../../../Utilities/RenderHtml'
 import SingleToggle from '../../../Utilities/SingleToggle'
-import PremiumOverlay from './PremiumSettingsOverlay'
+import PremiumSettingsOverlay from './PremiumSettingsOverlay'
 
 export default function SimpleAccordion({
   className,
@@ -157,7 +157,7 @@ export default function SimpleAccordion({
             onClick={cancelBubble}
             onKeyDown={cancelBubble}
           >
-            {isPro && !IS_PRO && <PremiumOverlay />}
+            {isPro && !IS_PRO && <PremiumSettingsOverlay proProperty={proProperty} />}
             {children}
           </div>
         </CSSTransition>

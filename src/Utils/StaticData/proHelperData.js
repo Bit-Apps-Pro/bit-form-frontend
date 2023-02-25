@@ -34,6 +34,23 @@ const proHelperData = {
   valueFormatOptions: { heading: __('Value Format Options'), featureText: __('Value Format Options') },
   countryNotFoundText: { heading: __('Country Not Found Text'), featureText: __('Country Not Found Text Modify') },
   currencyNotFoundText: { heading: __('Currency Not Found Text'), featureText: __('Currency Not Found Text Modify') },
+  fileSelectStatus: { heading: __('File Select Status'), featureText: __('Modification of File Select Status') },
+  showMaxSize: { heading: __('Show Max Size'), featureText: __('Show Max Size') },
+  showFileList: { heading: __('Show File List'), featureText: __('Show File List') },
+  fileExistMsg: { heading: __('File Exist Message'), featureText: __('File Exist Message') },
+  individualStyle: { heading: __('Individual Style'), featureText: __('Individual Field Styling') },
+  customClassAttr: { heading: __('Custom Class & Attribute'), featureText: __('Custom Classes and Attributes') },
+  breakPoint: { heading: __('Breakpoint Modification'), featureText: __('Breakpoint width size modification') },
+  formWidth: { heading: __('Form Width Modification'), featureText: __('Form Width Modification') },
+  fieldClone: { heading: __('Field Clone'), featureText: __('Field Cloning') },
+  disableEntryStoring: { heading: __('Disable Entry Storing'), featureText: __('Disable Entry Storing') },
+  captureGCLID: { heading: __('Google Ads'), featureText: __('Capture Google Ads Click') },
+  is_login: { heading: __('Login User'), featureText: __('Login User') },
+  empty_submission: { heading: __('Empty Submission'), featureText: __('Empty Submission') },
+  private_ip: { heading: __('Allowed IP'), featureText: __('Allowed IP List') },
+  blocked_ip: { heading: __('Blocked IP'), featureText: __('Blocked IP List') },
+  entryLimit: { heading: __('Entry Limit'), featureText: __('Entry Limit') },
+  singleEntry: { heading: __('Single Entry for each IP'), featureText: __('Single Entry for each IP') },
 }
 
 export default proHelperData

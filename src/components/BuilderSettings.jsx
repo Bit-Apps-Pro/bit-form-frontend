@@ -8,10 +8,13 @@ import { $breakpoint, $builderSettings } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import ut from '../styles/2.utilities'
 import { deleteNestedObj } from '../Utils/FormBuilderHelper'
+import { IS_PRO } from '../Utils/Helpers'
+import PremiumSettingsOverlay from './CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
 import SizeControl from './CompSettings/StyleCustomize/ChildComp/SizeControl'
 import { assignNestedObj, getNumFromStr, getStrFromStr, unitConverter } from './style-new/styleHelpers'
 import Cooltip from './Utilities/Cooltip'
 import Input from './Utilities/Input'
+import ProBadge from './Utilities/ProBadge'
 import Select from './Utilities/Select'
 import SingleToggle from './Utilities/SingleToggle'
 
@@ -92,18 +95,21 @@ export default function BuilderSettings() {
   return (
     <div className={css(ut.mt2, ut.p1)}>
       <div className={css({ flx: 'align-center', gap: '10px' })}>
-        <SettingsBlock title="Form width">
-          <SizeControl
-            className={css(style.select)}
-            width={250}
-            max={1000}
-            inputHandler={handleFormWidth}
-            sizeHandler={({ unitKey, unitValue }) => handleFormWidth({ value: unitValue, unit: unitKey })}
-            value={(formWidth && getNumFromStr(formWidth)) || ''}
-            unit={(formWidth && getStrFromStr(formWidth)) || 'px'}
-            sliderWidth="40%"
-            actualValue="auto"
-          />
+        <SettingsBlock title="Form width" isPro proProperty="formWidth">
+          <div className="pos-rel">
+            {!IS_PRO && <PremiumSettingsOverlay hideText proProperty="formWidth" />}
+            <SizeControl
+              className={css(style.select)}
+              width={250}
+              max={1000}
+              inputHandler={handleFormWidth}
+              sizeHandler={({ unitKey, unitValue }) => handleFormWidth({ value: unitValue, unit: unitKey })}
+              value={(formWidth && getNumFromStr(formWidth)) || ''}
+              unit={(formWidth && getStrFromStr(formWidth)) || 'px'}
+              sliderWidth="40%"
+              actualValue="auto"
+            />
+          </div>
 
           <Select
             color="primary"
@@ -182,11 +188,14 @@ export default function BuilderSettings() {
   )
 }
 
-const SettingsBlock = ({ title, children }) => {
+const SettingsBlock = ({ title, children, isPro, proProperty }) => {
   const { css } = useFela()
   return (
     <div className={css(ut.mt2, ut.flxc)}>
-      <div className={css(ut.w1, ut.fw500, { w: 150 })}>{title}</div>
+      <div className={css(ut.w1, ut.fw500, { w: 150 })}>
+        {title}
+        {isPro && !IS_PRO && (<ProBadge proProperty={proProperty} />)}
+      </div>
       <div className={css(ut.flxc)}>
         {children}
       </div>
