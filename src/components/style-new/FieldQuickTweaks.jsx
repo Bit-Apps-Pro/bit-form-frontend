@@ -209,7 +209,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
 
   return (
     <div className="pos-rel">
-      {!IS_PRO && (<PremiumSettingsOverlay hideText />)}
+      {!IS_PRO && (<PremiumSettingsOverlay hideText proProperty="individualStyle" />)}
       {fieldType.match(/^(text|number|password|username|email|url|date|time|datetime-local|month|week|color|textarea|html-select|)$/gi) && (
         <SimpleColorPicker
           title="Accent Color"
