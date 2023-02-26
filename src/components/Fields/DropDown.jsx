@@ -2,33 +2,28 @@
 /* eslint-disable no-plusplus */
 import BitDropdownField from 'bit-dropdown-field/src/bit-dropdown-field'
 import { observeElm } from 'bit-helpers/src'
-import { Fragment, memo, useEffect, useRef } from 'react'
+import { Fragment, memo, useEffect, useRef, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName, getDataDevAttrArr } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 function DropDown({
   fieldKey, formID, styleClasses, attr, onBlurHandler, resetFieldValue, isBuilder,
 }) {
-  const dropdownWrapElmRef = useRef(null)
+  const [dropdownWrapElmRef, setDropdownWrapElmRef] = useState(null)
   const dropdownFieldRef = useRef(null)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
   const { optionsList, ph } = fieldData
   const { activeList, optionIcon, allowCustomOption } = fieldData.config
 
-  // console.log('fieldData', fieldData, optionIcon)
-
   useEffect(() => {
-    if (!dropdownWrapElmRef?.current) {
-      dropdownWrapElmRef.current = selectInGrid(`.${fieldKey}-dpd-fld-wrp`)
-    }
+    if (!dropdownWrapElmRef) return
     const fldConstructor = dropdownFieldRef.current
-    const fldElm = dropdownWrapElmRef.current
-    if (fldConstructor && fldElm && 'destroy' in fldConstructor) {
+    if (fldConstructor && dropdownWrapElmRef && 'destroy' in fldConstructor) {
       fldConstructor.destroy()
     }
 
@@ -74,9 +69,15 @@ function DropDown({
     if (!iFrameWindow.observeElm) {
       iFrameWindow.observeElm = observeElm
     }
-    // dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)
-    dropdownFieldRef.current = new BitDropdownField(fldElm, configOptions)
-  }, [fieldData])
+    // dropdownFieldRef.current = new BitDropdownField(dropdownWrapElmRef, configOptions)
+    dropdownFieldRef.current = new BitDropdownField(dropdownWrapElmRef, configOptions)
+  }, [fieldData, dropdownWrapElmRef])
+
+  const optionsListObj = optionsList.reduce((acc, opt) => {
+    const [listName, optData] = Object.entries(opt)[0]
+    return { ...acc, [listName]: optData }
+  }, {})
+
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -91,7 +92,7 @@ function DropDown({
           <div
             data-dev-dpd-fld-wrp={fieldKey}
             className={`${fieldKey}-dpd-fld-wrp ${getCustomClsName(fieldKey, 'dpd-fld-wrp')} ${fieldData.valid.disabled ? 'disabled' : ''} ${fieldData.valid.readonly ? 'readonly' : ''}`}
-            ref={dropdownWrapElmRef}
+            ref={setDropdownWrapElmRef}
             {...getCustomAttributes(fieldKey, 'dpd-fld-wrp')}
           >
             <input
@@ -257,29 +258,25 @@ function DropDown({
                   </button>
                 </div>
                 {
-                  optionsList.map((listObj, index) => {
-                    const listName = Object.keys(listObj)[0]
-                    const options = Object.values(listObj)[0]
-                    // console.log('options', options)
-                    let dataIndex = 0
-                    return (
-                      <ul
-                        key={`list-option-${index + 1}`}
-                        className={`${fieldKey}-option-list ${getCustomClsName(fieldKey, 'option-list')} ${activeList === index ? 'active-list' : ''}`}
-                        aria-hidden="true"
-                        aria-label="Option List"
-                        data-list={listName}
-                        data-dev-option-list={fieldKey}
-                        tabIndex="-1"
-                        role="listbox"
-                        {...getCustomAttributes(fieldKey, 'option-list')}
-                      >
-                        {/* {allowCustomOption && ( */}
+                  Object.entries(optionsListObj).map(([listName, opts], listIndex) => (
+                    <ul
+                      key={listName}
+                      className={`${fieldKey}-option-list ${getCustomClsName(fieldKey, 'option-list')}`}
+                      aria-hidden="true"
+                      aria-label="Option List"
+                      data-list={listName}
+                      data-list-index={listIndex}
+                      data-dev-option-list={fieldKey}
+                      tabIndex="-1"
+                      role="listbox"
+                      {...getCustomAttributes(fieldKey, 'option-list')}
+                    >
+                      {allowCustomOption && (
                         <li
-                          key={`option-${(index + 1)}`}
-                          data-testid={`${fieldKey}-opt-${dataIndex}`}
+                          key={`option-${listName}`}
+                          data-testid={`${fieldKey}-opt-${listIndex}`}
                           data-dev-option={fieldKey}
-                          data-index={dataIndex++}
+                          data-index={listIndex}
                           data-value="create-opt"
                           className="option create-opt"
                           role="option"
@@ -297,92 +294,20 @@ function DropDown({
                           </span>
                           <span className="opt-prefix" />
                         </li>
-                        {/* )} */}
-                        {
-                          options.map((opt, indx) => {
-                            if (opt.type) {
-                              return (
-                                <Fragment key={`option-${indx + 1}`}>
-                                  <li
-                                    // key={`option-grp-ttl-${(index + 1) * (indx + 1)}`}
-                                    data-testid={`${fieldKey}-opt-${dataIndex}`}
-                                    data-index={dataIndex++}
-                                    className={`option opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
-                                    {...getCustomAttributes(fieldKey, 'opt-group-title')}
-                                  >
-                                    <span className="opt-lbl">{opt.title}</span>
-                                  </li>
-                                  {opt.childs.map((opt2, indx2) => (
-                                    <li
-                                      key={`opt-grp-child-${(index + 1) * (indx + 1) * (indx2 + 1)}`}
-                                      data-testid={`${fieldKey}-opt-${dataIndex}`}
-                                      data-dev-option={fieldKey}
-                                      data-index={dataIndex++}
-                                      data-value={opt2.val || opt2.lbl}
-                                      className={`option opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}`}
-                                      role="option"
-                                      aria-selected="false"
-                                      tabIndex="-1"
-                                      {...getCustomAttributes(fieldKey, 'option')}
-                                    >
-                                      <span
-                                        data-dev-opt-lbl-wrp={fieldKey}
-                                        className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
-                                        {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
-                                      >
-                                        {optionIcon && (
-                                          <img
-                                            className="opt-icn"
-                                            src={opt2?.img || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"}
-                                            alt="BD"
-                                            loading="lazy"
-                                          />
-                                        )}
-                                        <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt2.lbl}</span>
-                                      </span>
-                                      <span className="opt-prefix" />
-                                    </li>
-                                  ))}
-
-                                </Fragment>
-                              )
-                            } return (
-                              <li
-                                key={`option-${(index + 1) * (indx + 1)}`}
-                                data-testid={`${fieldKey}-opt-${dataIndex}`}
-                                data-dev-option={fieldKey}
-                                data-index={dataIndex++}
-                                data-value={opt.val || opt.lbl}
-                                className="option"
-                                role="option"
-                                aria-selected="false"
-                                tabIndex="-1"
-                                {...getCustomAttributes(fieldKey, 'option')}
-                              >
-                                <span
-                                  data-dev-opt-lbl-wrp={fieldKey}
-                                  className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
-                                  {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
-                                >
-                                  {optionIcon && (
-                                    <img
-                                      className={`opt-icn ${getCustomClsName(fieldKey, 'opt-icn')}`}
-                                      src={opt?.img || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"}
-                                      alt="BD"
-                                      loading="lazy"
-                                    />
-                                  )}
-                                  <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt.lbl}</span>
-                                </span>
-                                <span className="opt-prefix" />
-                              </li>
-                            )
-                          })
-                        }
-                      </ul>
-                    )
-                  })
+                      )}
+                      <Options opts={opts} fieldKey={fieldKey} optionIcon={optionIcon} />
+                    </ul>
+                  ))
                 }
+                <ul
+                  className={`${fieldKey}-option-list ${getCustomClsName(fieldKey, 'option-list')} active-list`}
+                  aria-hidden="true"
+                  aria-label="Option List"
+                  data-dev-option-list={fieldKey}
+                  tabIndex="-1"
+                  role="listbox"
+                  {...getCustomAttributes(fieldKey, 'option-list')}
+                />
               </div>
             </div>
           </div>
@@ -393,3 +318,56 @@ function DropDown({
 }
 
 export default memo(DropDown)
+
+const Options = ({ opts, fieldKey, optionIcon, isGroupChild }) => (
+  <>
+    {
+      opts.map((opt, optIndex) => (
+        opt.type === 'group' ? (
+          <Fragment key={opt.title}>
+            <li
+              key={`option-grp-ttl-${opt.title}`}
+              data-testid={`${fieldKey}-opt-${optIndex}`}
+              data-index={optIndex}
+              className={`option opt-group-title ${getCustomClsName(fieldKey, 'opt-group-title')}`}
+              {...getCustomAttributes(fieldKey, 'opt-group-title')}
+            >
+              <span className="opt-lbl">{opt.title}</span>
+            </li>
+            <Options opts={opt.childs} fieldKey={fieldKey} optionIcon={optionIcon} isGroupChild />
+          </Fragment>
+        ) : (
+          <li
+            key={`option-${opt.val || opt.lbl}}`}
+            data-testid={`${fieldKey}-opt-${optIndex}`}
+            data-dev-option={fieldKey}
+            data-index={optIndex}
+            data-value={opt.val || opt.lbl}
+            className={`option ${isGroupChild ? `opt-group-child ${getCustomClsName(fieldKey, 'option-group-child')}` : ''}`}
+            role="option"
+            aria-selected="false"
+            tabIndex="-1"
+            {...getCustomAttributes(fieldKey, 'option')}
+          >
+            <span
+              data-dev-opt-lbl-wrp={fieldKey}
+              className={`opt-lbl-wrp ${getCustomClsName(fieldKey, 'opt-lbl-wrp')}`}
+              {...getCustomAttributes(fieldKey, 'opt-lbl-wrp')}
+            >
+              {optionIcon && (
+                <img
+                  className={`opt-icn ${getCustomClsName(fieldKey, 'opt-icn')}`}
+                  src={opt?.img || "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'/>"}
+                  alt="BD"
+                  loading="lazy"
+                />
+              )}
+              <span data-dev-opt-lbl={fieldKey} className="opt-lbl">{opt.lbl}</span>
+            </span>
+            <span className="opt-prefix" />
+          </li>
+        )
+      ))
+    }
+  </>
+)
