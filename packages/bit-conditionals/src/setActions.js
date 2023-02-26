@@ -1,31 +1,32 @@
 import { replaceWithField } from './checkLogic'
 
 const select = (contentId, selector) => document.querySelector(`#form-${contentId} ${selector}`)
+const selectAll = (contentId, selector) => document.querySelectorAll(`#form-${contentId} ${selector}`)
 
-const setFieldValue = (fldData, val) => {
+const setFieldValue = (contentId, fldData, val) => {
   const { fieldName, typ } = fldData
   if (typ === 'radio') {
-    document.querySelector(`input[name="${fieldName}"][value="${val}"]`).checked = true
+    select(contentId, `input[name="${fieldName}"][value="${val}"]`).checked = true
     return
   }
 
   if (typ === 'check') {
     const vals = val.split(',')
-    document.querySelectorAll(`input[name="${fieldName}[]"]`).forEach((el) => {
+    selectAll(contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
       el.checked = vals.includes(el.value)
     })
     return
   }
 
   if (typ === 'decision-box') {
-    const fld = document.querySelector(`input[name="${fieldName}"]`)
+    const fld = select(contentId, `input[name="${fieldName}"]`)
     if (fld) {
       fld.checked = val === fldData.msg.checked
     }
     return
   }
 
-  const fld = document.querySelector(`[name^='${fieldName}']`)
+  const fld = select(contentId, `[name^='${fieldName}']`)
   if (fld.value === val) return
   fld.value = val
   fld.setAttribute('value', val)
@@ -43,7 +44,7 @@ const setDisabled = (fldKey, props, val) => {
   if (props.inits && props.inits[fldKey]) {
     props.inits[fldKey].disabled = val
   } else {
-    document.querySelector(`.${fldKey}-fld`).disabled = val
+    select(props.contentId, `.${fldKey}-fld`).disabled = val
   }
 }
 
@@ -51,14 +52,14 @@ const setReadonly = (fldKey, props, val) => {
   if (props.inits && props.inits[fldKey]) {
     props.inits[fldKey].readonly = val
   } else {
-    document.querySelector(`.${fldKey}-fld`).readonly = val
+    select(props.contentId, `.${fldKey}-fld`).readonly = val
   }
 }
 
 const setActionValue = (actionDetail, props, fieldValues) => {
   if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
     const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props) : ''
-    setFieldValue(props.fields[actionDetail.field], actionValue)
+    setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
   }
 }
 
@@ -67,7 +68,7 @@ const setActionHide = (actionDetail, props, val) => {
     props.fields[actionDetail.field].valid.hide = val
     const fldKey = actionDetail.field
 
-    const selector = document.querySelector(`.btcd-fld-itm.${fldKey}`)
+    const selector = select(props.contentId, `.btcd-fld-itm.${fldKey}`)
     const fld = window.getComputedStyle(selector)
     let heightCount = 0
     if (val) {
