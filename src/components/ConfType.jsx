@@ -41,9 +41,9 @@ export default function ConfType({ formID, formType }) {
         <NavLink to={`${path}/redirect-url`} className={`btcd-f-c-t-o mr-4 sh-sm ${confirmationType === 'redirect-url' && 'btcd-f-c-t-o-a'}`}>
           {__('Redirect Page')}
         </NavLink>
-        <NavLink to={`${path}/webhooks`} className={`btcd-f-c-t-o mr-4 sh-sm ${confirmationType === 'webhooks' && 'btcd-f-c-t-o-a'}`}>
+        {/* <NavLink to={`${path}/webhooks`} className={`btcd-f-c-t-o mr-4 sh-sm ${confirmationType === 'webhooks' && 'btcd-f-c-t-o-a'}`}>
           {__('Web Hooks')}
-        </NavLink>
+        </NavLink> */}
       </div>
       <br />
       <br />
