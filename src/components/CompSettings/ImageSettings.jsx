@@ -82,6 +82,7 @@ function ImageSettings() {
     reCalculateFldHeights()
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath(name), `${Number(value)}px`)
+      if (name === 'height') assignNestedObj(drftStyle, getPropertyPath('max-height'), `${Number(value)}px`)
     }))
   }
 

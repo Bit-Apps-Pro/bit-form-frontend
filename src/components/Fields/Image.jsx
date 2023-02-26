@@ -28,11 +28,16 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
 
   if (resizingFld.fieldKey === fieldKey) {
     tempData.current.resize = true
+    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('max-height'), '')
+    }))
   }
   if (tempData.current.resize && !resizingFld.fieldKey) {
     tempData.current.resize = false
     setStyles(prvStyle => produce(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
+      assignNestedObj(drftStyle, getPropertyPath('width'), `${wrap?.current?.parentElement.clientWidth}px`)
+      assignNestedObj(drftStyle, getPropertyPath('max-height'), `${wrap?.current?.parentElement.clientHeight}px`)
     }))
 
     setFields(prvFields => produce(prvFields, drftFields => {
