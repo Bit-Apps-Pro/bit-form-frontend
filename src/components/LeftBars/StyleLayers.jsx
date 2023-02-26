@@ -8,10 +8,11 @@ import { $breakpoint, $fields, $layouts } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import ut from '../../styles/2.utilities'
-import { deepCopy, ucFirst } from '../../Utils/Helpers'
+import { deepCopy, IS_PRO, ucFirst } from '../../Utils/Helpers'
 import fieldTypes from '../../Utils/StaticData/fieldTypes'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
 import { isFieldOverrideStyles, isLabelOverrideStyles, sortArrOfObjByMultipleProps } from '../style-new/styleHelpers'
+import ProBadge from '../Utilities/ProBadge'
 import ElementConfiguration from './ElementConfiguration'
 import NavBtn from './NavBtn'
 
@@ -210,7 +211,10 @@ function StyleLayers() {
             />
           </LayerAccordion>
 
-          <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>Individual Elements</h5>
+          <h5 className={css(s.subtitle, ut.fontH, { mt: 12 })}>
+            Individual Elements
+            {!IS_PRO && <ProBadge proProperty="individualStyle" />}
+          </h5>
 
           {activeFields.map(([fldKey, fldData]) => (
             <LayerAccordion

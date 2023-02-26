@@ -50,7 +50,7 @@ import {
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { deepCopy, isFirefox, isObjectEmpty } from '../Utils/Helpers'
+import { deepCopy, isFirefox, isObjectEmpty, IS_PRO } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -448,6 +448,10 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const cloneLayoutItem = fldKey => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.fieldClone })
+      return
+    }
     const fldData = fields[fldKey]
     if (!handleFieldExtraAttr(fldData)) return
 

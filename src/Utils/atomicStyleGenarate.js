@@ -469,7 +469,7 @@ export function generateFormGridStyle(breakpoint, formId) {
   // breakpoint === 'md' && (columnRepeat = 40)
   // breakpoint === 'sm' && (columnRepeat = 20)
   let style = ''
-  formId && (style += `._frm-${formId}`)
+  formId && (style += `._frm-b${formId}`)
   style += '{'
   breakpoint === 'lg' && (style += 'display:grid;')
   style += `grid-template-columns:repeat(${columnRepeat},minmax(1px,1fr))`

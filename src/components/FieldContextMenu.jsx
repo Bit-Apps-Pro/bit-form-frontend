@@ -1,11 +1,11 @@
 /* eslint-disable import/no-unresolved */
 import produce from 'immer'
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
+import { CSSTransition } from 'react-transition-group'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
-import { CSSTransition } from 'react-transition-group'
-import { $fields, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $fields, $proModal, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckMarkIcn from '../Icons/CheckMarkIcn'
 import CopyIcn from '../Icons/CopyIcn'
@@ -13,10 +13,10 @@ import DeSelectIcn from '../Icons/DeSelectIcn'
 import EditIcn from '../Icons/EditIcn'
 import EyeOffIcon from '../Icons/EyeOffIcon'
 import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
+import { IS_PRO } from '../Utils/Helpers'
+import proHelperData from '../Utils/StaticData/proHelperData'
 import FieldDeleteButton from './FieldDeleteButton'
 import ProBadge from './Utilities/ProBadge'
-import { IS_PRO } from '../Utils/Helpers'
-import ProBadgeOverlay from './CompSettings/StyleCustomize/ChildComp/ProBadgeOverlay'
 
 const MenuItemWrapper = ({ isContextMenu, children }) => {
   function handleItemClick(event) {
@@ -47,6 +47,7 @@ export default function FieldContextMenu({
   isComponentVisible,
 }) {
   const setSelectedFieldId = useSetRecoilState($selectedFieldId)
+  const setProModal = useSetRecoilState($proModal)
   const [fields, setFields] = useRecoilState($fields)
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
   const { css } = useFela()
@@ -63,6 +64,10 @@ export default function FieldContextMenu({
   }
 
   const handleFieldHide = () => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.hidden })
+      return
+    }
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
       if ('hide' in fldData.valid && fldData.valid?.hide === true) {
@@ -118,8 +123,8 @@ export default function FieldContextMenu({
             <ContextMenuItem onClick={deselectFieldId} label="Deselect" icn={<DeSelectIcn />} />
             <ContextMenuItem onClick={navigateToFieldSettings} label="Settings" icn={<EditIcn size="19" />} />
             <ContextMenuItem onClick={styleNavigation} label="Style" icn={<BrushIcn height="18" width="14" stroke="1.6" />} />
-            <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} />
-            <ContextMenuItem onClick={() => handleFieldHide()} label="Hide" icn={<EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />} postIcn={checkIfHidden('all') && <CheckMarkIcn cls="context-btn-color" size="19" />} />
+            <ContextMenuItem onClick={() => cloneLayoutItem(fldKey)} label="Clone" icn={<CopyIcn size="19" />} isPro proProperty="fieldClone" />
+            <ContextMenuItem onClick={() => handleFieldHide()} label="Hide" icn={<EyeOffIcon size="19" classes={css({ p: '2px 0px 0px 2px' })} />} postIcn={checkIfHidden('all') && <CheckMarkIcn cls="context-btn-color" size="19" />} isPro proProperty="hidden" />
             {/* <MenuItemWrapper isContextMenu={isContextMenu}>
             <li className="context-item">
               <Downmenu place="right-start" arrow={false} trigger="mouseenter click" onShow={() => toggleSubMenu('hide')} onHide={() => toggleSubMenu('hide')}>
@@ -158,14 +163,14 @@ export default function FieldContextMenu({
   )
 }
 
-function ContextMenuItem({ onClick, label, icn, postIcn, isPro }) {
+function ContextMenuItem({ onClick, label, icn, postIcn, isPro, proProperty }) {
   return (
     <li className="context-item">
       <button type="button" className="context-btn" onClick={onClick}>
         {icn}
         <span>{label}</span>
         {postIcn}
-        {isPro && !IS_PRO && <ProBadgeOverlay />}
+        {isPro && !IS_PRO && <ProBadge className="pro-badge" proProperty={proProperty} />}
       </button>
     </li>
   )

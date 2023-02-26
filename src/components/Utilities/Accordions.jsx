@@ -4,11 +4,13 @@ import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
 import ChevronDownIcn from '../../Icons/ChevronDownIcn'
 import EditIcn from '../../Icons/EditIcn'
+import { IS_PRO } from '../../Utils/Helpers'
 import Button from './Button'
+import ProBadge from './ProBadge'
 import SingleToggle2 from './SingleToggle2'
 
 function Accordions({
-  title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse, toggle, action, checked,
+  title, customTitle, subtitle, children, titleEditable, onTitleChange, cls, notScroll, header, onExpand, onCollapse, toggle, action, checked, isPro, proProperty,
 }) {
   const [tgl, setTgl] = useState(false)
   const [H, setH] = useState(0)
@@ -72,6 +74,7 @@ function Accordions({
               </button>
             )}
             {!tgl && header}
+            {isPro && !IS_PRO && (<ProBadge proProperty={proProperty} />)}
           </div>
           {subtitle !== undefined && <small>{subtitle}</small>}
         </div>

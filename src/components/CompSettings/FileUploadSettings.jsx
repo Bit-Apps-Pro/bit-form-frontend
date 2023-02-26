@@ -202,7 +202,7 @@ export default function FileUploadSettings() {
         title={__('Button Icons')}
         className={css(FieldStyle.fieldSection)}
         toggleChecked
-        open
+        // open
       >
         <div className={css(ut.mt1)}>
           <FieldIconSettings
@@ -211,6 +211,8 @@ export default function FileUploadSettings() {
             styleRoute="pre-i"
             setIcon={() => setIconModel('prefixIcn')}
             removeIcon={() => removeIcon('prefixIcn')}
+            isPro
+            proProperty="leadingIcon"
           />
 
           <FieldIconSettings
@@ -219,6 +221,8 @@ export default function FileUploadSettings() {
             styleRoute="suf-i"
             setIcon={() => setIconModel('suffixIcn')}
             removeIcon={() => removeIcon('suffixIcn')}
+            isPro
+            proProperty="trailingIcon"
           />
 
         </div>
@@ -311,9 +315,10 @@ export default function FileUploadSettings() {
         switching
         tip="By enabling this feature, you will see file select status"
         tipProps={{ width: 200, icnSize: 17 }}
-        open={showSelectStatus}
+        // open={showSelectStatus}
         {...IS_PRO && { disable: !showSelectStatus }}
         isPro
+        proProperty="fileSelectStatus"
       >
         <div className={css({ m: 2 })}>
           <input
@@ -341,6 +346,7 @@ export default function FileUploadSettings() {
         open={showMaxSize}
         {...IS_PRO && { disable: !showMaxSize }}
         isPro
+        proProperty="showMaxSize"
       >
         <div className={css({ m: 2 })}>
           <input
@@ -415,6 +421,7 @@ export default function FileUploadSettings() {
         disable={!showFileList}
         {...IS_PRO && { disable: !showFileList }}
         isPro
+        proProperty="showFileList"
       >
         <div className={css(ut.ml1)}>
           <CheckBoxMini
@@ -440,8 +447,9 @@ export default function FileUploadSettings() {
         id="fil-exst-err-msg"
         title={__('File Exist Message')}
         className={css(FieldStyle.fieldSection)}
-        open
+        // open
         isPro
+        proProperty="fileExistMsg"
       >
         <div className={css({ m: 2 })}>
           <input

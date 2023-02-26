@@ -50,7 +50,7 @@ const c = {
     },
   },
   popper_icn: {
-    dy: 'inline-grid',
+    dy: 'inline-grid !important',
     placeContent: 'center',
     cr: 'var(--dp-blue-bg)',
     oy: 1,

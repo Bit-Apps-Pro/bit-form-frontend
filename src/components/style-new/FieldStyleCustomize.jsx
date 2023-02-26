@@ -25,7 +25,7 @@ import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
 import AutoResizeInput from '../CompSettings/CompSettingsUtils/AutoResizeInput'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
-import PremiumOverlay from '../CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
+import PremiumSettingsOverlay from '../CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
 import ProBadge from '../Utilities/ProBadge'
 import SingleToggle from '../Utilities/SingleToggle'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
@@ -302,12 +302,12 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
           <h5 className={css(cls.subTitle)}>{fields[fieldKey]?.adminLbl}</h5>
           <span title="Field Key" className={css(cls.pill)}>{fieldKey}</span>
           {!IS_PRO && (
-            <ProBadge />
+            <ProBadge proProperty="individualStyle" />
           )}
         </div>
         {!IS_PRO && (
           <div className="pos-rel">
-            <PremiumOverlay />
+            <PremiumSettingsOverlay proProperty="individualStyle" />
           </div>
         )}
       </div>
@@ -337,6 +337,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
                 isChecked={isFieldElemetOverrided}
                 className={css(ut.m10)}
                 isPro
+                proProperty="individualStyle"
               />
               <div className={css(cls.container)}>
                 {renderIndividualCustomStyleComp()}
@@ -345,7 +346,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
             <Grow open={controller === 'classes'}>
               <div className="pos-rel">
-                {!IS_PRO && (<PremiumOverlay hideText />)}
+                {!IS_PRO && (<PremiumSettingsOverlay hideText proProperty="customClassAttr" />)}
 
                 <div className={css(ut.m10)}>
                   <label className={css({ fs: 14, fw: 600 })}>Custom Class Names</label>

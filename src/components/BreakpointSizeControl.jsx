@@ -5,7 +5,10 @@ import { $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStat
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
+import { IS_PRO } from '../Utils/Helpers'
+import PremiumSettingsOverlay from './CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
 import Cooltip from './Utilities/Cooltip'
+import ProBadge from './Utilities/ProBadge'
 import SingleToggle from './Utilities/SingleToggle'
 
 export default function BreakpointSizeControl() {
@@ -24,30 +27,36 @@ export default function BreakpointSizeControl() {
 
   return (
     <div className={css(s.wraper)}>
-      <h4 className={css(s.title)}>Breakpoint Sizes</h4>
+      <h4 className={css(s.title)}>
+        Breakpoint Sizes
+        {!IS_PRO && (<ProBadge proProperty="breakPoint" />)}
+      </h4>
       <div className={css(s.divider)} />
       {/* <div className={css(ut.flxc, s.inputWrp)}>
         <span className={css(s.icon_wrp)}><LaptopIcn size="27" /></span>
         <input title="Large device breakpoint size" aria-label="Large device breakpoint size" name="lg" onChange={breakpointSizeHandler} value={breakpointSize.lg} className={css(s.input)} type="number" />
         <span>px</span>
       </div> */}
-      <div className={css(ut.flxc, s.inputWrp)}>
-        <span className={css(s.icon_wrp)}><TabletIcon size="24" /></span>
-        <input title="Medium device breakpoint size" aria-label="Medium device breakpoint size" name="md" onChange={breakpointSizeHandler} value={breakpointSize.md} className={css(s.input)} type="number" />
-        <span>px</span>
-      </div>
-      <div className={css(ut.flxc, s.inputWrp)}>
-        <span className={css(s.icon_wrp)}><MobileIcon size="25" /></span>
-        <input title="Mobile device breakpoint size" aria-label="Mobile device breakpoint size" name="sm" onChange={breakpointSizeHandler} value={breakpointSize.sm} className={css(s.input)} type="number" />
-        <span>px</span>
-      </div>
-      <div className={css(s.divider)} />
-      <div className={css(ut.flxcb, ut.mt2, ut.mb1)}>
-        <div className={css(ut.flxi, ut.w7)}>
-          <span className={css(ut.fw500, ut.fs12)}>Respect Large Device Order</span>
-          <Cooltip icnSize="15"><span className={css([ut.tipBody, ut.mr2])}>When this option is enabled tablet and mobile devices layout will auto genarate according to desktop device field order.</span></Cooltip>
+      <div className="pos-rel">
+        {!IS_PRO && (<PremiumSettingsOverlay hideText proProperty="breakPoint" />)}
+        <div className={css(ut.flxc, s.inputWrp)}>
+          <span className={css(s.icon_wrp)}><TabletIcon size="24" /></span>
+          <input title="Medium device breakpoint size" aria-label="Medium device breakpoint size" name="md" onChange={breakpointSizeHandler} value={breakpointSize.md} className={css(s.input)} type="number" />
+          <span>px</span>
         </div>
-        <SingleToggle isChecked={builderHelperStates.respectLGLayoutOrder} action={toggleRespectOrder} />
+        <div className={css(ut.flxc, s.inputWrp)}>
+          <span className={css(s.icon_wrp)}><MobileIcon size="25" /></span>
+          <input title="Mobile device breakpoint size" aria-label="Mobile device breakpoint size" name="sm" onChange={breakpointSizeHandler} value={breakpointSize.sm} className={css(s.input)} type="number" />
+          <span>px</span>
+        </div>
+        <div className={css(s.divider)} />
+        <div className={css(ut.flxcb, ut.mt2, ut.mb1)}>
+          <div className={css(ut.flxi, ut.w7)}>
+            <span className={css(ut.fw500, ut.fs12)}>Respect Large Device Order</span>
+            <Cooltip icnSize="15"><span className={css([ut.tipBody, ut.mr2])}>When this option is enabled tablet and mobile devices layout will auto genarate according to desktop device field order.</span></Cooltip>
+          </div>
+          <SingleToggle isChecked={builderHelperStates.respectLGLayoutOrder} action={toggleRespectOrder} />
+        </div>
       </div>
     </div>
   )

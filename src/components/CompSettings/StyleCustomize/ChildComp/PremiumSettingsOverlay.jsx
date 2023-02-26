@@ -1,10 +1,15 @@
 // create a react component
 
 import { useFela } from 'react-fela'
+import { useSetRecoilState } from 'recoil'
+import { $proModal } from '../../../../GlobalStates/GlobalStates'
 import { __ } from '../../../../Utils/i18nwrap'
+import proHelperData from '../../../../Utils/StaticData/proHelperData'
 
-export default function PremiumOverlay({ classes, hideText }) {
+export default function PremiumSettingsOverlay({ classes, hideText, proProperty }) {
+  const setProModal = useSetRecoilState($proModal)
   const { css } = useFela()
+  const showProModal = () => setProModal({ show: true, ...proHelperData[proProperty] })
   return (
     <>
       { !hideText && (
@@ -24,7 +29,7 @@ export default function PremiumOverlay({ classes, hideText }) {
           {__(' to learn more about BitForm Pro.')}
         </div>
       )}
-      <div className={css(style.overlay, hideText && { h: '100%', tp: 0 })} />
+      <div aria-label="premium-overlay" className={css(style.overlay, hideText && { h: '100%', tp: 0 })} role="button" onClick={showProModal} onKeyUp={showProModal} tabIndex="0" />
     </>
   )
 }
@@ -39,10 +44,10 @@ const style = {
     bd: 'hsl(215deg 1% 77% / 22%)',
     brs: 8,
     pn: 'absolute',
-    tp: 55,
+    tp: 67,
     lp: 0,
     w: '100%',
-    h: 'calc(100% - 55px)',
+    h: 'calc(100% - 67px)',
     zx: 2,
     bpf: 'blur(0.5px)',
   },

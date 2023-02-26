@@ -11,8 +11,8 @@ import 'ace-builds/src-min-noconflict/snippets/javascript'
 import 'ace-builds/src-min-noconflict/theme-tomorrow'
 import 'ace-builds/src-min-noconflict/theme-twilight'
 // extensions
-import 'ace-builds/src-min-noconflict/ext-language_tools'
 import 'ace-builds/src-min-noconflict/ext-emmet'
+import 'ace-builds/src-min-noconflict/ext-language_tools'
 import 'ace-builds/src-min-noconflict/ext-searchbox'
 
 // both extension occur error in build time
@@ -30,14 +30,16 @@ import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import bitsFetch from '../../Utils/bitsFetch'
 import { select } from '../../Utils/globalHelpers'
+import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { cssPredefinedCodeList, jsPredefinedCodeList } from '../../Utils/StaticData/predefinedCodeList'
 import CheckBoxMini from '../Utilities/CheckBoxMini'
 import Downmenu from '../Utilities/Downmenu'
 import ListGroup from '../Utilities/ListGroup'
+import Select from '../Utilities/Select'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import Grow from './StyleCustomize/ChildComp/Grow'
-import Select from '../Utilities/Select'
+import ProOverlay from './StyleCustomize/ChildComp/ProOverlay'
 
 function CustomCodeEditor() {
   const { css } = useFela()
@@ -189,40 +191,42 @@ function CustomCodeEditor() {
       </div>
 
       <Grow open={editorTab === 'JavaScript'}>
-        {enableEditor === 'on' ? (
-          <AceEditor
-            {...editorProps}
-            onLoad={(editor) => {
-              editor.session.$worker.send('changeOptions', [{ asi: true }])
-            }}
-          />
-        ) : (
-          <div>
+        <div className="pos-rel">
+          {!IS_PRO && (<ProOverlay style={{ left: 0, width: '100%' }} />)}
+          {enableEditor === 'on' ? (
+            <AceEditor
+              {...editorProps}
+              onLoad={(editor) => {
+                editor.session.$worker.send('changeOptions', [{ asi: true }])
+              }}
+            />
+          ) : (
             <textarea
               className={css(style.editor, { h: 330 })}
               onChange={(e) => handleEditorValue(e.target.value)}
               value={customCodes[editorTab] || ''}
               rows="18"
             />
-          </div>
-        )}
+          )}
+        </div>
       </Grow>
 
       <Grow open={editorTab === 'CSS'}>
-        {enableEditor === 'on' ? (
-          <AceEditor
-            {...editorProps}
-          />
-        ) : (
-          <div>
+        <div className="pos-rel">
+          {!IS_PRO && (<ProOverlay style={{ left: 0, width: '100%' }} />)}
+          {enableEditor === 'on' ? (
+            <AceEditor
+              {...editorProps}
+            />
+          ) : (
             <textarea
               className={css(style.editor, { h: 330 })}
               onChange={(e) => handleEditorValue(e.target.value)}
               value={customCodes[editorTab] || ''}
               rows="18"
             />
-          </div>
-        )}
+          )}
+        </div>
       </Grow>
       <div className={css(ut.flxb, ut.mt1, ut.mb1, { jc: 'between' })}>
         <div className={css(ut.flxc, ut.w10, style.editorBtn)}>
