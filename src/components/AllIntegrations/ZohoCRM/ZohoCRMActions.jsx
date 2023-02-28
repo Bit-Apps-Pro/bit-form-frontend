@@ -20,8 +20,6 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
   const [upsertMdl, setUpsertMdl] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [actionMdl, setActionMdl] = useState({ show: false, action: () => { } })
-  const bits = useRecoilValue($bits)
-  const { isPro } = bits
 
   const actionHandler = (val, typ) => {
     const newConf = { ...crmConf }
@@ -230,7 +228,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
 
   return (
     <div className="pos-rel">
-      {!isPro && (
+      {/* {!isPro && (
         <div className="pro-blur flx w-10" style={{ top: -25 }}>
           <div className="pro">
             {__('Available On')}
@@ -242,7 +240,7 @@ export default function ZohoCRMActions({ crmConf, setCrmConf, formFields, tab, f
             </a>
           </div>
         </div>
-      )}
+      )} */}
       <div className="d-flx flx-wrp">
         <TableCheckBox
           onChange={(e) => actionHandler(e, 'workflow')}

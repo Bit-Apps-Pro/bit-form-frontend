@@ -3,10 +3,10 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
-import 'react-multiple-select-dropdown-lite/dist/index.css'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
 import PlusIcn from '../Icons/PlusIcn'
@@ -79,52 +79,51 @@ function Integrations() {
   const { css } = useFela()
 
   const allIntegURL = `/form/settings/${formType}/${formID}/integrations`
-  const pro = 1
 
   const integs = [
-    { type: 'Zoho CRM', logo: zohoCRM, pro },
-    { type: 'Web Hooks', logo: webhooks, pro },
-    { type: 'Zapier', logo: zapier, pro },
-    { type: 'Integromat', logo: integromat, pro },
-    { type: 'Integrately', logo: integrately, pro },
-    { type: 'Pabbly', logo: pabbly, pro },
-    { type: 'Zoho Flow', logo: zohoflow, pro },
-    { type: 'Google Sheet', logo: googleSheet, pro },
-    { type: 'Mail Chimp', logo: mailChimp, pro },
-    { type: 'ACF', logo: acf, pro },
-    { type: 'MetaBox', logo: metabox, pro },
-    { type: 'Pods', logo: pods, pro },
-    { type: 'Mail Poet', logo: mailPoet, pro },
-    { type: 'SendinBlue', logo: sendinblue, pro },
-    { type: 'WooCommerce', logo: wooCommerce, pro },
-    { type: 'ActiveCampaign', logo: activeCampaign, pro },
-    { type: 'Telegram', logo: telegram, pro },
-    { type: 'Fluent CRM', logo: fluentcrm, pro },
-    { type: 'Autonami', logo: autonami, pro },
-    { type: 'Acumbamail', logo: Acumbamail, pro, proVer: '1.4.23' },
-    { type: 'OneDrive', logo: oneDrive, pro },
-    { type: 'Dropbox', logo: dropbox, pro, proVer: '1.4.15' },
-    { type: 'Encharge', logo: encharge, pro },
-    { type: 'Rapidmail', logo: rapidmail, pro, proVer: '1.5.0' },
-    { type: 'Hubspot', logo: hubspot, pro, proVer: '1.5.0' },
-    { type: 'Getgist', logo: getgist, pro, proVer: '1.5.0' },
-    { type: 'ElasticEmail', logo: elasticemail, pro, proVer: '1.5.0' },
-    { type: 'Groundhogg', logo: groundhogg, pro, proVer: '1.5.0' },
-    { type: 'SendFox', logo: sendfox, pro, proVer: '1.5.0' },
-    { type: 'Zoho Recruit', logo: zohoRecruit, pro },
-    { type: 'Zoho Analytics', logo: zohoAnalytics, pro },
-    { type: 'Zoho Campaigns', logo: zohoCamp, pro },
-    { type: 'Zoho WorkDrive', logo: zohoWorkdrive, pro },
-    { type: 'Zoho Desk', logo: zohoDesk, pro },
-    { type: 'Zoho Mail', logo: zohoMail, pro },
-    { type: 'Zoho Sheet', logo: zohoSheet, pro },
-    { type: 'Zoho Projects', logo: zohoProjects, pro },
-    { type: 'Zoho Sign', logo: zohoSign, pro },
-    { type: 'Zoho Marketing Hub', logo: zohoHub, pro },
-    { type: 'Zoho Creator', logo: zohoCreator, pro },
-    { type: 'Zoho Bigin', logo: zohoBigin, pro },
-    { type: 'MailerLite', logo: mailerLite, pro, proVer: '1.5.1' },
-    { type: 'Twilio', logo: twilio, pro, proVer: '1.5.1' },
+    { type: 'Zoho CRM', logo: zohoCRM },
+    { type: 'Web Hooks', logo: webhooks },
+    { type: 'Zapier', logo: zapier },
+    { type: 'Integromat', logo: integromat },
+    { type: 'Integrately', logo: integrately },
+    { type: 'Pabbly', logo: pabbly },
+    { type: 'Zoho Flow', logo: zohoflow },
+    { type: 'Google Sheet', logo: googleSheet },
+    { type: 'Mail Chimp', logo: mailChimp },
+    { type: 'ACF', logo: acf },
+    { type: 'MetaBox', logo: metabox },
+    { type: 'Pods', logo: pods },
+    { type: 'Mail Poet', logo: mailPoet },
+    { type: 'SendinBlue', logo: sendinblue },
+    { type: 'WooCommerce', logo: wooCommerce },
+    { type: 'ActiveCampaign', logo: activeCampaign },
+    { type: 'Telegram', logo: telegram },
+    { type: 'Fluent CRM', logo: fluentcrm },
+    { type: 'Autonami', logo: autonami },
+    { type: 'Acumbamail', logo: Acumbamail },
+    { type: 'OneDrive', logo: oneDrive },
+    { type: 'Dropbox', logo: dropbox },
+    { type: 'Encharge', logo: encharge },
+    { type: 'Rapidmail', logo: rapidmail },
+    { type: 'Hubspot', logo: hubspot },
+    { type: 'Getgist', logo: getgist },
+    { type: 'ElasticEmail', logo: elasticemail },
+    { type: 'Groundhogg', logo: groundhogg },
+    { type: 'SendFox', logo: sendfox },
+    { type: 'Zoho Recruit', logo: zohoRecruit },
+    { type: 'Zoho Analytics', logo: zohoAnalytics },
+    { type: 'Zoho Campaigns', logo: zohoCamp },
+    { type: 'Zoho WorkDrive', logo: zohoWorkdrive },
+    { type: 'Zoho Desk', logo: zohoDesk },
+    { type: 'Zoho Mail', logo: zohoMail },
+    { type: 'Zoho Sheet', logo: zohoSheet },
+    { type: 'Zoho Projects', logo: zohoProjects },
+    { type: 'Zoho Sign', logo: zohoSign },
+    { type: 'Zoho Marketing Hub', logo: zohoHub },
+    { type: 'Zoho Creator', logo: zohoCreator },
+    { type: 'Zoho Bigin', logo: zohoBigin },
+    { type: 'MailerLite', logo: mailerLite },
+    { type: 'Twilio', logo: twilio },
   ]
 
   const [availableIntegs, setAvailableIntegs] = useState(sortArrOfObj(integs, 'type'))

@@ -1,6 +1,4 @@
 import { useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
 import { addFieldMap } from '../IntegrationHelpers/IntegrationHelpers'
@@ -11,9 +9,6 @@ import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 export default function ZohoCRMNewRecord({
   tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar,
 }) {
-  const bits = useRecoilValue($bits)
-  const { isPro } = bits
-
   useEffect(() => {
     handleTabChange(0, settab)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -99,7 +94,7 @@ export default function ZohoCRMNewRecord({
             <br />
             {Object.keys(crmConf.default.layouts[crmConf.module][crmConf.layout]?.fileUploadFields).length !== 0 && (
               <div className="pos-rel">
-                {!isPro && (
+                {/* {!isPro && (
                   <div className="pro-blur flx">
                     <div className="pro">
                       Available On
@@ -111,7 +106,7 @@ export default function ZohoCRMNewRecord({
                       </a>
                     </div>
                   </div>
-                )}
+                )} */}
                 <div className="mt-4"><b className="wdt-100">{__('Map File Upload Fields')}</b></div>
                 <div className="btcd-hr mt-1" />
                 <div className="flx flx-around mt-2 mb-1">

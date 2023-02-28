@@ -11,9 +11,6 @@ import ZohoCRMFieldMap from './ZohoCRMFieldMap'
 export default function ZohoCRMRelatedRecord({
   indx, tab, settab, formID, formFields, crmConf, setCrmConf, handleInput, isLoading, setisLoading, setSnackbar,
 }) {
-  const bits = useRecoilValue($bits)
-  const { isPro } = bits
-
   useEffect(() => {
     handleTabChange(indx + 1, settab, formID, crmConf, setCrmConf, setisLoading, setSnackbar)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,7 +31,7 @@ export default function ZohoCRMRelatedRecord({
       <br />
       <br />
       <div className="pos-rel">
-        {!isPro && (
+        {/* {!isPro && (
           <div className="pro-blur flx w-9">
             <div className="pro">
               {__('Available On')}
@@ -46,7 +43,7 @@ export default function ZohoCRMRelatedRecord({
               </a>
             </div>
           </div>
-        )}
+        )} */}
         <b className="wdt-100 d-in-b">{__('Related List:')}</b>
         <select
           onChange={handleInput}

@@ -1,5 +1,3 @@
-import { useRecoilValue } from 'recoil'
-import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
@@ -19,9 +17,6 @@ export default function ZohoCRMFieldMap({
   } else {
     isNotRequired = field.zohoFormField === '' || crmConf.default.layouts?.[module]?.[layout]?.required?.indexOf(field.zohoFormField) === -1
   }
-
-  const bits = useRecoilValue($bits)
-  const { isPro } = bits
 
   return (
     <div
@@ -44,8 +39,8 @@ export default function ZohoCRMFieldMap({
             && (
               <>
                 <option value="custom">{__('Custom...')}</option>
-                <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
-                  {isPro && SmartTagField?.map(f => (
+                <optgroup label="General Smart Codes">
+                  {SmartTagField?.map(f => (
                     <option key={`ff-rm-${f.name}`} value={f.name}>
                       {f.label}
                     </option>
