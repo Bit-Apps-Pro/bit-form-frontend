@@ -45,6 +45,7 @@ export default class BitPhoneNumberField {
     maxHeight: 370,
     detectCountryByIp: false,
     detectCountryByGeo: false,
+    optionFlagImage: true,
     searchCountryPlaceholder: 'Search Country',
     noCountryFoundText: 'No Country Found',
     searchClearable: true,
@@ -515,21 +516,24 @@ export default class BitPhoneNumberField {
           const optLblWrp = this.#config.attributes['opt-lbl-wrp']
           this.#setCustomAttr(lblimgbox, optLblWrp)
         }
-        const img = this.#createElm('img')
-        this.#setClassName(img, 'opt-icn')
-        if ('opt-icn' in this.#config.classNames) {
-          const optIcnCls = this.#config.classNames['opt-icn']
-          if (optIcnCls) this.#setCustomClass(img, optIcnCls)
+        if (this.#config.optionFlagImage) {
+          const img = this.#createElm('img')
+          this.#setClassName(img, 'opt-icn')
+          if ('opt-icn' in this.#config.classNames) {
+            const optIcnCls = this.#config.classNames['opt-icn']
+            if (optIcnCls) this.#setCustomClass(img, optIcnCls)
+          }
+          // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+          if ('opt-icn' in this.#config.attributes) {
+            const optIcn = this.#config.attributes['opt-icn']
+            this.#setCustomAttr(img, optIcn)
+          }
+          img.src = `${this.#assetsURL}/${opt.img}`
+          img.alt = `${opt.lbl} flag image`
+          img.loading = 'lazy'
+          this.#setAttribute(img, 'aria-hidden', true)
+          lblimgbox.append(img)
         }
-        // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
-        if ('opt-icn' in this.#config.attributes) {
-          const optIcn = this.#config.attributes['opt-icn']
-          this.#setCustomAttr(img, optIcn)
-        }
-        img.src = `${this.#assetsURL}/${opt.img}`
-        img.alt = `${opt.lbl} flag image`
-        img.loading = 'lazy'
-        this.#setAttribute(img, 'aria-hidden', true)
         const lbl = this.#createElm('span')
         this.#setClassName(lbl, 'opt-lbl')
         if ('opt-lbl' in this.#config.classNames) {
@@ -542,7 +546,7 @@ export default class BitPhoneNumberField {
           this.#setCustomAttr(lbl, optLbl)
         }
         this.#setTextContent(lbl, opt.lbl)
-        lblimgbox.append(img, lbl)
+        lblimgbox.append(lbl)
         const suffix = this.#createElm('span')
         this.#setClassName(suffix, 'opt-suffix')
         if ('opt-suffix' in this.#config.classNames) {

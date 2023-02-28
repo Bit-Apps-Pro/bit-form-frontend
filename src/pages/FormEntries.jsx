@@ -214,12 +214,16 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
               )
             }
             if (val.type === 'check' || val.type === 'select') {
-              const vals = typeof row.cell.value === 'string'
-                && row.cell.value.length > 0
-                && row.cell.value[0] === '['
-                ? JSON.parse(row.cell.value)
-                : row.cell.value !== undefined && row.cell.value.split(',')
-              return vals.map((itm, i) => (i < vals.length - 1 ? `${itm},` : itm))
+              try {
+                const vals = typeof row.cell.value === 'string'
+                  && row.cell.value.length > 0
+                  && row.cell.value[0] === '['
+                  ? JSON.parse(row.cell.value)
+                  : row.cell.value !== undefined && row.cell.value.split(',')
+                return vals.map((itm, i) => (i < vals.length - 1 ? `${itm},` : itm))
+              } catch (_) {
+                return row.cell.value
+              }
             }
             if (val.key === '__user_id') {
               return bits?.user[row.cell.value]?.url ? (<a href={bits.user[row.cell.value].url}>{bits.user[row.cell.value].name}</a>) : null
