@@ -529,11 +529,11 @@ export default function SingleFormSettings() {
   }
 
   const setAccordingEnable = (e, type, title) => {
-    const additional = deepCopy(additionalSetting)
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData[type] })
       return true
     }
+    const additional = deepCopy(additionalSetting)
 
     let msg = ''
     if (type === 'is_login') msg = 'You must be logged in.'
@@ -582,7 +582,7 @@ export default function SingleFormSettings() {
         )}
         toggle
         action={(e) => setAccordingEnable(e, 'is_login', 'User Require Login')}
-        checked={additionalSetting?.enabled?.is_login}
+        checked={additionalSetting?.enabled?.is_login || false}
         cls="w-6 mt-3"
         isPro
         proProperty="is_login"
@@ -605,7 +605,7 @@ export default function SingleFormSettings() {
         cls="w-6 mt-3"
         toggle
         action={(e) => setAccordingEnable(e, 'empty_submission', 'Empty Submission')}
-        checked={additionalSetting?.enabled?.empty_submission || undefined}
+        checked={additionalSetting?.enabled?.empty_submission || false}
         isPro
         proProperty="empty_submission"
       >
@@ -717,6 +717,7 @@ export default function SingleFormSettings() {
                     <a className="mt-1 cooltip-link" target="_blank" href="https://en.wikipedia.org/wiki/Honeypot_(computing)" rel="noreferrer">Learn More</a>
                   </div>
                 </Cooltip>
+                {!IS_PRO && (<ProBadge proProperty="honeypot" />)}
               </span>
             </div>
           </div>
