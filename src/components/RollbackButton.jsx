@@ -68,7 +68,13 @@ const RollbackButton = () => {
             <CheckMarkIcn size={14} cls={css(ut.mr1)} />
             <span>Do not close the browser tab during the process.</span>
           </p>
-          <small>Type &quot;CONFIRM&quot; in the input box below to proceed:</small>
+          <small>
+            Type
+            {' '}
+            <strong>&quot;CONFIRM&quot;</strong>
+            {' '}
+            in the input box below to proceed:
+          </small>
           <input ref={confirmTxtBox} type="text" placeholder="Type CONFIRM" onChange={handleConfirmTxt} />
           {showErr && <p className="migrate-err">Check if you typed &quot;CONFIRM&quot; correctly.</p>}
         </div>
