@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { $bits } from '../GlobalStates/GlobalStates'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { $bits, $formId } from '../GlobalStates/GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { generateUpdateFormData, getConfirmationStyle, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
@@ -11,6 +11,7 @@ import Progressbar from './Utilities/Progressbar'
 
 export default function MigrationModal() {
   const bits = useRecoilValue($bits)
+  const setFormId = useSetRecoilState($formId)
   const [migratingCount, setMigratingCount] = useState(0)
   const [totalForms, setTotalForms] = useState(0)
 
@@ -27,6 +28,7 @@ export default function MigrationModal() {
             const updateFormPromises = []
             res.data.forEach(formData => {
               const { id: formID } = formData
+              setFormId(formID)
               const fieldsArr = Object.entries(formData.form_content.fields)
               const { themeVars, themeColors, styles } = themeProvider('bitformDefault', fieldsArr, formID)
               setFormReponseDataToStates(formData)

@@ -40,6 +40,7 @@ const proHelperData = {
   fileExistMsg: { heading: __('File Exist Message'), featureText: __('File Exist Message') },
   individualStyle: { heading: __('Individual Style'), featureText: __('Individual Field Styling') },
   customClassAttr: { heading: __('Custom Class & Attribute'), featureText: __('Custom Classes and Attributes') },
+  customCode: { heading: __('Custom JS and CSS Editor'), featureText: __('Custom JS and CSS Code Editor') },
   breakPoint: { heading: __('Breakpoint Modification'), featureText: __('Breakpoint width size modification') },
   formWidth: { heading: __('Form Width Modification'), featureText: __('Form Width Modification') },
   fieldClone: { heading: __('Field Clone'), featureText: __('Field Cloning') },
