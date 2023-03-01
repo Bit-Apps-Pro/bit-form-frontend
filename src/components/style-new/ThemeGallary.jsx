@@ -68,7 +68,7 @@ export default function ThemeGallary() {
             <Btn
               size="sm"
               onClick={onModalThemeActive}
-              disabled={activeTheme.slug === modal.slug}
+              disabled={activeTheme?.slug === modal?.slug}
               gap={5}
               className={css({ mr: 10, my: 5 })}
             >
