@@ -24,8 +24,8 @@ import AceEditor from 'react-ace'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { $customCodes } from '../../GlobalStates/GlobalStates'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { $customCodes, $proModal } from '../../GlobalStates/GlobalStates'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -33,6 +33,7 @@ import { select } from '../../Utils/globalHelpers'
 import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { cssPredefinedCodeList, jsPredefinedCodeList } from '../../Utils/StaticData/predefinedCodeList'
+import proHelperData from '../../Utils/StaticData/proHelperData'
 import CheckBoxMini from '../Utilities/CheckBoxMini'
 import Downmenu from '../Utilities/Downmenu'
 import ListGroup from '../Utilities/ListGroup'
@@ -49,6 +50,7 @@ function CustomCodeEditor() {
   const [enableEditor, setEnableEditor] = useState(localStorage.getItem('bf-enable-editor') || 'on')
   const codeEditorRef = useRef({})
   const [customCodes, setCustomCodes] = useRecoilState($customCodes)
+  const setProModal = useSetRecoilState($proModal)
   const [editorOptions, setEditorOptions] = useState(options)
   const editorTabList = ['JavaScript', 'CSS']
   const themesList = [
@@ -97,6 +99,10 @@ function CustomCodeEditor() {
   }
 
   const saveCode = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.customCode })
+      return
+    }
     if (formType === 'new') {
       select('#update-btn').click()
       return
