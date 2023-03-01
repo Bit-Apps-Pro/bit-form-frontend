@@ -99,7 +99,7 @@ export default class BitCurrencyField {
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-
+    this.setMenu({ open: false })
     this.#addEvent(this.#currencyNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
@@ -114,7 +114,7 @@ export default class BitCurrencyField {
     if (this.#config.defaultValue) this.#handleDefaultCurrencyInputValue()
     if (!this.#config.defaultValue && this.#config.defaultCurrencyKey) this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
 
-    this.#generateOptions()
+    // this.#generateOptions()
 
     if (this.#config.searchClearable) {
       this.#setStyleProperty(this.#searchInputElm, 'padding-right', '35px')
@@ -512,6 +512,114 @@ export default class BitCurrencyField {
   }
 
   #generateOptions() {
+    this.#optionListElm.innerHTML = ''
+    const optionElms = this.#options.map((opt, index) => {
+      const li = this.#createElm('li')
+      this.#setAttribute(li, 'data-key', opt.i)
+      this.#setAttribute(li, 'data-index', index)
+      // this.#setAttribute(li, 'data-dev-option', this.fieldKey)
+      if ('option' in this.#config.attributes) {
+        const optAttr = this.#config.attributes.option
+        this.#setCustomAttr(li, optAttr)
+      }
+      if (!opt.i) {
+        this.#setTextContent(li, opt.lbl)
+        this.#setClassName(li, 'opt-not-found')
+        return li
+      }
+      this.#setClassName(li, 'option')
+      if ('option' in this.#config.classNames) {
+        const optCls = this.#config.classNames.option
+        if (optCls) this.#setCustomClass(li, optCls)
+      }
+      const lblimgbox = this.#createElm('span')
+      // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+      if ('opt-lbl-wrp' in this.#config.attributes) {
+        const optLblWrp = this.#config.attributes['opt-lbl-wrp']
+        this.#setCustomAttr(lblimgbox, optLblWrp)
+      }
+      this.#setClassName(lblimgbox, 'opt-lbl-wrp')
+      if ('opt-lbl-wrp' in this.#config.classNames) {
+        const optLblWrpCls = this.#config.classNames['opt-lbl-wrp']
+        if (optLblWrpCls) this.#setCustomClass(lblimgbox, optLblWrpCls)
+      }
+      if (this.#config.optionFlagImage) {
+        const img = this.#createElm('img')
+        // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+        if ('opt-icn' in this.#config.attributes) {
+          const optIcn = this.#config.attributes['opt-icn']
+          this.#setCustomAttr(img, optIcn)
+        }
+        this.#setClassName(img, 'opt-icn')
+        if ('opt-icn' in this.#config.classNames) {
+          const optIcnCls = this.#config.classNames['opt-icn']
+          if (optIcnCls) this.#setCustomClass(img, optIcnCls)
+        }
+        img.src = `${this.#assetsURL}${opt.img}`
+        img.alt = `${opt.lbl} flag image`
+        img.loading = 'lazy'
+        this.#setAttribute(img, 'aria-hidden', true)
+        lblimgbox.append(img)
+      }
+      const lbl = this.#createElm('span')
+      // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+      if ('opt-lbl' in this.#config.attributes) {
+        const optLbl = this.#config.attributes['opt-lbl']
+        this.#setCustomAttr(lbl, optLbl)
+      }
+      this.#setClassName(lbl, 'opt-lbl')
+      if ('opt-lbl' in this.#config.classNames) {
+        const optLblCls = this.#config.classNames['opt-lbl']
+        if (optLblCls) this.#setCustomClass(lbl, optLblCls)
+      }
+      this.#setTextContent(lbl, opt.lbl)
+      lblimgbox.append(lbl)
+      const suffix = this.#createElm('span')
+      // this.#setAttribute(suffix, 'data-dev-opt-suffix', this.fieldKey)
+      if ('opt-suffix' in this.#config.attributes) {
+        const optsufix = this.#config.attributes['opt-suffix']
+        this.#setCustomAttr(suffix, optsufix)
+      }
+      this.#setClassName(suffix, 'opt-suffix')
+      if ('opt-suffix' in this.#config.classNames) {
+        const optsuffixCls = this.#config.classNames['opt-suffix']
+        if (optsuffixCls) this.#setCustomClass(suffix, optsuffixCls)
+      }
+      this.#setTextContent(suffix, opt.i)
+      this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')
+      this.#setAttribute(li, 'role', 'option')
+      this.#setAttribute(li, 'aria-posinset', index + 1)
+      this.#setAttribute(li, 'aria-setsize', this.#options.length)
+
+      this.#addEvent(li, 'click', e => {
+        this.#currencySelectedFromList = true
+        this.setSelectedCurrencyItem(e.currentTarget.dataset.key)
+      })
+      this.#addEvent(li, 'keyup', e => {
+        if (e.key === 'Enter') {
+          this.#currencySelectedFromList = true
+          this.setSelectedCurrencyItem(e.currentTarget.dataset.key)
+        }
+      })
+
+      if (opt.disabled) {
+        this.#setClassName(li, 'disabled-opt')
+      }
+
+      li.append(lblimgbox, suffix)
+
+      if (this.#selectedCurrencyCode === opt.i) {
+        this.#setClassName(li, 'selected-opt')
+        this.#setAttribute(li, 'aria-selected', true)
+      } else {
+        this.#setAttribute(li, 'aria-selected', false)
+      }
+      return li
+    })
+
+    this.#optionListElm.append(...optionElms)
+
+    return
     const selectedIndex = this.#getSelectedCurrencyIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
       height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.#rowHeight,
@@ -631,10 +739,11 @@ export default class BitCurrencyField {
     if (this.#config.selectedFlagImage) {
       this.#selectedCurrencyImgElm.src = this.#placeholderImage
     }
+    this.setMenu({ open: false })
     this.#setAttribute(this.#currencyInputElm, 'data-num-value', '')
     if (this.#config.selectedCurrencyClearable) this.#setStyleProperty(this.#clearCurrencyInputElm, 'display', 'none')
     this.#setAttribute(this.#currencyHiddenInputElm, 'value', this.#config.defaultValue)
-    this.#reRenderVirtualOptions()
+    // this.#reRenderVirtualOptions()
   }
 
   setSelectedCurrencyItem(currencyKey) {
@@ -655,6 +764,12 @@ export default class BitCurrencyField {
   }
 
   #reRenderVirtualOptions() {
+    if (!this.#isMenuOpen()) return
+    this.#generateOptions()
+    const selectedIndex = this.#getSelectedCurrencyIndex()
+    const selectedOpt = this.#select(`.option[data-index="${selectedIndex}"]`)
+    if (selectedOpt) selectedOpt.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    return
     this.virtualOptionList?.setRowCount(this.#options.length)
     this.virtualOptionList?.scrollToIndex(this.#getSelectedCurrencyIndex())
   }
