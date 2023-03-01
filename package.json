@@ -100,6 +100,7 @@
     "fpd": "webpack --progress --color --config webpack.frontend.config.js --mode=production",
     "pda": "pnpm run pd && pnpm run fpd",
     "clear-lint-cache": "eslint . --cache --cache-file eslint-cache/eslintcache",
+    "gettext-parser": "npx react-gettext-parser --output ./locale.pot --config ./gettext-parser.config.js  './src/**/{*.js,*.jsx}'",
     "i18n:json": "npx po2json locale.pot ../languages/bitform-bitforms-admin-script.json -f jed1.x",
     "i18n:php": "node ./pot-to-php.js locale.pot ../languages/generatedString.php bitform;wp i18n make-pot ../ --include=*.php --skip-js --slug=bitform --headers='{\"Last-Translator\":\"developer@bitcode.pro\",\"Language-Team\":\"support@bitcode.pro\",\"PO-Revision-Date\":\"\"}'",
     "stat:a": "webpack --profile --json > coverage/a.stats.json",
@@ -112,8 +113,8 @@
     "del-modules": "npkill",
     "build-pkg": "turbo run build",
     "hot": "vite --force",
-    "build": "vite build && pnpm i18n:php",
-    "build-bit-phone-number-field": "cd ./packages/bit-phone-number-field && pnpm run build && cp -r ./dist/* ../../../assets"
+    "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
+    "build-bit-country-field": "cd ./packages/bit-country-field && pnpm run build && cp -r ./dist/* ../../../assets"
   },
   "husky": {
     "hooks": {
@@ -195,6 +196,7 @@
     "postcss-loader": "^7.0.1",
     "postcss-preset-env": "^7.8.0",
     "postcss-safe-parser": "^6.0.0",
+    "react-gettext-parser": "^1.16.0",
     "react-refresh": "^0.14.0",
     "react-scripts": "^5.0.1",
     "rimraf": "^3.0.2",

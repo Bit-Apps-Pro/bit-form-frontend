@@ -127,8 +127,8 @@ export default class BitCountryField {
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-
-    this.#generateOptions()
+    this.setMenu({ open: false })
+    // this.#generateOptions()
 
     this.#detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
@@ -215,6 +215,7 @@ export default class BitCountryField {
   }
 
   #handleKeyboardNavigation(e) {
+    e.stopPropagation()
     const activeEl = this.#document.activeElement
     let focussableEl = null
     const isMenuOpen = this.#isMenuOpen()
@@ -325,11 +326,11 @@ export default class BitCountryField {
     if (this.#selectedCountryClearable) this.#setStyleProperty(this.#selectedCountryClearBtnElm, 'display', 'none')
     this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', 'Selected country cleared')
     if (!this.#isReset) this.#dropdownWrapperElm.focus()
+    this.setMenu({ open: false })
     this.value = ''
     setTimeout(() => {
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#placeholder)
     }, 100)
-    this.#reRenderVirtualOptions()
   }
 
   setSelectedCountryItem(countryKey) {
@@ -384,9 +385,14 @@ export default class BitCountryField {
   }
 
   #reRenderVirtualOptions() {
-    this.virtualOptionList?.setRowCount(this.#listOptions.length)
+    if (!this.#isMenuOpen()) return
+    this.#generateOptions()
     const selectedIndex = this.#getSelectedCountryIndex()
+    const selectedOpt = this.#select(`.option[data-index="${selectedIndex}"]`)
+    if (selectedOpt) selectedOpt.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    return
     this.virtualOptionList?.scrollToIndex(selectedIndex === -1 ? 0 : selectedIndex)
+    this.virtualOptionList?.setRowCount(this.#listOptions.length)
   }
 
   #setCustomClass(element, classes) {
@@ -416,6 +422,99 @@ export default class BitCountryField {
   }
 
   #generateOptions() {
+    this.#optionListElm.innerHTML = ''
+    const optionElms = this.#listOptions.map((opt, index) => {
+      const li = this.#createElm('li')
+      this.#setAttribute(li, 'data-key', opt.i)
+      this.#setAttribute(li, 'data-index', index)
+      if ('option' in this.#attributes) {
+        const optAttr = this.#attributes.option
+        this.#setCustomAttr(li, optAttr)
+      }
+      this.#setAttribute(li, 'data-dev-option', this.fieldKey)
+      if (!opt.i) {
+        this.#setTextContent(li, opt.lbl)
+        this.#setClassName(li, 'opt-not-found')
+        return li
+      }
+      this.#setClassName(li, 'option')
+      if ('option' in this.#classNames) {
+        const optCls = this.#classNames.option
+        if (optCls) this.#setCustomClass(li, optCls)
+      }
+      const lblimgbox = this.#createElm('span')
+      this.#setClassName(lblimgbox, 'opt-lbl-wrp')
+      if ('opt-lbl-wrp' in this.#classNames) {
+        const optLblWrpCls = this.#classNames['opt-lbl-wrp']
+        if (optLblWrpCls) this.#setCustomClass(lblimgbox, optLblWrpCls)
+      }
+      if ('opt-lbl-wrp' in this.#attributes) {
+        const optLblWrp = this.#attributes['opt-lbl-wrp']
+        this.#setCustomAttr(lblimgbox, optLblWrp)
+      }
+      if (this.#optionFlagImage) {
+        const img = this.#createElm('img')
+        // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+        if ('opt-icn' in this.#attributes) {
+          const optIcn = this.#attributes['opt-icn']
+          if (optIcn) this.#setCustomAttr(img, optIcn)
+        }
+        this.#setClassName(img, 'opt-icn')
+        if ('opt-icn' in this.#classNames) {
+          const optIcnCls = this.#classNames['opt-icn']
+          if (optIcnCls) this.#setCustomClass(img, optIcnCls)
+        }
+        img.src = `${this.#assetsURL}${opt.img}`
+        img.alt = `${opt.lbl} flag image`
+        img.loading = 'lazy'
+        this.#setAttribute(img, 'aria-hidden', true)
+        lblimgbox.append(img)
+      }
+      const lbl = this.#createElm('span')
+      if ('opt-lbl' in this.#attributes) {
+        const optLbl = this.#attributes['opt-lbl']
+        this.#setCustomAttr(lbl, optLbl)
+      }
+      this.#setClassName(lbl, 'opt-lbl')
+      if ('opt-lbl' in this.#classNames) {
+        const optLblCls = this.#classNames['opt-lbl']
+        if (optLblCls) this.#setCustomClass(lbl, optLblCls)
+      }
+      this.#setTextContent(lbl, opt.lbl)
+      lblimgbox.append(lbl)
+      li.tabIndex = this.#isMenuOpen() ? '0' : '-1'
+      this.#setAttribute(li, 'role', 'option')
+      this.#setAttribute(li, 'aria-posinset', index + 1)
+      this.#setAttribute(li, 'aria-setsize', this.#listOptions.length)
+
+      this.#addEvent(li, 'click', e => {
+        this.setSelectedCountryItem(e.currentTarget.dataset.key)
+      })
+      this.#addEvent(li, 'keyup', e => {
+        if (e.key === 'Enter') {
+          this.setSelectedCountryItem(e.currentTarget.dataset.key)
+        }
+      })
+
+      if (opt.disabled) {
+        this.#setClassName(li, 'disabled-opt')
+      }
+
+      li.append(lblimgbox)
+
+      if (this.#selectedCountryCode === opt.i) {
+        this.#setClassName(li, 'selected-opt')
+        this.#setAttribute(li, 'aria-selected', true)
+      } else {
+        this.#setAttribute(li, 'aria-selected', false)
+      }
+
+      return li
+    })
+
+    this.#optionListElm.append(...optionElms)
+
+    return
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
       height: (this.#maxHeight - this.#searchWrpElm.offsetHeight) - this.#rowHeight,
@@ -432,7 +531,7 @@ export default class BitCountryField {
           const optAttr = this.#attributes.option
           this.#setCustomAttr(li, optAttr)
         }
-        // this.#setAttribute(li, 'data-dev-option', this.fieldKey)
+        this.#setAttribute(li, 'data-dev-option', this.fieldKey)
         if (!opt.i) {
           this.#setTextContent(li, opt.lbl)
           this.#setClassName(li, 'opt-not-found')

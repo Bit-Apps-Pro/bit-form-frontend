@@ -88,14 +88,14 @@ export default class BitPhoneNumberField {
     this.#phoneInputElm = this.#select(`.${this.fieldKey}-phone-number-input`)
     this.#phoneHiddenInputElm = this.#select(`.${this.fieldKey}-phone-hidden-input`)
     this.#clearPhoneInputElm = this.#select(`.${this.fieldKey}-input-clear-btn`)
-    this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`) || {}
+    this.#selectedCountryImgElm = this.#select(`.${this.fieldKey}-selected-country-img`)
     this.#searchWrpElm = this.#select(`.${this.fieldKey}-option-search-wrp`)
     this.#searchInputElm = this.#select(`.${this.fieldKey}-opt-search-input`)
     this.#dropdownWrapperElm = this.#select(`.${this.fieldKey}-dpd-wrp`)
     this.#optionWrapperElm = this.#select(`.${this.fieldKey}-option-wrp`)
     this.#clearSearchBtnElm = this.#select(`.${this.fieldKey}-search-clear-btn`)
     this.#optionListElm = this.#select(`.${this.fieldKey}-option-list`)
-
+    this.setMenu({ open: false })
     this.#addEvent(this.#phoneNumberFieldWrapper, 'keydown', e => { this.#handleKeyboardNavigation(e) })
 
     this.#addEvent(this.#dropdownWrapperElm, 'click', e => { this.#handleDropdownClick(e) })
@@ -103,7 +103,7 @@ export default class BitPhoneNumberField {
 
     this.#handleDefaultPhoneInputValue()
 
-    this.#generateOptions()
+    // this.#generateOptions()
 
     this.#addEvent(this.#phoneInputElm, 'blur', e => { this.#handlePhoneInputBlur() })
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
@@ -478,6 +478,116 @@ export default class BitPhoneNumberField {
   }
 
   #generateOptions() {
+    this.#optionListElm.innerHTML = ''
+    const optionElms = this.#options.map((opt, index) => {
+      const li = this.#createElm('li')
+      this.#setAttribute(li, 'data-key', opt.i)
+      this.#setAttribute(li, 'data-index', index)
+      // this.#setAttribute(li, 'data-dev-option', this.fieldKey)
+      if ('option' in this.#config.attributes) {
+        const optAttr = this.#config.attributes.option
+        this.#setCustomAttr(li, optAttr)
+      }
+      if (!opt.i) {
+        this.#setTextContent(li, opt.lbl)
+        this.#setClassName(li, 'opt-not-found')
+        return li
+      }
+      this.#setClassName(li, 'option')
+      if ('option' in this.#config.classNames) {
+        const optCls = this.#config.classNames.option
+        if (optCls) this.#setCustomClass(li, optCls)
+      }
+      const lblimgbox = this.#createElm('span')
+      this.#setClassName(lblimgbox, 'opt-lbl-wrp')
+      if ('opt-lbl-wrp' in this.#config.classNames) {
+        const optLblwrpCls = this.#config.classNames['opt-lbl-wrp']
+        if (optLblwrpCls) this.#setCustomClass(lblimgbox, optLblwrpCls)
+      }
+      // this.#setAttribute(lblimgbox, 'data-dev-opt-lbl-wrp', this.fieldKey)
+      if ('opt-lbl-wrp' in this.#config.attributes) {
+        const optLblWrp = this.#config.attributes['opt-lbl-wrp']
+        this.#setCustomAttr(lblimgbox, optLblWrp)
+      }
+      if (this.#config.optionFlagImage) {
+        const img = this.#createElm('img')
+        this.#setClassName(img, 'opt-icn')
+        if ('opt-icn' in this.#config.classNames) {
+          const optIcnCls = this.#config.classNames['opt-icn']
+          if (optIcnCls) this.#setCustomClass(img, optIcnCls)
+        }
+        // this.#setAttribute(img, 'data-dev-opt-icn', this.fieldKey)
+        if ('opt-icn' in this.#config.attributes) {
+          const optIcn = this.#config.attributes['opt-icn']
+          this.#setCustomAttr(img, optIcn)
+        }
+        img.src = `${this.#assetsURL}/${opt.img}`
+        img.alt = `${opt.lbl} flag image`
+        img.loading = 'lazy'
+        this.#setAttribute(img, 'aria-hidden', true)
+        lblimgbox.append(img)
+      }
+      const lbl = this.#createElm('span')
+      this.#setClassName(lbl, 'opt-lbl')
+      if ('opt-lbl' in this.#config.classNames) {
+        const optLblCls = this.#config.classNames['opt-lbl']
+        if (optLblCls) this.#setCustomClass(lbl, optLblCls)
+      }
+      // this.#setAttribute(lbl, 'data-dev-opt-lbl', this.fieldKey)
+      if ('opt-lbl' in this.#config.attributes) {
+        const optLbl = this.#config.attributes['opt-lbl']
+        this.#setCustomAttr(lbl, optLbl)
+      }
+      this.#setTextContent(lbl, opt.lbl)
+      lblimgbox.append(lbl)
+      const suffix = this.#createElm('span')
+      this.#setClassName(suffix, 'opt-suffix')
+      if ('opt-suffix' in this.#config.classNames) {
+        const optSuffixCls = this.#config.classNames['opt-suffix']
+        if (optSuffixCls) this.#setCustomClass(suffix, optSuffixCls)
+      }
+      this.#setTextContent(suffix, opt.code)
+      this.#setAttribute(suffix, 'data-dev-opt-suffix', this.fieldKey)
+      if ('opt-suffix' in this.#config.attributes) {
+        const optSuffix = this.#config.attributes['opt-suffix']
+        this.#setCustomAttr(suffix, optSuffix)
+      }
+      this.#setAttribute(li, 'tabindex', this.#isMenuOpen() ? '0' : '-1')
+      this.#setAttribute(li, 'role', 'option')
+      this.#setAttribute(li, 'aria-posinset', index + 1)
+      this.#setAttribute(li, 'aria-setsize', this.#options.length)
+
+      this.#addEvent(li, 'click', e => {
+        this.#countrySelectedFromList = true
+        this.setSelectedCountryItem(e.currentTarget.dataset.key)
+      })
+      this.#addEvent(li, 'keyup', e => {
+        if (e.key === 'Enter') {
+          this.#countrySelectedFromList = true
+          this.setSelectedCountryItem(e.currentTarget.dataset.key)
+        }
+      })
+
+      if (opt.disabled) {
+        this.#setClassName(li, 'disabled-opt')
+      }
+
+      li.append(lblimgbox, suffix)
+
+      if (this.#selectedCountryCode === opt.i) {
+        this.#setClassName(li, 'selected-opt')
+        this.#setAttribute(li, 'aria-selected', true)
+      } else {
+        this.#setAttribute(li, 'aria-selected', false)
+      }
+
+      return li
+    })
+
+    this.#optionListElm.append(...optionElms)
+
+    return
+
     const selectedIndex = this.#getSelectedCountryIndex()
     this.virtualOptionList = new this.#window.bit_virtualized_list(this.#optionListElm, {
       height: (this.#config.maxHeight - this.#searchWrpElm.offsetHeight) - this.#rowHeight,
@@ -621,9 +731,11 @@ export default class BitPhoneNumberField {
     if (this.#config.selectedFlagImage) {
       this.#selectedCountryImgElm.src = this.#placeholderImage
     }
+    this.#countrySelectedFromList = false
+    this.setMenu({ open: false })
     this.value = ''
     if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'none')
-    this.#reRenderVirtualOptions()
+    // this.#reRenderVirtualOptions()
   }
 
   setSelectedCountryItem(countryKey) {
@@ -635,14 +747,21 @@ export default class BitPhoneNumberField {
     }
     const selectedItem = this.#getSelectedCountryItem()
     if (!selectedItem) return
-    // this.#selectedCountryImgElm.src = selectedItem.img
-    this.#selectedCountryImgElm.src = `${this.#assetsURL}/${selectedItem.img}`
+    if (this.#config.selectedFlagImage) {
+      this.#selectedCountryImgElm.src = `${this.#assetsURL}/${selectedItem.img}`
+    }
     this.#setNewCountryCodeWithInputValue(selectedItem.code)
     this.setMenu({ open: false })
     if (this.#countrySelectedFromList) this.#phoneInputElm.focus()
   }
 
   #reRenderVirtualOptions() {
+    if (!this.#isMenuOpen()) return
+    this.#generateOptions()
+    const selectedIndex = this.#getSelectedCountryIndex()
+    const selectedOpt = this.#select(`.option[data-index="${selectedIndex}"]`)
+    if (selectedOpt) selectedOpt.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    return
     this.virtualOptionList?.setRowCount(this.#options.length)
     this.virtualOptionList?.scrollToIndex(this.#getSelectedCountryIndex())
   }
