@@ -19,7 +19,7 @@ function ConfirmModal({
       warning={warning || false}
     >
       <div className={`txt-center atn-btns flx flx-center ${className || 'flx-col'}`}>
-        <div className={`content p-4 ${!className && 'confirm-content'}`}>
+        <div className={`content mb-2 ${!className && 'confirm-content'}`}>
           {body}
           {children}
         </div>
