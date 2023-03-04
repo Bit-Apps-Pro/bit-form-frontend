@@ -43,6 +43,18 @@ export default function FieldNameSettings() {
   }, [fieldName, fldKey])
 
   const handleFieldName = (value) => {
+    if (value.includes('.') || value.includes(' ')) {
+      const errorData = {
+        fieldKey: fldKey,
+        errorKey: 'fieldNameInvalid',
+        errorMsg: __('Field name cannot contain dots or spaces'),
+        errorUrl: `field-settings/${fldKey}`,
+      }
+      addFormUpdateError(errorData)
+    } else {
+      removeFormUpdateError(fldKey, 'fieldNameInvalid')
+    }
+
     fieldData.fieldName = value
 
     if (!value) {
