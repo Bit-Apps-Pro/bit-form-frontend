@@ -1,8 +1,8 @@
 export default function setBFMsg(msgObj) {
   let msgWrpr = bfSelect(`#bf-form-msg-wrp-${msgObj.contentId}`)
 
-  msgWrpr.innerHTML = `<div class="form-msg deactive ${msgObj.type} scroll">${msgObj.msg}</div>`
-  msgWrpr = bfSelect('.form-msg', msgWrpr)
+  msgWrpr.innerHTML = `<div class="bf-form-msg deactive ${msgObj.type} scroll">${msgObj.msg}</div>`
+  msgWrpr = bfSelect('.bf-form-msg', msgWrpr)
   let duration = 5000
   if (msgObj.msgId) {
     msgWrpr = bfSelect(`.msg-content-${msgObj.msgId} .msg-content`, bfSelect(`#${msgObj.contentId}`))

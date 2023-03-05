@@ -189,7 +189,7 @@ document.querySelectorAll('form').forEach((frm) => {
   }
 })
 
-document.querySelectorAll('.msg-backdrop,.msg-close').forEach((elm) => {
+document.querySelectorAll('.msg-backdrop,.bf-msg-close').forEach((elm) => {
   elm.addEventListener('click', e => {
     if (e.target === elm) {
       e.stopPropagation()

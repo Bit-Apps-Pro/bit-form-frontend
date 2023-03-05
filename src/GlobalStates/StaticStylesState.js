@@ -13,7 +13,7 @@ export const $staticStylesState = atom({
     },
     staticStyles: {
       '.d-none': { display: 'none !important' },
-      '.form-msg': {
+      '.bf-form-msg': {
         background: '#ffe8c3',
         'border-radius': '6px',
         margin: '6px 0px',
@@ -24,16 +24,16 @@ export const $staticStylesState = atom({
         overflow: 'hidden',
         transition: 'all 0.5s ease-out',
       },
-      '.form-msg.success': {
+      '.bf-form-msg.success': {
         background: '#c5f7dd',
       },
-      '.form-msg.error': {
+      '.bf-form-msg.error': {
         background: '#ffd0cb',
       },
-      '.form-msg.warning': {
+      '.bf-form-msg.warning': {
         background: '#ffe8c3',
       },
-      '.form-msg.active': {
+      '.bf-form-msg.active': {
         height: 'auto',
         opacity: '1',
         transition: 'all 1s ease-out',
