@@ -17,7 +17,7 @@ export default function bfValidationErrMsg(result, contentId) {
       msg: responseData,
       error: true,
       show: true,
-      type: 'success',
+      type: 'error',
     })
   } else if (responseData) {
     if (responseData.$form !== undefined) {
@@ -26,7 +26,7 @@ export default function bfValidationErrMsg(result, contentId) {
         msg: responseData.$form.message,
         msgId: responseData.$form.msg_id,
         duration: responseData.$form.msg_duration,
-        type: 'success',
+        type: 'error',
       })
       delete responseData.$form
     }

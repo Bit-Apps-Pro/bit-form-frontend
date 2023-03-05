@@ -21,6 +21,7 @@ export const $staticStylesState = atom({
         color: '#776f63',
         height: '0',
         opacity: '0',
+        overflow: 'hidden',
         transition: 'all 0.5s ease-out',
       },
       '.bf-form-msg.success': {

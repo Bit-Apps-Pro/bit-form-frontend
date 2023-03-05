@@ -208,7 +208,7 @@
 }
 
 //skelaton loader
-.loader{
+.loader {
   background: rgb(255, 255, 255);
   background-image: linear-gradient(90deg, #e9e9e9 0px, #f7f7f7 30px, #ebebeb 60px);
   background-size: 200%;
@@ -219,32 +219,38 @@
   0% {
     background-position: calc(100%);
   }
-  60%, 100% {
+
+  60%,
+  100% {
     background-position: -100%;
   }
 }
 
 .btc-slider-modal-exit-active div[data-backdrop],
 .btc-slider-modal-enter-active div[data-backdrop],
-.btc-slider-modal-enter-done div[data-backdrop]{
+.btc-slider-modal-enter-done div[data-backdrop] {
   background: #00001f40;
 }
+
 .btc-slider-modal-enter-active div[data-modal],
 .btc-slider-modal-enter-done div[data-modal],
-.btc-slider-modal-enter-done div[data-arrow]{
+.btc-slider-modal-enter-done div[data-arrow] {
   opacity: 1;
   transform: scale(1) translateY(-25%);
 }
-.btc-slider-modal-exit div[data-modal]{
+
+.btc-slider-modal-exit div[data-modal] {
   opacity: 0 !important;
   transition: opacity 0.2;
   transform: scale(1);
 }
-.btc-slider-modal-exit div[data-backdrop]{
+
+.btc-slider-modal-exit div[data-backdrop] {
   background: transparent;
   transition: opacity 0.2 0.1s;
   opacity: 0;
 }
+
 .app-link-active {
   background: var(--white) !important;
   color: var(--b-54-12) !important;
@@ -254,6 +260,7 @@
 
 //table checkbox start
 .btcd-label-cbx {
+  display: inline-block;
   position: relative;
   align-items: center;
   -ms-user-select: none;
@@ -265,7 +272,7 @@
 
   input {
     &:checked {
-      + .btcd-cbx-wrp {
+      +.btcd-cbx-wrp {
         .btcd-t-cbx {
           border-color: var(--b-50);
 
@@ -283,7 +290,7 @@
     }
 
     &:indeterminate {
-      + .btcd-cbx-wrp {
+      +.btcd-cbx-wrp {
         .btcd-t-cbx {
           border-color: var(--b-50);
 
@@ -299,14 +306,15 @@
         }
       }
     }
-    &:focus ~ .btcd-t-cbx path{
+
+    &:focus~.btcd-t-cbx path {
       stroke-dashoffset: 0;
     }
   }
 
   &:hover {
     .btcd-t-cbx path {
-        stroke-dashoffset: 0;
+      stroke-dashoffset: 0;
     }
   }
 
@@ -319,7 +327,7 @@
     float: left;
     width: 20px;
     height: 20px;
-    margin-right:9px;
+    margin-right: 9px;
     // border       : 2px solid #c8ccd4;
     border: 2px solid var(--b-12-81);
     border-radius: 3px;
