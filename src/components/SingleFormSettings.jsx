@@ -978,7 +978,6 @@ export default function SingleFormSettings() {
           {alertMdl.msg}
         </div>
       </ConfirmModal>
-      <ProModal />
     </div>
   )
 }
