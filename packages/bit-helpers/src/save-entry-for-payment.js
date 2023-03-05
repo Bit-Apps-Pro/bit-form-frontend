@@ -183,8 +183,8 @@ function setToastMessage(msgObj) {
   if (msgWrpr.firstChild) {
     msgWrpr.firstChild.classList.remove('active')
   }
-  msgWrpr.innerHTML = `<div class="form-msg ${msgObj.type}">${msgObj.msg}</div>`
-  msgWrpr = bfSelect('.form-msg', msgWrpr)
+  msgWrpr.innerHTML = `<div class="bf-form-msg ${msgObj.type}">${msgObj.msg}</div>`
+  msgWrpr = bfSelect('.bf-form-msg', msgWrpr)
   if (msgObj.msgId) {
     msgWrpr = bfSelect(`.msg-content-${msgObj.msgId}`, bfSelect(`#${msgObj.contentId}`))
   }
