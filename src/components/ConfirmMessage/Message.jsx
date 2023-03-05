@@ -55,7 +55,10 @@ function Message({ id, msgItem }) {
   }
 
   const handleMsgType = ({ target: { value } }) => {
-    if (!IS_PRO && value !== 'below') { setProModal({ show: true, ...proHelperData[`${value}_msg`] }) }
+    if (!IS_PRO && value !== 'below') {
+      setProModal({ show: true, ...proHelperData[`${value}_msg`] })
+      return
+    }
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.msgType = value
     }))
@@ -251,6 +254,14 @@ function Message({ id, msgItem }) {
               radio
               name={`msg-type-${id}`}
               onChange={handleMsgType}
+              checked={msgType === 'below'}
+              title={<small className="txt-dp"><b>Below of Form</b></small>}
+              value="below"
+            />
+            <CheckBox
+              radio
+              name={`msg-type-${id}`}
+              onChange={handleMsgType}
               checked={msgType === 'snackbar'}
               title={(
                 <small className="txt-dp">
@@ -276,14 +287,6 @@ function Message({ id, msgItem }) {
                 </small>
               )}
               value="modal"
-            />
-            <CheckBox
-              radio
-              name={`msg-type-${id}`}
-              onChange={handleMsgType}
-              checked={msgType === 'below'}
-              title={<small className="txt-dp"><b>Below of Form</b></small>}
-              value="below"
             />
           </div>
           <div className={css({ flx: 1, cg: 5 })}>
