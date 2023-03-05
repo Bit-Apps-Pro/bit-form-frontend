@@ -63,35 +63,44 @@ const setActionValue = (actionDetail, props, fieldValues) => {
   }
 }
 
+const getHeight = (selector) => {
+  const fld = window.getComputedStyle(selector)
+  let heightCount = 0
+  if (fld.boxSizing === 'border-box') {
+    heightCount = selector.scrollHeight
+  } else {
+    heightCount = (
+      parseInt(fld.paddingTop)
+      + parseInt(fld.paddingBottom)
+      + selector.scrollHeight
+      + parseInt(fld.marginTop)
+      + parseInt(fld.marginBottom)
+      + parseInt(fld.borderTopWidth)
+      + parseInt(fld.borderBottomWidth)
+    )
+  }
+  return heightCount
+}
+
 const setActionHide = (actionDetail, props, val) => {
   if (props.fields[actionDetail.field]) {
     props.fields[actionDetail.field].valid.hide = val
     const fldKey = actionDetail.field
 
     const selector = select(props.contentId, `.btcd-fld-itm.${fldKey}`)
-    const fld = window.getComputedStyle(selector)
-    let heightCount = 0
+    let heightCount = getHeight(selector)
+    setStyleProperty(selector, 'height', `${heightCount}px`)
     if (val) {
-      setStyleProperty(selector, 'height', `${heightCount}px`)
+      setStyleProperty(selector, 'height', '0px')
       selector.classList.add('fld-hide')
     } else {
       selector.classList.remove('fld-hide')
-
-      if (fld.boxSizing === 'border-box') {
-        heightCount = selector.scrollHeight
-      } else {
-        heightCount = (
-          parseInt(fld.paddingTop)
-          + parseInt(fld.paddingBottom)
-          + selector.scrollHeight
-          + parseInt(fld.marginTop)
-          + parseInt(fld.marginBottom)
-          + parseInt(fld.borderTopWidth)
-          + parseInt(fld.borderBottomWidth)
-        )
-      }
+      heightCount = getHeight(selector)
       setStyleProperty(selector, 'height', `${heightCount}px`)
     }
+    setTimeout(() => {
+      selector.style.removeProperty('height')
+    }, 300)
   }
 }
 
