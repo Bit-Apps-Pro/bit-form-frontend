@@ -11,7 +11,7 @@ import IntegrationWorkflowAction from './IntegrationWorkflowAction'
 import RedirectPageWorkflowAction from './RedirectPageWorkflowAction'
 import SuccessMsgWorkflowAction from './SuccessMsgWorkflowAction'
 import ValidateMsgWorkflowAction from './ValidateMsgWorkflowAction'
-import WebhookWorkflowAction from './WebhookWorkflowAction'
+// import WebhookWorkflowAction from './WebhookWorkflowAction'
 
 export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const { css } = useFela()
@@ -91,13 +91,13 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
                 getValueFromArr={getValueFromArr}
               />
             )}
-            <WebhookWorkflowAction
+            {/* <WebhookWorkflowAction
               lgcGrpInd={lgcGrpInd}
               condGrpInd={condGrpInd}
               enableAction={enableAction}
               checkKeyInArr={checkKeyInArr}
               getValueFromArr={getValueFromArr}
-            />
+            /> */}
             {lgcGrp.action_run !== 'delete' && (
               <IntegrationWorkflowAction
                 lgcGrpInd={lgcGrpInd}
