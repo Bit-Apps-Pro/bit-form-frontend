@@ -1,18 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
 import { useContext, useState } from 'react'
-import { Calendar } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { Link } from 'react-router-dom'
-import TimePicker from 'react-time-picker'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import BlockIcn from '../Icons/BlockIcn'
-import CloseIcn from '../Icons/CloseIcn'
-import DateIcn from '../Icons/DateIcn'
 import DBIcn from '../Icons/DBIcn'
 import EmptyIcn from '../Icons/EmptyIcn'
 import FocusIcn from '../Icons/FocusIcn'
@@ -31,12 +27,9 @@ import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import { assignNestedObj } from './style-new/styleHelpers'
 import Accordions from './Utilities/Accordions'
-import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
-import Downmenu from './Utilities/Downmenu'
 import ProBadge from './Utilities/ProBadge'
-import ProModal from './Utilities/ProModal'
 // import Modal from './Utilities/Modal'
 import SingleToggle2 from './Utilities/SingleToggle2'
 
@@ -742,8 +735,8 @@ export default function SingleFormSettings() {
           </div>
         </div>
       </div>
-
-      <Accordions
+      {/* // temproray block for Date/Time library issue */}
+      {/* <Accordions
         customTitle={(
           <b>
             <span className="mr-2">
@@ -859,7 +852,7 @@ export default function SingleFormSettings() {
             />
           </div>
         </div>
-      </Accordions>
+      </Accordions> */}
 
       <Accordions
         customTitle={(
