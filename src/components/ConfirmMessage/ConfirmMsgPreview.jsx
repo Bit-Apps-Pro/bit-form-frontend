@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
+import { IS_PRO } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
 import RenderThemeVarsAndFormCSS from '../style-new/RenderThemeVarsAndFormCSS'
 import RenderHtml from '../Utilities/RenderHtml'
@@ -32,7 +33,7 @@ export default function ConfirmMsgPreview({
   useEffect(() => {
     setStyles(prvStyle => produce(prvStyle, drft => {
       drft.confirmations?.filter(confMsgObj => {
-        if (confMsgObj.confMsgId === msgId) {
+        if (confMsgObj.confMsgId === msgId && (msgType === 'below' || IS_PRO)) {
           confMsgObj.style = styleObject()
         }
       })

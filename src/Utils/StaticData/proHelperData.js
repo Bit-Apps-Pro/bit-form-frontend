@@ -53,6 +53,8 @@ const proHelperData = {
   entryLimit: { heading: __('Entry Limit'), featureText: __('Entry Limit') },
   singleEntry: { heading: __('Single Entry for each IP'), featureText: __('Single Entry for each IP') },
   honeypot: { heading: __('Honeypot trap'), featureText: __('Honeypot trap') },
+  snackbar_msg: { heading: __('Snackbar Message'), featureText: __('Snackbar Message') },
+  modal_msg: { heading: __('Modal Message'), featureText: __('Modal Message') },
 }
 
 export default proHelperData

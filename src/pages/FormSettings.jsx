@@ -3,6 +3,7 @@ import { lazy, memo, Suspense } from 'react'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
+import ProModal from '../components/Utilities/ProModal'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
 import ConditionalIcn from '../Icons/ConditionalIcn'
 import EmailInbox from '../Icons/EmailInbox'
@@ -99,6 +100,7 @@ function FormSettings({ setProModal }) {
             </Suspense>
           </>
         </Routes> */}
+        <ProModal />
         <div className="mb-50" />
       </div>
     </div>

@@ -3,7 +3,7 @@ import produce from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $confirmations, $fieldsArr, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $confirmations, $fieldsArr, $proModal, $updateBtn } from '../../GlobalStates/GlobalStates'
 import BoxFullIcon from '../../Icons/BoxFullIcon'
 import BoxIcon from '../../Icons/BoxIcon'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -12,10 +12,12 @@ import ut from '../../styles/2.utilities'
 import app from '../../styles/app.style'
 import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import proHelperData from '../../Utils/StaticData/proHelperData'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import { getNumFromStr, getStrFromStr, objectArrayToStyleStringGenarator, unitConverter } from '../style-new/styleHelpers'
 import CheckBox from '../Utilities/CheckBox'
+import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import SingleToggle from '../Utilities/SingleToggle'
 import SliderModal from '../Utilities/SliderModal'
@@ -28,6 +30,7 @@ function Message({ id, msgItem }) {
   const { css } = useFela()
 
   const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setProModal = useSetRecoilState($proModal)
   const fieldsArr = useRecoilValue($fieldsArr)
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const [msgActive, setMsgActive] = useState(false)
@@ -52,6 +55,7 @@ function Message({ id, msgItem }) {
   }
 
   const handleMsgType = ({ target: { value } }) => {
+    if (!IS_PRO && value !== 'below') { setProModal({ show: true, ...proHelperData[`${value}_msg`] }) }
     setAllConf(prevConf => produce(prevConf, draft => {
       draft.type.successMsg[id].config.msgType = value
     }))
@@ -248,7 +252,14 @@ function Message({ id, msgItem }) {
               name={`msg-type-${id}`}
               onChange={handleMsgType}
               checked={msgType === 'snackbar'}
-              title={<small className="txt-dp"><b>Snackbar</b></small>}
+              title={(
+                <small className="txt-dp">
+                  <b>
+                    Snackbar
+                    {!IS_PRO && <ProBadge />}
+                  </b>
+                </small>
+              )}
               value="snackbar"
             />
             <CheckBox
@@ -256,7 +267,14 @@ function Message({ id, msgItem }) {
               name={`msg-type-${id}`}
               onChange={handleMsgType}
               checked={msgType === 'modal'}
-              title={<small className="txt-dp"><b>Modal</b></small>}
+              title={(
+                <small className="txt-dp">
+                  <b>
+                    Modal
+                    {!IS_PRO && <ProBadge />}
+                  </b>
+                </small>
+              )}
               value="modal"
             />
             <CheckBox
