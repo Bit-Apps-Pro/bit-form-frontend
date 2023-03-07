@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useFela } from 'react-fela'
+import DocIcn from '../Icons/DocIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import FacebookIcn from '../Icons/FacebookIcn'
 import MailIcn from '../Icons/MailIcn'
@@ -20,18 +21,66 @@ export default function DocNSupport() {
       <div className={css(style.container)}>
         <h2 className={css(style.sbtitl)}>Professional & Easy To Use WordPress Form Builder</h2>
         <p className={css(style.fs)}>Drag and Drop WordPress Form Builder will allow you to build any kind of forms for WordPress website that you can imagine. The Professional design of Bit Form keeps all the tools right where you want them! You can make integration among various CRM and application with no zero experience.</p>
-        <h2 className={css(style.sbtitl)}>Doc</h2>
+        <h2 className={css(style.sbtitl)}>Documentation</h2>
         <p className={css(style.fs)}>
           Explore our extensive documentation. From beginners to developers - everyone will get an answer
           {' '}
           <a target="_blank" href="https://docs.form.bitapps.pro/" rel="noreferrer" className={css(style.linkTxt)}>
             here
             {' '}
-            <ExternalLinkIcn size="15" />
+            <ExternalLinkIcn size="12" />
           </a>
         </p>
         <h2 className={css(style.sbtitl)}>Support</h2>
         <p className={css(style.fs)}>In Bit Apps, we provide all kind product support for any types of customer, it doesn't matter FREE or PRO user. We actively provide support through Email and Live Chat. Our support team is always ready to help you. We are here to answer your questions and help you with any issues you may have.</p>
+        <div className={css(style.suprt, { mt: 20 })}>
+          <span className={css(ut.mr2, style.icnW)}>
+            <DocIcn size="18" />
+          </span>
+          <span className={css(style.pb)}>
+            <a href="https://docs.form.bitapps.pro/" rel="noreferrer" target="_blank" className={css(style.linkTxt)}>
+              Documentation
+              {' '}
+              <ExternalLinkIcn size="12" />
+            </a>
+          </span>
+        </div>
+        <div className={css(style.suprt)}>
+          <span className={css(ut.mr2, style.icnW)}>
+            <FacebookIcn size="15" />
+          </span>
+          <span className={css(style.pb)}>
+            <a href="https://www.facebook.com/groups/3308027439209387" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
+              Facebook support group
+              {' '}
+              <ExternalLinkIcn size="12" />
+            </a>
+          </span>
+        </div>
+        <div className={css(style.suprt)}>
+          <span className={css(ut.mr2, style.icnW)}>
+            <YoutubeIcn size="20" />
+          </span>
+          <span className={css(style.pb)}>
+            <a href="https://www.youtube.com/channel/UCjUl8UGn-G6zXZ-Wpd7Sc3g" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
+              You tube channel
+              {' '}
+              <ExternalLinkIcn size="12" />
+            </a>
+          </span>
+        </div>
+        <div className={css(style.suprt)}>
+          <span className={css(ut.mr2, style.icnW)}>
+            <MessagesCircle size="20" />
+          </span>
+          <span className={css(style.pb)}>
+            <a href="https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
+              Chat here
+              {' '}
+              <ExternalLinkIcn size="12" />
+            </a>
+          </span>
+        </div>
         <div className={css(style.suprt)}>
           <span className={css(ut.mr2, style.icnW)}>
             <MailIcn size="18" />
@@ -44,49 +93,13 @@ export default function DocNSupport() {
         </div>
         <div className={css(style.suprt)}>
           <span className={css(ut.mr2, style.icnW)}>
-            <MessagesCircle size="20" />
-          </span>
-          <span className={css(style.pb)}>
-            <a href="https://tawk.to/chat/60eac4b6d6e7610a49aab375/1faah0r3e" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
-              Chat here
-              {' '}
-              <ExternalLinkIcn size="15" />
-            </a>
-          </span>
-        </div>
-        <div className={css(style.suprt)}>
-          <span className={css(ut.mr2, style.icnW)}>
-            <YoutubeIcn size="20" />
-          </span>
-          <span className={css(style.pb)}>
-            <a href="https://www.youtube.com/channel/UCjUl8UGn-G6zXZ-Wpd7Sc3g" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
-              You tube channel
-              {' '}
-              <ExternalLinkIcn size="15" />
-            </a>
-          </span>
-        </div>
-        <div className={css(style.suprt)}>
-          <span className={css(ut.mr2, style.icnW)}>
-            <FacebookIcn size="15" />
-          </span>
-          <span className={css(style.pb)}>
-            <a href="https://www.facebook.com/groups/3308027439209387" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
-              Facebook support group
-              {' '}
-              <ExternalLinkIcn size="15" />
-            </a>
-          </span>
-        </div>
-        <div className={css(style.suprt)}>
-          <span className={css(ut.mr2, style.icnW)}>
             <ReviewStarIcn size="15" />
           </span>
           <span className={css(style.pb)}>
             <a href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post" target="_blank" className={css(style.linkTxt)} rel="noreferrer">
               Rate us on WordPress
               {' '}
-              <ExternalLinkIcn size="15" />
+              <ExternalLinkIcn size="12" />
             </a>
           </span>
         </div>
@@ -114,11 +127,14 @@ const style = {
   sbtitl: {
     fs: 14,
     fw: 700,
-    mt: 20,
+    // mt: 20,
     mb: 5,
   },
   container: {
     m: 10,
+    p: '5px 30px',
+    w: '60%',
+    ff: 'Outfit,sans-serif!important',
   },
   fs: {
     fs: 14,
@@ -127,6 +143,7 @@ const style = {
   suprt: {
     flx: 'align-center',
     fs: 14,
+    mt: 5,
   },
   pb: {
     pb: 7,
