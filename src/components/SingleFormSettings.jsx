@@ -3,11 +3,12 @@ import { produce } from 'immer'
 import { useContext, useState } from 'react'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
+import { $styles } from '../GlobalStates/StylesState'
 import BlockIcn from '../Icons/BlockIcn'
 import DBIcn from '../Icons/DBIcn'
 import EmptyIcn from '../Icons/EmptyIcn'
@@ -30,21 +31,20 @@ import Accordions from './Utilities/Accordions'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
 import ProBadge from './Utilities/ProBadge'
-// import Modal from './Utilities/Modal'
 import SingleToggle2 from './Utilities/SingleToggle2'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
   const fields = useRecoilValue($fields)
+  const { formID } = useParams()
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
-  // const bits = useRecoilValue($bits)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  // const setStaticStyle = useSetRecoilState($staticStylesState)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
   const setProModal = useSetRecoilState($proModal)
   // const [proModal, setProModal] = useState({ show: false, msg: '' })
+  const setStyles = useSetRecoilState($styles)
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }
@@ -112,20 +112,48 @@ export default function SingleFormSettings() {
     }
   }
 
+  const setAdditionalSettingsStyle = (e, setting) => {
+    const additionalSettings = deepCopy(additionalSetting)
+    setStyles(prevStyle => produce(prevStyle, draft => {
+      if (e.target.checked) {
+        additionalSettings.enabled[setting] = true
+        assignNestedObj(draft, 'form', {
+          [`._frm-ovrly-b${formID}`]: {
+            display: 'flex',
+            background: '#00000052',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            'z-index': 9999,
+            width: '100%',
+            height: '100%',
+            'align-items': 'center',
+            'justify - content': 'center',
+            overflow: 'auto',
+            padding: '30px',
+            color: '#fff',
+            pointer: 'none',
+            'border-radius': '5px',
+          },
+        })
+        assignNestedObj(draft, `form->._frm-bg-b${formID}`, { position: 'relative' })
+      } else {
+        delete additionalSettings.enabled[setting]
+        deleteNestedObj(draft, `form->._frm-ovrly-b${formID}`)
+        deleteNestedObj(draft, `form->._frm-bg-b${formID}->position`)
+      }
+    }))
+    additionalSettings.updateForm = 1
+    setadditional(additionalSettings)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+  }
+
   const setOnePerIp = e => {
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.singleEntry })
       return
     }
-    const additionalSettings = deepCopy(additionalSetting)
-    if (e.target.checked) {
-      additionalSettings.enabled.onePerIp = true
-    } else {
-      delete additionalSettings.enabled.onePerIp
-    }
-    additionalSettings.updateForm = 1
-    setadditional(additionalSettings)
-    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+    setAdditionalSettingsStyle(e, 'onePerIp')
     // saveForm('addional', additionalSettings)
   }
 
@@ -227,15 +255,16 @@ export default function SingleFormSettings() {
       setProModal({ show: true, ...proHelperData.entryLimit })
       return
     }
-    const additional = deepCopy(additionalSetting)
-    if (e.target.checked) {
-      additional.enabled.entry_limit = true
-    } else {
-      delete additional.enabled.entry_limit
-    }
-    additional.updateForm = 1
-    setadditional({ ...additional })
-    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+    // const additional = deepCopy(additionalSetting)
+    // if (e.target.checked) {
+    //   additional.enabled.entry_limit = true
+    // } else {
+    //   delete additional.enabled.entry_limit
+    // }
+    // additional.updateForm = 1
+    // setadditional({ ...additional })
+    // setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+    setAdditionalSettingsStyle(e, 'entry_limit')
   }
 
   const hideReCaptchaBadge = e => {
