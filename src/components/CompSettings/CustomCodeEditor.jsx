@@ -145,9 +145,7 @@ function CustomCodeEditor() {
       const formData = { form_id: formID }
       bitsFetch(formData, 'bitforms_get_custom_code')
         .then(response => {
-          if (response?.data?.JavaScript || response?.data?.CSS) {
-            setCustomCodes({ JavaScript: response?.data?.JavaScript, CSS: response?.data?.CSS })
-          }
+          setCustomCodes({ JavaScript: response?.data?.JavaScript, CSS: response?.data?.CSS, isFetched: true })
           return response
         })
     } else if (formType === 'new') {
