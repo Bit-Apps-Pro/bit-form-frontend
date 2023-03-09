@@ -37,7 +37,7 @@ export function defaultConfirmations(formID) {
     type: {
       successMsg: [{
         title: 'Form Success Message',
-        msg: '<p style="text-align: center;"><span style="font-size: 14pt;">✅ <span style="font-size: 12pt;"><strong>Successfully Submitted.&nbsp;</strong></span></span></p>',
+        msg: '<p style="text-align: center;"><span style="font-size: 12pt;"><strong>Successfully Submitted.&nbsp;</strong></span></p>',
         config: {
           msgType,
           position,

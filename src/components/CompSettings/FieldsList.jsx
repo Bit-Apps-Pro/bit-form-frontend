@@ -31,9 +31,11 @@ const Group = ({ title, filteredFields }) => {
       <div className={css(s.title)}>{title}</div>
       {filteredFields.map(([fldKey, fldData]) => {
         let { lbl } = fldData
-        const { typ, adminLbl } = fldData
+        const { typ, adminLbl, txt } = fldData
         if (typ === 'decision-box') {
           lbl = adminLbl
+        } else if (typ === 'button') {
+          lbl = txt
         }
         return (
           <FieldLinkBtn
