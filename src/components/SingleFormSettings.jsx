@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { Link, useParams } from 'react-router-dom'
@@ -112,15 +112,18 @@ export default function SingleFormSettings() {
     }
   }
 
-  const setAdditionalSettingsStyle = (e, setting) => {
-    const additionalSettings = deepCopy(additionalSetting)
+  useEffect(() => {
+    const isTrue = additionalSetting.enabled?.onePerIp
+      || additionalSetting.enabled?.is_login
+      || additionalSetting.enabled?.entry_limit
+      || additionalSetting.settings?.blocked_ip?.[0]?.ip
+      || additionalSetting.settings?.blocked_ip?.[0]?.ip
     setStyles(prevStyle => produce(prevStyle, draft => {
-      if (e.target.checked) {
-        additionalSettings.enabled[setting] = true
+      if (isTrue) {
         assignNestedObj(draft, 'form', {
           [`._frm-ovrly-b${formID}`]: {
             display: 'flex',
-            background: '#00000052',
+            background: 'hsla(0, 0%, 0%, 32%)',
             position: 'absolute',
             top: 0,
             left: 0,
@@ -128,21 +131,35 @@ export default function SingleFormSettings() {
             width: '100%',
             height: '100%',
             'align-items': 'center',
-            'justify - content': 'center',
+            'justify-content': 'center',
             overflow: 'auto',
-            padding: '30px',
-            color: '#fff',
-            pointer: 'none',
+            padding: '15px',
+            color: 'hsla(0, 0%, 100%, 100%)',
             'border-radius': '5px',
+          },
+          [`._frm-ovrly-msg-b${formID}`]: {
+            background: 'hsla(0, 0%, 100%, 100%)',
+            padding: '20px',
+            'border-radius': '5px',
+            color: 'hsla(0, 100%, 50%, 100%)',
           },
         })
         assignNestedObj(draft, `form->._frm-bg-b${formID}`, { position: 'relative' })
       } else {
-        delete additionalSettings.enabled[setting]
         deleteNestedObj(draft, `form->._frm-ovrly-b${formID}`)
+        deleteNestedObj(draft, `form->._frm-ovrly-msg-b${formID}`)
         deleteNestedObj(draft, `form->._frm-bg-b${formID}->position`)
       }
     }))
+  }, [additionalSetting])
+
+  const setAdditionalSettingsStyle = (e, setting) => {
+    const additionalSettings = deepCopy(additionalSetting)
+    if (e.target.checked) {
+      additionalSettings.enabled[setting] = true
+    } else {
+      delete additionalSettings.enabled[setting]
+    }
     additionalSettings.updateForm = 1
     setadditional(additionalSettings)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
