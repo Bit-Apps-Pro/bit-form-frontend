@@ -1,4 +1,5 @@
 import sortJson from 'sort-json'
+import XRegExp from 'xregexp'
 import deepCopy from './helpers/deepCopy'
 import generateCssClass from './helpers/generateNewClassName'
 import isSameSpeficity from './helpers/isSameSpeficity'
@@ -144,7 +145,7 @@ export function findSelectorBySamePropValue({ targetSelectorSpeficity,
 }
 
 function getFirstSelctorWithoutPseudo(selector) {
-  const firstSeparatorIndex = selector.match(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/)
+  const firstSeparatorIndex = selector.match(XRegExp(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/))
     ?.index
   if (!firstSeparatorIndex) {
     return selector
@@ -153,7 +154,7 @@ function getFirstSelctorWithoutPseudo(selector) {
 }
 
 function getSelctorPseudo(selector) {
-  const firstSeparatorIndex = selector.match(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/)
+  const firstSeparatorIndex = selector.match(XRegExp(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/))
     ?.index
   if (!firstSeparatorIndex) {
     return ''

@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-escape */
+import XRegExp from 'xregexp'
 import deepCopy from './deepCopy'
 import { expressAndCompressColors, expressCssVar, expressMultipleCalcFuncWithExt, isFloat, isQuadValueProp, isValidPropAndValue, normalizeSelector, optimizeQuadValue } from './utils'
 
@@ -24,7 +25,7 @@ export default function optimizeAndDefineCssClassProps(selectorObj, cssVarDefina
 
           if (typeof value === 'number') value = value.toString()
           if (isFloat(value)) {
-            value.toString().replace(/(?<=^0|,|\s*,\s*|\s)0*\./g, '.')
+            value = value.toString().replace(XRegExp(/(?<=^0|,|\s*,\s*|\s)0*\./g), '.')
           }
           if (value === undefined || value === null) value = ''
           let newValue = value
@@ -32,7 +33,7 @@ export default function optimizeAndDefineCssClassProps(selectorObj, cssVarDefina
             .replace(/\s{2,}/g, ' ')
             .replace(/\\n\s*/g, '')
             .replace(/,\s*/g, ',')
-            .replace(/(?<=^0|,|\s*,\s*|\s)0*\./g, '.')
+            .replace(XRegExp(/(?<=^0|,|\s*,\s*|\s)0*\./g), '.')
             .replace(/\s+\!important/g, '!important')
 
           if (newValue.startsWith('var')) {
