@@ -1,9 +1,9 @@
 import XRegExp from "xregexp"
 
 export default function isSameSpeficity(selector1, selector2) {
-  const firstSeparatorIndex = selector1.match(XRegExp(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/))
+  const firstSeparatorIndex = selector1.match(XRegExp('(?<=.{2})(::|:|\\s|\\.|\\[|~|\\+)'))
     ?.index
-  const secondSeparatorIndex = selector2.match(XRegExp(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/))
+  const secondSeparatorIndex = selector2.match(XRegExp('(?<=.{2})(::|:|\\s|\\.|\\[|~|\\+)'))
     ?.index
 
   if (
