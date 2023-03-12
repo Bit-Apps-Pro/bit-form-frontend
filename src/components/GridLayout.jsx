@@ -38,10 +38,9 @@ import {
   cols,
   filterLayoutItem,
   filterNumber,
-  fitAllLayoutItems,
-  fitSpecificLayoutItem,
-  getAbsoluteElmHeight, getLatestState,
+  fitAllLayoutItems, fitSpecificLayoutItem, getAbsoluteElmHeight, getLatestState,
   getResizableHandles,
+  getTotalLayoutHeight,
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
@@ -756,6 +755,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   useCSSTransforms
                   isDroppable={draggingField !== null && breakpoint === 'lg'}
                   className="layout"
+                  style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
                   onDrop={onDrop}
                   resizeHandles={['e']}
                   droppingItem={draggingField?.fieldSize}
