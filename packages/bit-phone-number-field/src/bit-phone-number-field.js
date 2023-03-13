@@ -35,7 +35,7 @@ export default class BitPhoneNumberField {
 
   #options = []
 
-  #callingCodes = []
+  #callingCodes = {}
 
   #countrySelectedFromList = false
 
@@ -105,14 +105,14 @@ export default class BitPhoneNumberField {
 
     // this.#generateOptions()
 
+    if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
+
     this.#addEvent(this.#phoneInputElm, 'blur', e => { this.#handlePhoneInputBlur() })
     this.#addEvent(this.#phoneInputElm, 'input', e => { this.#handlePhoneInput(e) })
     this.#addEvent(this.#phoneInputElm, 'focusout', e => { this.#handlePhoneValidation(e) })
     if (this.#config.selectedCountryClearable) this.#addEvent(this.#clearPhoneInputElm, 'click', e => { this.#handleClearPhoneInput(e) })
     this.#config.detectCountryByIp && this.#detectCountryCodeFromIpAddress()
     this.#config.detectCountryByGeo && this.#detectCountryCodeFromGeoLocation()
-
-    if (this.#config.defaultCountryKey) this.setSelectedCountryItem(this.#config.defaultCountryKey)
 
     if (this.#config.searchClearable) {
       this.#setStyleProperty(this.#searchInputElm, 'padding-right', '35px')
@@ -307,9 +307,10 @@ export default class BitPhoneNumberField {
       selectedCountryCode = `+${selectedCountryCode}`
     }
     if (searchedCountryCode !== selectedCountryCode) {
-      this.setSelectedCountryItem(this.#callingCodes[searchedCountryCode])
+      this.setSelectedCountryItem(this.#callingCodes[searchedCountryCode.substring(1)])
       return searchedCountryCode
     }
+    return selectedCountryCode
   }
 
   #unformatPhoneNumber(value) {
@@ -334,8 +335,6 @@ export default class BitPhoneNumberField {
     const { value } = e.target
     if (value && this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'grid')
     else if (this.#config.selectedCountryClearable) this.#setStyleProperty(this.#clearPhoneInputElm, 'display', 'none')
-
-    if (!this.#countrySelectedFromList && (value.length < 4 || e.inputType === 'deleteContentBackward' || e.inputType === 'deleteContentForward')) return
 
     this.#handlePhoneValue(value)
   }
@@ -409,7 +408,7 @@ export default class BitPhoneNumberField {
     if (selectedCountry) {
       const phoneNumberWithoutCode = value.substring(selectedCountry.code.length)
       if (selectedCountry.ptrn) {
-        const regex = new RegExp(selectedCountry.ptrn)
+        const regex = new RegExp(`^(${selectedCountry.ptrn})$`)
         return regex.test(phoneNumberWithoutCode)
       }
       return true
@@ -885,8 +884,8 @@ export default class BitPhoneNumberField {
   reset(value) {
     this.#clearSelectedCountry()
     this.destroy()
-    this.init()
     this.value = value
+    this.init()
   }
 }
 
