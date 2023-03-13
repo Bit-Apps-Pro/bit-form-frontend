@@ -18,7 +18,7 @@ export default function textStyle_1_bitformDefault({ fk, type, breakpoint, color
         'font-family': 'inherit',
         width: '100% !important',
         outline: 'none !important',
-        'background-color': 'var(--global-fld-bg-color, transparent) !important',
+        'background-color': 'var(--global-fld-bg-color) !important',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad) !important',

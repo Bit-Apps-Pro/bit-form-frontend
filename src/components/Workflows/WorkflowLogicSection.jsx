@@ -306,6 +306,36 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                         )}
                       </span>
                     ))}
+                    <Downmenu
+                      place="bottom"
+                    >
+                      <Tip msg="Add Logic">
+                        <Button
+                          icn
+                          className="blue sh-sm"
+                        >
+                          <CloseIcn size="14" className="icn-rotate-45" />
+                        </Button>
+                      </Tip>
+                      <div>
+                        <button
+                          type="button"
+                          className={css(accordionStyle.addItemBtn)}
+                          onClick={() => addInlineLogic('and', ind, subInd, subLogic.length)}
+                        >
+                          <CloseIcn size="9" className="icn-rotate-45 mr-1" />
+                          Add AND
+                        </button>
+                        <button
+                          type="button"
+                          className={css(accordionStyle.addItemBtn)}
+                          onClick={() => addInlineLogic('or', ind, subInd, subLogic.length)}
+                        >
+                          <CloseIcn size="9" className="icn-rotate-45 mr-1" />
+                          Add OR
+                        </button>
+                      </div>
+                    </Downmenu>
                   </div>
                 )}
               </span>

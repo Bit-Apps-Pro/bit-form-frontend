@@ -34,7 +34,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [dnLoading, setDnLoading] = useState(false)
-  const [prefix, setPrefix] = useState('')
+  const [prefix, setPrefix] = useState({})
   const [icons, setIcons] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [searchLoading, setSearchLoading] = useState(false)
@@ -146,7 +146,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   }
 
   useEffect(() => {
-    setPrefix('')
+    setPrefix({})
     setFiles([])
     setIcons([])
     if (controller.parent === 'Icons') {
@@ -174,7 +174,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
 
   const saveIcn = () => {
     setDnLoading(true)
-    bitsFetch({ src: prefix }, 'bitforms_icn_save_setting')
+    bitsFetch({ id: prefix.id, src: prefix.url }, 'bitforms_icn_save_setting')
       .then(res => {
         if (res !== undefined && res.success) {
           fieldData[iconType] = res.data
@@ -275,7 +275,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   }
 
   const selectedSaveIcon = () => {
-    fieldData[iconType] = prefix
+    fieldData[iconType] = prefix.url
     const newFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(newFields)
     let newStyles = allStyles
@@ -301,8 +301,8 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     reCalculateFldHeights(fldKey)
   }
 
-  const handlePrefixIcon = e => {
-    setPrefix(e.currentTarget.firstChild.src)
+  const handlePrefixIcon = (id, iconUrl) => {
+    setPrefix({ id, url: iconUrl })
   }
   // for unsplash image
   useEffect(() => {
@@ -335,7 +335,6 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     tmp.map(item => {
       item.status = false
     })
-    console.log(tmp)
     if (!status) {
       tmp[index].status = true
     } else {
@@ -399,8 +398,8 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   //   debouncedSearchImageTerm(value)
   // }
 
-  const handleImage = (imgUrl) => {
-    setPrefix(imgUrl)
+  const handleImage = image => {
+    setPrefix({ id: image.id, url: image.urls.regular })
   }
 
   return (
@@ -472,8 +471,8 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                 type="button"
                 key={`${item.name} (${item.id})`}
                 title={`${item.name} (${item.id})`}
-                className={`${css(s.icnBtn)} ${url + item.url === prefix && css(s.active, s.activeIcn)}`}
-                onClick={handlePrefixIcon}
+                className={`${css(s.icnBtn)} ${url + item.url === prefix.url && css(s.active, s.activeIcn)}`}
+                onClick={() => handlePrefixIcon(item.id, url + item.url)}
               >
                 <img
                   src={`${url}${item.url}`}
@@ -500,7 +499,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         <button
           data-testid="icn-dwnld-n-sav"
           type="button"
-          disabled={!prefix}
+          disabled={!prefix.url}
           className={css(s.saveBtn, s.btnPosition)}
           onClick={saveIcn}
         >
@@ -567,8 +566,8 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                   type="button"
                   key={`(${item.id})`}
                   title={`(${item.description})`}
-                  className={`${css(s.imageBtn)} ${item.urls.regular === prefix && css(s.activeImg)}`}
-                  onClick={() => handleImage(item.urls.regular)}
+                  className={`${css(s.imageBtn)} ${item.urls.regular === prefix.url && css(s.activeImg)}`}
+                  onClick={() => handleImage(item)}
                 >
                   <img
                     src={`${item.urls.thumb}`}
@@ -596,7 +595,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           <button
             data-testid="icn-dwnld-n-sav"
             type="button"
-            disabled={!prefix}
+            disabled={!prefix.url}
             className={css(s.saveBtn, s.btnPosition)}
             onClick={selectedSaveIcon}
           >
@@ -650,11 +649,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                   </button>
                   <button
                     data-testid={`dwnlodd-inc-prv-btn-${index}`}
-                    onClick={handlePrefixIcon}
+                    onClick={() => handlePrefixIcon(file.id, `${bits.iconURL}/${file}`)}
                     type="button"
                     key={`download-icn-${index + (Math.random() * 5)}`}
                     title={file.name}
-                    className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix && css(s.active)}`}
+                    className={`${css(s.icnBtn)} ${`${bits.iconURL}/${file}` === prefix.url && css(s.active)}`}
                   >
                     <img src={`${bits.iconURL}/${file}`} alt={`icon-${file}`} width="40" height="30" />
                   </button>
@@ -666,7 +665,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
         <button
           data-testid="icn-sav-btn"
           type="button"
-          disabled={!prefix}
+          disabled={!prefix.url}
           className={css(app.btn, s.saveBtn)}
           onClick={selectedSaveIcon}
         >
