@@ -13,7 +13,12 @@ const style = {
     p: 8,
     pn: 'relative',
     tn: 'border .2s, transform .2s',
-    ':hover, :focus-within': {
+    ':hover': {
+      tm: 'translateY(-3px)',
+      bcr: 'var(--blue)',
+      '& .action-wrp': { dy: 'inline-block!important' },
+    },
+    ':focus-within': {
       tm: 'translateY(-3px)',
       bcr: 'var(--blue)',
       '& .action-wrp': { dy: 'inline-block!important' },
@@ -81,7 +86,12 @@ const style = {
     tn: 'border .2s, transform .2s',
     curp: 1,
     pn: 'relative',
-    ':hover, :focus-within': {
+    ':hover': {
+      tm: 'translateY(-2px)',
+      bcr: 'var(--blue)',
+      '& .action-wrp': { dy: 'inline-block!important' },
+    },
+    ':focus-within': {
       tm: 'translateY(-2px)',
       bcr: 'var(--blue)',
       '& .action-wrp': { dy: 'inline-block!important' },
