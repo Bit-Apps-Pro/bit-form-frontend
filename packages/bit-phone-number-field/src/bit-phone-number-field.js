@@ -244,7 +244,7 @@ export default class BitPhoneNumberField {
 
   #handleClearPhoneInput() {
     this.#phoneInputElm.value = ''
-    this.setSelectedCountryItem(this.#config.defaultCountryKey)
+    this.setSelectedCountryItem('')
     this.#triggerEvent(this.#phoneInputElm, 'input')
   }
 
