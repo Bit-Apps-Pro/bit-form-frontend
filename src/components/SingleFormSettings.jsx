@@ -1,14 +1,27 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
-import { Link } from 'react-router-dom'
+/*
+  ⚠ Please don't remove this line, it's needed for the date picker documentation ⚠
+  https://react-day-picker.js.org/
+*/
+import { DayPicker } from 'react-day-picker'
+import 'react-day-picker/dist/style.css'
+/**
+ * https://reactjsexample.com/google-keep-app-inspired-time-picker-for-react/
+ */
+import { Link, useParams } from 'react-router-dom'
+import Timekeeper from 'react-timekeeper'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
+import { $styles } from '../GlobalStates/StylesState'
 import BlockIcn from '../Icons/BlockIcn'
+import CloseIcn from '../Icons/CloseIcn'
+import DateIcn from '../Icons/DateIcn'
 import DBIcn from '../Icons/DBIcn'
 import EmptyIcn from '../Icons/EmptyIcn'
 import FocusIcn from '../Icons/FocusIcn'
@@ -27,24 +40,25 @@ import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import { assignNestedObj } from './style-new/styleHelpers'
 import Accordions from './Utilities/Accordions'
+import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Cooltip from './Utilities/Cooltip'
+import Downmenu from './Utilities/Downmenu'
 import ProBadge from './Utilities/ProBadge'
-// import Modal from './Utilities/Modal'
 import SingleToggle2 from './Utilities/SingleToggle2'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
   const fields = useRecoilValue($fields)
+  const { formID } = useParams()
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const { reCaptchaV3 } = useContext(AppSettings)
-  // const bits = useRecoilValue($bits)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  // const setStaticStyle = useSetRecoilState($staticStylesState)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
   const setProModal = useSetRecoilState($proModal)
   // const [proModal, setProModal] = useState({ show: false, msg: '' })
+  const setStyles = useSetRecoilState($styles)
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }
@@ -111,21 +125,66 @@ export default function SingleFormSettings() {
       setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     }
   }
+  useEffect(() => {
+    const isTrue = additionalSetting.enabled?.onePerIp
+      || additionalSetting.enabled?.restrict_form
+      || additionalSetting.enabled?.is_login
+      || additionalSetting.enabled?.entry_limit
+      || additionalSetting.settings?.blocked_ip?.[0]?.ip
+      || additionalSetting.settings?.blocked_ip?.[0]?.ip
+    setStyles(prevStyle => produce(prevStyle, draft => {
+      if (isTrue) {
+        assignNestedObj(draft, 'form', {
+          [`._frm-ovrly-b${formID}`]: {
+            display: 'flex',
+            background: 'hsla(0, 0%, 0%, 32%)',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            'z-index': 9999,
+            width: '100%',
+            height: '100%',
+            'align-items': 'center',
+            'justify-content': 'center',
+            overflow: 'auto',
+            padding: '15px',
+            color: 'hsla(0, 0%, 100%, 100%)',
+            'border-radius': '5px',
+          },
+          [`._frm-ovrly-msg-b${formID}`]: {
+            background: 'hsla(0, 0%, 100%, 100%)',
+            padding: '20px',
+            'border-radius': '5px',
+            color: 'hsla(0, 100%, 50%, 100%)',
+          },
+        })
+        assignNestedObj(draft, `form->._frm-bg-b${formID}`, { position: 'relative' })
+      } else {
+        deleteNestedObj(draft, `form->._frm-ovrly-b${formID}`)
+        deleteNestedObj(draft, `form->._frm-ovrly-msg-b${formID}`)
+        deleteNestedObj(draft, `form->._frm-bg-b${formID}->position`)
+      }
+    }))
+  }, [additionalSetting])
+
+  const setAdditionalSettingsStyle = (e, setting) => {
+    const additionalSettings = deepCopy(additionalSetting)
+    if (e.target.checked) {
+      additionalSettings.enabled[setting] = true
+    } else {
+      delete additionalSettings.enabled[setting]
+    }
+    additionalSettings.updateForm = 1
+    setadditional(additionalSettings)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+  }
 
   const setOnePerIp = e => {
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.singleEntry })
       return
     }
-    const additionalSettings = deepCopy(additionalSetting)
-    if (e.target.checked) {
-      additionalSettings.enabled.onePerIp = true
-    } else {
-      delete additionalSettings.enabled.onePerIp
-    }
-    additionalSettings.updateForm = 1
-    setadditional(additionalSettings)
-    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+    setAdditionalSettingsStyle(e, 'onePerIp')
     // saveForm('addional', additionalSettings)
   }
 
@@ -227,15 +286,16 @@ export default function SingleFormSettings() {
       setProModal({ show: true, ...proHelperData.entryLimit })
       return
     }
-    const additional = deepCopy(additionalSetting)
-    if (e.target.checked) {
-      additional.enabled.entry_limit = true
-    } else {
-      delete additional.enabled.entry_limit
-    }
-    additional.updateForm = 1
-    setadditional({ ...additional })
-    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+    // const additional = deepCopy(additionalSetting)
+    // if (e.target.checked) {
+    //   additional.enabled.entry_limit = true
+    // } else {
+    //   delete additional.enabled.entry_limit
+    // }
+    // additional.updateForm = 1
+    // setadditional({ ...additional })
+    // setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+    setAdditionalSettingsStyle(e, 'entry_limit')
   }
 
   const hideReCaptchaBadge = e => {
@@ -409,17 +469,14 @@ export default function SingleFormSettings() {
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
-  const handleTime = (val, typ) => {
-    if ('restrict_form' in additionalSetting.settings && 'time' in additionalSetting.settings.restrict_form) {
-      setadditional(prvState => produce(prvState, drft => {
-        if (typ === 'from') {
-          drft.settings.restrict_form.time.from = val
-        } else {
-          drft.settings.restrict_form.time.to = val
-        }
-      }))
-      setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
-    }
+  const handleTime = (formatted24time, typ) => {
+    setadditional(prvState => produce(prvState, drft => {
+      if (!drft.settings) drft.settings = {}
+      if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
+      if (!drft.settings.restrict_form.time) drft.settings.restrict_form.time = {}
+      drft.settings.restrict_form.time[typ] = formatted24time
+    }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setRestrictForm = e => {
@@ -547,8 +604,18 @@ export default function SingleFormSettings() {
 
   const fromDate = additionalSetting?.settings?.restrict_form?.date?.from
   const toDate = additionalSetting?.settings?.restrict_form?.date?.to
-  const fromTime = additionalSetting?.settings?.restrict_form?.time?.from
-  const toTime = additionalSetting?.settings?.restrict_form?.time?.to
+  const fromTime = additionalSetting?.settings?.restrict_form?.time?.from || '00:00'
+  const toTime = additionalSetting?.settings?.restrict_form?.time?.to || '00:00'
+  const timeConverter = (time) => {
+    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time]
+
+    if (time.length > 1) {
+      time = time.slice(1)
+      time[5] = +time[0] < 12 ? 'AM' : 'PM'
+      time[0] = +time[0] % 12 || 12
+    }
+    return time.join('')
+  }
 
   return (
     <div>
@@ -563,7 +630,11 @@ export default function SingleFormSettings() {
             <b>{__('Allow single entry for each IP address')}</b>
             {!IS_PRO && <ProBadge proProperty="singleEntry" />}
           </div>
-          <SingleToggle2 action={setOnePerIp} checked={'onePerIp' in additionalSetting.enabled} className="flx" />
+          <SingleToggle2
+            action={setOnePerIp}
+            checked={'onePerIp' in additionalSetting.enabled}
+            className="flx"
+          />
         </div>
       </div>
       <Accordions
@@ -736,7 +807,7 @@ export default function SingleFormSettings() {
         </div>
       </div>
       {/* // temproray block for Date/Time library issue */}
-      {/* <Accordions
+      <Accordions
         customTitle={(
           <b>
             <span className="mr-2">
@@ -770,7 +841,7 @@ export default function SingleFormSettings() {
             <div className="mr-2 ml-2">
               <div><small>{__('From')}</small></div>
               <Downmenu>
-                <div className="btcd-custom-date-range white">
+                <div className="btcd-custom-date-range white" style={{ width: 175 }}>
                   {fromDate && (
                     <>
                       <span className="m-a">
@@ -792,16 +863,18 @@ export default function SingleFormSettings() {
                     </span>
                   )}
                 </div>
-                <Calendar
-                  onChange={val => handleDate(val, 'from')}
-                  date={fromDate ? new Date(fromDate) : ''}
+
+                <DayPicker
+                  mode="single"
+                  selected={fromDate ? new Date(fromDate) : ''}
+                  onSelect={val => handleDate(val, 'from')}
                 />
               </Downmenu>
             </div>
             <div>
               <div><small>{__('To')}</small></div>
               <Downmenu>
-                <div className="btcd-custom-date-range white">
+                <div className="btcd-custom-date-range white" style={{ width: 175 }}>
                   {toDate && (
                     <>
                       <span className="m-a">
@@ -822,11 +895,11 @@ export default function SingleFormSettings() {
                       Select To Date
                     </span>
                   )}
-
                 </div>
-                <Calendar
-                  onChange={val => handleDate(val, 'to')}
-                  date={toDate ? new Date(toDate) : ''}
+                <DayPicker
+                  mode="single"
+                  selected={toDate ? new Date(toDate) : ''}
+                  onSelect={val => handleDate(val, 'to')}
                 />
               </Downmenu>
             </div>
@@ -837,22 +910,70 @@ export default function SingleFormSettings() {
           <span className="mt-2 ml-2">{__('Time:')}</span>
           <div className="mr-2 ml-2">
             <div><small>{__('From')}</small></div>
-            <TimePicker
-              onChange={val => handleTime(val, 'from')}
-              value={fromTime || new Date()}
-              className="btcd-date-pick"
-            />
+            <Downmenu>
+              <div className="btcd-custom-date-range white" style={{ width: 175 }}>
+                {fromTime && (
+                  <>
+                    <span className="m-a">
+                      {timeConverter(fromTime)}
+                    </span>
+                    <button
+                      aria-label="Close"
+                      type="button"
+                      className="icn-btn"
+                      onClick={() => handleTime('', 'from')}
+                    >
+                      <CloseIcn size="12" />
+                    </button>
+                  </>
+                )}
+                {!fromTime && (
+                  <span className="m-a">
+                    Select To Time
+                  </span>
+                )}
+              </div>
+              <Timekeeper
+                time={fromTime || new Date()}
+                closeOnMinuteSelect
+                onChange={({ formatted24 }) => handleTime(formatted24, 'from')}
+              />
+            </Downmenu>
           </div>
           <div>
             <div><small>{__('To')}</small></div>
-            <TimePicker
-              onChange={val => handleTime(val, 'to')}
-              value={toTime || new Date()}
-              className="btcd-date-pick"
-            />
+            <Downmenu>
+              <div className="btcd-custom-date-range white" style={{ width: 175 }}>
+                {toTime && (
+                  <>
+                    <span className="m-a">
+                      {timeConverter(toTime)}
+                    </span>
+                    <button
+                      aria-label="Close"
+                      type="button"
+                      className="icn-btn"
+                      onClick={() => handleTime('', 'to')}
+                    >
+                      <CloseIcn size="12" />
+                    </button>
+                  </>
+                )}
+                {!toTime && (
+                  <span className="m-a">
+                    Select To Time
+                  </span>
+                )}
+              </div>
+              <Timekeeper
+                time={toTime || new Date()}
+                closeOnMinuteSelect
+                onChange={({ formatted24 }) => handleTime(formatted24, 'to')}
+              />
+            </Downmenu>
           </div>
         </div>
-      </Accordions> */}
+      </Accordions>
 
       <Accordions
         customTitle={(
@@ -869,7 +990,11 @@ export default function SingleFormSettings() {
       >
         {'blocked_ip' in additionalSetting.settings && additionalSetting.settings.blocked_ip.length > 0 && (
           <div className="flx mb-2">
-            <SingleToggle2 cls="flx" action={toggleAllIpStatus} checked={'blocked_ip' in additionalSetting.enabled} />
+            <SingleToggle2
+              cls="flx"
+              action={toggleAllIpStatus}
+              checked={'blocked_ip' in additionalSetting.enabled}
+            />
             {__('Enable / Disable')}
           </div>
         )}
