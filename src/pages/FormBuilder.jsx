@@ -5,7 +5,7 @@ import {
   createRef, StrictMode, useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState
+  useReducer, useRef, useState,
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'

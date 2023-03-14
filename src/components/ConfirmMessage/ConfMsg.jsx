@@ -1,22 +1,16 @@
 /* eslint-disable no-param-reassign */
 
 import produce from 'immer'
-import { memo, useEffect, useState } from 'react'
+import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $confirmations, $isNewThemeStyleLoaded, $updateBtn } from '../../GlobalStates/GlobalStates'
-import { $savedStylesAndVars } from '../../GlobalStates/SavedStylesAndVars'
-import { $allStyles, $styles } from '../../GlobalStates/StylesState'
-import { $allThemeColors } from '../../GlobalStates/ThemeColorsState'
-import { $allThemeVars } from '../../GlobalStates/ThemeVarsState'
+import { $confirmations, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import ut from '../../styles/2.utilities'
-import bitsFetch from '../../Utils/bitsFetch'
-import { JCOF } from '../../Utils/globalHelpers'
-import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
+import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import { msgDefaultConfig } from '../../Utils/StaticData/form-templates/defaultConfirmation'
 import Accordions from '../Utilities/Accordions'
@@ -26,40 +20,12 @@ import confirmMsgCssStyles from './confirmMsgCssStyles'
 import Message from './Message'
 
 function ConfMsg({ removeIntegration }) {
-  const { formID } = useParams()
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [allConf, setAllConf] = useRecoilState($confirmations)
-  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
-  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setStyles = useSetRecoilState($styles)
   const allConfirmations = deepCopy(allConf)
   const { css } = useFela()
-
-  useEffect(() => {
-    if (!isNewThemeStyleLoaded) {
-      bitsFetch({ formID }, 'bitforms_form_helpers_state')
-        .then(res => {
-          const fetchedBuilderHelperStates = res.data?.[0]?.builder_helper_state || {}
-          if (!isObjectEmpty(fetchedBuilderHelperStates)) {
-            const { themeVars, themeColors, style: oldAllStyles } = fetchedBuilderHelperStates
-            setAllThemeColors(JCOF.parse(themeColors))
-            setAllThemeVars(JCOF.parse(themeVars))
-            setAllStyles(JCOF.parse(oldAllStyles))
-
-            setSavedStylesAndVars({
-              allThemeColors: themeColors,
-              allThemeVars: themeVars,
-              allStyles: oldAllStyles,
-            })
-            setIsNewThemeStyleLoaded(true)
-          }
-        })
-    }
-  }, [])
 
   const handleMsgTitle = (e, idx) => {
     allConfirmations.type.successMsg[idx].title = e.target.value
