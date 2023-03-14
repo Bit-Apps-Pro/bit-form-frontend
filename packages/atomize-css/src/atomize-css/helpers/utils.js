@@ -190,7 +190,12 @@ export const expressCalcFunc = (calcStr, cssVarDefinations = {}) => {
     return '0'
   }
   const calcExpressionsArr = calcExpression
-    .replace(/\+|(?<!var\([^\)]*)-|\*|\/|/g, match => (match !== '' ? `##${match}##` : match))
+    .replace(/(\bvar\([^)]+\)|[+\-/*])/g, (match) => {
+      if (match.trim() !== '' && !match.includes('var')) {
+        return `##${match.trim()}##`
+      }
+      return match
+    })
     .split(/(##[\+\*\/-]##)/g)
     .map(itm => {
       itm.trim()
