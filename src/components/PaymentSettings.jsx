@@ -111,8 +111,8 @@ export default function PaymentSettings({ setSnackbar }) {
             {pays.map((pay, i) => (
               <div
                 key={`payment-${i + 2}`}
-                onClick={() => !IS_PRO && setNewInteg(pay)}
-                onKeyDown={() => !IS_PRO && setNewInteg(pay)}
+                onClick={() => IS_PRO && setNewInteg(pay.type)}
+                onKeyDown={() => IS_PRO && setNewInteg(pay.type)}
                 role="button"
                 tabIndex="0"
                 className={`${css(style.thumb)} ${pay.disable && !IS_PRO && css(style.integCardDisabled)}`}

@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-cycle
+import { IS_PRO } from '../../Helpers'
+
 export default {
   name: 'Untitled Form',
   theme: 'bitformDefault',
@@ -20,12 +23,16 @@ export default {
   },
   additionalSettings: {
     enabled: {
-      empty_submission: true,
+      empty_submission: IS_PRO,
+      private_ip: true,
+      blocked_ip: true,
     },
     settings: {
       empty_submission: {
         message: 'Empty form cannot be submitted.',
       },
+      blocked_ip: [{ ip: '', status: true }],
+      private_ip: [{ ip: '', status: true }],
     },
   },
 }
