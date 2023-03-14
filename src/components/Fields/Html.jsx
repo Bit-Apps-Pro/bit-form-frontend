@@ -9,12 +9,13 @@ import RenderHtml from '../Utilities/RenderHtml'
 
 export default function HtmlField({ fieldKey, attr, styleClasses }) {
   const { styleMode } = useRecoilValue($flags)
+  const isHidden = attr.valid?.hide || false
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
       <div
         data-dev-fld-wrp={fieldKey}
-        className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${getCustomClsName(fieldKey, 'fld-wrp')}`}
+        className={`${fieldKey}-fld-wrp ${styleMode ? '' : 'drag'} ${getCustomClsName(fieldKey, 'fld-wrp')} ${isHidden ? 'fld-hide' : ''}`}
         {...getCustomAttributes(fieldKey, 'fld-wrp')}
       >
         <RenderHtml html={attr.content || attr?.info?.content} />

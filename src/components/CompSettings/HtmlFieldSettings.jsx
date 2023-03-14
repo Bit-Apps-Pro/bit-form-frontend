@@ -15,6 +15,7 @@ import Cooltip from '../Utilities/Cooltip'
 import RenderHtml from '../Utilities/RenderHtml'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HTMLContentModal from './CompSettingsUtils/HTMLContentModal'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
@@ -99,6 +100,10 @@ export default function HtmlFieldSettings() {
         </div>
       </div>
       <HTMLContentModal labelModal={labelModal} setLabelModal={setLabelModal} />
+
+      <FieldSettingsDivider />
+
+      <FieldHideSettings />
 
       <FieldSettingsDivider />
 
