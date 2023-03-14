@@ -1072,7 +1072,7 @@ export default function SingleFormSettings() {
 
         {'private_ip' in additionalSetting.settings && additionalSetting.settings.private_ip.length > 0 && (
           <div className="flx mb-2 mt-3">
-            <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additionalSetting.enabled} />
+            <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additionalSetting.enabled && additionalSetting.enabled.private_ip} />
             {__('Enable / Disable')}
           </div>
         )}
