@@ -27,7 +27,7 @@ export default function ThemeGallary() {
   const formId = useRecoilValue($formId)
   const fields = useRecoilValue($fields)
   const fieldsArray = Object.entries(fields)
-  const activeTheme = themes.find(theme => theme.slug === currentStyles.theme)
+  const activeTheme = themes.find(theme => theme?.slug === currentStyles.theme)
   const [modal, setModal] = useState({ show: false })
 
   const handleThemeApply = (themeSlug) => {
@@ -41,7 +41,7 @@ export default function ThemeGallary() {
   }
 
   const handleSliderModal = (index, _themes) => {
-    setModal(prev => ({ ...prev, title: _themes[index].name, slug: _themes[index].slug }))
+    setModal(prev => ({ ...prev, title: _themes[index].name, slug: _themes[index]?.slug }))
   }
 
   const openPreviewModal = (i) => {
@@ -49,13 +49,13 @@ export default function ThemeGallary() {
       ...prev,
       show: true,
       title: themes[i].name,
-      slug: themes[i].slug,
+      slug: themes[i]?.slug,
       activeSlideIndex: i,
     }))
   }
 
   const onModalThemeActive = () => {
-    handleThemeApply(modal.slug)
+    handleThemeApply(modal?.slug)
     setModal(prev => ({ ...prev, show: false }))
   }
 
@@ -95,10 +95,10 @@ export default function ThemeGallary() {
           <ThemePreviewCard
             key={theme.name}
             onPreviewClick={() => openPreviewModal(i)}
-            applyThemeAction={() => handleThemeApply(theme.slug)}
+            applyThemeAction={() => handleThemeApply(theme?.slug)}
             name={theme.name}
             img={theme.img}
-            isActive={activeTheme.slug === theme.slug}
+            isActive={activeTheme?.slug === theme?.slug}
           />
         ))}
       </div>
