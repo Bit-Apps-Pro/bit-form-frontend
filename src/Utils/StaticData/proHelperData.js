@@ -48,6 +48,7 @@ const proHelperData = {
   captureGCLID: { heading: __('Google Ads'), featureText: __('Capture Google Ads Click') },
   is_login: { heading: __('Login User'), featureText: __('Login User') },
   empty_submission: { heading: __('Empty Submission'), featureText: __('Empty Submission') },
+  limit_submission: { heading: __('Limit Form Submission Period'), featureText: __('Limit Form Submission Period') },
   private_ip: { heading: __('Allowed IP'), featureText: __('Allowed IP List') },
   blocked_ip: { heading: __('Blocked IP'), featureText: __('Blocked IP List') },
   entryLimit: { heading: __('Entry Limit'), featureText: __('Entry Limit') },
