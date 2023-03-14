@@ -61,9 +61,9 @@ export default function CustomThemeGallary({ fldKey }) {
         <CustomThemeGallary.Card
           key={theme.name}
           name={theme.name}
-          applyThemeAction={() => handleThemeApply(theme.slug)}
+          applyThemeAction={() => handleThemeApply(theme?.slug)}
           img={theme.img}
-          isActive={checkActiveTheme(theme.slug)}
+          isActive={checkActiveTheme(theme?.slug)}
         />
       ))}
     </div>
