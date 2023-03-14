@@ -143,9 +143,18 @@ export function findSelectorBySamePropValue({ targetSelectorSpeficity,
   return samePropValueSelectors
 }
 
+function getFirstSelectorIndex(selector) {
+  const firstDot = selector.startsWith('.')
+  const newSelector = firstDot ? selector.slice(1) : selector
+  const firstSeperator = newSelector.match(/^([^:\s.[~+]+)/)?.[0]
+  if (!firstSeperator) {
+    return 0
+  }
+  return firstDot ? firstSeperator.length + 1 : firstSeperator.length
+}
+
 function getFirstSelctorWithoutPseudo(selector) {
-  const firstSeparatorIndex = selector.match(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/)
-    ?.index
+  const firstSeparatorIndex = getFirstSelectorIndex(selector)
   if (!firstSeparatorIndex) {
     return selector
   }
@@ -153,8 +162,7 @@ function getFirstSelctorWithoutPseudo(selector) {
 }
 
 function getSelctorPseudo(selector) {
-  const firstSeparatorIndex = selector.match(/(?<=.{2})(::|:|\s|\.|\[|~|\+)/)
-    ?.index
+  const firstSeparatorIndex = getFirstSelectorIndex(selector)
   if (!firstSeparatorIndex) {
     return ''
   }

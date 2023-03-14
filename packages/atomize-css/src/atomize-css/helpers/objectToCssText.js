@@ -17,8 +17,8 @@ export default function objectToCssText(obj) {
   cssText = cssText
     .replace(/::after/gm, ':after')
     .replace(/::before/gm, ':before')
-    .replace(/(?<=\s|:|,)0+(px|r?em|%|pt|pc|ch|vw|vh)/gm, '0')
-    .replace(/(?<=\s+|:|,)0+\./gm, '.')
+    .replace(/(?:\s|:|,)0+(px|r?em|%|pt|pc|ch|vw|vh)/gm, match => (match[0] !== '0' ? `${match[0]}0` : '0'))
+    .replace(/(?:\s+|:|,)0+\./gm, match => (match[0] !== '0' ? `${match[0]}.` : '.'))
     .replace(/\s*border\s*:\s*medium\s*none/gm, 'border:none')
 
   return cssText

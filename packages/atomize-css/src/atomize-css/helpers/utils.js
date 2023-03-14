@@ -184,13 +184,18 @@ export const expressCalcFunc = (calcStr, cssVarDefinations = {}) => {
   }
 
   const trimmedCalcStr = calcStr.trim().replace(/\s{2,}/g, ' ')
-  const calcExpression = trimmedCalcStr.match(/(?<=calc\()(.*)(?=\))/g)?.[0]
+  const calcExpression = trimmedCalcStr.match(/calc\(.+(?=\))/g)?.[0].replace('calc(', '')
   if (calcExpression.includes('calc')) {
     console.error('nested calc not supported', calcStr)
     return '0'
   }
   const calcExpressionsArr = calcExpression
-    .replace(/\+|(?<!var\([^\)]*)-|\*|\/|/g, match => (match !== '' ? `##${match}##` : match))
+    .replace(/(\bvar\([^)]+\)|[+\-/*])/g, (match) => {
+      if (match.trim() !== '' && !match.includes('var')) {
+        return `##${match.trim()}##`
+      }
+      return match
+    })
     .split(/(##[\+\*\/-]##)/g)
     .map(itm => {
       itm.trim()
@@ -272,7 +277,8 @@ export const expressCssVar = (cssVarStr, cssVarDefinations = {}) => {
   cssVars.forEach(varStr => {
     // eslint-disable-next-line prefer-const
     let [varName, fallbackValue] = varStr
-      .match(/(?<=var\()(.*)(?=\))/g)[0]
+      .match(/var\(.+(?=\))/g)[0]
+      .replace('var(', '')
       .trim()
       .replace(/\s{2,}/g, ' ')
       .split(',')
@@ -398,7 +404,8 @@ export const normalizeSelector = (selector) => selector
   .trim()
   .replace(/\s{2,}/g, ' ') // replace multiple whiteSpace to one whitespace
   .replace(/\\n\s*/g, '') // replace ",   " to "," and "\n   " to ""
-  .replace(/(?<=\[)(\s+)|(\s+)(?=\])/g, '') // replace "[  " to "[" and  "  ]" to "]"
+  .replace(/\[(\s+)/g, '[') // replace "[  " to "["
+  .replace(/(\s+)\]/g, ']') // replace "  ]" to "]"
   .replace(/\s*(::?|~|\+|=|,)\s*/g, '$1') // trim whitespce for : or :: or ~ or , or + or =
 
 export const isValidPropAndValue = (prop, value, matchObj) => {

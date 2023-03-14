@@ -6,7 +6,7 @@ import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
   $additionalSettings,
   $bits,
-  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $selectedFieldId, $updateBtn
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
@@ -512,9 +512,9 @@ const getElementTotalHeight = (elm) => {
 export const fitAllLayoutItems = (lays) => {
   const newLays = deepCopy(lays)
   for (let i = 0; i < newLays.lg.length; i += 1) {
-    newLays.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.lg[i].i}-fld-wrp`)))
-    newLays.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.md[i].i}-fld-wrp`)))
-    newLays.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.sm[i].i}-fld-wrp`)))
+    newLays.lg[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.lg[i].i}-fld-wrp`))) || newLays.lg[i].h
+    newLays.md[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.md[i].i}-fld-wrp`))) || newLays.md[i].h
+    newLays.sm[i].h = Math.ceil(getElementTotalHeight(selectInGrid(`.${newLays.sm[i].i}-fld-wrp`))) || newLays.sm[i].h
   }
   return newLays
 }
@@ -525,9 +525,9 @@ export const fitSpecificLayoutItem = (lays, fieldKey) => {
   const mdFld = newLays.md.find(itm => itm.i === fieldKey)
   const smFld = newLays.sm.find(itm => itm.i === fieldKey)
 
-  if (lgFld) lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`)))
-  if (mdFld) mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`)))
-  if (smFld) smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`)))
+  if (lgFld) lgFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${lgFld.i}-fld-wrp`))) || lgFld.h
+  if (mdFld) mdFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${mdFld.i}-fld-wrp`))) || mdFld.h
+  if (smFld) smFld.h = Math.ceil(getElementTotalHeight(selectInGrid(`.${smFld.i}-fld-wrp`))) || smFld.h
   return newLays
 }
 
@@ -881,4 +881,19 @@ export const getCurrentFormUrl = () => {
   const matchedUrl = url.match(regex)
   if (matchedUrl) return matchedUrl[0]
   return null
+}
+
+export const getTotalLayoutHeight = () => {
+  const layouts = getRecoil($layouts)
+  const breakpoint = getRecoil($breakpoint)
+  const layout = layouts[breakpoint]
+
+  return layout.reduce((acc, { h, y }) => {
+    const { [y]: prevH = 0 } = acc.maxHeightsByY
+    const newH = Math.max(prevH, h)
+    return {
+      maxHeightsByY: { ...acc.maxHeightsByY, [y]: newH },
+      totalHeight: acc.totalHeight + (newH - prevH),
+    }
+  }, { maxHeightsByY: {}, totalHeight: 0 }).totalHeight
 }
