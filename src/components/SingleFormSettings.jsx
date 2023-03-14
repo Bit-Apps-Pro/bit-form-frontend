@@ -479,7 +479,7 @@ export default function SingleFormSettings() {
     }
     if (!val) hideAll()
     let date = val
-    if (val) date = dateTimeFormatter(val, 'm-d-Y')
+    if (val) date = dateTimeFormatter(val, 'Y-m-d')
     setadditional(prvState => produce(prvState, drft => {
       if (!drft.settings) drft.settings = {}
       if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
