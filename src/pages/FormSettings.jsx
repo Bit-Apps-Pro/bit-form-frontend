@@ -1,9 +1,15 @@
 import loadable from '@loadable/component'
-import { lazy, memo, Suspense } from 'react'
+import { lazy, memo, Suspense, useEffect } from 'react'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import ProModal from '../components/Utilities/ProModal'
+import { $isNewThemeStyleLoaded } from '../GlobalStates/GlobalStates'
+import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
+import { $allStyles } from '../GlobalStates/StylesState'
+import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
+import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
 import ConditionalIcn from '../Icons/ConditionalIcn'
 import EmailInbox from '../Icons/EmailInbox'
@@ -11,6 +17,9 @@ import InfoIcn from '../Icons/InfoIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
 import Settings2 from '../Icons/Settings2'
 import UserIcn from '../Icons/UserIcn'
+import bitsFetch from '../Utils/bitsFetch'
+import { JCOF } from '../Utils/globalHelpers'
+import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
@@ -24,6 +33,33 @@ const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/Do
 function FormSettings({ setProModal }) {
   // const { path } = useMatch()
   const { formType, formID } = useParams()
+  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
+  const setAllThemeColors = useSetRecoilState($allThemeColors)
+  const setAllThemeVars = useSetRecoilState($allThemeVars)
+  const setAllStyles = useSetRecoilState($allStyles)
+  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
+
+  useEffect(() => {
+    if (!isNewThemeStyleLoaded) {
+      bitsFetch({ formID }, 'bitforms_form_helpers_state')
+        .then(res => {
+          const fetchedBuilderHelperStates = res.data?.[0]?.builder_helper_state || {}
+          if (!isObjectEmpty(fetchedBuilderHelperStates)) {
+            const { themeVars, themeColors, style: oldAllStyles } = fetchedBuilderHelperStates
+            setAllThemeColors(JCOF.parse(themeColors))
+            setAllThemeVars(JCOF.parse(themeVars))
+            setAllStyles(JCOF.parse(oldAllStyles))
+
+            setSavedStylesAndVars({
+              allThemeColors: themeColors,
+              allThemeVars: themeVars,
+              allStyles: oldAllStyles,
+            })
+            setIsNewThemeStyleLoaded(true)
+          }
+        })
+    }
+  }, [])
 
   return (
     <div className="btcd-f-settings">
