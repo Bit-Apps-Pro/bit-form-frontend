@@ -350,6 +350,10 @@ export default function SingleFormSettings() {
   }
 
   const handleIpStatus = (e, i, type) => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...(type === 'private' ? proHelperData.private_ip : proHelperData.blocked_ip) })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if (type === 'private') {
       additional.settings.private_ip[i].status = e.target.checked
@@ -376,6 +380,10 @@ export default function SingleFormSettings() {
   }
 
   const handleIp = (e, i, typ) => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...(typ === 'private' ? proHelperData.private_ip : proHelperData.blocked_ip) })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if (typ === 'blocked') {
       additional.settings.blocked_ip[i].ip = e.target.value
