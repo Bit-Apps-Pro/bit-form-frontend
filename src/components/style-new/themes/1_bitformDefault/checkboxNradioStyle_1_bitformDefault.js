@@ -109,7 +109,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         margin: '0px 0px 0px 33px',
         width: 'calc(100% - 33px) !important',
         outline: 'none !important',
-        'background-color': 'var(--global-fld-bg-color, transparent) !important',
+        'background-color': 'var(--global-fld-bg-color) !important',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad) !important',

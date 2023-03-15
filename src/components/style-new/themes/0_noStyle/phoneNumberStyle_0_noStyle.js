@@ -17,7 +17,7 @@ export default function phoneNumberStyle_0_noStyle({ fk, direction, breakpoint, 
       [`.${fk}-phone-fld-wrp`]: {
         position: 'absolute',
         width: '100%',
-        'background-color': 'var(--global-fld-bg-color, transparent)',
+        'background-color': 'var(--global-fld-bg-color)',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
         'border-radius': 'var(--g-bdr-rad) !important',

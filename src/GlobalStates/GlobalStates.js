@@ -73,7 +73,7 @@ export const $colorScheme = atom({
 })
 export const $customCodes = atom({
   key: '$customCodes',
-  default: { JavaScript: '', CSS: '' },
+  default: { JavaScript: '', CSS: '', isFetched: false },
   effects: [({ onSet }) => {
     onSet((newCustomCodes, _, isReset) => {
       if (isReset) return

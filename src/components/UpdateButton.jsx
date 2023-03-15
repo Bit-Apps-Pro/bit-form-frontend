@@ -284,7 +284,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       ...(!isStyleNotLoaded && { themeColors: JCOF.stringify(allThemeColors) }),
       ...(!isStyleNotLoaded && { themeVars: JCOF.stringify(allThemeVars) }),
       breakpointSize,
-      customCodes,
+      ...(customCodes.isFetched && { customCodes }),
       layoutChanged: sessionStorage.getItem('btcd-lc'),
       rowHeight: sessionStorage.getItem('btcd-rh'),
       formSettings: {

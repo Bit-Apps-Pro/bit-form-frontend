@@ -87,13 +87,13 @@ export default function App() {
                   </nav>
                 </div>
                 <nav className="top-nav mr-2">
-                  <a
+                  {/* <a
                     target="_blank"
                     href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post"
                     rel="noreferrer"
                   >
                     {__('Review Us')}
-                  </a>
+                  </a> */}
                   <NavLink
                     to="/doc-support"
                     className={({ isActive }) => (isActive ? 'app-link-active' : '')}
