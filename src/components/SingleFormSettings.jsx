@@ -135,6 +135,7 @@ export default function SingleFormSettings() {
     setStyles(prevStyle => produce(prevStyle, draft => {
       if (isTrue) {
         assignNestedObj(draft, 'form', {
+          ...draft.form,
           [`._frm-ovrly-b${formID}`]: {
             display: 'flex',
             background: 'hsla(0, 0%, 0%, 32%)',
@@ -219,7 +220,7 @@ export default function SingleFormSettings() {
           to use ReCaptchaV3, you must set site key and secret from
           &nbsp;
           <Link to="/app-settings/recaptcha">app settings</Link>
-        </p>)
+                 </p>)
         setAlertMdl({ show: true, msg })
         return false
       }
@@ -229,7 +230,7 @@ export default function SingleFormSettings() {
       if (captchaFlds) {
         msg = __(<p>
           You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV3 remove the ReCaptchaV2 from the form builder.
-        </p>)
+                 </p>)
         setAlertMdl({ show: true, msg })
         return false
       }
