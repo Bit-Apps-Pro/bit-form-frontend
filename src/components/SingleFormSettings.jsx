@@ -135,6 +135,7 @@ export default function SingleFormSettings() {
     setStyles(prevStyle => produce(prevStyle, draft => {
       if (isTrue) {
         assignNestedObj(draft, 'form', {
+          ...draft.form,
           [`._frm-ovrly-b${formID}`]: {
             display: 'flex',
             background: 'hsla(0, 0%, 0%, 32%)',
@@ -189,11 +190,11 @@ export default function SingleFormSettings() {
   }
 
   const storeSubmission = e => {
-    const additionalSettings = deepCopy(additionalSetting)
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.disableEntryStoring })
       return
     }
+    const additionalSettings = deepCopy(additionalSetting)
     if (e.target.checked) {
       additionalSettings.enabled.submission = true
     } else {
@@ -202,8 +203,8 @@ export default function SingleFormSettings() {
     setadditional(additionalSettings)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
-
   const setCustomMsg = (e, typ) => {
+    if (!IS_PRO) return
     const additionalSettings = deepCopy(additionalSetting)
     additionalSettings.settings[typ][e.target.name] = e.target.value
     setadditional(additionalSettings)
@@ -219,7 +220,7 @@ export default function SingleFormSettings() {
           to use ReCaptchaV3, you must set site key and secret from
           &nbsp;
           <Link to="/app-settings/recaptcha">app settings</Link>
-        </p>)
+                 </p>)
         setAlertMdl({ show: true, msg })
         return false
       }
@@ -229,7 +230,7 @@ export default function SingleFormSettings() {
       if (captchaFlds) {
         msg = __(<p>
           You can use either ReCaptchaV2 or ReCaptchaV3 in a form. to use ReCaptchaV3 remove the ReCaptchaV2 from the form builder.
-        </p>)
+                 </p>)
         setAlertMdl({ show: true, msg })
         return false
       }
@@ -269,6 +270,10 @@ export default function SingleFormSettings() {
   }
 
   const tolggleHoneypot = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.honeypot })
+      return false
+    }
     const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.honeypot = true
@@ -346,6 +351,10 @@ export default function SingleFormSettings() {
   }
 
   const handleIpStatus = (e, i, type) => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...(type === 'private' ? proHelperData.private_ip : proHelperData.blocked_ip) })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if (type === 'private') {
       additional.settings.private_ip[i].status = e.target.checked
@@ -372,6 +381,10 @@ export default function SingleFormSettings() {
   }
 
   const handleIp = (e, i, typ) => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...(typ === 'private' ? proHelperData.private_ip : proHelperData.blocked_ip) })
+      return
+    }
     const additional = deepCopy(additionalSetting)
     if (typ === 'blocked') {
       additional.settings.blocked_ip[i].ip = e.target.value
@@ -383,6 +396,10 @@ export default function SingleFormSettings() {
   }
 
   const toggleAllIpStatus = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.blocked_ip })
+      return false
+    }
     const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.blocked_ip = true
@@ -402,6 +419,10 @@ export default function SingleFormSettings() {
   }
 
   const toggleAllPvtIpStatus = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.private_ip })
+      return false
+    }
     const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       additional.enabled.private_ip = true
@@ -421,6 +442,10 @@ export default function SingleFormSettings() {
   }
 
   const handleRestrictFrom = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.limit_submission })
+      return false
+    }
     const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       if (additional.settings.restrict_form === undefined
@@ -457,9 +482,13 @@ export default function SingleFormSettings() {
   }
 
   const handleDate = (val, typ) => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.limit_submission })
+      return false
+    }
     if (!val) hideAll()
     let date = val
-    if (val) date = dateTimeFormatter(val, 'm-d-Y')
+    if (val) date = dateTimeFormatter(val, 'Y-m-d')
     setadditional(prvState => produce(prvState, drft => {
       if (!drft.settings) drft.settings = {}
       if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
@@ -470,6 +499,10 @@ export default function SingleFormSettings() {
   }
 
   const handleTime = (formatted24time, typ) => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.limit_submission })
+      return false
+    }
     setadditional(prvState => produce(prvState, drft => {
       if (!drft.settings) drft.settings = {}
       if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
@@ -480,6 +513,10 @@ export default function SingleFormSettings() {
   }
 
   const setRestrictForm = e => {
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.limit_submission })
+      return false
+    }
     const additional = deepCopy(additionalSetting)
     if (e.target.checked) {
       if ('restrict_form' in additional.settings && 'day' in additional.settings.restrict_form) {
@@ -581,7 +618,7 @@ export default function SingleFormSettings() {
   const setAccordingEnable = (e, type, title) => {
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData[type] })
-      return true
+      return
     }
     const additional = deepCopy(additionalSetting)
 
@@ -646,7 +683,7 @@ export default function SingleFormSettings() {
         )}
         toggle
         action={(e) => setAccordingEnable(e, 'is_login', 'User Require Login')}
-        checked={additionalSetting?.enabled?.is_login || false}
+        checked={'is_login' in additionalSetting.enabled}
         cls="w-6 mt-3"
         isPro
         proProperty="is_login"
@@ -654,7 +691,15 @@ export default function SingleFormSettings() {
         <div className="mb-2 ml-2">
           <b>Error message</b>
           <br />
-          <input aria-label="Error messages" type="text" placeholder="Error message" name="message" className="btcd-paper-inp w-6 mt-1" onChange={(e) => setCustomMsg(e, 'is_login')} value={additionalSetting.settings?.is_login?.message} />
+          <input
+            aria-label="Error messages"
+            type="text"
+            placeholder="Error message"
+            name="message"
+            className="btcd-paper-inp w-6 mt-1"
+            onChange={(e) => setCustomMsg(e, 'is_login')}
+            value={additionalSetting.settings?.is_login?.message}
+          />
         </div>
       </Accordions>
       <Accordions
@@ -703,9 +748,10 @@ export default function SingleFormSettings() {
             </span>
             <b>
               {__('Disable entry storing in WordPress database')}
+              {!IS_PRO && <ProBadge proProperty="submission" />}
             </b>
           </div>
-          <SingleToggle2 disabled={!IS_PRO} action={storeSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
+          <SingleToggle2 action={storeSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
       <Accordions
@@ -786,7 +832,7 @@ export default function SingleFormSettings() {
             </div>
           </div>
           <div className="flx">
-            <SingleToggle2 disabled={!IS_PRO} action={tolggleHoneypot} checked={'honeypot' in additionalSetting.enabled} className="flx" />
+            <SingleToggle2 action={tolggleHoneypot} checked={'honeypot' in additionalSetting.enabled} className="flx" />
           </div>
         </div>
       </div>
@@ -993,7 +1039,7 @@ export default function SingleFormSettings() {
             <SingleToggle2
               cls="flx"
               action={toggleAllIpStatus}
-              checked={'blocked_ip' in additionalSetting.enabled}
+              checked={'blocked_ip' in additionalSetting.enabled && additionalSetting.enabled.blocked_ip}
             />
             {__('Enable / Disable')}
           </div>
@@ -1035,7 +1081,7 @@ export default function SingleFormSettings() {
 
         {'private_ip' in additionalSetting.settings && additionalSetting.settings.private_ip.length > 0 && (
           <div className="flx mb-2 mt-3">
-            <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additionalSetting.enabled} />
+            <SingleToggle2 cls="flx" action={toggleAllPvtIpStatus} checked={'private_ip' in additionalSetting.enabled && additionalSetting.enabled.private_ip} />
             {__('Enable / Disable')}
           </div>
         )}

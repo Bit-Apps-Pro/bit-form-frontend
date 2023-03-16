@@ -24,15 +24,15 @@ export default {
   additionalSettings: {
     enabled: {
       empty_submission: IS_PRO,
-      private_ip: true,
-      blocked_ip: true,
+      private_ip: false,
+      blocked_ip: false,
     },
     settings: {
       empty_submission: {
         message: 'Empty form cannot be submitted.',
       },
-      blocked_ip: [{ ip: '', status: true }],
-      private_ip: [{ ip: '', status: true }],
+      blocked_ip: [{ ip: '', status: false }],
+      private_ip: [{ ip: '', status: false }],
     },
   },
 }
