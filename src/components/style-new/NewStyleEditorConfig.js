@@ -247,6 +247,8 @@ const chackProps = {
   transition: '',
   shadow: '',
   color: '',
+  'min-width': '',
+  'min-height': '',
 }
 const formCommonCssProps = {
   background: {
