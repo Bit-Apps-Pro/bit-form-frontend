@@ -408,7 +408,8 @@ export default class BitPhoneNumberField {
     if (selectedCountry) {
       const phoneNumberWithoutCode = value.substring(selectedCountry.code.length)
       if (selectedCountry.ptrn && phoneNumberWithoutCode) {
-        const regex = new RegExp(`^(${selectedCountry.ptrn})$`)
+        const ptrn = selectedCountry.ptrn.replace(/\$_bf_\$/g, '\\')
+        const regex = new RegExp(`^(${ptrn})$`)
         return regex.test(phoneNumberWithoutCode)
       }
       return true

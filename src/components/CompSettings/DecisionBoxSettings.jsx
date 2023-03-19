@@ -8,21 +8,17 @@ import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
-import sc from '../../styles/commonStyleEditorStyle'
 import ErrorMessages from '../../styles/ErrorMessages.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { truncatedString } from '../style-new/styleHelpers'
 import Cooltip from '../Utilities/Cooltip'
-import RenderHtml from '../Utilities/RenderHtml'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
-import FieldReadOnlySettings from './CompSettingsUtils/FieldReadOnlySettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -125,10 +121,6 @@ export default function DecisionBoxSettings() {
       <FieldSettingsDivider />
 
       <FieldDisabledSettings />
-
-      <FieldSettingsDivider />
-
-      <FieldReadOnlySettings />
 
       <FieldSettingsDivider />
 

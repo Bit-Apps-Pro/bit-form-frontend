@@ -75,10 +75,17 @@ export default function PaypalFieldSettings() {
     if (e.target.checked) {
       fieldData.payType = 'subscription'
       delete fieldData.currency
+      removeFormUpdateError(fldKey, 'paypalAmountMissing')
     } else {
       fieldData.currency = 'USD'
       delete fieldData.payType
       delete fieldData.planId
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'paypalAmountMissing',
+        errorMsg: __('PayPal Fixed Amount is not valid'),
+        errorUrl: `field-settings/${fldKey}`,
+      })
     }
     delete fieldData.amountType
     delete fieldData.amount
