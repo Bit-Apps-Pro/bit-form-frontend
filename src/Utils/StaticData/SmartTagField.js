@@ -37,6 +37,12 @@ export const SmartTagField = [
     type: 'date',
   },
   {
+    id: 42,
+    name: '_bf_date.d-M, Y',
+    label: 'Date(d-M, Y)',
+    type: 'date',
+  },
+  {
     id: 7,
     name: '_bf_time',
     label: 'Time',
