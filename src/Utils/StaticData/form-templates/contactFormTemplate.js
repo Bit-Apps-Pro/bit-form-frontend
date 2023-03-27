@@ -36,7 +36,7 @@ export default {
       fieldName: 'name',
       acHide: true,
       ac: 'name',
-      ph: 'Jhon Doe',
+      ph: 'John Doe',
     },
     'fld_key-3': {
       typ: 'textarea',
