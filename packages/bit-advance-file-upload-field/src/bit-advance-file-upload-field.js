@@ -84,8 +84,10 @@ export default class BitAdvanceFileUpload {
     this.#filePondRef = create(this.#configSetting)
     this.#fieldUploadWrapper.appendChild(this.#filePondRef.element)
     setTimeout(() => {
-      this.#document.querySelector(`.${this.#fieldKey}-lbl`).setAttribute('for', this.#select('input[name="filepond"]').id)
-    }, 100)
+      if (this.#fieldUploadWrapper) {
+        this.#fieldUploadWrapper.parentNode.parentNode.querySelector(`.${this.#fieldKey}-lbl`).setAttribute('for', this.#select('input[name="filepond"]').id)
+      }
+    }, 1000)
     if (this.#config.onFileUpdate) {
       this.#filePondRef.on('updatefiles', this.#config.onFileUpdate)
     }
