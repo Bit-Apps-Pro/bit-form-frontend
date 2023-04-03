@@ -74,9 +74,7 @@ export default class BitPhoneNumberField {
     } else {
       this.#phoneNumberFieldWrapper = selector
     }
-
-    this.#options = [...this.#config.options].filter(p => !p.hide)
-
+    this.#options = this.#config.options.filter(p => !p.hide)
     this.#callingCodes = this.#generateCountryCodesFromOptions()
     this.fieldKey = this.#config.fieldKey
 
