@@ -52,7 +52,7 @@ export default function TinyMCE({
         resize: 'verticle',
         convert_urls: false,
         theme: 'modern',
-        plugins: plugins || `directionality fullscreen image link media charmap hr lists textcolor colorpicker ${!loaded ? 'wordpress' : ''}`,
+        plugins: plugins || `directionality fullscreen image link media charmap hr lists textcolor colorpicker ${loaded ? '' : 'wordpress'}`,
         toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code | addFormField | addSmartField',
         image_advtab: true,
         default_link_target: '_blank',
