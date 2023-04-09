@@ -23,6 +23,7 @@ import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 
 export default function ButtonSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -250,6 +251,8 @@ export default function ButtonSettings() {
         </div>
 
         <FieldSettingsDivider />
+
+        <FieldHideSettings />
 
       </div>
 
