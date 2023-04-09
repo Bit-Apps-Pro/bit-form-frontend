@@ -31,13 +31,13 @@ export default class BitAdvanceFileUpload {
   constructor(selector, config) {
     Object.assign(this.#config, config)
     this.#fieldKey = config.fieldKey
+    this.#window = config.window ? config.window : window
+    this.#document = config.document ? config.document : document
     if (typeof selector === 'string') {
-      this.#fieldUploadWrapper = this.#config.document.querySelector(selector)
+      this.#fieldUploadWrapper = this.#document.querySelector(selector)
     } else {
       this.#fieldUploadWrapper = selector
     }
-    this.#window = config.window ? config.window : window
-    this.#document = config.document ? config.document : document
     this.#formID = this.#config.formID
     this.#configSetting = this.#config.configSetting
     this.#ajaxURL = this.#config.ajaxURL
