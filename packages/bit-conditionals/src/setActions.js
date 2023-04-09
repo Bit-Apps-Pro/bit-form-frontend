@@ -41,9 +41,30 @@ const setActiveList = (actionDetail, props, fieldValues) => {
 }
 
 const setDisabled = (fldKey, props, val) => {
+  const fldData = props.fields[fldKey]
+  const { fieldName, typ } = fldData
   if (props.inits && props.inits[fldKey]) {
     props.inits[fldKey].disabled = val
   } else {
+    if (typ === 'check') {
+      selectAll(props.contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
+        el.disabled = val
+      })
+      return
+    }
+    if (typ === 'radio') {
+      selectAll(props.contentId, `input[name="${fieldName}"]`).forEach((el) => {
+        el.disabled = val
+      })
+      return
+    }
+    if (typ === 'decision-box') {
+      const fld = select(props.contentId, `input[name="${fieldName}"]`)
+      if (fld) {
+        fld.disabled = val
+      }
+      return
+    }
     select(props.contentId, `.${fldKey}-fld`).disabled = val
   }
 }
