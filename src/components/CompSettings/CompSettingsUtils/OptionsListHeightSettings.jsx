@@ -4,10 +4,10 @@ import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
-import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import FieldStyle from '../../../styles/FieldStyle.style'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function OptionsListHeightSettings({ cls }) {
@@ -19,6 +19,7 @@ export default function OptionsListHeightSettings({ cls }) {
 
   const handleHeightChange = (val) => {
     fieldData.config.maxHeight = val
+    if (!val) delete fieldData.config.maxHeight
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Options List Height '${String(val || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: 'height_changed', state: { fields: allFields, fldKey } })
@@ -31,7 +32,7 @@ export default function OptionsListHeightSettings({ cls }) {
           <span>{__('Maximum:')}</span>
           <input
             data-testid="nmbr-stng-min-inp"
-            title="Maximum height of Option List"
+            title="Maximum height of Option List(Ex: 400)"
             aria-label="Maximum height of Option List"
             placeholder="Type Maximum Height..."
             className={css(FieldStyle.input, FieldStyle.w140)}
