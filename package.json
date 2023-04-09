@@ -198,7 +198,6 @@
     "postcss-preset-env": "^7.8.0",
     "postcss-safe-parser": "^6.0.0",
     "react-gettext-parser": "^1.16.0",
-    "react-refresh": "^0.14.0",
     "react-scripts": "^5.0.1",
     "rimraf": "^3.0.2",
     "sass": "1.54.5",

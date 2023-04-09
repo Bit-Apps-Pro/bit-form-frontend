@@ -1,9 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
+import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { postFields } from '../../../Utils/StaticData/postField'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
@@ -18,7 +17,6 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
   const [types, setTypes] = useState([])
   const [pods, setPods] = useState([])
   const [users, setUsers] = useState([])
-  const { css } = useFela()
   const history = useNavigate()
   const [data, setData] = useState({
     name: 'Pods',
@@ -27,7 +25,6 @@ function Pods({ formFields, setIntegration, integrations, allIntegURL }) {
     pod_map: [{}],
   })
   const [snack, setSnackbar] = useState({ show: false })
-
   const handleInput = (typ, val, isNumber) => {
     const tmpData = { ...data }
     if (isNumber) {
