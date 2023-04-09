@@ -5,17 +5,15 @@ import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import EditIcn from '../../Icons/EditIcn'
-import ut from '../../styles/2.utilities'
-import FieldStyle from '../../styles/FieldStyle.style'
-import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
+import { isDev } from '../../Utils/config'
 import { __ } from '../../Utils/i18nwrap'
-import { iconElementLabel } from '../style-new/styleHelpers'
+import FieldStyle from '../../styles/FieldStyle.style'
 import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
+import { iconElementLabel } from '../style-new/styleHelpers'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
@@ -360,7 +358,7 @@ const PhoneNumberFieldSettings = () => {
       />
 
       <FieldSettingsDivider />
-      <div className={css(FieldStyle.section, FieldStyle.fieldSection, { pr: '26px !important' })}>
+      {/* <div className={css(FieldStyle.section, FieldStyle.fieldSection, { pr: '26px !important' })}>
         <span>Placeholder Image</span>
         <div className={css(ut.flxcb)}>
           {placeholderImage && (
@@ -377,7 +375,7 @@ const PhoneNumberFieldSettings = () => {
             )
           }
         </div>
-      </div>
+      </div> */}
 
       <FieldSettingsDivider />
 
