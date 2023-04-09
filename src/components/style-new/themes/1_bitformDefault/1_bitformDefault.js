@@ -358,6 +358,8 @@ export const defaultLightThemeColors = {
   '--sub-titl-sh': '', // subtitle box shadow
   '--sub-titl-bdr-clr': '', // subtitle border color
 
+  '--fld-c': 'var(--global-font-color)', // field text color
+
   '--hlp-txt-bg': '', // helper text background color
   '--hlp-txt-c': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)', // helpertext color
   '--hlp-txt-sh': '', // helper text box shadow
@@ -522,6 +524,9 @@ export const defaultLgLightform = ({ formId }) => ({
   },
   [`._frm-b${formId}`]: {
     direction: 'var(--dir)',
+  },
+  [`._frm-b${formId} p`]: {
+    margin: '0',
   },
 })
 
