@@ -115,7 +115,7 @@
     "build-pkg": "turbo run build",
     "hot": "vite --force",
     "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
-    "build-bit-country-field": "cd ./packages/bit-country-field && pnpm run build && cp -r ./dist/* ../../../assets"
+    "build-bit-fileup": "cd ./packages/bit-advance-file-upload-field && pnpm run build && cp -r ./dist/* ../../../assets"
   },
   "husky": {
     "hooks": {

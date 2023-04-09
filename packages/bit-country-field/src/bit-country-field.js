@@ -82,7 +82,6 @@ export default class BitCountryField {
     } else {
       this.#countryFieldWrapper = selector
     }
-
     this.fieldKey = this.#fieldKey
 
     this.init()
@@ -104,16 +103,12 @@ export default class BitCountryField {
     this.#detectCountryByGeo = config.detectCountryByGeo
     this.#assetsURL = config.assetsURL
     this.#onChange = config.onChange
-    this.#initialOptions = config.options
-    this.#listOptions = [...this.#initialOptions].filter(c => !c.hide)
+    this.#initialOptions = config.options.filter(c => !c.hide)
+    this.#listOptions = this.#initialOptions
     this.#attributes = config.attributes || {}
     this.#classNames = config.classNames || {}
-    // rubel vaiya! can we use tarnary operator here?
-    if (config.document) this.#document = config.document
-    else this.#document = document
-    // rubel vaiya! can we use tarnary operator here?
-    if (config.window) this.#window = config.window
-    else this.#window = window
+    this.#document = config.document || document
+    this.#window = config.window || window
   }
 
   init() {
