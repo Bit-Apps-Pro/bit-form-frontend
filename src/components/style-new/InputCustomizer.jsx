@@ -4,6 +4,8 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import BorderControl from './BorderControl'
+import FontSizeControl from './FontSizeControl'
+import FontWeightAndStyleControl from './FontWeightAndStyleControl'
 import ResetStyle from './ResetStyle'
 import SimpleColorPicker from './SimpleColorPicker'
 import SpacingControl from './SpacingControl'
@@ -39,6 +41,12 @@ export default function InputCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
+
+      <FontSizeControl
+        stateObjName="themeVars"
+        propertyPath="--fld-fs"
+        id="fld-fs"
+      />
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>{__('Spacing')}</span>
