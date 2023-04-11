@@ -408,12 +408,13 @@ export default class BitPhoneNumberField {
       if (selectedCountry.ptrn && phoneNumberWithoutCode) {
         const ptrn = selectedCountry.ptrn.replace(/\$_bf_\$/g, '\\')
         const regex = new RegExp(`^(${ptrn})$`)
-        return regex.test(phoneNumberWithoutCode)
+        return !regex.test(phoneNumberWithoutCode) ? 'invalid' : ''
       }
-      return true
+      if (!phoneNumberWithoutCode) return 'req'
+      return ''
     }
 
-    return false
+    return 'req'
   }
 
   isValidated() {

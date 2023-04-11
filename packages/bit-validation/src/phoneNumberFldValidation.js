@@ -1,2 +1,2 @@
-const phoneNumberFldValidation = fldInstance => (!fldInstance.isValidated() ? 'invalid' : '')
+const phoneNumberFldValidation = fldInstance => fldInstance.isValidated()
 export default phoneNumberFldValidation
