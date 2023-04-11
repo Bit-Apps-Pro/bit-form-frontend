@@ -410,11 +410,11 @@ export default class BitPhoneNumberField {
         const regex = new RegExp(`^(${ptrn})$`)
         return !regex.test(phoneNumberWithoutCode) ? 'invalid' : ''
       }
-      if (!phoneNumberWithoutCode) return 'req'
+      if (!phoneNumberWithoutCode) return 'required'
       return ''
     }
 
-    return 'req'
+    return 'required'
   }
 
   isValidated() {
