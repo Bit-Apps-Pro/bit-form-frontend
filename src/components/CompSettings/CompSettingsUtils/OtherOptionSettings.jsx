@@ -29,7 +29,7 @@ export default function OtherOptionSettings() {
       fieldData.valid.otherOptReq = true
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.otherOptReq) fieldData.err.otherOptReq = {}
-      fieldData.err.otherOptReq.dflt = '<p>Custom Option Required</p>'
+      fieldData.err.otherOptReq.dflt = '<p style="margin:0">Custom Option Required</p>'
       fieldData.err.otherOptReq.show = true
       addDefaultStyleClasses(fldKey, 'otherOptions')
     } else {
@@ -52,7 +52,7 @@ export default function OtherOptionSettings() {
       fieldData.valid.otherOptReq = true
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.otherOptReq) fieldData.err.otherOptReq = {}
-      fieldData.err.otherOptReq.dflt = '<p>Custom Option Required</p>'
+      fieldData.err.otherOptReq.dflt = '<p style="margin:0">Custom Option Required</p>'
       fieldData.err.otherOptReq.show = true
     } else {
       delete fieldData.valid.otherOptReq
