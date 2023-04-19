@@ -136,7 +136,7 @@ function TextFieldSettings() {
       fieldData.mn = e.target.value
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.mn) fieldData.err.mn = {}
-      fieldData.err.mn.dflt = `<p>Minimum number is ${e.target.value}<p>`
+      fieldData.err.mn.dflt = `<p style="margin:0">Minimum number is ${e.target.value}<p>`
       fieldData.err.mn.show = true
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -151,7 +151,7 @@ function TextFieldSettings() {
       fieldData.mx = e.target.value
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.mx) fieldData.err.mx = {}
-      fieldData.err.mx.dflt = `<p>Maximum number is ${e.target.value}</p>`
+      fieldData.err.mx.dflt = `<p style="margin:0">Maximum number is ${e.target.value}</p>`
       fieldData.err.mx.show = true
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -171,7 +171,7 @@ function TextFieldSettings() {
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.regexr) fieldData.err.regexr = {}
       const ifPredefined = predefinedPatterns.find(opt => opt.val === val)
-      fieldData.err.regexr.dflt = `<p>${ifPredefined ? ifPredefined.msg : 'Pattern not matched'}</p>`
+      fieldData.err.regexr.dflt = `<p style="margin:0">${ifPredefined ? ifPredefined.msg : 'Pattern not matched'}</p>`
       fieldData.err.regexr.show = true
       if (fieldData.typ === 'password') {
         delete fieldData.valid.validations
@@ -194,7 +194,7 @@ function TextFieldSettings() {
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.regexr) fieldData.err.regexr = {}
       const ifPredefined = predefinedPatterns.find(opt => opt.val === val)
-      fieldData.err.regexr.dflt = `<p>${ifPredefined ? ifPredefined.msg : 'Pattern not matched'}</p>`
+      fieldData.err.regexr.dflt = `<p style="margin:0">${ifPredefined ? ifPredefined.msg : 'Pattern not matched'}</p>`
       fieldData.err.regexr.show = true
       if (fieldData.typ === 'password') {
         delete fieldData.valid.validations
@@ -219,7 +219,7 @@ function TextFieldSettings() {
 
   const generatePasswordPattern = validations => `^${validations.digit || ''}${validations.lower || ''}${validations.upper || ''}${validations.special || ''}.{${validations?.limit?.mn || 0},${validations?.limit?.mx || ''}}$`
 
-  const generatePasswordErrMsg = validations => `<p>Password must consist at least ${Object.keys(validations).map(vld => {
+  const generatePasswordErrMsg = validations => `<p style="margin:0">Password must consist at least ${Object.keys(validations).map(vld => {
     if (vld === 'digit') {
       return 'one number'
     } if (vld === 'lower') {
@@ -258,7 +258,7 @@ function TextFieldSettings() {
       fieldData.err.regexr.dflt = generatePasswordErrMsg(validations)
       fieldData.err.regexr.show = true
     } else {
-      fieldData.err.regexr.dflt = '<p>Pattern not matched</p>'
+      fieldData.err.regexr.dflt = '<p style="margin:0">Pattern not matched</p>'
       delete fieldData.valid.regexr
       delete fieldData.err.regexr.show
     }
