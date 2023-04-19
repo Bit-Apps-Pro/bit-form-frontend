@@ -13,7 +13,9 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import { $bits, $fieldLabels, $fieldsArr, $forms, $reportId, $reports, $reportSelector } from '../GlobalStates/GlobalStates'
+import {
+  $bits, $fieldLabels, $forms, $reportId, $reports, $reportSelector
+} from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
 import bitsFetch from '../Utils/bitsFetch'
@@ -268,7 +270,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
       accessor: 'table_ac',
       Cell: (val) => (
         <TableAction
-          // edit={() => editData(val.row)}
+          edit={() => editData(val.row)}
           del={() => delConfMdl(val.row, {
             fetchData: val.fetchData,
             data: {

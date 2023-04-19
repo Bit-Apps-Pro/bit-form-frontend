@@ -1,12 +1,13 @@
 import produce from 'immer'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
-import { useRecoilValue } from 'recoil'
 import { useFela } from 'react-fela'
+import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
-import Bitforms from '../user-frontend/Bitforms'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import app from '../styles/app.style'
+import Loader from './Loaders/Loader'
 import LoaderSm from './Loaders/LoaderSm'
 import Modal from './Utilities/Modal'
 
@@ -15,12 +16,11 @@ export default function EditEntryData(props) {
   const bits = useRecoilValue($bits)
   const [showEdit, setshowEdit] = useState(false)
   const [isLoading, setisLoading] = useState(false)
-  const [data, setData] = useState({ layout: null, fields: null })
+  const [isIframeLoading, setisIframeLoading] = useState(true)
   const [error, setError] = useState(null)
   const [formStyle, setFormStyle] = useState('')
   const [formLayoutStyle, setFormLayoutStyle] = useState('')
   const ref = useRef(null)
-  const [fields, setFields] = useState(null)
   const { css } = useFela()
   useEffect(() => {
     setshowEdit(true)
@@ -32,30 +32,23 @@ export default function EditEntryData(props) {
     fetch(`${bits.styleURL}/bitform-layout-${formID}.css`)
       .then(response => response.text())
       .then(styleData => setFormLayoutStyle(styleData))
-
-    bitsFetch({ formID, entryID }, 'bitforms_edit_form_entry')
-      .then(res => {
-        if (res !== undefined && res.success) {
-          const tmp = { layout: res.data.layout, fields: res.data.fields, fieldToCheck: res.data.fieldToCheck, conditional: res.data.conditional, fieldsKey: res.data.fieldsKey }
-          const submitBtn = Object.entries(tmp.fields).find(fld => fld[1].btnTyp === 'submit')
-          const submitBtnKey = submitBtn?.[0] || null
-          if (submitBtnKey) {
-            tmp.layout.lg = tmp.layout.lg.filter(lay => lay.i !== submitBtnKey)
-            delete tmp.fields[submitBtnKey]
-          }
-          setData(tmp)
-          setFields(res.data.fields)
-        }
-      })
   }, [entryID, formID])
 
   const updateData = (event) => {
     event.preventDefault()
     setisLoading(true)
-    const formData = new FormData(ref.current)
+    const iframeWindow = ref.current.contentWindow
+    const iframeDoc = iframeWindow.document
+    const form = iframeDoc?.querySelector('form')
+    const contentId = form.id.slice(form.id.indexOf('-') + 1)
+    let formData = new FormData(form)
+    console.log('advancedFileHandle= ', typeof iframeWindow.advancedFileHandle)
     const queryParam = { formID, entryID: props.entryID }
     const hidden = []
-    Object.entries(fields).forEach(fld => {
+    const objProp = iframeWindow.bf_globals[contentId]
+    if (typeof iframeWindow.advancedFileHandle !== 'undefined') formData = iframeWindow.advancedFileHandle(objProp, formData)
+    if (typeof iframeWindow.decisionFldHandle !== 'undefined') formData = iframeWindow.decisionFldHandle(objProp, formData)
+    Object.entries(objProp?.fields || {}).forEach((fld) => {
       if (fld[1]?.valid?.hide) {
         hidden.push(fld[0])
       }
@@ -102,21 +95,17 @@ export default function EditEntryData(props) {
       .finally(() => setisLoading(false))
   }
 
-  function SaveBtn() {
-    return (
-      <button onClick={updateData} disabled={isLoading} type="button" className={`${css.btn} btn-md blue btcd-mdl-hdr-btn`}>
-        Update
-        {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
-      </button>
-    )
-  }
-
   const mdlContentElm = document.querySelector('.btcd-modal-wrp')
   const mdlAutoHeight = mdlContentElm?.offsetHeight ? (mdlContentElm.offsetHeight - 150) : 0
 
   return (
     <Modal
-      hdrActn={<SaveBtn />}
+      hdrActn={(
+        <button onClick={updateData} disabled={isLoading} type="button" className={`${css(app.btn, app.blueGrd)} btn-md blue btcd-mdl-hdr-btn`}>
+          Update
+          {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
+        </button>
+      )}
       lg
       show={showEdit}
       setModal={props.close}
@@ -141,22 +130,24 @@ export default function EditEntryData(props) {
         autoHeightMin={mdlAutoHeight}
         autoHeightMax={mdlAutoHeight}
       >
-        {data.layout !== null && (
-          <Bitforms
-            refer={ref}
-            editMode
-            setFields={setFields}
-            layout={data.layout}
-            data={data.fields}
-            formID={formID}
-            entryID={props.entryID}
-            fieldToCheck={data.fieldToCheck}
-            conditional={data.conditional}
-            fieldsKey={data.fieldsKey}
-            error={error}
-          />
-        )}
+        {isIframeLoading && <Loader className={css({ ta: 'center' })} />}
+        <iframe ref={ref} title="Form Entry Edit" src={`http://bitformorg.local/bitform-form-entry-edit/${formID}/${entryID}`} className={css(style.iframe, style.body)} onLoad={() => setisIframeLoading(false)} />
       </Scrollbars>
     </Modal>
   )
+}
+
+const style = {
+  iframe: {
+    width: '100%',
+    height: '80vh',
+  },
+  body: {
+    '> body': {
+      height: '80vh',
+    },
+    '> html': {
+      height: '80vh',
+    },
+  },
 }
