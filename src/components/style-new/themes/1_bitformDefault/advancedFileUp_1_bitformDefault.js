@@ -74,6 +74,53 @@ export default function advancedFileUp_1_bitformDefault({ fk, breakpoint, colorS
       /* the text color of the file status and info labels */
       [`.${fk}-inp-wrp .filepond--file`]: { color: 'var(--global-font-color)' },
 
+      [`.${fk}-inp-wrp .file-wrpr`]: {
+        'background-color': 'var(--bg-10)',
+        'border-radius': 'var(--g-bdr-rad)',
+        display: 'flex',
+        'align-items': 'center',
+        'justify-content': 'space-between',
+        width: '100%',
+        height: 'auto',
+        'margin-top': '10px',
+        padding: '5px',
+        outline: '1px solid var(--bg-15)',
+      },
+
+      [`.${fk}-inp-wrp .file-details`]: {
+        display: 'flex',
+        'align-items': 'center',
+        'justify-content': 'space-between',
+        padding: '0px 10px',
+        width: '94%',
+      },
+
+      [`.${fk}-inp-wrp .file-title`]: {
+        display: 'inline-block',
+        'font-size': '12px',
+        overflow: 'hidden',
+        'text-overflow': 'ellipsis',
+        'white-space': 'nowrap',
+        color: 'var(--global-font-color)',
+      },
+
+      [`.${fk}-inp-wrp .cross-btn`]: {
+        cursor: 'pointer',
+        border: 'none',
+        'border-radius': '50px',
+        'box-shadow': 'none',
+        color: 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.8)',
+        'font-size': '20px',
+        height: '25px',
+        'line-height': '1',
+        'min-height': '25px',
+        'min-width': '25px',
+        padding: '0',
+        'text-decoration': 'none',
+        width: '25px',
+        transition: 'background-color 150ms',
+        'background-color': 'var(--bg-15)',
+      },
     }
   }
   return {}
