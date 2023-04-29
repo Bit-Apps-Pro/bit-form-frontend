@@ -34,6 +34,8 @@ export default class BitFileUpField {
 
   #assetsURL = ''
 
+  #oldFiles = []
+
   // default config
   #config = {
     id: 'upload',
@@ -96,7 +98,7 @@ export default class BitFileUpField {
       allowedFileType,
       accept,
       showSelectStatus,
-      fileSelectStatus } = this.#config
+      fileSelectStatus, oldFiles } = this.#config
 
     this.#fileUploadInput.multiple = multiple
     /* this.#fileUploadInput.onchange = onchange */
@@ -105,9 +107,77 @@ export default class BitFileUpField {
     else this.#fileSelectStatus?.remove()
     this.#files = {}
     this.#removeFilesList()
-
+    if (oldFiles) this.#loadFiles(oldFiles)
     this.#addEvent(this.#fileUploadInput, 'change', e => this.#fileUploadAction(e))
     this.#addEvent(this.#inpBtn, 'click', () => this.#fileUploadInput.click())
+  }
+
+  #loadFiles(val) {
+    const files = JSON.parse(val)
+    this.#oldFiles = JSON.parse(val)
+    if (!this.#filesList) { this.#createFilesList() }
+    files.forEach(file => {
+      this.#createFileListItem(file)
+    })
+    const hiddenOldFiles = this.#createElm('input')
+    hiddenOldFiles.type = 'hidden'
+    hiddenOldFiles.name = `${this.#config.fieldName}_old`
+    hiddenOldFiles.value = this.#oldFiles.toString()
+    this.#fileInputWrpr.appendChild(hiddenOldFiles)
+  }
+
+  #createFileListItem(fileName) {
+    const fileWrp = this.#createElm('div')
+    const fileId = fileName.replace(/( |\.|\(|\))/g, '')
+    fileWrp.id = `file-wrp-${fileId}`
+    this.#addClass(fileWrp, 'file-wrpr')
+    if ('file-wrpr' in this.#classNames) {
+      const fileWrpCls = this.#classNames['file-wrpr']
+      if (fileWrpCls) this.#setCustomClass(fileWrp, fileWrpCls)
+    }
+    if ('file-wrpr' in this.#attributes) {
+      const optLblWrp = this.#attributes['file-wrpr']
+      this.#setCustomAttr(fileWrp, optLblWrp)
+    }
+
+    const fileDetails = this.#createElm('div')
+    this.#addClass(fileDetails, 'file-details')
+
+    const fileTitle = this.#createElm('a')
+    this.#addClass(fileTitle, 'file-title')
+    if ('file-title' in this.#classNames) {
+      const fileTitleCls = this.#classNames['file-title']
+      if (fileTitleCls) this.#setCustomClass(fileTitle, fileTitleCls)
+    }
+    if ('file-title' in this.#config.attributes) {
+      const fileTitleAttr = this.#config.attributes['file-title']
+      this.#setCustomAttr(fileTitle, fileTitleAttr)
+    }
+    this.#setAttribute(fileTitle, 'target', '_blank')
+    this.#setAttribute(fileTitle, 'href', `${this.#config.baseDLURL}&fileID=${fileName}`)
+    this.#setTextContent(fileTitle, fileName)
+
+    fileDetails.append(fileTitle)
+
+    fileWrp.append(fileDetails)
+
+    const crossBtn = this.#createElm('button')
+    this.#addClass(crossBtn, 'cross-btn')
+    if ('cross-btn' in this.#classNames) {
+      const crossBtnCls = this.#classNames['cross-btn']
+      if (crossBtnCls) this.#setCustomClass(crossBtn, crossBtnCls)
+    }
+    this.#setAttribute(crossBtn, 'data-file-id', fileId)
+    this.#setAttribute(crossBtn, 'data-file-name', fileName)
+    this.#setAttribute(crossBtn, 'type', 'button')
+    if ('cross-btn' in this.#config.attributes) {
+      const crossBtnAttr = this.#config.attributes['cross-btn']
+      this.#setCustomAttr(crossBtn, crossBtnAttr)
+    }
+    this.#setTextContent(crossBtn, '×')
+    this.#addEvent(crossBtn, 'click', e => this.#removeOldFiles(e))
+    fileWrp.append(crossBtn)
+    this.#filesList.appendChild(fileWrp)
   }
 
   #fileUploadAction(e) {
@@ -314,6 +384,14 @@ export default class BitFileUpField {
       dataTransfer.items.add(file)
     })
     this.#fileUploadInput.files = dataTransfer.files
+  }
+
+  #removeOldFiles(e) {
+    const fileId = e.target.getAttribute('data-file-id')
+    const fileName = e.target.getAttribute('data-file-name')
+    this.#remove(`#file-wrp-${fileId}`)
+    this.#oldFiles = this.#oldFiles.filter(file => file !== fileName)
+    this.#select(`input[name="${this.#config.fieldName}_old"]`).value = this.#oldFiles.toString()
   }
 
   #removeAction = e => {

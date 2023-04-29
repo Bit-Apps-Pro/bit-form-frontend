@@ -65,6 +65,10 @@ const setDisabled = (fldKey, props, val) => {
       }
       return
     }
+    if (typ === 'button') {
+      select(props.contentId, `.${fldKey}-btn`).disabled = val
+      return
+    }
     select(props.contentId, `.${fldKey}-fld`).disabled = val
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 export default class BitAdvanceFileUpload {
   #fieldUploadWrapper = null
 
@@ -18,6 +19,10 @@ export default class BitAdvanceFileUpload {
   #nonce = null
 
   #uploadFileToServer = null
+
+  #oldFileList = null
+
+  #oldFiles = []
 
   #config = {
     document: {},
@@ -185,7 +190,89 @@ export default class BitAdvanceFileUpload {
       })
     }
 
+    if (this.#config.oldFiles) this.#loadFiles(this.#config.oldFiles)
     // this.#filePondRef.destroy(this.#filePondRef.element)
+  }
+
+  #loadFiles(val) {
+    const files = JSON.parse(val)
+    this.#oldFiles = JSON.parse(val)
+    this.#oldFileList = this.#createElm('div')
+    this.#addClass(this.#oldFileList, 'old-file-list')
+
+    files.forEach(file => {
+      this.#createFileListItem(file)
+    })
+    const hiddenOldFiles = this.#createElm('input')
+    hiddenOldFiles.type = 'hidden'
+    hiddenOldFiles.name = `${this.#config.fieldName}_old`
+    hiddenOldFiles.value = this.#oldFiles.toString()
+    this.#fieldUploadWrapper.appendChild(this.#oldFileList)
+    this.#fieldUploadWrapper.appendChild(hiddenOldFiles)
+  }
+
+  #createFileListItem(fileName) {
+    const fileWrp = this.#createElm('div')
+    const fileId = fileName.replace(/( |\.|\(|\))/g, '')
+    fileWrp.id = `file-wrp-${fileId}`
+    this.#addClass(fileWrp, 'file-wrpr')
+
+    const fileDetails = this.#createElm('div')
+    this.#addClass(fileDetails, 'file-details')
+
+    const fileTitle = this.#createElm('a')
+    this.#addClass(fileTitle, 'file-title')
+
+    this.#setAttribute(fileTitle, 'target', '_blank')
+    this.#setAttribute(fileTitle, 'href', `${this.#config.baseDLURL}&fileID=${fileName}`)
+    this.#setTextContent(fileTitle, fileName)
+
+    fileDetails.append(fileTitle)
+
+    fileWrp.append(fileDetails)
+
+    const crossBtn = this.#createElm('button')
+    this.#addClass(crossBtn, 'cross-btn')
+
+    this.#setAttribute(crossBtn, 'data-file-id', fileId)
+    this.#setAttribute(crossBtn, 'data-file-name', fileName)
+    this.#setAttribute(crossBtn, 'type', 'button')
+
+    this.#setTextContent(crossBtn, '×')
+    this.#addEvent(crossBtn, 'click', e => this.#removeOldFiles(e))
+    fileWrp.append(crossBtn)
+    this.#oldFileList.appendChild(fileWrp)
+  }
+
+  #removeOldFiles(e) {
+    const fileId = e.target.getAttribute('data-file-id')
+    const fileName = e.target.getAttribute('data-file-name')
+    this.#remove(`#file-wrp-${fileId}`)
+    this.#oldFiles = this.#oldFiles.filter(file => file !== fileName)
+    this.#select(`input[name="${this.#config.fieldName}_old"]`).value = this.#oldFiles.toString()
+  }
+
+  #remove(selector) { this.#select(selector)?.remove() }
+
+  #createElm(elm) {
+    return this.#document.createElement(elm)
+  }
+
+  #addEvent(element, eventType, eventAction) {
+    element.addEventListener(eventType, eventAction)
+    // this.#allEventListeners.push({ element, eventType, eventAction })
+  }
+
+  #addClass(element, className) {
+    element.classList.add(className)
+  }
+
+  #setTextContent(elm, txt) {
+    elm.textContent = txt
+  }
+
+  #setAttribute(elm, name, value) {
+    elm?.setAttribute?.(name, value)
   }
 
   #select(selector) { return this.#fieldUploadWrapper.querySelector(selector) || console.error('selector not found', selector) }

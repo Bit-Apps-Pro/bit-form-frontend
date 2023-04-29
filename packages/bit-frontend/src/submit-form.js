@@ -38,19 +38,20 @@ function bitFormSubmitAction(e) {
         .execute(props.gRecaptchaSiteKey, { action: 'submit' })
         .then((token) => {
           formData.append('g-recaptcha-response', token)
-          const submitResp = bfSubmitFetch(props?.ajaxURL, formData)
+          const submitResp = bfSubmitFetch(props, formData)
           submitResponse(submitResp, contentId, formData)
         })
     })
   } else {
-    const submitResp = bfSubmitFetch(props?.ajaxURL, formData)
+    const submitResp = bfSubmitFetch(props, formData)
     submitResponse(submitResp, contentId, formData)
   }
 }
 
-function bfSubmitFetch(ajaxURL, formData) {
-  const uri = new URL(ajaxURL)
-  uri.searchParams.append('action', 'bitforms_submit_form')
+function bfSubmitFetch(props, formData) {
+  const uri = new URL(props?.ajaxURL)
+  const route = props?.entryId ? `bitforms_update_form_entry/${props.formId}/${props.entryId}` : 'bitforms_submit_form'
+  uri.searchParams.append('action', route)
   return fetch(uri, {
     method: 'POST',
     body: formData,
