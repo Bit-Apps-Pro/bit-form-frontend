@@ -31,7 +31,6 @@ export default function Tip({
   return (
     <Tippy
       trigger={trigger}
-      animateFill
       placement={place}
       plugins={theme === 'material' && [animateFill]}
       duration={150}

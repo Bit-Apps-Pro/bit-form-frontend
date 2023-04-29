@@ -18,8 +18,10 @@ import {
   $draggingField,
   $fields,
   $flags,
+  $isDraggable,
   $isNewThemeStyleLoaded,
   $layouts,
+  $nestedLayouts,
   $proModal,
   $selectedFieldId,
   $uniqueFieldId
@@ -49,6 +51,7 @@ import {
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
+import { addNewFieldToGridLayout } from '../Utils/gridLayoutHelpers'
 import { deepCopy, isFirefox, isObjectEmpty, IS_PRO } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
@@ -181,6 +184,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }, [v1Styles, gridWidth, formID, styles])
 
   const margeNewData = () => {
+    console.log({ newData })
     addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     setNewData(null)
   }
@@ -248,194 +252,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     removeFormUpdateError(fldKey)
   }
 
-  const handleFieldExtraAttr = (fieldData) => {
-    const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2)
-    if (extraAttr.validType === 'pro') {
-      setProModal({ show: true, ...proHelperData[fieldData.typ] })
-      return 0
-    }
-
-    if (extraAttr.validType === 'onlyOne') {
-      setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
-      return 0
-    }
-
-    if (extraAttr.validType === 'keyEmpty') {
-      setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
-      return 0
-    }
-
-    if (extraAttr.validType === 'setDefaultPayConfig') {
-      const newFldData = { ...fieldData }
-      newFldData.payIntegID = extraAttr.payData.id
-      return newFldData
-    }
-
-    return fieldData
-  }
-
-  const generateFieldLblForHistory = fldData => {
-    if (fldData.typ === 'button') return fldData.txt
-    if (fldData.typ === 'decision-box') return 'Decision Box'
-    if (fldData.typ === 'title') return 'Title Field'
-    if (fldData.typ === 'html') return 'HTML Field'
-    if (fldData.typ === 'recaptcha') return 'Recaptcha Field'
-    if (!fldData.lbl) return fldData.typ.charAt(0).toUpperCase() + fldData.typ.slice(1)
-    return fldData.lbl
-  }
-
-  const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
-    const { typ: fldType } = fieldData
-
-    if (fldType === 'paypal') {
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'paypalClientIdMissing',
-        errorMsg: 'PayPal Client ID is missing',
-        errorUrl: `field-settings/${fldKey}`,
-      })
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'paypalAmountMissing',
-        errorMsg: __('PayPal Fixed Amount is not valid'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-    } else if (fldType === 'razorpay') {
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'razorpayClientIdMissing',
-        errorMsg: __('Razorpay Client ID is missing'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'razorpayAmountMissing',
-        errorMsg: __('Razorpay Fixed Amount is not valid'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-    }
-  }
+  const setNestedLayouts = useSetRecoilState($nestedLayouts)
 
   function addNewField(fieldData, fieldSize, addPosition) {
-    let processedFieldData = handleFieldExtraAttr(fieldData)
-    if (!processedFieldData) return
-    processedFieldData = { ...processedFieldData, fieldName: `${processedFieldData.typ}-${formID}-${uniqueFieldId}` }
-    const newBlk = `b${formID}-${uniqueFieldId}`
-    setUpdateErrorMsgByDefault(newBlk, processedFieldData)
-    // eslint-disable-next-line prefer-const
-    let { x, y } = addPosition
-    if (y !== 0) { y -= 1 }
-    const { w, h, minH, maxH, minW } = fieldSize
-    const newLayoutItem = {
-      i: newBlk, x, y, w, h, minH, maxH, minW,
-    }
-    const resizeHandles = getResizableHandles(fieldData.typ)
-    if (resizeHandles) {
-      newLayoutItem.resizeHandles = resizeHandles
-    }
-    const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
-    const newFields = { ...fields, [newBlk]: processedFieldData }
-    if (newLayouts.lg.length !== Object.keys(newFields).length) {
-      const fldArr = Object.keys(newFields)
-      const layArr = newLayouts.lg.map(lay => lay.i)
-      const missingFields = fldArr.filter(fld => !layArr.includes(fld))
-      if (missingFields.length) missingFields.forEach(fldKey => delete newFields[fldKey])
-    }
+    const { newLayouts } = addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition)
+
     setLayouts(newLayouts)
     setRootLayouts(newLayouts)
-    setFields(newFields)
-    sessionStorage.setItem('btcd-lc', '-')
-
-    // add to history
-    const event = `${generateFieldLblForHistory(fieldData)} added`
-    const type = 'add_fld'
-
-    setTimeout(() => {
-      selectInGrid(`[data-key="${newBlk}"]`)?.focus()
-    }, 500)
-
-    // add style
-    let newStyles = styles
-    const tempThemeVars = deepCopy(themeVars)
-    setStyles(prevStyles => {
-      newStyles = produce(prevStyles, draftStyle => {
-        const globalTheme = draftStyle.theme
-
-        if (globalTheme === 'bitformDefault') {
-          const defaultFieldStyle = bitformDefaultTheme({
-            type: processedFieldData.typ,
-            fieldKey: newBlk,
-            direction: themeVars['--dir'],
-          })
-          if (prevStyles.fieldsSize !== 'medium') {
-            const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, prevStyles.fieldsSize, tempThemeVars)
-            draftStyle.fields[newBlk] = updateStyle
-          } else {
-            draftStyle.fields[newBlk] = defaultFieldStyle
-          }
-        }
-
-        if (globalTheme === 'atlassian') {
-          draftStyle.fields[newBlk] = atlassianTheme({
-            type: processedFieldData.typ,
-            fieldKey: newBlk,
-            direction: themeVars['--dir'],
-          })
-        }
-
-        if (globalTheme === 'noStyle') {
-          draftStyle.fields[newBlk] = noStyleTheme({
-            type: processedFieldData.typ,
-            fieldKey: newBlk,
-            direction: themeVars['--dir'],
-          })
-        }
-      })
-      return newStyles
-    })
-    setThemeVars(tempThemeVars)
-
-    const fldType = processedFieldData.typ
-    if (fldType === 'razorpay' || fldType === 'paypal') {
-      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
-        draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
-        draftStaticStyleState.staticStyles['.form-loading::before'] = {
-          position: 'absolute',
-          'border-radius': '5px',
-          display: 'block',
-          top: 0,
-          left: 0,
-          content: "''",
-          height: '100%',
-          width: '100%',
-          'z-index': '9999',
-          'background-color': 'rgba(0,0,0,0.2)',
-        }
-        draftStaticStyleState.staticStyles['.form-loading::after'] = {
-          position: 'absolute',
-          'border-radius': '5px',
-          color: '#fff',
-          top: '50%',
-          left: '50%',
-          content: "'loading...'",
-          transform: 'translate(-50%, -50%)',
-          'z-index': '99999',
-          'font-size': '20px',
-          'background-color': '#222',
-          padding: '5px 15px',
-        }
-        if (fldType === 'razorpay') draftStaticStyleState.staticStyles['.razorpay-checkout-frame'] = { height: '100% !important' }
-      }))
-    }
-
-    const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
-    addToBuilderHistory({ event, type, state })
-
-    setTimeout(() => {
-      reCalculateFldHeights(newBlk)
-    }, 100)
-
-    return { newBlk }
   }
 
   const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
@@ -515,11 +338,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       setLayouts(layoutsFromGrid)
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
-  }
-
-  const setRegenarateLayFlag = () => {
-    sessionStorage.setItem('btcd-lc', '-')
-    setResizingFalse()
   }
 
   const handleContextMenu = (e, fldKey) => {
@@ -725,10 +543,19 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     return {}
   }
 
+  const [isDraggable, setIsDraggable] = useRecoilState($isDraggable)
+
+  const setRegenarateLayFlag = () => {
+    sessionStorage.setItem('btcd-lc', '-')
+    setResizingFalse()
+  }
+
   const setResizingFldKey = (_, lay) => {
     const fldKey = lay.i
     setResizingFld({ fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
   }
+
+  console.log('isDraggable', isDraggable)
 
   return (
     <div
@@ -754,6 +581,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   compactType="vertical"
                   useCSSTransforms
                   isDroppable={draggingField !== null && breakpoint === 'lg'}
+                  // isDroppable={false}
                   className="layout"
                   style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
                   onDrop={onDrop}
@@ -763,6 +591,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   cols={cols}
                   breakpoints={{ lg: 700, md: 420, sm: 300 }}
                   rowHeight={rowHeight}
+                  isDraggable={isDraggable}
                   margin={gridContentMargin}
                   draggableCancel=".no-drg"
                   draggableHandle=".drag"

@@ -21,6 +21,7 @@ import PhoneNumberField from './Fields/PhoneNumberField'
 import RadioBox from './Fields/RadioBox'
 import RazorpayField from './Fields/RazorpayField'
 import ReCaptchaV2 from './Fields/ReCaptchaV2'
+import SectionField from './Fields/SectionField'
 import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
@@ -107,6 +108,8 @@ function MapComponents({
       return <CountryField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
     case 'phone-number':
       return <PhoneNumberField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
+    case 'section':
+      return <SectionField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

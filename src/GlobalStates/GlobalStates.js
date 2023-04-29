@@ -165,3 +165,11 @@ export const $reportSelector = selector({
 })
 
 export const $proModal = atom({ key: '$proModal', default: { show: false } })
+
+export const $nestedLayouts = atom({
+  key: '$nestedLayouts',
+  default: {},
+  dangerouslyAllowMutability: true,
+})
+
+export const $isDraggable = atom({ key: '$isDraggable', default: true })

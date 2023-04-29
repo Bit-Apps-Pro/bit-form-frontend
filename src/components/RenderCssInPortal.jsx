@@ -8,24 +8,24 @@ import tippyLightBorderCSS from 'tippy.js/themes/light-border.css'
 import { select } from '../Utils/globalHelpers'
 
 export default function RenderCssInPortal() {
-  const styled = { div([str]) { return str } }
+   const styled = { div([str]) { return str } }
 
-  useEffect(() => {
-    const font1 = select('#bf-font-0-css')
-    const font2 = select('#bf-font-1-css')
+   useEffect(() => {
+      const font1 = select('#bf-font-0-css')
+      const font2 = select('#bf-font-1-css')
 
-    if (font1 && font2) {
-      document
-        .getElementById('bit-grid-layout')
-        ?.contentWindow
-        ?.document
-        .head
-        .appendChild(document.importNode(font1))
-        .appendChild(document.importNode(font2))
-    }
-  }, [])
+      if (font1 && font2) {
+         document
+            .getElementById('bit-grid-layout')
+            ?.contentWindow
+            ?.document
+            .head
+            .appendChild(document.importNode(font1))
+            .appendChild(document.importNode(font2))
+      }
+   }, [])
 
-  const gridLayoutStyle = styled.div`
+   const gridLayoutStyle = styled.div`
 :root {
     --b-50: #006aff;
     --g-41: #00faa7;
@@ -105,21 +105,21 @@ export default function RenderCssInPortal() {
     z-index: 999;
  }
  
- .blk:focus .blk-icn-wrp,.blk:hover .blk-icn-wrp,.itm-focus .blk-icn-wrp {
+ .blk:focus > .blk-icn-wrp,.blk:hover > .blk-icn-wrp,.itm-focus > .blk-icn-wrp {
     visibility: visible;
  }
 
- .blk:focus .blk-icn-wrp,.itm-focus .blk-icn-wrp {
+ .blk:focus > .blk-icn-wrp,.itm-focus > .blk-icn-wrp {
   top: -25px;
   right: -3px;
  }
 
- .blk:not(.itm-focus):hover:not(:focus) .blk-icn-wrp {
+ .blk:not(.itm-focus):hover:not(:focus) > .blk-icn-wrp {
   top: -25px;
   right: 0px;
  }
  
- .blk:focus .blk-icn-wrp button,.blk:focus .react-resizable-handle,.blk:hover .blk-icn-wrp button,.blk:hover .react-resizable-handle,.itm-focus .blk-icn-wrp button,.itm-focus .react-resizable-handle {
+ .blk:focus > .blk-icn-wrp button,.blk:focus > .react-resizable-handle,.blk:hover > .blk-icn-wrp button,.blk:hover > .react-resizable-handle,.itm-focus > .blk-icn-wrp button,.itm-focus > .react-resizable-handle {
     transform: scale(1)
  }
  
@@ -407,7 +407,7 @@ export default function RenderCssInPortal() {
 }
   `
 
-  const utils = styled.div`
+   const utils = styled.div`
   .pos-rel { position: relative}
    .g-c {
       display: -ms-grid;
@@ -475,16 +475,16 @@ display:none;
 
 
 `
-  return (
-    <style>
-      {gridLayoutStyle}
-      {filepondCSS}
-      {filepondPreviewCSS}
-      {tippyCss}
-      {tippyLightBorderCSS}
-      {tippyShiftAwayExtremeCSS}
-      {tippySvgArrowCSS}
-      {utils}
-    </style>
-  )
+   return (
+      <style>
+         {gridLayoutStyle}
+         {filepondCSS}
+         {filepondPreviewCSS}
+         {tippyCss}
+         {tippyLightBorderCSS}
+         {tippyShiftAwayExtremeCSS}
+         {tippySvgArrowCSS}
+         {utils}
+      </style>
+   )
 }
