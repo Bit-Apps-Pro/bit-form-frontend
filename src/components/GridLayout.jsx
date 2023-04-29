@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -32,27 +32,23 @@ import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import {
-  addFormUpdateError,
-  addNewItemInLayout,
   addToBuilderHistory,
+  builderBreakpoints,
   calculateFormGutter,
-  checkFieldsExtraAttr,
   cols,
   filterLayoutItem,
   filterNumber,
   fitAllLayoutItems, fitSpecificLayoutItem, getAbsoluteElmHeight, getLatestState,
-  getResizableHandles,
   getTotalLayoutHeight,
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
-  reCalculateFldHeights,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { addNewFieldToGridLayout } from '../Utils/gridLayoutHelpers'
-import { deepCopy, isFirefox, isObjectEmpty, IS_PRO } from '../Utils/Helpers'
+import { IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -60,10 +56,6 @@ import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
-import noStyleTheme from './style-new/themes/0_noStyle'
-import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
-import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefault/fieldSizeControlStyle'
-import atlassianTheme from './style-new/themes/2_atlassian'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -589,7 +581,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   droppingItem={draggingField?.fieldSize}
                   onLayoutChange={handleLayoutChange}
                   cols={cols}
-                  breakpoints={{ lg: 700, md: 420, sm: 300 }}
+                  breakpoints={builderBreakpoints}
                   rowHeight={rowHeight}
                   isDraggable={isDraggable}
                   margin={gridContentMargin}

@@ -18,6 +18,8 @@ import { __ } from './i18nwrap'
 
 export const cols = { lg: 60, md: 60, sm: 60 }
 
+export const builderBreakpoints = { lg: 700, md: 420, sm: 300 }
+
 /**
  * sort a layout array by x and y axis
  * @param {array} layoutArr layout array [{x:0,y:1,...}, {x:0,y:2,...}, ]

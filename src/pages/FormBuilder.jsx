@@ -22,7 +22,7 @@ import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAn
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal
+  $bits, $breakpoint, $breakpointSize, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -32,7 +32,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, calculateFormGutter } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, builderBreakpoints, calculateFormGutter } from '../Utils/FormBuilderHelper'
 import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
@@ -306,11 +306,11 @@ const FormBuilder = ({ isLoading }) => {
     const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
 
     const gw = Math.round(paneWidth - w) // inner left-right padding
-    if (gw <= 510) {
+    if (gw < builderBreakpoints.md) {
       setbrkPoint('sm')
-    } else if (gw > 420 && gw <= 700) {
+    } else if (gw >= builderBreakpoints.md && gw < builderBreakpoints.lg) {
       setbrkPoint('md')
-    } else if (gw > 700) {
+    } else if (gw >= builderBreakpoints.lg) {
       setbrkPoint('lg')
     }
   }

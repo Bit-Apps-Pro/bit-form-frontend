@@ -1,17 +1,19 @@
 import { Suspense } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { $breakpoint, $draggingField, $fields, $isDraggable, $nestedLayouts, $selectedFieldId } from '../../GlobalStates/GlobalStates'
-import { cols, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
-import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
-import { addNewFieldToGridLayout } from '../../Utils/gridLayoutHelpers'
+import {
+  $breakpoint, $breakpointSize, $draggingField, $fields, $isDraggable, $nestedLayouts, $selectedFieldId,
+} from '../../GlobalStates/GlobalStates'
+import { cols, reCalculateFldHeights, builderBreakpoints } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
+import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
+import { addNewFieldToGridLayout, onBreakpointChange } from '../../Utils/gridLayoutHelpers'
 import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
 import { toolsList } from '../LeftBars/Toolbar'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
-import RenderStyle from '../style-new/RenderStyle'
 import Downmenu from '../Utilities/Downmenu'
+import RenderStyle from '../style-new/RenderStyle'
 
 /* eslint-disable react/jsx-props-no-spreading */
 export default function SectionField({
@@ -94,7 +96,7 @@ export default function SectionField({
               droppingItem={draggingField?.fieldSize}
               onLayoutChange={handleLayoutChange}
               cols={cols}
-              breakpoints={{ lg: 700, md: 420, sm: 300 }}
+              breakpoints={builderBreakpoints}
               rowHeight={1}
               margin={[0, 0]}
               draggableCancel=".no-drg"
