@@ -146,6 +146,15 @@ export default function SectionField({
                 </div>
               ))}
             </ResponsiveReactGridLayout>
+            {!nestedLayouts?.[fieldKey]?.[breakpoint]?.length && (
+              <div className="empty-layout">
+                <div className="empty-layout-msg">
+                  <div className="empty-layout-msg-txt">
+                    <span>Drag and drop fields here</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </InputWrapper>
