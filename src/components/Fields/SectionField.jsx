@@ -1,19 +1,20 @@
 import { Suspense } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { $gridWidth } from '../../GlobalStates/FormBuilderStates'
 import {
-  $breakpoint, $breakpointSize, $draggingField, $fields, $isDraggable, $nestedLayouts, $selectedFieldId,
+  $breakpoint, $draggingField, $fields, $isDraggable, $nestedLayouts, $selectedFieldId
 } from '../../GlobalStates/GlobalStates'
-import { cols, reCalculateFldHeights, builderBreakpoints } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { builderBreakpoints, cols, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
-import { addNewFieldToGridLayout, onBreakpointChange } from '../../Utils/gridLayoutHelpers'
+import { addNewFieldToGridLayout } from '../../Utils/gridLayoutHelpers'
+import { deepCopy } from '../../Utils/Helpers'
 import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
 import { toolsList } from '../LeftBars/Toolbar'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
-import Downmenu from '../Utilities/Downmenu'
 import RenderStyle from '../style-new/RenderStyle'
+import Downmenu from '../Utilities/Downmenu'
 
 /* eslint-disable react/jsx-props-no-spreading */
 export default function SectionField({
@@ -59,6 +60,12 @@ export default function SectionField({
 
   const [isDraggable, setIsDraggable] = useRecoilState($isDraggable)
 
+  const gridWidth = useRecoilValue($gridWidth)
+  // const styles = useRecoilValue($styles)
+  console.log({ styleClasses })
+
+  const fldWrpPadding = 40
+
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />
@@ -84,7 +91,7 @@ export default function SectionField({
           >
             <ResponsiveReactGridLayout
               // width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
-              width={826}
+              width={gridWidth - fldWrpPadding}
               measureBeforeMount
               compactType="vertical"
               useCSSTransforms

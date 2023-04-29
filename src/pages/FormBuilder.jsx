@@ -21,6 +21,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
+import { $gridWidth } from '../GlobalStates/FormBuilderStates'
 import {
   $bits, $breakpoint, $breakpointSize, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal,
 } from '../GlobalStates/GlobalStates'
@@ -78,7 +79,7 @@ const FormBuilder = ({ isLoading }) => {
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [showToolBar, setShowToolbar] = useState(!toolbarOff)
-  const [gridWidth, setGridWidth] = useState(BUILDER_WIDTH)
+  const [gridWidth, setGridWidth] = useRecoilState($gridWidth)
   const deferedGridWidth = useDeferredValue(gridWidth)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
@@ -107,13 +108,8 @@ const FormBuilder = ({ isLoading }) => {
 
   const { forceBuilderWidthToLG } = builderHookStates
 
-  // useEffect(() => {
-  // if (formType === 'new') {
-  // sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
-  // setStyleLoading(false)
-  // }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  useEffect(() => { setGridWidth(BUILDER_WIDTH) }, [])
 
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
