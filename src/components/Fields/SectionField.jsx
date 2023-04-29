@@ -62,7 +62,7 @@ export default function SectionField({
 
   const gridWidth = useRecoilValue($gridWidth)
   // const styles = useRecoilValue($styles)
-  console.log({ styleClasses })
+  console.log({ gridWidth })
 
   const fldWrpPadding = 40
 
@@ -82,7 +82,7 @@ export default function SectionField({
           {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
         >
           <div
-            style={{ width: 800, display: 'inline-block' }}
+            style={{ width: gridWidth - fldWrpPadding, display: 'inline-block' }}
             className="layout-wrapper"
             id="layout-wrapper"
             onDragOver={e => e.preventDefault()}
@@ -90,7 +90,6 @@ export default function SectionField({
           // onClick={resetContextMenu}
           >
             <ResponsiveReactGridLayout
-              // width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
               width={gridWidth - fldWrpPadding}
               measureBeforeMount
               compactType="vertical"
