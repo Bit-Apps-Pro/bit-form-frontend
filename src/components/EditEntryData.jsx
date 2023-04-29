@@ -4,9 +4,9 @@ import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
+import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
-import app from '../styles/app.style'
 import Loader from './Loaders/Loader'
 import LoaderSm from './Loaders/LoaderSm'
 import Modal from './Utilities/Modal'
@@ -26,12 +26,12 @@ export default function EditEntryData(props) {
     setshowEdit(true)
     // eslint-disable-next-line no-undef
     fetch(`${bits.styleURL}/bitform-${formID}.css`)
-      .then(response => response.text())
-      .then(styleData => setFormStyle(styleData))
+      .then((response) => response.text())
+      .then((styleData) => setFormStyle(styleData))
 
     fetch(`${bits.styleURL}/bitform-layout-${formID}.css`)
-      .then(response => response.text())
-      .then(styleData => setFormLayoutStyle(styleData))
+      .then((response) => response.text())
+      .then((styleData) => setFormLayoutStyle(styleData))
   }, [entryID, formID])
 
   const updateData = (event) => {
@@ -46,8 +46,12 @@ export default function EditEntryData(props) {
     const queryParam = { formID, entryID: props.entryID }
     const hidden = []
     const objProp = iframeWindow.bf_globals[contentId]
-    if (typeof iframeWindow.advancedFileHandle !== 'undefined') formData = iframeWindow.advancedFileHandle(objProp, formData)
-    if (typeof iframeWindow.decisionFldHandle !== 'undefined') formData = iframeWindow.decisionFldHandle(objProp, formData)
+    if (typeof iframeWindow.advancedFileHandle !== 'undefined') {
+      formData = iframeWindow.advancedFileHandle(objProp, formData)
+    }
+    if (typeof iframeWindow.decisionFldHandle !== 'undefined') {
+      formData = iframeWindow.decisionFldHandle(objProp, formData)
+    }
     Object.entries(objProp?.fields || {}).forEach((fld) => {
       if (fld[1]?.valid?.hide) {
         hidden.push(fld[0])
@@ -57,7 +61,7 @@ export default function EditEntryData(props) {
       formData.append('hidden_fields', hidden)
     }
     bitsFetch(formData, 'bitforms_update_form_entry', undefined, queryParam)
-      .then(response => {
+      .then((response) => {
         if (response !== undefined && response.success) {
           if (response.data.cron || response.data.cronNotOk) {
             const hitCron = response.data.cron || response.data.cronNotOk
@@ -70,22 +74,26 @@ export default function EditEntryData(props) {
             } else {
               const uri = new URL(bits.ajaxURL)
               uri.searchParams.append('action', 'bitforms_trigger_workflow')
-              const triggerData = { cronNotOk: hitCron, id: `bitforms_${formID}` }
-              fetch(
-                uri,
-                {
-                  method: 'POST',
-                  body: JSON.stringify(triggerData),
-                  headers: { 'Content-Type': 'application/json' },
-                },
-              )
-                .then(res => res.json())
+              const triggerData = {
+                cronNotOk: hitCron,
+                id: `bitforms_${formID}`,
+              }
+              fetch(uri, {
+                method: 'POST',
+                body: JSON.stringify(triggerData),
+                headers: { 'Content-Type': 'application/json' },
+              }).then((res) => res.json())
             }
           }
           setSnackbar({ show: true, msg: response.data.message })
-          setAllResp(oldResp => produce(oldResp, draft => {
-            const entryIndex = draft.findIndex(e => e.entry_id === props.entryID)
-            draft[entryIndex] = { ...draft[entryIndex], ...response.data.updatedData }
+          setAllResp((oldResp) => produce(oldResp, (draft) => {
+            const entryIndex = draft.findIndex(
+              (e) => e.entry_id === props.entryID,
+            )
+            draft[entryIndex] = {
+              ...draft[entryIndex],
+              ...response.data.updatedData,
+            }
           }))
           props.close(false)
         } else if (response.data) {
@@ -96,12 +104,22 @@ export default function EditEntryData(props) {
   }
 
   const mdlContentElm = document.querySelector('.btcd-modal-wrp')
-  const mdlAutoHeight = mdlContentElm?.offsetHeight ? (mdlContentElm.offsetHeight - 150) : 0
+  const mdlAutoHeight = mdlContentElm?.offsetHeight
+    ? mdlContentElm.offsetHeight - 150
+    : 0
 
   return (
     <Modal
       hdrActn={(
-        <button onClick={updateData} disabled={isLoading} type="button" className={`${css(app.btn, app.blueGrd)} btn-md blue btcd-mdl-hdr-btn`}>
+        <button
+          onClick={updateData}
+          disabled={isLoading}
+          type="button"
+          className={`${css(
+            app.btn,
+            app.blueGrd,
+          )} btn-md blue btcd-mdl-hdr-btn`}
+        >
           Update
           {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>
@@ -131,7 +149,13 @@ export default function EditEntryData(props) {
         autoHeightMax={mdlAutoHeight}
       >
         {isIframeLoading && <Loader className={css({ ta: 'center' })} />}
-        <iframe ref={ref} title="Form Entry Edit" src={`http://bitformorg.local/bitform-form-entry-edit/${formID}/${entryID}`} className={css(style.iframe, style.body)} onLoad={() => setisIframeLoading(false)} />
+        <iframe
+          ref={ref}
+          title="Form Entry Edit"
+          src={`${window.location.origin}/bitform-form-entry-edit/${formID}/${entryID}`}
+          className={css(style.iframe, style.body)}
+          onLoad={() => setisIframeLoading(false)}
+        />
       </Scrollbars>
     </Modal>
   )
