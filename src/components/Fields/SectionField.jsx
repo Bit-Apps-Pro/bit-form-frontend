@@ -14,7 +14,6 @@ import InputWrapper from '../InputWrapper'
 import { toolsList } from '../LeftBars/Toolbar'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
 import RenderStyle from '../style-new/RenderStyle'
-import Downmenu from '../Utilities/Downmenu'
 
 /* eslint-disable react/jsx-props-no-spreading */
 export default function SectionField({
@@ -148,21 +147,6 @@ export default function SectionField({
               ))}
             </ResponsiveReactGridLayout>
           </div>
-          <Downmenu>
-            <button type="button" className="btn btn-primary">Add Field</button>
-            <div>
-              {tools.map(tool => (
-                <button
-                  type="button"
-                  key={tool.name}
-                  className="btn btn-primary"
-                  onClick={handleToolClick(tool)}
-                >
-                  {tool.name}
-                </button>
-              ))}
-            </div>
-          </Downmenu>
         </div>
       </InputWrapper>
     </>
