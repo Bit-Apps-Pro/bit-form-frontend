@@ -176,7 +176,7 @@ export const searchKey = (e) => {
   }
 }
 
-function getAbsoluteSize(el) {
+export function getAbsoluteSize(el) {
   const styles = window.getComputedStyle(el)
   // const marginTop =
   // const marginBottom =
@@ -195,7 +195,12 @@ function getAbsoluteSize(el) {
   const paddingTop = parseFloat(styles.paddingTop)
   const paddingBottom = parseFloat(styles.paddingBottom)
 
+  const height = parseFloat(styles.height)
+  const width = parseFloat(styles.width)
+
   return {
+    height,
+    width,
     borderBottom,
     borderTop: parseFloat(styles.borderTop),
     borderLeft,
