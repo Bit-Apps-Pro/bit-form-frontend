@@ -1,15 +1,17 @@
 import { Suspense } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $gridWidth, $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
-  $breakpoint, $draggingField, $fields, $nestedLayouts, $selectedFieldId
+  $breakpoint, $contextMenu, $draggingField, $fields, $nestedLayouts, $selectedFieldId,
 } from '../../GlobalStates/GlobalStates'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { builderBreakpoints, cols, propertyValueSumX, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { builderBreakpoints, cols, getNestedLayoutHeight, propertyValueSumX, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { deepCopy } from '../../Utils/Helpers'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { addNewFieldToGridLayout } from '../../Utils/gridLayoutHelpers'
-import { deepCopy } from '../../Utils/Helpers'
+import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
@@ -20,12 +22,18 @@ import { getValueFromStateVar } from '../style-new/styleHelpers'
 export default function SectionField({
   fieldKey, attr: fieldData, styleClasses, formID,
 }) {
+  const { formType } = useParams()
   const styleClassesForRender = deepCopy(styleClasses)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
+  const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
+  // const breakpoint = useRecoilValue($breakpoint)
   const selectedFieldId = useRecoilValue($selectedFieldId)
+  const { setIsComponentVisible } = useComponentVisible(false)
   const fields = useRecoilValue($fields)
   const breakpoint = useRecoilValue($breakpoint)
   const setIsDraggable = useSetRecoilState($isDraggable)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const handleLayoutChange = (l, layoutsFromGrid) => {
     if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
@@ -39,6 +47,8 @@ export default function SectionField({
   const onDrop = (e, dropPosition) => {
     const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], draggingField.fieldData, draggingField.fieldSize, dropPosition)
     setNestedLayouts({ ...nestedLayouts, [fieldKey]: newLayouts })
+    setIsDraggable(true)
+    reCalculateFldHeights(fieldKey)
   }
 
   const gridWidth = useRecoilValue($gridWidth)
@@ -47,6 +57,21 @@ export default function SectionField({
 
   const fldWrpPadding = propertyValueSumX(getValueFromStateVar(themeVars, styleClassesForRender[`.${fieldKey}-fld-wrp`].padding)) * 2
   const inpWrpPadding = propertyValueSumX(getValueFromStateVar(themeVars, styleClassesForRender[`.${fieldKey}-inp-wrp`].padding)) * 2
+
+  const resetContextMenu = () => {
+    setContextMenu({})
+    setIsComponentVisible(false)
+  }
+
+  const navigateToFieldSettings = () => {
+    navigate(location.pathname.replace(/style\/.+|style/g, 'fs'), { replace: true })
+    resetContextMenu()
+  }
+
+  const navigateToStyle = fldKey => {
+    navigate(`/form/builder/${formType}/${formID}/field-theme-customize/quick-tweaks/${fldKey}`, { replace: true })
+    resetContextMenu()
+  }
 
   return (
     <>
@@ -80,7 +105,7 @@ export default function SectionField({
               useCSSTransforms
               isDroppable={draggingField !== null && breakpoint === 'lg'}
               className="layout"
-              // style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
+              style={{ minHeight: draggingField ? getNestedLayoutHeight() + 40 : null }}
               onDrop={onDrop}
               resizeHandles={['e']}
               droppingItem={draggingField?.fieldSize}
@@ -121,9 +146,9 @@ export default function SectionField({
                         // removeLayoutItem,
                         // cloneLayoutItem,
                         fields,
-                        // formID,
-                        // navigateToFieldSettings,
-                        // navigateToStyle,
+                        formID,
+                        navigateToFieldSettings,
+                        navigateToStyle,
                         // handleContextMenu,
                         resizingFld: {},
                       }}

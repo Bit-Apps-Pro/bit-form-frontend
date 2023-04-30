@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -15,6 +15,7 @@ import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
   $builderHookStates,
+  $contextMenu,
   $deletedFldKey,
   $draggingField,
   $fields,
@@ -24,7 +25,7 @@ import {
   $nestedLayouts,
   $proModal,
   $selectedFieldId,
-  $uniqueFieldId
+  $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
@@ -43,12 +44,12 @@ import {
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
 import { addNewFieldToGridLayout } from '../Utils/gridLayoutHelpers'
-import { isFirefox, isObjectEmpty, IS_PRO } from '../Utils/Helpers'
+import { IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -84,7 +85,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const isDraggable = useRecoilValue($isDraggable)
-  const [contextMenu, setContextMenu] = useState({})
+  const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
