@@ -1,3 +1,4 @@
+import produce from 'immer'
 import { Suspense } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -9,14 +10,14 @@ import {
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { builderBreakpoints, cols, getNestedLayoutHeight, propertyValueSumX, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
-import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
+import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import { addNewFieldToGridLayout } from '../../Utils/gridLayoutHelpers'
 import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
 import RenderStyle from '../style-new/RenderStyle'
-import { getValueFromStateVar } from '../style-new/styleHelpers'
+import { getAbsoluteSize, getValueFromStateVar } from '../style-new/styleHelpers'
 
 /* eslint-disable react/jsx-props-no-spreading */
 export default function SectionField({
@@ -35,9 +36,16 @@ export default function SectionField({
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleLayoutChange = (l, layoutsFromGrid) => {
+  const handleLayoutChange = (lay, layoutsFromGrid) => {
     if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
-      setNestedLayouts({ ...nestedLayouts, [fieldKey]: layoutsFromGrid })
+      setNestedLayouts(prv => produce(prv, draft => {
+        if (lay.length === draft[fieldKey][breakpoint].length) {
+          draft[fieldKey][breakpoint] = [...lay]
+        } else {
+          draft[fieldKey] = layoutsFromGrid
+          reCalculateFldHeights(fieldKey)
+        }
+      }))
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
@@ -50,13 +58,9 @@ export default function SectionField({
     setIsDraggable(true)
     reCalculateFldHeights(fieldKey)
   }
-
-  const gridWidth = useRecoilValue($gridWidth)
-
-  const themeVars = useRecoilValue($themeVars)
-
-  const fldWrpPadding = propertyValueSumX(getValueFromStateVar(themeVars, styleClassesForRender[`.${fieldKey}-fld-wrp`].padding)) * 2
-  const inpWrpPadding = propertyValueSumX(getValueFromStateVar(themeVars, styleClassesForRender[`.${fieldKey}-inp-wrp`].padding)) * 2
+  const inpWrpElm = selectInGrid(`.${fieldKey}-inp-fld-wrp`)
+  const absoluteSizes = inpWrpElm && getAbsoluteSize(inpWrpElm)
+  const inpWrpWidth = absoluteSizes ? absoluteSizes.width - (absoluteSizes.paddingLeft + absoluteSizes.paddingRight) : 0
 
   const resetContextMenu = () => {
     setContextMenu({})
@@ -89,7 +93,7 @@ export default function SectionField({
           {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
         >
           <div
-            style={{ width: gridWidth - (fldWrpPadding + inpWrpPadding), display: 'inline-block' }}
+            style={{ width: inpWrpWidth, display: 'inline-block' }}
             className="layout-wrapper"
             id="layout-wrapper"
             onDragOver={e => e.preventDefault()}
@@ -99,7 +103,7 @@ export default function SectionField({
           // onClick={resetContextMenu}
           >
             <ResponsiveReactGridLayout
-              width={gridWidth - (fldWrpPadding + inpWrpPadding)}
+              width={inpWrpWidth}
               measureBeforeMount
               compactType="vertical"
               useCSSTransforms
@@ -111,7 +115,7 @@ export default function SectionField({
               droppingItem={draggingField?.fieldSize}
               onLayoutChange={handleLayoutChange}
               cols={cols}
-              breakpoints={builderBreakpoints}
+              breakpoints={{lg: 400, md: 600, sm: 450 }}
               rowHeight={1}
               margin={[0, 0]}
               draggableCancel=".no-drg"
