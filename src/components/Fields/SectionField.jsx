@@ -1,6 +1,6 @@
 import produce from 'immer'
 import { Suspense } from 'react'
-import GridLayout from 'react-grid-layout'
+import { default as ReactGridLayout } from 'react-grid-layout'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
@@ -71,7 +71,7 @@ export default function SectionField({
             onMouseLeave={() => setIsDraggable(true)}
           // onClick={resetContextMenu}
           >
-            <GridLayout
+            <ReactGridLayout
               width={inpWrpWidth}
               measureBeforeMount
               compactType="vertical"
@@ -83,7 +83,7 @@ export default function SectionField({
               resizeHandles={['e']}
               droppingItem={draggingField?.fieldSize}
               onLayoutChange={handleLayoutChange}
-              cols={12}
+              cols={60}
               rowHeight={1}
               margin={[0, 0]}
               draggableCancel=".no-drg"
@@ -128,7 +128,7 @@ export default function SectionField({
                   </Suspense>
                 </div>
               ))}
-            </GridLayout>
+            </ReactGridLayout>
             {!nestedLayouts?.[fieldKey]?.[breakpoint]?.length && (
               <div className="empty-layout">
                 <div className="empty-layout-msg">
