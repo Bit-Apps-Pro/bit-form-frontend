@@ -1,19 +1,20 @@
 import { Suspense } from 'react'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { $gridWidth } from '../../GlobalStates/FormBuilderStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $gridWidth, $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
-  $breakpoint, $draggingField, $fields, $isDraggable, $nestedLayouts, $selectedFieldId
+  $breakpoint, $draggingField, $fields, $nestedLayouts, $selectedFieldId
 } from '../../GlobalStates/GlobalStates'
-import { builderBreakpoints, cols, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { $themeVars } from '../../GlobalStates/ThemeVarsState'
+import { builderBreakpoints, cols, propertyValueSumX, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { addNewFieldToGridLayout } from '../../Utils/gridLayoutHelpers'
 import { deepCopy } from '../../Utils/Helpers'
 import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
-import { toolsList } from '../LeftBars/Toolbar'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
 import RenderStyle from '../style-new/RenderStyle'
+import { getValueFromStateVar } from '../style-new/styleHelpers'
 
 /* eslint-disable react/jsx-props-no-spreading */
 export default function SectionField({
@@ -21,10 +22,10 @@ export default function SectionField({
 }) {
   const styleClassesForRender = deepCopy(styleClasses)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
-  // const breakpoint = useRecoilValue($breakpoint)
   const selectedFieldId = useRecoilValue($selectedFieldId)
   const fields = useRecoilValue($fields)
   const breakpoint = useRecoilValue($breakpoint)
+  const setIsDraggable = useSetRecoilState($isDraggable)
 
   const handleLayoutChange = (l, layoutsFromGrid) => {
     if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
@@ -33,37 +34,19 @@ export default function SectionField({
     }
   }
 
-  console.log({ fields })
-
   const draggingField = useRecoilValue($draggingField)
 
-  console.log({ fieldKey, nestedLayouts })
-
-  // const availableTools = toolsList.filter(tool => tool.availableFor.includes(fieldKey))
-  const filterTools = ['section']
-  const tools = toolsList.filter(tool => !filterTools.includes(tool.elm.typ))
-
-  const handleToolClick = tool => () => {
-    const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], tool.elm, tool.pos, { x: 0, y: Infinity })
-    console.log('add', newLayouts)
-    setNestedLayouts({ ...nestedLayouts, [fieldKey]: newLayouts })
-  }
-
   const onDrop = (e, dropPosition) => {
-    // const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], tool.elm, tool.pos, { x: 0, y: Infinity })
-    console.log('add', dropPosition)
     const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], draggingField.fieldData, draggingField.fieldSize, dropPosition)
-    console.log({ newLayouts })
     setNestedLayouts({ ...nestedLayouts, [fieldKey]: newLayouts })
   }
-
-  const [isDraggable, setIsDraggable] = useRecoilState($isDraggable)
 
   const gridWidth = useRecoilValue($gridWidth)
-  // const styles = useRecoilValue($styles)
-  console.log({ gridWidth })
 
-  const fldWrpPadding = 40
+  const themeVars = useRecoilValue($themeVars)
+
+  const fldWrpPadding = propertyValueSumX(getValueFromStateVar(themeVars, styleClassesForRender[`.${fieldKey}-fld-wrp`].padding)) * 2
+  const inpWrpPadding = propertyValueSumX(getValueFromStateVar(themeVars, styleClassesForRender[`.${fieldKey}-inp-wrp`].padding)) * 2
 
   return (
     <>
@@ -81,15 +64,17 @@ export default function SectionField({
           {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
         >
           <div
-            style={{ width: gridWidth - fldWrpPadding, display: 'inline-block' }}
+            style={{ width: gridWidth - (fldWrpPadding + inpWrpPadding), display: 'inline-block' }}
             className="layout-wrapper"
             id="layout-wrapper"
             onDragOver={e => e.preventDefault()}
             onDragEnter={e => e.preventDefault()}
+            onMouseMove={() => setIsDraggable(false)}
+            onMouseLeave={() => setIsDraggable(true)}
           // onClick={resetContextMenu}
           >
             <ResponsiveReactGridLayout
-              width={gridWidth - fldWrpPadding}
+              width={gridWidth - (fldWrpPadding + inpWrpPadding)}
               measureBeforeMount
               compactType="vertical"
               useCSSTransforms
@@ -109,9 +94,10 @@ export default function SectionField({
               layouts={nestedLayouts[fieldKey]}
               // onBreakpointChange={onBreakpointChange}
               // onDragStart={setResizingFldKey}
-              onDragStart={() => setIsDraggable(false)}
+              // onDragStart={() => { setIsDraggable(false); setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToBrkPnt: prv.forceBuilderWidthToBrkPnt + 1, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 })) }}
               // onDrag={setResizingWX}
-              onDragStop={() => { reCalculateFldHeights() }}
+              // onDragStop={() => { setTimeout(() => { setIsDraggable(true); reCalculateFldHeights() }, 100) }}
+              onDragStop={() => setIsDraggable(true)}
               // onResizeStart={setResizingFldKey}
               // onResize={() => reCalculateFldHeights()}
               onResizeStop={() => reCalculateFldHeights()}

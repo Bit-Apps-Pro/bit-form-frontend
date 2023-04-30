@@ -11,6 +11,7 @@ import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
   $builderHookStates,
@@ -18,7 +19,6 @@ import {
   $draggingField,
   $fields,
   $flags,
-  $isDraggable,
   $isNewThemeStyleLoaded,
   $layouts,
   $nestedLayouts,
@@ -83,6 +83,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
+  const isDraggable = useRecoilValue($isDraggable)
   const [contextMenu, setContextMenu] = useState({})
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
@@ -535,8 +536,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     return {}
   }
 
-  const [isDraggable, setIsDraggable] = useRecoilState($isDraggable)
-
   const setRegenarateLayFlag = () => {
     sessionStorage.setItem('btcd-lc', '-')
     setResizingFalse()
@@ -546,8 +545,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const fldKey = lay.i
     setResizingFld({ fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
   }
-
-  console.log('isDraggable', isDraggable)
 
   return (
     <div

@@ -171,5 +171,3 @@ export const $nestedLayouts = atom({
   default: {},
   dangerouslyAllowMutability: true,
 })
-
-export const $isDraggable = atom({ key: '$isDraggable', default: true })
