@@ -1,16 +1,25 @@
 import produce from 'immer'
-import { Suspense } from 'react'
+import { Suspense, useRef } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
-  $breakpoint, $contextMenu, $draggingField, $fields, $nestedLayouts, $selectedFieldId,
+  $breakpoint, $contextMenu, $deletedFldKey, $draggingField, $fields,
+  $flags,
+  $nestedLayouts, $proModal,
+  $resizingFld,
+  $selectedFieldId, $uniqueFieldId,
 } from '../../GlobalStates/GlobalStates'
-import { getNestedLayoutHeight, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
+import { $styles } from '../../GlobalStates/StylesState'
+import { addToBuilderHistory, filterLayoutItem, getNestedLayoutHeight, reCalculateFldHeights, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
-import { addNewFieldToGridLayout } from '../../Utils/gridLayoutHelpers'
+import {
+  addNewFieldToGridLayout, cloneLayoutItem, generateFieldLblForHistory,
+  removeFieldStyles, setResizingFldKey, setResizingWX,
+} from '../../Utils/gridLayoutHelpers'
 import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
@@ -27,9 +36,17 @@ export default function SectionField({
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
+  const setDeletedFldKey = useSetRecoilState($deletedFldKey)
+  const [fields, setFields] = useRecoilState($fields)
+  const [styles, setStyles] = useRecoilState($styles)
+  const uniqueFieldId = useRecoilValue($uniqueFieldId)
+  const { styleMode } = useRecoilValue($flags)
+  const setStaticStyleState = useSetRecoilState($staticStylesState)
+  const setProModal = useSetRecoilState($proModal)
+  const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
+  const delayRef = useRef(null)
   // const breakpoint = useRecoilValue($breakpoint)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
-  const fields = useRecoilValue($fields)
   const breakpoint = useRecoilValue($breakpoint)
   const setIsDraggable = useSetRecoilState($isDraggable)
   const navigate = useNavigate()
@@ -38,6 +55,7 @@ export default function SectionField({
   const handleLayoutChange = (lay) => {
     if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
       setNestedLayouts(prv => produce(prv, draft => {
+        if (!draft[fieldKey]) return
         draft[fieldKey][breakpoint] = lay
       }))
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
@@ -72,22 +90,32 @@ export default function SectionField({
   }
 
   const handleContextMenu = (e, fldKey) => {
-    console.log('context Menu', fldKey)
     e.preventDefault()
     e.stopPropagation()
     calculatePositionForContextMenu(e, fldKey)
   }
 
   const handleFldBlockEvent = (e, fieldId) => {
-    console.log('fieldId stop', fieldId)
     e.stopPropagation()
     setSelectedFieldId(fieldId)
     if (!isObjectEmpty(contextMenu)) {
       setContextMenu({})
     }
-    // setResizingFalse()
+    setResizingFalse()
     // if (styleMode) return
     navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
+  }
+
+  const setResizingFalse = () => {
+    if (isObjectEmpty(resizingFld)) return
+    if (delayRef.current !== null) {
+      clearTimeout(delayRef.current)
+    }
+
+    delayRef.current = setTimeout(() => {
+      setResizingFld({})
+      delayRef.current = null
+    }, 700)
   }
 
   const calculatePositionForContextMenu = (e, fldKey) => {
@@ -158,6 +186,56 @@ export default function SectionField({
     setIsComponentVisible(true)
   }
 
+  const removeLayoutItem = fldKey => {
+    const fldData = fields[fldKey]
+    const layouts = { ...nestedLayouts[fieldKey] }
+    const removedLay = {
+      lg: layouts.lg.find(l => l.i === fldKey),
+      md: layouts.md.find(l => l.i === fldKey),
+      sm: layouts.sm.find(l => l.i === fldKey),
+    }
+    const nwLay = filterLayoutItem(fldKey, layouts)
+    const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
+    setNestedLayouts(prevLayout => produce(prevLayout, draftLayout => {
+      draftLayout[fieldKey] = nwLay
+    }))
+    setFields(tmpFields)
+    setSelectedFieldId(null)
+    removeFieldStyles(fldKey)
+    setDeletedFldKey(prvDeleted => {
+      const tmpFldKeys = [...prvDeleted]
+      if (!tmpFldKeys.includes(fldKey)) {
+        tmpFldKeys.push(fldKey)
+      }
+
+      return tmpFldKeys
+    })
+    sessionStorage.setItem('btcd-lc', '-')
+
+    const fldType = fldData?.typ
+    if (fldType === 'razorpay' || fldType === 'paypal') {
+      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
+        delete draftStaticStyleState.staticStyles['.pos-rel']
+        delete draftStaticStyleState.staticStyles['.form-loading::before']
+        delete draftStaticStyleState.staticStyles['.form-loading::after']
+        if (fldType === 'razorpay') delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
+      }))
+    }
+
+    // redirect to fields list
+    // navigate.replace(`/form/builder/${formType}/${formID}/fields-list`)
+    navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
+
+    // add to history
+    const event = `${generateFieldLblForHistory(fldData)} removed`
+    const type = 'remove_fld'
+    const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
+    addToBuilderHistory({ event, type, state })
+
+    //  remove if it has any update button errors
+    removeFormUpdateError(fldKey)
+  }
+
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />
@@ -202,41 +280,43 @@ export default function SectionField({
               draggableHandle=".drag"
               layout={nestedLayouts?.[fieldKey]?.[breakpoint] || []}
               // onBreakpointChange={onBreakpointChange}
-              // onDragStart={setResizingFldKey}
-              // onDragStart={() => { setIsDraggable(false); setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToBrkPnt: prv.forceBuilderWidthToBrkPnt + 1, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 })) }}
-              // onDrag={setResizingWX}
+              onDragStart={setResizingFldKey}
+              onDrag={setResizingWX}
               onDragStop={() => {
                 setIsDraggable(true)
                 reCalculateFldHeights(fieldKey)
+                setResizingFalse()
               }}
-              // onResizeStart={setResizingFldKey}
-              // onResize={() => reCalculateFldHeights()}
-              onResizeStop={() => reCalculateFldHeights(fieldKey)}
+              onResizeStart={setResizingFldKey}
+              onResize={setResizingWX}
+              onResizeStop={() => {
+                setResizingFalse()
+                reCalculateFldHeights(fieldKey)
+              }}
             >
               {nestedLayouts?.[fieldKey]?.[breakpoint]?.map(layoutItem => (
                 <div
                   key={layoutItem.i}
                   data-key={layoutItem.i}
-                  className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
+                  className={`${!styleMode && 'blk'} ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
                   onClick={(e) => handleFldBlockEvent(e, layoutItem.i)}
                   onKeyDown={(e) => handleFldBlockEvent(e, layoutItem.i)}
                   role="button"
                   tabIndex={0}
-                // onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-                // data-testid={`${layoutItem.i}-fld-blk`}
+                  onContextMenu={e => handleContextMenu(e, layoutItem.i)}
                 >
                   <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
                     <FieldBlockWrapper
                       {...{
                         layoutItem,
-                        // removeLayoutItem,
-                        // cloneLayoutItem,
+                        removeLayoutItem,
+                        cloneLayoutItem: () => cloneLayoutItem(layoutItem.i, fieldKey),
                         fields,
                         formID,
                         navigateToFieldSettings,
                         navigateToStyle,
                         handleContextMenu,
-                        resizingFld: {},
+                        resizingFld,
                       }}
                     />
                   </Suspense>
