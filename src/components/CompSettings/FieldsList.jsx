@@ -1,17 +1,9 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
-import { $breakpoint, $fields, $layouts } from '../../GlobalStates/GlobalStates'
-import { deepCopy } from '../../Utils/Helpers'
-import { sortArrOfObjByMultipleProps } from '../style-new/styleHelpers'
+import { getFieldsBasedOnLayoutOrder } from '../../Utils/FormBuilderHelper'
 import FieldLinkBtn from './FieldLinkButton'
 
 export default function FieldsList() {
-  const fields = useRecoilValue($fields)
-  const layouts = useRecoilValue($layouts)
-  const breakpoint = useRecoilValue($breakpoint)
-  const sortedLayouts = deepCopy(layouts[breakpoint]).sort(sortArrOfObjByMultipleProps(['y', 'x']))
-  const sortedFields = sortedLayouts.reduce((acc, lay) => ({ ...acc, [lay.i]: fields[lay.i] }), {})
-
+  const sortedFields = getFieldsBasedOnLayoutOrder()
   const hiddenFlds = Object.entries(sortedFields).filter(([, fld]) => fld?.valid?.hide)
   const notHiddenFlds = Object.entries(sortedFields).filter(([, fld]) => !fld?.valid?.hide)
 

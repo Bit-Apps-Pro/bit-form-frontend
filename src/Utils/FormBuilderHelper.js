@@ -2,11 +2,11 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
+import { addDefaultStyleClasses, sortArrOfObjByMultipleProps } from '../components/style-new/styleHelpers'
 import {
   $additionalSettings,
   $bits,
-  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $selectedFieldId, $updateBtn,
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $nestedLayouts, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
@@ -898,4 +898,23 @@ export const getTotalLayoutHeight = () => {
       totalHeight: acc.totalHeight + (newH - prevH),
     }
   }, { maxHeightsByY: {}, totalHeight: 0 }).totalHeight
+}
+
+export const getFieldsBasedOnLayoutOrder = () => {
+  const fields = getRecoil($fields)
+  const layouts = getRecoil($layouts)
+  const breakpoint = getRecoil($breakpoint)
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const breakpointLayouts = layouts[breakpoint]
+  const breakpointNestedLayouts = Object.entries(nestedLayouts).reduce((acc, [fieldKey, lays]) => {
+    const fldPosition = breakpointLayouts.find((lay) => lay.i === fieldKey)
+    if (!fldPosition) return acc
+    const breakpointLays = lays[breakpoint]
+    const laysSumFldPosition = breakpointLays.map((lay) => ({ ...lay, y: lay.y + fldPosition.y }))
+    return [...acc, ...laysSumFldPosition]
+  }, [])
+  const mergedLayouts = [...breakpointLayouts, ...breakpointNestedLayouts]
+  const sortedLayouts = mergedLayouts.sort(sortArrOfObjByMultipleProps(['y', 'x']))
+  const sortedFields = sortedLayouts.reduce((acc, lay) => ({ ...acc, [lay.i]: fields[lay.i] }), {})
+  return sortedFields
 }
