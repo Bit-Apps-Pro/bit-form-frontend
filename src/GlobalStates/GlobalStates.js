@@ -150,6 +150,7 @@ export const $unsplashMdl = atom({ key: '$unsplashMdl', default: false })
 export const $unsplashImgUrl = atom({ key: '$unsplashImgUrl', default: '' })
 export const $workflows = atom({ key: '$workflows', default: [], dangerouslyAllowMutability: true })
 export const $contextMenu = atom({ key: '$contextMenu', default: {} })
+export const $resizingFld = atom({ key: '$resizingFld', default: {} })
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels), []), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
