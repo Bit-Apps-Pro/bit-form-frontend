@@ -5,6 +5,7 @@ export default function sectionStyle_1_bitformDefault({ fk, type, breakpoint, co
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
+      [`.${fk}-inp-fld-wrp`]: { display: 'grid' },
     }
   }
   return {}
