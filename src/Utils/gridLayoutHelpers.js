@@ -1,16 +1,23 @@
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
+import {
+  $breakpoint,
+  $contextMenu,
+  $fields, $formId, $layouts, $nestedLayouts, $proModal, $resizingFld, $uniqueFieldId,
+} from '../GlobalStates/GlobalStates'
+import { $staticStylesState } from '../GlobalStates/StaticStylesState'
+import { $styles } from '../GlobalStates/StylesState'
+import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import noStyleTheme from '../components/style-new/themes/0_noStyle'
 import bitformDefaultTheme from '../components/style-new/themes/1_bitformDefault'
 import { updateFieldStyleByFieldSizing } from '../components/style-new/themes/1_bitformDefault/fieldSizeControlStyle'
 import atlassianTheme from '../components/style-new/themes/2_atlassian'
-import { $fields, $formId, $nestedLayouts, $uniqueFieldId } from '../GlobalStates/GlobalStates'
-import { $staticStylesState } from '../GlobalStates/StaticStylesState'
-import { $styles } from '../GlobalStates/StylesState'
-import { $themeVars } from '../GlobalStates/ThemeVarsState'
-import { addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, getResizableHandles, reCalculateFldHeights } from './FormBuilderHelper'
+import {
+  addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, getAbsoluteElmHeight, getLatestState, getResizableHandles, reCalculateFldHeights,
+} from './FormBuilderHelper'
+import { IS_PRO, deepCopy } from './Helpers'
+import proHelperData from './StaticData/proHelperData'
 import { selectInGrid } from './globalHelpers'
-import { deepCopy } from './Helpers'
 
 const handleFieldExtraAttr = (fieldData) => {
   const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2)
@@ -207,4 +214,142 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   }, 100)
 
   return { newBlk, newLayouts }
+}
+
+export const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
+  const oldFldKeyExceptFirstLetter = oldFLdKey.slice(1)
+  const newFldKeyExceptFirstLetter = newFldKey.slice(1)
+  const reg = new RegExp(oldFldKeyExceptFirstLetter, 'g')
+  const newFldName = oldFldName.replace(reg, newFldKeyExceptFirstLetter)
+  return newFldName
+}
+
+export const getInitHeightsForResizingTextarea = fldKey => {
+  const fields = getRecoil($fields)
+  const fldData = fields[fldKey]
+  if (!fldData) return
+  const fldType = fldData.typ
+  if (fldType === 'textarea') {
+    const wrpElm = selectInGrid(`[data-key="${fldKey}"]`)
+    const textareaElm = selectInGrid(`textarea[data-dev-fld="${fldKey}"]`)
+    const wrpHeight = getAbsoluteElmHeight(wrpElm, 0)
+    const fldHeight = getAbsoluteElmHeight(textareaElm, 0)
+    return { fldHeight, wrpHeight }
+  }
+
+  return {}
+}
+
+export const setResizingFldKey = (_, lay) => {
+  const fldKey = lay.i
+  setRecoil($resizingFld, { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
+}
+
+export const setResizingWX = (lays, lay) => {
+  const resizingFld = getRecoil($resizingFld)
+  if (resizingFld.fieldKey) {
+    const layout = lays.find(l => l.i === resizingFld.fieldKey)
+    const newResingFld = produce(resizingFld, draftResizingFld => {
+      draftResizingFld.w = layout.w
+      draftResizingFld.x = layout.x
+    })
+    setRecoil($resizingFld, newResingFld)
+    return
+  }
+  const fldKey = lay.i
+  const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
+  setRecoil($resizingFld, { ...resizingData, w: lay.w, x: lay.x })
+}
+
+export const removeFieldStyles = fldKey => {
+  const styles = getRecoil($styles)
+  const newStyles = produce(styles, prevStyles => produce(prevStyles, draftStyles => {
+    delete draftStyles.fields[fldKey]
+  }))
+  setRecoil($styles, newStyles)
+}
+
+export const cloneLayoutItem = (fldKey, parentFieldKey) => {
+  const layouts = getRecoil($layouts)
+  const fields = getRecoil($fields)
+  const styles = getRecoil($styles)
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const proModal = getRecoil($proModal)
+  const uniqueFieldId = getRecoil($uniqueFieldId)
+  const formID = getRecoil($formId)
+  const contextMenu = getRecoil($contextMenu)
+  const breakpoint = getRecoil($breakpoint)
+
+  if (!IS_PRO) {
+    setRecoil(proModal, { show: true, ...proHelperData.fieldClone })
+    return
+  }
+  const fldData = fields[fldKey]
+  // if (!handleFieldExtraAttr(fldData)) return
+
+  const newBlk = `b${formID}-${uniqueFieldId}`
+  const newLayItem = {}
+
+  const allBreakpoints = ['sm', 'md', 'lg']
+  let newLayouts
+  if (parentFieldKey) {
+    newLayouts = produce(nestedLayouts, draft => {
+      allBreakpoints.forEach(brkpnt => {
+        const layIndx = nestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
+        const { y, h } = nestedLayouts[parentFieldKey][brkpnt][layIndx]
+        const newLayoutItem = { ...nestedLayouts[parentFieldKey][brkpnt][layIndx], i: newBlk, y: y + h }
+        newLayItem[brkpnt] = newLayoutItem
+        draft[parentFieldKey][brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+      })
+    })
+    setRecoil($nestedLayouts, newLayouts)
+  }
+  if (!parentFieldKey) {
+    newLayouts = produce(layouts, draft => {
+      allBreakpoints.forEach(brkpnt => {
+        const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
+        const { y, h } = layouts[brkpnt][layIndx]
+        const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
+        newLayItem[brkpnt] = newLayoutItem
+        draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+      })
+    })
+    setRecoil($layouts, newLayouts)
+  }
+
+  const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
+  const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
+  // eslint-disable-next-line no-param-reassign
+  setRecoil($fields, oldFields)
+
+  // clone style
+  const newStyle = produce(styles, draftStyle => {
+    const fldStyle = draftStyle.fields[fldKey]
+    const fldClasses = fldStyle.classes
+    draftStyle.fields[newBlk] = { ...fldStyle }
+    draftStyle.fields[newBlk].classes = {}
+    Object.keys(fldClasses).forEach(cls => {
+      const newClassName = cls.replace(fldKey, newBlk)
+      draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
+    })
+  })
+  setRecoil($styles, newStyle)
+
+  sessionStorage.setItem('btcd-lc', '-')
+
+  setTimeout(() => {
+    selectInGrid(`[data-key="${newBlk}"]`)?.focus()
+    // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, 500)
+
+  // add to history
+  const event = `${generateFieldLblForHistory(fldData)} cloned`
+  const type = 'clone_fld'
+  const state = {
+    fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: newLayouts, fields: oldFields, styles: getLatestState('styles'),
+  }
+  addToBuilderHistory({ event, type, state })
+
+  // resetContextMenu()
+  setRecoil(contextMenu, {})
 }
