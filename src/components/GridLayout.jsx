@@ -20,15 +20,12 @@ import {
   $fields,
   $flags,
   $isNewThemeStyleLoaded,
-  $layouts,
-  $nestedLayouts,
-  $proModal,
+  $layouts, $proModal,
   $selectedFieldId,
   $uniqueFieldId
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
-import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import {
@@ -77,7 +74,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const builderHookStates = useRecoilValue($builderHookStates)
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
   const [styles, setStyles] = useRecoilState($stylesLgLight)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
@@ -177,7 +173,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }, [v1Styles, gridWidth, formID, styles])
 
   const margeNewData = () => {
-    console.log({ newData })
     addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     setNewData(null)
   }
@@ -244,8 +239,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     //  remove if it has any update button errors
     removeFormUpdateError(fldKey)
   }
-
-  const setNestedLayouts = useSetRecoilState($nestedLayouts)
 
   function addNewField(fieldData, fieldSize, addPosition) {
     const { newLayouts } = addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition)

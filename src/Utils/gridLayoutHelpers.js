@@ -84,7 +84,6 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   const formID = getRecoil($formId)
   const uniqueFieldId = getRecoil($uniqueFieldId)
   const fields = getRecoil($fields)
-  console.log('on add ', fields)
   const styles = getRecoil($styles)
   const themeVars = getRecoil($themeVars)
   const staticStylesState = getRecoil($staticStylesState)
@@ -110,7 +109,6 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   const newFields = { ...fields, [newBlk]: processedFieldData }
 
   setRecoil($fields, newFields)
-  console.log('after add', newFields)
   sessionStorage.setItem('btcd-lc', '-')
 
   // add to history
