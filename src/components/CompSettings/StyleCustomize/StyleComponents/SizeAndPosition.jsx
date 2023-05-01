@@ -3,19 +3,28 @@ import produce from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $breakpoint, $builderHookStates, $layouts } from '../../../../GlobalStates/GlobalStates'
+import { $breakpoint, $builderHookStates, $layouts, $nestedLayouts } from '../../../../GlobalStates/GlobalStates'
+import { addToBuilderHistory, cols } from '../../../../Utils/FormBuilderHelper'
 import ut from '../../../../styles/2.utilities'
 import FieldStyle from '../../../../styles/FieldStyle.style'
-import { addToBuilderHistory, cols } from '../../../../Utils/FormBuilderHelper'
 import SimpleAccordion from '../ChildComp/SimpleAccordion'
 
 function SizeAndPosition() {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
   const [layouts, setLayouts] = useRecoilState($layouts)
+  const nestedLayouts = useRecoilValue($nestedLayouts)
   const breakpoint = useRecoilValue($breakpoint)
-  const fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey))
+  let fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey))
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
+  if (!fieldSize) {
+    Object.values(nestedLayouts).forEach((lay) => {
+      const field = lay?.[breakpoint]?.find(fl => (fl.i === fldKey))
+      if (field) {
+        fieldSize = field
+      }
+    })
+  }
 
   const maxY = layouts[breakpoint].reduce((prv, curr) => (prv.y > curr.y ? prv.y : curr.y))
 

@@ -2,10 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-undef */
 import produce from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -15,12 +14,14 @@ import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
   $builderHookStates,
+  $contextMenu,
   $deletedFldKey,
   $draggingField,
   $fields,
   $flags,
   $isNewThemeStyleLoaded,
   $layouts, $proModal,
+  $resizingFld,
   $selectedFieldId,
   $uniqueFieldId
 } from '../GlobalStates/GlobalStates'
@@ -35,7 +36,8 @@ import {
   cols,
   filterLayoutItem,
   filterNumber,
-  fitAllLayoutItems, fitSpecificLayoutItem, getAbsoluteElmHeight, getLatestState,
+  fitAllLayoutItems, fitSpecificLayoutItem,
+  getLatestState,
   getTotalLayoutHeight,
   isLayoutSame,
   produceNewLayouts,
@@ -44,8 +46,8 @@ import {
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { addNewFieldToGridLayout } from '../Utils/gridLayoutHelpers'
-import { isFirefox, isObjectEmpty, IS_PRO } from '../Utils/Helpers'
+import { addNewFieldToGridLayout, generateFieldLblForHistory, generateNewFldName, getInitHeightsForResizingTextarea } from '../Utils/gridLayoutHelpers'
+import { IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -77,17 +79,17 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
+  const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const isDraggable = useRecoilValue($isDraggable)
-  const [contextMenu, setContextMenu] = useState({})
+  const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode, inspectMode } = flags
   const stopGridTransition = useRef(false)
-  const [resizingFld, setResizingFld] = useState({})
   const delayRef = useRef(null)
   const [formGutter, setFormGutter] = useState(0)
   const elmCurrentHighlightedRef = useRef(null)
@@ -247,21 +249,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setRootLayouts(newLayouts)
   }
 
-  const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
-    const oldFldKeyExceptFirstLetter = oldFLdKey.slice(1)
-    const newFldKeyExceptFirstLetter = newFldKey.slice(1)
-    const reg = new RegExp(oldFldKeyExceptFirstLetter, 'g')
-    const newFldName = oldFldName.replace(reg, newFldKeyExceptFirstLetter)
-    return newFldName
-  }
-
   const cloneLayoutItem = fldKey => {
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.fieldClone })
       return
     }
     const fldData = fields[fldKey]
-    if (!handleFieldExtraAttr(fldData)) return
+    // if (!handleFieldExtraAttr(fldData)) return
 
     const newBlk = `b${formID}-${uniqueFieldId}`
     const newLayItem = {}
@@ -514,20 +508,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
   }
 
-  const getInitHeightsForResizingTextarea = fldKey => {
-    const fldData = fields[fldKey]
-    if (!fldData) return
-    const fldType = fldData.typ
-    if (fldType === 'textarea') {
-      const wrpElm = selectInGrid(`[data-key="${fldKey}"]`)
-      const textareaElm = selectInGrid(`textarea[data-dev-fld="${fldKey}"]`)
-      const wrpHeight = getAbsoluteElmHeight(wrpElm, 0)
-      const fldHeight = getAbsoluteElmHeight(textareaElm, 0)
-      return { fldHeight, wrpHeight }
-    }
-
-    return {}
-  }
 
   const setRegenarateLayFlag = () => {
     sessionStorage.setItem('btcd-lc', '-')
