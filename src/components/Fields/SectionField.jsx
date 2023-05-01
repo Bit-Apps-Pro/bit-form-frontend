@@ -1,15 +1,14 @@
 import produce from 'immer'
 import { Suspense } from 'react'
-import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { $gridWidth, $isDraggable } from '../../GlobalStates/FormBuilderStates'
+import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
   $breakpoint, $contextMenu, $draggingField, $fields, $nestedLayouts, $selectedFieldId,
 } from '../../GlobalStates/GlobalStates'
-import { $themeVars } from '../../GlobalStates/ThemeVarsState'
-import { builderBreakpoints, cols, getNestedLayoutHeight, propertyValueSumX, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { getNestedLayoutHeight, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import { addNewFieldToGridLayout } from '../../Utils/gridLayoutHelpers'
 import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -17,7 +16,7 @@ import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
 import RenderStyle from '../style-new/RenderStyle'
-import { getAbsoluteSize, getValueFromStateVar } from '../style-new/styleHelpers'
+import { getAbsoluteSize } from '../style-new/styleHelpers'
 
 /* eslint-disable react/jsx-props-no-spreading */
 export default function SectionField({
@@ -27,24 +26,19 @@ export default function SectionField({
   const styleClassesForRender = deepCopy(styleClasses)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
+  const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   // const breakpoint = useRecoilValue($breakpoint)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const { setIsComponentVisible } = useComponentVisible(false)
+  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const fields = useRecoilValue($fields)
   const breakpoint = useRecoilValue($breakpoint)
   const setIsDraggable = useSetRecoilState($isDraggable)
   const navigate = useNavigate()
   const location = useLocation()
 
-  const handleLayoutChange = (lay, layoutsFromGrid) => {
-    if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
+  const handleLayoutChange = (lay) => {
+    if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
       setNestedLayouts(prv => produce(prv, draft => {
-        if (lay.length === draft[fieldKey][breakpoint].length) {
-          draft[fieldKey][breakpoint] = [...lay]
-        } else {
-          draft[fieldKey] = layoutsFromGrid
-          reCalculateFldHeights(fieldKey)
-        }
+        draft[fieldKey][breakpoint] = lay
       }))
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
@@ -77,6 +71,93 @@ export default function SectionField({
     resetContextMenu()
   }
 
+  const handleContextMenu = (e, fldKey) => {
+    console.log('context Menu', fldKey)
+    e.preventDefault()
+    e.stopPropagation()
+    calculatePositionForContextMenu(e, fldKey)
+  }
+
+  const handleFldBlockEvent = (e, fieldId) => {
+    console.log('fieldId stop', fieldId)
+    e.stopPropagation()
+    setSelectedFieldId(fieldId)
+    if (!isObjectEmpty(contextMenu)) {
+      setContextMenu({})
+    }
+    // setResizingFalse()
+    // if (styleMode) return
+    navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
+  }
+
+  const calculatePositionForContextMenu = (e, fldKey) => {
+    // 0 - left click, 1 - middle click, 2 - right click
+    const { button: mouseBtnClicked } = e
+
+    let x
+    let y
+    let right
+    let bottom
+
+    const topPos = ref.current.getBoundingClientRect().top + window.scrollY
+    const leftPos = ref.current.getBoundingClientRect().left + window.scrollX
+
+    const layoutWrapperElm = selectInGrid('#layout-wrapper')
+    const rootW = Number(layoutWrapperElm.style.width.match(/\d+/gi))
+    const rootH = Number(layoutWrapperElm.style.height.match(/\d+/gi))
+
+    const menuWidth = 170
+    const menuHeight = 200
+
+    if (mouseBtnClicked === 0) {
+      const downBtn = selectInGrid(`[data-key="${fldKey}"]`)?.querySelector('.blk-wrp-down-btn')
+      const downBtnSize = 30
+      const downBtnTop = downBtn.getBoundingClientRect().top + downBtnSize
+      const downBtnLeft = downBtn.getBoundingClientRect().left
+
+      x = (downBtnLeft - leftPos) + 5
+      y = (downBtnTop - topPos) + 2
+
+      right = (x + menuWidth) > rootW
+      bottom = (y + menuHeight) > rootH
+
+      if (right) {
+        x = ((downBtnLeft + downBtnSize) - leftPos) - 148
+      }
+
+      if (bottom) {
+        y = (downBtnTop - topPos) - (menuHeight + downBtnSize + 7)
+      }
+
+      if (selectedFieldId !== fldKey) {
+        x += 3
+      }
+
+      if (isComponentVisible && contextMenu.fldKey === fldKey && contextMenu.x === x && contextMenu.y === y) {
+        resetContextMenu()
+        return
+      }
+    } else if (mouseBtnClicked === 2) {
+      x = (e.clientX - leftPos) + 5
+      y = e.clientY - topPos
+
+      right = (x + menuWidth) > rootW
+      bottom = (y + menuHeight) > rootH
+
+      if (right) {
+        x = (e.clientX - leftPos) - 150
+      }
+
+      if (bottom) {
+        y = (e.clientY - topPos) - menuHeight
+      }
+    }
+
+    setSelectedFieldId(fldKey)
+    setContextMenu({ fldKey, x, y })
+    setIsComponentVisible(true)
+  }
+
   return (
     <>
       <RenderStyle styleClasses={styleClassesForRender} />
@@ -102,7 +183,7 @@ export default function SectionField({
             onMouseLeave={() => setIsDraggable(true)}
           // onClick={resetContextMenu}
           >
-            <ResponsiveReactGridLayout
+            <ReactGridLayout
               width={inpWrpWidth}
               measureBeforeMount
               compactType="vertical"
@@ -114,30 +195,31 @@ export default function SectionField({
               resizeHandles={['e']}
               droppingItem={draggingField?.fieldSize}
               onLayoutChange={handleLayoutChange}
-              cols={cols}
-              breakpoints={{lg: 400, md: 600, sm: 450 }}
+              cols={60}
               rowHeight={1}
               margin={[0, 0]}
               draggableCancel=".no-drg"
               draggableHandle=".drag"
-              layouts={nestedLayouts[fieldKey]}
+              layout={nestedLayouts?.[fieldKey]?.[breakpoint] || []}
               // onBreakpointChange={onBreakpointChange}
               // onDragStart={setResizingFldKey}
               // onDragStart={() => { setIsDraggable(false); setBuilderHookStates(prv => ({ ...prv, forceBuilderWidthToBrkPnt: prv.forceBuilderWidthToBrkPnt + 1, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 })) }}
               // onDrag={setResizingWX}
-              // onDragStop={() => { setTimeout(() => { setIsDraggable(true); reCalculateFldHeights() }, 100) }}
-              onDragStop={() => setIsDraggable(true)}
+              onDragStop={() => {
+                setIsDraggable(true)
+                reCalculateFldHeights(fieldKey)
+              }}
               // onResizeStart={setResizingFldKey}
               // onResize={() => reCalculateFldHeights()}
-              onResizeStop={() => reCalculateFldHeights()}
+              onResizeStop={() => reCalculateFldHeights(fieldKey)}
             >
               {nestedLayouts?.[fieldKey]?.[breakpoint]?.map(layoutItem => (
                 <div
                   key={layoutItem.i}
                   data-key={layoutItem.i}
                   className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
-                  // onClick={() => handleFldBlockEvent(layoutItem.i)}
-                  // onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
+                  onClick={(e) => handleFldBlockEvent(e, layoutItem.i)}
+                  onKeyDown={(e) => handleFldBlockEvent(e, layoutItem.i)}
                   role="button"
                   tabIndex={0}
                 // onContextMenu={e => handleContextMenu(e, layoutItem.i)}
@@ -153,14 +235,14 @@ export default function SectionField({
                         formID,
                         navigateToFieldSettings,
                         navigateToStyle,
-                        // handleContextMenu,
+                        handleContextMenu,
                         resizingFld: {},
                       }}
                     />
                   </Suspense>
                 </div>
               ))}
-            </ResponsiveReactGridLayout>
+            </ReactGridLayout>
             {!nestedLayouts?.[fieldKey]?.[breakpoint]?.length && (
               <div className="empty-layout">
                 <div className="empty-layout-msg">
