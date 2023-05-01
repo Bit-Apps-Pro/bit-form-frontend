@@ -2,18 +2,18 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
   $additionalSettings,
   $bits,
-  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $selectedFieldId, $updateBtn,
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $nestedLayouts, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
+import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
+import { deepCopy } from './Helpers'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
-import { deepCopy } from './Helpers'
 import { __ } from './i18nwrap'
 
 export const cols = { lg: 60, md: 60, sm: 60 }
@@ -890,6 +890,22 @@ export const getTotalLayoutHeight = () => {
   const breakpoint = getRecoil($breakpoint)
   const layout = layouts[breakpoint]
 
+  return layout.reduce((acc, { h, y }) => {
+    const { [y]: prevH = 0 } = acc.maxHeightsByY
+    const newH = Math.max(prevH, h)
+    return {
+      maxHeightsByY: { ...acc.maxHeightsByY, [y]: newH },
+      totalHeight: acc.totalHeight + (newH - prevH),
+    }
+  }, { maxHeightsByY: {}, totalHeight: 0 }).totalHeight
+}
+
+export const getNestedLayoutHeight = (fieldKey) => {
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const layouts = nestedLayouts[fieldKey]
+  const breakpoint = getRecoil($breakpoint)
+  if (!layouts) return 0
+  const layout = layouts[breakpoint]
   return layout.reduce((acc, { h, y }) => {
     const { [y]: prevH = 0 } = acc.maxHeightsByY
     const newH = Math.max(prevH, h)
