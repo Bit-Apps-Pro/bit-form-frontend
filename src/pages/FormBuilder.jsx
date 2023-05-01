@@ -5,7 +5,7 @@ import {
   createRef, StrictMode, useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState,
+  useReducer, useRef, useState
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
@@ -21,9 +21,9 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
-import { $gridWidth } from '../GlobalStates/FormBuilderStates'
+import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal,
+  $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -79,7 +79,7 @@ const FormBuilder = ({ isLoading }) => {
   const formID = isNewForm ? newFormId : pramsFormId
   const { toolbarOff } = JSON.parse(localStorage.getItem('bit-form-config') || '{}')
   const [showToolBar, setShowToolbar] = useState(!toolbarOff)
-  const [gridWidth, setGridWidth] = useRecoilState($gridWidth)
+  const [gridWidth, setGridWidth] = useState(BUILDER_WIDTH)
   const deferedGridWidth = useDeferredValue(gridWidth)
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
@@ -101,15 +101,14 @@ const FormBuilder = ({ isLoading }) => {
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setBuilderSettings = useSetRecoilState($builderSettings)
+  const builderHelperStates = useRecoilValue($builderHelperStates)
+  const setIsDraggable = useSetRecoilState($isDraggable)
 
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
   const isV2Form = useRef(true)
   // eslint-disable-next-line no-console
 
   const { forceBuilderWidthToLG } = builderHookStates
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { setGridWidth(BUILDER_WIDTH) }, [])
 
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
@@ -304,10 +303,17 @@ const FormBuilder = ({ isLoading }) => {
     const gw = Math.round(paneWidth - w) // inner left-right padding
     if (gw < builderBreakpoints.md) {
       setbrkPoint('sm')
+      if (builderHelperStates.respectLGLayoutOrder) {
+        setIsDraggable(false)
+      }
     } else if (gw >= builderBreakpoints.md && gw < builderBreakpoints.lg) {
       setbrkPoint('md')
+      if (builderHelperStates.respectLGLayoutOrder) {
+        setIsDraggable(false)
+      }
     } else if (gw >= builderBreakpoints.lg) {
       setbrkPoint('lg')
+      setIsDraggable(true)
     }
   }
 
