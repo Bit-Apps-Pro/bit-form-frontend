@@ -13,12 +13,12 @@ import {
 } from '../../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
 import { $styles } from '../../GlobalStates/StylesState'
-import { addToBuilderHistory, filterLayoutItem, getNestedLayoutHeight, reCalculateFldHeights, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
+import { getNestedLayoutHeight, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import {
-  addNewFieldToGridLayout, cloneLayoutItem, generateFieldLblForHistory,
-  removeFieldStyles, setResizingFldKey, setResizingWX,
+  addNewFieldToGridLayout, cloneLayoutItem,
+  removeLayoutItem, setResizingFldKey, setResizingWX,
 } from '../../Utils/gridLayoutHelpers'
 import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from '../FieldBlockWrapper'
@@ -102,7 +102,7 @@ export default function SectionField({
       setContextMenu({})
     }
     setResizingFalse()
-    // if (styleMode) return
+    if (styleMode) return
     navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
   }
 
@@ -186,54 +186,23 @@ export default function SectionField({
     setIsComponentVisible(true)
   }
 
-  const removeLayoutItem = fldKey => {
-    const fldData = fields[fldKey]
+  const cloneNestedLayoutItem = fldKey => {
     const layouts = { ...nestedLayouts[fieldKey] }
-    const removedLay = {
-      lg: layouts.lg.find(l => l.i === fldKey),
-      md: layouts.md.find(l => l.i === fldKey),
-      sm: layouts.sm.find(l => l.i === fldKey),
-    }
-    const nwLay = filterLayoutItem(fldKey, layouts)
-    const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
+    const { newLayouts } = cloneLayoutItem(fldKey, layouts)
     setNestedLayouts(prevLayout => produce(prevLayout, draftLayout => {
-      draftLayout[fieldKey] = nwLay
+      draftLayout[fieldKey] = newLayouts
     }))
-    setFields(tmpFields)
-    setSelectedFieldId(null)
-    removeFieldStyles(fldKey)
-    setDeletedFldKey(prvDeleted => {
-      const tmpFldKeys = [...prvDeleted]
-      if (!tmpFldKeys.includes(fldKey)) {
-        tmpFldKeys.push(fldKey)
-      }
+    reCalculateFldHeights(fieldKey)
+  }
 
-      return tmpFldKeys
-    })
-    sessionStorage.setItem('btcd-lc', '-')
-
-    const fldType = fldData?.typ
-    if (fldType === 'razorpay' || fldType === 'paypal') {
-      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
-        delete draftStaticStyleState.staticStyles['.pos-rel']
-        delete draftStaticStyleState.staticStyles['.form-loading::before']
-        delete draftStaticStyleState.staticStyles['.form-loading::after']
-        if (fldType === 'razorpay') delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
-      }))
-    }
-
-    // redirect to fields list
-    // navigate.replace(`/form/builder/${formType}/${formID}/fields-list`)
+  const removeNestedLayoutItem = fldKey => {
+    const layouts = { ...nestedLayouts[fieldKey] }
+    const newLayouts = removeLayoutItem(fldKey, layouts)
+    setNestedLayouts(prevLayout => produce(prevLayout, draftLayout => {
+      draftLayout[fieldKey] = newLayouts
+    }))
     navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
-
-    // add to history
-    const event = `${generateFieldLblForHistory(fldData)} removed`
-    const type = 'remove_fld'
-    const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: nwLay, fields: tmpFields }
-    addToBuilderHistory({ event, type, state })
-
-    //  remove if it has any update button errors
-    removeFormUpdateError(fldKey)
+    reCalculateFldHeights(fieldKey)
   }
 
   return (
@@ -261,68 +230,102 @@ export default function SectionField({
             onMouseLeave={() => setIsDraggable(true)}
           // onClick={resetContextMenu}
           >
-            <ReactGridLayout
-              width={inpWrpWidth}
-              measureBeforeMount
-              compactType="vertical"
-              useCSSTransforms
-              isDroppable={draggingField !== null && breakpoint === 'lg'}
-              className="layout"
-              style={{ minHeight: draggingField ? getNestedLayoutHeight() + 40 : null }}
-              onDrop={onDrop}
-              resizeHandles={['e']}
-              droppingItem={draggingField?.fieldSize}
-              onLayoutChange={handleLayoutChange}
-              cols={60}
-              rowHeight={1}
-              margin={[0, 0]}
-              draggableCancel=".no-drg"
-              draggableHandle=".drag"
-              layout={nestedLayouts?.[fieldKey]?.[breakpoint] || []}
-              // onBreakpointChange={onBreakpointChange}
-              onDragStart={setResizingFldKey}
-              onDrag={setResizingWX}
-              onDragStop={() => {
-                setIsDraggable(true)
-                reCalculateFldHeights(fieldKey)
-                setResizingFalse()
-              }}
-              onResizeStart={setResizingFldKey}
-              onResize={setResizingWX}
-              onResizeStop={() => {
-                setResizingFalse()
-                reCalculateFldHeights(fieldKey)
-              }}
-            >
-              {nestedLayouts?.[fieldKey]?.[breakpoint]?.map(layoutItem => (
-                <div
-                  key={layoutItem.i}
-                  data-key={layoutItem.i}
-                  className={`${!styleMode && 'blk'} ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
-                  onClick={(e) => handleFldBlockEvent(e, layoutItem.i)}
-                  onKeyDown={(e) => handleFldBlockEvent(e, layoutItem.i)}
-                  role="button"
-                  tabIndex={0}
-                  onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-                >
-                  <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
-                    <FieldBlockWrapper
-                      {...{
-                        layoutItem,
-                        removeLayoutItem,
-                        cloneLayoutItem: () => cloneLayoutItem(layoutItem.i, fieldKey),
-                        fields,
-                        formID,
-                        navigateToFieldSettings,
-                        navigateToStyle,
-                        handleContextMenu,
-                        resizingFld,
-                      }}
-                    />
-                  </Suspense>
-                </div>
-              ))}
-            </ReactGridLayout>
+            {!styleMode ? (
+              <ReactGridLayout
+                width={inpWrpWidth}
+                measureBeforeMount
+                compactType="vertical"
+                useCSSTransforms
+                isDroppable={draggingField !== null && breakpoint === 'lg'}
+                className="layout"
+                style={{ minHeight: draggingField ? getNestedLayoutHeight() + 40 : null }}
+                onDrop={onDrop}
+                resizeHandles={['e']}
+                droppingItem={draggingField?.fieldSize}
+                onLayoutChange={handleLayoutChange}
+                cols={60}
+                rowHeight={1}
+                margin={[0, 0]}
+                draggableCancel=".no-drg"
+                draggableHandle=".drag"
+                layout={nestedLayouts?.[fieldKey]?.[breakpoint] || []}
+                // onBreakpointChange={onBreakpointChange}
+                onDragStart={setResizingFldKey}
+                onDrag={setResizingWX}
+                onDragStop={() => {
+                  setIsDraggable(true)
+                  reCalculateFldHeights(fieldKey)
+                  setResizingFalse()
+                }}
+                onResizeStart={setResizingFldKey}
+                onResize={setResizingWX}
+                onResizeStop={() => {
+                  setResizingFalse()
+                  reCalculateFldHeights(fieldKey)
+                }}
+              >
+                {nestedLayouts?.[fieldKey]?.[breakpoint]?.map(layoutItem => (
+                  <div
+                    key={layoutItem.i}
+                    data-key={layoutItem.i}
+                    className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
+                    onClick={(e) => handleFldBlockEvent(e, layoutItem.i)}
+                    onKeyDown={(e) => handleFldBlockEvent(e, layoutItem.i)}
+                    role="button"
+                    tabIndex={0}
+                    onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                  >
+                    <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                      <FieldBlockWrapper
+                        {...{
+                          layoutItem,
+                          removeLayoutItem: removeNestedLayoutItem,
+                          cloneLayoutItem: cloneNestedLayoutItem,
+                          fields,
+                          formID,
+                          navigateToFieldSettings,
+                          navigateToStyle,
+                          handleContextMenu,
+                          resizingFld,
+                        }}
+                      />
+                    </Suspense>
+                  </div>
+                ))}
+              </ReactGridLayout>
+            ) : (
+              <div className="_frm-g">
+                {nestedLayouts?.[fieldKey]?.[breakpoint].map(layoutItem => (
+                  <div
+                    key={layoutItem.i}
+                    data-key={layoutItem.i}
+                    className={layoutItem.i}
+                    onClick={(e) => handleFldBlockEvent(e, layoutItem.i)}
+                    onKeyDown={(e) => handleFldBlockEvent(e, layoutItem.i)}
+                    role="button"
+                    tabIndex={0}
+                    onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                  >
+                    <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                      <FieldBlockWrapper
+                        {...{
+                          layoutItem,
+                          removeLayoutItem: removeNestedLayoutItem,
+                          cloneLayoutItem: cloneNestedLayoutItem,
+                          fields,
+                          formID,
+                          navigateToFieldSettings,
+                          navigateToStyle,
+                          handleContextMenu,
+                          resizingFld,
+                        }}
+                      />
+                    </Suspense>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {!nestedLayouts?.[fieldKey]?.[breakpoint]?.length && (
               <div className="empty-layout">
                 <div className="empty-layout-msg">

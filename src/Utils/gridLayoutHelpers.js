@@ -3,7 +3,9 @@ import { getRecoil, setRecoil } from 'recoil-nexus'
 import {
   $breakpoint,
   $contextMenu,
-  $fields, $formId, $layouts, $nestedLayouts, $proModal, $resizingFld, $uniqueFieldId,
+  $deletedFldKey,
+  $fields, $formId,
+  $nestedLayouts, $proModal, $resizingFld, $selectedFieldId, $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $styles } from '../GlobalStates/StylesState'
@@ -13,7 +15,7 @@ import bitformDefaultTheme from '../components/style-new/themes/1_bitformDefault
 import { updateFieldStyleByFieldSizing } from '../components/style-new/themes/1_bitformDefault/fieldSizeControlStyle'
 import atlassianTheme from '../components/style-new/themes/2_atlassian'
 import {
-  addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, getAbsoluteElmHeight, getLatestState, getResizableHandles, reCalculateFldHeights,
+  addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, getAbsoluteElmHeight, getLatestState, getResizableHandles, reCalculateFldHeights, removeFormUpdateError,
 } from './FormBuilderHelper'
 import { IS_PRO, deepCopy } from './Helpers'
 import proHelperData from './StaticData/proHelperData'
@@ -267,15 +269,12 @@ export const removeFieldStyles = fldKey => {
   setRecoil($styles, newStyles)
 }
 
-export const cloneLayoutItem = (fldKey, parentFieldKey) => {
-  const layouts = getRecoil($layouts)
+export const cloneLayoutItem = (fldKey, layouts) => {
   const fields = getRecoil($fields)
   const styles = getRecoil($styles)
-  const nestedLayouts = getRecoil($nestedLayouts)
   const proModal = getRecoil($proModal)
   const uniqueFieldId = getRecoil($uniqueFieldId)
   const formID = getRecoil($formId)
-  const contextMenu = getRecoil($contextMenu)
   const breakpoint = getRecoil($breakpoint)
 
   if (!IS_PRO) {
@@ -289,31 +288,16 @@ export const cloneLayoutItem = (fldKey, parentFieldKey) => {
   const newLayItem = {}
 
   const allBreakpoints = ['sm', 'md', 'lg']
-  let newLayouts
-  if (parentFieldKey) {
-    newLayouts = produce(nestedLayouts, draft => {
-      allBreakpoints.forEach(brkpnt => {
-        const layIndx = nestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
-        const { y, h } = nestedLayouts[parentFieldKey][brkpnt][layIndx]
-        const newLayoutItem = { ...nestedLayouts[parentFieldKey][brkpnt][layIndx], i: newBlk, y: y + h }
-        newLayItem[brkpnt] = newLayoutItem
-        draft[parentFieldKey][brkpnt].splice(layIndx + 1, 0, newLayoutItem)
-      })
+
+  const newLayouts = produce(layouts, draft => {
+    allBreakpoints.forEach(brkpnt => {
+      const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
+      const { y, h } = layouts[brkpnt][layIndx]
+      const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
+      newLayItem[brkpnt] = newLayoutItem
+      draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
     })
-    setRecoil($nestedLayouts, newLayouts)
-  }
-  if (!parentFieldKey) {
-    newLayouts = produce(layouts, draft => {
-      allBreakpoints.forEach(brkpnt => {
-        const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
-        const { y, h } = layouts[brkpnt][layIndx]
-        const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
-        newLayItem[brkpnt] = newLayoutItem
-        draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
-      })
-    })
-    setRecoil($layouts, newLayouts)
-  }
+  })
 
   const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
   const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
@@ -349,5 +333,62 @@ export const cloneLayoutItem = (fldKey, parentFieldKey) => {
   addToBuilderHistory({ event, type, state })
 
   // resetContextMenu()
-  setRecoil(contextMenu, {})
+  setRecoil($contextMenu, {})
+  return { newBlk, newFldName, newLayouts }
+}
+
+export const removeLayoutItem = (fldKey, layouts) => {
+  const fields = getRecoil($fields)
+  const breakpoint = getRecoil($breakpoint)
+  const deletedFldKey = getRecoil($deletedFldKey)
+  const staticStylesState = getRecoil($staticStylesState)
+
+  const fldData = fields[fldKey]
+  if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
+    const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+    if (!payFields.length) {
+      // setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
+      return false
+    }
+  }
+  const removedLay = {
+    lg: layouts.lg.find(l => l.i === fldKey),
+    md: layouts.md.find(l => l.i === fldKey),
+    sm: layouts.sm.find(l => l.i === fldKey),
+  }
+  const newLayouts = filterLayoutItem(fldKey, layouts)
+  const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
+
+  setRecoil($fields, tmpFields)
+  setRecoil($selectedFieldId, null)
+  removeFieldStyles(fldKey)
+  const newDeletedFldKey = produce(deletedFldKey, drft => {
+    if (!drft.includes(fldKey)) {
+      drft.push(fldKey)
+    }
+  })
+  setRecoil($deletedFldKey, newDeletedFldKey)
+  sessionStorage.setItem('btcd-lc', '-')
+
+  const fldType = fldData?.typ
+  if (fldType === 'razorpay' || fldType === 'paypal') {
+    const newStaticStyleState = produce(staticStylesState, draftStaticStyleState => {
+      delete draftStaticStyleState.staticStyles['.pos-rel']
+      delete draftStaticStyleState.staticStyles['.form-loading::before']
+      delete draftStaticStyleState.staticStyles['.form-loading::after']
+      if (fldType === 'razorpay') delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
+    })
+    setRecoil($staticStylesState, newStaticStyleState)
+  }
+
+  // add to history
+  const event = `${generateFieldLblForHistory(fldData)} removed`
+  const type = 'remove_fld'
+  const state = { fldKey, breakpoint, layout: removedLay, fldData, layouts: newLayouts, fields: tmpFields }
+  addToBuilderHistory({ event, type, state })
+
+  //  remove if it has any update button errors
+  removeFormUpdateError(fldKey)
+
+  return newLayouts
 }
