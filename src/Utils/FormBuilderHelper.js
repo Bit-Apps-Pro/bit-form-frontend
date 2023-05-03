@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 import produce from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
   $additionalSettings,
   $bits,
@@ -11,7 +10,7 @@ import {
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
-import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
+import { addDefaultStyleClasses, sortArrOfObjByMultipleProps } from '../components/style-new/styleHelpers'
 import { deepCopy } from './Helpers'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
@@ -891,6 +890,41 @@ export const getTotalLayoutHeight = () => {
   const breakpoint = getRecoil($breakpoint)
   const layout = layouts[breakpoint]
 
+  return layout.reduce((acc, { h, y }) => {
+    const { [y]: prevH = 0 } = acc.maxHeightsByY
+    const newH = Math.max(prevH, h)
+    return {
+      maxHeightsByY: { ...acc.maxHeightsByY, [y]: newH },
+      totalHeight: acc.totalHeight + (newH - prevH),
+    }
+  }, { maxHeightsByY: {}, totalHeight: 0 }).totalHeight
+}
+
+export const getFieldsBasedOnLayoutOrder = () => {
+  const fields = getRecoil($fields)
+  const layouts = getRecoil($layouts)
+  const breakpoint = getRecoil($breakpoint)
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const breakpointLayouts = layouts[breakpoint]
+  const breakpointNestedLayouts = Object.entries(nestedLayouts).reduce((acc, [fieldKey, lays]) => {
+    const fldPosition = breakpointLayouts.find((lay) => lay.i === fieldKey)
+    if (!fldPosition) return acc
+    const breakpointLays = lays[breakpoint]
+    const laysSumFldPosition = breakpointLays.map((lay) => ({ ...lay, y: lay.y + fldPosition.y }))
+    return [...acc, ...laysSumFldPosition]
+  }, [])
+  const mergedLayouts = [...breakpointLayouts, ...breakpointNestedLayouts]
+  const sortedLayouts = mergedLayouts.sort(sortArrOfObjByMultipleProps(['y', 'x']))
+  const sortedFields = sortedLayouts.reduce((acc, lay) => ({ ...acc, [lay.i]: fields[lay.i] }), {})
+  return sortedFields
+}
+
+export const getNestedLayoutHeight = (fieldKey) => {
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const layouts = nestedLayouts[fieldKey]
+  const breakpoint = getRecoil($breakpoint)
+  if (!layouts) return 0
+  const layout = layouts[breakpoint]
   return layout.reduce((acc, { h, y }) => {
     const { [y]: prevH = 0 } = acc.maxHeightsByY
     const newH = Math.max(prevH, h)
