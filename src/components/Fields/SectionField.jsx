@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
-  $breakpoint, $contextMenu, $deletedFldKey, $draggingField, $fields,
+  $breakpoint, $contextMenu, $contextMenuRef, $deletedFldKey, $draggingField, $fields,
   $flags,
   $nestedLayouts, $proModal,
   $resizingFld,
@@ -20,7 +20,6 @@ import {
   addNewFieldToGridLayout, cloneLayoutItem,
   removeLayoutItem, setResizingFldKey, setResizingWX,
 } from '../../Utils/gridLayoutHelpers'
-import useComponentVisible from '../CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldBlockWrapper from '../FieldBlockWrapper'
 import InputWrapper from '../InputWrapper'
 import FieldBlockWrapperLoader from '../Loaders/FieldBlockWrapperLoader'
@@ -46,7 +45,7 @@ export default function SectionField({
   const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
   const delayRef = useRef(null)
   // const breakpoint = useRecoilValue($breakpoint)
-  const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
+  const { ref, isComponentVisible, setIsComponentVisible } = useRecoilValue($contextMenuRef)
   const breakpoint = useRecoilValue($breakpoint)
   const setIsDraggable = useSetRecoilState($isDraggable)
   const navigate = useNavigate()
@@ -222,8 +221,8 @@ export default function SectionField({
         >
           <div
             style={{ width: inpWrpWidth, display: 'inline-block' }}
-            className="layout-wrapper"
-            id="layout-wrapper"
+            // className="layout-wrapper"
+            id={`${fieldKey}-layout-wrapper`}
             onDragOver={e => e.preventDefault()}
             onDragEnter={e => e.preventDefault()}
             onMouseMove={() => setIsDraggable(false)}

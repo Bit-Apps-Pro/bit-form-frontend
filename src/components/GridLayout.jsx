@@ -15,6 +15,7 @@ import {
   $breakpoint,
   $builderHookStates,
   $contextMenu,
+  $contextMenuRef,
   $deletedFldKey,
   $draggingField,
   $fields,
@@ -23,7 +24,7 @@ import {
   $layouts, $proModal,
   $resizingFld,
   $selectedFieldId,
-  $uniqueFieldId
+  $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
@@ -42,7 +43,7 @@ import {
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -84,6 +85,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const isDraggable = useRecoilValue($isDraggable)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
+  const setContextMenuRef = useSetRecoilState($contextMenuRef)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
@@ -98,6 +100,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const location = useLocation()
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setContextMenuRef({ ref, isComponentVisible, setIsComponentVisible }) }, [ref])
   // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
     const fieldsCount = Object.keys(fields).length
@@ -507,7 +510,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
     setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
   }
-
 
   const setRegenarateLayFlag = () => {
     sessionStorage.setItem('btcd-lc', '-')
