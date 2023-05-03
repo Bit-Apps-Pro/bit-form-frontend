@@ -1193,6 +1193,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'opt-search-input': {
@@ -1214,6 +1215,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'option-search-wrp': {
@@ -1483,6 +1485,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'opt-search-input': {
@@ -1504,6 +1507,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'opt-search-icn': {
@@ -2396,5 +2400,6 @@ const editorConfig = {
       },
     },
   },
+  section: { ...textFldCssProps },
 }
 export default editorConfig
