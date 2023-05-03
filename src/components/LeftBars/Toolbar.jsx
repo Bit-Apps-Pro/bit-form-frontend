@@ -32,24 +32,25 @@ import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import SearchIcon from '../../Icons/SearchIcon'
-import TextareaIcn from '../../Icons/TextareaIcn'
+import SectionIcon from '../../Icons/SectionIcon'
 import TextIcn from '../../Icons/TextIcn'
+import TextareaIcn from '../../Icons/TextareaIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import TitleIcn from '../../Icons/TitleIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
-import ut from '../../styles/2.utilities'
-import Toolbars from '../../styles/Toolbars.style'
 import { IS_PRO } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
 import countries from '../../Utils/StaticData/countries.json'
 import currencyList from '../../Utils/StaticData/currencies.json'
 import phoneNumberList from '../../Utils/StaticData/phone-number-code.json'
-import { searchKey } from '../style-new/styleHelpers'
+import { __ } from '../../Utils/i18nwrap'
+import ut from '../../styles/2.utilities'
+import Toolbars from '../../styles/Toolbars.style'
 import Cooltip from '../Utilities/Cooltip'
 import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
+import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
 
 export const toolsList = [
@@ -767,7 +768,7 @@ export const toolsList = [
   {
     name: __('Section'),
     keywords: 'Section, Field Group, Group, Section Field',
-    icn: <TextIcn size="23" />,
+    icn: <SectionIcon size="18" stroke={3} />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'section',
