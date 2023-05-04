@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { Suspense, useRef } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'

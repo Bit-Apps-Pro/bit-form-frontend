@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import {
   $breakpoint,
