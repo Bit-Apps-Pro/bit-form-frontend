@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
@@ -74,7 +74,7 @@ export default function EmailNotification({
           <Btn variant="danger-outline" className={css({ mr: 5 })} onClick={cancelModal}>{__('Cancel')}</Btn>
           <Btn onClick={() => setshowMdl(false)}>
             {__('Save')}
-&nbsp;
+            &nbsp;
           </Btn>
         </div>
       </>

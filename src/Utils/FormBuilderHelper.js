@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {

@@ -11,6 +11,7 @@ import './resource/sass/app.scss'
 import './resource/sass/global.scss'
 import customProperties from './styles/1.customProperties'
 import AppSettingsProvider from './Utils/AppSettingsContext'
+import { HashRouter } from 'react-router-dom'
 
 const renderer = createRenderer({
   plugins: [
@@ -51,7 +52,9 @@ root.render(
     <RecoilNexus />
     <AppSettingsProvider>
       <RendererProvider renderer={renderer}>
-        <App />
+        <HashRouter>
+          <App />
+        </HashRouter>
       </RendererProvider>
     </AppSettingsProvider>
   </RecoilRoot>,

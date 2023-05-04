@@ -1,31 +1,31 @@
-import filepondPreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import filepondCSS from 'filepond/dist/filepond.min.css'
+import filepondPreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css?inline'
+import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { useEffect } from 'react'
-import tippyShiftAwayExtremeCSS from 'tippy.js/animations/shift-away-extreme.css'
-import tippySvgArrowCSS from 'tippy.js/dist/svg-arrow.css'
-import tippyCss from 'tippy.js/dist/tippy.css'
-import tippyLightBorderCSS from 'tippy.js/themes/light-border.css'
+import tippyShiftAwayExtremeCSS from 'tippy.js/animations/shift-away-extreme.css?inline'
+import tippySvgArrowCSS from 'tippy.js/dist/svg-arrow.css?inline'
+import tippyCss from 'tippy.js/dist/tippy.css?inline'
+import tippyLightBorderCSS from 'tippy.js/themes/light-border.css?inline'
 import { select } from '../Utils/globalHelpers'
 
 export default function RenderCssInPortal() {
-  const styled = { div([str]) { return str } }
+   const styled = { div([str]) { return str } }
 
-  useEffect(() => {
-    const font1 = select('#bf-font-0-css')
-    const font2 = select('#bf-font-1-css')
+   useEffect(() => {
+      const font1 = select('#bf-font-0-css')
+      const font2 = select('#bf-font-1-css')
 
-    if (font1 && font2) {
-      document
-        .getElementById('bit-grid-layout')
-        ?.contentWindow
-        ?.document
-        .head
-        .appendChild(document.importNode(font1))
-        .appendChild(document.importNode(font2))
-    }
-  }, [])
+      if (font1 && font2) {
+         document
+            .getElementById('bit-grid-layout')
+            ?.contentWindow
+            ?.document
+            .head
+            .appendChild(document.importNode(font1))
+            .appendChild(document.importNode(font2))
+      }
+   }, [])
 
-  const gridLayoutStyle = styled.div`
+   const gridLayoutStyle = styled.div`
 :root {
     --b-50: #006aff;
     --g-41: #00faa7;
@@ -407,7 +407,7 @@ export default function RenderCssInPortal() {
 }
   `
 
-  const utils = styled.div`
+   const utils = styled.div`
   .pos-rel { position: relative}
    .g-c {
       display: -ms-grid;
@@ -475,16 +475,16 @@ display:none;
 
 
 `
-  return (
-    <style>
-      {gridLayoutStyle}
-      {filepondCSS}
-      {filepondPreviewCSS}
-      {tippyCss}
-      {tippyLightBorderCSS}
-      {tippyShiftAwayExtremeCSS}
-      {tippySvgArrowCSS}
-      {utils}
-    </style>
-  )
+   return (
+      <style>
+         {gridLayoutStyle}
+         {filepondCSS}
+         {filepondPreviewCSS}
+         {tippyCss}
+         {tippyLightBorderCSS}
+         {tippyShiftAwayExtremeCSS}
+         {tippySvgArrowCSS}
+         {utils}
+      </style>
+   )
 }

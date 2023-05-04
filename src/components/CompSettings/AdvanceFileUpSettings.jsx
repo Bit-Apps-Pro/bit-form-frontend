@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import produce from 'immer'
+import { produce } from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'

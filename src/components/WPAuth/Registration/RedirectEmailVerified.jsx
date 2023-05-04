@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { __ } from '../../../Utils/i18nwrap'

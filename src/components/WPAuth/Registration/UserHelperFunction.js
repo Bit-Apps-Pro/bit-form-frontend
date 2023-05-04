@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line no-unused-vars
-import produce from 'immer'
+import { produce } from 'immer'
 import { __ } from '../../../Utils/i18nwrap'
 
 export const addFieldMap = (authType, fldProp, i, confTmp, setConf) => {

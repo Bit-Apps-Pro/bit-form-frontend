@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
-import produce from 'immer'
+import { produce } from 'immer'
 import FieldMap from './FieldMap'
 import { fogotPassTamplate } from '../../Utils/StaticData/tamplate'
 import EmailNotification from './EmailNotification'

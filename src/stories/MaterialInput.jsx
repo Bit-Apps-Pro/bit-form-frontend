@@ -1,6 +1,5 @@
 import { createRenderer } from 'fela'
 import PropTypes from 'prop-types'
-// import './material-input.css'
 import { RendererProvider, useFela } from 'react-fela'
 
 const renderer = createRenderer({})

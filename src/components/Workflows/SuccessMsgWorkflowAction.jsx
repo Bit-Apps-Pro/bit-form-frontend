@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
 import TableCheckBox from '../Utilities/TableCheckBox'

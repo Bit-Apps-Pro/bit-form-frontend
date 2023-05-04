@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-// import './currency-field-style.css'
 import BitCurrencyField from 'bit-currency-field/src/bit-currency-field'
 import { observeElm } from 'bit-helpers/src'
 import bitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
