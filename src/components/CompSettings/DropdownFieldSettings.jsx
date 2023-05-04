@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import produce from 'immer'
+import { produce } from 'immer'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -266,7 +266,7 @@ export default function DropdownFieldSettings() {
         toggleAction={toggleSearchPlaceholder}
         toggleChecked={showSearchPh}
         open={showSearchPh}
-        {... IS_PRO && { disable: !showSearchPh }}
+        {...IS_PRO && { disable: !showSearchPh }}
         isPro
         proProperty="searchPlaceholder"
       >

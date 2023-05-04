@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { $confirmations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'

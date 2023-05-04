@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'

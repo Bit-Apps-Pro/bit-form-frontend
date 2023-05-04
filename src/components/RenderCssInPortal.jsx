@@ -1,10 +1,10 @@
-import filepondPreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import filepondCSS from 'filepond/dist/filepond.min.css'
+import filepondPreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css?inline'
+import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { useEffect } from 'react'
-import tippyShiftAwayExtremeCSS from 'tippy.js/animations/shift-away-extreme.css'
-import tippySvgArrowCSS from 'tippy.js/dist/svg-arrow.css'
-import tippyCss from 'tippy.js/dist/tippy.css'
-import tippyLightBorderCSS from 'tippy.js/themes/light-border.css'
+import tippyShiftAwayExtremeCSS from 'tippy.js/animations/shift-away-extreme.css?inline'
+import tippySvgArrowCSS from 'tippy.js/dist/svg-arrow.css?inline'
+import tippyCss from 'tippy.js/dist/tippy.css?inline'
+import tippyLightBorderCSS from 'tippy.js/themes/light-border.css?inline'
 import { select } from '../Utils/globalHelpers'
 
 export default function RenderCssInPortal() {

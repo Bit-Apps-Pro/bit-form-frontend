@@ -2,7 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+/* eslint-disable no-undef */
+import { produce } from 'immer'
 import {
   lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'

@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'

@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
-import produce from 'immer'
+import { produce } from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'

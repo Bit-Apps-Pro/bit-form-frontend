@@ -2,10 +2,10 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
 import { combineSelectors, objectToCssText } from 'atomize-css'
-import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import filepondCSS from 'filepond/dist/filepond.min.css'
+import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css?inline'
+import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import produce from 'immer'
+import { produce } from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../../GlobalStates/StaticStylesState'

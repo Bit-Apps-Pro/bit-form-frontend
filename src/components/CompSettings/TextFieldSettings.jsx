@@ -7,7 +7,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import produce from 'immer'
+import { produce } from 'immer'
 import { memo, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
@@ -77,7 +77,7 @@ function TextFieldSettings() {
   const { css } = useFela()
 
   const generateBackslashPattern = str => str.replace(/\$_bf_\$/g, '\\')
-  const escapeBackslashPattern = str => str.replace(/\\\\/g, '$_bf_$')
+  const escapeBackslashPattern = str => str.replace(/\\/g, '$_bf_$')
 
   // function setAutoComplete(e) {
   //   if (e.target.checked) {
@@ -162,7 +162,6 @@ function TextFieldSettings() {
   const setRegexr = e => {
     if (!IS_PRO) return
     const { value } = e.target
-    console.log(value)
     if (value === '') {
       delete fieldData.valid.regexr
     } else {

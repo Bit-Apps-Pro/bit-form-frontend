@@ -18,10 +18,10 @@ export default function VirtualList({
     enableSmoothScroll: true,
   })
 
-  useEffect(() => {
-    virtualizerRef?.current?.scrollToIndex(scrollToIndex, { align: scrollToAlignment || 'auto' })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollToIndex, scrollToAlignment])
+  // useEffect(() => {
+  //   if (virtualizerRef?.current) virtualizerRef?.current?.scrollToIndex(scrollToIndex, { align: scrollToAlignment || 'auto' })
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [scrollToIndex, scrollToAlignment])
 
   return (
     <div

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useEffect, useRef, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'

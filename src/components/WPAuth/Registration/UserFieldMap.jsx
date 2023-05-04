@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import produce from 'immer'
+import { produce } from 'immer'
 import { __ } from '../../../Utils/i18nwrap'
 import Cooltip from '../../Utilities/Cooltip'
 import { userFields } from '../../../Utils/StaticData/userField'

@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
 import { debouncer, getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'

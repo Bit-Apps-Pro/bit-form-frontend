@@ -12,9 +12,9 @@ function Drawer(props) {
           <button onClick={props.relatedinfo} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Related Info"' }} aria-label="icon-btn" type="button">
             <InfoIcn size="15" />
           </button>
-          {/* <button onClick={props.editData} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Edit"' }} aria-label="icon-btn" type="button">
+          <button onClick={props.editData} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Edit"' }} aria-label="icon-btn" type="button">
             <DocIcn size="15" />
-          </button> */}
+          </button>
           <button onClick={props.delConfMdl} className="icn-btn btcd-icn-lg tooltip" style={{ '--tooltip-txt': '"Delete"' }} aria-label="icon-btn" type="button">
             {/* <span className="btcd-icn icn-trash-fill" style={{ fontSize: 16 }} /> */}
             <TrashIcn size="15" />

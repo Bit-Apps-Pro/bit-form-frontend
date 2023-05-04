@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { useFela } from 'react-fela'
+import 'react-multiple-select-dropdown-lite/dist/index.css'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
