@@ -325,7 +325,7 @@ export default function SectionField({
               </div>
             )}
 
-            {!nestedLayouts?.[fieldKey]?.[breakpoint]?.length && (
+            {!nestedLayouts?.[fieldKey]?.[breakpoint]?.length && !draggingField && (
               <div className="empty-layout">
                 <div className="empty-layout-msg">
                   <div className="empty-layout-msg-txt">
