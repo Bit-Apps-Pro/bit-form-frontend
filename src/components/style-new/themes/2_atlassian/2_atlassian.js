@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 
 import { cleanObj } from '../../../../Utils/globalHelpers'
+import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
+import { defaultDarkThemeColors, defaultFont, defaultLgLightform, defaultLgLightThemeVars, defaultLightThemeColors } from '../1_bitformDefault/1_bitformDefault'
 import advancedFileUp_2_atlassian from './advancedFileUp_2_atlassian'
 import buttonStyle_2_atlassian from './buttonStyle_2_atlassian'
 import checkboxNradioStyle_2_atlassian from './checkboxNradioStyle_2_atlassian'
@@ -17,12 +19,10 @@ import paypalStyle_2_atlassian from './paypalStyle_2_atlassian'
 import phoneNumberStyle_2_atlassian from './phoneNumberStyle_2_atlassian'
 import razorpayStyle_2_atlassian from './razorpayStyle_2_atlassian'
 import recaptchaStyle_2_atlassian from './recaptchaStyle_2_atlassian'
+import sectionStyle_2_atlassian from './sectionStyle_2_atlassian'
 import selectStyle_2_atlassian from './selectStyle_2_atlassian'
 import textStyle_2_atlassian from './textStyle_2_atlassian'
 import titleStyle_2_atlassian from './titleStyle_2_atlassian'
-import { defaultDarkThemeColors, defaultFont, defaultLgLightform, defaultLgLightThemeVars, defaultLightThemeColors } from '../1_bitformDefault/1_bitformDefault'
-import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
-import sectionStyle_2_bitformDefault from './sectionStyle_2_atlassian'
 
 export default function atlassianTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -233,7 +233,7 @@ const section = ({ type, fk, breakpoint, colorScheme }) => {
       fieldType: type,
       overrideGlobalTheme: [],
       fieldSize: 'medium',
-      classes: sectionStyle_2_bitformDefault({ fk, type, breakpoint, colorScheme }),
+      classes: sectionStyle_2_atlassian({ fk, type, breakpoint, colorScheme }),
     }
   }
   return {}
