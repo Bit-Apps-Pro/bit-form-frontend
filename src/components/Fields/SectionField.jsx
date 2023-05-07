@@ -71,7 +71,7 @@ export default function SectionField({
   }
   const inpWrpElm = selectInGrid(`.${fieldKey}-inp-fld-wrp`)
   const absoluteSizes = inpWrpElm && getAbsoluteSize(inpWrpElm)
-  const inpWrpWidth = absoluteSizes ? absoluteSizes.width - (absoluteSizes.paddingLeft + absoluteSizes.paddingRight) : 0
+  const inpWrpWidth = absoluteSizes ? absoluteSizes.width - (absoluteSizes.paddingLeft + absoluteSizes.paddingRight + absoluteSizes.borderLeft + absoluteSizes.borderRight) : 0
 
   const resetContextMenu = () => {
     setContextMenu({})
