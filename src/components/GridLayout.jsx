@@ -563,7 +563,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   layouts={layouts}
                   onBreakpointChange={onBreakpointChange}
                   onDragStart={setResizingFldKey}
-                  onDrag={setResizingWX}
+                  // onDrag={setResizingWX}
                   onDragStop={setRegenarateLayFlag}
                   onResizeStart={setResizingFldKey}
                   onResize={setResizingWX}

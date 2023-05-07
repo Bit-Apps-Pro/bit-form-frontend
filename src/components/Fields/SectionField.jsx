@@ -250,7 +250,7 @@ export default function SectionField({
                 layout={nestedLayouts?.[fieldKey]?.[breakpoint] || []}
                 // onBreakpointChange={onBreakpointChange}
                 onDragStart={setResizingFldKey}
-                onDrag={setResizingWX}
+                // onDrag={setResizingWX}
                 onDragStop={() => {
                   setIsDraggable(true)
                   reCalculateFldHeights(fieldKey)
