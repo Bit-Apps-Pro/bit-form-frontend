@@ -13,7 +13,7 @@ import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import {
-  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $updateBtn, $workflows,
+  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -57,6 +57,7 @@ function FormDetails() {
   const setConfirmations = useSetRecoilState($confirmations)
   const setReportId = useSetRecoilState($reportId)
   const setLayouts = useSetRecoilState($layouts)
+  const setNestedLayouts = useSetRecoilState($nestedLayouts)
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
@@ -162,6 +163,7 @@ function FormDetails() {
       smDarkStyles: getSessionStorageStates(`btcd-stylesSmDark-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1),
     }
     const sessionLayouts = getSessionStorageStates(`btcd-layouts-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1)
+    const sessionNestedLayouts = getSessionStorageStates(`btcd-nested-layouts-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1)
     const sessionFields = getSessionStorageStates(`btcd-fields-bf-${formID}`, { strType: 'json' }) ?? (sessionDataNotFound += 1)
 
     const sessionBreakpointSize = getSessionStorageStates(`btcd-breakpointSize-bf-${formID}`, { strType: 'json' }) ?? breakpointSize
@@ -175,6 +177,7 @@ function FormDetails() {
 
     if (sessionDataNotFound === 0) {
       setLayouts(sessionLayouts)
+      setNestedLayouts(sessionNestedLayouts)
       setFields(sessionFields)
       addToBuilderHistory({ state: { layouts: sessionLayouts, fields: sessionFields } }, false, 0)
       setBreakpoint(sessionStorageBreakpoint)
@@ -209,6 +212,10 @@ function FormDetails() {
             if (!formsSessionDataFound) {
               setLayouts(responseData.form_content.layout)
               addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
+            }
+            if (!formsSessionDataFound) {
+              setNestedLayouts(responseData.form_content.nestedLayout || {})
+              addToBuilderHistory({ state: { nestedLayouts: responseData.form_content.nestedLayout || {} } }, false, 0)
             }
             if (!formsSessionDataFound) {
               setFields(responseData.form_content.fields)
