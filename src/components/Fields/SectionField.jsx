@@ -5,14 +5,14 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
-  $breakpoint, $contextMenu, $contextMenuRef, $deletedFldKey, $draggingField, $fields,
+  $breakpoint,
+  $contextMenu, $contextMenuRef,
+  $draggingField, $fields,
   $flags,
-  $nestedLayouts, $proModal,
+  $nestedLayouts,
   $resizingFld,
-  $selectedFieldId, $uniqueFieldId,
+  $selectedFieldId
 } from '../../GlobalStates/GlobalStates'
-import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
-import { $styles } from '../../GlobalStates/StylesState'
 import { getNestedLayoutHeight, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
@@ -35,13 +35,8 @@ export default function SectionField({
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
-  const setDeletedFldKey = useSetRecoilState($deletedFldKey)
   const [fields, setFields] = useRecoilState($fields)
-  const [styles, setStyles] = useRecoilState($styles)
-  const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const { styleMode } = useRecoilValue($flags)
-  const setStaticStyleState = useSetRecoilState($staticStylesState)
-  const setProModal = useSetRecoilState($proModal)
   const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
   const delayRef = useRef(null)
   // const breakpoint = useRecoilValue($breakpoint)
@@ -215,7 +210,7 @@ export default function SectionField({
       >
         <div
           data-testid={`${fieldKey}-inp-fld-wrp`}
-          // data-dev-inp-fld-wrp={fieldKey}
+          data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
           {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
         >

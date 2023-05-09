@@ -2400,6 +2400,20 @@ const editorConfig = {
       },
     },
   },
-  section: { ...textFldCssProps },
+  section: {
+    ...textFldCssProps,
+    'inp-fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+        'text-decoration': {
+          'text-decoration-line': true,
+          'text-decoration-style': true,
+          'text-decoration-color': true,
+          'text-decoration-thickness': true,
+        },
+      },
+    },
+  },
 }
 export default editorConfig
