@@ -773,6 +773,9 @@ export const toolsList = [
     elm: {
       typ: 'section',
       lbl: __('Section'),
+      layout: {
+        autoHeight: 1,
+      },
       nestedFlds: ['b9-6'],
       valid: {},
       err: {},
