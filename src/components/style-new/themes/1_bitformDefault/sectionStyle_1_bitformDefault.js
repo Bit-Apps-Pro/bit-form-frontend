@@ -7,7 +7,7 @@ export default function sectionStyle_1_bitformDefault({ fk, type, breakpoint, co
       ...inputWrapperClasses(fk),
       [`.${fk}-inp-fld-wrp`]: {
         display: 'grid',
-        'border-style': 'solid',
+        'border-style': 'dotted',
         'border-color': 'var(--global-fld-bdr-clr)',
         'border-radius': '4px',
         'border-width': '1px',
