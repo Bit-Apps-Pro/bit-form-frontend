@@ -587,7 +587,9 @@ export const filterNumber = numberString => Number(numberString.replace(/px|em|r
 
 export const reCalculateFldHeights = (fieldKey) => {
   const builderHookState = getRecoil($builderHookStates)
-  if (fieldKey) {
+  const layouts = getRecoil($layouts)
+  const isExistInLayout = layouts.lg.find(itm => itm.i === fieldKey)
+  if (fieldKey && isExistInLayout) {
     const newBuilderHookState = produce(builderHookState, draft => {
       const { counter } = draft.reCalculateSpecificFldHeight
       draft.reCalculateSpecificFldHeight = {
@@ -596,12 +598,35 @@ export const reCalculateFldHeights = (fieldKey) => {
       }
     })
     setRecoil($builderHookStates, newBuilderHookState)
-  } else {
+  } else if (isExistInLayout) {
     const newBuilderHookState = produce(builderHookState, draft => {
       draft.reCalculateFieldHeights += 1
     })
     setRecoil($builderHookStates, newBuilderHookState)
+  } else if (!isExistInLayout) {
+    const parentFieldKey = getParentFieldKey(fieldKey)
+    const newBuilderHookState = produce(builderHookState, draft => {
+      const { counter } = draft.recalculateNestedField
+      draft.recalculateNestedField = {
+        fieldKey,
+        parentFieldKey,
+        counter: counter + 1,
+      }
+    })
+    setRecoil($builderHookStates, newBuilderHookState)
   }
+}
+
+export const getParentFieldKey = (fieldKey) => {
+  const nestedLayout = getRecoil($nestedLayouts)
+  let parentFieldKey = ''
+  Object.entries(nestedLayout).forEach(([key, layout]) => {
+    if (layout.lg.find(itm => itm.i === fieldKey)) {
+      parentFieldKey = key
+      return parentFieldKey
+    }
+  })
+  return parentFieldKey
 }
 
 export const generateHistoryData = (element, fieldKey, path, changedValue, state) => {

@@ -1,19 +1,20 @@
 import { produce } from 'immer'
-import { Suspense, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
+  $builderHookStates,
   $contextMenu, $contextMenuRef,
   $draggingField, $fields,
   $flags,
   $nestedLayouts,
   $resizingFld,
-  $selectedFieldId
+  $selectedFieldId,
 } from '../../GlobalStates/GlobalStates'
-import { getNestedLayoutHeight, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { fitSpecificLayoutItem, getNestedLayoutHeight, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import {
@@ -42,10 +43,22 @@ export default function SectionField({
   // const breakpoint = useRecoilValue($breakpoint)
   const { ref, isComponentVisible, setIsComponentVisible } = useRecoilValue($contextMenuRef)
   const breakpoint = useRecoilValue($breakpoint)
+  const builderHookStates = useRecoilValue($builderHookStates)
   const setIsDraggable = useSetRecoilState($isDraggable)
+  const { recalculateNestedField } = builderHookStates
+  const { fieldKey: changedFieldKey, parentFieldKey, counter: fieldChangeCounter } = recalculateNestedField
   const navigate = useNavigate()
   const location = useLocation()
 
+  useEffect(() => {
+    if (fieldChangeCounter > 0 && fieldKey === parentFieldKey) {
+      const nl = fitSpecificLayoutItem(nestedLayouts[fieldKey], changedFieldKey)
+      setNestedLayouts(prv => produce(prv, draft => {
+        draft[fieldKey] = nl
+      }))
+      reCalculateFldHeights(fieldKey)
+    }
+  }, [fieldChangeCounter, parentFieldKey, changedFieldKey])
   const handleLayoutChange = (lay) => {
     if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
       setNestedLayouts(prv => produce(prv, draft => {

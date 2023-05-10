@@ -44,7 +44,13 @@ export const $builderHelperStates = atom({
     })
   }],
 })
-export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, forceBuilderWidthToBrkPnt: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
+export const $builderHookStates = atom({ key: '$builderHookStates',
+  default: { reCalculateFieldHeights: 0,
+    reRenderGridLayoutByRootLay: 0,
+    forceBuilderWidthToLG: 0,
+    forceBuilderWidthToBrkPnt: 0,
+    reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 },
+    recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 } } })
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
 export const $builderSettings = atom({
   key: '$builderSettings',
