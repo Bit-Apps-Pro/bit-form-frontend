@@ -14,11 +14,11 @@ import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import {
   $themeVars, $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight,
 } from '../../GlobalStates/ThemeVarsState'
+import { deepCopy, forEach, getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty, trimCSS } from '../../Utils/Helpers'
 import css2json from '../../Utils/css2json'
 import { select } from '../../Utils/globalHelpers'
-import { deepCopy, forEach, getIconsGlobalFilterVariable, getIconsParentElement, isObjectEmpty, trimCSS } from '../../Utils/Helpers'
-import { hslToHex } from './colorHelpers'
 import editorConfig from './NewStyleEditorConfig'
+import { hslToHex } from './colorHelpers'
 import advancedFileUp_1_bitformDefault from './themes/1_bitformDefault/advancedFileUp_1_bitformDefault'
 import buttonStyle1BitformDefault from './themes/1_bitformDefault/buttonStyle_1_bitformDefault'
 import checkboxNradioStyle1BitformDefault from './themes/1_bitformDefault/checkboxNradioStyle_1_bitformDefault'
@@ -31,6 +31,7 @@ import htmlStyle_1_bitformDefault from './themes/1_bitformDefault/htmlStyle_1_bi
 import imageStyle1BitformDefault from './themes/1_bitformDefault/imageStyle_1_bitformDefault'
 import phoneNumberStyle_1_bitformDefault from './themes/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
 import recaptchaStyle_1_bitformDefault from './themes/1_bitformDefault/recaptchaStyle_1_bitformDefault'
+import sectionStyle_1_bitformDefault from './themes/1_bitformDefault/sectionStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './themes/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from './themes/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './themes/1_bitformDefault/titleStyle_1_bitformDefault'
@@ -679,6 +680,10 @@ export const addDefaultStyleClasses = (fk, element) => {
         case 'phone-number':
           const phoneNumberStyleBitformDefault = phoneNumberStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
           addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: phoneNumberStyleBitformDefault })
+          break
+        case 'section':
+          const sectionStyleBiformDefault = sectionStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: sectionStyleBiformDefault })
           break
         default:
           break
