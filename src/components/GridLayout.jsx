@@ -22,8 +22,7 @@ import {
   $fields,
   $flags,
   $isNewThemeStyleLoaded,
-  $layouts, $proModal,
-  $resizingFld,
+  $layouts, $nestedLayouts, $proModal,
   $selectedFieldId,
   $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
@@ -40,6 +39,7 @@ import {
   filterNumber,
   fitAllLayoutItems, fitSpecificLayoutItem,
   getLatestState,
+  getParentFieldKey,
   getTotalLayoutHeight,
   isLayoutSame,
   produceNewLayouts,
@@ -47,9 +47,9 @@ import {
   removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
-import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
+import { compactResponsiveLayouts, getLayoutItemCount } from '../Utils/gridLayoutHelper'
 import { addNewFieldToGridLayout, generateFieldLblForHistory, generateNewFldName, getInitHeightsForResizingTextarea } from '../Utils/gridLayoutHelpers'
-import { IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
+import { deepCopy, getNewId, IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -79,9 +79,10 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
   const [styles, setStyles] = useRecoilState($stylesLgLight)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
+  const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
-  const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
+  const [resizingFld, setResizingFld] = useState({})
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
   const isDraggable = useRecoilValue($isDraggable)
@@ -105,8 +106,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
     const fieldsCount = Object.keys(fields).length
-    const layoutLgFieldsCount = layouts.lg.length
+    const layoutLgFieldsCount = getLayoutItemCount()
     if (fieldsCount === layoutLgFieldsCount) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draft => {
+        Object.entries(draft).forEach(([fldKey, lay]) => {
+          draft[fldKey] = fitAllLayoutItems(lay)
+        })
+      }))
       const nl = fitAllLayoutItems(layouts)
       const nl2 = compactResponsiveLayouts(nl, cols)
       if (!isLayoutSame(layouts, nl2)) {
@@ -185,9 +191,11 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
   const onBreakpointChange = bp => setBreakpoint(bp)
 
-  const removeFieldStyles = fldKey => {
+  const removeFieldStyles = fldKeys => {
     setStyles(prevStyles => produce(prevStyles, draftStyles => {
-      delete draftStyles.fields[fldKey]
+      fldKeys.forEach(fldKey => {
+        delete draftStyles.fields[fldKey]
+      })
     }))
   }
 
@@ -200,18 +208,40 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
         return false
       }
     }
+    const isNestedField = nestedLayouts[fldKey]
+    const isExistInLayout = layouts.lg.find(itm => itm.i === fldKey)
     const removedLay = {
       lg: layouts.lg.find(l => l.i === fldKey),
       md: layouts.md.find(l => l.i === fldKey),
       sm: layouts.sm.find(l => l.i === fldKey),
     }
     const nwLay = filterLayoutItem(fldKey, layouts)
-    const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
+    const removedFldKeys = [fldKey]
     setLayouts(nwLay)
     setRootLayouts(nwLay)
+    if (isNestedField) {
+      nestedLayouts[fldKey].lg.forEach(nestedField => {
+        removedFldKeys.push(nestedField.i)
+      })
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        delete draftNestedLayouts[fldKey]
+      }))
+    }
+    if (!isExistInLayout) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        const parentFieldKey = getParentFieldKey(fldKey)
+        draftNestedLayouts[parentFieldKey] = filterLayoutItem(fldKey, draftNestedLayouts[parentFieldKey])
+      }))
+    }
+    const tmpFields = produce(fields, draftFields => {
+      removedFldKeys.forEach(rmvfldKey => {
+        delete draftFields[rmvfldKey]
+      })
+    })
+
     setFields(tmpFields)
     setSelectedFieldId(null)
-    removeFieldStyles(fldKey)
+    removeFieldStyles(removedFldKeys)
     setDeletedFldKey(prvDeleted => {
       const tmpFldKeys = [...prvDeleted]
       if (!tmpFldKeys.includes(fldKey)) {
@@ -252,60 +282,109 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setLayouts(newLayouts)
     setRootLayouts(newLayouts)
   }
-
   const cloneLayoutItem = fldKey => {
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.fieldClone })
       return
     }
-    const fldData = fields[fldKey]
+    const fieldData = fields[fldKey]
     // if (!handleFieldExtraAttr(fldData)) return
+    const isNestedField = nestedLayouts[fldKey]
+    const isExistInLayout = layouts.lg.find(itm => itm.i === fldKey)
+    const cloneFldKeys = [fldKey]
+    if (isNestedField) {
+      nestedLayouts[fldKey].lg.forEach(nestedField => {
+        cloneFldKeys.push(nestedField.i)
+      })
+    }
+    let uniqueFldId = getNewId(fields)
+    // const newBlk = `b${formID}-${uniqueFldId}`
 
-    const newBlk = `b${formID}-${uniqueFieldId}`
-    const newLayItem = {}
-
-    const tmpLayouts = produce(layouts, draft => {
-      const allBreakpoints = ['sm', 'md', 'lg']
-      allBreakpoints.forEach(brkpnt => {
-        const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
-        const { y, h } = layouts[brkpnt][layIndx]
-        const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
-        newLayItem[brkpnt] = newLayoutItem
-        draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+    // clone field
+    const clonedNewFieldKey = {}
+    const oldFields = produce(fields, draft => {
+      cloneFldKeys.forEach(fldKeyToClone => {
+        const fldData = draft[fldKeyToClone]
+        const newBlk = `b${formID}-${uniqueFldId}`
+        uniqueFldId += 1
+        clonedNewFieldKey[fldKeyToClone] = newBlk
+        const newFldName = generateNewFldName(fldData.fieldName, fldKeyToClone, newBlk)
+        draft[newBlk] = { ...fldData, fieldName: newFldName }
       })
     })
-
-    setLayouts(tmpLayouts)
-    setRootLayouts(tmpLayouts)
-    const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
-    const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
-    // eslint-disable-next-line no-param-reassign
     setFields(oldFields)
 
     // clone style
     setStyles(preStyles => produce(preStyles, draftStyle => {
-      const fldStyle = draftStyle.fields[fldKey]
-      const fldClasses = fldStyle.classes
-      draftStyle.fields[newBlk] = { ...fldStyle }
-      draftStyle.fields[newBlk].classes = {}
-      Object.keys(fldClasses).forEach(cls => {
-        const newClassName = cls.replace(fldKey, newBlk)
-        draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
+      cloneFldKeys.forEach(fldKeyToClone => {
+        const fldStyle = draftStyle.fields[fldKeyToClone]
+        const fldClasses = fldStyle.classes
+        const newBlk = clonedNewFieldKey[fldKeyToClone]
+        draftStyle.fields[newBlk] = { ...fldStyle }
+        draftStyle.fields[newBlk].classes = {}
+        Object.keys(fldClasses).forEach(cls => {
+          const newClassName = cls.replace(fldKeyToClone, newBlk)
+          draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
+        })
       })
     }))
 
-    sessionStorage.setItem('btcd-lc', '-')
+    const newLayItem = {}
 
+    const allBreakpoints = ['sm', 'md', 'lg']
+    if (isNestedField) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        const newFieldKey = clonedNewFieldKey[fldKey]
+        const prevLayout = prevNestedLayouts[fldKey]
+        draftNestedLayouts[newFieldKey] = deepCopy(prevLayout)
+        allBreakpoints.forEach(brkpnt => {
+          draftNestedLayouts[newFieldKey][brkpnt].forEach((nestedField, indx) => {
+            const newBlk = clonedNewFieldKey[nestedField.i]
+            draftNestedLayouts[newFieldKey][brkpnt][indx].i = newBlk
+          })
+        })
+      }))
+    } else if (!isExistInLayout) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        allBreakpoints.forEach(brkpnt => {
+          const parentFieldKey = getParentFieldKey(fldKey)
+          const layIndx = draftNestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
+          const { y, h } = draftNestedLayouts[parentFieldKey][brkpnt][layIndx]
+          const newFieldKey = clonedNewFieldKey[fldKey]
+          const newLayoutItem = { ...draftNestedLayouts[parentFieldKey][brkpnt][layIndx], i: newFieldKey, y: y + h }
+          newLayItem[brkpnt] = newLayoutItem
+          draftNestedLayouts[parentFieldKey][brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+        })
+      }))
+    }
+    let tmpLayouts = layouts
+    if (isExistInLayout) {
+      tmpLayouts = produce(layouts, draft => {
+        allBreakpoints.forEach(brkpnt => {
+          const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
+          const { y, h } = layouts[brkpnt][layIndx]
+          const newBlk = clonedNewFieldKey[fldKey]
+          const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
+          newLayItem[brkpnt] = newLayoutItem
+          draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+        })
+      })
+      setLayouts(tmpLayouts)
+      setRootLayouts(tmpLayouts)
+    }
+
+    sessionStorage.setItem('btcd-lc', '-')
+    const newBlk = clonedNewFieldKey[fldKey]
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
 
     // add to history
-    const event = `${generateFieldLblForHistory(fldData)} cloned`
+    const event = `${generateFieldLblForHistory(fieldData)} cloned`
     const type = 'clone_fld'
     const state = {
-      fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields, styles: getLatestState('styles'),
+      fldKey: newBlk, breakpoint, layout: newLayItem, fieldData, layouts: tmpLayouts, fields: oldFields, styles: getLatestState('styles'),
     }
     addToBuilderHistory({ event, type, state })
 
