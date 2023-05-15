@@ -1,5 +1,4 @@
 import { __ } from '../Utils/i18nwrap'
-import CheckBox from './Utilities/CheckBox'
 
 export default function StripeSettings({ paySetting, handleInput }) {
   return (
@@ -17,7 +16,7 @@ export default function StripeSettings({ paySetting, handleInput }) {
           onChange={handleInput}
         />
       </div>
-      <div className="flx mt-3">
+      {/* <div className="flx mt-3">
         <b className="wdt-150 mr-2">{__('Environment Mode:')}</b>
         <CheckBox
           radio
@@ -35,7 +34,7 @@ export default function StripeSettings({ paySetting, handleInput }) {
           title={<small className="txt-dp"><b>Live</b></small>}
           value="live"
         />
-      </div>
+      </div> */}
       <div className="flx mt-3">
         <b className="wdt-200">{__('Publishable key:')}</b>
         <input

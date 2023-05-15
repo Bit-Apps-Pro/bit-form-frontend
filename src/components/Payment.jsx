@@ -58,7 +58,7 @@ export default function Payment({ allIntegURL }) {
         }
         break
       case 'Stripe':
-        if (!tmpSetting.name || !tmpSetting.publishableKey || !tmpSetting.clientSecret || !tmpSetting.mode) {
+        if (!tmpSetting.name || !tmpSetting.publishableKey || !tmpSetting.clientSecret) {
           validation = true
         }
       // eslint-disable-next-line no-fallthrough
@@ -91,6 +91,7 @@ export default function Payment({ allIntegURL }) {
         }
         setSnackbar({ show: true, msg: `${res.data.message}` })
         setisLoading(false)
+        navigate('/app-settings/payments')
       })
   }
 
