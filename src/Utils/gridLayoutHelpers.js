@@ -15,37 +15,15 @@ import bitformDefaultTheme from '../components/style-new/themes/1_bitformDefault
 import { updateFieldStyleByFieldSizing } from '../components/style-new/themes/1_bitformDefault/fieldSizeControlStyle'
 import atlassianTheme from '../components/style-new/themes/2_atlassian'
 import {
-  addNewItemInLayout, addToBuilderHistory, checkFieldsExtraAttr, filterLayoutItem, getAbsoluteElmHeight, getLatestState, getResizableHandles, reCalculateFldHeights, removeFormUpdateError,
+  addFormUpdateError,
+  addNewItemInLayout, addToBuilderHistory,
+  filterLayoutItem, getAbsoluteElmHeight, getLatestState,
+  getResizableHandles, reCalculateFldHeights, removeFormUpdateError,
 } from './FormBuilderHelper'
 import { IS_PRO, deepCopy } from './Helpers'
 import proHelperData from './StaticData/proHelperData'
 import { selectInGrid } from './globalHelpers'
-
-const handleFieldExtraAttr = (fieldData) => {
-  const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2)
-  if (extraAttr.validType === 'pro') {
-    setProModal({ show: true, ...proHelperData[fieldData.typ] })
-    return 0
-  }
-
-  if (extraAttr.validType === 'onlyOne') {
-    setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
-    return 0
-  }
-
-  if (extraAttr.validType === 'keyEmpty') {
-    setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
-    return 0
-  }
-
-  if (extraAttr.validType === 'setDefaultPayConfig') {
-    const newFldData = { ...fieldData }
-    newFldData.payIntegID = extraAttr.payData.id
-    return newFldData
-  }
-
-  return fieldData
-}
+import { __ } from './i18nwrap'
 
 const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
   const { typ: fldType } = fieldData
@@ -148,7 +126,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
         direction: themeVars['--dir'],
       })
       if (draftStyle.fieldsSize !== 'medium') {
-        const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, prevStyles.fieldsSize, tempThemeVars)
+        const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, draftStyle.fieldsSize, tempThemeVars)
         draftStyle.fields[newBlk] = updateStyle
       } else {
         draftStyle.fields[newBlk] = defaultFieldStyle
