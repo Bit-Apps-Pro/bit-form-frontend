@@ -23,6 +23,7 @@ import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
+  $alertModal,
   $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
@@ -93,7 +94,7 @@ const FormBuilder = ({ isLoading }) => {
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
+  const [alertMdl, setAlertMdl] = useRecoilState($alertModal)
   const setStaticStylesState = useSetRecoilState($staticStylesState)
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)

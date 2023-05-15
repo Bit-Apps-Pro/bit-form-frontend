@@ -158,6 +158,8 @@ export const $workflows = atom({ key: '$workflows', default: [], dangerouslyAllo
 export const $contextMenu = atom({ key: '$contextMenu', default: {} })
 export const $resizingFld = atom({ key: '$resizingFld', default: {} })
 export const $contextMenuRef = atom({ key: '$contextMenuRef', default: {}, dangerouslyAllowMutability: true })
+export const $proModal = atom({ key: '$proModal', default: { show: false } })
+export const $alertModal = atom({ key: '$alertModal', default: { show: false, msg: '' } })
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels), []), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
@@ -173,7 +175,6 @@ export const $reportSelector = selector({
   })),
 })
 
-export const $proModal = atom({ key: '$proModal', default: { show: false } })
 
 export const $nestedLayouts = atom({
   key: '$nestedLayouts',
