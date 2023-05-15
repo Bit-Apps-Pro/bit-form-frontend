@@ -275,7 +275,7 @@ export default class BitPhoneNumberField {
       if (!acc[item.code]) {
         let { code } = item
         if (code[0] === '+') code = code.substring(1)
-        acc[code] = item.i
+        if (!(code in acc) && item.ptrn) acc[code] = item.i
       }
       return acc
     }, {})
