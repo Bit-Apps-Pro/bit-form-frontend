@@ -51,6 +51,7 @@ import Cooltip from '../Utilities/Cooltip'
 import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import Tools from './Tools'
+import StripeIcn from '../../Icons/StripeIcn'
 
 function Toolbar({ setNewData }) {
   const { css } = useFela()
@@ -699,6 +700,35 @@ function Toolbar({ setNewData }) {
         valid: {},
         customClasses: {},
         customAttributes: {},
+      },
+    },
+    {
+      name: __('Stripe'),
+      keywords: 'Stripe, payment, credit card, credit card payment',
+      icn: <StripeIcn size="23" />,
+      pos: { h: 200, w: 60, i: 'shadow_block', minW: 20 },
+      pro: 'This field is available only in pro version',
+      elm: {
+        typ: 'stripe',
+        adminLbl: __('Stripe'),
+        valid: {},
+        config: {
+          layout: {
+            type: 'tabs',
+            defaultCollapsed: false,
+          },
+          options: {
+            mode: 'payment',
+            currency: 'usd',
+            locale: 'en',
+            amount: 50,
+            payment_method_types: ['card'],
+            appearance: {
+              theme: 'night',
+              labels: 'floating',
+            },
+          },
+        },
       },
     },
     {

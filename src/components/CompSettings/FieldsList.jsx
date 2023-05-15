@@ -11,7 +11,6 @@ export default function FieldsList() {
   const breakpoint = useRecoilValue($breakpoint)
   const sortedLayouts = deepCopy(layouts[breakpoint]).sort(sortArrOfObjByMultipleProps(['y', 'x']))
   const sortedFields = sortedLayouts.reduce((acc, lay) => ({ ...acc, [lay.i]: fields[lay.i] }), {})
-
   const hiddenFlds = Object.entries(sortedFields).filter(([, fld]) => fld?.valid?.hide)
   const notHiddenFlds = Object.entries(sortedFields).filter(([, fld]) => !fld?.valid?.hide)
 

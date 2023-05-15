@@ -362,6 +362,10 @@ module.exports = (env, argv) => {
               from: path.resolve(__dirname, 'packages/bit-conditionals/dist/bit-conditionals.min.js'),
               to: path.resolve(__dirname, '../assets/js/bit-conditionals.min.js'),
             },
+            {
+              from: path.resolve(__dirname, 'packages/bit-stripe-field/dist/bit-stripe-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-stripe-field.min.js'),
+            },
           ],
         }),
         new WorkboxPlugin.GenerateSW({

@@ -25,15 +25,16 @@ import PhoneNumberIcn from '../../Icons/PhoneNumberIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
-import TextareaIcn from '../../Icons/TextareaIcn'
+import StripeIcn from '../../Icons/StripeIcn'
 import TextIcn from '../../Icons/TextIcn'
+import TextareaIcn from '../../Icons/TextareaIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import TitleIcn from '../../Icons/TitleIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
-import { selectInGrid } from '../../Utils/globalHelpers'
 import { ucFirst } from '../../Utils/Helpers'
+import { selectInGrid } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
@@ -105,6 +106,7 @@ const FieldIcon = icon => {
     button: <BtnIcn size="14" />,
     html: <CodeSnippetIcn size="14" />,
     paypal: <PaypalIcn w="14" />,
+    stripe: <StripeIcn size="18" />,
     razorpay: <RazorPayIcn w="14" h="19" />,
     'advanced-file-up': <FileUploadIcn w="14" />,
     currency: <CurrencyIcn size="15" />,

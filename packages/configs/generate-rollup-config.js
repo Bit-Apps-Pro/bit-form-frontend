@@ -8,7 +8,7 @@ import livereload from 'rollup-plugin-livereload'
 const terserOptions = {
   compress: {
     passes: 10,
-    drop_console: true,
+    drop_console: false,
   },
   output: {
     comments: false,
