@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-undef */
 import { produce } from 'immer'
 import {
   lazy, memo, Suspense, useContext, useEffect, useRef, useState,
@@ -41,6 +40,7 @@ import {
   getLatestState,
   getParentFieldKey,
   getTotalLayoutHeight,
+  handleFieldExtraAttr,
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
@@ -277,6 +277,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   function addNewField(fieldData, fieldSize, addPosition) {
+    if (!handleFieldExtraAttr(fieldData, payments, reCaptchaV2)) return
     const { newLayouts } = addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition)
 
     setLayouts(newLayouts)
@@ -288,7 +289,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       return
     }
     const fieldData = fields[fldKey]
-    // if (!handleFieldExtraAttr(fldData)) return
+    if (!handleFieldExtraAttr(fieldData, payments, reCaptchaV2)) return
     const isNestedField = nestedLayouts[fldKey]
     const isExistInLayout = layouts.lg.find(itm => itm.i === fldKey)
     const cloneFldKeys = [fldKey]
@@ -296,6 +297,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       nestedLayouts[fldKey].lg.forEach(nestedField => {
         cloneFldKeys.push(nestedField.i)
       })
+      // check cloneFldKeys with handleFieldExtraAttr
+      const isNestedFieldValid = cloneFldKeys.every(fk => handleFieldExtraAttr(fields[fk], payments, reCaptchaV2))
+      if (!isNestedFieldValid) return
     }
     let uniqueFldId = getNewId(fields)
     // const newBlk = `b${formID}-${uniqueFldId}`

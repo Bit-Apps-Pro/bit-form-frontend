@@ -4,14 +4,16 @@ import { produce } from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import {
   $additionalSettings,
+  $alertModal,
   $bits,
-  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $nestedLayouts, $selectedFieldId, $updateBtn,
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $nestedLayouts, $proModal, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { addDefaultStyleClasses, sortArrOfObjByMultipleProps } from '../components/style-new/styleHelpers'
 import { deepCopy } from './Helpers'
+import proHelperData from './StaticData/proHelperData'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { __ } from './i18nwrap'
@@ -229,7 +231,12 @@ const FIELDS_EXTRA_ATTR = {
   reset: { onlyOne: true },
 }
 
-export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2) => {
+const FIELD_FILTER = {
+  section: ['section'],
+  repeater: ['repeater', 'section', 'button', 'recaptcha', 'paypal', 'razorpay', 'advanced-file-up'],
+}
+
+export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2, parentField) => {
   // eslint-disable-next-line no-undef
   const allFields = getRecoil($fields)
   const bits = getRecoil($bits)
@@ -259,6 +266,10 @@ export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2) =>
     return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.btnTyp} button in the same form.`) }
   }
 
+  if (parentField !== 'root' && FIELD_FILTER[parentField]?.includes(field.typ)) {
+    return { validType: 'onlyOne', msg: __(`You cannot add ${field.typ} field in the ${parentField}.`) }
+  }
+
   if (FIELDS_EXTRA_ATTR[field.typ]?.setDefaultPayConfig) {
     const payConf = paymentsIntegs.filter(pay => pay.type.toLowerCase() === field.typ)
     if (payConf.length === 1) {
@@ -267,6 +278,27 @@ export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2) =>
   }
 
   return {}
+}
+
+export const handleFieldExtraAttr = (fieldData, payments, reCaptchaV2, parentField = 'root') => {
+  const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2, parentField)
+  if (extraAttr.validType === 'pro') {
+    setRecoil($proModal, { show: true, ...proHelperData[fieldData.typ] })
+    return 0
+  }
+
+  if (extraAttr.validType === 'onlyOne' || extraAttr.validType === 'keyEmpty') {
+    setRecoil($alertModal, { show: true, msg: extraAttr.msg, cancelBtn: false })
+    return 0
+  }
+
+  if (extraAttr.validType === 'setDefaultPayConfig') {
+    const newFldData = { ...fieldData }
+    newFldData.payIntegID = extraAttr.payData.id
+    return newFldData
+  }
+
+  return fieldData
 }
 
 export function sortLayoutItemsByRowCol(layout) {

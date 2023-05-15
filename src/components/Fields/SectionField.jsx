@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { Suspense, useEffect, useRef } from 'react'
+import { Suspense, useContext, useEffect, useRef } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -11,14 +11,18 @@ import {
   $draggingField, $fields,
   $flags,
   $nestedLayouts,
+  $proModal,
   $resizingFld,
   $selectedFieldId,
 } from '../../GlobalStates/GlobalStates'
-import { fitSpecificLayoutItem, getNestedLayoutHeight, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
-import { deepCopy, isObjectEmpty } from '../../Utils/Helpers'
+import { AppSettings } from '../../Utils/AppSettingsContext'
+import { fitSpecificLayoutItem, getNestedLayoutHeight, handleFieldExtraAttr, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { IS_PRO, deepCopy, isObjectEmpty } from '../../Utils/Helpers'
+import proHelperData from '../../Utils/StaticData/proHelperData'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import {
-  addNewFieldToGridLayout, cloneLayoutItem,
+  addNewFieldToGridLayout,
+  cloneLayoutItem,
   removeLayoutItem, setResizingFldKey, setResizingWX,
 } from '../../Utils/gridLayoutHelpers'
 import FieldBlockWrapper from '../FieldBlockWrapper'
@@ -32,10 +36,12 @@ export default function SectionField({
   fieldKey, attr: fieldData, styleClasses, formID,
 }) {
   const { formType } = useParams()
+  const { payments, reCaptchaV2 } = useContext(AppSettings)
   const styleClassesForRender = deepCopy(styleClasses)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
+  const setProModal = useSetRecoilState($proModal)
   const [fields, setFields] = useRecoilState($fields)
   const { styleMode } = useRecoilValue($flags)
   const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
@@ -72,7 +78,9 @@ export default function SectionField({
   const draggingField = useRecoilValue($draggingField)
 
   const onDrop = (e, dropPosition) => {
-    const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], draggingField.fieldData, draggingField.fieldSize, dropPosition)
+    const dragFieldData = handleFieldExtraAttr(draggingField.fieldData, payments, reCaptchaV2, 'section')
+    if (!dragFieldData) return
+    const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], dragFieldData, draggingField.fieldSize, dropPosition)
     setNestedLayouts({ ...nestedLayouts, [fieldKey]: newLayouts })
     setIsDraggable(true)
     reCalculateFldHeights(fieldKey)
@@ -195,6 +203,12 @@ export default function SectionField({
 
   const cloneNestedLayoutItem = fldKey => {
     const layouts = { ...nestedLayouts[fieldKey] }
+    if (!IS_PRO) {
+      setProModal({ show: true, ...proHelperData.fieldClone })
+      return
+    }
+    const fldData = fields[fldKey]
+    if (!handleFieldExtraAttr(fldData, payments, reCaptchaV2)) return
     const { newLayouts } = cloneLayoutItem(fldKey, layouts)
     setNestedLayouts(prevLayout => produce(prevLayout, draftLayout => {
       draftLayout[fieldKey] = newLayouts
