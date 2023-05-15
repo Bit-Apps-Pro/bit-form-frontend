@@ -4,7 +4,7 @@
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import produce from 'immer'
+import { produce } from 'immer'
 import { memo, useEffect, useState, useTransition } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'

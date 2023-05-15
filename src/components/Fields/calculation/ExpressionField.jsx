@@ -10,24 +10,24 @@ import KeyBoard from './KeyBoard'
 const ExpressionField = () => {
   const fieldList = ['User Name', 'First Name', 'Last Name', 'Price', 'Quantity']
   const keyList = [{ type: 'back', content: <img src={back} alt="" /> },
-    { id: 6, type: 'operator', content: '(' },
-    { id: 7, type: 'operator', content: ')' },
-    { id: 8, type: 'empty', content: '' },
-    { id: 9, type: 'number', content: '7' },
-    { id: 10, type: 'number', content: '8' },
-    { id: 11, type: 'number', content: '9' },
-    { id: 12, type: 'operator', content: '/' },
-    { id: 13, type: 'number', content: '4' },
-    { id: 14, type: 'number', content: '5' },
-    { id: 15, type: 'number', content: '6' },
-    { id: 16, type: 'operator', content: '*' },
-    { id: 17, type: 'number', content: '1' },
-    { id: 18, type: 'number', content: '2' },
-    { id: 19, type: 'number', content: '3' },
-    { id: 20, type: 'operator', content: '+' },
-    { id: 21, type: 'number', content: '0' },
-    { id: 22, type: 'number', content: '.' },
-    { id: 23, type: 'operator', content: '-' }]
+  { id: 6, type: 'operator', content: '(' },
+  { id: 7, type: 'operator', content: ')' },
+  { id: 8, type: 'empty', content: '' },
+  { id: 9, type: 'number', content: '7' },
+  { id: 10, type: 'number', content: '8' },
+  { id: 11, type: 'number', content: '9' },
+  { id: 12, type: 'operator', content: '/' },
+  { id: 13, type: 'number', content: '4' },
+  { id: 14, type: 'number', content: '5' },
+  { id: 15, type: 'number', content: '6' },
+  { id: 16, type: 'operator', content: '*' },
+  { id: 17, type: 'number', content: '1' },
+  { id: 18, type: 'number', content: '2' },
+  { id: 19, type: 'number', content: '3' },
+  { id: 20, type: 'operator', content: '+' },
+  { id: 21, type: 'number', content: '0' },
+  { id: 22, type: 'number', content: '.' },
+  { id: 23, type: 'operator', content: '-' }]
 
   const [expressions, setExpressions] = useImmer([])
   const [isExpFocused, setIsExpFocused] = useState(false)

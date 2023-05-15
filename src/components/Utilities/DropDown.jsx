@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
+import MultiSelect from 'react-multiple-select-dropdown-lite'
 
 function DropDown({
   options, placeholder, action, className, isMultiple, allowCustomOpt, value, addable, titleClassName, title, jsonValue,

@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'

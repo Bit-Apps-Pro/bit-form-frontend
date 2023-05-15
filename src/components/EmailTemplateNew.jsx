@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
-// import '../resource/css/tinymce.css'
 import BackIcn from '../Icons/BackIcn'
 import app from '../styles/app.style'
 import { __ } from '../Utils/i18nwrap'

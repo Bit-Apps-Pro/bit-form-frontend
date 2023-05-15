@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'

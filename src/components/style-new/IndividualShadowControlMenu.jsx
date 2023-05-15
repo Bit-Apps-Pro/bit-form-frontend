@@ -2,7 +2,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { Fragment, memo } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'

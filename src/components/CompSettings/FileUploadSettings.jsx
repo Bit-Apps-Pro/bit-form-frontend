@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -202,7 +202,7 @@ export default function FileUploadSettings() {
         title={__('Button Icons')}
         className={css(FieldStyle.fieldSection)}
         toggleChecked
-        // open
+      // open
       >
         <div className={css(ut.mt1)}>
           <FieldIconSettings

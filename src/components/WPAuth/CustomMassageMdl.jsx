@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import TinyMCE from '../Utilities/TinyMCE'

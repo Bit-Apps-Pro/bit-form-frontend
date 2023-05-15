@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import produce from 'immer'
+import { produce } from 'immer'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -41,7 +41,7 @@ function ConfMsg({ removeIntegration }) {
     const TEMP_CONF_ID = `_tmp_${newMsgId}_conf_id`
     const newSuccessMsg = {
       title: `Untitled Message ${newMsgId + 1}`,
-      msg: __('<p>Successfully Submitted.</p>'),
+      msg: __('<p style="margin:0">Successfully Submitted.</p>'),
       config: msgDefaultConfig,
     }
     const { msgType, position, animation, styles: defaultStyle } = msgDefaultConfig || {}

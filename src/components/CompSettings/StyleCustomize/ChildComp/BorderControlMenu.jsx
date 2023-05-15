@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-console */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'

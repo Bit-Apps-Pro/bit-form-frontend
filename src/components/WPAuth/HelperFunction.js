@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 
 export const addFieldMap = (type, fldProp, i, confTmp, setConf) => {
   setConf(tmpConf => produce(tmpConf, draft => {

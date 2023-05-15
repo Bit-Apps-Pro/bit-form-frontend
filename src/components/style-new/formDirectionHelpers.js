@@ -1,4 +1,4 @@
-import produce from 'immer'
+import { produce } from 'immer'
 import { isObjectEmpty } from '../../Utils/Helpers'
 
 export const changeFormStylesDir = (style, dir) => produce(style, drft => {

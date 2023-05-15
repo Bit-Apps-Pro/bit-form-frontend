@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'

@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import produce from 'immer'
+import { produce } from 'immer'
 import {
   lazy, memo, Suspense, useContext, useEffect, useRef, useState
 } from 'react'

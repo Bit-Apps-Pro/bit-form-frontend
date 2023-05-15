@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
@@ -723,7 +723,7 @@ export const setRequired = (e, callBack) => {
     fieldData.valid = tmp
     if (!fieldData.err) fieldData.err = {}
     if (!fieldData.err.req) fieldData.err.req = {}
-    fieldData.err.req.dflt = '<p>This field is required</p>'
+    fieldData.err.req.dflt = '<p style="margin:0">This field is required</p>'
     fieldData.err.req.show = true
     addDefaultStyleClasses(fldKey, 'reqSmbl')
   } else {

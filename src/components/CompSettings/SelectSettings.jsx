@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -71,7 +71,7 @@ export default function SelectSettings() {
       fieldData.valid = tmp
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.req) fieldData.err.req = {}
-      fieldData.err.req.dflt = '<p>This field is required</p>'
+      fieldData.err.req.dflt = '<p style="margin:0">This field is required</p>'
       fieldData.err.req.show = true
     } else {
       delete fieldData.valid.req
@@ -215,7 +215,7 @@ export default function SelectSettings() {
       fieldData.mn = e.target.value
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.mn) fieldData.err.mn = {}
-      fieldData.err.mn.dflt = `<p>Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
+      fieldData.err.mn.dflt = `<p style="margin:0">Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
       fieldData.err.mn.show = true
       setRequired({ target: { checked: true } })
     }
@@ -232,7 +232,7 @@ export default function SelectSettings() {
       fieldData.mx = e.target.value
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.mx) fieldData.err.mx = {}
-      fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
+      fieldData.err.mx.dflt = `<p style="margin:0">Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
       fieldData.err.mx.show = true
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })

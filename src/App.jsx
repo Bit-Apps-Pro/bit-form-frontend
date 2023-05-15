@@ -20,22 +20,19 @@ const FormDetails = loadable(() => import('./pages/FormDetails'), { fallback: <B
 const Error404 = loadable(() => import('./pages/Error404'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
 
 const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
-// document.querySelector('#wpbody').style.backgroundColor = backgroundColor
-
-const Nav = ({ setActive }) => {
-  const { pathname } = useLocation()
-  const url = pathname.split('/')
-  const len = url.length
-  const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments', 'general']
-  const active = nav.includes(url[len - 1]) || false
-  setActive(active)
-  return <></>
-}
 
 export default function App() {
   const bits = useRecoilValue($bits)
-  const [active, setActive] = useState(false)
   useEffect(removeUnwantedCSS, [])
+
+  const isAppSettingsActive = () => {
+    const { pathname } = useLocation()
+    const url = pathname.split('/')
+    const len = url.length
+    const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments', 'general']
+    const active = nav.includes(url[len - 1]) || false
+    return active
+  }
 
   return (
     <>
@@ -54,71 +51,66 @@ export default function App() {
           },
         }}
       />
-
       <MigrationModal />
-
-      <HashRouter>
-        <div className="Btcd-App" style={{ backgroundColor }}>
-          <div className="nav-wrp" style={{ backgroundColor }}>
-            <div className="top-wrp">
-              <div className="flx flx-between">
-                <Nav setActive={setActive} />
-                <div className="flx">
-                  <div className="logo flx" title={__('Bit Form')}>
-                    <Link to="/" className="flx">
-                      <img src={logo} alt="bit form logo" className="ml-2" />
-                      <span className="ml-2">Bit Form</span>
-                    </Link>
-                  </div>
-                  <nav className="top-nav ml-2">
-                    <NavLink
-                      to="/"
-                      className={({ isActive }) => (isActive ? 'app-link-active' : '')}
-                    >
-                      {__('My Forms')}
-                    </NavLink>
-
-                    <NavLink
-                      to="/app-settings/recaptcha"
-                      className={active ? 'app-link-active' : ''}
-                    >
-                      {__('App Settings')}
-                    </NavLink>
-                  </nav>
+      <div className="Btcd-App" style={{ backgroundColor }}>
+        <div className="nav-wrp" style={{ backgroundColor }}>
+          <div className="top-wrp">
+            <div className="flx flx-between">
+              <div className="flx">
+                <div className="logo flx" title={__('Bit Form')}>
+                  <Link to="/" className="flx">
+                    <img src={logo} alt="bit form logo" className="ml-2" />
+                    <span className="ml-2">Bit Form</span>
+                  </Link>
                 </div>
-                <nav className="top-nav mr-2">
-                  {/* <a
+                <nav className="top-nav ml-2">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                  >
+                    {__('My Forms')}
+                  </NavLink>
+
+                  <NavLink
+                    to="/app-settings/recaptcha"
+                    className={isAppSettingsActive() ? 'app-link-active' : ''}
+                  >
+                    {__('App Settings')}
+                  </NavLink>
+                </nav>
+              </div>
+              <nav className="top-nav mr-2">
+                {/* <a
                     target="_blank"
                     href="https://wordpress.org/support/plugin/bit-form/reviews/#new-post"
                     rel="noreferrer"
                   >
                     {__('Review Us')}
                   </a> */}
-                  <NavLink
-                    to="/doc-support"
-                    className={({ isActive }) => (isActive ? 'app-link-active' : '')}
-                  >
-                    {__('Doc & Support')}
-                  </NavLink>
-                </nav>
-              </div>
-              {bits.canRollbackToV1 && (
-                <RollbackButton />
-              )}
+                <NavLink
+                  to="/doc-support"
+                  className={({ isActive }) => (isActive ? 'app-link-active' : '')}
+                >
+                  {__('Doc & Support')}
+                </NavLink>
+              </nav>
             </div>
-          </div>
-
-          <div className="route-wrp">
-            <Routes>
-              <Route path="/" element={<AllForms />} />
-              <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
-              <Route path="/app-settings/*" element={<AppSettings />} />
-              <Route path="/doc-support" element={<DocNSupport />} />
-              <Route path="*" element={<Error404 />} />
-            </Routes>
+            {bits.canRollbackToV1 && (
+              <RollbackButton />
+            )}
           </div>
         </div>
-      </HashRouter>
+
+        <div className="route-wrp">
+          <Routes>
+            <Route path="/" element={<AllForms />} />
+            <Route path="/form/:page/:formType/:formID/*" element={<FormDetails />} />
+            <Route path="/app-settings/*" element={<AppSettings />} />
+            <Route path="/doc-support" element={<DocNSupport />} />
+            <Route path="*" element={<Error404 />} />
+          </Routes>
+        </div>
+      </div>
     </>
   )
 }

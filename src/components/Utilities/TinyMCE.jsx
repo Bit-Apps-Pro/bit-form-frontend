@@ -9,7 +9,7 @@ import '../../resource/css/tinymce.css'
 export default function TinyMCE({
   formFields, id, value, onChangeHandler, toolbarMnu, menubar, height, width, disabled, plugins,
 }) {
-  const [loaded, setLoaded] = useState(0)
+  const [tinymceInWp, setTinymceInWp] = useState(0)
   useEffect(() => { loadTinyMceScript() }, [])
 
   const loadTinyMceScript = async () => {
@@ -27,7 +27,8 @@ export default function TinyMCE({
         console.warn('Is your internet working properly to load script?')
         loadTinyMceScript()
       }
-      setLoaded(1)
+    } else {
+      setTinymceInWp(1)
     }
   }
 
@@ -39,7 +40,7 @@ export default function TinyMCE({
       tinymce.get(`${id}-settings`)?.setContent(value || '')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formFields, id, disabled, loaded])
+  }, [formFields, id, disabled, tinymceInWp])
 
   const timyMceInit = () => {
     if (typeof tinymce !== 'undefined') {
@@ -52,7 +53,7 @@ export default function TinyMCE({
         resize: 'verticle',
         convert_urls: false,
         theme: 'modern',
-        plugins: plugins || `directionality fullscreen image link media charmap hr lists textcolor colorpicker ${loaded ? '' : 'wordpress'}`,
+        plugins: plugins || `directionality fullscreen image link media charmap hr lists textcolor colorpicker ${tinymceInWp ? 'wordpress' : ''}`,
         toolbar: toolbarMnu || 'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code | addFormField | addSmartField',
         image_advtab: true,
         default_link_target: '_blank',

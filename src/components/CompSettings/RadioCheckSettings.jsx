@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import produce from 'immer'
+import { produce } from 'immer'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -99,7 +99,7 @@ function RadioCheckSettings() {
       fieldData.mn = e.target.value
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.mn) fieldData.err.mn = {}
-      fieldData.err.mn.dflt = `<p>Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
+      fieldData.err.mn.dflt = `<p style="margin:0">Minimum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}<p>`
       fieldData.err.mn.show = true
     }
 
@@ -117,7 +117,7 @@ function RadioCheckSettings() {
       fieldData.mx = e.target.value
       if (!fieldData.err) fieldData.err = {}
       if (!fieldData.err.mx) fieldData.err.mx = {}
-      fieldData.err.mx.dflt = `<p>Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
+      fieldData.err.mx.dflt = `<p style="margin:0">Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
       fieldData.err.mx.show = true
     }
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -144,8 +144,8 @@ function RadioCheckSettings() {
       draft[fldKey].opt = newOpts
       if (reqOpts.length && draft[fldKey].err.req) {
         draft[fldKey].err.req.custom = true
-        draft[fldKey].err.req.msg = `<p>${reqOpts.map(opt => opt.lbl).join(',')} is required</p>`
-      } else if (draft[fldKey].err.req) draft[fldKey].err.req.msg = '<p>This field is required</p>'
+        draft[fldKey].err.req.msg = `<p style="margin:0">${reqOpts.map(opt => opt.lbl).join(',')} is required</p>`
+      } else if (draft[fldKey].err.req) draft[fldKey].err.req.msg = '<p style="margin:0">This field is required</p>'
     })
     setFields(allFields)
     addToBuilderHistory({
