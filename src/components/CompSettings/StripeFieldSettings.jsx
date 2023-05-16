@@ -1,5 +1,5 @@
-import produce from 'immer'
-import { useContext, useEffect, useState } from 'react'
+import { produce } from 'immer'
+import { useContext, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
@@ -14,12 +14,11 @@ import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
 import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
-import SingleToggle from '../Utilities/SingleToggle'
+import { assignNestedObj } from '../style-new/styleHelpers'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import { assignNestedObj } from '../style-new/styleHelpers'
 
 export default function StripeFieldSettings() {
   const { fieldKey: fldKey } = useParams()

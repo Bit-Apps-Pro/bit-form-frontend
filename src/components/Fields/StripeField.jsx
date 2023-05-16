@@ -1,4 +1,3 @@
-import BitStripeField from 'bit-stripe-field/src/bit-stripe-field'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'

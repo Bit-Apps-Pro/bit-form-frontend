@@ -51,7 +51,13 @@ export default class BitStripeField {
       bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
         .then(res => {
           const { clientSecret } = res.data
-          this.#elements = this.#stripInstance.elements({ clientSecret })
+          const config = {
+            apperance: this.#options.appearance,
+            clientSecret,
+            locale: this.#options.locale,
+            paymentMethodTypes: this.#options.paymentMethodTypes,
+          }
+          this.#elements = this.#stripInstance.elements(config)
 
           // const linkAuthenticationElement = elements.create('linkAuthentication')
           // linkAuthenticationElement.mount('#link-authentication-element')
