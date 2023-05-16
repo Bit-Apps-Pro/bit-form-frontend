@@ -5,7 +5,7 @@
 /* eslint-disable no-undef */
 import { produce } from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -22,7 +22,7 @@ import {
   $layouts,
   $proModal,
   $selectedFieldId,
-  $uniqueFieldId
+  $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
@@ -45,7 +45,7 @@ import {
   produceNewLayouts,
   propertyValueSumY,
   reCalculateFldHeights,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
@@ -196,7 +196,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const removeLayoutItem = fldKey => {
     const fldData = fields[fldKey]
     if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
-      const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+      const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay|stripe/)) : []
       if (!payFields.length) {
         setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
         return false
