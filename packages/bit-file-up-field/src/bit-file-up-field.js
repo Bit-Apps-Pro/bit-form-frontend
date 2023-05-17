@@ -121,7 +121,7 @@ export default class BitFileUpField {
     })
     const hiddenOldFiles = this.#createElm('input')
     hiddenOldFiles.type = 'hidden'
-    hiddenOldFiles.name = `${this.#config.fieldName}_old`
+    hiddenOldFiles.name = `${this.#fieldKey}_old`
     hiddenOldFiles.value = this.#oldFiles.toString()
     this.#fileInputWrpr.appendChild(hiddenOldFiles)
   }
@@ -391,7 +391,7 @@ export default class BitFileUpField {
     const fileName = e.target.getAttribute('data-file-name')
     this.#remove(`#file-wrp-${fileId}`)
     this.#oldFiles = this.#oldFiles.filter(file => file !== fileName)
-    this.#select(`input[name="${this.#config.fieldName}_old"]`).value = this.#oldFiles.toString()
+    this.#select(`input[name="${this.#fieldKey}_old"]`).value = this.#oldFiles.toString()
   }
 
   #removeAction = e => {
