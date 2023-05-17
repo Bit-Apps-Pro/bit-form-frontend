@@ -382,7 +382,7 @@ export function prepareLayout(lays, respectLGLayoutOrder) {
   }
 
   if (respectLGLayoutOrder) {
-    layouts = layoutOrderSortedByLg(layouts, cols)
+    layouts = layouts.lg.length > 0 ? layoutOrderSortedByLg(layouts, cols) : layouts
   } else {
     // sort all layout by x and y
     layouts.lg = sortLayoutItemsByRowCol(layouts.lg)
