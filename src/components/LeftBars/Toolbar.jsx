@@ -711,17 +711,17 @@ function Toolbar({ setNewData }) {
       elm: {
         typ: 'stripe',
         adminLbl: __('Stripe'),
-        valid: {},
+        err: {},
         config: {
           layout: {
             type: 'tabs',
             defaultCollapsed: false,
           },
+          amount: 50,
           options: {
             mode: 'payment',
             currency: 'usd',
             locale: 'en',
-            amount: 50,
             payment_method_types: ['card'],
             appearance: {
               theme: 'night',

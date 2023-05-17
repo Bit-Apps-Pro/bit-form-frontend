@@ -396,7 +396,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setThemeVars(tempThemeVars)
 
     const fldType = processedFieldData.typ
-    if (fldType === 'razorpay' || fldType === 'paypal') {
+    if (fldType === 'razorpay' || fldType === 'paypal' || fldType === 'stripe') {
       setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
         draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
         draftStaticStyleState.staticStyles['.form-loading::before'] = {

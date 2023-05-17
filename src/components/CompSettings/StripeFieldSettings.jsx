@@ -27,26 +27,27 @@ export default function StripeFieldSettings() {
   const formFields = Object.entries(fields)
   const { payments } = useContext(AppSettings)
   const isSubscription = fieldData?.payType === 'subscription'
-  const isDynamicDesc = fieldData?.descType === 'dynamic'
-  const isDynamicAmount = fieldData?.amountType === 'dynamic'
-  const isDynamicShipping = fieldData?.shippingType === 'dynamic'
-  const isDynamicTax = fieldData?.taxType === 'dynamic'
+  // const isDynamicDesc = fieldData?.descType === 'dynamic'
+  const isDynamicAmount = fieldData.config?.amountType === 'dynamic'
+  // const isDynamicShipping = fieldData?.shippingType === 'dynamic'
+  // const isDynamicTax = fieldData?.taxType === 'dynamic'
   // const [filterCurrency, setFilterCurrency] = useState(currencyCodes)
   let filterCurrency = currencyCodes
   console.log('payments', payments)
   console.log('fieldData', fieldData)
   const { css } = useFela()
   useEffect(() => {
-    removeFormUpdateError(fldKey, 'paypalAmountFldMissing')
+    removeFormUpdateError(fldKey, 'stripeAmountFldMissing')
     removeFormUpdateError(fldKey, 'paypalAmountMissing')
-    if (isDynamicAmount && !fieldData.amountFld) {
+    console.log(isDynamicAmount, 'amountfield', fieldData.config.amountFld)
+    if (isDynamicAmount && !fieldData.config.amountFld) {
       addFormUpdateError({
         fieldKey: fldKey,
-        errorKey: 'paypalAmountFldMissing',
-        errorMsg: __('PayPal Dyanmic Amount Field is not Selected'),
+        errorKey: 'stripeAmountFldMissing',
+        errorMsg: __('Stripe Dyanmic Amount Field is not Selected'),
         errorUrl: `field-settings/${fldKey}`,
       })
-    } else if (!isDynamicAmount && (!fieldData.config.options.amount || fieldData.config.options.amount <= 0)) {
+    } else if (!isDynamicAmount && (!fieldData.config.amount || fieldData.config.amount <= 0)) {
       addFormUpdateError({
         fieldKey: fldKey,
         errorKey: 'paypalAmountMissing',
@@ -54,12 +55,12 @@ export default function StripeFieldSettings() {
         errorUrl: `field-settings/${fldKey}`,
       })
     }
-  }, [fieldData?.amountType, fieldData?.amount])
+  }, [fieldData?.config?.amountType, fieldData?.config?.amount])
 
   const handleInput = (name, value) => {
     if (value) {
-      fieldData[name] = value
-      // assignNestedObj(fieldData, name, value)
+      // fieldData[name] = value
+      assignNestedObj(fieldData, name, value)
       // if (name === 'locale') {
       //   const localeArr = value.split(' - ')
       //   fieldData.locale = localeArr[localeArr.length - 1]
@@ -67,8 +68,8 @@ export default function StripeFieldSettings() {
       //   fieldData.language = value
       // }
     } else {
-      // deleteNestedObj(fieldData, name)
-      delete fieldData[name]
+      deleteNestedObj(fieldData, name)
+      // delete fieldData[name]
     }
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -84,7 +85,6 @@ export default function StripeFieldSettings() {
     return currencies || []
   }
   const handlePaymentMethodType = (val) => {
-    console.log('val', val)
     if (val) {
       const valArr = val.split(',')
       assignNestedObj(fieldData, 'config->options->payment_method_types', valArr)
@@ -139,10 +139,10 @@ export default function StripeFieldSettings() {
   // }
 
   const setAmountType = e => {
-    if (e.target.value) fieldData.amountType = e.target.value
-    else delete fieldData.amountType
-    delete fieldData.amount
-    delete fieldData.amountFld
+    if (e.target.value) fieldData.config.amountType = e.target.value
+    else delete fieldData.config.amountType
+    delete fieldData.config.amount
+    // delete fieldData.config.amountFld
 
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -367,8 +367,8 @@ export default function StripeFieldSettings() {
                     cls={css(FieldStyle.input)}
                     inpType="number"
                     title={__('Amount')}
-                    value={fieldData.config.options.amount || ''}
-                    action={e => handleInput('config->options->amount', e.target.value)}
+                    value={fieldData.config?.amount || ''}
+                    action={e => handleInput('config->amount', e.target.value)}
                   />
                 </div>
               )}
@@ -377,10 +377,10 @@ export default function StripeFieldSettings() {
                   <b>{__('Select Amount Field')}</b>
                   <select
                     data-testid="slct-amnt-slct"
-                    onChange={e => handleInput(e.target.name, e.target.value)}
+                    onChange={e => handleInput('config->amountFld', e.target.value)}
                     name="amountFld"
                     className={css(FieldStyle.input)}
-                    value={fieldData.amountFld}
+                    value={fieldData.config.amountFld}
                   >
                     <option value="">{__('Select Field')}</option>
                     {getAmountFields()}

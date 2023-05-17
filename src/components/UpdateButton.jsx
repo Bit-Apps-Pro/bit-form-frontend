@@ -175,7 +175,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const checkSubmitBtn = () => {
     const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
-    const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+    const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay|stripe/)) : []
     return (payFields.length > 0 || btns.length > 0)
   }
 

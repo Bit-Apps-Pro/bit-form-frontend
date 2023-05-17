@@ -1,6 +1,9 @@
+import inputWrapperClasses from '../common/inputWrapperClasses'
+
 /* eslint-disable camelcase */
 export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
+    const inputWrpStyle = inputWrapperClasses(fk)
     return {
       [`.${fk}-fld-wrp`]: {
         display: 'var(--fld-wrp-dis, block)',
@@ -22,7 +25,9 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         width: '100%',
         'min-width': '150px',
         'max-width': '750px',
-        // margin: 'auto',
+        // display: 'flex',
+        // 'justify-content': 'center',
+        // 'align-items': 'center',
       },
       [`.${fk}-stripe-btn`]: {
         'font-size': 'var(--btn-fs)!important',
@@ -46,6 +51,7 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         'justify-content': 'center',
         'align-items': 'center',
         transition: 'background-color 0.2s, transform 0.2s',
+        width: '100%',
       },
       [`.${fk}-stripe-fld`]: {
         margin: '10px 0px',
@@ -73,6 +79,16 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         'justify-content': 'center',
         'align-items': 'center',
         transition: 'background-color 0.2s, transform 0.2s',
+      },
+
+      [`.${fk}-err-wrp`]: {
+        ...inputWrpStyle[`.${fk}-err-wrp`],
+      },
+      [`.${fk}-err-msg`]: {
+        ...inputWrpStyle[`.${fk}-err-msg`],
+      },
+      [`.${fk}-err-txt`]: {
+        ...inputWrpStyle[`.${fk}-err-txt`],
       },
 
     }
