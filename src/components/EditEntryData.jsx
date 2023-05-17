@@ -4,9 +4,9 @@ import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
-import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import app from '../styles/app.style'
 import Loader from './Loaders/Loader'
 import LoaderSm from './Loaders/LoaderSm'
 import Modal from './Utilities/Modal'
@@ -18,20 +18,10 @@ export default function EditEntryData(props) {
   const [isLoading, setisLoading] = useState(false)
   const [isIframeLoading, setisIframeLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [formStyle, setFormStyle] = useState('')
-  const [formLayoutStyle, setFormLayoutStyle] = useState('')
   const ref = useRef(null)
   const { css } = useFela()
   useEffect(() => {
     setshowEdit(true)
-    // eslint-disable-next-line no-undef
-    fetch(`${bits.styleURL}/bitform-${formID}.css`)
-      .then((response) => response.text())
-      .then((styleData) => setFormStyle(styleData))
-
-    fetch(`${bits.styleURL}/bitform-layout-${formID}.css`)
-      .then((response) => response.text())
-      .then((styleData) => setFormLayoutStyle(styleData))
   }, [entryID, formID])
 
   const updateData = (event) => {
@@ -129,26 +119,13 @@ export default function EditEntryData(props) {
       setModal={props.close}
       title={__('Edit')}
     >
-      {formStyle && (
-        <>
-          <style>{formStyle}</style>
-          <style>{formLayoutStyle}</style>
-          <style>
-            {`
-              .drag:not(.no-drg), .drag:active {
-                cursor: default;
-              }
-            `}
-          </style>
-        </>
-      )}
+      {isIframeLoading && <Loader className={css({ ta: 'center' })} />}
       <Scrollbars
         autoHide
         autoHeight
         autoHeightMin={mdlAutoHeight}
         autoHeightMax={mdlAutoHeight}
       >
-        {isIframeLoading && <Loader className={css({ ta: 'center' })} />}
         <iframe
           ref={ref}
           title="Form Entry Edit"
