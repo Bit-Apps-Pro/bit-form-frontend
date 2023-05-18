@@ -27,6 +27,10 @@ export default class BitStripeField {
 
   #formSelector = null
 
+  #formID = null
+
+  #entryID = null
+
   constructor(selector, config) {
     // check config string or object
     const conf = typeof config === 'string' ? JSON.parse(config) : config
@@ -44,6 +48,7 @@ export default class BitStripeField {
     this.#amountType = this.#config.amountType
     this.#currency = this.#config.options.currency
     this.#formSelector = `#form-${this.#contentId}`
+    this.#formID = this.#contentId?.split('_')[1]
 
     this.init()
   }
@@ -54,80 +59,95 @@ export default class BitStripeField {
   }
 
   #initField() {
-    const { Stripe } = window
     const stripeBtn = document.querySelector(`.${this.#fieldKey}-stripe-btn`)
+
+    stripeBtn.addEventListener('click', () => {
+      this.#handleOnClick(this.#contentId)
+        .then(response => {
+          if (response) {
+            this.#stripeComponent()
+          }
+        })
+    })
+  }
+
+  #stripeComponent() {
+    const { Stripe } = window
     const contentIdLastItm = this.#contentId.split('_').at(-1)
     const fldId = `#${this.#amountFld}-${contentIdLastItm}`
     const errWrp = bfSelect(`#form-${this.#contentId} .${this.#fieldKey}-err-wrp`)
     const errTxt = bfSelect(`.${this.#fieldKey}-err-txt`, errWrp)
     const errMsg = bfSelect(`.${this.#fieldKey}-err-msg`, errWrp)
+    this.#stripeWrpSelector.classList.remove('d-none')
+    const dynamicAmount = document.querySelector(fldId)?.value
 
-    stripeBtn.addEventListener('click', () => {
-      this.#stripeWrpSelector.classList.remove('d-none')
-      const dynamicAmount = document.querySelector(fldId)?.value
+    if (this.#amountType === 'dynamic' && !dynamicAmount) {
+      errMsg.style.removeProperty('display')
+      errTxt.innerHTML = 'Amount field is required'
+      setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
+      setStyleProperty(errWrp, 'opacity', 1)
+      const fld = document.querySelector(`#form-${this.#contentId} .btcd-fld-itm.${this.#fieldKey}`)
+      scrollToFld(fld)
+      return
+    }
+    errTxt.innerHTML = ''
+    setStyleProperty(errMsg, 'display', 'none')
+    setStyleProperty(errWrp, 'height', 0)
+    setStyleProperty(errWrp, 'opacity', 0)
 
-      if (this.#amountType === 'dynamic' && !dynamicAmount) {
-        errMsg.style.removeProperty('display')
-        errTxt.innerHTML = 'Amount field is required'
-        setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
-        setStyleProperty(errWrp, 'opacity', 1)
-        const fld = document.querySelector(`#form-${this.#contentId} .btcd-fld-itm.${this.#fieldKey}`)
-        scrollToFld(fld)
-        return
+    const amount = (this.#amountType === 'fixed' ? this.#amount : dynamicAmount) * 100
+    if (Stripe) {
+      this.#stripInstance = Stripe(this.#publishableKey)
+
+      const data = {
+        payIntegID: this.#payIntegID,
+        amount,
+        currency: this.#currency,
+        metadata: {
+          formID: this.#formID,
+          entryID: this.#getEntryId(),
+          fieldKey: this.#fieldKey,
+        },
       }
-      errTxt.innerHTML = ''
-      setStyleProperty(errMsg, 'display', 'none')
-      setStyleProperty(errWrp, 'height', 0)
-      setStyleProperty(errWrp, 'opacity', 0)
+      console.log(data)
+      bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
+        .then(res => {
+          const { clientSecret } = res.data
 
-      const amount = (this.#amountType === 'fixed' ? this.#amount : dynamicAmount) * 100
-      if (Stripe) {
-        this.#stripInstance = Stripe(this.#publishableKey)
-        const data = {
-          payIntegID: this.#payIntegID,
-          amount,
-          currency: this.#currency,
-        }
-        console.log(data)
-        bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
-          .then(res => {
-            const { clientSecret } = res.data
+          const config = {
+            apperance: this.#options.appearance,
+            clientSecret,
+            locale: this.#options.locale,
+            paymentMethodTypes: this.#options.paymentMethodTypes,
+          }
+          this.#elements = this.#stripInstance.elements(config)
 
-            const config = {
-              apperance: this.#options.appearance,
-              clientSecret,
-              locale: this.#options.locale,
-              paymentMethodTypes: this.#options.paymentMethodTypes,
-            }
-            this.#elements = this.#stripInstance.elements(config)
+          const paymentElement = this.#elements.create('payment', this.#options.layout)
+          paymentElement.mount(this.#stripeWrpSelector)
+        }).then(() => {
+          const payNowBtn = document.createElement('button')
+          payNowBtn.innerText = 'Pay Now'
+          payNowBtn.classList.add('strip-pay-btn')
+          payNowBtn.setAttribute('id', 'pay-now-btn')
+          payNowBtn.setAttribute('type', 'button')
 
-            const paymentElement = this.#elements.create('payment', this.#options.layout)
-            paymentElement.mount(this.#stripeWrpSelector)
-          }).then(() => {
-            const payNowBtn = document.createElement('button')
-            payNowBtn.innerText = 'Pay Now'
-            payNowBtn.classList.add('strip-pay-btn')
-            payNowBtn.setAttribute('id', 'pay-now-btn')
-            payNowBtn.setAttribute('type', 'button')
-
-            const spannerSvg = `
-              <svg width="25" height="25" class="pay-spinner d-none" version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0"
-              xml:space="preserve">
-              <path fill="#fff"
-                d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
-                <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50"
-                  to="360 50 50" repeatCount="indefinite" />
-              </path>
-            </svg>`
-            const span = document.createElement('span')
-            span.innerHTML = spannerSvg
-            payNowBtn.insertAdjacentElement('beforeend', span)
-            this.#stripeWrpSelector.insertAdjacentElement('beforeend', payNowBtn)
-            this.#submitPayment()
-          })
-      }
-    })
+          const spannerSvg = `
+                <svg width="25" height="25" class="pay-spinner d-none" version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 0 0"
+                xml:space="preserve">
+                <path fill="#fff"
+                  d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+                  <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50"
+                    to="360 50 50" repeatCount="indefinite" />
+                </path>
+              </svg>`
+          const span = document.createElement('span')
+          span.innerHTML = spannerSvg
+          payNowBtn.insertAdjacentElement('beforeend', span)
+          this.#stripeWrpSelector.insertAdjacentElement('beforeend', payNowBtn)
+          this.#submitPayment()
+        })
+    }
   }
 
   #getEntryId() {
@@ -140,22 +160,17 @@ export default class BitStripeField {
     const elements = this.#elements
 
     submitBtn?.addEventListener('click', () => {
-
-      const submittedFormPromise = this.#handleOnClick(this.#contentId)
-      submittedFormPromise.then(formSubmitted => {
-        if (formSubmitted) {
-          this.#stripInstance.confirmPayment({
-            elements,
-            confirmParams: {},
-            redirect: 'if_required',
-          }).then(res => {
-            console.log({ res })
-            if (res.paymentIntent.status === 'succeeded') {
-              const { id } = res.paymentIntent
-              paySpinner.classList.add('d-none')
-              // this.#handleOnClick(this.#contentId)
-            }
-          })
+      const paySpinner = document.querySelector('.pay-spinner')
+      paySpinner.classList.remove('d-none')
+      this.#stripInstance.confirmPayment({
+        elements,
+        confirmParams: {},
+        redirect: 'if_required',
+      }).then(res => {
+        console.log({ res })
+        if (res?.paymentIntent?.status === 'succeeded') {
+          paySpinner.classList.add('d-none')
+          this.#onApproveHandler(res.paymentIntent)
         }
       })
     })
@@ -184,8 +199,7 @@ export default class BitStripeField {
       form.dispatchEvent(validationEvent)
       return false
     }
-    const paySpinner = document.querySelector('.pay-spinner')
-    paySpinner.classList.remove('d-none')
+
     let update = false
     let formData = new FormData(form)
     if (this.#getEntryId()) {
@@ -232,9 +246,104 @@ export default class BitStripeField {
     return result
   }
 
-  // #addEvent(selector, eventType, cb) {
-  //   selector.addEventListener(eventType, cb)
-  // }
+  #onApproveHandler(result) {
+    const formParent = document.getElementById(`${this.#contentId}`)
+    formParent.classList.add('pos-rel', 'form-loading')
+
+    const form = document.getElementById(`form-${this.#contentId}`)
+    // this.#formID = this.#contentId?.split('_')[1]
+    console.log('content id', this.#contentId)
+    console.log({ result, form })
+    if (typeof form !== 'undefined' && form !== null) {
+      const paymentParams = {
+        formID: this.#formID,
+        transactionID: result.id,
+        payment_name: 'stripe',
+        payment_type: 'order',
+        payment_response: result,
+        entry_id: this.#getEntryId(),
+        fieldKey: this.#fieldKey,
+      }
+      console.log({ paymentParams })
+      const props = bf_globals[this.#contentId]
+      const uri = new URL(props?.ajaxURL)
+      uri.searchParams.append('_ajax_nonce', props?.nonce)
+      uri.searchParams.append('action', 'bitforms_payment_insert')
+      const submitResp = fetch(
+        uri,
+        {
+          method: 'POST',
+          body: JSON.stringify(paymentParams),
+        },
+      )
+      submitResp.then(() => {
+        formParent.classList.remove('pos-rel', 'form-loading')
+        setBFMsg({
+          contentId: this.#config.contentId,
+          msg: this.responseData.message || this.responseData,
+          type: 'success',
+          show: true,
+          error: false,
+        })
+        this.responseData?.hidden_fields?.map(hdnFld => {
+          setHiddenFld(hdnFld, form)
+        })
+        this.#responseRedirect()
+        bfReset(this.#contentId)
+      })
+    }
+  }
+
+  #responseRedirect() {
+    const responsedRedirectPage = this.responseData.redirectPage
+    let hitCron = null
+    let newNonce = ''
+    if (this.responseData.cron) {
+      hitCron = this.responseData.cron
+    }
+    if (this.responseData.cronNotOk) {
+      hitCron = this.responseData.cronNotOk
+    }
+    if (this.responseData.new_nonce) {
+      newNonce = this.responseData.new_nonce
+    }
+
+    this.#triggerIntegration(hitCron, newNonce, this.#contentId)
+    if (responsedRedirectPage) {
+      const timer = setTimeout(() => {
+        window.location = decodeURI(responsedRedirectPage)
+        if (timer) {
+          clearTimeout(timer)
+        }
+      }, 1000)
+    }
+  }
+
+  #triggerIntegration(hitCron, newNonce, contentId) {
+    const props = window.bf_globals[contentId]
+    if (hitCron) {
+      if (typeof hitCron === 'string') {
+        const uri = new URL(hitCron)
+        if (uri.protocol !== window.location.protocol) {
+          uri.protocol = window.location.protocol
+        }
+        fetch(uri)
+      } else {
+        const uri = new URL(props.ajaxURL)
+        uri.searchParams.append('action', 'bitforms_trigger_workflow')
+        const data = {
+          cronNotOk: hitCron,
+          token: newNonce || props.nonce,
+          id: props.appID,
+        }
+        fetch(uri, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: { 'Content-Type': 'application/json' },
+        }).then((response) => response.json())
+      }
+    }
+  }
 
   destroy() {
     this.#stripeWrpSelector.innerHTML = ''
