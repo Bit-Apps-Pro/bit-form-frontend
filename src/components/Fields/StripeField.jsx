@@ -125,7 +125,7 @@ export default function StripeField({ fieldKey, formID, attr, isBuilder, styleCl
       >
         {(loaded && publishableKey && !isLoading) && (
           <div className={`${fieldKey}-stripe-wrp`}>
-            <button type="button" className={`${fieldKey}-stripe-btn`}>
+            <button data-dev-stripe-btn={fieldKey} type="button" className={`${fieldKey}-stripe-btn`}>
               <StripeIcn size="18" />
               Stripe Payment
             </button>

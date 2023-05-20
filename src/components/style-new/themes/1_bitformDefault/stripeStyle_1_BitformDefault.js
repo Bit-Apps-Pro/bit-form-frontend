@@ -23,8 +23,8 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
 
       [`.${fk}-stripe-wrp`]: {
         width: '100%',
-        'min-width': '150px',
-        'max-width': '750px',
+        // 'min-width': '150px',
+        // 'max-width': '750px',
         // display: 'flex',
         // 'justify-content': 'center',
         // 'align-items': 'center',
@@ -53,6 +53,20 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         transition: 'background-color 0.2s, transform 0.2s',
         width: '100%',
       },
+      [`.${fk}-stripe-btn:hover`]: {
+        'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
+      },
+      [`.${fk}-stripe-btn:active`]: {
+        transform: 'scale(0.95)',
+      },
+      [`.${fk}-stripe-btn:focus-visible`]: {
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
+      [`.${fk}-stripe-btn:active:focus-visible`]: {
+        'outline-offset': 0,
+      },
       [`.${fk}-stripe-fld`]: {
         margin: '10px 0px',
       },
@@ -79,6 +93,20 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         'justify-content': 'center',
         'align-items': 'center',
         transition: 'background-color 0.2s, transform 0.2s',
+      },
+      [`.${fk}-stripe-fld .strip-pay-btn:hover`]: {
+        'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
+      },
+      [`.${fk}-stripe-fld .strip-pay-btn:active`]: {
+        transform: 'scale(0.95)',
+      },
+      [`.${fk}-stripe-fld .strip-pay-btn:focus-visible`]: {
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
+      [`.${fk}-stripe-fld .strip-pay-btn:active:focus-visible`]: {
+        'outline-offset': 0,
       },
 
       [`.${fk}-err-wrp`]: {

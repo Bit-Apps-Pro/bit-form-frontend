@@ -124,10 +124,21 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         }
         break
 
+      case 'stripe-btn':
+        if (state === 'active') {
+          state = ':active'
+        }
+        if (state === 'hover') {
+          state = ':hover'
+        }
+        if (state === 'focus') {
+          state = ':focus-visible'
+        }
+        break
+
       default:
         if (state) { return `:${state}` }
     }
-    console.log('state', state)
     return state
   }
   const fldStyleObj = styles?.fields?.[fldKey]
@@ -184,6 +195,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'option-list .opt-prefix': 'Option Prefix',
     divider: 'Divider',
     bx: fieldType === 'radio' ? 'Radio Box' : 'Check Box',
+    'stripe-btn': 'Stripe Button',
   }
 
   const fldTitle = getTitle[elementKey]

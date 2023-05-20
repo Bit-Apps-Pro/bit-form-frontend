@@ -19,6 +19,8 @@ import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
+import Cooltip from '../Utilities/Cooltip'
+import RenderHtml from '../Utilities/RenderHtml'
 
 export default function StripeFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -322,9 +324,13 @@ export default function StripeFieldSettings() {
                 />
               </div>
 
+              <FieldSettingsDivider />
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <label htmlFor="recap-thm">
-                  <b>{__('Currency')}</b>
+                  <b>
+                    {__('Currency')}
+                    {' '}
+                  </b>
                   <select
                     data-testid="crncy-fld-slct"
                     onChange={e => handleInput('config->options->currency', e.target.value)}
@@ -342,7 +348,15 @@ export default function StripeFieldSettings() {
               </div>
 
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                <b>{__('Amount Type')}</b>
+                <b className={css(style.amountType)}>
+                  {__('Amount Type')}
+                  <Cooltip>
+                    <div className="txt-body">
+                      <RenderHtml html="Stripe provide minimum or maximum amount for different payment method type and currency. <a href='https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts'>learn more</a>" />
+                    </div>
+                  </Cooltip>
+
+                </b>
                 <br />
                 <CheckBox
                   id="amnt-typ-fxd"
@@ -542,4 +556,13 @@ const propNameLabel = {
   description: 'Other Description',
   descFld: 'Description Field Selected',
   layout: 'Layout Changed',
+}
+
+const style = {
+  amountType: {
+    dy: 'flex !important',
+    // flx: 'align-center',
+    fw: 600,
+    '& .hover-tip': { oy: 0 },
+  },
 }

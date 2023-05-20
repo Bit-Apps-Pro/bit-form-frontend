@@ -103,6 +103,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
         elementKey = 'paypal-wrp'
         break
 
+      case 'stripe':
+        elementKey = 'stripe-btn'
+        break
+
       case 'select':
         elementKey = 'dpd-fld-wrp'
         break

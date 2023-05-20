@@ -29,7 +29,9 @@ export default class BitStripeField {
 
   #formID = null
 
-  #entryID = null
+  #stripeBtnSpanner = null
+
+  #paymentElement = null
 
   constructor(selector, config) {
     // check config string or object
@@ -60,14 +62,18 @@ export default class BitStripeField {
 
   #initField() {
     const stripeBtn = document.querySelector(`.${this.#fieldKey}-stripe-btn`)
+    this.#stripeBtnSpanner = document.querySelector('.stripe-btn-spinner')
 
     stripeBtn.addEventListener('click', () => {
+      this.#stripeBtnSpanner.classList.remove('d-none')
       this.#handleOnClick(this.#contentId)
         .then(response => {
           if (response) {
             this.#stripeComponent()
+            // stripeBtnSpanner.classList.add('d-none')
           }
         })
+        .finally(() => this.#stripeBtnSpanner.classList.add('d-none'))
     })
   }
 
@@ -108,6 +114,7 @@ export default class BitStripeField {
           entryID: this.#getEntryId(),
           fieldKey: this.#fieldKey,
         },
+        payment_method_types: this.#options.payment_method_types,
       }
       console.log(data)
       bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
@@ -118,12 +125,13 @@ export default class BitStripeField {
             apperance: this.#options.appearance,
             clientSecret,
             locale: this.#options.locale,
-            paymentMethodTypes: this.#options.paymentMethodTypes,
+            // paymentMethodTypes: this.#options.paymentMethodTypes,
           }
           this.#elements = this.#stripInstance.elements(config)
 
-          const paymentElement = this.#elements.create('payment', this.#options.layout)
-          paymentElement.mount(this.#stripeWrpSelector)
+          this.#paymentElement = this.#elements.create('payment', this.#options.layout)
+          this.#paymentElement.mount(this.#stripeWrpSelector)
+          this.#stripeBtnSpanner.classList.add('d-none')
         }).then(() => {
           const payNowBtn = document.createElement('button')
           payNowBtn.innerText = 'Pay Now'
@@ -171,6 +179,9 @@ export default class BitStripeField {
         if (res?.paymentIntent?.status === 'succeeded') {
           paySpinner.classList.add('d-none')
           this.#onApproveHandler(res.paymentIntent)
+          this.#paymentElement.clear()
+        } else {
+          paySpinner.classList.add('d-none')
         }
       })
     })
@@ -249,11 +260,8 @@ export default class BitStripeField {
   #onApproveHandler(result) {
     const formParent = document.getElementById(`${this.#contentId}`)
     formParent.classList.add('pos-rel', 'form-loading')
-
     const form = document.getElementById(`form-${this.#contentId}`)
-    // this.#formID = this.#contentId?.split('_')[1]
-    console.log('content id', this.#contentId)
-    console.log({ result, form })
+
     if (typeof form !== 'undefined' && form !== null) {
       const paymentParams = {
         formID: this.#formID,
@@ -264,7 +272,7 @@ export default class BitStripeField {
         entry_id: this.#getEntryId(),
         fieldKey: this.#fieldKey,
       }
-      console.log({ paymentParams })
+
       const props = bf_globals[this.#contentId]
       const uri = new URL(props?.ajaxURL)
       uri.searchParams.append('_ajax_nonce', props?.nonce)
@@ -347,6 +355,7 @@ export default class BitStripeField {
 
   destroy() {
     this.#stripeWrpSelector.innerHTML = ''
+    this.#paymentElement.destroy()
   }
 
   reset() {
