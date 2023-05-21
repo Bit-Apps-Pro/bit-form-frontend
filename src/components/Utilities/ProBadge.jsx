@@ -7,7 +7,9 @@ import 'tippy.js/themes/material.css'
 import { $proModal } from '../../GlobalStates/GlobalStates'
 import proHelperData from '../../Utils/StaticData/proHelperData'
 
-export default function ProBadge({ className, children, width = 'auto', icnSize = 18, tip = false, proProperty }) {
+export default function ProBadge({
+  className, children, width = 'auto', icnSize = 18, tip = false, proProperty, text = 'PRO',
+}) {
   const { css } = useFela()
   const setProModal = useSetRecoilState($proModal)
   return (
@@ -30,7 +32,7 @@ export default function ProBadge({ className, children, width = 'auto', icnSize 
       onKeyDown={() => setProModal({ show: true, ...proHelperData[proProperty] })}
     >
       {/* {tip ? children : <ProBadgeIcn size={icnSize} />} */}
-      <span className={css(c.proBadge)}>PRO</span>
+      <span className={css(c.proBadge)}>{text}</span>
     </div>
     // </Tippy>
   )

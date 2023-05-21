@@ -770,6 +770,7 @@ export const toolsList = [
     keywords: 'Section, Field Group, Group, Section Field',
     icn: <SectionIcon size="18" stroke={3} />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
+    new: true,
     elm: {
       typ: 'section',
       lbl: __('Section'),
@@ -960,6 +961,9 @@ function Toolbar({ setNewData }) {
                       <RenderHtml html={tool.pro} />
                     </div>
                   </ProBadge>
+                )}
+                {tool.new && (
+                  <ProBadge width="18" text="New" />
                 )}
               </Tools>
             ))}
