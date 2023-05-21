@@ -80,6 +80,9 @@ export default class BitCurrencyField {
     } else {
       this.#currencyNumberFieldWrapper = selector
     }
+    if (typeof this.#config.options === 'string') {
+      this.#config.options = this.#getOptionsFromGlobalPath(this.#config.options)
+    }
     this.#options = this.#config.options.filter(c => !c.hide)
     this.fieldKey = this.#config.fieldKey
     this.#assetsURL = config.assetsURL
@@ -122,6 +125,15 @@ export default class BitCurrencyField {
     }
     this.#searchInputElm.value = ''
     this.#addEvent(this.#searchInputElm, 'keyup', e => { this.#handleSearchInput(e) })
+  }
+
+  #getOptionsFromGlobalPath(path) {
+    const pathArr = path.split('->')
+    let options = this.#window
+    pathArr.forEach(p => {
+      options = options[p]
+    })
+    return options
   }
 
   #handleCurrencyInputFocus() {
