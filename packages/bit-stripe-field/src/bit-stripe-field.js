@@ -33,6 +33,10 @@ export default class BitStripeField {
 
   #paymentElement = null
 
+  #theme = null
+
+  #layout = null
+
   constructor(selector, config) {
     // check config string or object
     const conf = typeof config === 'string' ? JSON.parse(config) : config
@@ -51,7 +55,8 @@ export default class BitStripeField {
     this.#currency = this.#config.options.currency
     this.#formSelector = `#form-${this.#contentId}`
     this.#formID = this.#contentId?.split('_')[1]
-
+    this.#theme = this.#config.theme.style
+    this.#layout = this.#config.layout
     this.init()
   }
 
@@ -122,14 +127,15 @@ export default class BitStripeField {
           const { clientSecret } = res.data
 
           const config = {
-            apperance: this.#options.appearance,
+            appearance: this.#theme,
             clientSecret,
             locale: this.#options.locale,
             // paymentMethodTypes: this.#options.paymentMethodTypes,
           }
+          console.log(config)
           this.#elements = this.#stripInstance.elements(config)
-
-          this.#paymentElement = this.#elements.create('payment', this.#options.layout)
+          console.log(this.#layout)
+          this.#paymentElement = this.#elements.create('payment', this.#layout)
           this.#paymentElement.mount(this.#stripeWrpSelector)
           this.#stripeBtnSpanner.classList.add('d-none')
         }).then(() => {

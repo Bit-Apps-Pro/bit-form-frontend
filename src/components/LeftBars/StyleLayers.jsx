@@ -311,14 +311,24 @@ function StyleLayers() {
               )}
 
               {fldData.typ === 'stripe' && (
-                <NavBtn
-                  subRoute={fldKey}
-                  route="stripe-btn"
-                  label="Stripe Button"
-                  offset="2.5"
-                  highlightSelector={`[data-dev-stripe-btn="${fldKey}"]`}
-                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'stripe-btn')}
-                />
+                <>
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="stripe-btn"
+                    label="Stripe Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-stripe-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'stripe-btn')}
+                  />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="stripe-icn"
+                    label="Stripe Icon"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-stripe-icn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'stripe-icn')}
+                  />
+                </>
               )}
 
               {fldData.typ === 'razorpay' && (

@@ -897,6 +897,13 @@ const editorConfig = {
       states: ['hover', 'focus', 'active'],
       properties: { ...buttonCssProps },
     },
+    'stripe-icn': {
+      // states: ['hover', 'focus', 'active'],
+      properties: {
+        width: '',
+        height: '',
+      },
+    },
   },
   button: {
     'fld-wrp': {

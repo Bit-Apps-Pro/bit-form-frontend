@@ -67,6 +67,10 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-stripe-btn:active:focus-visible`]: {
         'outline-offset': 0,
       },
+      [`.${fk}-stripe-icn`]: {
+        height: '18px',
+        width: '18px',
+      },
       [`.${fk}-stripe-fld`]: {
         margin: '10px 0px',
       },

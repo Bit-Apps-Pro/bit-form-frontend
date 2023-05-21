@@ -723,9 +723,11 @@ function Toolbar({ setNewData }) {
             currency: 'usd',
             locale: 'en',
             payment_method_types: ['card'],
-            appearance: {
-              theme: 'night',
-              labels: 'floating',
+          },
+          theme: {
+            name: 'stripe',
+            style: {
+              theme: 'stripe',
             },
           },
         },

@@ -22,6 +22,7 @@ import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, getVa
 import ThemeControl from './ThemeControl'
 import { updateFieldStyleByFieldSizing } from './themes/1_bitformDefault/fieldSizeControlStyle'
 import ThemeStyleReset from './ThemeStyleReset'
+import StripeQuickTweaks from './QuickTweaks/StripeQuickTweaks'
 
 export default function FieldQuickTweaks({ fieldKey }) {
   const { css } = useFela()
@@ -252,6 +253,10 @@ export default function FieldQuickTweaks({ fieldKey }) {
       {fieldType === 'button' && (
         <ButtonQuickTweaks />
       )}
+      {fieldType === 'stripe' && (
+        <StripeQuickTweaks />
+      )}
+
 
       {fieldType === 'title' && (
         <TitleFieldQuickTweaks />

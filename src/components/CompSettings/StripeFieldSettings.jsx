@@ -8,7 +8,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { AppSettings } from '../../Utils/AppSettingsContext'
 import { addFormUpdateError, addToBuilderHistory, deleteNestedObj, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
-import { currencyCodes, layouts, localeCodes, paymentMethodType } from '../../Utils/StaticData/StripeData'
+import { currencyCodes, layouts, themes, localeCodes, paymentMethodType } from '../../Utils/StaticData/StripeData'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -21,6 +21,7 @@ import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import Cooltip from '../Utilities/Cooltip'
 import RenderHtml from '../Utilities/RenderHtml'
+import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 
 export default function StripeFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -107,6 +108,18 @@ export default function StripeFieldSettings() {
       fieldData.config.layout = layouts[value]
     } else {
       delete fieldData.config.layout
+    }
+    // eslint-disable-next-line no-param-reassign
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `${propNameLabel.layout} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
+  }
+  const handleTheme = (value) => {
+    if (value) {
+      fieldData.config.theme.name = value
+      fieldData.config.theme.style = themes[value]
+    } else {
+      delete fieldData.config.theme
     }
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -281,6 +294,28 @@ export default function StripeFieldSettings() {
             </select>
           </SimpleAccordion>
           <FieldSettingsDivider />
+          <SimpleAccordion
+            id="slct-cnfg-stng"
+            title="Theme"
+            className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+            tip={tippyHelperMsg.stripeTheme}
+            tipProps={{ width: 250, icnSize: 17 }}
+          >
+            <select
+              data-testid="slct-cnfg-theme"
+              name="theme"
+              id="theme"
+              onChange={e => handleTheme(e.target.value)}
+              className={css(FieldStyle.input)}
+              value={fieldData.config?.theme.name}
+            >
+              {/* <option value="">Select Layout</option> */}
+              {Object
+                .keys(themes)
+                .map(tm => (<option key={`${themes[tm].theme}-${tm}`} value={tm}>{tm}</option>))}
+            </select>
+          </SimpleAccordion>
+          <FieldSettingsDivider />
           {/* <div className={css(ut.ml2, ut.mr2, ut.p1)}>
             <SingleToggle
               id="sbscrptn"
@@ -352,7 +387,7 @@ export default function StripeFieldSettings() {
                   {__('Amount Type')}
                   <Cooltip>
                     <div className="txt-body">
-                      <RenderHtml html="Stripe provide minimum or maximum amount for different payment method type and currency. <a href='https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts'>learn more</a>" />
+                      <RenderHtml html={tippyHelperMsg.amountType} />
                     </div>
                   </Cooltip>
 

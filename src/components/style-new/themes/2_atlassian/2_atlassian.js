@@ -22,6 +22,7 @@ import textStyle_2_atlassian from './textStyle_2_atlassian'
 import titleStyle_2_atlassian from './titleStyle_2_atlassian'
 import { defaultDarkThemeColors, defaultFont, defaultLgLightform, defaultLgLightThemeVars, defaultLightThemeColors } from '../1_bitformDefault/1_bitformDefault'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
+import stripeStyle_2_atlassian from './stripeStyle_2_atlassian'
 
 export default function atlassianTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -101,6 +102,8 @@ export default function atlassianTheme({
       return phoneNumber({ type, fk, direction, breakpoint, colorScheme })
     case 'paypal':
       return paypal({ type, fk, breakpoint, colorScheme })
+    case 'stripe':
+      return stripe({ type, fk, breakpoint, colorScheme })
     case 'razorpay':
       return razorpay({ type, fk, breakpoint, colorScheme })
     default:
@@ -430,6 +433,19 @@ const paypal = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: paypalStyle_2_atlassian({ fk, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const stripe = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'atlassian',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: stripeStyle_2_atlassian({ fk, breakpoint, colorScheme }),
     }
   }
   return {}
