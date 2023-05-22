@@ -37,11 +37,12 @@ export default class BitStripeField {
 
   #layout = null
 
+  #payBtnTxt = null
+
   constructor(selector, config) {
     // check config string or object
     const conf = typeof config === 'string' ? JSON.parse(config) : config
     Object.assign(this.#config, conf)
-    console.log({ config })
 
     this.#stripeWrpSelector = selector
     this.#publishableKey = this.#config.publishableKey
@@ -57,6 +58,7 @@ export default class BitStripeField {
     this.#formID = this.#contentId?.split('_')[1]
     this.#theme = this.#config.theme.style
     this.#layout = this.#config.layout
+    this.#payBtnTxt = this.#config.payBtnTxt
     this.init()
   }
 
@@ -65,9 +67,13 @@ export default class BitStripeField {
     // this.#submitPayment()
   }
 
+  #querySelector(selector) {
+    return document.querySelector(selector)
+  }
+
   #initField() {
-    const stripeBtn = document.querySelector(`.${this.#fieldKey}-stripe-btn`)
-    this.#stripeBtnSpanner = document.querySelector('.stripe-btn-spinner')
+    const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
+    this.#stripeBtnSpanner = this.#querySelector('.stripe-btn-spinner')
 
     stripeBtn.addEventListener('click', () => {
       this.#stripeBtnSpanner.classList.remove('d-none')
@@ -90,14 +96,14 @@ export default class BitStripeField {
     const errTxt = bfSelect(`.${this.#fieldKey}-err-txt`, errWrp)
     const errMsg = bfSelect(`.${this.#fieldKey}-err-msg`, errWrp)
     this.#stripeWrpSelector.classList.remove('d-none')
-    const dynamicAmount = document.querySelector(fldId)?.value
+    const dynamicAmount = this.#querySelector(fldId)?.value
 
     if (this.#amountType === 'dynamic' && !dynamicAmount) {
       errMsg.style.removeProperty('display')
       errTxt.innerHTML = 'Amount field is required'
       setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
       setStyleProperty(errWrp, 'opacity', 1)
-      const fld = document.querySelector(`#form-${this.#contentId} .btcd-fld-itm.${this.#fieldKey}`)
+      const fld = this.#querySelector(`#form-${this.#contentId} .btcd-fld-itm.${this.#fieldKey}`)
       scrollToFld(fld)
       return
     }
@@ -121,7 +127,6 @@ export default class BitStripeField {
         },
         payment_method_types: this.#options.payment_method_types,
       }
-      console.log(data)
       bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
         .then(res => {
           const { clientSecret } = res.data
@@ -132,16 +137,14 @@ export default class BitStripeField {
             locale: this.#options.locale,
             // paymentMethodTypes: this.#options.paymentMethodTypes,
           }
-          console.log(config)
           this.#elements = this.#stripInstance.elements(config)
-          console.log(this.#layout)
           this.#paymentElement = this.#elements.create('payment', this.#layout)
           this.#paymentElement.mount(this.#stripeWrpSelector)
           this.#stripeBtnSpanner.classList.add('d-none')
         }).then(() => {
           const payNowBtn = document.createElement('button')
-          payNowBtn.innerText = 'Pay Now'
-          payNowBtn.classList.add('strip-pay-btn')
+          payNowBtn.innerText = this.#payBtnTxt
+          payNowBtn.classList.add('stripe-pay-btn')
           payNowBtn.setAttribute('id', 'pay-now-btn')
           payNowBtn.setAttribute('type', 'button')
 
@@ -169,19 +172,18 @@ export default class BitStripeField {
   }
 
   #submitPayment() {
-    const submitBtn = document.querySelector('#pay-now-btn')
+    const submitBtn = this.#querySelector('#pay-now-btn')
 
     const elements = this.#elements
 
     submitBtn?.addEventListener('click', () => {
-      const paySpinner = document.querySelector('.pay-spinner')
+      const paySpinner = this.#querySelector('.pay-spinner')
       paySpinner.classList.remove('d-none')
       this.#stripInstance.confirmPayment({
         elements,
         confirmParams: {},
         redirect: 'if_required',
       }).then(res => {
-        console.log({ res })
         if (res?.paymentIntent?.status === 'succeeded') {
           paySpinner.classList.add('d-none')
           this.#onApproveHandler(res.paymentIntent)
@@ -203,13 +205,11 @@ export default class BitStripeField {
   }
 
   async #handleOnClick(contentId) {
-    console.log('handleOnClick')
     const form = bfSelect(this.#formSelector)
     if (
       typeof validateForm !== 'undefined'
       && !validateForm({ form: contentId })
     ) {
-      console.log('validate')
       const validationEvent = new CustomEvent('bf-form-validation-error', {
         detail: { formId: contentId, fieldId: '', error: '' },
       })
@@ -257,9 +257,7 @@ export default class BitStripeField {
       return result
     }
     const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
-    console.log({ submitResp })
     const result = await paymentSubmitResponse(this, submitResp, contentId, formData)
-    console.log({ result })
     return result
   }
 

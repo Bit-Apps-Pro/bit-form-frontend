@@ -1026,6 +1026,7 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'chip-lbl': 'selected-opt-lbl .chip-lbl',
     'chip-icn': 'selected-opt-lbl .chip-icn',
     'chip-clear-btn': 'selected-opt-lbl .chip-clear-btn',
+    'stripe-pay-btn': 'stripe-wrp .stripe-pay-btn',
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey

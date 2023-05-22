@@ -26,6 +26,7 @@ export default function StripeField({ fieldKey, formID, attr, isBuilder, styleCl
     const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
     if (payInteg) {
       const key = payInteg.publishableKey
+      console.log('key', key)
       setPublishableKey(key)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -137,7 +138,10 @@ export default function StripeField({ fieldKey, formID, attr, isBuilder, styleCl
                   />
                 </g>
               </svg>
-              Stripe Payment
+              {fieldData.txt}
+            </button>
+            <button type="button" data-dev-stripe-pay-btn={fieldKey} className="stripe-pay-btn">
+              {fieldData.config.payBtnTxt}
             </button>
           </div>
         )}

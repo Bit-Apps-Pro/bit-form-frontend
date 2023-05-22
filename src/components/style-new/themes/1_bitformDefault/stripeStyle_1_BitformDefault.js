@@ -74,7 +74,7 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-stripe-fld`]: {
         margin: '10px 0px',
       },
-      [`.${fk}-stripe-fld .strip-pay-btn`]: {
+      [`.${fk}-stripe-wrp .stripe-pay-btn`]: {
         width: '100%',
         'font-size': 'var(--btn-fs)!important',
         padding: 'var(--btn-p)!important',
@@ -98,18 +98,18 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         'align-items': 'center',
         transition: 'background-color 0.2s, transform 0.2s',
       },
-      [`.${fk}-stripe-fld .strip-pay-btn:hover`]: {
+      [`.${fk}-stripe-wrp .stripe-pay-btn:hover`]: {
         'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
       },
-      [`.${fk}-stripe-fld .strip-pay-btn:active`]: {
+      [`.${fk}-stripe-wrp .stripe-pay-btn:active`]: {
         transform: 'scale(0.95)',
       },
-      [`.${fk}-stripe-fld .strip-pay-btn:focus-visible`]: {
+      [`.${fk}-stripe-wrp .stripe-pay-btn:focus-visible`]: {
         outline: '2px solid var(--global-accent-color)',
         'outline-offset': '2px',
         transition: 'outline-offset 0.2s ease',
       },
-      [`.${fk}-stripe-fld .strip-pay-btn:active:focus-visible`]: {
+      [`.${fk}-stripe-wrp .stripe-pay-btn:active:focus-visible`]: {
         'outline-offset': 0,
       },
 

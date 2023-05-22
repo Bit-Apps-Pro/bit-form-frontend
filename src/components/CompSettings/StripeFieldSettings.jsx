@@ -22,6 +22,7 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import Cooltip from '../Utilities/Cooltip'
 import RenderHtml from '../Utilities/RenderHtml'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 
 export default function StripeFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -36,7 +37,6 @@ export default function StripeFieldSettings() {
   // const isDynamicTax = fieldData?.taxType === 'dynamic'
   // const [filterCurrency, setFilterCurrency] = useState(currencyCodes)
   let filterCurrency = currencyCodes
-  console.log('payments', payments)
   console.log('fieldData', fieldData)
   const { css } = useFela()
   useEffect(() => {
@@ -90,11 +90,13 @@ export default function StripeFieldSettings() {
   const handlePaymentMethodType = (val) => {
     if (val) {
       const valArr = val.split(',')
+      console.log({ valArr })
       assignNestedObj(fieldData, 'config->options->payment_method_types', valArr)
       filterCurrency = findCommonItems(fieldData?.config?.options?.payment_method_types)
     } else {
       deleteNestedObj(fieldData, 'config->options->payment_method_types')
     }
+    console.log({ fieldData })
   }
 
   // useEffect(() => {
@@ -231,6 +233,19 @@ export default function StripeFieldSettings() {
 
   const paymentMethodTypes = () => paymentMethodType?.map(method => ({ label: method.name, value: method.type }))
 
+  function setBtnTxt(e) {
+    fieldData.txt = e.target.value
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Stripe button text updated : ${fieldData.txt}`, type: 'change_stripe_btn_txt', state: { fields: allFields, fldKey } })
+  }
+  function setPayBtnTxt(e) {
+    fieldData.config.payBtnTxt = e.target.value
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
+    addToBuilderHistory({ event: `Stripe pay button text updated : ${fieldData.config.payBtnTxt}`, type: 'change_stripe_pay_btn_txt', state: { fields: allFields, fldKey } })
+  }
+
   return (
     <div>
       <FieldSettingTitle
@@ -274,6 +289,42 @@ export default function StripeFieldSettings() {
       </div> */}
       {fieldData.payIntegID && (
         <>
+          <SimpleAccordion
+            id="btn-txt-stng"
+            title={__('Button Text')}
+            className={css(FieldStyle.fieldSection)}
+            open
+          >
+            <div className={css(FieldStyle.placeholder)}>
+              <AutoResizeInput
+                id="btn-txt"
+                aria-label="Stripe button text"
+                placeholder="Type text here..."
+                value={fieldData.txt}
+                changeAction={setBtnTxt}
+              />
+            </div>
+          </SimpleAccordion>
+
+          <FieldSettingsDivider />
+          <SimpleAccordion
+            id="btn-txt-stng"
+            title={__('Pay Button Text')}
+            className={css(FieldStyle.fieldSection)}
+            open
+          >
+            <div className={css(FieldStyle.placeholder)}>
+              <AutoResizeInput
+                id="pay-btn-txt"
+                aria-label="Stripe pay button text"
+                placeholder="Type text here..."
+                value={fieldData.config.payBtnTxt}
+                changeAction={setPayBtnTxt}
+              />
+            </div>
+          </SimpleAccordion>
+
+          <FieldSettingsDivider />
           <SimpleAccordion
             id="slct-cnfg-stng"
             title="Layout"

@@ -712,7 +712,9 @@ function Toolbar({ setNewData }) {
         typ: 'stripe',
         adminLbl: __('Stripe'),
         err: {},
+        txt: __('Pay with Stripe'),
         config: {
+          payBtnTxt: __('Pay now'),
           layout: {
             type: 'tabs',
             defaultCollapsed: false,

@@ -441,7 +441,7 @@ const cls = {
   l2: { cr: 'var(--white-0-21)' },
   wrp: { ml: 5, mt: 10, fs: 12, mr: 10 },
   mainWrapper: { bd: 'var(--white-100)' },
-  subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
+  subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)', gp: 10 },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
   container: { mx: 16, pn: 'relative' },

@@ -328,6 +328,14 @@ function StyleLayers() {
                     highlightSelector={`[data-dev-stripe-icn="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'stripe-icn')}
                   />
+                  <NavBtn
+                    subRoute={fldKey}
+                    route="stripe-pay-btn"
+                    label="Stripe Pay Button"
+                    offset="2.5"
+                    highlightSelector={`[data-dev-stripe-pay-btn="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'stripe-pay-btn')}
+                  />
                 </>
               )}
 

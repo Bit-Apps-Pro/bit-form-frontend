@@ -904,6 +904,10 @@ const editorConfig = {
         height: '',
       },
     },
+    'stripe-wrp .stripe-pay-btn': {
+      states: ['hover', 'focus', 'active'],
+      properties: { ...buttonCssProps },
+    },
   },
   button: {
     'fld-wrp': {
