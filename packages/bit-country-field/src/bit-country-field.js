@@ -88,6 +88,8 @@ export default class BitCountryField {
   }
 
   #setConfigPropertiesToVariables(config) {
+    this.#document = config.document || document
+    this.#window = config.window || window
     this.#fieldKey = config.fieldKey
     this.#defaultValue = config.defaultValue
     this.#placeholder = config.placeholder
@@ -103,12 +105,14 @@ export default class BitCountryField {
     this.#detectCountryByGeo = config.detectCountryByGeo
     this.#assetsURL = config.assetsURL
     this.#onChange = config.onChange
-    this.#initialOptions = config.options.filter(c => !c.hide)
-    this.#listOptions = this.#initialOptions
     this.#attributes = config.attributes || {}
     this.#classNames = config.classNames || {}
-    this.#document = config.document || document
-    this.#window = config.window || window
+    if (typeof config.options === 'string') {
+      // eslint-disable-next-line no-param-reassign
+      config.options = this.#getOptionsFromGlobalPath(config.options)
+    }
+    this.#initialOptions = config.options.filter(c => !c.hide)
+    this.#listOptions = this.#initialOptions
   }
 
   init() {
@@ -142,6 +146,15 @@ export default class BitCountryField {
       this.#setStyleProperty(this.#clearSearchBtnElm, 'display', 'none')
     }
     // this.#url = decodeURIComponent((`${this.#document.URL}`).replace(/\+/g, '%20'))
+  }
+
+  #getOptionsFromGlobalPath(path) {
+    const pathArr = path.split('->')
+    let options = this.#window
+    pathArr.forEach(p => {
+      options = options[p]
+    })
+    return options
   }
 
   #addEventListenersToElm() {

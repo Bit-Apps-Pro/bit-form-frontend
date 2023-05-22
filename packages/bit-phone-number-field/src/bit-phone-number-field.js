@@ -74,6 +74,9 @@ export default class BitPhoneNumberField {
     } else {
       this.#phoneNumberFieldWrapper = selector
     }
+    if (typeof this.#config.options === 'string') {
+      this.#config.options = this.#getOptionsFromGlobalPath(this.#config.options)
+    }
     this.#options = this.#config.options.filter(p => !p.hide)
     this.#callingCodes = this.#generateCountryCodesFromOptions()
     this.fieldKey = this.#config.fieldKey
@@ -122,6 +125,15 @@ export default class BitPhoneNumberField {
     this.#placeholderImage = this.#config.placeholderImage ? this.#config.placeholderImage : this.#placeholderImage
 
     this.#window.observeElm(this.#phoneHiddenInputElm, 'value', (oldVal, newVal) => { this.#handleHiddenInputValueChange(oldVal, newVal) })
+  }
+
+  #getOptionsFromGlobalPath(path) {
+    const pathArr = path.split('->')
+    let options = this.#window
+    pathArr.forEach(p => {
+      options = options[p]
+    })
+    return options
   }
 
   #select(selector) { return this.#phoneNumberFieldWrapper.querySelector(selector) }
@@ -275,7 +287,7 @@ export default class BitPhoneNumberField {
       if (!acc[item.code]) {
         let { code } = item
         if (code[0] === '+') code = code.substring(1)
-        acc[code] = item.i
+        if (!(code in acc) && item.ptrn) acc[code] = item.i
       }
       return acc
     }, {})
