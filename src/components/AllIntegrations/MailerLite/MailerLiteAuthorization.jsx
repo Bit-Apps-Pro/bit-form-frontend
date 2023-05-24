@@ -7,6 +7,7 @@ import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
+import { version } from 'ace-builds'
 
 export default function MailerLiteAuthorization({
   mailerLiteConf, setMailerLiteConf, step, setstep, isLoading, setIsLoading, isInfo,
@@ -27,16 +28,16 @@ export default function MailerLiteAuthorization({
     setError(rmError)
     setMailerLiteConf(newConf)
   }
-  console.log('error', isLoading)
+  const url = (mailerLiteConf.version === 'v2') ? 'https://dashboard.mailerlite.com/integrations/api' : 'https://app.mailerlite.com/integrations/api/'
   const note = `
     <h4> Step of generate API token:</h4>
     <ul>
-      <li>Goto <a href="https://dashboard.mailerlite.com/integrations/api">Generate API Token</a></li>
+      <li>Goto <a href=${url}>Generate API Token</a></li>
       <li>Copy the <b>Token</b> and paste into <b>API Token</b> field of your authorization form.</li>
       <li>Finally, click <b>Authorize</b> button.</li>
   </ul>
   `
-
+  console.log('mailerLiteConf', mailerLiteConf)
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       <TutorialLink
@@ -53,13 +54,34 @@ export default function MailerLiteAuthorization({
         placeholder={__('Integration Name...')}
         disabled={isInfo}
       />
+      <div className="mt-3"><b>{__('Select Version:')}</b></div>
+      <select
+        onChange={handleInput}
+        name="version"
+        value={mailerLiteConf?.version}
+        className="btcd-paper-inp w-6 mt-1"
+      >
+        <option value="">{__('Select Action')}</option>
+        <option value="v1">MailerLite Classic</option>
+        <option value="v2">MailerLite New</option>
+      </select>
+      {/* <select
+        className="btcd-paper-inp w-6 mt-1"
+        onChange={handleInput}
+        name="name"
+        value={mailerLiteConf.name}
+        placeholder={__('Integration Name...')}
+        disabled={isInfo} >
+        <option value="v1">MailerLite Classic</option>
+        <option value="v1">MailerLite New</option>
+      </select> */}
 
       <small className="d-blk mt-3">
         {__('To Get API token, Please Visit')}
         &nbsp;
         <a
           className="btcd-link"
-          href="https://dashboard.mailerlite.com/integrations/api"
+          href={url}
           target="_blank"
           rel="noreferrer"
         >
