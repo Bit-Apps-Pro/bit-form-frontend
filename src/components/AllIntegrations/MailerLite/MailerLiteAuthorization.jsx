@@ -61,7 +61,6 @@ export default function MailerLiteAuthorization({
         value={mailerLiteConf?.version}
         className="btcd-paper-inp w-6 mt-1"
       >
-        <option value="">{__('Select Action')}</option>
         <option value="v1">MailerLite Classic</option>
         <option value="v2">MailerLite New</option>
       </select>

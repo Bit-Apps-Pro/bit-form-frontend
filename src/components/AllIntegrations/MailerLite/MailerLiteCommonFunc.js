@@ -61,10 +61,8 @@ export const mailerliteRefreshFields = (
     auth_token: confTmp.auth_token,
     version: confTmp.version,
   };
-  console.log("requestParams", requestParams);
   bitsFetch(requestParams, "bitforms_mailerlite_refresh_fields").then(
     (result) => {
-      console.log("result", result);
       if (result && result.success) {
         const newConf = { ...confTmp };
         if (result.data) {
