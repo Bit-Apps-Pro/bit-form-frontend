@@ -27,6 +27,7 @@ const fieldsTypes = {
   button: 'Button',
   paypal: 'Paypal',
   razorpay: 'Razorpay',
+  stripe: 'Stripe',
   'html-select': 'HTML Select',
   country: 'Country',
   currency: 'Currency',

@@ -46,6 +46,7 @@ import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 import LoaderSm from './Loaders/LoaderSm'
 import { removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
+import paymentFields from '../Utils/StaticData/paymentFields'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
@@ -175,7 +176,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   const checkSubmitBtn = () => {
     const btns = Object.values(fields).filter(fld => fld.typ === 'button' && fld.btnTyp === 'submit')
-    const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay|stripe/)) : []
+    const payFields = fields ? Object.values(fields).filter(field => paymentFields.includes(field.typ)) : []
     return (payFields.length > 0 || btns.length > 0)
   }
 

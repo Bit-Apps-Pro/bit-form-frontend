@@ -6,7 +6,7 @@ import blankTemplate from '../Utils/StaticData/form-templates/blankTemplate'
 
 // atoms
 export const $additionalSettings = atom({ key: '$additionalSettings', default: blankTemplate.additionalSettings })
-export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? bits : {} }) // eslint-disable-line no-undef
+export const $bits = atom({ key: '$bits', default: typeof bits !== 'undefined' ? window.bits : {} }) // eslint-disable-line no-undef
 export const $breakpoint = atom({
   key: '$breakpoint',
   default: 'lg',
@@ -44,13 +44,17 @@ export const $builderHelperStates = atom({
     })
   }],
 })
-export const $builderHookStates = atom({ key: '$builderHookStates',
-  default: { reCalculateFieldHeights: 0,
+export const $builderHookStates = atom({
+  key: '$builderHookStates',
+  default: {
+    reCalculateFieldHeights: 0,
     reRenderGridLayoutByRootLay: 0,
     forceBuilderWidthToLG: 0,
     forceBuilderWidthToBrkPnt: 0,
     reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 },
-    recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 } } })
+    recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 }
+  }
+})
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
 export const $builderSettings = atom({
   key: '$builderSettings',
@@ -174,7 +178,6 @@ export const $reportSelector = selector({
     draft[rportIndx] = newReport
   })),
 })
-
 
 export const $nestedLayouts = atom({
   key: '$nestedLayouts',

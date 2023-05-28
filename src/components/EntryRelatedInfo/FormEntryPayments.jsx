@@ -6,6 +6,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import PaypalInfo from './PaymentInfo/PaypalInfo'
 import RazorpayInfo from './PaymentInfo/RazorpayInfo'
+import paymentFields from '../../Utils/StaticData/paymentFields'
 
 export default function FormEntryPayments({ formID, rowDtl }) {
   const allLabels = useRecoilValue($fieldLabels)
@@ -13,9 +14,8 @@ export default function FormEntryPayments({ formID, rowDtl }) {
   const { isPro } = bits
   const [paymentInfo, setPaymentInfo] = useState({})
   const [isLoading, setIsLoading] = useState(false)
-  const payPattern = /paypal|razorpay/
-  const paymentFields = allLabels.filter(label => label.type.match(payPattern))
-  const payFld = paymentFields.find(field => rowDtl[field.key]) || {}
+  const payFields = allLabels.filter(label => paymentFields.includes(label.type))
+  const payFld = payFields.find(field => rowDtl[field.key]) || {}
   const payInfoFound = useRef(0) // 1 - found, 2 - not found
 
   useEffect(() => {

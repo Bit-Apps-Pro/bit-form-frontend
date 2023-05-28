@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
+import { $payments, $reCaptchaV2 } from '../GlobalStates/AppSettingsStates'
 import {
   $additionalSettings,
   $alertModal,
@@ -13,6 +14,7 @@ import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { addDefaultStyleClasses, sortArrOfObjByMultipleProps } from '../components/style-new/styleHelpers'
 import { deepCopy } from './Helpers'
+import paymentFields from './StaticData/paymentFields'
 import proHelperData from './StaticData/proHelperData'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
@@ -234,10 +236,12 @@ const FIELDS_EXTRA_ATTR = {
 
 const FIELD_FILTER = {
   section: ['section'],
-  repeater: ['repeater', 'section', 'button', 'recaptcha', 'paypal', 'razorpay', 'advanced-file-up'],
+  repeater: ['repeater', 'section', 'button', 'recaptcha', 'advanced-file-up', ...paymentFields],
 }
 
-export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2, parentField) => {
+export const checkFieldsExtraAttr = (field, parentField) => {
+  const paymentsIntegs = getRecoil($payments)
+  const reCaptchaV2 = getRecoil($reCaptchaV2)
   // eslint-disable-next-line no-undef
   const allFields = getRecoil($fields)
   const bits = getRecoil($bits)
@@ -281,8 +285,8 @@ export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2, pa
   return {}
 }
 
-export const handleFieldExtraAttr = (fieldData, payments, reCaptchaV2, parentField = 'root') => {
-  const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2, parentField)
+export const handleFieldExtraAttr = (fieldData, parentField = 'root') => {
+  const extraAttr = checkFieldsExtraAttr(fieldData, parentField)
   if (extraAttr.validType === 'pro') {
     setRecoil($proModal, { show: true, ...proHelperData[fieldData.typ] })
     return 0

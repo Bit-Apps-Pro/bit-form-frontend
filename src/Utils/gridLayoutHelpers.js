@@ -24,6 +24,8 @@ import { IS_PRO, deepCopy } from './Helpers'
 import proHelperData from './StaticData/proHelperData'
 import { selectInGrid } from './globalHelpers'
 import { __ } from './i18nwrap'
+import { handleFieldExtraAttr } from './FormBuilderHelper'
+import paymentFields from './StaticData/paymentFields'
 
 const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
   const { typ: fldType } = fieldData
@@ -75,8 +77,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   const themeVars = getRecoil($themeVars)
   const staticStylesState = getRecoil($staticStylesState)
 
-  // let processedFieldData = handleFieldExtraAttr(fieldData)
-  let processedFieldData = fieldData
+  let processedFieldData = handleFieldExtraAttr(fieldData)
   if (!processedFieldData) return
   processedFieldData = { ...processedFieldData, fieldName: `${processedFieldData.typ}-${formID}-${uniqueFieldId}` }
   const newBlk = `b${formID}-${uniqueFieldId}`
@@ -152,7 +153,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   setRecoil($styles, newStyles)
   setRecoil($themeVars, tempThemeVars)
 
-  if (fldType === 'razorpay' || fldType === 'paypal') {
+  if (paymentFields.includes(fldType)) {
     setRecoil($staticStylesState, produce(staticStylesState, draftStaticStyleState => {
       draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
       draftStaticStyleState.staticStyles['.form-loading::before'] = {
@@ -323,7 +324,7 @@ export const removeLayoutItem = (fldKey, layouts) => {
 
   const fldData = fields[fldKey]
   if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
-    const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+    const payFields = fields ? Object.values(fields).filter(field => paymentFields.includes(field.typ)) : []
     if (!payFields.length) {
       // setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
       return false
@@ -349,7 +350,7 @@ export const removeLayoutItem = (fldKey, layouts) => {
   sessionStorage.setItem('btcd-lc', '-')
 
   const fldType = fldData?.typ
-  if (fldType === 'razorpay' || fldType === 'paypal') {
+  if (paymentFields.includes(fldType)) {
     const newStaticStyleState = produce(staticStylesState, draftStaticStyleState => {
       delete draftStaticStyleState.staticStyles['.pos-rel']
       delete draftStaticStyleState.staticStyles['.form-loading::before']
