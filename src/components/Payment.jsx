@@ -1,25 +1,25 @@
 /* eslint-disable no-shadow */
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $payments } from '../GlobalStates/AppSettingsStates'
 import { $bits } from '../GlobalStates/GlobalStates'
-import ut from '../styles/2.utilities'
-import { AppSettings } from '../Utils/AppSettingsContext'
-import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
+import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import ut from '../styles/2.utilities'
 import LoaderSm from './Loaders/LoaderSm'
 import PaypalSettings from './PaypalSettings'
 import RazorpaySettings from './RazorpaySettings'
+import StripeSettings from './StripeSettings'
 import Btn from './Utilities/Btn'
 import SnackMsg from './Utilities/SnackMsg'
-import StripeSettings from './StripeSettings'
 
 export default function Payment({ allIntegURL }) {
   const bits = useRecoilValue($bits)
   const { isPro } = bits
-  const { payments, setPayments } = useContext(AppSettings)
+  const [payments, setPayments] = useRecoilState($payments)
   const { type, indx } = useParams()
   const navigate = useNavigate()
   const [isLoading, setisLoading] = useState(false)

@@ -1,15 +1,15 @@
-import { useContext, useEffect, useState } from 'react'
-import { isFormValidatedWithoutError } from '../../user-frontend/frontendHelpers'
-import validateForm from '../../user-frontend/validation'
-import { AppSettings } from '../../Utils/AppSettingsContext'
+import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $payments } from '../../GlobalStates/AppSettingsStates'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { loadScript, select } from '../../Utils/globalHelpers'
+import { isFormValidatedWithoutError } from '../../user-frontend/frontendHelpers'
 import InputWrapper from '../InputWrapper'
 
 export default function RazorPay({
   fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend, handleFormValidationErrorMessages,
 }) {
-  const appSettingsContext = useContext(AppSettings)
+  const payments = useRecoilValue($payments)
   const [clientID, setClientID] = useState('')
   const [amount, setAmount] = useState(attr.options.amount || 1)
   const [prefillName, setPrefillName] = useState('')
@@ -33,7 +33,7 @@ export default function RazorPay({
       // eslint-disable-next-line no-undef
       key = atob(bitFormsFront?.paymentKeys?.razorpayKey || '')
     } else if (typeof bits !== 'undefined') {
-      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
+      const payInteg = payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
       if (!payInteg) return false
       key = payInteg.apiKey
     }

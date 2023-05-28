@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRecoilValue } from 'recoil'
+import { $payments } from '../../../GlobalStates/AppSettingsStates'
 import { $bits, $fields } from '../../../GlobalStates/GlobalStates'
-import noData from '../../../resource/img/nodata.svg'
-import { AppSettings } from '../../../Utils/AppSettingsContext'
-import bitsFetch from '../../../Utils/bitsFetch'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
+import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
+import noData from '../../../resource/img/nodata.svg'
 import Loader from '../../Loaders/Loader'
 
 const generateParsedRazorpayInfo = info => {
@@ -24,7 +24,7 @@ const generateParsedRazorpayInfo = info => {
 export default function RazorpayInfo({ paymentInfo, payInfoFound, fldKey, transactionID }) {
   const bits = useRecoilValue($bits)
   const { formID } = useParams()
-  const { payments } = useContext(AppSettings)
+  const payments = useRecoilValue($payments)
   const fields = useRecoilValue($fields)
   const fldData = fields[fldKey]
   const { payIntegID } = fldData.options

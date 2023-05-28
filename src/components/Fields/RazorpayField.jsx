@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import BitRazorpayField from 'bit-razorpay-field/src/bit-razorpay-field'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRecoilValue } from 'recoil'
+import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import { AppSettings } from '../../Utils/AppSettingsContext'
 import { addFormUpdateError, reCalculateFldHeights, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName, loadScript, selectInGrid } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -11,7 +11,7 @@ import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 export default function RazorpayField({ fieldKey, formID, attr, isBuilder, styleClasses }) {
-  const appSettingsContext = useContext(AppSettings)
+  const payments = useRecoilValue($payments)
   const fields = useRecoilValue($fields)
   const fieldData = fields[fieldKey]
   const [clientID, setClientID] = useState('')
@@ -47,7 +47,7 @@ export default function RazorpayField({ fieldKey, formID, attr, isBuilder, style
   useEffect(() => {
     if (!attr.payIntegID) { setClientID(''); return }
 
-    const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
+    const payInteg = payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
     if (!payInteg) return
     const key = payInteg.apiKey
     setClientID(key)
