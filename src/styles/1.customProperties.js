@@ -37,8 +37,10 @@ const customProperties = {
     '-webkit-appearance': $ || 'none',
     '-moz-appearance': $ || 'none',
   }),
-  bpf: $ => ({ backdropFilter: $ || 'none',
-    '-webkit-backdrop-filter': $ || 'none' }),
+  bpf: $ => ({
+    backdropFilter: $ || 'none',
+    '-webkit-backdrop-filter': $ || 'none'
+  }),
   fr: $ => ({ filter: $ }),
   bs: $ => ({ boxShadow: $ }),
   ls: $ => ({ listStyle: $ }),
@@ -89,6 +91,7 @@ const customProperties = {
   }),
   cg: $ => ({ columnGap: Number.isInteger($) ? `${$}px` : $ }),
   rg: $ => ({ rowGap: Number.isInteger($) ? `${$}px` : $ }),
+  gp: $ => ({ gap: Number.isInteger($) ? `${$}px` : $ }),
 
   fd: $ => ({ flexDirection: $ }),
   jc: $ => ({ justifyContent: $ }),

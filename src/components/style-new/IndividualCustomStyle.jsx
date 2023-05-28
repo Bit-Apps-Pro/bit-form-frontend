@@ -54,7 +54,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const [stateController, setStateController] = useState('')
 
   const elementKey = getActualElementKey(elmKey, fieldObj?.typ)
-
+  console.log({ elementKey })
   const getPseudoPath = (state = '') => {
     state = state.toLowerCase()
     // don't remove this
@@ -79,6 +79,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     //   }
     // }
     // console.log('pseudoPahtObj', pseudoPahtObj?.[elementKey]?.[state] || '')
+    console.log('elementKey', elementKey)
     switch (elementKey) {
       case 'dpd-fld-wrp':
       case 'currency-fld-wrp':
@@ -124,16 +125,28 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         }
         break
 
+      case 'stripe-btn':
+      case 'stripe-wrp .stripe-pay-btn':
+        if (state === 'active') {
+          state = ':active'
+        }
+        if (state === 'hover') {
+          state = ':hover'
+        }
+        if (state === 'focus') {
+          state = ':focus-visible'
+        }
+        break
+
       default:
         if (state) { return `:${state}` }
     }
-    console.log('state', state)
     return state
   }
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('😅 no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
-
+  console.log('elementKey', { elementKey })
   const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {})
   const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {}
   Object.entries(addableCssPropsObj(fieldType, elementKey) || {}).forEach(([prop, propObj]) => {
@@ -144,7 +157,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
   const fontweightVariants = styles.font?.fontWeightVariants.length !== 0 ? arrayToObject(styles.font?.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font?.fontStyle.length !== 0 ? arrayToObject(styles.font?.fontStyle) : staticFontStyleVariants
-
+  console.log({ availableCssProp, existCssProps, existCssPropsObj })
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
   const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `${state}`}${selector}->${cssProperty}`
 
@@ -184,9 +197,13 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'option-list .opt-prefix': 'Option Prefix',
     divider: 'Divider',
     bx: fieldType === 'radio' ? 'Radio Box' : 'Check Box',
+    'stripe-btn': 'Stripe Button',
+    'stripe-icn': 'Stripe Icon',
+    'stripe-pay-btn': 'Stripe Pay Button',
   }
 
   const fldTitle = getTitle[elementKey]
+  console.log('fldTitle', fldTitle)
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
     const themeVal = getValueFromStateVar(themeVars, getVlu?.replace('!important', ''))

@@ -5,7 +5,7 @@ export default function paymentSubmitResponse(reference, resp, contentId, formDa
         (response) => new Promise((resolve2, reject) => {
           if (response.staus > 400) {
             const errorEvent = new CustomEvent('bf-form-submit-error', {
-              detail: { formId: contentId, errors: result.data },
+              detail: { formId: contentId, errors: response.data },
             })
             bfSelect(`#form-${contentId}`).dispatchEvent(errorEvent)
             response.staus === 500
@@ -20,7 +20,9 @@ export default function paymentSubmitResponse(reference, resp, contentId, formDa
         })
         bfSelect(`#form-${contentId}`).dispatchEvent(successEvent)
         reference.responseData = result.data
+        console.log({ result })
         if (result !== undefined && result.success) {
+          console.log('success', { result })
           localStorage.setItem('bf-entry-id', result.data.entry_id)
           resolve(true)
           return

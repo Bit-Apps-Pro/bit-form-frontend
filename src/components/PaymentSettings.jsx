@@ -7,6 +7,7 @@ import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
+import stripe from '../resource/img/settings/stripe.svg'
 import style from '../styles/integrations.style'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import bitsFetch from '../Utils/bitsFetch'
@@ -23,10 +24,11 @@ export default function PaymentSettings({ setSnackbar }) {
   const { css } = useFela()
   const { payments, setPayments } = useContext(AppSettings)
   const { pathname } = useLocation()
-
+  console.log('payments', payments)
   const pays = [
     { type: 'PayPal', logo: paypal },
     { type: 'Razorpay', logo: razorpay },
+    { type: 'Stripe', logo: stripe },
   ]
 
   const setNewInteg = (type) => {

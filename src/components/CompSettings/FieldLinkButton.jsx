@@ -26,6 +26,7 @@ import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import SectionIcon from '../../Icons/SectionIcon'
+import StripeIcn from '../../Icons/StripeIcn'
 import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TimeIcn from '../../Icons/TimeIcn'
@@ -106,6 +107,7 @@ const FieldIcon = icon => {
     button: <BtnIcn size="14" />,
     html: <CodeSnippetIcn size="14" />,
     paypal: <PaypalIcn w="14" />,
+    stripe: <StripeIcn size="18" />,
     razorpay: <RazorPayIcn w="14" h="19" />,
     'advanced-file-up': <FileUploadIcn w="14" />,
     currency: <CurrencyIcn size="15" />,

@@ -52,6 +52,7 @@ import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
+import StripeIcn from '../../Icons/StripeIcn'
 
 export const toolsList = [
   {
@@ -691,6 +692,39 @@ export const toolsList = [
       valid: {},
       customClasses: {},
       customAttributes: {},
+    },
+  },
+  {
+    name: __('Stripe'),
+    keywords: 'Stripe, payment, credit card, credit card payment',
+    icn: <StripeIcn size="23" />,
+    pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+    pro: 'This field is available only in pro version',
+    elm: {
+      typ: 'stripe',
+      adminLbl: __('Stripe'),
+      err: {},
+      txt: __('Pay with Stripe'),
+      config: {
+        payBtnTxt: __('Pay now'),
+        layout: {
+          type: 'tabs',
+          defaultCollapsed: false,
+        },
+        amount: 50,
+        options: {
+          mode: 'payment',
+          currency: 'usd',
+          locale: 'en',
+          payment_method_types: ['card'],
+        },
+        theme: {
+          name: 'stripe',
+          style: {
+            theme: 'stripe',
+          },
+        },
+      },
     },
   },
   {

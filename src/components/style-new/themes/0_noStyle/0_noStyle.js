@@ -1,10 +1,11 @@
+/* eslint-disable import/no-duplicates */
 /* eslint-disable camelcase */
 
 import { cleanObj } from '../../../../Utils/globalHelpers'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
 import advancedFileUp_0_noStyle from './advancedFileUp_0_noStyle'
-import buttonStyle_0_noStyle from './buttonStyle_0_noStyle'
+import buttonStyle_0_noStyle from './stripeStyle_0_noStyle'
 import checkboxNradioStyle_0_noStyle from './checkboxNradioStyle_0_noStyle'
 import countryStyle_0_noStyle from './countryStyle_0_noStyle'
 import currencyStyle_0_noStyle from './currencyStyle_0_noStyle'
@@ -22,6 +23,7 @@ import sectionStyle_0_noStyle from './sectionStyle_0_noStyle'
 import selectStyle_0_noStyle from './selectStyle_0_noStyle'
 import textStyle_0_noStyle from './textStyle_0_noStyle'
 import titleStyle_0_noStyle from './titleStyle_0_noStyle'
+import stripeStyle_0_noStyle from './stripeStyle_0_noStyle'
 
 export default function noStyleTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
@@ -99,6 +101,8 @@ export default function noStyleTheme({
       return razorpay({ type, fk, breakpoint, colorScheme })
     case 'section':
       return section({ type, fk, breakpoint, colorScheme })
+    case 'stripe':
+      return stripe({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = noStyleTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light' })
@@ -769,6 +773,18 @@ const razorpay = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: razorpayStyle_0_noStyle({ fk, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const stripe = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'noStyle',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: stripeStyle_0_noStyle({ fk, breakpoint, colorScheme }),
     }
   }
   return {}

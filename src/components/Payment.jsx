@@ -14,6 +14,7 @@ import PaypalSettings from './PaypalSettings'
 import RazorpaySettings from './RazorpaySettings'
 import Btn from './Utilities/Btn'
 import SnackMsg from './Utilities/SnackMsg'
+import StripeSettings from './StripeSettings'
 
 export default function Payment({ allIntegURL }) {
   const bits = useRecoilValue($bits)
@@ -40,16 +41,30 @@ export default function Payment({ allIntegURL }) {
     tmpSetting[name] = value
     setPaySetting(tmpSetting)
   }
-
+  console.log('paySetting', paySetting)
   const validation = () => {
     let validation = false
     const tmpSetting = { ...paySetting }
-    if (type === 'Razorpay') {
-      if (!tmpSetting.apiKey || !tmpSetting.apiSecret || !tmpSetting.name) {
-        validation = true
-      }
-    } else if (!tmpSetting.name || !tmpSetting.clientID || !tmpSetting.clientSecret || !tmpSetting.mode) {
-      validation = true
+    console.log('type', type)
+    switch (type) {
+      case 'PayPal':
+        if (!tmpSetting.name || !tmpSetting.clientID || !tmpSetting.clientSecret || !tmpSetting.mode) {
+          validation = true
+        }
+        break
+      case 'Razorpay':
+        if (!tmpSetting.apiKey || !tmpSetting.apiSecret || !tmpSetting.name) {
+          validation = true
+        }
+        break
+      case 'Stripe':
+        if (!tmpSetting.name || !tmpSetting.publishableKey || !tmpSetting.clientSecret) {
+          validation = true
+        }
+      // eslint-disable-next-line no-fallthrough
+      default:
+        console.log('not found')
+        break
     }
 
     return validation
@@ -76,6 +91,7 @@ export default function Payment({ allIntegURL }) {
         }
         setSnackbar({ show: true, msg: `${res.data.message}` })
         setisLoading(false)
+        navigate('/app-settings/payments')
       })
   }
 
@@ -102,6 +118,11 @@ export default function Payment({ allIntegURL }) {
             handleInput={handleInput}
           />,
           Razorpay: <RazorpaySettings
+            paySetting={paySetting}
+            setPaySetting={setPaySetting}
+            handleInput={handleInput}
+          />,
+          Stripe: <StripeSettings
             paySetting={paySetting}
             setPaySetting={setPaySetting}
             handleInput={handleInput}

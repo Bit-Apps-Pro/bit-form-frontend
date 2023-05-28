@@ -44,7 +44,7 @@ import {
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
-  removeFormUpdateError,
+  removeFormUpdateError
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts, getLayoutItemCount } from '../Utils/gridLayoutHelper'
@@ -202,7 +202,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const removeLayoutItem = fldKey => {
     const fldData = fields[fldKey]
     if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
-      const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+      const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay|stripe/)) : []
       if (!payFields.length) {
         setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
         return false

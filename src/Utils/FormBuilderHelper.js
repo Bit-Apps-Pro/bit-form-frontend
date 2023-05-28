@@ -225,6 +225,7 @@ export const propertyValueSumX = (propertyValue = '') => {
 const FIELDS_EXTRA_ATTR = {
   paypal: { pro: true, onlyOne: true, setDefaultPayConfig: true },
   razorpay: { pro: true, onlyOne: true, setDefaultPayConfig: true },
+  stripe: { pro: true, onlyOne: true, setDefaultPayConfig: true },
   'advanced-file-up': { pro: true },
   recaptcha: { onlyOne: true },
   submit: { onlyOne: true },

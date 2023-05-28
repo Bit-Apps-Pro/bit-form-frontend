@@ -66,6 +66,10 @@ export const getElementTitle = (element) => {
 
     case 'opt-prefix': return 'Option Leading'
     case 'opt-suffix': return 'Option Trailing'
+
+    case 'stripe-btn': return 'Stripe Button'
+    case 'stripe-icn': return 'Stripe Icon'
+    case 'stripe-pay-btn': return 'Stripe Pay Button'
     default:
       return ''
   }

@@ -21,6 +21,7 @@ import razorpayStyle_2_atlassian from './razorpayStyle_2_atlassian'
 import recaptchaStyle_2_atlassian from './recaptchaStyle_2_atlassian'
 import sectionStyle_2_atlassian from './sectionStyle_2_atlassian'
 import selectStyle_2_atlassian from './selectStyle_2_atlassian'
+import stripeStyle_2_atlassian from './stripeStyle_2_atlassian'
 import textStyle_2_atlassian from './textStyle_2_atlassian'
 import titleStyle_2_atlassian from './titleStyle_2_atlassian'
 
@@ -102,6 +103,8 @@ export default function atlassianTheme({
       return phoneNumber({ type, fk, direction, breakpoint, colorScheme })
     case 'paypal':
       return paypal({ type, fk, breakpoint, colorScheme })
+    case 'stripe':
+      return stripe({ type, fk, breakpoint, colorScheme })
     case 'razorpay':
       return razorpay({ type, fk, breakpoint, colorScheme })
     case 'section':
@@ -446,6 +449,19 @@ const paypal = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: paypalStyle_2_atlassian({ fk, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const stripe = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'atlassian',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: stripeStyle_2_atlassian({ fk, breakpoint, colorScheme }),
     }
   }
   return {}

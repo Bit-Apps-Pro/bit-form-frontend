@@ -34,6 +34,7 @@
     "bit-filepond-plugin-media-preview": "workspace:*",
     "bit-helpers": "workspace:*",
     "bit-paypal-field": "workspace:*",
+    "bit-stripe-field": "workspace:*",
     "bit-phone-number-field": "workspace:*",
     "bit-razorpay-field": "workspace:*",
     "bit-recaptcha-field": "workspace:*",
@@ -115,7 +116,9 @@
     "build-pkg": "turbo run build",
     "hot": "vite --force",
     "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
-    "build-bit-advanced": "cd ./packages/bit-advanced-file-up-field && pnpm run build && cp -r ./dist/* ../../../assets"
+    "build-bit-stripe": "cd ./packages/bit-stripe-field && pnpm run build && cp -r ./dist/* ../../../assets",
+    "build-bit-frontend": "cd ./packages/bit-frontend && pnpm run build && cp -r ./dist/* ../../../assets",
+    "build-bit-helper": "cd ./packages/bit-helpers && pnpm run build && cp -r ./dist/* ../../../assets"
   },
   "husky": {
     "hooks": {
