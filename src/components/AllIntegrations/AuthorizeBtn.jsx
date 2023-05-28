@@ -4,13 +4,13 @@ import { __ } from '../../Utils/i18nwrap'
 import LoaderSm from '../Loaders/LoaderSm'
 import Btn from '../Utilities/Btn'
 
-export default function AuthorizeBtn({ isAuthorized, isLoading, handleAuthorize }) {
+export default function AuthorizeBtn({ isAuthorized, isLoading, handleAuthorize, disabled }) {
   const { css } = useFela()
   return (
     <Btn
       variant={isAuthorized ? 'disabled' : 'success'}
       onClick={handleAuthorize}
-      disabled={isAuthorized || isLoading}
+      disabled={isAuthorized || isLoading || disabled}
       className={css(ut.mt3, { ml: 3 })}
     >
       {isAuthorized ? __('Authorized ✔') : __('Authorize')}

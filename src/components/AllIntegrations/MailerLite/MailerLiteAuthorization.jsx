@@ -37,7 +37,6 @@ export default function MailerLiteAuthorization({
       <li>Finally, click <b>Authorize</b> button.</li>
   </ul>
   `
-  console.log('mailerLiteConf', mailerLiteConf)
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       <TutorialLink
@@ -55,25 +54,23 @@ export default function MailerLiteAuthorization({
         disabled={isInfo}
       />
       <div className="mt-3"><b>{__('Select Version:')}</b></div>
-      <select
-        onChange={handleInput}
-        name="version"
-        value={mailerLiteConf?.version}
-        className="btcd-paper-inp w-6 mt-1"
-      >
-        <option value="v1">MailerLite Classic</option>
-        <option value="v2">MailerLite New</option>
-      </select>
-      {/* <select
-        className="btcd-paper-inp w-6 mt-1"
-        onChange={handleInput}
-        name="name"
-        value={mailerLiteConf.name}
-        placeholder={__('Integration Name...')}
-        disabled={isInfo} >
-        <option value="v1">MailerLite Classic</option>
-        <option value="v1">MailerLite New</option>
-      </select> */}
+      <div className="flex items-center w-6 mt-3">
+        <input id="MailerLiteClassic" type="radio" name="version" value="v1" className="hidden" checked={mailerLiteConf.version === "v1"} onChange={handleInput} />
+        <label for="MailerLiteClassic">
+          <span className="w-4 h-4 inline-block mr-1 border border-grey" />
+          MailerLite Classic
+
+        </label>
+      </div>
+
+      <div className="flex items-center mr-4 mt-2 mb-4">
+        <input id="MailerLiteNew" type="radio" name="version" value="v2" className="hidden" checked={mailerLiteConf.version === "v2"} onChange={handleInput} />
+        <label for="MailerLiteNew">
+          <span className="w-4 h-4 inline-block mr-1 border border-grey" />
+          MailerLite New
+
+        </label>
+      </div>
 
       <small className="d-blk mt-3">
         {__('To Get API token, Please Visit')}
@@ -105,6 +102,7 @@ export default function MailerLiteAuthorization({
           <AuthorizeBtn
             isAuthorized={isAuthorized}
             isLoading={isLoading}
+            disabled={mailerLiteConf.version === undefined || mailerLiteConf.version === ''}
             handleAuthorize={() => mailerliteRefreshFields(mailerLiteConf, setMailerLiteConf, setError, setisAuthorized, setIsLoading, 'authorization')}
           />
           <br />
