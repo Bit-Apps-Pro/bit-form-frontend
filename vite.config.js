@@ -186,7 +186,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-dropdown-field/dist/bit-dropdown-field.min.js'),
+        src: absPath('packages/bit-select-field/dist/bit-select-field.min.js'),
         dest: absPath('../assets'),
       },
       {
@@ -206,7 +206,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),
+        src: absPath('packages/bit-advanced-file-up-field/dist/bit-advanced-file-up-field.min.js'),
         dest: absPath('../assets'),
       },
       {

@@ -287,8 +287,8 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/bit-currency-field.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-dropdown-field/dist/bit-dropdown-field.min.js'),
-              to: path.resolve(__dirname, '../assets/js/bit-dropdown-field.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-select-field/dist/bit-select-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-select-field.min.js'),
             },
             {
               from: path.resolve(__dirname, 'packages/bit-file-up-field/dist/bit-file-up-field.min.js'),
@@ -307,8 +307,8 @@ module.exports = (env, argv) => {
               to: path.resolve(__dirname, '../assets/js/bit-razorpay-field.min.js'),
             },
             {
-              from: path.resolve(__dirname, 'packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),
-              to: path.resolve(__dirname, '../assets/js/bit-advance-file-upload-field.min.js'),
+              from: path.resolve(__dirname, 'packages/bit-advanced-file-up-field/dist/bit-advanced-file-up-field.min.js'),
+              to: path.resolve(__dirname, '../assets/js/bit-advanced-file-up-field.min.js'),
             },
             {
               from: path.resolve(__dirname, 'packages/bit-validation/dist/checkFldValidation.min.js'),
