@@ -40,11 +40,13 @@ export default class BitStripeField {
   #payBtnTxt = null
 
   constructor(selector, config) {
-    // check config string or object
-    const conf = typeof config === 'string' ? JSON.parse(config) : config
-    Object.assign(this.#config, conf)
+    if (typeof selector === 'string') {
+      this.#stripeWrpSelector = document.querySelector(selector)
+    } else {
+      this.#stripeWrpSelector = selector
+    }
 
-    this.#stripeWrpSelector = selector
+    Object.assign(this.#config, config)
     this.#publishableKey = this.#config.publishableKey
     this.#options = this.#config.options
     this.#contentId = this.#config.contentId
