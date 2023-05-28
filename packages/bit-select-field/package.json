@@ -1,7 +1,7 @@
 {
-  "name": "bit-dropdown-field",
+  "name": "bit-select-field",
   "packageManager": "pnpm@7.6.0",
-  "main": "dist/bit-dropdown-field.min.js",
+  "main": "dist/bit-select-field.min.js",
   "version": "1.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev rollup -c -w",
