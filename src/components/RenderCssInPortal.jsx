@@ -105,21 +105,21 @@ export default function RenderCssInPortal() {
     z-index: 999;
  }
  
- .blk:focus .blk-icn-wrp,.blk:hover .blk-icn-wrp,.itm-focus .blk-icn-wrp {
+ .blk:focus > .blk-icn-wrp,.blk:hover > .blk-icn-wrp,.itm-focus > .blk-icn-wrp {
     visibility: visible;
  }
 
- .blk:focus .blk-icn-wrp,.itm-focus .blk-icn-wrp {
+ .blk:focus > .blk-icn-wrp,.itm-focus > .blk-icn-wrp {
   top: -25px;
   right: -3px;
  }
 
- .blk:not(.itm-focus):hover:not(:focus) .blk-icn-wrp {
+ .blk:not(.itm-focus):hover:not(:focus) > .blk-icn-wrp {
   top: -25px;
   right: 0px;
  }
  
- .blk:focus .blk-icn-wrp button,.blk:focus .react-resizable-handle,.blk:hover .blk-icn-wrp button,.blk:hover .react-resizable-handle,.itm-focus .blk-icn-wrp button,.itm-focus .react-resizable-handle {
+ .blk:focus > .blk-icn-wrp button,.blk:focus > .react-resizable-handle,.blk:hover > .blk-icn-wrp button,.blk:hover > .react-resizable-handle,.itm-focus > .blk-icn-wrp button,.itm-focus > .react-resizable-handle {
     transform: scale(1)
  }
  

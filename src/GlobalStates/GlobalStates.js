@@ -44,7 +44,13 @@ export const $builderHelperStates = atom({
     })
   }],
 })
-export const $builderHookStates = atom({ key: '$builderHookStates', default: { reCalculateFieldHeights: 0, reRenderGridLayoutByRootLay: 0, forceBuilderWidthToLG: 0, forceBuilderWidthToBrkPnt: 0, reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 } } })
+export const $builderHookStates = atom({ key: '$builderHookStates',
+  default: { reCalculateFieldHeights: 0,
+    reRenderGridLayoutByRootLay: 0,
+    forceBuilderWidthToLG: 0,
+    forceBuilderWidthToBrkPnt: 0,
+    reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 },
+    recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 } } })
 export const $builderRightPanelScroll = atom({ key: '$builderRightPanelScroll', default: false })
 export const $builderSettings = atom({
   key: '$builderSettings',
@@ -149,6 +155,11 @@ export const $updateBtn = atom({ key: '$updateBtn', default: { unsaved: false } 
 export const $unsplashMdl = atom({ key: '$unsplashMdl', default: false })
 export const $unsplashImgUrl = atom({ key: '$unsplashImgUrl', default: '' })
 export const $workflows = atom({ key: '$workflows', default: [], dangerouslyAllowMutability: true })
+export const $contextMenu = atom({ key: '$contextMenu', default: {} })
+export const $resizingFld = atom({ key: '$resizingFld', default: {} })
+export const $contextMenuRef = atom({ key: '$contextMenuRef', default: {}, dangerouslyAllowMutability: true })
+export const $proModal = atom({ key: '$proModal', default: { show: false } })
+export const $alertModal = atom({ key: '$alertModal', default: { show: false, msg: '' } })
 // selectors
 export const $fieldsArr = selector({ key: '$fieldsArr', get: ({ get }) => makeFieldsArrByLabel(get($fields), get($fieldLabels), []), dangerouslyAllowMutability: true })
 export const $newFormId = selector({ key: '$newFormId', get: ({ get }) => getNewFormId(get($forms)) })
@@ -164,4 +175,9 @@ export const $reportSelector = selector({
   })),
 })
 
-export const $proModal = atom({ key: '$proModal', default: { show: false } })
+
+export const $nestedLayouts = atom({
+  key: '$nestedLayouts',
+  default: {},
+  dangerouslyAllowMutability: true,
+})

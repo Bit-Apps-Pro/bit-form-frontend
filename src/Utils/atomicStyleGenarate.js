@@ -3,17 +3,18 @@
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
 import { getRecoil } from 'recoil-nexus'
 import { generateStylesWithImportantRule, mergeOtherStylesWithAtomicCSS, removeUnusedStyles } from '../components/style-new/styleHelpers'
-import { $breakpointSize, $builderSettings, $fields, $formId, $workflows } from '../GlobalStates/GlobalStates'
+import { $breakpointSize, $builderHelperStates, $builderSettings, $fields, $formId, $nestedLayouts, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
-import { getLayoutDiff } from './FormBuilderHelper'
+import { getLayoutDiff, prepareLayout } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 import { omitByObj } from './Helpers'
 
 export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = '' }) {
   const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
   const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
+  const nestedLayouts = getRecoil($nestedLayouts)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
   const ignoreWithFallbackValues = {
@@ -184,7 +185,6 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   simplyfiedLayout.lg = sortedLayout.lg
   simplyfiedLayout.md = getLayoutDiff(sortedLayout.lg, sortedLayout.md)
   simplyfiedLayout.sm = getLayoutDiff(sortedLayout.md, sortedLayout.sm)
-
   const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(simplyfiedLayout)
 
   // generate css text from objects and add dark mode prefix if need
@@ -197,17 +197,21 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const smDarkCssText = objectToCssText(smDarkCombinedSelectors)?.trim()
   const smPrefixedDarkCssText = objectToCssText(addPrefixInObjectKeys(smDarkCombinedSelectors, `${darkModeSelector} `))?.trim()
 
+  const { sortedNestedLayouts, nestedLayoutStyleText } = generateNestedLayoutCSSText()
+  const { lg: nestedLayoutLgTxt, md: nestedLayoutMdTxt, sm: nestedLayoutSmTxt } = nestedLayoutStyleText
   // concat css texts
   let cssText = generateFormGridStyle('lg', formId)
   cssText += lgLayoutStyleText
+  if (nestedLayoutLgTxt) cssText += nestedLayoutLgTxt
   cssText += objectToCssText(lgLightCombineSelectors)
   if (darkModeSelector.trim()) {
     cssText += lgPrefixedDarkCssText
   }
 
-  if (mdLayoutStyleText || mdLightCssText) {
+  if (mdLayoutStyleText || mdLightCssText || nestedLayoutMdTxt) {
     cssText += `@media (max-width:${mdBreakpointSize}px){`
     if (mdLayoutStyleText) cssText += mdLayoutStyleText
+    if (nestedLayoutMdTxt) cssText += nestedLayoutMdTxt
     if (mdLightCssText) cssText += mdLightCssText
     if (darkModeSelector.trim()) {
       cssText += mdPrefixedDarkCssText
@@ -215,9 +219,10 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     cssText += '}'
   }
 
-  if (smLayoutStyleText || smLightCssText) {
+  if (smLayoutStyleText || smLightCssText || nestedLayoutSmTxt) {
     cssText += `@media (max-width:${smBreakpointSize}px){`
     if (smLayoutStyleText) cssText += smLayoutStyleText
+    if (nestedLayoutSmTxt) cssText += nestedLayoutSmTxt
     if (smLightCssText) cssText += smLightCssText
     if (darkModeSelector.trim()) {
       cssText += smPrefixedDarkCssText
@@ -252,7 +257,29 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     mdDarkStyles,
     smLightStyles: smlightStylesWithoutMergedStyles,
     smDarkStyles,
+    nestedLayouts: sortedNestedLayouts,
   }
+}
+
+function generateNestedLayoutCSSText() {
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const builderHelperStates = getRecoil($builderHelperStates)
+  const nestedLayoutStyleText = { lg: '', md: '', sm: '' }
+  const nestedLayoutsArr = Object.entries(nestedLayouts)
+  const sortedNestedLayouts = {}
+  nestedLayoutsArr.forEach(([fldKey, lay]) => {
+    const simplyfiedLayout = {}
+    const layouts = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+    sortedNestedLayouts[fldKey] = layouts
+    simplyfiedLayout.lg = layouts.lg
+    simplyfiedLayout.md = getLayoutDiff(layouts.lg, layouts.md)
+    simplyfiedLayout.sm = getLayoutDiff(layouts.md, layouts.sm)
+    const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(simplyfiedLayout)
+    if (lgLayoutStyleText) nestedLayoutStyleText.lg += lgLayoutStyleText
+    if (mdLayoutStyleText) nestedLayoutStyleText.md += mdLayoutStyleText
+    if (smLayoutStyleText) nestedLayoutStyleText.sm += smLayoutStyleText
+  })
+  return { sortedNestedLayouts, nestedLayoutStyleText }
 }
 
 /*

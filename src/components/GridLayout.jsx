@@ -2,54 +2,54 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-undef */
 import { produce } from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState
+  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
   $builderHookStates,
+  $contextMenu,
+  $contextMenuRef,
   $deletedFldKey,
   $draggingField,
   $fields,
   $flags,
   $isNewThemeStyleLoaded,
-  $layouts,
-  $proModal,
+  $layouts, $nestedLayouts, $proModal,
   $selectedFieldId,
-  $uniqueFieldId
+  $uniqueFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
-import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import '../resource/css/grid-layout.css'
 import { AppSettings } from '../Utils/AppSettingsContext'
 import {
-  addFormUpdateError,
-  addNewItemInLayout,
   addToBuilderHistory,
+  builderBreakpoints,
   calculateFormGutter,
-  checkFieldsExtraAttr,
   cols,
   filterLayoutItem,
   filterNumber,
-  fitAllLayoutItems, fitSpecificLayoutItem, getAbsoluteElmHeight, getLatestState,
-  getResizableHandles,
+  fitAllLayoutItems, fitSpecificLayoutItem,
+  getLatestState,
+  getParentFieldKey,
   getTotalLayoutHeight,
+  handleFieldExtraAttr,
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
-  reCalculateFldHeights,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
-import { compactResponsiveLayouts } from '../Utils/gridLayoutHelper'
-import { deepCopy, isFirefox, isObjectEmpty, IS_PRO } from '../Utils/Helpers'
+import { compactResponsiveLayouts, getLayoutItemCount } from '../Utils/gridLayoutHelper'
+import { addNewFieldToGridLayout, generateFieldLblForHistory, generateNewFldName, getInitHeightsForResizingTextarea } from '../Utils/gridLayoutHelpers'
+import { deepCopy, getNewId, IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -57,10 +57,6 @@ import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
-import noStyleTheme from './style-new/themes/0_noStyle'
-import bitformDefaultTheme from './style-new/themes/1_bitformDefault'
-import { updateFieldStyleByFieldSizing } from './style-new/themes/1_bitformDefault/fieldSizeControlStyle'
-import atlassianTheme from './style-new/themes/2_atlassian'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -82,20 +78,22 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const builderHookStates = useRecoilValue($builderHookStates)
   const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
   const [styles, setStyles] = useRecoilState($stylesLgLight)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
+  const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
+  const [resizingFld, setResizingFld] = useState({})
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useRecoilValue($uniqueFieldId)
-  const [contextMenu, setContextMenu] = useState({})
+  const isDraggable = useRecoilValue($isDraggable)
+  const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
+  const setContextMenuRef = useSetRecoilState($contextMenuRef)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
   const { fieldKey, counter: fieldChangeCounter } = reCalculateSpecificFldHeight
   const { styleMode, inspectMode } = flags
   const stopGridTransition = useRef(false)
-  const [resizingFld, setResizingFld] = useState({})
   const delayRef = useRef(null)
   const [formGutter, setFormGutter] = useState(0)
   const elmCurrentHighlightedRef = useRef(null)
@@ -104,11 +102,17 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const location = useLocation()
 
   useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setContextMenuRef({ ref, isComponentVisible, setIsComponentVisible }) }, [ref])
   // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
     const fieldsCount = Object.keys(fields).length
-    const layoutLgFieldsCount = layouts.lg.length
+    const layoutLgFieldsCount = getLayoutItemCount()
     if (fieldsCount === layoutLgFieldsCount) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draft => {
+        Object.entries(draft).forEach(([fldKey, lay]) => {
+          draft[fldKey] = fitAllLayoutItems(lay)
+        })
+      }))
       const nl = fitAllLayoutItems(layouts)
       const nl2 = compactResponsiveLayouts(nl, cols)
       if (!isLayoutSame(layouts, nl2)) {
@@ -187,9 +191,11 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
   const onBreakpointChange = bp => setBreakpoint(bp)
 
-  const removeFieldStyles = fldKey => {
+  const removeFieldStyles = fldKeys => {
     setStyles(prevStyles => produce(prevStyles, draftStyles => {
-      delete draftStyles.fields[fldKey]
+      fldKeys.forEach(fldKey => {
+        delete draftStyles.fields[fldKey]
+      })
     }))
   }
 
@@ -202,18 +208,40 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
         return false
       }
     }
+    const isNestedField = nestedLayouts[fldKey]
+    const isExistInLayout = layouts.lg.find(itm => itm.i === fldKey)
     const removedLay = {
       lg: layouts.lg.find(l => l.i === fldKey),
       md: layouts.md.find(l => l.i === fldKey),
       sm: layouts.sm.find(l => l.i === fldKey),
     }
     const nwLay = filterLayoutItem(fldKey, layouts)
-    const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
+    const removedFldKeys = [fldKey]
     setLayouts(nwLay)
     setRootLayouts(nwLay)
+    if (isNestedField) {
+      nestedLayouts[fldKey].lg.forEach(nestedField => {
+        removedFldKeys.push(nestedField.i)
+      })
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        delete draftNestedLayouts[fldKey]
+      }))
+    }
+    if (!isExistInLayout) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        const parentFieldKey = getParentFieldKey(fldKey)
+        draftNestedLayouts[parentFieldKey] = filterLayoutItem(fldKey, draftNestedLayouts[parentFieldKey])
+      }))
+    }
+    const tmpFields = produce(fields, draftFields => {
+      removedFldKeys.forEach(rmvfldKey => {
+        delete draftFields[rmvfldKey]
+      })
+    })
+
     setFields(tmpFields)
     setSelectedFieldId(null)
-    removeFieldStyles(fldKey)
+    removeFieldStyles(removedFldKeys)
     setDeletedFldKey(prvDeleted => {
       const tmpFldKeys = [...prvDeleted]
       if (!tmpFldKeys.includes(fldKey)) {
@@ -248,257 +276,119 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     removeFormUpdateError(fldKey)
   }
 
-  const handleFieldExtraAttr = (fieldData) => {
-    const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2)
-    if (extraAttr.validType === 'pro') {
-      setProModal({ show: true, ...proHelperData[fieldData.typ] })
-      return 0
-    }
-
-    if (extraAttr.validType === 'onlyOne') {
-      setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
-      return 0
-    }
-
-    if (extraAttr.validType === 'keyEmpty') {
-      setAlertMdl({ show: true, msg: extraAttr.msg, cancelBtn: false })
-      return 0
-    }
-
-    if (extraAttr.validType === 'setDefaultPayConfig') {
-      const newFldData = { ...fieldData }
-      newFldData.payIntegID = extraAttr.payData.id
-      return newFldData
-    }
-
-    return fieldData
-  }
-
-  const generateFieldLblForHistory = fldData => {
-    if (fldData.typ === 'button') return fldData.txt
-    if (fldData.typ === 'decision-box') return 'Decision Box'
-    if (fldData.typ === 'title') return 'Title Field'
-    if (fldData.typ === 'html') return 'HTML Field'
-    if (fldData.typ === 'recaptcha') return 'Recaptcha Field'
-    if (!fldData.lbl) return fldData.typ.charAt(0).toUpperCase() + fldData.typ.slice(1)
-    return fldData.lbl
-  }
-
-  const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
-    const { typ: fldType } = fieldData
-
-    if (fldType === 'paypal') {
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'paypalClientIdMissing',
-        errorMsg: 'PayPal Client ID is missing',
-        errorUrl: `field-settings/${fldKey}`,
-      })
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'paypalAmountMissing',
-        errorMsg: __('PayPal Fixed Amount is not valid'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-    } else if (fldType === 'razorpay') {
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'razorpayClientIdMissing',
-        errorMsg: __('Razorpay Client ID is missing'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'razorpayAmountMissing',
-        errorMsg: __('Razorpay Fixed Amount is not valid'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-    }
-  }
-
   function addNewField(fieldData, fieldSize, addPosition) {
-    let processedFieldData = handleFieldExtraAttr(fieldData)
-    if (!processedFieldData) return
-    processedFieldData = { ...processedFieldData, fieldName: `${processedFieldData.typ}-${formID}-${uniqueFieldId}` }
-    const newBlk = `b${formID}-${uniqueFieldId}`
-    setUpdateErrorMsgByDefault(newBlk, processedFieldData)
-    // eslint-disable-next-line prefer-const
-    let { x, y } = addPosition
-    if (y !== 0) { y -= 1 }
-    const { w, h, minH, maxH, minW } = fieldSize
-    const newLayoutItem = {
-      i: newBlk, x, y, w, h, minH, maxH, minW,
-    }
-    const resizeHandles = getResizableHandles(fieldData.typ)
-    if (resizeHandles) {
-      newLayoutItem.resizeHandles = resizeHandles
-    }
-    const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
-    const newFields = { ...fields, [newBlk]: processedFieldData }
-    if (newLayouts.lg.length !== Object.keys(newFields).length) {
-      const fldArr = Object.keys(newFields)
-      const layArr = newLayouts.lg.map(lay => lay.i)
-      const missingFields = fldArr.filter(fld => !layArr.includes(fld))
-      if (missingFields.length) missingFields.forEach(fldKey => delete newFields[fldKey])
-    }
+    if (!handleFieldExtraAttr(fieldData, payments, reCaptchaV2)) return
+    const { newLayouts } = addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition)
+
     setLayouts(newLayouts)
     setRootLayouts(newLayouts)
-    setFields(newFields)
-    sessionStorage.setItem('btcd-lc', '-')
-
-    // add to history
-    const event = `${generateFieldLblForHistory(fieldData)} added`
-    const type = 'add_fld'
-
-    setTimeout(() => {
-      selectInGrid(`[data-key="${newBlk}"]`)?.focus()
-    }, 500)
-
-    // add style
-    let newStyles = styles
-    const tempThemeVars = deepCopy(themeVars)
-    setStyles(prevStyles => {
-      newStyles = produce(prevStyles, draftStyle => {
-        const globalTheme = draftStyle.theme
-
-        if (globalTheme === 'bitformDefault') {
-          const defaultFieldStyle = bitformDefaultTheme({
-            type: processedFieldData.typ,
-            fieldKey: newBlk,
-            direction: themeVars['--dir'],
-          })
-          if (prevStyles.fieldsSize !== 'medium') {
-            const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, prevStyles.fieldsSize, tempThemeVars)
-            draftStyle.fields[newBlk] = updateStyle
-          } else {
-            draftStyle.fields[newBlk] = defaultFieldStyle
-          }
-        }
-
-        if (globalTheme === 'atlassian') {
-          draftStyle.fields[newBlk] = atlassianTheme({
-            type: processedFieldData.typ,
-            fieldKey: newBlk,
-            direction: themeVars['--dir'],
-          })
-        }
-
-        if (globalTheme === 'noStyle') {
-          draftStyle.fields[newBlk] = noStyleTheme({
-            type: processedFieldData.typ,
-            fieldKey: newBlk,
-            direction: themeVars['--dir'],
-          })
-        }
-      })
-      return newStyles
-    })
-    setThemeVars(tempThemeVars)
-
-    const fldType = processedFieldData.typ
-    if (fldType === 'razorpay' || fldType === 'paypal') {
-      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
-        draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
-        draftStaticStyleState.staticStyles['.form-loading::before'] = {
-          position: 'absolute',
-          'border-radius': '5px',
-          display: 'block',
-          top: 0,
-          left: 0,
-          content: "''",
-          height: '100%',
-          width: '100%',
-          'z-index': '9999',
-          'background-color': 'rgba(0,0,0,0.2)',
-        }
-        draftStaticStyleState.staticStyles['.form-loading::after'] = {
-          position: 'absolute',
-          'border-radius': '5px',
-          color: '#fff',
-          top: '50%',
-          left: '50%',
-          content: "'loading...'",
-          transform: 'translate(-50%, -50%)',
-          'z-index': '99999',
-          'font-size': '20px',
-          'background-color': '#222',
-          padding: '5px 15px',
-        }
-        if (fldType === 'razorpay') draftStaticStyleState.staticStyles['.razorpay-checkout-frame'] = { height: '100% !important' }
-      }))
-    }
-
-    const state = { fldKey: newBlk, layouts: newLayouts, fields: newFields, styles: newStyles }
-    addToBuilderHistory({ event, type, state })
-
-    setTimeout(() => {
-      reCalculateFldHeights(newBlk)
-    }, 100)
-
-    return { newBlk }
   }
-
-  const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
-    const oldFldKeyExceptFirstLetter = oldFLdKey.slice(1)
-    const newFldKeyExceptFirstLetter = newFldKey.slice(1)
-    const reg = new RegExp(oldFldKeyExceptFirstLetter, 'g')
-    const newFldName = oldFldName.replace(reg, newFldKeyExceptFirstLetter)
-    return newFldName
-  }
-
   const cloneLayoutItem = fldKey => {
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.fieldClone })
       return
     }
-    const fldData = fields[fldKey]
-    if (!handleFieldExtraAttr(fldData)) return
+    const fieldData = fields[fldKey]
+    if (!handleFieldExtraAttr(fieldData, payments, reCaptchaV2)) return
+    const isNestedField = nestedLayouts[fldKey]
+    const isExistInLayout = layouts.lg.find(itm => itm.i === fldKey)
+    const cloneFldKeys = [fldKey]
+    if (isNestedField) {
+      nestedLayouts[fldKey].lg.forEach(nestedField => {
+        cloneFldKeys.push(nestedField.i)
+      })
+      // check cloneFldKeys with handleFieldExtraAttr
+      const isNestedFieldValid = cloneFldKeys.every(fk => handleFieldExtraAttr(fields[fk], payments, reCaptchaV2))
+      if (!isNestedFieldValid) return
+    }
+    let uniqueFldId = getNewId(fields)
+    // const newBlk = `b${formID}-${uniqueFldId}`
 
-    const newBlk = `b${formID}-${uniqueFieldId}`
-    const newLayItem = {}
-
-    const tmpLayouts = produce(layouts, draft => {
-      const allBreakpoints = ['sm', 'md', 'lg']
-      allBreakpoints.forEach(brkpnt => {
-        const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
-        const { y, h } = layouts[brkpnt][layIndx]
-        const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
-        newLayItem[brkpnt] = newLayoutItem
-        draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+    // clone field
+    const clonedNewFieldKey = {}
+    const oldFields = produce(fields, draft => {
+      cloneFldKeys.forEach(fldKeyToClone => {
+        const fldData = draft[fldKeyToClone]
+        const newBlk = `b${formID}-${uniqueFldId}`
+        uniqueFldId += 1
+        clonedNewFieldKey[fldKeyToClone] = newBlk
+        const newFldName = generateNewFldName(fldData.fieldName, fldKeyToClone, newBlk)
+        draft[newBlk] = { ...fldData, fieldName: newFldName }
       })
     })
-
-    setLayouts(tmpLayouts)
-    setRootLayouts(tmpLayouts)
-    const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
-    const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
-    // eslint-disable-next-line no-param-reassign
     setFields(oldFields)
 
     // clone style
     setStyles(preStyles => produce(preStyles, draftStyle => {
-      const fldStyle = draftStyle.fields[fldKey]
-      const fldClasses = fldStyle.classes
-      draftStyle.fields[newBlk] = { ...fldStyle }
-      draftStyle.fields[newBlk].classes = {}
-      Object.keys(fldClasses).forEach(cls => {
-        const newClassName = cls.replace(fldKey, newBlk)
-        draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
+      cloneFldKeys.forEach(fldKeyToClone => {
+        const fldStyle = draftStyle.fields[fldKeyToClone]
+        const fldClasses = fldStyle.classes
+        const newBlk = clonedNewFieldKey[fldKeyToClone]
+        draftStyle.fields[newBlk] = { ...fldStyle }
+        draftStyle.fields[newBlk].classes = {}
+        Object.keys(fldClasses).forEach(cls => {
+          const newClassName = cls.replace(fldKeyToClone, newBlk)
+          draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
+        })
       })
     }))
 
-    sessionStorage.setItem('btcd-lc', '-')
+    const newLayItem = {}
 
+    const allBreakpoints = ['sm', 'md', 'lg']
+    if (isNestedField) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        const newFieldKey = clonedNewFieldKey[fldKey]
+        const prevLayout = prevNestedLayouts[fldKey]
+        draftNestedLayouts[newFieldKey] = deepCopy(prevLayout)
+        allBreakpoints.forEach(brkpnt => {
+          draftNestedLayouts[newFieldKey][brkpnt].forEach((nestedField, indx) => {
+            const newBlk = clonedNewFieldKey[nestedField.i]
+            draftNestedLayouts[newFieldKey][brkpnt][indx].i = newBlk
+          })
+        })
+      }))
+    } else if (!isExistInLayout) {
+      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+        allBreakpoints.forEach(brkpnt => {
+          const parentFieldKey = getParentFieldKey(fldKey)
+          const layIndx = draftNestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
+          const { y, h } = draftNestedLayouts[parentFieldKey][brkpnt][layIndx]
+          const newFieldKey = clonedNewFieldKey[fldKey]
+          const newLayoutItem = { ...draftNestedLayouts[parentFieldKey][brkpnt][layIndx], i: newFieldKey, y: y + h }
+          newLayItem[brkpnt] = newLayoutItem
+          draftNestedLayouts[parentFieldKey][brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+        })
+      }))
+    }
+    let tmpLayouts = layouts
+    if (isExistInLayout) {
+      tmpLayouts = produce(layouts, draft => {
+        allBreakpoints.forEach(brkpnt => {
+          const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
+          const { y, h } = layouts[brkpnt][layIndx]
+          const newBlk = clonedNewFieldKey[fldKey]
+          const newLayoutItem = { ...layouts[brkpnt][layIndx], i: newBlk, y: y + h }
+          newLayItem[brkpnt] = newLayoutItem
+          draft[brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+        })
+      })
+      setLayouts(tmpLayouts)
+      setRootLayouts(tmpLayouts)
+    }
+
+    sessionStorage.setItem('btcd-lc', '-')
+    const newBlk = clonedNewFieldKey[fldKey]
     setTimeout(() => {
       selectInGrid(`[data-key="${newBlk}"]`)?.focus()
       // .scrollIntoView({ behavior: 'smooth', block: 'nearest' })
     }, 500)
 
     // add to history
-    const event = `${generateFieldLblForHistory(fldData)} cloned`
+    const event = `${generateFieldLblForHistory(fieldData)} cloned`
     const type = 'clone_fld'
     const state = {
-      fldKey: newBlk, breakpoint, layout: newLayItem, fldData, layouts: tmpLayouts, fields: oldFields, styles: getLatestState('styles'),
+      fldKey: newBlk, breakpoint, layout: newLayItem, fieldData, layouts: tmpLayouts, fields: oldFields, styles: getLatestState('styles'),
     }
     addToBuilderHistory({ event, type, state })
 
@@ -515,11 +405,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       setLayouts(layoutsFromGrid)
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
-  }
-
-  const setRegenarateLayFlag = () => {
-    sessionStorage.setItem('btcd-lc', '-')
-    setResizingFalse()
   }
 
   const handleContextMenu = (e, fldKey) => {
@@ -710,19 +595,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
   }
 
-  const getInitHeightsForResizingTextarea = fldKey => {
-    const fldData = fields[fldKey]
-    if (!fldData) return
-    const fldType = fldData.typ
-    if (fldType === 'textarea') {
-      const wrpElm = selectInGrid(`[data-key="${fldKey}"]`)
-      const textareaElm = selectInGrid(`textarea[data-dev-fld="${fldKey}"]`)
-      const wrpHeight = getAbsoluteElmHeight(wrpElm, 0)
-      const fldHeight = getAbsoluteElmHeight(textareaElm, 0)
-      return { fldHeight, wrpHeight }
-    }
-
-    return {}
+  const setRegenarateLayFlag = () => {
+    sessionStorage.setItem('btcd-lc', '-')
+    setResizingFalse()
   }
 
   const setResizingFldKey = (_, lay) => {
@@ -754,6 +629,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   compactType="vertical"
                   useCSSTransforms
                   isDroppable={draggingField !== null && breakpoint === 'lg'}
+                  // isDroppable={false}
                   className="layout"
                   style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
                   onDrop={onDrop}
@@ -761,15 +637,16 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   droppingItem={draggingField?.fieldSize}
                   onLayoutChange={handleLayoutChange}
                   cols={cols}
-                  breakpoints={{ lg: 700, md: 420, sm: 300 }}
+                  breakpoints={builderBreakpoints}
                   rowHeight={rowHeight}
+                  isDraggable={isDraggable}
                   margin={gridContentMargin}
                   draggableCancel=".no-drg"
                   draggableHandle=".drag"
                   layouts={layouts}
                   onBreakpointChange={onBreakpointChange}
                   onDragStart={setResizingFldKey}
-                  onDrag={setResizingWX}
+                  // onDrag={setResizingWX}
                   onDragStop={setRegenarateLayFlag}
                   onResizeStart={setResizingFldKey}
                   onResize={setResizingWX}

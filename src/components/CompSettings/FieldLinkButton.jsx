@@ -25,15 +25,16 @@ import PhoneNumberIcn from '../../Icons/PhoneNumberIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
-import TextareaIcn from '../../Icons/TextareaIcn'
+import SectionIcon from '../../Icons/SectionIcon'
 import TextIcn from '../../Icons/TextIcn'
+import TextareaIcn from '../../Icons/TextareaIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import TitleIcn from '../../Icons/TitleIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
-import { selectInGrid } from '../../Utils/globalHelpers'
 import { ucFirst } from '../../Utils/Helpers'
+import { selectInGrid } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
@@ -110,6 +111,7 @@ const FieldIcon = icon => {
     currency: <CurrencyIcn size="15" />,
     'phone-number': <PhoneNumberIcn size="15" />,
     country: <FlagIcn size="14" />,
+    section: <SectionIcon size="14" />,
   }
   return icons[icon]
 }

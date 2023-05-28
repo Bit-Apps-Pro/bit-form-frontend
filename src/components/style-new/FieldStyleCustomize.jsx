@@ -16,13 +16,13 @@ import { $styles } from '../../GlobalStates/StylesState'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
+import { addToBuilderHistory, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
+import { IS_PRO } from '../../Utils/Helpers'
+import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
+import fieldsTypes from '../../Utils/StaticData/fieldTypes'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { addToBuilderHistory, deleteNestedObj, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
-import { IS_PRO } from '../../Utils/Helpers'
-import fieldsTypes from '../../Utils/StaticData/fieldTypes'
-import { getElementTitle } from '../../Utils/StaticData/IndividualElementTitle'
 import AutoResizeInput from '../CompSettings/CompSettingsUtils/AutoResizeInput'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import PremiumSettingsOverlay from '../CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
@@ -441,7 +441,7 @@ const cls = {
   l2: { cr: 'var(--white-0-21)' },
   wrp: { ml: 5, mt: 10, fs: 12, mr: 10 },
   mainWrapper: { bd: 'var(--white-100)' },
-  subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
+  subTitle: { mt: 10, mb: 5, mr: 5, fs: 15, cr: 'var(--white-0-31)' },
   subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
   container: { mx: 16, pn: 'relative' },

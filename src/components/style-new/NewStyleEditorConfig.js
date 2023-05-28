@@ -1193,6 +1193,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'opt-search-input': {
@@ -1214,6 +1215,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'option-search-wrp': {
@@ -1483,6 +1485,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'opt-search-input': {
@@ -1504,6 +1507,7 @@ const editorConfig = {
         'font-style': '',
         'font-weight': '',
         transition: '',
+        'line-height': '',
       },
     },
     'opt-search-icn': {
@@ -2393,6 +2397,21 @@ const editorConfig = {
         'font-weight': '',
         'font-style': '',
         color: '',
+      },
+    },
+  },
+  section: {
+    ...textFldCssProps,
+    'inp-fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+        'text-decoration': {
+          'text-decoration-line': true,
+          'text-decoration-style': true,
+          'text-decoration-color': true,
+          'text-decoration-thickness': true,
+        },
       },
     },
   },

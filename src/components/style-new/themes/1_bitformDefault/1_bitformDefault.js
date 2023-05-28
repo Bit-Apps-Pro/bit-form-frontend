@@ -3,6 +3,7 @@
 import { cleanObj } from '../../../../Utils/globalHelpers'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 import advancedFileUp_1_bitformDefault from './advancedFileUp_1_bitformDefault'
 import buttonStyle_1_bitformDefault from './buttonStyle_1_bitformDefault'
 import checkboxNradioStyle_1_bitformDefault from './checkboxNradioStyle_1_bitformDefault'
@@ -18,6 +19,7 @@ import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from './phoneNumberStyle_1_bitformDefault'
 import razorpayStyle_1_BitformDefault from './razorpayStyle_1_BitformDefault'
 import recaptchaStyle_1_bitformDefault from './recaptchaStyle_1_bitformDefault'
+import sectionStyle_1_bitformDefault from './sectionStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './selectStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
@@ -102,6 +104,8 @@ export default function bitformDefaultTheme({
       return paypal({ type, fk, breakpoint, colorScheme })
     case 'razorpay':
       return razorpay({ type, fk, breakpoint, colorScheme })
+    case 'section':
+      return section({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -547,6 +551,19 @@ const text = ({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme, fldPrefix, fldSuffix }),
+    }
+  }
+  return {}
+}
+
+const section = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: sectionStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme }),
     }
   }
   return {}

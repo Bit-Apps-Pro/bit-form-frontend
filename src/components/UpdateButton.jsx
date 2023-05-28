@@ -221,6 +221,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
     const {
       layouts,
+      nestedLayouts,
       lightThemeColors,
       darkThemeColors,
       lgLightThemeVars,
@@ -268,6 +269,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       ...(!savedFormId && { form_id: newFormId }),
       ...(savedFormId && { currentReport }),
       layout: layouts,
+      nestedLayouts,
       fields,
       // saveStyle && style obj
       form_name: formName,

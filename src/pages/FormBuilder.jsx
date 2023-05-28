@@ -5,7 +5,7 @@ import {
   createRef, StrictMode, useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState,
+  useReducer, useRef, useState
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
@@ -21,8 +21,10 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
+import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
-  $bits, $breakpoint, $breakpointSize, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal
+  $alertModal,
+  $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -32,7 +34,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, calculateFormGutter } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory, builderBreakpoints, calculateFormGutter } from '../Utils/FormBuilderHelper'
 import { JCOF, select } from '../Utils/globalHelpers'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
@@ -92,7 +94,7 @@ const FormBuilder = ({ isLoading }) => {
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
   const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
+  const [alertMdl, setAlertMdl] = useRecoilState($alertModal)
   const setStaticStylesState = useSetRecoilState($staticStylesState)
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
@@ -100,20 +102,14 @@ const FormBuilder = ({ isLoading }) => {
   const styles = useRecoilValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setBuilderSettings = useSetRecoilState($builderSettings)
+  const builderHelperStates = useRecoilValue($builderHelperStates)
+  const setIsDraggable = useSetRecoilState($isDraggable)
 
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
   const isV2Form = useRef(true)
   // eslint-disable-next-line no-console
 
   const { forceBuilderWidthToLG } = builderHookStates
-
-  // useEffect(() => {
-  // if (formType === 'new') {
-  // sessionStorage.setItem('btcd-fs', bitCipher(j2c.sheet(defaultTheme(formID))))
-  // setStyleLoading(false)
-  // }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
 
   useEffect(() => {
     if (isNewForm) setStyleLoading(false)
@@ -306,12 +302,19 @@ const FormBuilder = ({ isLoading }) => {
     const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
 
     const gw = Math.round(paneWidth - w) // inner left-right padding
-    if (gw <= 510) {
+    if (gw < builderBreakpoints.md) {
       setbrkPoint('sm')
-    } else if (gw > 420 && gw <= 700) {
+      if (builderHelperStates.respectLGLayoutOrder) {
+        setIsDraggable(false)
+      }
+    } else if (gw >= builderBreakpoints.md && gw < builderBreakpoints.lg) {
       setbrkPoint('md')
-    } else if (gw > 700) {
+      if (builderHelperStates.respectLGLayoutOrder) {
+        setIsDraggable(false)
+      }
+    } else if (gw >= builderBreakpoints.lg) {
       setbrkPoint('lg')
+      setIsDraggable(true)
     }
   }
 

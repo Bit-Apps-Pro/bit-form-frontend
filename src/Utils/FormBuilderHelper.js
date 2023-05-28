@@ -2,21 +2,25 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
 import { getRecoil, setRecoil } from 'recoil-nexus'
-import { addDefaultStyleClasses } from '../components/style-new/styleHelpers'
 import {
   $additionalSettings,
+  $alertModal,
   $bits,
-  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $selectedFieldId, $updateBtn,
+  $breakpoint, $builderHistory, $builderHookStates, $colorScheme, $fields, $formId, $layouts, $nestedLayouts, $proModal, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
+import { addDefaultStyleClasses, sortArrOfObjByMultipleProps } from '../components/style-new/styleHelpers'
+import { deepCopy } from './Helpers'
+import proHelperData from './StaticData/proHelperData'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
-import { deepCopy } from './Helpers'
 import { __ } from './i18nwrap'
 
 export const cols = { lg: 60, md: 60, sm: 60 }
+
+export const builderBreakpoints = { lg: 700, md: 420, sm: 300 }
 
 /**
  * sort a layout array by x and y axis
@@ -227,7 +231,12 @@ const FIELDS_EXTRA_ATTR = {
   reset: { onlyOne: true },
 }
 
-export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2) => {
+const FIELD_FILTER = {
+  section: ['section'],
+  repeater: ['repeater', 'section', 'button', 'recaptcha', 'paypal', 'razorpay', 'advanced-file-up'],
+}
+
+export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2, parentField) => {
   // eslint-disable-next-line no-undef
   const allFields = getRecoil($fields)
   const bits = getRecoil($bits)
@@ -257,6 +266,10 @@ export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2) =>
     return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.btnTyp} button in the same form.`) }
   }
 
+  if (parentField !== 'root' && FIELD_FILTER[parentField]?.includes(field.typ)) {
+    return { validType: 'onlyOne', msg: __(`You cannot add ${field.typ} field in the ${parentField}.`) }
+  }
+
   if (FIELDS_EXTRA_ATTR[field.typ]?.setDefaultPayConfig) {
     const payConf = paymentsIntegs.filter(pay => pay.type.toLowerCase() === field.typ)
     if (payConf.length === 1) {
@@ -265,6 +278,27 @@ export const checkFieldsExtraAttr = (field, paymentsIntegs = [], reCaptchaV2) =>
   }
 
   return {}
+}
+
+export const handleFieldExtraAttr = (fieldData, payments, reCaptchaV2, parentField = 'root') => {
+  const extraAttr = checkFieldsExtraAttr(fieldData, payments, reCaptchaV2, parentField)
+  if (extraAttr.validType === 'pro') {
+    setRecoil($proModal, { show: true, ...proHelperData[fieldData.typ] })
+    return 0
+  }
+
+  if (extraAttr.validType === 'onlyOne' || extraAttr.validType === 'keyEmpty') {
+    setRecoil($alertModal, { show: true, msg: extraAttr.msg, cancelBtn: false })
+    return 0
+  }
+
+  if (extraAttr.validType === 'setDefaultPayConfig') {
+    const newFldData = { ...fieldData }
+    newFldData.payIntegID = extraAttr.payData.id
+    return newFldData
+  }
+
+  return fieldData
 }
 
 export function sortLayoutItemsByRowCol(layout) {
@@ -348,7 +382,7 @@ export function prepareLayout(lays, respectLGLayoutOrder) {
   }
 
   if (respectLGLayoutOrder) {
-    layouts = layoutOrderSortedByLg(layouts, cols)
+    layouts = layouts.lg.length > 0 ? layoutOrderSortedByLg(layouts, cols) : layouts
   } else {
     // sort all layout by x and y
     layouts.lg = sortLayoutItemsByRowCol(layouts.lg)
@@ -585,7 +619,9 @@ export const filterNumber = numberString => Number(numberString.replace(/px|em|r
 
 export const reCalculateFldHeights = (fieldKey) => {
   const builderHookState = getRecoil($builderHookStates)
-  if (fieldKey) {
+  const layouts = getRecoil($layouts)
+  const isExistInLayout = layouts.lg.find(itm => itm.i === fieldKey)
+  if (fieldKey && isExistInLayout) {
     const newBuilderHookState = produce(builderHookState, draft => {
       const { counter } = draft.reCalculateSpecificFldHeight
       draft.reCalculateSpecificFldHeight = {
@@ -594,12 +630,35 @@ export const reCalculateFldHeights = (fieldKey) => {
       }
     })
     setRecoil($builderHookStates, newBuilderHookState)
-  } else {
+  } else if (isExistInLayout) {
     const newBuilderHookState = produce(builderHookState, draft => {
       draft.reCalculateFieldHeights += 1
     })
     setRecoil($builderHookStates, newBuilderHookState)
+  } else if (!isExistInLayout) {
+    const parentFieldKey = getParentFieldKey(fieldKey)
+    const newBuilderHookState = produce(builderHookState, draft => {
+      const { counter } = draft.recalculateNestedField
+      draft.recalculateNestedField = {
+        fieldKey,
+        parentFieldKey,
+        counter: counter + 1,
+      }
+    })
+    setRecoil($builderHookStates, newBuilderHookState)
   }
+}
+
+export const getParentFieldKey = (fieldKey) => {
+  const nestedLayout = getRecoil($nestedLayouts)
+  let parentFieldKey = ''
+  Object.entries(nestedLayout).forEach(([key, layout]) => {
+    if (layout.lg.find(itm => itm.i === fieldKey)) {
+      parentFieldKey = key
+      return parentFieldKey
+    }
+  })
+  return parentFieldKey
 }
 
 export const generateHistoryData = (element, fieldKey, path, changedValue, state) => {
@@ -888,6 +947,41 @@ export const getTotalLayoutHeight = () => {
   const breakpoint = getRecoil($breakpoint)
   const layout = layouts[breakpoint]
 
+  return layout.reduce((acc, { h, y }) => {
+    const { [y]: prevH = 0 } = acc.maxHeightsByY
+    const newH = Math.max(prevH, h)
+    return {
+      maxHeightsByY: { ...acc.maxHeightsByY, [y]: newH },
+      totalHeight: acc.totalHeight + (newH - prevH),
+    }
+  }, { maxHeightsByY: {}, totalHeight: 0 }).totalHeight
+}
+
+export const getFieldsBasedOnLayoutOrder = () => {
+  const fields = getRecoil($fields)
+  const layouts = getRecoil($layouts)
+  const breakpoint = getRecoil($breakpoint)
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const breakpointLayouts = layouts[breakpoint]
+  const breakpointNestedLayouts = Object.entries(nestedLayouts).reduce((acc, [fieldKey, lays]) => {
+    const fldPosition = breakpointLayouts.find((lay) => lay.i === fieldKey)
+    if (!fldPosition) return acc
+    const breakpointLays = lays[breakpoint]
+    const laysSumFldPosition = breakpointLays.map((lay) => ({ ...lay, y: lay.y + fldPosition.y }))
+    return [...acc, ...laysSumFldPosition]
+  }, [])
+  const mergedLayouts = [...breakpointLayouts, ...breakpointNestedLayouts]
+  const sortedLayouts = mergedLayouts.sort(sortArrOfObjByMultipleProps(['y', 'x']))
+  const sortedFields = sortedLayouts.reduce((acc, lay) => ({ ...acc, [lay.i]: fields[lay.i] }), {})
+  return sortedFields
+}
+
+export const getNestedLayoutHeight = (fieldKey) => {
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const layouts = nestedLayouts[fieldKey]
+  const breakpoint = getRecoil($breakpoint)
+  if (!layouts) return 0
+  const layout = layouts[breakpoint]
   return layout.reduce((acc, { h, y }) => {
     const { [y]: prevH = 0 } = acc.maxHeightsByY
     const newH = Math.max(prevH, h)

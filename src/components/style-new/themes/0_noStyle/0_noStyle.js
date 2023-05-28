@@ -18,6 +18,7 @@ import paypalStyle_0_noStyle from './paypalStyle_0_noStyle'
 import phoneNumberStyle_0_noStyle from './phoneNumberStyle_0_noStyle'
 import razorpayStyle_0_noStyle from './razorpayStyle_0_noStyle'
 import recaptchaStyle_0_noStyle from './recaptchaStyle_0_noStyle'
+import sectionStyle_0_noStyle from './sectionStyle_0_noStyle'
 import selectStyle_0_noStyle from './selectStyle_0_noStyle'
 import textStyle_0_noStyle from './textStyle_0_noStyle'
 import titleStyle_0_noStyle from './titleStyle_0_noStyle'
@@ -96,6 +97,8 @@ export default function noStyleTheme({
       return paypal({ type, fk, breakpoint, colorScheme })
     case 'razorpay':
       return razorpay({ type, fk, breakpoint, colorScheme })
+    case 'section':
+      return section({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = noStyleTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light' })
@@ -532,6 +535,19 @@ const text = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: textStyle_0_noStyle({ fk, type, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const section = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'noStyle',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: sectionStyle_0_noStyle({ fk, type, breakpoint, colorScheme }),
     }
   }
   return {}

@@ -46,6 +46,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const reports = useRecoilValue($reports)
   const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
   const rowSl = useRef(0)
+  const filterFieldType = ['divider', 'image', 'title', 'section']
 
   useEffect(() => {
     if (currentReportData) {
@@ -407,7 +408,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     [rowDtl],
   )
 
-  const filterEntryLabels = () => entryLabels.filter(el => !['sl', 'table_ac'].includes(el.accessor) && !['title', 'image', 'divider'].includes(el.fieldType))
+  const filterEntryLabels = () => entryLabels.filter(el => !['sl', 'table_ac'].includes(el.accessor) && !filterFieldType.includes(el.fieldType))
 
   const getUploadedFilesArr = files => {
     try {
@@ -493,8 +494,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
 
   const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => {
     const ignoreLbls = ['__user_id', '__user_ip', '__referer', '__user_device', '__created_at', '__updated_at']
-    const fieldTyps = ['divider', 'image', 'title']
-    return !ignoreLbls.includes(lbl.accessor) && !fieldTyps.includes(lbl.fieldType)
+    return !ignoreLbls.includes(lbl.accessor) && !filterFieldType.includes(lbl.fieldType)
   })
 
   return (

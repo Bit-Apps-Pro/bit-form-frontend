@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 
+import { getRecoil } from 'recoil-nexus'
+import { $layouts, $nestedLayouts } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
 
 // Fast path to cloning, since this is monomorphic
@@ -271,4 +273,15 @@ export function compactResponsiveLayouts(layouts, cols) {
   lays.md = compactRGL(lays.md, cols.md)
   lays.sm = compactRGL(lays.sm, cols.sm)
   return lays
+}
+
+export function getLayoutItemCount() {
+  const layout = getRecoil($layouts)
+  const nestedLayouts = getRecoil($nestedLayouts)
+  const layoutItem = layout.lg.length
+  const nestedLayoutItem = Object.values(nestedLayouts).reduce(
+    (count, cur) => count + cur.lg.length,
+    0,
+  )
+  return layoutItem + nestedLayoutItem
 }

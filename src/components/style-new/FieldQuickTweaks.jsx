@@ -30,7 +30,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const [styles, setStyles] = useRecoilState($styles)
   const fields = useRecoilValue($fields)
   const fieldData = deepCopy(fields[fieldKey])
-  const fldStyleObj = styles?.fields?.[fieldKey]
+  const fldStyleObj = styles?.fields?.[fieldKey] || {}
   const { fieldType, fieldSize } = fldStyleObj
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
 

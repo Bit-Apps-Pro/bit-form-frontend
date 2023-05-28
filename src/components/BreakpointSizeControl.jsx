@@ -1,7 +1,8 @@
 import { produce } from 'immer'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates/GlobalStates'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { $isDraggable } from '../GlobalStates/FormBuilderStates'
+import { $breakpoint, $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates/GlobalStates'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
 import ut from '../styles/2.utilities'
@@ -15,9 +16,15 @@ export default function BreakpointSizeControl() {
   const { css } = useFela()
   const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
   const [breakpointSize, setBreakpointSize] = useRecoilState($breakpointSize)
+  const breakpoint = useRecoilValue($breakpoint)
+  const setIsDraggable = useSetRecoilState($isDraggable)
   const setUpdateBtn = useSetRecoilState($updateBtn)
 
-  const toggleRespectOrder = () => setBuilderHelperStates(prv => ({ ...prv, respectLGLayoutOrder: !prv.respectLGLayoutOrder }))
+  const toggleRespectOrder = () => {
+    if (builderHelperStates.respectLGLayoutOrder) setIsDraggable(true)
+    else if (breakpoint !== 'lg') setIsDraggable(false)
+    setBuilderHelperStates(prv => ({ ...prv, respectLGLayoutOrder: !prv.respectLGLayoutOrder }))
+  }
   const breakpointSizeHandler = ({ target: { name, value } }) => {
     // eslint-disable-next-line no-param-reassign
     const size = produce(breakpointSize, draft => { draft[name] = Number(value) })
