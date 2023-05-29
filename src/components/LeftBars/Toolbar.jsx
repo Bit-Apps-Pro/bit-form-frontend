@@ -705,6 +705,9 @@ export const toolsList = [
       adminLbl: __('Stripe'),
       err: {},
       txt: __('Pay with Stripe'),
+      layout: {
+        autoHeight: 1,
+      },
       config: {
         payBtnTxt: __('Pay now'),
         layout: {
