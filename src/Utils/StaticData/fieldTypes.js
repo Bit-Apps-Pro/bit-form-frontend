@@ -31,5 +31,7 @@ const fieldsTypes = {
   country: 'Country',
   currency: 'Currency',
   'phone-number': 'Phone Number',
+  section: 'Section',
+  repeater: 'Repeater',
 }
 export default fieldsTypes

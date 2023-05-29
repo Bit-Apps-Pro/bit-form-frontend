@@ -232,7 +232,7 @@ const FIELDS_EXTRA_ATTR = {
 }
 
 const FIELD_FILTER = {
-  section: ['section'],
+  section: ['section', 'repeater'],
   repeater: ['repeater', 'section', 'button', 'recaptcha', 'paypal', 'razorpay', 'advanced-file-up'],
 }
 

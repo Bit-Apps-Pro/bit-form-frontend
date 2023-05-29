@@ -107,7 +107,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   }, 500)
   const fldType = processedFieldData.typ
 
-  if (fldType === 'section') {
+  if (fldType === 'section' || fldType === 'repeater') {
     const nestedLayouts = getRecoil($nestedLayouts)
     setRecoil($nestedLayouts, produce(nestedLayouts, draftNestedLayouts => {
       draftNestedLayouts[newBlk] = { lg: [], md: [], sm: [] }

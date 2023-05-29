@@ -25,6 +25,7 @@ import PhoneNumberIcn from '../../Icons/PhoneNumberIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
+import RepeatIcon from '../../Icons/RepeatIcon'
 import SectionIcon from '../../Icons/SectionIcon'
 import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
@@ -112,6 +113,7 @@ const FieldIcon = icon => {
     'phone-number': <PhoneNumberIcn size="15" />,
     country: <FlagIcn size="14" />,
     section: <SectionIcon size="14" />,
+    repeater: <RepeatIcon size="14" />,
   }
   return icons[icon]
 }

@@ -19,6 +19,7 @@ import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from './phoneNumberStyle_1_bitformDefault'
 import razorpayStyle_1_BitformDefault from './razorpayStyle_1_BitformDefault'
 import recaptchaStyle_1_bitformDefault from './recaptchaStyle_1_bitformDefault'
+import repeaterStyle_1_bitformDefault from './repeaterStyle_1_bitformDefault'
 import sectionStyle_1_bitformDefault from './sectionStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './selectStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
@@ -106,6 +107,8 @@ export default function bitformDefaultTheme({
       return razorpay({ type, fk, breakpoint, colorScheme })
     case 'section':
       return section({ type, fk, breakpoint, colorScheme })
+    case 'repeater':
+      return repeater({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -564,6 +567,19 @@ const section = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: sectionStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const repeater = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: repeaterStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme }),
     }
   }
   return {}

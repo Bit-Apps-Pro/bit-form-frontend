@@ -1,8 +1,8 @@
 import { memo } from 'react'
 import { useRecoilValue } from 'recoil'
 import { $styles } from '../GlobalStates/StylesState'
-import '../resource/sass/components.scss'
 import { isObjectEmpty } from '../Utils/Helpers'
+import '../resource/sass/components.scss'
 import AdvanceFileUp from './Fields/AdvanceFileUp'
 import Button from './Fields/Button'
 import CheckBox from './Fields/CheckBox'
@@ -21,6 +21,7 @@ import PhoneNumberField from './Fields/PhoneNumberField'
 import RadioBox from './Fields/RadioBox'
 import RazorpayField from './Fields/RazorpayField'
 import ReCaptchaV2 from './Fields/ReCaptchaV2'
+import RepeaterField from './Fields/RepeaterField'
 import SectionField from './Fields/SectionField'
 import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
@@ -110,6 +111,8 @@ function MapComponents({
       return <PhoneNumberField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} contentID={contentID} />
     case 'section':
       return <SectionField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
+    case 'repeater':
+      return <RepeaterField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

@@ -18,6 +18,7 @@ import paypalStyle_0_noStyle from './paypalStyle_0_noStyle'
 import phoneNumberStyle_0_noStyle from './phoneNumberStyle_0_noStyle'
 import razorpayStyle_0_noStyle from './razorpayStyle_0_noStyle'
 import recaptchaStyle_0_noStyle from './recaptchaStyle_0_noStyle'
+import repeaterStyle_0_noStyle from './repeaterStyle_0_noStyle'
 import sectionStyle_0_noStyle from './sectionStyle_0_noStyle'
 import selectStyle_0_noStyle from './selectStyle_0_noStyle'
 import textStyle_0_noStyle from './textStyle_0_noStyle'
@@ -99,6 +100,8 @@ export default function noStyleTheme({
       return razorpay({ type, fk, breakpoint, colorScheme })
     case 'section':
       return section({ type, fk, breakpoint, colorScheme })
+    case 'repeater':
+      return repeater({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = noStyleTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light' })
@@ -548,6 +551,19 @@ const section = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: sectionStyle_0_noStyle({ fk, type, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const repeater = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'noStyle',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: repeaterStyle_0_noStyle({ fk, type, breakpoint, colorScheme }),
     }
   }
   return {}
