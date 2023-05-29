@@ -70,7 +70,8 @@ export default class BitStripeField {
   }
 
   #querySelector(selector) {
-    return document.querySelector(selector)
+    const form = document.querySelector(this.#formSelector)
+    return form.querySelector(selector)
   }
 
   #initField() {
@@ -90,15 +91,28 @@ export default class BitStripeField {
     })
   }
 
+  #getDynamicValue(fldKey) {
+    if (fldKey) {
+      const fldName = window.bf_globals[this.#contentId].fields[fldKey]?.fieldName
+      if (!fldName) return console.error(`Field name not found for ${fldKey}`)
+      let elm = this.#querySelector(`[name="${fldName}"]`, this.#formSelector)
+      if (elm && elm.type === 'radio') {
+        elm = this.#querySelector(`[name="${fldName}"]:checked`, this.#formSelector)
+      }
+      if (elm && elm.value) {
+        return elm.value
+      }
+    }
+    return ''
+  }
+
   #stripeComponent() {
     const { Stripe } = window
-    const contentIdLastItm = this.#contentId.split('_').at(-1)
-    const fldId = `#${this.#amountFld}-${contentIdLastItm}`
     const errWrp = bfSelect(`#form-${this.#contentId} .${this.#fieldKey}-err-wrp`)
     const errTxt = bfSelect(`.${this.#fieldKey}-err-txt`, errWrp)
     const errMsg = bfSelect(`.${this.#fieldKey}-err-msg`, errWrp)
     this.#stripeWrpSelector.classList.remove('d-none')
-    const dynamicAmount = this.#querySelector(fldId)?.value
+    const dynamicAmount = this.#getDynamicValue(this.#amountFld)
 
     if (this.#amountType === 'dynamic' && !dynamicAmount) {
       errMsg.style.removeProperty('display')
@@ -360,6 +374,9 @@ export default class BitStripeField {
   }
 
   destroy() {
+    const stripeFldElm = this.#querySelector(`.${this.#fieldKey}-stripe-fld`)
+    stripeFldElm.innerHTML = ''
+    stripeFldElm.classList.add('d-none')
     this.#stripeWrpSelector.innerHTML = ''
     this.#paymentElement.destroy()
   }
