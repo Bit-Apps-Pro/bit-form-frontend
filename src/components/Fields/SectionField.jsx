@@ -40,7 +40,7 @@ export default function SectionField({
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setProModal = useSetRecoilState($proModal)
-  const fields = useSetRecoilState($fields)
+  const fields = useRecoilValue($fields)
   const { styleMode } = useRecoilValue($flags)
   const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
   const delayRef = useRef(null)
