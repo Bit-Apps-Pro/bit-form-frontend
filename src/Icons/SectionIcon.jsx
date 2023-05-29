@@ -1,4 +1,4 @@
-export default function SectionIcon({ size = 14, strokeWidth = 10 }) {
+export default function SectionIcon({ size = 14 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="7" width="32" height="20" rx="1" stroke="currentColor" strokeWidth="2" />
