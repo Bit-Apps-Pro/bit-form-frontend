@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 /*
@@ -16,13 +16,14 @@ import { Link, useParams } from 'react-router-dom'
 import Timekeeper from 'react-timekeeper'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
+import { $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $styles } from '../GlobalStates/StylesState'
 import BlockIcn from '../Icons/BlockIcn'
 import CloseIcn from '../Icons/CloseIcn'
-import DateIcn from '../Icons/DateIcn'
 import DBIcn from '../Icons/DBIcn'
+import DateIcn from '../Icons/DateIcn'
 import EmptyIcn from '../Icons/EmptyIcn'
 import FocusIcn from '../Icons/FocusIcn'
 import GoogleAdIcn from '../Icons/GoogleAdIcn'
@@ -33,12 +34,10 @@ import LoginIcn from '../Icons/LoginIcn'
 import NoneIcn from '../Icons/NoneIcn'
 import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
 import TrashIcn from '../Icons/TrashIcn'
-import { AppSettings } from '../Utils/AppSettingsContext'
 import { deleteNestedObj } from '../Utils/FormBuilderHelper'
-import { dateTimeFormatter, deepCopy, IS_PRO } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
+import { IS_PRO, dateTimeFormatter, deepCopy } from '../Utils/Helpers'
 import proHelperData from '../Utils/StaticData/proHelperData'
-import { assignNestedObj } from './style-new/styleHelpers'
+import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -46,6 +45,7 @@ import Cooltip from './Utilities/Cooltip'
 import Downmenu from './Utilities/Downmenu'
 import ProBadge from './Utilities/ProBadge'
 import SingleToggle2 from './Utilities/SingleToggle2'
+import { assignNestedObj } from './style-new/styleHelpers'
 
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
@@ -53,7 +53,7 @@ export default function SingleFormSettings() {
   const { formID } = useParams()
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
-  const { reCaptchaV3 } = useContext(AppSettings)
+  const reCaptchaV3 = useRecoilValue($reCaptchaV3)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const setStaticStyleState = useSetRecoilState($staticStylesState)
   const setProModal = useSetRecoilState($proModal)

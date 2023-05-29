@@ -50,8 +50,13 @@ function bitFormSubmitAction(e) {
 
 function bfSubmitFetch(props, formData) {
   const uri = new URL(props?.ajaxURL)
-  const route = props?.entryId ? `bitforms_update_form_entry/${props.formId}/${props.entryId}` : 'bitforms_submit_form'
+  const route = props?.entryId ? 'bitforms_update_form_entry' : 'bitforms_submit_form'
   uri.searchParams.append('action', route)
+  if (props?.entryId) {
+    uri.searchParams.append('_ajax_nonce', props.nonce || '')
+    uri.searchParams.append('entryID', props.entryId)
+    uri.searchParams.append('formID', props.formId)
+  }
   return fetch(uri, {
     method: 'POST',
     body: formData,

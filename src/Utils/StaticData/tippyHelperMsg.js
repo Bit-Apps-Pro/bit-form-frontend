@@ -19,5 +19,7 @@ const tippyHelperMsg = {
   disabled: __('Disabling a field prevents users from interacting with it or entering data. You can toggle this option to enable or disable the field as needed.'),
   uniqueEntry: __('Enabling this option will check from the submitted entries whether its value is duplicate.'),
   userUnique: __('Enabling this option will check from your WordPress user database whether its value is duplicate.'),
+  stripeTheme: __('Stripe provide a variety of themes for the payment form. You can choose the theme that best suits theme your payment form. <a target="_blank" href="https://stripe.com/docs/elements/appearance-api">Learn more</a>'),
+  amountType: __("Stripe provide minimum or maximum amount for different payment method type and currency. <a href='https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts'>learn more</a>"),
 }
 export default tippyHelperMsg

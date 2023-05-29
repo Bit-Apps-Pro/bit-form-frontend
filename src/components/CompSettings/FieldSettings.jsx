@@ -21,6 +21,7 @@ const HtmlFieldSettings = loadable(() => import('./HtmlFieldSettings'), { fallba
 const HtmlSelectSettings = loadable(() => import('./HtmlSelectSettings'), { fallback: <FieldSettingsLoader /> })
 const ImageSettings = loadable(() => import('./ImageSettings'), { fallback: <FieldSettingsLoader /> })
 const PaypalFieldSettings = loadable(() => import('./PaypalFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const StripeFieldSettings = loadable(() => import('./StripeFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const PhoneNumberFieldSettings = loadable(() => import('./PhoneNumberFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const RadioCheckSettings = loadable(() => import('./RadioCheckSettings'), { fallback: <FieldSettingsLoader /> })
 const RazorpayFieldSettings = loadable(() => import('./RazorpayFieldSettings'), { fallback: <FieldSettingsLoader /> })
@@ -34,7 +35,6 @@ export default function FieldSettings() {
   const styles = useRecoilValue($styles)
   const selectedFieldType = fields?.[fieldKey]?.typ
   const navigate = useNavigate()
-
   useEffect(() => {
     if (!fieldKey || !selectedFieldType || !styles?.fields?.[fieldKey]?.classes) {
       return navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
@@ -71,6 +71,7 @@ export default function FieldSettings() {
     case 'html': return <HtmlFieldSettings />
     case 'button': return <ButtonSettings />
     case 'paypal': return <PaypalFieldSettings />
+    case 'stripe': return <StripeFieldSettings />
     case 'razorpay': return <RazorpayFieldSettings />
     case 'title': return <TitleSettings />
     case 'image': return <ImageSettings />

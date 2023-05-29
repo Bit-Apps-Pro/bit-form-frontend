@@ -1,17 +1,17 @@
 import { produce } from 'immer'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
-import ut from '../../styles/2.utilities'
-import FieldStyle from '../../styles/FieldStyle.style'
-import { AppSettings } from '../../Utils/AppSettingsContext'
 import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
 import { currencyCodes, fundLists, localeCodes } from '../../Utils/StaticData/paypalData'
+import { __ } from '../../Utils/i18nwrap'
+import ut from '../../styles/2.utilities'
+import FieldStyle from '../../styles/FieldStyle.style'
 import CheckBox from '../Utilities/CheckBox'
 import SingleInput from '../Utilities/SingleInput'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -25,7 +25,7 @@ export default function PaypalFieldSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
-  const { payments } = useContext(AppSettings)
+  const payments = useRecoilValue($payments)
   const isSubscription = fieldData?.payType === 'subscription'
   const isDynamicDesc = fieldData?.descType === 'dynamic'
   const isDynamicAmount = fieldData?.amountType === 'dynamic'

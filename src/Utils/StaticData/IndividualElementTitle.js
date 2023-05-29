@@ -82,6 +82,10 @@ export const getElementTitle = (element) => {
     case 'add-to-end-btn': return 'Add To End Button'
     case 'add-to-end-btn-pre-i': return 'Add To End Button Leading Icon'
     case 'add-to-end-btn-suf-i': return 'Add To End Button Trailing Icon'
+
+    case 'stripe-btn': return 'Stripe Button'
+    case 'stripe-icn': return 'Stripe Icon'
+    case 'stripe-pay-btn': return 'Stripe Pay Button'
     default:
       return ''
   }

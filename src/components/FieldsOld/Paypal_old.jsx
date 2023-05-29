@@ -1,15 +1,16 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-props-no-spreading */
 import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
-import { useContext, useEffect, useState } from 'react'
-import validateForm from '../../user-frontend/validation'
-import { AppSettings } from '../../Utils/AppSettingsContext'
+import { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { $payments } from '../../GlobalStates/AppSettingsStates'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { select } from '../../Utils/globalHelpers'
+import validateForm from '../../user-frontend/validation'
 import OldInputWrapper from '../OldInputWrapper'
 
 export default function Paypal_old({ fieldKey, formID, attr, contentID, resetFieldValue, isBuilder }) {
-  const appSettingsContext = useContext(AppSettings)
+  const payments = useRecoilValue($payments)
   const [clientID, setClientID] = useState('')
   const [render, setrender] = useState(false)
   const [amount, setAmount] = useState(attr?.amount || 1)
@@ -55,7 +56,7 @@ export default function Paypal_old({ fieldKey, formID, attr, contentID, resetFie
     }
 
     if (!key && typeof bits !== 'undefined') {
-      const payInteg = appSettingsContext?.payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
+      const payInteg = payments?.find(pay => pay.id && attr.payIntegID && Number(pay.id) === Number(attr.payIntegID))
       if (payInteg) {
         key = payInteg.clientID
       }

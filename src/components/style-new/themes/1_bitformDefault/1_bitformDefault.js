@@ -15,7 +15,7 @@ import dropdownStyle_1_BitformDefault from './dropdownStyle_1_bitformDefault'
 import fileUploadStyle_1_BitformDefault from './fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './htmlStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './imageStyle_1_bitformDefault'
-import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
+import paypalStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from './phoneNumberStyle_1_bitformDefault'
 import razorpayStyle_1_BitformDefault from './razorpayStyle_1_BitformDefault'
 import recaptchaStyle_1_bitformDefault from './recaptchaStyle_1_bitformDefault'
@@ -24,6 +24,7 @@ import sectionStyle_1_bitformDefault from './sectionStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './selectStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
+import stripeStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -103,6 +104,8 @@ export default function bitformDefaultTheme({
       return phoneNumber({ type, fk, direction, breakpoint, colorScheme })
     case 'paypal':
       return paypal({ type, fk, breakpoint, colorScheme })
+    case 'stripe':
+      return stripe({ type, fk, breakpoint, colorScheme })
     case 'razorpay':
       return razorpay({ type, fk, breakpoint, colorScheme })
     case 'section':
@@ -792,6 +795,19 @@ const paypal = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: paypalStyle_1_BitformDefault({ fk, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const stripe = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: stripeStyle_1_BitformDefault({ fk, breakpoint, colorScheme }),
     }
   }
   return {}

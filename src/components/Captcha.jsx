@@ -1,19 +1,20 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $reCaptchaV2, $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $bits } from '../GlobalStates/GlobalStates'
-import app from '../styles/app.style'
-import { AppSettings } from '../Utils/AppSettingsContext'
-import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
+import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import app from '../styles/app.style'
 import LoaderSm from './Loaders/LoaderSm'
 import CopyText from './Utilities/CopyText'
 import SnackMsg from './Utilities/SnackMsg'
 
 export default function Captcha() {
-  const { reCaptchaV2, setreCaptchaV2, reCaptchaV3, setreCaptchaV3 } = useContext(AppSettings)
+  const [reCaptchaV2, setreCaptchaV2] = useRecoilState($reCaptchaV2)
+  const [reCaptchaV3, setreCaptchaV3] = useRecoilState($reCaptchaV3)
   const bits = useRecoilValue($bits)
   const [snack, setsnack] = useState({ show: false })
   const [loading, setLoading] = useState(false)

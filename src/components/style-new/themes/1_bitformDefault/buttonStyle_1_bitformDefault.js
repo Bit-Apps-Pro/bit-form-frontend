@@ -77,7 +77,7 @@ export default function buttonStyle_1_bitformDefault({
           // display: 'inline-block',
           'border-top': '2px solid',
           'border-right': '2px solid transparent',
-          animation: 'rotation 1s linear infinite',
+          animation: 'bf-rotation 1s linear infinite',
         },
       },
     }

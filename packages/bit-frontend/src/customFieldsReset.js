@@ -6,6 +6,7 @@ export default function customFieldsReset(props) {
     'currency',
     'file-up',
     'advanced-file-up',
+    'stripe',
   ]
 
   Object.entries(props?.fields || {}).map(([fieldKey, fieldData]) => {

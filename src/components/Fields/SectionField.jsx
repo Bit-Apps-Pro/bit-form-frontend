@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { Suspense, useContext, useEffect, useRef } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -15,7 +15,6 @@ import {
   $resizingFld,
   $selectedFieldId,
 } from '../../GlobalStates/GlobalStates'
-import { AppSettings } from '../../Utils/AppSettingsContext'
 import { fitSpecificLayoutItem, getNestedLayoutHeight, handleFieldExtraAttr, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { IS_PRO, deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import proHelperData from '../../Utils/StaticData/proHelperData'
@@ -36,13 +35,12 @@ export default function SectionField({
   fieldKey, attr: fieldData, styleClasses, formID,
 }) {
   const { formType } = useParams()
-  const { payments, reCaptchaV2 } = useContext(AppSettings)
   const styleClassesForRender = deepCopy(styleClasses)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setProModal = useSetRecoilState($proModal)
-  const [fields, setFields] = useRecoilState($fields)
+  const fields = useRecoilValue($fields)
   const { styleMode } = useRecoilValue($flags)
   const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
   const delayRef = useRef(null)
@@ -78,7 +76,7 @@ export default function SectionField({
   const draggingField = useRecoilValue($draggingField)
 
   const onDrop = (e, dropPosition) => {
-    const dragFieldData = handleFieldExtraAttr(draggingField.fieldData, payments, reCaptchaV2, 'section')
+    const dragFieldData = handleFieldExtraAttr(draggingField.fieldData, 'section')
     if (!dragFieldData) return
     const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], dragFieldData, draggingField.fieldSize, dropPosition)
     setNestedLayouts({ ...nestedLayouts, [fieldKey]: newLayouts })
@@ -208,7 +206,7 @@ export default function SectionField({
       return
     }
     const fldData = fields[fldKey]
-    if (!handleFieldExtraAttr(fldData, payments, reCaptchaV2)) return
+    if (!handleFieldExtraAttr(fldData)) return
     const { newLayouts } = cloneLayoutItem(fldKey, layouts)
     setNestedLayouts(prevLayout => produce(prevLayout, draftLayout => {
       draftLayout[fieldKey] = newLayouts

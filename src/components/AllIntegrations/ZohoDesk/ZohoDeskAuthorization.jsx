@@ -116,7 +116,7 @@ export default function ZohoDeskAuthorization({
             <AuthorizeBtn
               isAuthorized={isAuthorized}
               isLoading={isLoading}
-              handelAuthorize={() => handleAuthorize(deskConf, setDeskConf, setError, setisAuthorized, setisLoading, setSnackbar)}
+              handleAuthorize={() => handleAuthorize(deskConf, setDeskConf, setError, setisAuthorized, setisLoading, setSnackbar)}
             />
             {/* <button onClick={() => handleAuthorize(deskConf, setDeskConf, setError, setisAuthorized, setisLoading, setSnackbar)} className={`${css(app.btn)} btcd-btn-lg green sh-sm flx`} type="button" disabled={isAuthorized}>
               {isAuthorized ? __('Authorized ✔') : __('Authorize')}

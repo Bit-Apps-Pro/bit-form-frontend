@@ -1,7 +1,7 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
+import { $reCaptchaV2 } from '../../GlobalStates/AppSettingsStates'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
-import { AppSettings } from '../../Utils/AppSettingsContext'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { loadScript, removeScript, selectInGrid } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
@@ -15,8 +15,8 @@ export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
   const { styleMode } = useRecoilValue($flags)
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
   const recaptchaId = useRef(null)
-  const appSettingsContext = useContext(AppSettings)
-  const { siteKey = '' } = appSettingsContext?.reCaptchaV2 || {}
+  const reCaptchaV2 = useRecoilValue($reCaptchaV2)
+  const { siteKey = '' } = reCaptchaV2 || {}
 
   useEffect(() => {
     window.renderGrecaptcha = renderGrecaptcha

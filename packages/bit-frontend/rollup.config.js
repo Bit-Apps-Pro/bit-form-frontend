@@ -5,7 +5,7 @@ import { terser } from 'rollup-plugin-terser'
 
 export default function generateRollupConfig() {
   const isDev = process.env.NODE_ENV === 'dev'
-  const fileNames = ['hidden-token-field', 'submit-form', 'customFieldsReset', 'advancedFileHandle', 'decisionFldHandle', 'validate-focus']
+  const fileNames = ['hidden-token-field', 'bitsFetchFront', 'submit-form', 'customFieldsReset', 'advancedFileHandle', 'decisionFldHandle', 'validate-focus']
 
   const external = [
     'window',
@@ -16,7 +16,7 @@ export default function generateRollupConfig() {
   const terserOptions = {
     compress: {
       passes: 10,
-      drop_console: true,
+      drop_console: false,
     },
     // mangle: {
     //   properties: true,

@@ -1,17 +1,19 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import { $payments } from '../GlobalStates/AppSettingsStates'
 import EditIcn from '../Icons/EditIcn'
 import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
+import { IS_PRO, deepCopy } from '../Utils/Helpers'
+import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
 import paypal from '../resource/img/settings/paypal.svg'
 import razorpay from '../resource/img/settings/razorpay.svg'
+import stripe from '../resource/img/settings/stripe.svg'
 import style from '../styles/integrations.style'
-import { AppSettings } from '../Utils/AppSettingsContext'
-import bitsFetch from '../Utils/bitsFetch'
-import { IS_PRO } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Modal from './Utilities/Modal'
 import Tip from './Utilities/Tip'
@@ -21,12 +23,13 @@ export default function PaymentSettings({ setSnackbar }) {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const { css } = useFela()
-  const { payments, setPayments } = useContext(AppSettings)
+  const [payments, setPayments] = useRecoilState($payments)
   const { pathname } = useLocation()
-
+  console.log('payments', payments)
   const pays = [
     { type: 'PayPal', logo: paypal },
     { type: 'Razorpay', logo: razorpay },
+    { type: 'Stripe', logo: stripe },
   ]
 
   const setNewInteg = (type) => {
@@ -55,7 +58,7 @@ export default function PaymentSettings({ setSnackbar }) {
 
   const removeInteg = i => {
     const tmpPayments = { ...payments[i] }
-    const newInteg = [...payments]
+    const newInteg = deepCopy(payments)
     newInteg.splice(i, 1)
     setPayments(newInteg)
     bitsFetch({ formID: 0, id: tmpPayments.id }, 'bitforms_delete_integration')

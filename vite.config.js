@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-plusplus */
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 import react from '@vitejs/plugin-react'
@@ -186,7 +187,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-dropdown-field/dist/bit-dropdown-field.min.js'),
+        src: absPath('packages/bit-select-field/dist/bit-select-field.min.js'),
         dest: absPath('../assets'),
       },
       {
@@ -206,7 +207,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-advance-file-upload-field/dist/bit-advance-file-upload-field.min.js'),
+        src: absPath('packages/bit-advanced-file-up-field/dist/bit-advanced-file-up-field.min.js'),
         dest: absPath('../assets'),
       },
       {
@@ -274,6 +275,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-frontend/dist/bitsFetchFront.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
         dest: absPath('../assets'),
       },
@@ -295,6 +300,10 @@ function copyStatics(mode) {
       },
       {
         src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-stripe-field/dist/bit-stripe-field.min.js'),
         dest: absPath('../assets'),
       },
     ],

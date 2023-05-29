@@ -1,19 +1,19 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TrashIcn from '../../Icons/TrashIcn'
-import ut from '../../styles/2.utilities'
-import FieldStyle from '../../styles/FieldStyle.style'
-import { AppSettings } from '../../Utils/AppSettingsContext'
 import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { deepCopy, sortArrOfObj } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
 import { razorpayCurrencyCodes } from '../../Utils/StaticData/razorpayData'
+import { __ } from '../../Utils/i18nwrap'
+import ut from '../../styles/2.utilities'
+import FieldStyle from '../../styles/FieldStyle.style'
 import CheckBox from '../Utilities/CheckBox'
 import SelectBox2 from '../Utilities/SelectBox2'
 import SingleInput from '../Utilities/SingleInput'
@@ -30,7 +30,7 @@ export default function RazorpayFieldSettings() {
   const [styles, setStyles] = useRecoilState($styles)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
-  const { payments } = useContext(AppSettings)
+  const payments = useRecoilValue($payments)
   const { css } = useFela()
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = fieldData?.payType === 'subscription'

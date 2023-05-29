@@ -4,7 +4,8 @@
 /* eslint-disable no-param-reassign */
 import { produce } from 'immer'
 import {
-  lazy, memo, Suspense, useContext, useEffect, useRef, useState,
+  lazy, memo, Suspense,
+  useEffect, useRef, useState
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
@@ -28,7 +29,6 @@ import {
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
 import '../resource/css/grid-layout.css'
-import { AppSettings } from '../Utils/AppSettingsContext'
 import {
   addToBuilderHistory,
   builderBreakpoints,
@@ -44,13 +44,14 @@ import {
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
-  removeFormUpdateError,
+  removeFormUpdateError
 } from '../Utils/FormBuilderHelper'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts, getLayoutItemCount } from '../Utils/gridLayoutHelper'
 import { addNewFieldToGridLayout, generateFieldLblForHistory, generateNewFldName, getInitHeightsForResizingTextarea } from '../Utils/gridLayoutHelpers'
 import { deepCopy, getNewId, IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import paymentFields from '../Utils/StaticData/paymentFields'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
@@ -66,7 +67,6 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   const { formType } = useParams()
-  const { payments, reCaptchaV2 } = useContext(AppSettings)
   const setProModal = useSetRecoilState($proModal)
   const [fields, setFields] = useRecoilState($fields)
   const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
@@ -202,7 +202,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const removeLayoutItem = fldKey => {
     const fldData = fields[fldKey]
     if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
-      const payFields = fields ? Object.values(fields).filter(field => field.typ.match(/paypal|razorpay/)) : []
+      const payFields = fields ? Object.values(fields).filter(field => paymentFields.includes(field.typ)) : []
       if (!payFields.length) {
         setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
         return false
@@ -253,7 +253,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     sessionStorage.setItem('btcd-lc', '-')
 
     const fldType = fldData?.typ
-    if (fldType === 'razorpay' || fldType === 'paypal') {
+    if (paymentFields.includes(fldType)) {
       setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
         delete draftStaticStyleState.staticStyles['.pos-rel']
         delete draftStaticStyleState.staticStyles['.form-loading::before']
@@ -277,19 +277,20 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   function addNewField(fieldData, fieldSize, addPosition) {
-    if (!handleFieldExtraAttr(fieldData, payments, reCaptchaV2)) return
+    if (!handleFieldExtraAttr(fieldData)) return
     const { newLayouts } = addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition)
 
     setLayouts(newLayouts)
     setRootLayouts(newLayouts)
   }
+
   const cloneLayoutItem = fldKey => {
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.fieldClone })
       return
     }
     const fieldData = fields[fldKey]
-    if (!handleFieldExtraAttr(fieldData, payments, reCaptchaV2)) return
+    if (!handleFieldExtraAttr(fieldData)) return
     const isNestedField = nestedLayouts[fldKey]
     const isExistInLayout = layouts.lg.find(itm => itm.i === fldKey)
     const cloneFldKeys = [fldKey]
@@ -298,7 +299,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
         cloneFldKeys.push(nestedField.i)
       })
       // check cloneFldKeys with handleFieldExtraAttr
-      const isNestedFieldValid = cloneFldKeys.every(fk => handleFieldExtraAttr(fields[fk], payments, reCaptchaV2))
+      const isNestedFieldValid = cloneFldKeys.every(fk => handleFieldExtraAttr(fields[fk]))
       if (!isNestedFieldValid) return
     }
     let uniqueFldId = getNewId(fields)

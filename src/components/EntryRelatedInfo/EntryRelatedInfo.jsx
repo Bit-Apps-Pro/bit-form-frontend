@@ -8,20 +8,20 @@ import FormEntryTimeline from './FormEntryTimeline'
 import Modal from '../Utilities/Modal'
 import GoogleAdInfo from './GoogleAdInfo'
 import { $fieldLabels, $formId, $integrations } from '../../GlobalStates/GlobalStates'
+import paymentFields from '../../Utils/StaticData/paymentFields'
 
 function EntryRelatedInfo({ entryID, rowDtl, setSnackbar, close }) {
   const formID = useRecoilValue($formId)
   const allLabels = useRecoilValue($fieldLabels)
   const integrations = useRecoilValue($integrations)
-  const payPattern = /paypal|razorpay/
-  const paymentFields = allLabels.filter(label => label.type.match(payPattern))
+  const payFields = allLabels.filter(label => paymentFields.includes(label.type))
   return (
     <Modal lg show setModal={close} title={__('Related Info')}>
       <Tabs
         selectedTabClassName="s-t-l-active"
       >
         <TabList className="flx m-0">
-          {!!(paymentFields?.length) && (
+          {!!(payFields?.length) && (
             <Tab className="btcd-s-tab-link">
               {__('Payment')}
             </Tab>
@@ -39,7 +39,7 @@ function EntryRelatedInfo({ entryID, rowDtl, setSnackbar, close }) {
           )}
         </TabList>
 
-        {!!(paymentFields?.length) && (
+        {!!(payFields?.length) && (
           <TabPanel>
             <FormEntryPayments
               formID={formID}

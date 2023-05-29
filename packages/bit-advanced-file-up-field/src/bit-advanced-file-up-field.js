@@ -205,7 +205,7 @@ export default class BitAdvanceFileUpload {
     })
     const hiddenOldFiles = this.#createElm('input')
     hiddenOldFiles.type = 'hidden'
-    hiddenOldFiles.name = `${this.#config.fieldName}_old`
+    hiddenOldFiles.name = `${this.#fieldKey}_old`
     hiddenOldFiles.value = this.#oldFiles.toString()
     this.#fieldUploadWrapper.appendChild(this.#oldFileList)
     this.#fieldUploadWrapper.appendChild(hiddenOldFiles)
@@ -249,7 +249,7 @@ export default class BitAdvanceFileUpload {
     const fileName = e.target.getAttribute('data-file-name')
     this.#remove(`#file-wrp-${fileId}`)
     this.#oldFiles = this.#oldFiles.filter(file => file !== fileName)
-    this.#select(`input[name="${this.#config.fieldName}_old"]`).value = this.#oldFiles.toString()
+    this.#select(`input[name="${this.#fieldKey}_old"]`).value = this.#oldFiles.toString()
   }
 
   #remove(selector) { this.#select(selector)?.remove() }

@@ -892,6 +892,23 @@ const editorConfig = {
       properties: { ...iconCssProps },
     },
   },
+  stripe: {
+    'stripe-btn': {
+      states: ['hover', 'focus', 'active'],
+      properties: { ...buttonCssProps },
+    },
+    'stripe-icn': {
+      // states: ['hover', 'focus', 'active'],
+      properties: {
+        width: '',
+        height: '',
+      },
+    },
+    'stripe-wrp .stripe-pay-btn': {
+      states: ['hover', 'focus', 'active'],
+      properties: { ...buttonCssProps },
+    },
+  },
   button: {
     'fld-wrp': {
       states: ['hover'],
