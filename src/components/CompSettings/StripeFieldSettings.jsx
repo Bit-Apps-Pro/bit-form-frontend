@@ -31,48 +31,39 @@ export default function StripeFieldSettings() {
   const formFields = Object.entries(fields)
   const payments = useRecoilValue($payments)
   const isSubscription = fieldData?.payType === 'subscription'
-  // const isDynamicDesc = fieldData?.descType === 'dynamic'
   const isDynamicAmount = fieldData.config?.amountType === 'dynamic'
-  // const isDynamicShipping = fieldData?.shippingType === 'dynamic'
-  // const isDynamicTax = fieldData?.taxType === 'dynamic'
-  // const [filterCurrency, setFilterCurrency] = useState(currencyCodes)
-  let filterCurrency = currencyCodes
-  console.log('fieldData', fieldData)
+
   const { css } = useFela()
-  useEffect(() => {
-    removeFormUpdateError(fldKey, 'stripeAmountFldMissing')
-    removeFormUpdateError(fldKey, 'paypalAmountMissing')
-    console.log(isDynamicAmount, 'amountfield', fieldData.config.amountFld)
-    if (isDynamicAmount && !fieldData.config.amountFld) {
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'stripeAmountFldMissing',
-        errorMsg: __('Stripe Dyanmic Amount Field is not Selected'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-    } else if (!isDynamicAmount && (!fieldData.config.amount || fieldData.config.amount <= 0)) {
-      addFormUpdateError({
-        fieldKey: fldKey,
-        errorKey: 'paypalAmountMissing',
-        errorMsg: __('PayPal Fixed Amount is not valid'),
-        errorUrl: `field-settings/${fldKey}`,
-      })
-    }
-  }, [fieldData?.config?.amountType, fieldData?.config?.amount])
 
   const handleInput = (name, value) => {
     if (value) {
-      // fieldData[name] = value
       assignNestedObj(fieldData, name, value)
-      // if (name === 'locale') {
-      //   const localeArr = value.split(' - ')
-      //   fieldData.locale = localeArr[localeArr.length - 1]
-      //   fieldData.locale = value
-      //   fieldData.language = value
-      // }
     } else {
       deleteNestedObj(fieldData, name)
-      // delete fieldData[name]
+    }
+    if (name === 'config->amount') {
+      const currencyMinAmount = currencyCodes.find(item => item.code === fieldData.config.options.currency)?.minAmount || 0
+      if (currencyMinAmount && Number(value) < currencyMinAmount) {
+        addFormUpdateError({
+          fieldKey: fldKey,
+          errorKey: 'stripeAmountMin',
+          errorMsg: __(`Stripe Minimum Amount is ${currencyMinAmount}`),
+          errorUrl: `field-settings/${fldKey}`,
+        })
+      } else {
+        removeFormUpdateError(fldKey, 'stripeAmountMin')
+      }
+    } else if (name === 'config->amountFld') {
+      if (value) {
+        removeFormUpdateError(fldKey, 'stripeAmountFldMissing')
+      } else {
+        addFormUpdateError({
+          fieldKey: fldKey,
+          errorKey: 'stripeAmountFldMissing',
+          errorMsg: __('Stripe Dyanmic Amount Field is not Selected'),
+          errorUrl: `field-settings/${fldKey}`,
+        })
+      }
     }
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -80,30 +71,38 @@ export default function StripeFieldSettings() {
     addToBuilderHistory({ event: `${propNameLabel[name]} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
   function findCommonItems(types) {
-    if (!types || types.length === 0) return []
+    if (!types || types.length === 0) return currencyCodes
     const cntris = paymentMethodType.filter(item => types.includes(item.type))
     const arrays = cntris.map(item => item.currency)
     const codes = arrays?.reduce((a, b) => a.filter(c => b.includes(c)))
     const currencies = currencyCodes.filter(item => codes.includes(item.code))
     return currencies || []
   }
+
   const handlePaymentMethodType = (val) => {
     if (val) {
       const valArr = val.split(',')
-      console.log({ valArr })
       assignNestedObj(fieldData, 'config->options->payment_method_types', valArr)
-      filterCurrency = findCommonItems(fieldData?.config?.options?.payment_method_types)
+      const commonCurrencies = findCommonItems(valArr)
+      if (!commonCurrencies.length) {
+        addFormUpdateError({
+          fieldKey: fldKey,
+          errorKey: 'stripeCurrencyMissing',
+          errorMsg: __('Select a valid currency for the selected payment method types'),
+          errorUrl: `field-settings/${fldKey}`,
+        })
+        assignNestedObj(fieldData, 'config->options->currency', '')
+      } else {
+        removeFormUpdateError(fldKey, 'stripeCurrencyMissing')
+      }
     } else {
       deleteNestedObj(fieldData, 'config->options->payment_method_types')
+      removeFormUpdateError(fldKey, 'stripeCurrencyMissing')
+      assignNestedObj(fieldData, 'config->options->currency', 'usd')
     }
-    console.log({ fieldData })
+    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    setFields(allFields)
   }
-
-  // useEffect(() => {
-  //   const filterCurrencies = findCommonItems(fieldData?.config?.options?.payment_method_types)
-  //   console.log('filterCurrencies', filterCurrencies)
-  //   setFilterCurrency(filterCurrencies)
-  // }, [fieldData?.config?.options?.payment_method_types])
 
   const handleLayout = (value) => {
     if (value) {
@@ -128,38 +127,29 @@ export default function StripeFieldSettings() {
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel.layout} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
-  // console.log('fieldData', fieldData)
-  // const setSubscription = e => {
-  //   if (e.target.checked) {
-  //     fieldData.payType = 'subscription'
-  //     delete fieldData.currency
-  //     removeFormUpdateError(fldKey, 'paypalAmountMissing')
-  //   } else {
-  //     fieldData.currency = 'USD'
-  //     delete fieldData.payType
-  //     delete fieldData.planId
-  //     addFormUpdateError({
-  //       fieldKey: fldKey,
-  //       errorKey: 'paypalAmountMissing',
-  //       errorMsg: __('PayPal Fixed Amount is not valid'),
-  //       errorUrl: `field-settings/${fldKey}`,
-  //     })
-  //   }
-  //   delete fieldData.amountType
-  //   delete fieldData.amount
-  //   delete fieldData.amountFld
-
-  //   // eslint-disable-next-line no-param-reassign
-  //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-  //   setFields(allFields)
-  //   addToBuilderHistory({ event: `Subscription "${e.target.checked ? 'On' : 'Off'}": ${fieldData.lbl || fldKey}`, type: 'toggle_subscription', state: { fields: allFields, fldKey } })
-  // }
-
   const setAmountType = e => {
     if (e.target.value) fieldData.config.amountType = e.target.value
     else delete fieldData.config.amountType
     delete fieldData.config.amount
-    // delete fieldData.config.amountFld
+    delete fieldData.config.amountFld
+
+    if (fieldData.config.amountType === 'dynamic') {
+      removeFormUpdateError(fldKey, 'stripeAmountMissing')
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'stripeAmountFldMissing',
+        errorMsg: __('Stripe Dyanmic Amount Field is not Selected'),
+        errorUrl: `field-settings/${fldKey}`,
+      })
+    } else {
+      removeFormUpdateError(fldKey, 'stripeAmountFldMissing')
+      addFormUpdateError({
+        fieldKey: fldKey,
+        errorKey: 'stripeAmountMissing',
+        errorMsg: __('Stripe Fixed Amount is not valid'),
+        errorUrl: `field-settings/${fldKey}`,
+      })
+    }
 
     // eslint-disable-next-line no-param-reassign
     const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
@@ -167,49 +157,8 @@ export default function StripeFieldSettings() {
     addToBuilderHistory({ event: `Ammount Type Changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_amount', state: { fields: allFields, fldKey } })
   }
 
-  const setShippingType = e => {
-    if (e.target.value) fieldData.shippingType = e.target.value
-    else delete fieldData.shippingType
-    delete fieldData.shipping
-    delete fieldData.shippingFld
-
-    // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Shipping Type changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_shipping_type', state: { fields: allFields, fldKey } })
-  }
-
-  const setTaxType = e => {
-    if (e.target.value) fieldData.taxType = e.target.value
-    else delete fieldData.taxType
-    delete fieldData.tax
-    delete fieldData.taxFld
-
-    // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Tax type changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_tax_type', state: { fields: allFields, fldKey } })
-  }
-
-  const setDescType = e => {
-    if (e.target.value) fieldData.descType = e.target.value
-    else delete fieldData.descType
-    delete fieldData.description
-    delete fieldData.descFld
-
-    // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
-    setFields(allFields)
-    addToBuilderHistory({ event: `Description type to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_description_type', state: { fields: allFields, fldKey } })
-  }
-
   const getAmountFields = () => {
     const filteredFields = formFields.filter(field => field[1].typ.match(/^(radio|number|currency)/))
-    return filteredFields.map(itm => (<option key={itm[0]} value={itm[0]}>{itm[1].adminLbl || itm[1].lbl}</option>))
-  }
-
-  const getDescFields = () => {
-    const filteredFields = formFields.filter(field => field[1].typ.match(/text/g))
     return filteredFields.map(itm => (<option key={itm[0]} value={itm[0]}>{itm[1].adminLbl || itm[1].lbl}</option>))
   }
 
@@ -246,6 +195,8 @@ export default function StripeFieldSettings() {
     addToBuilderHistory({ event: `Stripe pay button text updated : ${fieldData.config.payBtnTxt}`, type: 'change_stripe_pay_btn_txt', state: { fields: allFields, fldKey } })
   }
 
+  const availableCurrencies = findCommonItems(fieldData.config.options.payment_method_types)
+
   return (
     <div>
       <FieldSettingTitle
@@ -253,12 +204,6 @@ export default function StripeFieldSettings() {
         subtitle={fieldData.typ}
         fieldKey={fldKey}
       />
-
-      {/*
-      <div className="mb-2">
-        <span className="font-w-m">{__('Field Type : ')}</span>
-        {__('Paypal')}
-      </div> */}
 
       <SimpleAccordion
         id="slct-cnfg-stng"
@@ -278,15 +223,6 @@ export default function StripeFieldSettings() {
         </select>
       </SimpleAccordion>
       <FieldSettingsDivider />
-
-      {/* <div className="mt-3">
-        <b>{__('Select Config')}</b>
-        <br />
-        <select name="payIntegID" id="payIntegID" onChange={e => handleInput(e.target.name, e.target.value)} className="btcd-paper-inp mt-1" value={fieldData.payIntegID}>
-          <option value="">Select Config</option>
-          {getStripeConfigs()}
-        </select>
-      </div> */}
       {fieldData.payIntegID && (
         <>
           <SimpleAccordion
@@ -301,7 +237,7 @@ export default function StripeFieldSettings() {
                 aria-label="Stripe button text"
                 placeholder="Type text here..."
                 value={fieldData.txt}
-                changeAction={setBtnTxt}
+                changeAction={e => setBtnTxt(e)}
               />
             </div>
           </SimpleAccordion>
@@ -319,7 +255,7 @@ export default function StripeFieldSettings() {
                 aria-label="Stripe pay button text"
                 placeholder="Type text here..."
                 value={fieldData.config.payBtnTxt}
-                changeAction={setPayBtnTxt}
+                changeAction={e => setPayBtnTxt(e)}
               />
             </div>
           </SimpleAccordion>
@@ -367,25 +303,6 @@ export default function StripeFieldSettings() {
             </select>
           </SimpleAccordion>
           <FieldSettingsDivider />
-          {/* <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-            <SingleToggle
-              id="sbscrptn"
-              title={__('Subscription:')}
-              action={setSubscription}
-              isChecked={isSubscription}
-              className="mt-3"
-            />
-            {isSubscription && (
-              <SingleInput
-                id="pln-id"
-                inpType="text"
-                title={__('Plan Id')}
-                value={fieldData.planId || ''}
-                action={e => handleInput('planId', e.target.value)}
-                cls={css(FieldStyle.input)}
-              />
-            )}
-          </div> */}
           {!isSubscription && (
             <>
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
@@ -424,7 +341,7 @@ export default function StripeFieldSettings() {
                     value={fieldData.config.options?.currency}
                     className={css(FieldStyle.input)}
                   >
-                    {filterCurrency?.map(cn => (
+                    {availableCurrencies.map(cn => (
                       <option key={cn.code} value={cn.code}>
                         {cn.currency}
                       </option>
@@ -464,6 +381,7 @@ export default function StripeFieldSettings() {
                 <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                   <SingleInput
                     id="amnt"
+                    className={css(ut.mt0)}
                     cls={css(FieldStyle.input)}
                     inpType="number"
                     title={__('Amount')}
@@ -487,135 +405,6 @@ export default function StripeFieldSettings() {
                   </select>
                 </div>
               )}
-              {/* <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                <b>{__('Shipping Amount')}</b>
-                <br />
-                <CheckBox
-                  id="shpng-amnt-fxd"
-                  onChange={setShippingType}
-                  radio
-                  checked={!isDynamicShipping}
-                  title={__('Fixed')}
-                />
-                <CheckBox
-                  id="shpng-amnt-dynmc"
-                  onChange={setShippingType}
-                  radio
-                  checked={isDynamicShipping}
-                  title={__('Dynamic')}
-                  value="dynamic"
-                />
-              </div> */}
-              {/* {!isDynamicShipping && (
-                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                  <SingleInput
-                    id="spng-cst"
-                    cls={css(FieldStyle.input)}
-                    inpType="number"
-                    title={__('Shipping Cost')}
-                    value={fieldData.shipping || ''}
-                    action={e => handleInput('shipping', e.target.value)}
-                  />
-                </div>
-              )} */}
-              {/* {isDynamicShipping && (
-                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                  <b>{__('Select Shipping Amount Field')}</b>
-                  <select
-                    data-testid="slct-shpng-amnt"
-                    onChange={e => handleInput(e.target.name, e.target.value)}
-                    name="shippingFld"
-                    className={css(FieldStyle.input)}
-                    value={fieldData.shippingFld}
-                  >
-                    <option value="">{__('Select Field')}</option>
-                    {getAmountFields()}
-                  </select>
-                </div>
-              )} */}
-              {/* <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                <b>{__('Tax Amount Type')}</b>
-                <br />
-                <CheckBox
-                  id="tx-amnt-fxd"
-                  onChange={setTaxType}
-                  radio
-                  checked={!isDynamicTax}
-                  title={__('Fixed')}
-                />
-                <CheckBox
-                  id="tx-amnt-dynmc"
-                  onChange={setTaxType}
-                  radio
-                  checked={isDynamicTax}
-                  title={__('Dynamic')}
-                  value="dynamic"
-                />
-              </div> */}
-              {/* {!isDynamicTax && (
-                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                  <SingleInput
-                    id="tax"
-                    cls={css(FieldStyle.input)}
-                    inpType="number"
-                    title={__('Tax (%)')}
-                    value={fieldData.tax || ''}
-                    action={e => handleInput('tax', e.target.value)}
-                  />
-                </div>
-              )} */}
-              {/* {isDynamicTax && (
-                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                  <b>{__('Select Amount Field')}</b>
-                  <select
-                    data-testid="slct-amnt-fld"
-                    onChange={e => handleInput(e.target.name, e.target.value)}
-                    name="taxFld"
-                    className={css(FieldStyle.input)}
-                    value={fieldData.taxFld}
-                  >
-                    <option value="">{__('Select Field')}</option>
-                    {getAmountFields()}
-                  </select>
-                </div>
-              )} */}
-
-              {/*
-              // ---------Description Added in bit-paypal-filed.js whith form-id,entry-id,field-key value----------
-              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                <b>{__('Description')}</b>
-                <br />
-                <CheckBox id="dscrptn-sttc" onChange={setDescType} radio checked={!isDynamicDesc} title={__('Static')} />
-                <CheckBox id="dscrptn-dynmc" onChange={setDescType} radio checked={isDynamicDesc} title={__('Dynamic')} value="dynamic" />
-              </div>
-              {!isDynamicDesc
-                && (
-                  <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                    <textarea
-                      data-testid="ordr-dscrptn-txt-ara"
-                      className="mt-1 btcd-paper-inp"
-                      placeholder="Order Description"
-                      name="description"
-                      rows="5"
-                      onChange={e => handleInput(e.target.name, e.target.value)}
-                    />
-                  </div>
-                )}
-              {isDynamicDesc && (
-                <div className={css(ut.ml2, ut.mr2, ut.p1)}>
-                  <b>{__('Select Description Field')}</b>
-                  <select
-                    data-testid="slct-dscrptn-fld"
-                    onChange={e => handleInput(e.target.name, e.target.value)}
-                    name="descFld"
-                    className={css(FieldStyle.input)}
-                    value={fieldData.descFld}
-                  >
-                    <option value="">{__('Select Field')}</option>
-                    {getDescFields()}
-                  </select>
-                </div>
-              )} */}
             </>
           )}
         </>
