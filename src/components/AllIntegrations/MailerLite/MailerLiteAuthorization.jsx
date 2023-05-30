@@ -7,6 +7,7 @@ import TutorialLink from '../../Utilities/TutorialLink'
 import AuthorizeBtn from '../AuthorizeBtn'
 import NextBtn from '../NextBtn'
 import { mailerliteRefreshFields } from './MailerLiteCommonFunc'
+import { version } from 'ace-builds'
 
 export default function MailerLiteAuthorization({
   mailerLiteConf, setMailerLiteConf, step, setstep, isLoading, setIsLoading, isInfo,
@@ -27,16 +28,15 @@ export default function MailerLiteAuthorization({
     setError(rmError)
     setMailerLiteConf(newConf)
   }
-  console.log('error', isLoading)
+  const url = (mailerLiteConf.version === 'v2') ? 'https://dashboard.mailerlite.com/integrations/api' : 'https://app.mailerlite.com/integrations/api/'
   const note = `
     <h4> Step of generate API token:</h4>
     <ul>
-      <li>Goto <a href="https://dashboard.mailerlite.com/integrations/api">Generate API Token</a></li>
+      <li>Goto <a href=${url}>Generate API Token</a></li>
       <li>Copy the <b>Token</b> and paste into <b>API Token</b> field of your authorization form.</li>
       <li>Finally, click <b>Authorize</b> button.</li>
   </ul>
   `
-
   return (
     <div className="btcd-stp-page" style={{ ...{ width: step === 1 && 900 }, ...{ height: step === 1 && 'auto' } }}>
       <TutorialLink
@@ -53,13 +53,31 @@ export default function MailerLiteAuthorization({
         placeholder={__('Integration Name...')}
         disabled={isInfo}
       />
+      <div className="mt-3"><b>{__('Select Version:')}</b></div>
+      <div className="flex items-center w-6 mt-3">
+        <input id="MailerLiteClassic" type="radio" name="version" value="v1" className="hidden" checked={mailerLiteConf.version === "v1"} onChange={handleInput} />
+        <label for="MailerLiteClassic">
+          <span className="w-4 h-4 inline-block mr-1 border border-grey" />
+          MailerLite Classic
+
+        </label>
+      </div>
+
+      <div className="flex items-center mr-4 mt-2 mb-4">
+        <input id="MailerLiteNew" type="radio" name="version" value="v2" className="hidden" checked={mailerLiteConf.version === "v2"} onChange={handleInput} />
+        <label for="MailerLiteNew">
+          <span className="w-4 h-4 inline-block mr-1 border border-grey" />
+          MailerLite New
+
+        </label>
+      </div>
 
       <small className="d-blk mt-3">
         {__('To Get API token, Please Visit')}
         &nbsp;
         <a
           className="btcd-link"
-          href="https://dashboard.mailerlite.com/integrations/api"
+          href={url}
           target="_blank"
           rel="noreferrer"
         >
@@ -84,6 +102,7 @@ export default function MailerLiteAuthorization({
           <AuthorizeBtn
             isAuthorized={isAuthorized}
             isLoading={isLoading}
+            disabled={mailerLiteConf.version === undefined || mailerLiteConf.version === ''}
             handleAuthorize={() => mailerliteRefreshFields(mailerLiteConf, setMailerLiteConf, setError, setisAuthorized, setIsLoading, 'authorization')}
           />
           <br />
