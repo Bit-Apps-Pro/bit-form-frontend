@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 
-import { getRecoil, resetRecoil, setRecoil } from 'recoil-nexus'
+import { getRecoil, resetRecoil, bitStore.set } from 'recoil-nexus'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import {
@@ -614,42 +614,42 @@ export const setFormReponseDataToStates = (responseData) => {
   const formsSessionDataFound = false
   if (!formsSessionDataFound) {
     // setLayouts(responseData.form_content.layout)
-    setRecoil($layouts, responseData.form_content.layout)
+    bitStore.set($layouts, responseData.form_content.layout)
     addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
   }
   if (!formsSessionDataFound) {
     // setFields(responseData.form_content.fields)
-    setRecoil($fields, responseData.form_content.fields)
+    bitStore.set($fields, responseData.form_content.fields)
     addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
   }
   if (!formsSessionDataFound) {
     // setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
-    setRecoil($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+    bitStore.set($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
   }
   // setworkFlows(responseData.workFlows)
-  setRecoil($workflows, responseData.workFlows)
+  bitStore.set($workflows, responseData.workFlows)
   // setAdditional(responseData.additional)
-  setRecoil($additionalSettings, responseData.additional)
+  bitStore.set($additionalSettings, responseData.additional)
   // setIntegration(responseData.formSettings.integrations)
-  setRecoil($integrations, responseData.formSettings.integrations)
+  bitStore.set($integrations, responseData.formSettings.integrations)
   // setConfirmations(responseData.formSettings.confirmation)
-  setRecoil($confirmations, responseData.formSettings.confirmation)
+  bitStore.set($confirmations, responseData.formSettings.confirmation)
   // setMailTem(responseData.formSettings.mailTem)
-  setRecoil($mailTemplates, responseData.formSettings.mailTem)
+  bitStore.set($mailTemplates, responseData.formSettings.mailTem)
   // if (!formsSessionDataFound && responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
-  if (!formsSessionDataFound && responseData.builderSettings) setRecoil($builderSettings, responseData.builderSettings)
+  if (!formsSessionDataFound && responseData.builderSettings) bitStore.set($builderSettings, responseData.builderSettings)
   // setReportId({
   //   id: responseData?.form_content?.report_id || defaultReport?.id,
   //   isDefault: responseData?.form_content?.report_id === null,
   // })
-  setRecoil($reportId, {
+  bitStore.set($reportId, {
     id: responseData?.form_content?.report_id || defaultReport?.id,
     isDefault: responseData?.form_content?.report_id === null,
   })
   // setFieldLabels(responseData.Labels)
-  setRecoil($fieldLabels, responseData.Labels)
+  bitStore.set($fieldLabels, responseData.Labels)
   // setReports(responseData.reports || [])
-  setRecoil($reports, responseData.reports || [])
+  bitStore.set($reports, responseData.reports || [])
 }
 
 export const getConfirmationStyle = (formData) => {
@@ -668,22 +668,22 @@ export const getConfirmationStyle = (formData) => {
 }
 
 export const setStyleRelatedStates = ({ themeVars, themeColors, styles }) => {
-  setRecoil($themeVarsLgLight, themeVars.lgLightThemeVars)
-  setRecoil($themeVarsLgDark, themeVars.lgDarkThemeVars)
-  setRecoil($themeVarsMdLight, themeVars.mdLightThemeVars)
-  setRecoil($themeVarsMdDark, themeVars.mdDarkThemeVars)
-  setRecoil($themeVarsSmLight, themeVars.smLightThemeVars)
-  setRecoil($themeVarsSmDark, themeVars.smDarkThemeVars)
+  bitStore.set($themeVarsLgLight, themeVars.lgLightThemeVars)
+  bitStore.set($themeVarsLgDark, themeVars.lgDarkThemeVars)
+  bitStore.set($themeVarsMdLight, themeVars.mdLightThemeVars)
+  bitStore.set($themeVarsMdDark, themeVars.mdDarkThemeVars)
+  bitStore.set($themeVarsSmLight, themeVars.smLightThemeVars)
+  bitStore.set($themeVarsSmDark, themeVars.smDarkThemeVars)
 
-  setRecoil($lightThemeColors, themeColors.lightThemeColors)
-  setRecoil($darkThemeColors, themeColors.darkThemeColors)
+  bitStore.set($lightThemeColors, themeColors.lightThemeColors)
+  bitStore.set($darkThemeColors, themeColors.darkThemeColors)
 
-  setRecoil($stylesLgLight, styles.lgLightStyles)
-  setRecoil($stylesLgDark, styles.lgDarkStyles)
-  setRecoil($stylesMdLight, styles.mdLightStyles)
-  setRecoil($stylesMdDark, styles.mdDarkStyles)
-  setRecoil($stylesSmLight, styles.smLightStyles)
-  setRecoil($stylesSmDark, styles.smDarkStyles)
+  bitStore.set($stylesLgLight, styles.lgLightStyles)
+  bitStore.set($stylesLgDark, styles.lgDarkStyles)
+  bitStore.set($stylesMdLight, styles.mdLightStyles)
+  bitStore.set($stylesMdDark, styles.mdDarkStyles)
+  bitStore.set($stylesSmLight, styles.smLightStyles)
+  bitStore.set($stylesSmDark, styles.smDarkStyles)
 }
 
 export const generateAndSaveAtomicCss = currentFormId => {

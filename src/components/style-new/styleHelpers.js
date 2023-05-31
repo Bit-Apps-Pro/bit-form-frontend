@@ -6,7 +6,7 @@ import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/fi
 import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { create } from 'mutative'
-import { getRecoil, setRecoil } from 'recoil-nexus'
+import { getRecoil, bitStore.set } from 'recoil-nexus'
 import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
@@ -478,7 +478,7 @@ const filterUnusedStyles = (styles) => {
 
 export const removeUnuseStylesAndUpdateState = () => {
   const updatedStyles = removeUnusedStyles()
-  setRecoil($allStyles, updatedStyles)
+  bitStore.set($allStyles, updatedStyles)
 }
 
 export const removeUnusedStyles = () => {
@@ -690,7 +690,7 @@ export const addDefaultStyleClasses = (fk, element) => {
       }
     })
   })
-  setRecoil($allStyles, allNewStyles)
+  bitStore.set($allStyles, allNewStyles)
 }
 
 export const generateFontUrl = (font, string) => {
@@ -839,7 +839,7 @@ export const setIconFilterValue = (iconType, fldKey) => {
         const newThemeColors = create(themeColors, drft => {
           drft[getIconsGlobalFilterVariable(iconType)] = setFilterValue.filter
         })
-        setRecoil($themeColors, newThemeColors)
+        bitStore.set($themeColors, newThemeColors)
       }
     } else if (parentColor) {
       const valArr = parentColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
@@ -851,7 +851,7 @@ export const setIconFilterValue = (iconType, fldKey) => {
           drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
       })
-      setRecoil($styles, newStyles)
+      bitStore.set($styles, newStyles)
     } else {
       const setFilterValue = hexToCSSFilter('#000000')
       const newStyles = create(styles, drftStyles => {
@@ -860,7 +860,7 @@ export const setIconFilterValue = (iconType, fldKey) => {
           drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
       })
-      setRecoil($styles, newStyles)
+      bitStore.set($styles, newStyles)
     }
   }
 }

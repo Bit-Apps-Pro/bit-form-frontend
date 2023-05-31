@@ -1,7 +1,7 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
-import { getRecoil, setRecoil } from 'recoil-nexus'
+import { getRecoil, bitStore.set } from 'recoil-nexus'
 import { $payments, $reCaptchaV2 } from '../GlobalStates/AppSettingsStates'
 import {
   $additionalSettings,
@@ -288,12 +288,12 @@ export const checkFieldsExtraAttr = (field, parentField) => {
 export const handleFieldExtraAttr = (fieldData, parentField = 'root') => {
   const extraAttr = checkFieldsExtraAttr(fieldData, parentField)
   if (extraAttr.validType === 'pro') {
-    setRecoil($proModal, { show: true, ...proHelperData[fieldData.typ] })
+    bitStore.set($proModal, { show: true, ...proHelperData[fieldData.typ] })
     return 0
   }
 
   if (extraAttr.validType === 'onlyOne' || extraAttr.validType === 'keyEmpty') {
-    setRecoil($alertModal, { show: true, msg: extraAttr.msg, cancelBtn: false })
+    bitStore.set($alertModal, { show: true, msg: extraAttr.msg, cancelBtn: false })
     return 0
   }
 
@@ -426,11 +426,11 @@ export const addToBuilderHistory = (historyData, unsaved = true, index = undefin
       draft.active = draft.histories.push(historyData) - 1
     }
   })
-  setRecoil($builderHistory, changedHistory)
+  bitStore.set($builderHistory, changedHistory)
 
   if (unsaved) {
     const updateBtn = getRecoil($updateBtn)
-    setRecoil($updateBtn, { ...updateBtn, unsaved: true })
+    bitStore.set($updateBtn, { ...updateBtn, unsaved: true })
   }
 }
 
@@ -451,7 +451,7 @@ export const addFormUpdateError = (err) => {
     }
     draftUpdateBtn.errors.push(err)
   })
-  setRecoil($updateBtn, newUpdateBtn)
+  bitStore.set($updateBtn, newUpdateBtn)
 }
 
 export const removeFormUpdateError = (fieldKey, errorKey) => {
@@ -467,7 +467,7 @@ export const removeFormUpdateError = (fieldKey, errorKey) => {
         delete draftUpdateBtn.errors
       }
     })
-    setRecoil($updateBtn, newUpdateBtn)
+    bitStore.set($updateBtn, newUpdateBtn)
     return
   }
   const newUpdateBtn = create(updateBtn, draftUpdateBtn => {
@@ -484,7 +484,7 @@ export const removeFormUpdateError = (fieldKey, errorKey) => {
     }
   })
 
-  setRecoil($updateBtn, newUpdateBtn)
+  bitStore.set($updateBtn, newUpdateBtn)
 }
 
 export const compactNewLayoutItem = (breakpoint, layout, layouts) => create(layouts, drftLay => {
@@ -634,12 +634,12 @@ export const reCalculateFldHeights = (fieldKey) => {
         counter: counter + 1,
       }
     })
-    setRecoil($builderHookStates, newBuilderHookState)
+    bitStore.set($builderHookStates, newBuilderHookState)
   } else if (isExistInLayout) {
     const newBuilderHookState = create(builderHookState, draft => {
       draft.reCalculateFieldHeights += 1
     })
-    setRecoil($builderHookStates, newBuilderHookState)
+    bitStore.set($builderHookStates, newBuilderHookState)
   } else if (!isExistInLayout) {
     const parentFieldKey = getParentFieldKey(fieldKey)
     const newBuilderHookState = create(builderHookState, draft => {
@@ -650,7 +650,7 @@ export const reCalculateFldHeights = (fieldKey) => {
         counter: counter + 1,
       }
     })
-    setRecoil($builderHookStates, newBuilderHookState)
+    bitStore.set($builderHookStates, newBuilderHookState)
   }
 }
 
@@ -794,7 +794,7 @@ export const setRequired = (e, callBack) => {
     delete fieldData.valid.req
   }
   const allFields = create(fields, draft => { draft[fldKey] = fieldData })
-  setRecoil($fields, allFields)
+  bitStore.set($fields, allFields)
   const req = e.target.checked ? 'on' : 'off'
   addToBuilderHistory({ event: `Field required ${req}: ${fieldData.adminLbl || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } })
   callBack && callBack()
