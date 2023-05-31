@@ -5,7 +5,7 @@
 import Tippy from '@tippyjs/react'
 import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import { useImmer } from 'use-immer'

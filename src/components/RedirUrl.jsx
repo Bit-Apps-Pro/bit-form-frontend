@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates/GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
 import StackIcn from '../Icons/StackIcn'

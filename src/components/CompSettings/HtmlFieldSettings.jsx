@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import { $builderHookStates, $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'

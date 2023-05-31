@@ -10,7 +10,7 @@
 import { memo } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'

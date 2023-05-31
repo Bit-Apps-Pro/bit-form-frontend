@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import validateForm from '../../user-frontend/validation'
 import { getAbsoluteElmHeight } from '../../Utils/FormBuilderHelper'

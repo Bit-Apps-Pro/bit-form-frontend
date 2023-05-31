@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $confirmations, $fieldsArr, $proModal, $updateBtn } from '../../GlobalStates/GlobalStates'
 import BoxFullIcon from '../../Icons/BoxFullIcon'
 import BoxIcon from '../../Icons/BoxIcon'

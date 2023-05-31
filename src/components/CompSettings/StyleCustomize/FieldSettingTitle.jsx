@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $builderRightPanelScroll } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import style from '../../../styles/FieldSettingTitle.style'

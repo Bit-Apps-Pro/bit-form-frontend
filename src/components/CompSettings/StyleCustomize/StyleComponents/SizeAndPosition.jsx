@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $breakpoint, $builderHookStates, $layouts, $nestedLayouts } from '../../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory, cols } from '../../../../Utils/FormBuilderHelper'
 import ut from '../../../../styles/2.utilities'

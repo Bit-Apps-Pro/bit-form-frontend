@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import { useParams, useNavigate } from 'react-router-dom'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import { __ } from '../../Utils/i18nwrap'

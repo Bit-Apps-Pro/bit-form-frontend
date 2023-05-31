@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'

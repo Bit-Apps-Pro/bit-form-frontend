@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'

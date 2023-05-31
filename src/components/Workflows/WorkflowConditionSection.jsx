@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'

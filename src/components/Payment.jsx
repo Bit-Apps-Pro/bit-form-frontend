@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $payments } from '../GlobalStates/AppSettingsStates'
 import { $bits } from '../GlobalStates/GlobalStates'
 import { deepCopy } from '../Utils/Helpers'

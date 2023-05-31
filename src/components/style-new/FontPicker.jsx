@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { showDraggableModal } from './styleHelpers'

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $reCaptchaV2, $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $bits } from '../GlobalStates/GlobalStates'
 import { deepCopy } from '../Utils/Helpers'

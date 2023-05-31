@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $forms } from '../GlobalStates/GlobalStates'
 import ut from '../styles/2.utilities'
 import app from '../styles/app.style'

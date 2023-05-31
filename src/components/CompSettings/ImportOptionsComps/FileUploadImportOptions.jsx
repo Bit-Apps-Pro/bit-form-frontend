@@ -1,4 +1,4 @@
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { csvToJson, getFileExts, isType } from '../../../Utils/Helpers'
 import { checkIfHasColonLblVlu } from './importOptionsHelpers'

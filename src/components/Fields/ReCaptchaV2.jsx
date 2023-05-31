@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $reCaptchaV2 } from '../../GlobalStates/AppSettingsStates'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'

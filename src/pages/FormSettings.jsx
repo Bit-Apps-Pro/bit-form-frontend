@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
 import { lazy, memo, Suspense, useEffect } from 'react'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
-import { useAtom, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import ProModal from '../components/Utilities/ProModal'

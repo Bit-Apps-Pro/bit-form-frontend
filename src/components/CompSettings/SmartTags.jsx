@@ -3,7 +3,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'

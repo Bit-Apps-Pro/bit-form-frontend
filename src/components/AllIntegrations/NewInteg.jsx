@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fieldsArr, $integrations } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import app from '../../styles/app.style'

@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAtomValue, useSetAtom } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import EditEntryData from '../components/EditEntryData'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import ExportImportMenu from '../components/ExportImport/ExportImportMenu'

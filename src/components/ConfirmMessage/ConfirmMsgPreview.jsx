@@ -4,7 +4,7 @@
 import { create } from 'mutative'
 import { useCallback, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { IS_PRO } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'

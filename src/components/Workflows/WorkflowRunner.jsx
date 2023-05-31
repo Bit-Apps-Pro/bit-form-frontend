@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { useAtom, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'

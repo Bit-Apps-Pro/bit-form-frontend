@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import BrushIcn from '../../../Icons/BrushIcn'

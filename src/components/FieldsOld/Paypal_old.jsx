@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { useEffect, useState } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { select } from '../../Utils/globalHelpers'

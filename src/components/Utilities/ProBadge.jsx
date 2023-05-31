@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import 'tippy.js/animations/shift-away.css'
 import 'tippy.js/dist/backdrop.css'
 import 'tippy.js/dist/tippy.css'

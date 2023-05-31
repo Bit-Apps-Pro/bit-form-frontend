@@ -8,7 +8,7 @@
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtomValue, useSetAtom } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { $builderRightPanelScroll, $flags } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'

@@ -1,7 +1,7 @@
 import Tagify from '@yaireo/tagify'
 import '@yaireo/tagify/dist/tagify.css'
 import { useEffect, useRef } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fieldsArr } from '../../GlobalStates/GlobalStates'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 

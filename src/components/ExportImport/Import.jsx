@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../GlobalStates/GlobalStates'
 import Modal from '../Utilities/Modal'
 import ImportStepOne from './ImportStepOne'

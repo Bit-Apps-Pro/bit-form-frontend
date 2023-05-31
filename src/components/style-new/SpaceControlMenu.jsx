@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'

@@ -1,6 +1,6 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'

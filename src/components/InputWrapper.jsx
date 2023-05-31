@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'

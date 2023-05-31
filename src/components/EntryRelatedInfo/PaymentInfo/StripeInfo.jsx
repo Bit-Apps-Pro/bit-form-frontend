@@ -1,4 +1,4 @@
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { __ } from '../../../Utils/i18nwrap'
 import noData from '../../../resource/img/nodata.svg'
 import { $bits } from '../../../GlobalStates/GlobalStates'

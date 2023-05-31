@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'

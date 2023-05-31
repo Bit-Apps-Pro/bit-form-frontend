@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy, IS_PRO } from '../../../Utils/Helpers'

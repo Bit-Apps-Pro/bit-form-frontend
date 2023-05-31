@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'

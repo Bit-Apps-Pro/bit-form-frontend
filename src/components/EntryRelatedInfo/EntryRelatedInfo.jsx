@@ -1,5 +1,5 @@
 import { memo, useState } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { __ } from '../../Utils/i18nwrap'
 import FormEntryNotes from './FormEntryNotes'

@@ -1,4 +1,4 @@
-import { useAtom } from 'recoil'
+import { useAtom } from 'jotai'
 import { useFela } from 'react-fela'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { showDraggableModal } from './styleHelpers'

@@ -4,7 +4,7 @@
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'

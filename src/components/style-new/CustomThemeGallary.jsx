@@ -3,7 +3,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'

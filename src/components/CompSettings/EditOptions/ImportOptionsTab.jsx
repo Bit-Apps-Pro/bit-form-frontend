@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { deepCopy, IS_PRO } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'

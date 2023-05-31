@@ -14,7 +14,7 @@ import 'react-day-picker/dist/style.css'
  */
 import { Link, useParams } from 'react-router-dom'
 import Timekeeper from 'react-timekeeper'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'

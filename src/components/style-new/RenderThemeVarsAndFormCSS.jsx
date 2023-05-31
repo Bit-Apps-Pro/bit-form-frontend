@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'

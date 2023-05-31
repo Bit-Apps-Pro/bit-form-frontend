@@ -1,4 +1,4 @@
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $btcbi } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'

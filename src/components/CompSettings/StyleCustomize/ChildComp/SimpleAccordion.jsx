@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $proModal } from '../../../../GlobalStates/GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'

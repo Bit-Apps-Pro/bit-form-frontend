@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useAtomValue, useSetAtom } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 // import MtInput from './MtInput'

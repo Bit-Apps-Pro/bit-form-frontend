@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtomValue, useSetAtom } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $allThemeColors } from '../../GlobalStates/ThemeColorsState'

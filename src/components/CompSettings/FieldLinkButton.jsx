@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../GlobalStates/GlobalStates'
 import DocIcn from '../../Icons/DocIcn'
 import TrashIcn from '../../Icons/TrashIcn'

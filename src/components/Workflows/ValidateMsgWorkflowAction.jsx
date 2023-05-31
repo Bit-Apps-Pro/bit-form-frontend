@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { __ } from '../../Utils/i18nwrap'
 import { $confirmations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import MtSelect from '../Utilities/MtSelect'

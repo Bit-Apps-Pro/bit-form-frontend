@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 import app from '../../styles/app.style'

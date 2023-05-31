@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $payments } from '../../../GlobalStates/AppSettingsStates'
 import { $bits, $fields } from '../../../GlobalStates/GlobalStates'
 import { dateTimeFormatter } from '../../../Utils/Helpers'

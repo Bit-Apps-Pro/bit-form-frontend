@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../../GlobalStates/StylesState'
 import DirectionIcn from '../../../Icons/DirectionIcn'
 import TxtAlignCntrIcn from '../../../Icons/TxtAlignCntrIcn'

@@ -16,7 +16,7 @@ import bitFilepondPluginMediaPreview from 'bit-filepond-plugin-media-preview/src
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef, useState } from 'react'
-import { useAtom } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { selectAllInGrid, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'

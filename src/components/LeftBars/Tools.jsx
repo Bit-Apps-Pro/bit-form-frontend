@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { useFela } from 'react-fela'
-import { useAtom, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import { $breakpoint, $builderHookStates, $draggingField } from '../../GlobalStates/GlobalStates'
 
 function Tools({ setNewData, value, children, title }) {

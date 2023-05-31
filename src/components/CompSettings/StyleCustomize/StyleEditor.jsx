@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Link, useNavigate } from 'react-router-dom'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $draggableModal } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'

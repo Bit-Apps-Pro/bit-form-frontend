@@ -1,4 +1,4 @@
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'

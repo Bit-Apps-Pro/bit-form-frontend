@@ -2,7 +2,7 @@
 import loadable from '@loadable/component'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'

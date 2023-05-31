@@ -1,7 +1,7 @@
 // create a react component
 
 import { useFela } from 'react-fela'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $proModal } from '../../../../GlobalStates/GlobalStates'
 import { __ } from '../../../../Utils/i18nwrap'
 import proHelperData from '../../../../Utils/StaticData/proHelperData'

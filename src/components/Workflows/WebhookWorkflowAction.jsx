@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { useFela } from 'react-fela'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import { __ } from '../../Utils/i18nwrap'

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'

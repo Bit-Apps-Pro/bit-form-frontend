@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { create } from 'mutative'
 import { useEffect, useRef } from 'react'
-import { useAtomValue, useSetAtom } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useFela } from 'react-fela'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $proModal } from '../../GlobalStates/GlobalStates'
 import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'

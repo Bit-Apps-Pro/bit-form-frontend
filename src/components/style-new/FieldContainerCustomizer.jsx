@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'

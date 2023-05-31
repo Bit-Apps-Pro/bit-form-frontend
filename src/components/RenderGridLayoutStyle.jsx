@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $breakpoint, $layouts, $nestedLayouts } from '../GlobalStates/GlobalStates'
 import { cols } from '../Utils/FormBuilderHelper'
 import { generateLayoutStyle } from '../Utils/atomicStyleGenarate'

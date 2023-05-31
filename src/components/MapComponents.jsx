@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $styles } from '../GlobalStates/StylesState'
 import '../resource/sass/components.scss'
 import { isObjectEmpty } from '../Utils/Helpers'

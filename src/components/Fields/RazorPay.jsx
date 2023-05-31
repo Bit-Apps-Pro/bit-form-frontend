@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { loadScript, select } from '../../Utils/globalHelpers'

@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useSetAtom } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $proModal } from '../../../../GlobalStates/GlobalStates'
 import proHelperData from '../../../../Utils/StaticData/proHelperData'
 import ProBadge from '../../../Utilities/ProBadge'

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { checkValidEmail } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'

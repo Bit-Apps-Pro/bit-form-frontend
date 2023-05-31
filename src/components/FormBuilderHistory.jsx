@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
   $breakpoint,
   $builderHistory,

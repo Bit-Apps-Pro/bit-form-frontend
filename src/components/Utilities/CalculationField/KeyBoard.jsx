@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'

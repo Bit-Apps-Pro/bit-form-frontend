@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'

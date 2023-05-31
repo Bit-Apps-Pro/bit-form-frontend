@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
