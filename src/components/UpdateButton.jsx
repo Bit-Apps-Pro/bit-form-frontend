@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useResetAtom, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom} from 'jotai/utils'
 import {
   $additionalSettings,
   $breakpointSize,
