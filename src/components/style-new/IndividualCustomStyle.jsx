@@ -4,7 +4,7 @@
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -45,7 +45,7 @@ import TransformControl from './TransformControl'
 import TransitionControl from './TransitionControl'
 
 export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const themeVars = useAtomValue($themeVars)
   const themeColors = useAtomValue($themeColors)
   const fields = useAtomValue($fields)

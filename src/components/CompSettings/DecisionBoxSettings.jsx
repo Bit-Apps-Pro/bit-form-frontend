@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -27,7 +27,7 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function DecisionBoxSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [labelModal, setLabelModal] = useState(false)
   const { css } = useFela()

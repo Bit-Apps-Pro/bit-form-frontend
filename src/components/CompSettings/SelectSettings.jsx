@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
@@ -30,7 +30,7 @@ export default function SelectSettings() {
   const { isPro } = bits
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const options = fieldData.opt
   const isRequired = fieldData.valid.req !== undefined

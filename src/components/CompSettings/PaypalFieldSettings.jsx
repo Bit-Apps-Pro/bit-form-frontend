@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
@@ -22,7 +22,7 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 
 export default function PaypalFieldSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
   const payments = useAtomValue($payments)

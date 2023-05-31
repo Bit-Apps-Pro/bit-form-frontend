@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
@@ -13,7 +13,7 @@ import SingleToggle from '../../Utilities/SingleToggle'
 
 export default function FieldHideSettings({ cls }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const isHidden = fields[fldKey].valid?.hide || false
   const { css } = useFela()
 

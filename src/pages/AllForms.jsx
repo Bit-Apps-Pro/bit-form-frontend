@@ -6,7 +6,7 @@ import { memo, useCallback, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
@@ -33,7 +33,7 @@ const Welcome = loadable(() => import('./Welcome'), { fallback: <div>Loading...<
 function AllFroms() {
   const [modal, setModal] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
-  const [allForms, setAllForms] = useRecoilState($forms)
+  const [allForms, setAllForms] = useAtom($forms)
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const newFormId = useAtomValue($newFormId)
   const bits = useAtomValue($bits)

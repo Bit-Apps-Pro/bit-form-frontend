@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -29,7 +29,7 @@ export default function HtmlSelectSettings() {
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
   const { css } = useFela()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const [optionMdl, setOptionMdl] = useState(false)
   const fieldData = deepCopy(fields[fldKey])
   const options = fieldData.opt

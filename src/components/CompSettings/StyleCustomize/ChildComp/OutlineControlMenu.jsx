@@ -4,7 +4,7 @@
 /* eslint-disable no-console */
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
@@ -28,9 +28,9 @@ import SizeControl from './SizeControl'
 export default function OutlineControlMenu({ objectPaths, id }) {
   const { css } = useFela()
   const { '*': rightBarUrl } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
   const [element, fieldKey] = rightBarUrl.split('/')
 
   const stateObj = (objName) => getObjByKey(objName, { themeVars, styles, themeColors })

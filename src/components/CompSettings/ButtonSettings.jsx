@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -27,7 +27,7 @@ import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 
 export default function ButtonSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [error, setError] = useState({})
   const [icnMdl, setIcnMdl] = useState(false)
@@ -35,7 +35,7 @@ export default function ButtonSettings() {
   const { txt, align, txtAlign, fulW, btnTyp } = fieldData
   const [btnAlign, setBtnAlign] = useState(align)
   const { css } = useFela()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const selectedFieldId = useAtomValue($selectedFieldId)
 
   const pos = [

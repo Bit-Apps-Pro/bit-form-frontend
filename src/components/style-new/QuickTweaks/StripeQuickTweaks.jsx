@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $styles } from '../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../GlobalStates/ThemeVarsState'
 import ut from '../../../styles/2.utilities'
@@ -15,7 +15,7 @@ import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 export default function StripeQuickTweaks() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const themeVars = useAtomValue($themeVars)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldSize } = fldStyleObj

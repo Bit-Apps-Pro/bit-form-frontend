@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
@@ -17,7 +17,7 @@ export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar,
   const { css } = useFela()
   const { fieldKey, element } = useParams()
   const styles = useAtomValue($styles)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
 
   const fontVarSetHandler = (varName, val) => {
     setThemeVars(prvThemeVars => create(prvThemeVars, drft => {

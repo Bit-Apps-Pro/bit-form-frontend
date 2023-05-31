@@ -3,7 +3,7 @@ import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -26,8 +26,8 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function RazorpayFieldSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [fields, setFields] = useAtom($fields)
+  const [styles, setStyles] = useAtom($styles)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
   const payments = useAtomValue($payments)

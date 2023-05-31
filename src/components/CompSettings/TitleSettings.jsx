@@ -7,7 +7,7 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
@@ -43,9 +43,9 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 function TitleSettings() {
   const { css } = useFela()
   const { fieldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fieldKey])
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const selectedFieldId = useAtomValue($selectedFieldId)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { classes } = fldStyleObj

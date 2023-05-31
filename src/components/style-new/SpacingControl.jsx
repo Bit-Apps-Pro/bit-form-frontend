@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -17,9 +17,9 @@ export default function SpacingControl({
 }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
 
   const { object, paths } = objectPaths
   const margin = themeVars[paths?.margin]

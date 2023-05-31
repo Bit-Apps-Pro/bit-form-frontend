@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
@@ -12,8 +12,8 @@ import ResetStyle from './ResetStyle'
 import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, getValueFromStateVar, unitConverter } from './styleHelpers'
 
 export default function FontSizeControl({ stateObjName, propertyPath, id }) {
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [styles, setStyle] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [styles, setStyle] = useAtom($styles)
   const { fieldKey, element } = useParams()
   const { css } = useFela()
 

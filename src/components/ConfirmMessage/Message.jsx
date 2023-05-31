@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $confirmations, $fieldsArr, $proModal, $updateBtn } from '../../GlobalStates/GlobalStates'
 import BoxFullIcon from '../../Icons/BoxFullIcon'
 import BoxIcon from '../../Icons/BoxIcon'
@@ -32,7 +32,7 @@ function Message({ id, msgItem }) {
   const setUpdateBtn = useSetAtom($updateBtn)
   const setProModal = useSetAtom($proModal)
   const fieldsArr = useAtomValue($fieldsArr)
-  const [allConf, setAllConf] = useRecoilState($confirmations)
+  const [allConf, setAllConf] = useAtom($confirmations)
   const [msgActive, setMsgActive] = useState(false)
   const [modal, setModal] = useState({ show: false })
   const [closeColorType, setCloseColorType] = useState('default')

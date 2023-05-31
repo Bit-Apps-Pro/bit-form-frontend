@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import sc from '../../../styles/commonStyleEditorStyle'
@@ -13,8 +13,8 @@ import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 export default function RazorpayFieldQuickTweaks() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
-  const [fields, setFields] = useRecoilState($fields)
+  const [styles, setStyles] = useAtom($styles)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fieldKey])
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
 

@@ -3,7 +3,7 @@ import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Navigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
@@ -25,7 +25,7 @@ import TransitionControl from './TransitionControl'
 export default function FormCommonStyle({ element, componentTitle }) {
   const { css } = useFela()
   const { fieldKey, formID, formType } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const elemn = `.${element}-b${formID}`
   const formWrpStylesObj = styles.form?.[elemn]
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj || {})

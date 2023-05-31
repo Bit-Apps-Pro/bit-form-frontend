@@ -3,7 +3,7 @@
 import { create } from 'mutative'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $confirmations, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -21,7 +21,7 @@ import Message from './Message'
 
 function ConfMsg({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
-  const [allConf, setAllConf] = useRecoilState($confirmations)
+  const [allConf, setAllConf] = useAtom($confirmations)
   const setUpdateBtn = useSetAtom($updateBtn)
   const setStyles = useSetAtom($styles)
   const allConfirmations = deepCopy(allConf)

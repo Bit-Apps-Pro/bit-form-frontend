@@ -7,7 +7,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -28,7 +28,7 @@ import Grow from './StyleCustomize/ChildComp/Grow'
 
 function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '', unsplash = false }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [controller, setController] = useState({ parent: selected || 'Icons' })
   const [files, setFiles] = useState([])
@@ -47,7 +47,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const { css } = useFela()
   const url = 'https://raw.githack.com'
   const ref = useRef()
-  const [allStyles, setAllStyles] = useRecoilState($allStyles)
+  const [allStyles, setAllStyles] = useAtom($allStyles)
   const clientId = 'n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU'
   const [pageNo, setPageNo] = useState(1)
   const [images, setImages] = useState([])

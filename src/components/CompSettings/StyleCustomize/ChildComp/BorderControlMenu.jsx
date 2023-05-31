@@ -4,7 +4,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
@@ -35,9 +35,9 @@ import SpaceControl from './SpaceControl'
 export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   const { css } = useFela()
   const { '*': rightBarUrl } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
   const [rightBar, element, fieldKey] = rightBarUrl.split('/')
 
   const fldStyleObj = styles?.fields?.[fieldKey]

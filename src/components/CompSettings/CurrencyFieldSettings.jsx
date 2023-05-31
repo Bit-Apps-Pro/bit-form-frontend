@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
@@ -35,7 +35,7 @@ const CurrencyFieldSettings = () => {
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
   const { css } = useFela()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const [optionMdl, setOptionMdl] = useState(false)
   const fieldData = deepCopy(fields[fldKey])
   const adminLabel = fieldData.adminLbl || ''

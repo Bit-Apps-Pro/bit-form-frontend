@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
@@ -15,8 +15,8 @@ import {
 export default function ShadowControlMenu({ objectPaths, id }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [styles, setStyles] = useAtom($styles)
   const { object, paths } = objectPaths
 
   const currentState = getObjByKey(object, { themeColors, styles })

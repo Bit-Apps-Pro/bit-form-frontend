@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ut from '../../../../styles/2.utilities'
@@ -16,8 +16,8 @@ import SizeControl from './SizeControl'
 export default function TextDecorationControlMenu({ objectPaths, id }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [styles, setStyles] = useAtom($styles)
 
   const { object, paths } = objectPaths
 

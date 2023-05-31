@@ -3,7 +3,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -18,10 +18,10 @@ import { assignNestedObj, getObjByKey, getValueByObjPath, getValueFromStateVar, 
 export default function OutlineControl({ subtitle, objectPaths, id, allowImportant, state, hslaPaths }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [draggableModel, setDraggableModal] = useAtom($draggableModal)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [styles, setStyles] = useAtom($styles)
 
   /**
    * objectPaths is Array

@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -36,8 +36,8 @@ export default function FilterColorPicker({
   const { element, fieldKey } = useParams()
   const setStyles = useSetAtom($styles)
   const setThemeVars = useSetAtom($themeVars)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
 
   const clearHandler = () => {
     switch (stateObjName) {

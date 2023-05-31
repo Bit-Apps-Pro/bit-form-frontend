@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -37,7 +37,7 @@ const PhoneNumberFieldSettings = () => {
   if (!fldKey) return <>No field exist with this field key</>
 
   const { css } = useFela()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const [optionMdl, setOptionMdl] = useState(false)
   const [icnMdl, setIcnMdl] = useState(false)
   const [fieldName, setFieldName] = useState('')

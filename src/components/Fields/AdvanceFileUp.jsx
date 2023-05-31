@@ -16,14 +16,14 @@ import bitFilepondPluginMediaPreview from 'bit-filepond-plugin-media-preview/src
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 import 'filepond/dist/filepond.min.css'
 import { memo, useEffect, useRef, useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { selectAllInGrid, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 function AdvanceFileUp({ attr, formID, fieldKey, styleClasses }) {
-  const [fields] = useRecoilState($fields)
+  const [fields] = useAtom($fields)
   const fieldData = fields[fieldKey]
   const { config } = fieldData
   const [fileChange, setFileChange] = useState(0)

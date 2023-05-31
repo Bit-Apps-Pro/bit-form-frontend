@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -28,7 +28,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const { css } = useFela()
   const { element } = useParams()
   const themeVars = useAtomValue($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const fields = useAtomValue($fields)
   const fieldData = deepCopy(fields[fieldKey])
   const fldStyleObj = styles?.fields?.[fieldKey] || {}

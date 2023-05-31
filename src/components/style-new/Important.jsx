@@ -1,13 +1,13 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import StarIcn from '../../Icons/StarIcn'
 import Tip from '../Utilities/Tip'
 import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function Important({ paths = {}, propertyPath, className, id }) {
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const { css } = useFela()
   const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
   const isAlreadyImportant = () => {
