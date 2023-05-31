@@ -1,6 +1,6 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
@@ -15,7 +15,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   const { css } = useFela()
   const [workflows, setWorkflows] = useRecoilState($workflows)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
 
   const addLogic = (typ, path = '', isGroup = 0) => {
     const logicData = [typ]

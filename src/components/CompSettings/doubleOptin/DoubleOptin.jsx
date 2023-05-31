@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits, $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import app from '../../../styles/app.style'
@@ -36,14 +36,14 @@ export default function DoubleOptin() {
       invalid_key_msg: 'Sorry! Your URL Is Invalid!',
     },
   )
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const [customRedirectMdl, setCustomRedirectMdl] = useState(false)
   const [dfltTampMdl, setDfltTamMdl] = useState(false)
   const [status, setStatus] = useState(false)
   const { isPro, allPages } = bits
   const [isLoad, setIsLoad] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const formFields = useRecoilValue($fieldsArr)
+  const formFields = useAtomValue($fieldsArr)
   const [snack, setSnackbar] = useState({ show: false })
 
   const { formID } = useParams()

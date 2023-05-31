@@ -1,6 +1,6 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import { $breakpoint, $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates/GlobalStates'
 import MobileIcon from '../Icons/MobileIcon'
@@ -16,7 +16,7 @@ export default function BreakpointSizeControl() {
   const { css } = useFela()
   const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
   const [breakpointSize, setBreakpointSize] = useRecoilState($breakpointSize)
-  const breakpoint = useRecoilValue($breakpoint)
+  const breakpoint = useAtomValue($breakpoint)
   const setIsDraggable = useSetRecoilState($isDraggable)
   const setUpdateBtn = useSetRecoilState($updateBtn)
 

@@ -3,7 +3,7 @@ import BitCountryField from 'bit-country-field/src/bit-country-field'
 import { observeElm } from 'bit-helpers/src'
 import bitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
 import { useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -13,9 +13,9 @@ const CountryField = ({ fieldKey, formID, attr, styleClasses }) => {
   // console.log(bit_virtualized_list, '###');
   const countryWrapElmRef = useRef(null)
   const countryFieldRef = useRef(null)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { options, ph } = fieldData
 
   useEffect(() => {

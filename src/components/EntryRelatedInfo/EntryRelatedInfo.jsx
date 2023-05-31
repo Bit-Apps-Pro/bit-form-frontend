@@ -1,5 +1,5 @@
 import { memo, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import { __ } from '../../Utils/i18nwrap'
 import FormEntryNotes from './FormEntryNotes'
@@ -11,9 +11,9 @@ import { $fieldLabels, $formId, $integrations } from '../../GlobalStates/GlobalS
 import paymentFields from '../../Utils/StaticData/paymentFields'
 
 function EntryRelatedInfo({ entryID, rowDtl, setSnackbar, close }) {
-  const formID = useRecoilValue($formId)
-  const allLabels = useRecoilValue($fieldLabels)
-  const integrations = useRecoilValue($integrations)
+  const formID = useAtomValue($formId)
+  const allLabels = useAtomValue($fieldLabels)
+  const integrations = useAtomValue($integrations)
   const payFields = allLabels.filter(label => paymentFields.includes(label.type))
   return (
     <Modal lg show setModal={close} title={__('Related Info')}>

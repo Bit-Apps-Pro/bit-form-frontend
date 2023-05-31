@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -9,7 +9,7 @@ import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from 
 export default function ZohoMarketingHubFieldMap({ i, formFields, field, marketingHubConf, setMarketingHubConf }) {
   const isNotRequired = field.zohoFormField === '' || marketingHubConf.default.fields[marketingHubConf.list].required?.indexOf(field.zohoFormField) === -1
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   return (

@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
@@ -74,7 +74,7 @@ const BUILDER_WIDTH = window.innerWidth - LEFT_MENU_WIDTH - RIGHT_MENU_WIDTH - (
 
 const FormBuilder = ({ isLoading }) => {
   const [proModal, setProModal] = useRecoilState($proModal)
-  const newFormId = useRecoilValue($newFormId)
+  const newFormId = useAtomValue($newFormId)
   const { element, fieldKey, formType, formID: pramsFormId } = useParams()
   const isNewForm = formType !== 'edit'
   const formID = isNewForm ? newFormId : pramsFormId
@@ -85,12 +85,12 @@ const FormBuilder = ({ isLoading }) => {
   const [newData, setNewData] = useState(null)
   const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
   const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
-  const builderHookStates = useRecoilValue($builderHookStates)
-  const { styleMode } = useRecoilValue($flags)
+  const builderHookStates = useAtomValue($builderHookStates)
+  const { styleMode } = useAtomValue($flags)
   const [v1Style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
   const [styleSheet, setStyleSheet] = useState(j2c.sheet(v1Style))
   const [styleLoading, setStyleLoading] = useState(true)
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
   const setBreakpointSize = useSetRecoilState($breakpointSize)
@@ -99,10 +99,10 @@ const FormBuilder = ({ isLoading }) => {
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setBuilderSettings = useSetRecoilState($builderSettings)
-  const builderHelperStates = useRecoilValue($builderHelperStates)
+  const builderHelperStates = useAtomValue($builderHelperStates)
   const setIsDraggable = useSetRecoilState($isDraggable)
 
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)

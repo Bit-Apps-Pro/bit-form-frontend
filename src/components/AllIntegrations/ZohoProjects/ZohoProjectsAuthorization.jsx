@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
@@ -12,7 +12,7 @@ import { handleAuthorize, refreshPortals } from './ZohoProjectsCommonFunc'
 export default function ZohoProjectsAuthorization({
   formID, projectsConf, setProjectsConf, step, setstep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
 }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '' })

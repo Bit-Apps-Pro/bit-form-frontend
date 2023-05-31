@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
@@ -21,7 +21,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function IcnCustomizer({ elementKey }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const themeColors = useRecoilValue($themeColors)
+  const themeColors = useAtomValue($themeColors)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const weightVar = `--${elementKey}-w`
   const heightVar = `--${elementKey}-h`

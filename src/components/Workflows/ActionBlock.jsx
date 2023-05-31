@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 // import MtInput from './MtInput'
@@ -12,8 +12,8 @@ import MtSelect from '../Utilities/MtSelect'
 
 function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
   const setWorkflows = useSetRecoilState($workflows)
-  const fields = useRecoilValue($fields)
-  const formFields = useRecoilValue($fieldsArr)
+  const fields = useAtomValue($fields)
+  const formFields = useAtomValue($fieldsArr)
   const setUpdateBtn = useSetRecoilState($updateBtn)
   const { css } = useFela()
   let fieldKey = ''

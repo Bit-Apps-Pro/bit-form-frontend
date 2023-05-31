@@ -2,15 +2,15 @@
 import { create } from 'mutative'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits, $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import TinyMCE from '../../Utilities/TinyMCE'
 import ZohoMailActions from './ZohoMailActions'
 
 export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf }) {
-  const bits = useRecoilValue($bits)
-  const fieldsArr = useRecoilValue($fieldsArr)
+  const bits = useAtomValue($bits)
+  const fieldsArr = useAtomValue($fieldsArr)
 
   const mailOptions = () => {
     const mail = []

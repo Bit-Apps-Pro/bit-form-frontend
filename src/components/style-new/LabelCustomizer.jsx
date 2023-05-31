@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
@@ -14,7 +14,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function LabelCustomizer() {
   const { css } = useFela()
-  const themeColors = useRecoilValue($themeColors)
+  const themeColors = useAtomValue($themeColors)
 
   const { '--fld-lbl-c': flc,
     '--fld-lbl-sh': flSh,

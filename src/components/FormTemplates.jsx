@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useNavigate } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $newFormId } from '../GlobalStates/GlobalStates'
 import DownloadIcon from '../Icons/DownloadIcon'
 import FormIcn from '../Icons/FormIcn'
@@ -16,7 +16,7 @@ const staticTem = [
 ]
 
 export default function FormTemplates({ setTempModal, setSnackbar }) {
-  const newFormId = useRecoilValue($newFormId)
+  const newFormId = useAtomValue($newFormId)
   const navigate = useNavigate()
   const [modal, setModal] = useState(false)
   const { css } = useFela()

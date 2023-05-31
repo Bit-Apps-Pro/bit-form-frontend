@@ -3,7 +3,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $breakpoint, $builderSettings } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import ut from '../styles/2.utilities'
@@ -22,7 +22,7 @@ export default function BuilderSettings() {
   const { css } = useFela()
   const { formID } = useParams()
   const [staticStylesState, setStaticStyleState] = useRecoilState($staticStylesState)
-  const breakpoints = useRecoilValue($breakpoint)
+  const breakpoints = useAtomValue($breakpoint)
   const [brkpnt, setBrkpnt] = useState(breakpoints)
   const [{ atomicClassPrefix, darkModeConfig, addImportantRuleToStyles }, setBuilderSettings] = useRecoilState($builderSettings)
   let darkModePrefereceInitialValue = 'disabled'

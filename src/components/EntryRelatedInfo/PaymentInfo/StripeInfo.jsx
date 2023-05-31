@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import noData from '../../../resource/img/nodata.svg'
 import { $bits } from '../../../GlobalStates/GlobalStates'
@@ -13,7 +13,7 @@ const generateParsedInfo = info => {
 }
 
 export default function StripeInfo({ paymentInfo, payInfoFound }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
   const stripeResp = generateParsedInfo(paymentInfo)
 

@@ -7,7 +7,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -40,7 +40,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const [searchLoading, setSearchLoading] = useState(false)
   const [scrollLoading, setScrollLoading] = useState(false)
   const uploadLabel = uploadLbl || 'Upload Icon'
-  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const selectedFieldId = useAtomValue($selectedFieldId)
   const [total, setTotal] = useState(10001)
   const [showWarning, setShowWarning] = useState(false)
   const [selectIcon, setSelectIcon] = useState()

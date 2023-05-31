@@ -2,7 +2,7 @@ import loadable from '@loadable/component'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
@@ -45,7 +45,7 @@ function FormDetails() {
   const [appFullScreen, setAppFullScreen] = useState(true)
   const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
-  const updateBtn = useRecoilValue($updateBtn)
+  const updateBtn = useAtomValue($updateBtn)
   const [formInfo, setFormInfo] = useRecoilState($formInfo)
   const { formName } = formInfo
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
@@ -64,7 +64,7 @@ function FormDetails() {
   const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
   const setIsNewThemeStyleLoaded = useSetRecoilState($isNewThemeStyleLoaded)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const newFormId = useRecoilValue($newFormId)
+  const newFormId = useAtomValue($newFormId)
   const { css } = useFela()
   const [staticStylesState, setStaticStylesState] = useRecoilState($staticStylesState)
   const setBreakpoint = useSetRecoilState($breakpoint)

@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
@@ -13,7 +13,7 @@ import CopyText from './Utilities/CopyText'
 import SnackMsg from './Utilities/SnackMsg'
 
 export default function GCLID() {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const [gclidConf, setGclidConf] = useState({
     name: 'Gclid',

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import {
   $breakpoint,
   $builderHistory,

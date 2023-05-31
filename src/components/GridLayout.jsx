@@ -10,7 +10,7 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -73,10 +73,10 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setDeletedFldKey = useSetRecoilState($deletedFldKey)
-  const draggingField = useRecoilValue($draggingField)
+  const draggingField = useAtomValue($draggingField)
   const [flags, setFlags] = useRecoilState($flags)
-  const builderHookStates = useRecoilValue($builderHookStates)
-  const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
+  const builderHookStates = useAtomValue($builderHookStates)
+  const isNewThemeStyleLoaded = useAtomValue($isNewThemeStyleLoaded)
   const [styles, setStyles] = useRecoilState($stylesLgLight)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
@@ -84,8 +84,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [resizingFld, setResizingFld] = useState({})
   const [rowHeight, setRowHeight] = useState(1)
-  const uniqueFieldId = useRecoilValue($uniqueFieldId)
-  const isDraggable = useRecoilValue($isDraggable)
+  const uniqueFieldId = useAtomValue($uniqueFieldId)
+  const isDraggable = useAtomValue($isDraggable)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const setContextMenuRef = useSetRecoilState($contextMenuRef)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)

@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
@@ -17,7 +17,7 @@ export default function MailerLiteFieldMap({ i, formFields, field, mailerLiteCon
 
   const requiredFlds = mailerLiteConf?.mailerLiteFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = mailerLiteConf?.mailerLiteFields.filter(fld => fld.required === false) || []
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   return (

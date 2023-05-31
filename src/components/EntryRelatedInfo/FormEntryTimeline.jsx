@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits, $fieldLabels } from '../../GlobalStates/GlobalStates'
 import DocIcn from '../../Icons/DocIcn'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -10,8 +10,8 @@ import CopyText from '../Utilities/CopyText'
 import RenderHtml from '../Utilities/RenderHtml'
 
 function FormEntryTimeline({ formID, entryID, integrations }) {
-  const bits = useRecoilValue($bits)
-  const allLabels = useRecoilValue($fieldLabels)
+  const bits = useAtomValue($bits)
+  const allLabels = useAtomValue($fieldLabels)
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
   const [log, setLog] = useState([])
   const [integLogs, setIntegLogs] = useState([])

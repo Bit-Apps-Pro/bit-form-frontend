@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -11,7 +11,7 @@ export default function ZohoBiginFieldMap({
 }) {
   const module = tab === 0 ? biginConf.module : biginConf.relatedlists?.[tab - 1]?.module
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const isNotRequired = field.zohoFormField === '' || biginConf.default.moduleData?.[module]?.required?.indexOf(field.zohoFormField) === -1
 

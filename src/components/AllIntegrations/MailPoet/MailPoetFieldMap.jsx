@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -8,7 +8,7 @@ import MtInput from '../../Utilities/MtInput'
 export default function MailPoetFieldMap({ i, formFields, field, mailPoetConf, setMailPoetConf }) {
   const isRequired = field.required
   const notResquiredField = mailPoetConf?.default?.fields && Object.values(mailPoetConf?.default?.fields).filter((f => f.required === ''))
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const addFieldMap = (indx) => {
     const newConf = { ...mailPoetConf }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetRecoilState } from 'recoil'
 import { $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $allThemeColors } from '../../GlobalStates/ThemeColorsState'
@@ -23,9 +23,9 @@ export default function ThemeGallary() {
   const setAllThemeVars = useSetRecoilState($allThemeVars)
   const setAllStyles = useSetRecoilState($allStyles)
 
-  const currentStyles = useRecoilValue($styles)
-  const formId = useRecoilValue($formId)
-  const fields = useRecoilValue($fields)
+  const currentStyles = useAtomValue($styles)
+  const formId = useAtomValue($formId)
+  const fields = useAtomValue($fields)
   const fieldsArray = Object.entries(fields)
   const activeTheme = themes.find(theme => theme?.slug === currentStyles.theme)
   const [modal, setModal] = useState({ show: false })

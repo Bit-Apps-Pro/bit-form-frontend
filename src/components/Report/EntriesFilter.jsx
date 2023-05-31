@@ -3,7 +3,7 @@ import { DateRange } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $reportSelector } from '../../GlobalStates/GlobalStates'
 import CalendarIcn from '../../Icons/CalendarIcn'
@@ -17,7 +17,7 @@ import Downmenu from '../Utilities/Downmenu'
 import Tip from '../Utilities/Tip'
 
 export default function EntriesFilter({ fetchData }) {
-  const currentReport = useRecoilValue($reportSelector)
+  const currentReport = useAtomValue($reportSelector)
   const initialRange = {
     startDate: '',
     endDate: '',

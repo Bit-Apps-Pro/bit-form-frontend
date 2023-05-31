@@ -13,7 +13,7 @@ import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $fields, $selectedFieldId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
@@ -63,7 +63,7 @@ function TextFieldSettings() {
   const [styles, setStyles] = useRecoilState($styles)
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const selectedFieldId = useAtomValue($selectedFieldId)
   const patternTippy = useRef()
   const adminLabel = fieldData.adminLbl || ''
   const imputMode = fieldData.inputMode || 'text'

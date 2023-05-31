@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import ut from '../../../styles/2.utilities'
@@ -19,7 +19,7 @@ import GroundhoggIntegLayout from './GroundhoggIntegLayout'
 function Groundhogg({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
   const { formID } = useParams()
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { css } = useFela()
 
   const [isLoading, setIsLoading] = useState(false)

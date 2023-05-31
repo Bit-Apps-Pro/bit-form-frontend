@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
@@ -6,7 +6,7 @@ import MtInput from '../../Utilities/MtInput'
 import { handleCustomValue, handleFieldMapping } from './IntegrationHelpers'
 
 export default function TwilioFieldMap({ i, formFields, field, twilioConf, setTwilioConf }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   return (

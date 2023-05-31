@@ -1,6 +1,6 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $integrations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import { IS_PRO } from '../../Utils/Helpers'
@@ -16,7 +16,7 @@ export default function IntegrationWorkflowAction({ lgcGrpInd,
   const { css } = useFela()
   const [workflows, setWorkflows] = useRecoilState($workflows)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const integrations = useRecoilValue($integrations)
+  const integrations = useAtomValue($integrations)
 
   const setInteg = val => {
     const tmpWorkflows = create(workflows, draftWorkflow => {

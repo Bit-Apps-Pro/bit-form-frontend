@@ -4,7 +4,7 @@ import Tippy from '@tippyjs/react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { hideAll, roundArrow } from 'tippy.js'
 import 'tippy.js/animations/scale.css'
 import 'tippy.js/animations/shift-away-extreme.css'
@@ -37,12 +37,12 @@ import FilterIcn from '../../Icons/FilterIcn'
 import Downmenu from '../Utilities/Downmenu'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
-  const currentReport = useRecoilValue($reportSelector)
+  const currentReport = useAtomValue($reportSelector)
   const [reportId, setReportId] = useRecoilState($reportId)
   const [reports, setReports] = useRecoilState($reports)
   const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
 
-  const formFields = useRecoilValue($fieldsArr)
+  const formFields = useAtomValue($fieldsArr)
   const [showMdl, setshowMdl] = useState(false)
   const [reportIndex, setReportIndex] = useState(rprtIndx || 0)
   const { formID } = useParams()
@@ -50,7 +50,7 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const [availableReports, setAvailableReports] = useState([])
   const [reportUpdate, setReportUpdate] = useState(false)
   const [proModal, setProModal] = useState({ show: false, msg: '' })
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const [isLoading, setisLoading] = useState(false)
   const [snack, setSnackbar] = useState({ show: false })
@@ -359,9 +359,9 @@ const ReportsList = ({
   availableReports, setAvailableReports, setAvailableReport, reportFetchById, setProModal, confMdl, setconfMdl, setReportUpdate, setReportIndex, setshowMdl,
 }) => {
   const { css } = useFela()
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
-  const currentReport = useRecoilValue($reportSelector)
+  const currentReport = useAtomValue($reportSelector)
   const [reports, setReports] = useRecoilState($reports)
 
   const searchReport = (e) => {

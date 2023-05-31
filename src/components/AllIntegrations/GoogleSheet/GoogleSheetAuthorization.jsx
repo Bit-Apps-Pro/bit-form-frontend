@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
@@ -14,7 +14,7 @@ export default function GoogleSheetAuthorization({
 }) {
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { siteURL } = bits
 
   const handleInput = e => {

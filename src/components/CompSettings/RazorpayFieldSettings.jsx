@@ -3,7 +3,7 @@ import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -30,7 +30,7 @@ export default function RazorpayFieldSettings() {
   const [styles, setStyles] = useRecoilState($styles)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
-  const payments = useRecoilValue($payments)
+  const payments = useAtomValue($payments)
   const { css } = useFela()
   const [payNotes, setPayNotes] = useState([{}])
   const isSubscription = fieldData?.payType === 'subscription'

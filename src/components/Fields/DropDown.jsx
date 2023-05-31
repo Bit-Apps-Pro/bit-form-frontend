@@ -4,7 +4,7 @@ import BitDropdownField from 'bit-select-field/src/bit-select-field'
 import { observeElm } from 'bit-helpers/src'
 import { Fragment, memo, useEffect, useRef, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -15,7 +15,7 @@ function DropDown({
 }) {
   const [dropdownWrapElmRef, setDropdownWrapElmRef] = useState(null)
   const dropdownFieldRef = useRef(null)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
   const { optionsList, ph } = fieldData
   const { activeList, optionIcon, allowCustomOption } = fieldData.config

@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $fieldsArr, $integrations } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -58,7 +58,7 @@ export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
   const [integs, setIntegration] = useRecoilState($integrations)
   const integrations = deepCopy(integs)
-  const formFields = useRecoilValue($fieldsArr)
+  const formFields = useAtomValue($fieldsArr)
   const { css } = useFela()
 
   const renderIntegByType = () => {

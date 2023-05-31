@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
@@ -9,8 +9,8 @@ function TitleField({ fieldKey, attr: fieldData, styleClasses }) {
   const {
     logo, title, subtitle, titleHide, subtitleHide, titleTag, subTitleTag,
   } = fieldData
-  const breakpoint = useRecoilValue($breakpoint)
-  const { styleMode } = useRecoilValue($flags)
+  const breakpoint = useAtomValue($breakpoint)
+  const { styleMode } = useAtomValue($flags)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
 
   const titleGenerator = (tag, text, cls, preIcn, sufIcn) => (

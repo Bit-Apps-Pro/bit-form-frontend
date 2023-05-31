@@ -4,7 +4,7 @@
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { ReactSortable } from 'react-sortablejs'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import MenuIcon from '../../../Icons/MenuIcon'
 import { __ } from '../../../Utils/i18nwrap'

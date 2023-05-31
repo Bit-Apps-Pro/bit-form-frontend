@@ -8,7 +8,7 @@ import {
   useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable,
 } from 'react-table'
 import { useSticky } from 'react-table-sticky'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $reportId, $reportSelector } from '../../GlobalStates/GlobalStates'
 import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
 import ChevronLeft from '../../Icons/ChevronLeft'
@@ -87,7 +87,7 @@ function Table(props) {
     columns, data, fetchData, refreshResp, report, rightHeader, leftHeader,
   } = props
   const [currentReportData, updateReportData] = useRecoilState($reportSelector)
-  const reportId = useRecoilValue($reportId)
+  const reportId = useAtomValue($reportId)
 
   const {
     getTableProps,

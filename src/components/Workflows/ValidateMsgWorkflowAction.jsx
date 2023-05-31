@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { $confirmations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import MtSelect from '../Utilities/MtSelect'
@@ -9,7 +9,7 @@ export default function ValidateMsgWorkflowAction({ lgcGrpInd,
   condGrpInd }) {
   const [workflows, setWorkflows] = useRecoilState($workflows)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const confirmations = useRecoilValue($confirmations)
+  const confirmations = useAtomValue($confirmations)
   const { failure: validateAction } = condGrp.actions
 
   const changeValidateMsg = val => {

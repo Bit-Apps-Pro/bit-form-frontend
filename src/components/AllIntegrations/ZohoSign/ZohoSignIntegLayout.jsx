@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import MailOpenIcn from '../../../Icons/MailOpenIcn'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -15,7 +15,7 @@ import { handleInput, refreshTemplateDetails, refreshTemplates } from './ZohoSig
 export default function ZohoSignIntegLayout({
   formID, formFields, signConf, setSignConf, isLoading, setisLoading, setSnackbar,
 }) {
-  const fieldsArr = useRecoilValue($fieldsArr)
+  const fieldsArr = useAtomValue($fieldsArr)
   const [actionMdl, setActionMdl] = useState({ show: false })
 
   if (signConf.template && signConf?.default?.templateDetails?.[signConf?.template] && (!signConf?.templateActions || (signConf.templateActions.length !== signConf?.default?.templateDetails?.[signConf?.template]?.actions?.length))) {

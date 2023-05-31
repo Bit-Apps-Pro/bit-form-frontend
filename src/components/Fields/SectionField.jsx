@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -41,13 +41,13 @@ export default function SectionField({
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setProModal = useSetRecoilState($proModal)
-  const fields = useRecoilValue($fields)
-  const { styleMode } = useRecoilValue($flags)
+  const fields = useAtomValue($fields)
+  const { styleMode } = useAtomValue($flags)
   const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
   const delayRef = useRef(null)
-  const { ref, isComponentVisible, setIsComponentVisible } = useRecoilValue($contextMenuRef)
-  const breakpoint = useRecoilValue($breakpoint)
-  const builderHookStates = useRecoilValue($builderHookStates)
+  const { ref, isComponentVisible, setIsComponentVisible } = useAtomValue($contextMenuRef)
+  const breakpoint = useAtomValue($breakpoint)
+  const builderHookStates = useAtomValue($builderHookStates)
   const setIsDraggable = useSetRecoilState($isDraggable)
   const { recalculateNestedField } = builderHookStates
   const { fieldKey: changedFieldKey, parentFieldKey, counter: fieldChangeCounter } = recalculateNestedField
@@ -71,7 +71,7 @@ export default function SectionField({
     }
   }
 
-  const draggingField = useRecoilValue($draggingField)
+  const draggingField = useAtomValue($draggingField)
 
   const onDrop = (e, dropPosition) => {
     const dragFieldData = handleFieldExtraAttr(draggingField.fieldData, 'section')

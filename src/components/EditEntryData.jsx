@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
@@ -13,7 +13,7 @@ import Modal from './Utilities/Modal'
 
 export default function EditEntryData(props) {
   const { formID, entryID, setAllResp, setSnackbar } = props
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const [showEdit, setshowEdit] = useState(false)
   const [isLoading, setisLoading] = useState(false)
   const [isIframeLoading, setisIframeLoading] = useState(true)

@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $styles } from '../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../GlobalStates/ThemeVarsState'
 import ut from '../../../styles/2.utilities'
@@ -16,7 +16,7 @@ export default function ButtonQuickTweaks() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
   const [styles, setStyles] = useRecoilState($styles)
-  const themeVars = useRecoilValue($themeVars)
+  const themeVars = useAtomValue($themeVars)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldSize } = fldStyleObj
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`

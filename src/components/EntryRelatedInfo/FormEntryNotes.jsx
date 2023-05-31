@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../GlobalStates/GlobalStates'
 import DocIcn from '../../Icons/DocIcn'
 import TrashIcn from '../../Icons/TrashIcn'
@@ -17,7 +17,7 @@ import RenderHtml from '../Utilities/RenderHtml'
 import NoteForm from './NoteForm'
 
 export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const { css } = useFela()
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -33,7 +33,7 @@ export default function FontPickerMenu({ id }) {
   const [focusSearch, setfocusSearch] = useState(false)
   const [controller, setController] = useState(styles.font.fontType || ('Custom' || 'inherit'))
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const savedThemeVars = useRecoilValue($savedThemeVars)
+  const savedThemeVars = useAtomValue($savedThemeVars)
 
   const inheritFont = themeVars['--g-font-family'] === 'inherit'
   const fontSource = (styles.font.fontType === 'Google')

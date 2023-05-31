@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -20,7 +20,7 @@ export default function HubspotFieldMap({
   const requiredFlds = hubspotFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = hubspotFields.filter(fld => fld.required === false) || []
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   return (

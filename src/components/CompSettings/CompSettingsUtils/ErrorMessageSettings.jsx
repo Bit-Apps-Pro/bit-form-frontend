@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import EditIcn from '../../../Icons/EditIcn'
@@ -31,10 +31,10 @@ export default function ErrorMessageSettings({
   const { css } = useFela()
   const fieldData = deepCopy(fields[fldKey])
   const errMsg = fieldData?.err?.[type]?.custom ? fieldData?.err?.[type]?.msg : fieldData?.err?.[type]?.dflt
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
   const [icnType, setIcnType] = useState('')
   const [icnMdl, setIcnMdl] = useState(false)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const selectedFieldId = useAtomValue($selectedFieldId)
 
   const setCustomErrMsg = e => {
     const { name, checked } = e.target

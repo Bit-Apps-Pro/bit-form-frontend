@@ -5,7 +5,7 @@
 import Tippy from '@tippyjs/react'
 import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import { useImmer } from 'use-immer'
@@ -21,7 +21,7 @@ function CalculatorField({
   label, onChange, value, disabled, type, textarea, className, options,
 }) {
   const { css } = useFela()
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldArr = makeFieldsArrByLabel(fields)
   const [expressions, setExpressions] = useImmer(() => initialExpression(value, fieldArr))
   const [caretPosition, setCaretPosition] = useImmer(expressions.length)

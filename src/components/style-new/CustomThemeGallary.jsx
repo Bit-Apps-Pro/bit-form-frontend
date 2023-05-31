@@ -3,7 +3,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
@@ -20,8 +20,8 @@ import themes from './themes/themeList'
 export default function CustomThemeGallary({ fldKey }) {
   const { css } = useFela()
   const [styles, setStyles] = useRecoilState($styles)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const fields = useRecoilValue($fields)
+  const selectedFieldId = useAtomValue($selectedFieldId)
+  const fields = useAtomValue($fields)
   const fieldType = fields[fldKey].typ
   const customThemes = [
     { name: 'Checkbox Theme', slug: 'individual', img: '', allowedFlds: ['check', 'radio'] },

@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $builderSettings, $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
@@ -48,12 +48,12 @@ export default function ThemeQuickTweaksCustomizer() {
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [styles, setStyles] = useRecoilState($styles)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const { '--dir': direction } = themeVars
-  const tmpStyles = useRecoilValue($savedStyles)
-  const tmpThemeColors = useRecoilValue($savedThemeColors)
-  const tmpThemeVars = useRecoilValue($savedThemeVars)
-  const formId = useRecoilValue($formId)
+  const tmpStyles = useAtomValue($savedStyles)
+  const tmpThemeColors = useAtomValue($savedThemeColors)
+  const tmpThemeVars = useAtomValue($savedThemeVars)
+  const formId = useAtomValue($formId)
   const fieldsArray = Object.entries(fields)
   const setAllThemeColors = useSetRecoilState($allThemeColors)
   const setAllThemeVars = useSetRecoilState($allThemeVars)

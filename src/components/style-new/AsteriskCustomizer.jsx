@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -24,7 +24,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function AsteriskCustomizer() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const themeColors = useRecoilValue($themeColors)
+  const themeColors = useAtomValue($themeColors)
   const [themeVars, setThemeVars] = useRecoilState($themeVars)
   const [fields, setFields] = useRecoilState($fields)
 

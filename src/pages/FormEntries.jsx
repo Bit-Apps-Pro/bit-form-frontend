@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetRecoilState } from 'recoil'
 import EditEntryData from '../components/EditEntryData'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
@@ -24,7 +24,7 @@ import { __ } from '../Utils/i18nwrap'
 import { formsReducer } from '../Utils/Reducers'
 
 function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
-  const allLabels = useRecoilValue($fieldLabels)
+  const allLabels = useAtomValue($fieldLabels)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(isFetching)
   const { formID } = useParams()
@@ -40,10 +40,10 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const setForms = useSetRecoilState($forms)
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
-  const bits = useRecoilValue($bits)
-  const currentReportData = useRecoilValue($reportSelector)
-  const reportId = useRecoilValue($reportId)
-  const reports = useRecoilValue($reports)
+  const bits = useAtomValue($bits)
+  const currentReportData = useAtomValue($reportSelector)
+  const reportId = useAtomValue($reportId)
+  const reports = useAtomValue($reports)
   const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
   const rowSl = useRef(0)
   const filterFieldType = ['divider', 'image', 'title', 'section']

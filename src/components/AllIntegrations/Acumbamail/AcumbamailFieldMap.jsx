@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -7,7 +7,7 @@ import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from '../IntegrationHelpers/MailChimpIntegrationHelpers'
 
 export default function AcumbamailFieldMap({ i, formFields, field, acumbamailConf, setAcumbamailConf }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const isRequiredFld = acumbamailConf.default.allFields[acumbamailConf.listId]?.required?.includes(field.acumbamailFormField)
   const requiredFlds = acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields && (Object.entries(acumbamailConf.default.allFields?.[acumbamailConf.listId]?.fields).filter(listField => listField[1].required === true) || [])

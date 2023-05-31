@@ -10,7 +10,7 @@ import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $builderRightPanelScroll, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ChevronLeft from '../../Icons/ChevronLeft'
@@ -39,7 +39,7 @@ import atlassianTheme from './themes/2_atlassian'
 export default function FieldStyleCustomizeHOC() {
   const { formType, formID, '*': rightParams } = useParams()
   const [, element, fieldKey] = rightParams.split('/')
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
 
   if (!styles?.fields?.[fieldKey]) {
     return <Navigate to={`/form/builder/${formType}/${formID}/theme-customize/quick-tweaks`} />
@@ -279,7 +279,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
       </div>
     )
   }
-  const scrollTo = useRecoilValue($builderRightPanelScroll)
+  const scrollTo = useAtomValue($builderRightPanelScroll)
 
   return (
     <div className={css(cls.mainWrapper)}>

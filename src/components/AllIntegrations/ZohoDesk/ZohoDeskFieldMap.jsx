@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -9,7 +9,7 @@ import { addFieldMap, delFieldMap, handleCustomValue, handleFieldMapping } from 
 export default function ZohoDeskFieldMap({ i, formFields, field, deskConf, setDeskConf }) {
   const { orgId } = deskConf
   const isNotRequired = field.zohoFormField === '' || deskConf.default.fields[orgId].required?.indexOf(field.zohoFormField) === -1
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   return (
     <div

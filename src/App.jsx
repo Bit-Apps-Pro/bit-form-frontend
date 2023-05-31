@@ -3,7 +3,7 @@ import loadable from '@loadable/component'
 import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import logo from '../logo.svg'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
@@ -22,7 +22,7 @@ const Error404 = loadable(() => import('./pages/Error404'), { fallback: <Loader 
 const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpadminbar'))
 
 export default function App() {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   useEffect(removeUnwantedCSS, [])
 
   const isAppSettingsActive = () => {

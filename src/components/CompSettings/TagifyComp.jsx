@@ -1,14 +1,14 @@
 import Tagify from '@yaireo/tagify'
 import '@yaireo/tagify/dist/tagify.css'
 import { useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $fieldsArr } from '../../GlobalStates/GlobalStates'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 export default function TagifyComp({
   children, selector, actionId, onChange, value, fFields = true, ph = null, ptrn = null,
 }) {
-  const formFields = useRecoilValue($fieldsArr)
+  const formFields = useAtomValue($fieldsArr)
   const fields = fFields ? formFields.filter(itm => itm.lbl !== undefined).map(item => ({ name: item.key, value: item.lbl })) : []
   const smartTags = SmartTagField.map((item) => ({ name: item.name, value: item.label }))
   const tagifyRef = useRef(null)

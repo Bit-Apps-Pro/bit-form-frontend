@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
@@ -14,7 +14,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function SubTitleCustomizer() {
   const { css } = useFela()
-  const themeColors = useRecoilValue($themeColors)
+  const themeColors = useAtomValue($themeColors)
 
   const { '--sub-titl-sh': stSh,
     '--sub-titl-c': stC,

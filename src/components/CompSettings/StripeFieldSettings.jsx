@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { addFormUpdateError, addToBuilderHistory, deleteNestedObj, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
@@ -30,7 +30,7 @@ export default function StripeFieldSettings() {
   const [fields, setFields] = useRecoilState($fields)
   const fieldData = deepCopy(fields[fldKey])
   const formFields = Object.entries(fields)
-  const payments = useRecoilValue($payments)
+  const payments = useAtomValue($payments)
   const isSubscription = fieldData?.payType === 'subscription'
   const isDynamicAmount = fieldData.config?.amountType === 'dynamic'
 

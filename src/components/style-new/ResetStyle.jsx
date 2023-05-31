@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -13,9 +13,9 @@ import Tip from '../Utilities/Tip'
 import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function ResetStyle({ stateObjName, propertyPath, id }) {
-  const tmpThemeColors = useRecoilValue($savedThemeColors)
-  const tmpThemeVars = useRecoilValue($savedThemeVars)
-  const tmpStyles = useRecoilValue($savedStyles)
+  const tmpThemeColors = useAtomValue($savedThemeColors)
+  const tmpThemeVars = useAtomValue($savedThemeVars)
+  const tmpStyles = useAtomValue($savedStyles)
   const [themeColors, setThemeColors] = useRecoilState($themeColors)
   const [themeVar, setThemeVar] = useRecoilState($themeVars)
   const [styles, setStyles] = useRecoilState($styles)

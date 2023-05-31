@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $builderHookStates, $layouts, $nestedLayouts } from '../../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory, cols } from '../../../../Utils/FormBuilderHelper'
 import ut from '../../../../styles/2.utilities'
@@ -13,8 +13,8 @@ function SizeAndPosition() {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
   const [layouts, setLayouts] = useRecoilState($layouts)
-  const nestedLayouts = useRecoilValue($nestedLayouts)
-  const breakpoint = useRecoilValue($breakpoint)
+  const nestedLayouts = useAtomValue($nestedLayouts)
+  const breakpoint = useAtomValue($breakpoint)
   let fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey))
   const setBuilderHookStates = useSetRecoilState($builderHookStates)
   if (!fieldSize) {

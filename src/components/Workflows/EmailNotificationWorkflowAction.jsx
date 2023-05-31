@@ -1,6 +1,6 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
@@ -18,10 +18,10 @@ export default function EmailNotificationWorkflowAction({
 }) {
   const { css } = useFela()
   const [workflows, setWorkflows] = useRecoilState($workflows)
-  const mailTem = useRecoilValue($mailTemplates)
-  const fieldsArr = useRecoilValue($fieldsArr)
+  const mailTem = useAtomValue($mailTemplates)
+  const fieldsArr = useAtomValue($fieldsArr)
   const setUpdateBtn = useSetRecoilState($updateBtn)
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
 
   const fileInFormField = () => {
     const file = []

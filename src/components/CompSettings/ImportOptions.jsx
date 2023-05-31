@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
 import app from '../../styles/app.style'
@@ -17,11 +17,11 @@ import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps
 import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
 
 export default function ImportOptions({ setOptions, importOpts, setImportOpts, lblKey, valKey, setEditOptionType }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = deepCopy(fields[fldKey])
 
   const replaceAllValsCommas = optArr => optArr.map(opt => ({ ...opt, [valKey]: opt[valKey].replace(/,/g, '_') }))

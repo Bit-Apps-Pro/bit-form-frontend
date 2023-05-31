@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { create } from 'mutative'
 import { useEffect, useRef } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
@@ -17,8 +17,8 @@ const placeholderImgUrl = (h, w) => `https://fakeimg.pl/${h}x${w}/?text=${h} x $
 function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   const wrap = useRef()
   const tempData = useRef({ extarnalSource: placeholderImgUrl(100, 40) })
-  const breakpoint = useRecoilValue($breakpoint)
-  const { styleMode } = useRecoilValue($flags)
+  const breakpoint = useAtomValue($breakpoint)
+  const { styleMode } = useAtomValue($flags)
   const setStyles = useSetRecoilState($styles)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)

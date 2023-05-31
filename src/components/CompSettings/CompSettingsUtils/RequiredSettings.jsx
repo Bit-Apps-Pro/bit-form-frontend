@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import TxtAlignLeftIcn from '../../../Icons/TxtAlignLeftIcn'
@@ -27,7 +27,7 @@ export default function RequiredSettings({ asteriskIsAllow = true }) {
   const { css } = useFela()
   const isRequired = fieldData.valid.req || false
   const adminLabel = fieldData.adminLbl || ''
-  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const selectedFieldId = useAtomValue($selectedFieldId)
 
   const getPropertyPath = (elementKey, cssProperty, state = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `:${state}`}->${cssProperty}`
 

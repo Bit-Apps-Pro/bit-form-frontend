@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits } from '../GlobalStates/GlobalStates'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
@@ -20,7 +20,7 @@ const randomKey = () => {
 
 export default function Apikey() {
   const [key, setKey] = useState('')
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro, siteURL } = bits
   const [snack, setSnack] = useState({ show: false })
   const [isLoading, setisLoading] = useState(false)

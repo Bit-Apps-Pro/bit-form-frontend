@@ -6,7 +6,7 @@ import { memo, useCallback, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
@@ -35,8 +35,8 @@ function AllFroms() {
   const [snack, setSnackbar] = useState({ show: false })
   const [allForms, setAllForms] = useRecoilState($forms)
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
-  const newFormId = useRecoilValue($newFormId)
-  const bits = useRecoilValue($bits)
+  const newFormId = useAtomValue($newFormId)
+  const bits = useAtomValue($bits)
   const { css } = useFela()
 
   const handleStatus = (e, id) => {

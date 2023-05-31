@@ -4,7 +4,7 @@ import { observeElm } from 'bit-helpers/src'
 import BitPhoneNumberField from 'bit-phone-number-field/src/bit-phone-number-field'
 import BitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
 import { useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'recoil'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -13,9 +13,9 @@ import RenderStyle from '../style-new/RenderStyle'
 export default function PhoneNumberField({ fieldKey, formID, attr, styleClasses }) {
   const phoneNumberWrapElmRef = useRef(null)
   const phoneNumberFieldRef = useRef(null)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const {
     selectedFlagImage,
     selectedCountryClearable,

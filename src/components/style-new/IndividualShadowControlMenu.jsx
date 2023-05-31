@@ -6,7 +6,7 @@ import { create } from 'mutative'
 import { Fragment, memo } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -23,7 +23,7 @@ import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, split
 function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffset', 'yOffset', 'blur', 'spread', 'color', 'inset'], defaultValue = '0px 5px 15px 2px hsla(0, 0%, 0%, 35%) ' }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const themeVars = useRecoilValue($themeVars)
+  const themeVars = useAtomValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   let importantAlreadyExist = ''
 

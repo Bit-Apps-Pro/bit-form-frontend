@@ -6,7 +6,7 @@ import { create } from 'mutative'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useAtomValue } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -22,7 +22,7 @@ import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, split
 function TransitionControlMenu({ stateObjName, propertyPath, id }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const themeVars = useRecoilValue($themeVars)
+  const themeVars = useAtomValue($themeVars)
   const [styles, setStyles] = useRecoilState($styles)
   let checkImportant = ''
   const getTransitionStyleVal = () => {
