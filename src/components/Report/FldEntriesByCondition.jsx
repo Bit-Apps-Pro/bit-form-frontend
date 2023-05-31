@@ -4,7 +4,7 @@ import Tippy from '@tippyjs/react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { hideAll, roundArrow } from 'tippy.js'
 import 'tippy.js/animations/scale.css'
 import 'tippy.js/animations/shift-away-extreme.css'
@@ -38,8 +38,8 @@ import Downmenu from '../Utilities/Downmenu'
 
 export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
   const currentReport = useAtomValue($reportSelector)
-  const [reportId, setReportId] = useRecoilState($reportId)
-  const [reports, setReports] = useRecoilState($reports)
+  const [reportId, setReportId] = useAtom($reportId)
+  const [reports, setReports] = useAtom($reports)
   const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
 
   const formFields = useAtomValue($fieldsArr)
@@ -362,7 +362,7 @@ const ReportsList = ({
   const bits = useAtomValue($bits)
   const { isPro } = bits
   const currentReport = useAtomValue($reportSelector)
-  const [reports, setReports] = useRecoilState($reports)
+  const [reports, setReports] = useAtom($reports)
 
   const searchReport = (e) => {
     const { value } = e.target

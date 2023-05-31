@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import LblPlacementInlineIcn from '../../Icons/LblPlacementInlineIcn'
 import LblPlacementReverseIcn from '../../Icons/LblPlacementReverseIcn'
@@ -31,7 +31,7 @@ import { getNumFromStr, getStrFromStr, unitConverter } from './styleHelpers'
 export default function LabelControlMenu() {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
   const [openVarPos, setOpenVarPos] = useState(false)
 
   const {

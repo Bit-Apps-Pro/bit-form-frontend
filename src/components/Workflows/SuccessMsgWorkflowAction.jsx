@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { useFela } from 'react-fela'
 import TableCheckBox from '../Utilities/TableCheckBox'
 import { __ } from '../../Utils/i18nwrap'
@@ -12,8 +12,8 @@ export default function SuccessMsgWorkflowAction({ lgcGrpInd,
   checkKeyInArr,
   getValueFromArr }) {
   const { css } = useFela()
-  const [workflows, setWorkflows] = useRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const [workflows, setWorkflows] = useAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const confirmations = useAtomValue($confirmations)
 
   const setSuccessMsg = val => {

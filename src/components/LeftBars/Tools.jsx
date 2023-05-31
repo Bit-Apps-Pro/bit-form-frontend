@@ -1,12 +1,12 @@
 import { memo } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $breakpoint, $builderHookStates, $draggingField } from '../../GlobalStates/GlobalStates'
 
 function Tools({ setNewData, value, children, title }) {
-  const setDraggingField = useSetRecoilState($draggingField)
-  const [brkPoint] = useRecoilState($breakpoint)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
+  const setDraggingField = useSetAtom($draggingField)
+  const [brkPoint] = useAtom($breakpoint)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
 
   const { css } = useFela()
 

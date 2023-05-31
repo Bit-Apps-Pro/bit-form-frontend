@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $mailTemplates } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -21,7 +21,7 @@ import ConfirmModal from './Utilities/ConfirmModal'
 import Table from './Utilities/Table'
 
 export default function AllEmailTemplates({ formID }) {
-  const [mailTem, setMailTem] = useRecoilState($mailTemplates)
+  const [mailTem, setMailTem] = useAtom($mailTemplates)
   const [confMdl, setconfMdl] = useState({ show: false })
   const { css } = useFela()
   // const matchR = matchRoutes()

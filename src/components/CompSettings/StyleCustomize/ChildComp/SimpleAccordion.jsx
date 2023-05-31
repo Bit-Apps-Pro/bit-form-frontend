@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'recoil'
 import { $proModal } from '../../../../GlobalStates/GlobalStates'
 import ChevronDownIcn from '../../../../Icons/ChevronDownIcn'
 import ut from '../../../../styles/2.utilities'
@@ -38,7 +38,7 @@ export default function SimpleAccordion({
   onClick,
   proTip,
 }) {
-  const setProModal = useSetRecoilState($proModal)
+  const setProModal = useSetAtom($proModal)
   const [tgl, setTgl] = useState((!disable && open) || false)
   const [H, setH] = useState(open ? 'auto' : 0)
   const nodeRef = useRef(null)

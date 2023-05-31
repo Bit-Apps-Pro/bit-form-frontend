@@ -3,7 +3,7 @@ import { create } from 'mutative'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $fields, $proModal } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
@@ -39,10 +39,10 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function DropdownFieldSettings() {
   const { fieldKey: fldKey } = useParams()
-  const setProModal = useSetRecoilState($proModal)
+  const setProModal = useSetAtom($proModal)
   if (!fldKey) return <>No field exist with this field key</>
   const { css } = useFela()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const [optionMdl, setOptionMdl] = useState(false)
   const [duplicateListName, setDuplicateListName] = useState(false)
   const [currentOptList, setCurrentOptList] = useState(0)

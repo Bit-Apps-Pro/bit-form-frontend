@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import validateForm from '../../user-frontend/validation'
 import { getAbsoluteElmHeight } from '../../Utils/FormBuilderHelper'
@@ -17,7 +17,7 @@ export default function TextArea({
   const [value, setValue] = useState(attr.val)
   const textAreaRef = useRef(null)
   const tempResize = useRef({ resize: false })
-  const setStyles = useSetRecoilState($styles)
+  const setStyles = useSetAtom($styles)
 
   useEffect(() => {
     if (resizingFld.fieldKey === fieldKey) {

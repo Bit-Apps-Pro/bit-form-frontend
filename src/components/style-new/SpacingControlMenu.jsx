@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
@@ -9,7 +9,7 @@ import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 export default function SpacingControlMenu() {
   const { fieldKey, element } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
   const savedThemeVars = useAtomValue($savedThemeVars)
 
   const { '--fld-m': fldMargin,

@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $payments } from '../GlobalStates/AppSettingsStates'
 import { $bits } from '../GlobalStates/GlobalStates'
 import { deepCopy } from '../Utils/Helpers'
@@ -19,7 +19,7 @@ import SnackMsg from './Utilities/SnackMsg'
 export default function Payment({ allIntegURL }) {
   const bits = useAtomValue($bits)
   const { isPro } = bits
-  const [payments, setPayments] = useRecoilState($payments)
+  const [payments, setPayments] = useAtom($payments)
   const { type, indx } = useParams()
   const navigate = useNavigate()
   const [isLoading, setisLoading] = useState(false)

@@ -3,7 +3,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { create } from 'mutative'
 import { useEffect, useRef } from 'react'
-import { useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'recoil'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
@@ -19,10 +19,10 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
   const tempData = useRef({ extarnalSource: placeholderImgUrl(100, 40) })
   const breakpoint = useAtomValue($breakpoint)
   const { styleMode } = useAtomValue($flags)
-  const setStyles = useSetRecoilState($styles)
+  const setStyles = useSetAtom($styles)
   const isHidden = fieldData.valid.hidden?.includes(breakpoint) || false
   const styleClassesForRender = deepCopy(styleClasses)
-  const setFields = useSetRecoilState($fields)
+  const setFields = useSetAtom($fields)
   const { width, height } = fieldData
   const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld-wrp->${cssProperty}`
 

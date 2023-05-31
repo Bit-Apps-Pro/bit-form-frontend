@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'recoil'
 import EditEntryData from '../components/EditEntryData'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
@@ -37,7 +37,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const [confMdl, setconfMdl] = useState({ show: false })
   const [tableColumns, setTableColumns] = useState([])
   const [entryLabels, setEntryLabels] = useState([])
-  const setForms = useSetRecoilState($forms)
+  const setForms = useSetAtom($forms)
   const [countEntries, setCountEntries] = useState(0)
   const [refreshResp, setRefreshResp] = useState(0)
   const bits = useAtomValue($bits)

@@ -24,7 +24,7 @@ import AceEditor from 'react-ace'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $customCodes, $proModal } from '../../GlobalStates/GlobalStates'
 import BdrDottedIcn from '../../Icons/BdrDottedIcn'
 import ut from '../../styles/2.utilities'
@@ -49,8 +49,8 @@ function CustomCodeEditor() {
   const [theme, setTheme] = useState(localStorage.getItem('bf-editor-theme') || 'tomorrow')
   const [enableEditor, setEnableEditor] = useState(localStorage.getItem('bf-enable-editor') || 'on')
   const codeEditorRef = useRef({})
-  const [customCodes, setCustomCodes] = useRecoilState($customCodes)
-  const setProModal = useSetRecoilState($proModal)
+  const [customCodes, setCustomCodes] = useAtom($customCodes)
+  const setProModal = useSetAtom($proModal)
   const [editorOptions, setEditorOptions] = useState(options)
   const editorTabList = ['JavaScript', 'CSS']
   const themesList = [

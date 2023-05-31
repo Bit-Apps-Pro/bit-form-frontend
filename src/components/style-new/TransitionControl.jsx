@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -35,7 +35,7 @@ export default function TransitionControl({
   const setStyles = useSetAtom($styles)
   const setThemeVars = useSetAtom($themeVars)
   const setThemeColors = useSetAtom($themeColors)
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
 
   const clearHandler = () => {
     switch (stateObjName) {

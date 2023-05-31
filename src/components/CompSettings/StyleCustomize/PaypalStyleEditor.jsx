@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $fields, $layouts, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import BrushIcn from '../../../Icons/BrushIcn'
@@ -11,9 +11,9 @@ import { __ } from '../../../Utils/i18nwrap'
 
 export default function PaypalStyleEditor() {
   const { formID, formType, fieldKey: fldKey } = useParams()
-  const [lay, setLay] = useRecoilState($layouts)
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-  const [fields, setFields] = useRecoilState($fields)
+  const [lay, setLay] = useAtom($layouts)
+  const setSelectedFieldId = useSetAtom($selectedFieldId)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [customHeight, setCustomHeight] = useState(fieldData?.style?.height || '')
   const [, setCustomWidth] = useState(fieldData?.style?.width || '')

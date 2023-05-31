@@ -9,7 +9,7 @@ import {
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
 import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
 import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
@@ -73,7 +73,7 @@ const SPLIT_BAR = 8
 const BUILDER_WIDTH = window.innerWidth - LEFT_MENU_WIDTH - RIGHT_MENU_WIDTH - (SPLIT_BAR * 2)
 
 const FormBuilder = ({ isLoading }) => {
-  const [proModal, setProModal] = useRecoilState($proModal)
+  const [proModal, setProModal] = useAtom($proModal)
   const newFormId = useAtomValue($newFormId)
   const { element, fieldKey, formType, formID: pramsFormId } = useParams()
   const isNewForm = formType !== 'edit'
@@ -83,8 +83,8 @@ const FormBuilder = ({ isLoading }) => {
   const [gridWidth, setGridWidth] = useState(BUILDER_WIDTH)
   const deferedGridWidth = useDeferredValue(gridWidth)
   const [newData, setNewData] = useState(null)
-  const [brkPoint, setbrkPoint] = useRecoilState($breakpoint)
-  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
+  const [brkPoint, setbrkPoint] = useAtom($breakpoint)
+  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useAtom($isNewThemeStyleLoaded)
   const builderHookStates = useAtomValue($builderHookStates)
   const { styleMode } = useAtomValue($flags)
   const [v1Style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
@@ -93,17 +93,17 @@ const FormBuilder = ({ isLoading }) => {
   const bits = useAtomValue($bits)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
-  const setBreakpointSize = useSetRecoilState($breakpointSize)
-  const [alertMdl, setAlertMdl] = useRecoilState($alertModal)
-  const setStaticStylesState = useSetRecoilState($staticStylesState)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
+  const setBreakpointSize = useSetAtom($breakpointSize)
+  const [alertMdl, setAlertMdl] = useAtom($alertModal)
+  const setStaticStylesState = useSetAtom($staticStylesState)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
   const styles = useAtomValue($styles)
-  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
-  const setBuilderSettings = useSetRecoilState($builderSettings)
+  const setSavedStylesAndVars = useSetAtom($savedStylesAndVars)
+  const setBuilderSettings = useSetAtom($builderSettings)
   const builderHelperStates = useAtomValue($builderHelperStates)
-  const setIsDraggable = useSetRecoilState($isDraggable)
+  const setIsDraggable = useSetAtom($isDraggable)
 
   const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
   const isV2Form = useRef(true)

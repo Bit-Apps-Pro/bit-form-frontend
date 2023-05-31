@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $builderHookStates, $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -23,8 +23,8 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 export default function HtmlFieldSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
+  const [fields, setFields] = useAtom($fields)
+  const setBuilderHookState = useSetAtom($builderHookStates)
   const fieldData = deepCopy(fields[fldKey])
   const [labelModal, setLabelModal] = useState(false)
   const { css } = useFela()

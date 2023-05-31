@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
 import { lazy, memo, Suspense, useEffect } from 'react'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import ProModal from '../components/Utilities/ProModal'
@@ -33,11 +33,11 @@ const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/Do
 function FormSettings({ setProModal }) {
   // const { path } = useMatch()
   const { formType, formID } = useParams()
-  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useRecoilState($isNewThemeStyleLoaded)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
-  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
+  const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useAtom($isNewThemeStyleLoaded)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
+  const setSavedStylesAndVars = useSetAtom($savedStylesAndVars)
 
   useEffect(() => {
     if (!isNewThemeStyleLoaded) {

@@ -2,14 +2,14 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
 import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 function FormWrapperControlMenu() {
   const { element, fieldKey } = useParams()
-  const [styleVars, setStyleVars] = useRecoilState($styles)
+  const [styleVars, setStyleVars] = useAtom($styles)
   const { _frm } = styleVars.form
 
   const marginHandler = (value) => {

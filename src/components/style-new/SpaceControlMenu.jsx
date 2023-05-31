@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -10,9 +10,9 @@ import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 import { assignNestedObj, getValueByObjPath, getValueFromStateVar } from './styleHelpers'
 
 export default function SpaceControlMenu({ objectPaths, id }) {
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
   const { element, fieldKey } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const savedThemeVars = useAtomValue($savedThemeVars)
   const { object, paths } = objectPaths
   const spaceHandler = (val, propertyPath) => {

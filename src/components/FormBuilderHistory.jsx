@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import {
   $breakpoint,
   $builderHistory,
@@ -54,7 +54,7 @@ export default function FormBuilderHistory() {
   const setAllStyles = useSetAtom($allStyles)
   const setAllThemeColors = useSetAtom($allThemeColors)
   const setAllThemeVars = useSetAtom($allThemeVars)
-  const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
+  const [builderHistory, setBuilderHistory] = useAtom($builderHistory)
   const setBuilderHookStates = useSetAtom($builderHookStates)
   const rowVirtualizer = useRef(null)
   const { active, histories } = builderHistory

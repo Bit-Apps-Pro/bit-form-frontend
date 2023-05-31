@@ -5,7 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $bits, $integrations } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
@@ -67,7 +67,7 @@ import SnackMsg from './Utilities/SnackMsg'
 import Tip from './Utilities/Tip'
 
 function Integrations() {
-  const [integrs, setIntegration] = useRecoilState($integrations)
+  const [integrs, setIntegration] = useAtom($integrations)
   const integrations = deepCopy(integrs)
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })

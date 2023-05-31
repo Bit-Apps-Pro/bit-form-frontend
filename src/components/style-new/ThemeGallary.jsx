@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'recoil'
 import { $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
 import { $allThemeColors } from '../../GlobalStates/ThemeColorsState'
@@ -19,9 +19,9 @@ import Btn from '../Utilities/Btn'
 export default function ThemeGallary() {
   const { css } = useFela()
 
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
 
   const currentStyles = useAtomValue($styles)
   const formId = useAtomValue($formId)

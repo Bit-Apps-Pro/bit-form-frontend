@@ -10,7 +10,7 @@ import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $builderRightPanelScroll, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ChevronLeft from '../../Icons/ChevronLeft'
@@ -48,10 +48,10 @@ export default function FieldStyleCustomizeHOC() {
 }
 const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const { css } = useFela()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const [controller, setController] = useState('style')
-  const setFlags = useSetRecoilState($flags)
-  const [fields, setFields] = useRecoilState($fields)
+  const setFlags = useSetAtom($flags)
+  const [fields, setFields] = useAtom($fields)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldType, theme } = fldStyleObj
   const options = [

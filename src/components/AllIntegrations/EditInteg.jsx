@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $fieldsArr, $integrations } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -56,7 +56,7 @@ const EditTwilio = lazy(() => import('./Twilio/EditTwilio'))
 
 export default function EditInteg({ allIntegURL }) {
   const { id } = useParams()
-  const [integs, setIntegration] = useRecoilState($integrations)
+  const [integs, setIntegration] = useAtom($integrations)
   const integrations = deepCopy(integs)
   const formFields = useAtomValue($fieldsArr)
   const { css } = useFela()

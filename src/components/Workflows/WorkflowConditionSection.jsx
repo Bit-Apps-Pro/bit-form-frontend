@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -21,8 +21,8 @@ import WorkflowLogicSection from './WorkflowLogicSection'
 
 export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
   const { css } = useFela()
-  const setWorkflows = useSetRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setWorkflows = useSetAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const generateAccrTtl = title => title.replace(/-/g, ' ').split(' ').map(word => firstCharCap(word)).join(' ')
 
   const addCondition = condType => {
@@ -201,8 +201,8 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
 
 const WorkflowAccordionActions = ({ lgcGrpInd, condGrpInd, add, clone, remove }) => {
   const [confMdl, setConfMdl] = useState({ show: false })
-  const setWorkflows = useSetRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setWorkflows = useSetAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const closeConfMdl = () => {
     setConfMdl({ show: false })

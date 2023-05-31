@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $builderSettings, $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
@@ -45,9 +45,9 @@ import ThemeStyleReset from './ThemeStyleReset'
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
   const { fieldKey, element, formType } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [styles, setStyles] = useAtom($styles)
   const fields = useAtomValue($fields)
   const { '--dir': direction } = themeVars
   const tmpStyles = useAtomValue($savedStyles)
@@ -63,7 +63,7 @@ export default function ThemeQuickTweaksCustomizer() {
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
-  const [{ addImportantRuleToStyles }, setBuilderSettings] = useRecoilState($builderSettings)
+  const [{ addImportantRuleToStyles }, setBuilderSettings] = useAtom($builderSettings)
 
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)

@@ -8,7 +8,7 @@ import { create } from 'mutative'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $builderHookStates, $fields, $layouts } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -42,11 +42,11 @@ function AdvanceFileUpSettings() {
   const [lblPropertyMdl, setLblPropertyMdl] = useState(false)
   const [imgValdiateMdl, setImgValdiateMdl] = useState(false)
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
-  const setLayouts = useSetRecoilState($layouts)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
+  const setLayouts = useSetAtom($layouts)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
 
   const handle = ({ target: { checked, name } }) => {
     if (checked) {

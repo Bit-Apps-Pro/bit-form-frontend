@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useResetRecoilState, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useResetRecoilState, useSetAtom } from 'recoil'
 import {
   $additionalSettings,
   $breakpointSize,
@@ -54,9 +54,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const { css } = useFela()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const [lay, setLay] = useRecoilState($layouts)
+  const [lay, setLay] = useAtom($layouts)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
-  const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
+  const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
   const fields = useAtomValue($fields)
   const formInfo = useAtomValue($formInfo)
   const { formName } = formInfo
@@ -66,15 +66,15 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const setBuilderHookStates = useSetAtom($builderHookStates)
   const setFieldLabels = useSetAtom($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
-  const [reports, setReports] = useRecoilState($reports)
+  const [reports, setReports] = useAtom($reports)
   const currentReport = useAtomValue($reportSelector)
-  const [reportId, setReportId] = useRecoilState($reportId)
-  const [mailTem, setMailTem] = useRecoilState($mailTemplates)
-  const [updateBtn, setUpdateBtn] = useRecoilState($updateBtn)
-  const [workFlows, setworkFlows] = useRecoilState($workflows)
-  const [integrations, setIntegration] = useRecoilState($integrations)
-  const [additional, setAdditional] = useRecoilState($additionalSettings)
-  const [confirmations, setConfirmations] = useRecoilState($confirmations)
+  const [reportId, setReportId] = useAtom($reportId)
+  const [mailTem, setMailTem] = useAtom($mailTemplates)
+  const [updateBtn, setUpdateBtn] = useAtom($updateBtn)
+  const [workFlows, setworkFlows] = useAtom($workflows)
+  const [integrations, setIntegration] = useAtom($integrations)
+  const [additional, setAdditional] = useAtom($additionalSettings)
+  const [confirmations, setConfirmations] = useAtom($confirmations)
   const styles = useAtomValue($styles)
   const setAllThemeColors = useSetAtom($allThemeColors)
   const setAllThemeVars = useSetAtom($allThemeVars)

@@ -1,10 +1,10 @@
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { useFela } from 'react-fela'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { showDraggableModal } from './styleHelpers'
 
 export default function LabelControl({ id }) {
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
   const { css } = useFela()
 
   return (

@@ -14,7 +14,7 @@ import 'react-day-picker/dist/style.css'
  */
 import { Link, useParams } from 'react-router-dom'
 import Timekeeper from 'react-timekeeper'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
@@ -48,7 +48,7 @@ import SingleToggle2 from './Utilities/SingleToggle2'
 import { assignNestedObj } from './style-new/styleHelpers'
 
 export default function SingleFormSettings() {
-  const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
+  const [additionalSetting, setadditional] = useAtom($additionalSettings)
   const fields = useAtomValue($fields)
   const { formID } = useParams()
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })

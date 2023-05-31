@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import app from '../styles/app.style'
@@ -15,7 +15,7 @@ import TinyMCE from './Utilities/TinyMCE'
 
 function EmailTemplateNew() {
   const [tem, setTem] = useState({ title: 'New Template', sub: 'Email Subject', body: 'Email Body' })
-  const [mailTem, setMailTem] = useRecoilState($mailTemplates)
+  const [mailTem, setMailTem] = useAtom($mailTemplates)
   const formFields = useAtomValue($fieldsArr)
   const [showTemplateModal, setTemplateModal] = useState(false)
   const { formType, formID } = useParams()

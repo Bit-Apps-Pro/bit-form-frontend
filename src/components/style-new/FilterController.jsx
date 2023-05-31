@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -14,9 +14,9 @@ import { assignNestedObj, getValueByObjPath, getValueFromStateVar, showDraggable
 export default function FilterController({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
 
   const { object, paths } = objectPaths
   const val = getValueByObjPath(styles, paths?.filter)

@@ -10,7 +10,7 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -68,25 +68,25 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   const { formType } = useParams()
   const setProModal = useSetAtom($proModal)
-  const [fields, setFields] = useRecoilState($fields)
-  const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
+  const [fields, setFields] = useAtom($fields)
+  const [rootLayouts, setRootLayouts] = useAtom($layouts)
   const [layouts, setLayouts] = useState(rootLayouts)
-  const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
+  const [selectedFieldId, setSelectedFieldId] = useAtom($selectedFieldId)
   const setDeletedFldKey = useSetAtom($deletedFldKey)
   const draggingField = useAtomValue($draggingField)
-  const [flags, setFlags] = useRecoilState($flags)
+  const [flags, setFlags] = useAtom($flags)
   const builderHookStates = useAtomValue($builderHookStates)
   const isNewThemeStyleLoaded = useAtomValue($isNewThemeStyleLoaded)
-  const [styles, setStyles] = useRecoilState($stylesLgLight)
-  const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
-  const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
+  const [styles, setStyles] = useAtom($stylesLgLight)
+  const [breakpoint, setBreakpoint] = useAtom($breakpoint)
+  const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
   const setStaticStyleState = useSetAtom($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [resizingFld, setResizingFld] = useState({})
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useAtomValue($uniqueFieldId)
   const isDraggable = useAtomValue($isDraggable)
-  const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
+  const [contextMenu, setContextMenu] = useAtom($contextMenu)
   const setContextMenuRef = useSetAtom($contextMenuRef)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()

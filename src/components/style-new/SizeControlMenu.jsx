@@ -3,7 +3,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -16,8 +16,8 @@ import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath } from
 export default function SizeControlMenu({ objectPaths }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [styles, setStyles] = useAtom($styles)
   const savedThemeVars = useAtomValue($savedThemeVars)
   const [aspectRatio, setAspectRation] = useState(true)
   const { object, paths } = objectPaths

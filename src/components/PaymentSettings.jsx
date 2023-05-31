@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'recoil'
 import { $payments } from '../GlobalStates/AppSettingsStates'
 import EditIcn from '../Icons/EditIcn'
 import PlusIcn from '../Icons/PlusIcn'
@@ -23,7 +23,7 @@ export default function PaymentSettings({ setSnackbar }) {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const { css } = useFela()
-  const [payments, setPayments] = useRecoilState($payments)
+  const [payments, setPayments] = useAtom($payments)
   const { pathname } = useLocation()
   console.log('payments', payments)
   const pays = [

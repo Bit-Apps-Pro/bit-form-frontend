@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates/GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
 import StackIcn from '../Icons/StackIcn'
@@ -16,7 +16,7 @@ import ConfirmModal from './Utilities/ConfirmModal'
 function RedirUrl({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
   const [redirectUrls, setredirectUrls] = useState(null)
-  const [allConf, setAllConf] = useRecoilState($confirmations)
+  const [allConf, setAllConf] = useAtom($confirmations)
   const fieldsArr = useAtomValue($fieldsArr)
   const setUpdateBtn = useSetAtom($updateBtn)
   const { css } = useFela()

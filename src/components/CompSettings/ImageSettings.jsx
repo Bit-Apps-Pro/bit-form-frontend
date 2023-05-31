@@ -5,7 +5,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import ut from '../../styles/2.utilities'
@@ -27,11 +27,11 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 function ImageSettings() {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [icnMdl, setIcnMdl] = useState(false)
   const alt = fieldData.alt || ''
-  const setStyles = useSetRecoilState($styles)
+  const setStyles = useSetAtom($styles)
 
   const setAlt = (e) => {
     const { value } = e.target

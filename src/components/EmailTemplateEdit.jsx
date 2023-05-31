@@ -3,7 +3,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { NavLink, Navigate, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import app from '../styles/app.style'
@@ -15,7 +15,7 @@ import TinyMCE from './Utilities/TinyMCE'
 function EmailTemplateEdit() {
   const { formType, formID, id } = useParams()
   const navigate = useNavigate()
-  const [mailTemp, setMailTem] = useRecoilState($mailTemplates)
+  const [mailTemp, setMailTem] = useAtom($mailTemplates)
   const formFields = useAtomValue($fieldsArr)
   const { css } = useFela()
 

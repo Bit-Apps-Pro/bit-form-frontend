@@ -1,6 +1,6 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $savedStyles, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -11,7 +11,7 @@ import Tip from '../Utilities/Tip'
 export default function ThemeStyleReset({ id, fk }) {
   const { css } = useFela()
   const saveStyles = useAtomValue($savedStyles) || {}
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const setThemeVars = useSetAtom($themeVars)
   const savedThemeVars = useAtomValue($savedThemeVars)
 

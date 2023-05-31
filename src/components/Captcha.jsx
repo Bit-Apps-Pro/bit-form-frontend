@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $reCaptchaV2, $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $bits } from '../GlobalStates/GlobalStates'
 import { deepCopy } from '../Utils/Helpers'
@@ -13,8 +13,8 @@ import CopyText from './Utilities/CopyText'
 import SnackMsg from './Utilities/SnackMsg'
 
 export default function Captcha() {
-  const [reCaptchaV2, setreCaptchaV2] = useRecoilState($reCaptchaV2)
-  const [reCaptchaV3, setreCaptchaV3] = useRecoilState($reCaptchaV3)
+  const [reCaptchaV2, setreCaptchaV2] = useAtom($reCaptchaV2)
+  const [reCaptchaV3, setreCaptchaV3] = useAtom($reCaptchaV3)
   const bits = useAtomValue($bits)
   const [snack, setsnack] = useState({ show: false })
   const [loading, setLoading] = useState(false)

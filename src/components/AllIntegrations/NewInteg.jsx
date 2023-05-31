@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue } from 'recoil'
+import { useAtom, useAtomValue } from 'recoil'
 import { $fieldsArr, $integrations } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import app from '../../styles/app.style'
@@ -55,7 +55,7 @@ const Twilio = lazy(() => import('./Twilio/Twilio'))
 
 export default function NewInteg({ allIntegURL }) {
   const { integUrlName } = useParams()
-  const [integs, setIntegration] = useRecoilState($integrations)
+  const [integs, setIntegration] = useAtom($integrations)
   const integrations = deepCopy(integs)
   const formFields = useAtomValue($fieldsArr)
   const { css } = useFela()

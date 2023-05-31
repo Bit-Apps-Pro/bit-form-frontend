@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'recoil'
 import { $proModal } from '../../GlobalStates/GlobalStates'
 import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -12,7 +12,7 @@ export default function SingleToggle({
   id, className, tip, title, isChecked, name, action = () => { }, disabled, isPro, proProperty,
 }) {
   const { css } = useFela()
-  const setProModal = useSetRecoilState($proModal)
+  const setProModal = useSetAtom($proModal)
   const allowToggleAction = !isPro || IS_PRO
   return (
     <div className={`flx flx-between ${className}`}>

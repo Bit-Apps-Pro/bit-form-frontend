@@ -2,7 +2,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $breakpoint, $builderHookStates, $layouts, $nestedLayouts } from '../../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory, cols } from '../../../../Utils/FormBuilderHelper'
 import ut from '../../../../styles/2.utilities'
@@ -12,11 +12,11 @@ import SimpleAccordion from '../ChildComp/SimpleAccordion'
 function SizeAndPosition() {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const [layouts, setLayouts] = useRecoilState($layouts)
+  const [layouts, setLayouts] = useAtom($layouts)
   const nestedLayouts = useAtomValue($nestedLayouts)
   const breakpoint = useAtomValue($breakpoint)
   let fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey))
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
   if (!fieldSize) {
     Object.values(nestedLayouts).forEach((lay) => {
       const field = lay?.[breakpoint]?.find(fl => (fl.i === fldKey))

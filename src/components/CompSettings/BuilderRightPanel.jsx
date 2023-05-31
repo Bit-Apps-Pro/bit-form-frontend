@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $breakpoint, $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -28,9 +28,9 @@ function BuilderRightPanel({ style, styleDispatch }) {
   const { formID, '*': rightPanel } = useParams()
   const rightBar = rightPanel.split('/')[0]
   const { css } = useFela()
-  const setScrollTop = useSetRecoilState($builderRightPanelScroll)
-  const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
-  const [brkPoint, setResponsiveView] = useRecoilState($breakpoint)
+  const setScrollTop = useSetAtom($builderRightPanelScroll)
+  const [unsplashMdl, setUnsplashMdl] = useAtom($unsplashMdl)
+  const [brkPoint, setResponsiveView] = useAtom($breakpoint)
 
   useEffect(() => {
     // setSelectedFieldId(fieldKey)

@@ -2,7 +2,7 @@ import { create } from 'mutative'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -36,19 +36,19 @@ export default function SectionField({
 }) {
   const { formType } = useParams()
   const styleClassesForRender = deepCopy(styleClasses)
-  const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
+  const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
   const [gridNestedLayouts, setGridNestedLayouts] = useState(deepCopy(nestedLayouts[fieldKey]))
-  const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
-  const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
-  const setProModal = useSetRecoilState($proModal)
+  const [contextMenu, setContextMenu] = useAtom($contextMenu)
+  const [selectedFieldId, setSelectedFieldId] = useAtom($selectedFieldId)
+  const setProModal = useSetAtom($proModal)
   const fields = useAtomValue($fields)
   const { styleMode } = useAtomValue($flags)
-  const [resizingFld, setResizingFld] = useRecoilState($resizingFld)
+  const [resizingFld, setResizingFld] = useAtom($resizingFld)
   const delayRef = useRef(null)
   const { ref, isComponentVisible, setIsComponentVisible } = useAtomValue($contextMenuRef)
   const breakpoint = useAtomValue($breakpoint)
   const builderHookStates = useAtomValue($builderHookStates)
-  const setIsDraggable = useSetRecoilState($isDraggable)
+  const setIsDraggable = useSetAtom($isDraggable)
   const { recalculateNestedField } = builderHookStates
   const { fieldKey: changedFieldKey, parentFieldKey, counter: fieldChangeCounter } = recalculateNestedField
   const navigate = useNavigate()

@@ -8,7 +8,7 @@ import { memo, useEffect, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useResetRecoilState, useSetAtom } from 'recoil'
+import { useAtom, useResetRecoilState, useSetAtom } from 'recoil'
 import { $unsplashImgUrl, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -54,12 +54,12 @@ function BackgroundControlMenu({ stateObjName,
   })
   // const [bgPositionValue, setBgPositionValue] = useState('center')
   const [bgRepeat, setBgRepeat] = useState('initial')
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const setThemeVars = useSetAtom($themeVars)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [unsplashMdl, setUnsplashMdl] = useAtom($unsplashMdl)
   const resetUnsplashImgUrl = useResetRecoilState($unsplashImgUrl)
-  const [unsplashImgUrl, setUnsplashImgUrl] = useRecoilState($unsplashImgUrl)
+  const [unsplashImgUrl, setUnsplashImgUrl] = useAtom($unsplashImgUrl)
 
   const stateObj = getObjByKey(object, { styles })
 

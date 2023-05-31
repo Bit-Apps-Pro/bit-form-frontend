@@ -2,7 +2,7 @@ import loadable from '@loadable/component'
 import { useState, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'recoil'
 import { $breakpoint, $builderSettings, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
@@ -38,7 +38,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]
   const { darkModeConfig } = useAtomValue($builderSettings)
-  const [flags, setFlags] = useRecoilState($flags)
+  const [flags, setFlags] = useAtom($flags)
   const breakpoint = useAtomValue($breakpoint)
   const colorScheme = useAtomValue($colorScheme)
   const setColorScheme = useSetAtom($colorScheme)

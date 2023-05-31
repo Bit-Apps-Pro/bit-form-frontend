@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { useFela } from 'react-fela'
 import ActionBlock from './ActionBlock'
 import Button from '../Utilities/Button'
@@ -10,8 +10,8 @@ import Tip from '../Utilities/Tip'
 
 export default function FieldWorkflowAction({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const { css } = useFela()
-  const [workflows, setWorkflows] = useRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const [workflows, setWorkflows] = useAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { fields: fldActions } = condGrp.actions
 
   const addAction = () => {

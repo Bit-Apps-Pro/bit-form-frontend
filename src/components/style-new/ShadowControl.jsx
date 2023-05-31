@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetAtom } from 'recoil'
+import { useAtom, useSetAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -14,7 +14,7 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
   const setThemeColors = useSetAtom($themeColors)
 
   const colorVal = splitValueBySpaces(value)[4]
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
   const clearValue = () => {
     switch (objectPaths.object) {
       case 'themeColors':
