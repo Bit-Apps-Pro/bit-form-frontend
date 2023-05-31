@@ -57,6 +57,7 @@
     "hex-to-css-filter": "^5.4.0",
     "htmr": "^1.0.2",
     "jcof": "^1.0.2",
+    "jotai": "^2.1.0",
     "mutative": "^0.5.0",
     "react": "^18.2.0",
     "react-ace": "^10.1.0",
