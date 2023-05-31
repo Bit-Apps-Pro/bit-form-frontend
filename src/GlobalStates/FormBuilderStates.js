@@ -1,3 +1,3 @@
-import { atom } from 'recoil'
+import { atom } from 'jotai'
 
-export const $isDraggable = atom({ key: '$isDraggable', default: true })
+export const $isDraggable = atom(true)

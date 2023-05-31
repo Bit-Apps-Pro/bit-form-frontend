@@ -1,4 +1,4 @@
-import { atom } from 'recoil'
+import { atom } from 'jotai'
 
 // helper functions
 const paymentsState = () => {
@@ -28,6 +28,6 @@ const getReCaptchaState = ver => {
   }
 }
 
-export const $payments = atom({ key: '$payments', default: paymentsState() })
-export const $reCaptchaV2 = atom({ key: '$reCaptchaV2', default: getReCaptchaState('v2') })
-export const $reCaptchaV3 = atom({ key: '$reCaptchaV3', default: getReCaptchaState('v3') })
+export const $payments = atom(paymentsState())
+export const $reCaptchaV2 = atom(getReCaptchaState('v2'))
+export const $reCaptchaV3 = atom(getReCaptchaState('v3'))

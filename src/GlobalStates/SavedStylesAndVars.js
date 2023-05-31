@@ -1,41 +1,24 @@
-import { atom, selector } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
-import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
+import { atom } from 'jotai'
 import { mergeNestedObj } from '../Utils/globalHelpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
 export const $savedStylesAndVars = atom({
-  key: '$savedStylesAndVars',
-  default: {
-    allThemeVars: {},
-    allThemeColors: {},
-    allStyles: {},
-  },
-  effects: [({ onSet }) => {
-    onSet(() => {
-      const historyData = {
-        themeVars: getRecoil($savedThemeVars),
-        themeColors: getRecoil($savedThemeColors),
-        styles: getRecoil($savedStyles),
-      }
-      addToBuilderHistory({ state: historyData }, false, 0)
-    })
-  }],
+  allThemeVars: {},
+  allThemeColors: {},
+  allStyles: {},
 })
 
-export const $savedThemeColors = selector({
-  key: '$savedThemeColors',
-  get: ({ get }) => {
+export const $savedThemeColors = atom(
+  (get) => {
     const colorScheme = get($colorScheme)
     const { lightThemeColors, darkThemeColors } = get($savedStylesAndVars).allThemeColors
     if (colorScheme === 'dark') return { ...lightThemeColors, ...darkThemeColors }
     return lightThemeColors
   },
-})
+)
 
-export const $savedThemeVars = selector({
-  key: '$savedThemeVars',
-  get: ({ get }) => {
+export const $savedThemeVars = atom(
+  (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
     const { lgLightThemeVars, lgDarkThemeVars, mdLightThemeVars, mdDarkThemeVars, smLightThemeVars, smDarkThemeVars } = get($savedStylesAndVars).allThemeVars
@@ -63,11 +46,10 @@ export const $savedThemeVars = selector({
       }
     }
   },
-})
+)
 
-export const $savedStyles = selector({
-  key: '$savedStyles',
-  get: ({ get }) => {
+export const $savedStyles = atom(
+  (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
     const { lgLightStyles, lgDarkStyles, mdLightStyles, mdDarkStyles, smLightStyles, smDarkStyles } = get($savedStylesAndVars).allStyles
@@ -112,4 +94,4 @@ export const $savedStyles = selector({
       )
     }
   },
-})
+)

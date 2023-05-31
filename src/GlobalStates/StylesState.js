@@ -1,86 +1,17 @@
 /* eslint-disable import/no-cycle */
-import { atom, selector } from 'recoil'
-import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
+import { atom } from 'jotai'
 import { mergeNestedObj } from '../Utils/globalHelpers'
-import { debouncer } from '../Utils/Helpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
-export const $stylesLgLight = atom({
-  key: '$stylesLgLight',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newStyles, _, isReset) => {
-      if (isReset) return
-      debouncer('stylesLgLight', () => {
-        addToSessionStorage(generateSessionKey('stylesLgLight'), newStyles, { strType: 'json' })
-      })
-    })
-  }],
-})
-export const $stylesLgDark = atom({
-  key: '$stylesLgDark',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newStyles, _, isReset) => {
-      if (isReset) return
-      debouncer('stylesLgDark', () => {
-        addToSessionStorage(generateSessionKey('stylesLgDark'), newStyles, { strType: 'json' })
-      })
-    })
-  }],
-})
-export const $stylesMdLight = atom({
-  key: '$stylesMdLight',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newStyles, _, isReset) => {
-      if (isReset) return
-      debouncer('stylesMdLight', () => {
-        addToSessionStorage(generateSessionKey('stylesMdLight'), newStyles, { strType: 'json' })
-      })
-    })
-  }],
-})
-export const $stylesMdDark = atom({
-  key: '$stylesMdDark',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newStyles, _, isReset) => {
-      if (isReset) return
-      debouncer('stylesMdDark', () => {
-        addToSessionStorage(generateSessionKey('stylesMdDark'), newStyles, { strType: 'json' })
-      })
-    })
-  }],
-})
-export const $stylesSmLight = atom({
-  key: '$stylesSmLight',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newStyles, _, isReset) => {
-      if (isReset) return
-      debouncer('stylesSmLight', () => {
-        addToSessionStorage(generateSessionKey('stylesSmLight'), newStyles, { strType: 'json' })
-      })
-    })
-  }],
-})
-export const $stylesSmDark = atom({
-  key: '$stylesSmDark',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newStyles, _, isReset) => {
-      if (isReset) return
-      debouncer('stylesSmDark', () => {
-        addToSessionStorage(generateSessionKey('stylesSmDark'), newStyles, { strType: 'json' })
-      })
-    })
-  }],
-})
+export const $stylesLgLight = atom({})
+export const $stylesLgDark = atom({})
+export const $stylesMdLight = atom({})
+export const $stylesMdDark = atom({})
+export const $stylesSmLight = atom({})
+export const $stylesSmDark = atom({})
 
-export const $styles = selector({
-  key: '$styles',
-  get: ({ get }) => {
+export const $styles = atom(
+  (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
     if (breakpoint === 'lg') {
@@ -124,7 +55,7 @@ export const $styles = selector({
       )
     }
   },
-  set: ({ set, get }, incomingStyles) => {
+  (get, set, incomingStyles) => {
     const newStyles = incomingStyles || {}
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
@@ -142,20 +73,18 @@ export const $styles = selector({
       set(isDarkColorScheme ? $stylesSmDark : $stylesSmLight, newStyles)
     }
   },
-})
+)
 
-export const $allStyles = selector({
-  key: '$allStyles',
-  get: ({ get }) => ({
+export const $allStyles = atom(
+  (get) => ({
     lgLightStyles: get($stylesLgLight),
     lgDarkStyles: get($stylesLgDark),
     mdLightStyles: get($stylesMdLight),
     mdDarkStyles: get($stylesMdDark),
     smLightStyles: get($stylesSmLight),
     smDarkStyles: get($stylesSmDark),
-  }
-  ),
-  set: ({ set }, newStyles) => {
+  }),
+  (_, set, newStyles) => {
     if (!('lgLightStyles' in newStyles)) throw new Error('$allStyles: lgLightStyles is missing')
     if (!('lgDarkStyles' in newStyles)) throw new Error('$allStyles: lgDarkStyles is missing')
     if (!('mdLightStyles' in newStyles)) throw new Error('$allStyles: mdLightStyles is missing')
@@ -169,4 +98,4 @@ export const $allStyles = selector({
     set($stylesSmLight, newStyles.smLightStyles)
     set($stylesSmDark, newStyles.smDarkStyles)
   },
-})
+)
