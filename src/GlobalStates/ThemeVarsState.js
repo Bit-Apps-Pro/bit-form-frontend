@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { atom } from 'jotai'
 import { atomWithReset } from 'jotai/utils'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
@@ -9,7 +10,7 @@ export const $themeVarsLgDark = atomWithReset({})
 export const $themeVarsMdDark = atomWithReset({})
 export const $themeVarsSmDark = atomWithReset({})
 
-export const $themeVars = atomWithReset(
+export const $themeVars = atom(
   (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
@@ -52,14 +53,14 @@ export const $themeVars = atomWithReset(
   },
 )
 
-export const $fieldsDirection = atomWithReset(
+export const $fieldsDirection = atom(
   (get) => {
     const themeVars = get($themeVars)
     return themeVars['--dir']
   },
 )
 
-export const $allThemeVars = atomWithReset(
+export const $allThemeVars = atom(
   (get) => ({
     lgLightThemeVars: get($themeVarsLgLight),
     lgDarkThemeVars: get($themeVarsLgDark),

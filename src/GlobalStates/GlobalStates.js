@@ -1,4 +1,5 @@
 import { atomWithReset } from 'jotai/utils'
+import { atom } from 'jotai'
 import { create } from 'mutative'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 import blankTemplate from '../Utils/StaticData/form-templates/blankTemplate'
@@ -51,10 +52,10 @@ export const $alertModal = atomWithReset({ show: false, msg: '' })
 export const $nestedLayouts = atomWithReset({})
 
 // selectors
-export const $fieldsArr = atomWithReset((get) => makeFieldsArrByLabel(get($fields), get($fieldLabels), []))
-export const $newFormId = atomWithReset((get) => getNewFormId(get($forms)))
-export const $uniqueFieldId = atomWithReset((get) => getNewId(get($fields)))
-export const $reportSelector = atomWithReset(
+export const $fieldsArr = atom((get) => makeFieldsArrByLabel(get($fields), get($fieldLabels), []))
+export const $newFormId = atom((get) => getNewFormId(get($forms)))
+export const $uniqueFieldId = atom((get) => getNewId(get($fields)))
+export const $reportSelector = atom(
   (get) => get($reports)?.find(r => r.id === get($reportId)?.id?.toString()),
   (get, set, newReport) => set($reports, oldReports => create(oldReports, draft => {
     const reprtId = get($reportId)?.id?.toString()

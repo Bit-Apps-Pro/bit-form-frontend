@@ -1,3 +1,4 @@
+import { atom } from 'jotai'
 import { atomWithReset } from 'jotai/utils'
 import { mergeNestedObj } from '../Utils/globalHelpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
@@ -8,7 +9,7 @@ export const $savedStylesAndVars = atomWithReset({
   allStyles: {},
 })
 
-export const $savedThemeColors = atomWithReset(
+export const $savedThemeColors = atom(
   (get) => {
     const colorScheme = get($colorScheme)
     const { lightThemeColors, darkThemeColors } = get($savedStylesAndVars).allThemeColors
@@ -17,7 +18,7 @@ export const $savedThemeColors = atomWithReset(
   },
 )
 
-export const $savedThemeVars = atomWithReset(
+export const $savedThemeVars = atom(
   (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
@@ -48,7 +49,7 @@ export const $savedThemeVars = atomWithReset(
   },
 )
 
-export const $savedStyles = atomWithReset(
+export const $savedStyles = atom(
   (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)

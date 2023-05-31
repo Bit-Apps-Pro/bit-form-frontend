@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { atom } from 'jotai'
 import { atomWithReset } from 'jotai/utils'
 import { mergeNestedObj } from '../Utils/globalHelpers'
 import { $breakpoint, $colorScheme } from './GlobalStates'
@@ -10,7 +11,7 @@ export const $stylesMdDark = atomWithReset({})
 export const $stylesSmLight = atomWithReset({})
 export const $stylesSmDark = atomWithReset({})
 
-export const $styles = atomWithReset(
+export const $styles = atom(
   (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
@@ -75,7 +76,7 @@ export const $styles = atomWithReset(
   },
 )
 
-export const $allStyles = atomWithReset(
+export const $allStyles = atom(
   (get) => ({
     lgLightStyles: get($stylesLgLight),
     lgDarkStyles: get($stylesLgDark),
