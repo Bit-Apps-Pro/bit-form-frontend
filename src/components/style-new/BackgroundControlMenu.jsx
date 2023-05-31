@@ -8,7 +8,7 @@ import { memo, useEffect, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom, useResetRecoilState, useSetAtom } from 'jotai'
+import { useAtom, useResetAtom, useSetAtom } from 'jotai'
 import { $unsplashImgUrl, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -58,7 +58,7 @@ function BackgroundControlMenu({ stateObjName,
   const setThemeVars = useSetAtom($themeVars)
   const [themeColors, setThemeColors] = useAtom($themeColors)
   const [unsplashMdl, setUnsplashMdl] = useAtom($unsplashMdl)
-  const resetUnsplashImgUrl = useResetRecoilState($unsplashImgUrl)
+  const resetUnsplashImgUrl = useResetAtom($unsplashImgUrl)
   const [unsplashImgUrl, setUnsplashImgUrl] = useAtom($unsplashImgUrl)
 
   const stateObj = getObjByKey(object, { styles })

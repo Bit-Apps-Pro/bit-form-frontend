@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useResetRecoilState, useSetAtom } from 'jotai'
+import { useAtom, useAtomValue, useResetAtom, useSetAtom } from 'jotai'
 import {
   $additionalSettings,
   $breakpointSize,
@@ -65,7 +65,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const builderHelperStates = useAtomValue($builderHelperStates)
   const setBuilderHookStates = useSetAtom($builderHookStates)
   const setFieldLabels = useSetAtom($fieldLabels)
-  const resetUpdateBtn = useResetRecoilState($updateBtn)
+  const resetUpdateBtn = useResetAtom($updateBtn)
   const [reports, setReports] = useAtom($reports)
   const currentReport = useAtomValue($reportSelector)
   const [reportId, setReportId] = useAtom($reportId)
