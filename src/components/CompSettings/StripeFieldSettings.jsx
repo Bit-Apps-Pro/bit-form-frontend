@@ -459,7 +459,7 @@ export default function StripeFieldSettings() {
               value={fieldData.config?.linkAuthentication?.emailFld || ''}
             >
               <option value="">{__('Select Field')}</option>
-              {getSpecifiedFields('email')}
+              {getSpecifiedFields()}
             </select>
           </div>
         </SimpleAccordion>
@@ -575,7 +575,7 @@ export default function StripeFieldSettings() {
                   value={fieldData.config?.address?.defaultValues?.name || ''}
                 >
                   <option value="">{__('Select Field')}</option>
-                  {getSpecifiedFields('desc')}
+                  {getSpecifiedFields()}
                 </select>
               </div>
             )}
@@ -591,7 +591,7 @@ export default function StripeFieldSettings() {
                     value={fieldData.config?.address?.defaultValues?.firstName || ''}
                   >
                     <option value="">{__('Select Field')}</option>
-                    {getSpecifiedFields('desc')}
+                    {getSpecifiedFields()}
                   </select>
                 </div>
                 <div className={css(ut.mt2, { px: 1 })}>
@@ -604,7 +604,7 @@ export default function StripeFieldSettings() {
                     value={fieldData.config?.address?.defaultValues?.lastName || ''}
                   >
                     <option value="">{__('Select Field')}</option>
-                    {getSpecifiedFields('desc')}
+                    {getSpecifiedFields()}
                   </select>
                 </div>
               </>
@@ -632,7 +632,7 @@ export default function StripeFieldSettings() {
                   value={fieldData.config?.address?.defaultValues?.phone || ''}
                 >
                   <option value="">{__('Select Field')}</option>
-                  {getSpecifiedFields('desc')}
+                  {getSpecifiedFields()}
                 </select>
               </div>
             )}
@@ -646,7 +646,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.line1 || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields('desc')}
+                {getSpecifiedFields()}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -659,7 +659,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.line2 || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields('desc')}
+                {getSpecifiedFields()}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -672,7 +672,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.city || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields('desc')}
+                {getSpecifiedFields()}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -685,7 +685,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.state || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields('desc')}
+                {getSpecifiedFields()}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -698,7 +698,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.postal_code || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields('desc')}
+                {getSpecifiedFields()}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -711,7 +711,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.country || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields('desc')}
+                {getSpecifiedFields()}
               </select>
             </div>
           </div>
