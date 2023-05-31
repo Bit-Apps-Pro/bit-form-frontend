@@ -1,5 +1,5 @@
 import { produce } from 'immer'
-import { Suspense, useEffect, useRef } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -37,6 +37,7 @@ export default function SectionField({
   const { formType } = useParams()
   const styleClassesForRender = deepCopy(styleClasses)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
+  const [gridNestedLayouts, setGridNestedLayouts] = useState(deepCopy(nestedLayouts[fieldKey]))
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
   const setProModal = useSetRecoilState($proModal)
@@ -56,19 +57,17 @@ export default function SectionField({
 
   useEffect(() => {
     if (fieldChangeCounter > 0 && fieldKey === parentFieldKey) {
-      const nl = fitSpecificLayoutItem(nestedLayouts[fieldKey], changedFieldKey)
-      setNestedLayouts(prv => produce(prv, draft => {
-        draft[fieldKey] = nl
-      }))
+      const nl = fitSpecificLayoutItem(gridNestedLayouts, changedFieldKey)
+      setGridNestedLayouts(deepCopy(nl))
+      setNestedLayouts(prevLayouts => produce(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = nl }))
       reCalculateFldHeights(fieldKey)
     }
   }, [fieldChangeCounter, parentFieldKey, changedFieldKey])
+
   const handleLayoutChange = (lay) => {
     if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
-      setNestedLayouts(prv => produce(prv, draft => {
-        if (!draft[fieldKey]) return
-        draft[fieldKey][breakpoint] = lay
-      }))
+      setGridNestedLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
+      setNestedLayouts(prevLayouts => produce(prevLayouts, draftLayouts => { draftLayouts[fieldKey][breakpoint] = lay }))
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
@@ -78,8 +77,9 @@ export default function SectionField({
   const onDrop = (e, dropPosition) => {
     const dragFieldData = handleFieldExtraAttr(draggingField.fieldData, 'section')
     if (!dragFieldData) return
-    const { newLayouts } = addNewFieldToGridLayout(nestedLayouts[fieldKey], dragFieldData, draggingField.fieldSize, dropPosition)
-    setNestedLayouts({ ...nestedLayouts, [fieldKey]: newLayouts })
+    const { newLayouts } = addNewFieldToGridLayout(gridNestedLayouts, dragFieldData, draggingField.fieldSize, dropPosition)
+    setGridNestedLayouts(deepCopy(newLayouts))
+    setNestedLayouts(prevLayouts => produce(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
     setIsDraggable(true)
     reCalculateFldHeights(fieldKey)
   }
@@ -200,26 +200,22 @@ export default function SectionField({
   }
 
   const cloneNestedLayoutItem = fldKey => {
-    const layouts = { ...nestedLayouts[fieldKey] }
     if (!IS_PRO) {
       setProModal({ show: true, ...proHelperData.fieldClone })
       return
     }
     const fldData = fields[fldKey]
     if (!handleFieldExtraAttr(fldData)) return
-    const { newLayouts } = cloneLayoutItem(fldKey, layouts)
-    setNestedLayouts(prevLayout => produce(prevLayout, draftLayout => {
-      draftLayout[fieldKey] = newLayouts
-    }))
+    const { newLayouts } = cloneLayoutItem(fldKey, gridNestedLayouts)
+    setGridNestedLayouts(deepCopy(newLayouts))
+    setNestedLayouts(prevLayouts => produce(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
     reCalculateFldHeights(fieldKey)
   }
 
   const removeNestedLayoutItem = fldKey => {
-    const layouts = { ...nestedLayouts[fieldKey] }
-    const newLayouts = removeLayoutItem(fldKey, layouts)
-    setNestedLayouts(prevLayout => produce(prevLayout, draftLayout => {
-      draftLayout[fieldKey] = newLayouts
-    }))
+    const newLayouts = removeLayoutItem(fldKey, gridNestedLayouts)
+    setGridNestedLayouts(deepCopy(newLayouts))
+    setNestedLayouts(prevLayouts => produce(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
     navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
     reCalculateFldHeights(fieldKey)
   }
@@ -267,7 +263,7 @@ export default function SectionField({
                 margin={[0, 0]}
                 draggableCancel=".no-drg"
                 draggableHandle=".drag"
-                layout={nestedLayouts?.[fieldKey]?.[breakpoint] || []}
+                layout={gridNestedLayouts[breakpoint]}
                 // onBreakpointChange={onBreakpointChange}
                 onDragStart={setResizingFldKey}
                 // onDrag={setResizingWX}
@@ -283,7 +279,7 @@ export default function SectionField({
                   reCalculateFldHeights(fieldKey)
                 }}
               >
-                {nestedLayouts?.[fieldKey]?.[breakpoint]?.map(layoutItem => (
+                {gridNestedLayouts[breakpoint]?.map(layoutItem => (
                   <div
                     key={layoutItem.i}
                     data-key={layoutItem.i}
@@ -314,7 +310,7 @@ export default function SectionField({
               </ReactGridLayout>
             ) : (
               <div className="_frm-g">
-                {nestedLayouts?.[fieldKey]?.[breakpoint].map(layoutItem => (
+                {gridNestedLayouts[breakpoint].map(layoutItem => (
                   <div
                     key={layoutItem.i}
                     data-key={layoutItem.i}
@@ -345,7 +341,7 @@ export default function SectionField({
               </div>
             )}
 
-            {!nestedLayouts?.[fieldKey]?.[breakpoint]?.length && !draggingField && (
+            {!gridNestedLayouts[breakpoint]?.length && !draggingField && (
               <div className="empty-layout">
                 <div className="empty-layout-msg">
                   <div className="empty-layout-msg-txt">
