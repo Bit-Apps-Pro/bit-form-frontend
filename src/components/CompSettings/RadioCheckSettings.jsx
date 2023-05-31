@@ -5,7 +5,6 @@ import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useAtom, useAtomValue } from 'recoil'
-import { bitStore.get } from 'recoil-nexus'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -140,7 +139,7 @@ function RadioCheckSettings() {
   const handleOptions = newOpts => {
     const reqOpts = newOpts.filter(opt => opt.req)
     reqOpts.length && setRequired({ target: { checked: true } })
-    const allFields = create(bitStore.get($fields), draft => {
+    const allFields = create(fields, draft => {
       draft[fldKey].opt = newOpts
       if (reqOpts.length && draft[fldKey].err.req) {
         draft[fldKey].err.req.custom = true

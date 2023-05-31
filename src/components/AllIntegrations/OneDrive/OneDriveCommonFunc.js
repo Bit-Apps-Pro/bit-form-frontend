@@ -1,10 +1,10 @@
 /* eslint-disable no-else-return */
 import toast from 'react-hot-toast'
-import { bitStore.get } from 'recoil-nexus'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { sortArrOfObj } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import bitStore from '../../../GlobalStates/BitStore'
 
 export const handleInput = (e, oneDriveConf, setOneDriveConf, formID, setIsLoading, setSnackbar, i = 0) => {
   let newConf = { ...oneDriveConf }

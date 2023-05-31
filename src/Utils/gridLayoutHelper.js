@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { bitStore.get } from 'recoil-nexus'
+import bitStore from '../GlobalStates/BitStore'
 import { $layouts, $nestedLayouts } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
 

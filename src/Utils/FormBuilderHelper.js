@@ -1,7 +1,6 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
-import { bitStore.get, bitStore.set } from 'recoil-nexus'
 import { $payments, $reCaptchaV2 } from '../GlobalStates/AppSettingsStates'
 import {
   $additionalSettings,
@@ -19,6 +18,7 @@ import proHelperData from './StaticData/proHelperData'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
 import { __ } from './i18nwrap'
+import bitStore from '../GlobalStates/BitStore'
 
 export const cols = { lg: 60, md: 60, sm: 60 }
 

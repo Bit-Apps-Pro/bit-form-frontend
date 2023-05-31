@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
-import { bitStore.get } from 'recoil-nexus'
+import bitStore from '../../../../GlobalStates/BitStore'
 import { $fields } from '../../../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../../../Utils/Helpers'
 import { assignNestedObj } from '../../styleHelpers'

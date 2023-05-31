@@ -6,7 +6,6 @@ import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/fi
 import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { create } from 'mutative'
-import { bitStore.get, bitStore.set } from 'recoil-nexus'
 import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
@@ -35,6 +34,7 @@ import sectionStyle_1_bitformDefault from './themes/1_bitformDefault/sectionStyl
 import selectStyle_1_BitformDefault from './themes/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from './themes/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './themes/1_bitformDefault/titleStyle_1_bitformDefault'
+import bitStore from '../../GlobalStates/BitStore'
 
 export const assignNestedObj = (obj, keyPath, value) => {
   const paths = keyPath?.split('->') || []

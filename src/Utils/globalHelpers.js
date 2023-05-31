@@ -1,9 +1,9 @@
 import { diff } from 'deep-object-diff'
 import merge from 'deepmerge-alt'
 import { parse, stringify } from 'jcof'
-import { bitStore.get } from 'recoil-nexus'
 import { $fields } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
+import bitStore from '../GlobalStates/BitStore'
 
 export function observeElement(element, property, callback, delay = 0) {
   const elementPrototype = Object.getPrototypeOf(element)

@@ -1,4 +1,4 @@
-import { bitStore.get } from 'recoil-nexus'
+import bitStore from '../../GlobalStates/BitStore'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { firstCharCap } from '../Helpers'
 import { SmartTagField } from './SmartTagField'

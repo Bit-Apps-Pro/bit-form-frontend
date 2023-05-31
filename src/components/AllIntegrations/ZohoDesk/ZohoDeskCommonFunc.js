@@ -1,4 +1,4 @@
-import { bitStore.get } from 'recoil-nexus'
+import bitStore from '../../../GlobalStates/BitStore'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { sprintf, __ } from '../../../Utils/i18nwrap'

@@ -1,7 +1,7 @@
-import { bitStore.get } from 'recoil-nexus'
 import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import bitStore from '../../../GlobalStates/BitStore'
 
 export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
   let newConf = { ...sheetConf }

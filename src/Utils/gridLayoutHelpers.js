@@ -1,5 +1,4 @@
 import { create } from 'mutative'
-import { bitStore.get, bitStore.set } from 'recoil-nexus'
 import {
   $breakpoint,
   $contextMenu,
@@ -26,6 +25,7 @@ import { selectInGrid } from './globalHelpers'
 import { __ } from './i18nwrap'
 import { handleFieldExtraAttr } from './FormBuilderHelper'
 import paymentFields from './StaticData/paymentFields'
+import bitStore from '../GlobalStates/BitStore'
 
 const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
   const { typ: fldType } = fieldData

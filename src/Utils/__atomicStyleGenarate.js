@@ -1,7 +1,6 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
-import { bitStore.get } from 'recoil-nexus'
 import { removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $formId, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -9,6 +8,7 @@ import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColors
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
+import bitStore from '../GlobalStates/BitStore'
 
 export default function atomicStyleGenarate(sortedLayout) {
   const { atomicClassPrefix, darkModeConfig } = bitStore.get($builderSettings)
