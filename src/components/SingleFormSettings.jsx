@@ -14,7 +14,7 @@ import 'react-day-picker/dist/style.css'
  */
 import { Link, useParams } from 'react-router-dom'
 import Timekeeper from 'react-timekeeper'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
@@ -54,11 +54,11 @@ export default function SingleFormSettings() {
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const reCaptchaV3 = useAtomValue($reCaptchaV3)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setStaticStyleState = useSetRecoilState($staticStylesState)
-  const setProModal = useSetRecoilState($proModal)
+  const setUpdateBtn = useSetAtom($updateBtn)
+  const setStaticStyleState = useSetAtom($staticStylesState)
+  const setProModal = useSetAtom($proModal)
   // const [proModal, setProModal] = useState({ show: false, msg: '' })
-  const setStyles = useSetRecoilState($styles)
+  const setStyles = useSetAtom($styles)
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }

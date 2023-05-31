@@ -10,7 +10,7 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -67,12 +67,12 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   const { formType } = useParams()
-  const setProModal = useSetRecoilState($proModal)
+  const setProModal = useSetAtom($proModal)
   const [fields, setFields] = useRecoilState($fields)
   const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
   const [layouts, setLayouts] = useState(rootLayouts)
   const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
-  const setDeletedFldKey = useSetRecoilState($deletedFldKey)
+  const setDeletedFldKey = useSetAtom($deletedFldKey)
   const draggingField = useAtomValue($draggingField)
   const [flags, setFlags] = useRecoilState($flags)
   const builderHookStates = useAtomValue($builderHookStates)
@@ -80,14 +80,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [styles, setStyles] = useRecoilState($stylesLgLight)
   const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
   const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
-  const setStaticStyleState = useSetRecoilState($staticStylesState)
+  const setStaticStyleState = useSetAtom($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [resizingFld, setResizingFld] = useState({})
   const [rowHeight, setRowHeight] = useState(1)
   const uniqueFieldId = useAtomValue($uniqueFieldId)
   const isDraggable = useAtomValue($isDraggable)
   const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
-  const setContextMenuRef = useSetRecoilState($contextMenuRef)
+  const setContextMenuRef = useSetAtom($contextMenuRef)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates

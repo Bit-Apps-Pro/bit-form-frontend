@@ -1,7 +1,7 @@
 import { memo, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
 import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates/GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
 import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
@@ -24,7 +24,7 @@ function WebHooks({ removeIntegration }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useAtomValue($fieldsArr)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { css } = useFela()
   const testResponseRef = useRef([])
 

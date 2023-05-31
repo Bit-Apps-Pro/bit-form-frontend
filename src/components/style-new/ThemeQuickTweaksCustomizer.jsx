@@ -4,7 +4,7 @@ import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $builderSettings, $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
@@ -55,9 +55,9 @@ export default function ThemeQuickTweaksCustomizer() {
   const tmpThemeVars = useAtomValue($savedThemeVars)
   const formId = useAtomValue($formId)
   const fieldsArray = Object.entries(fields)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
   const [styleResetTo, setStyleResetTo] = useState('initial')
   const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,

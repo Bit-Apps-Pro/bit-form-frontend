@@ -3,7 +3,7 @@ import { create } from 'mutative'
 import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetAtom } from 'recoil'
 import { hideAll } from 'tippy.js'
 import { $fields, $proModal, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
@@ -46,8 +46,8 @@ export default function FieldContextMenu({
   removeLayoutItem,
   isComponentVisible,
 }) {
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-  const setProModal = useSetRecoilState($proModal)
+  const setSelectedFieldId = useSetAtom($selectedFieldId)
+  const setProModal = useSetAtom($proModal)
   const [fields, setFields] = useRecoilState($fields)
   const fldKey = isContextMenu ? contextMenu.fldKey : layoutItem.i
   const { css } = useFela()

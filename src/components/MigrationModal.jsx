@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'recoil'
 import { $bits, $formId } from '../GlobalStates/GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { generateUpdateFormData, getConfirmationStyle, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
@@ -11,7 +11,7 @@ import Progressbar from './Utilities/Progressbar'
 
 export default function MigrationModal() {
   const bits = useAtomValue($bits)
-  const setFormId = useSetRecoilState($formId)
+  const setFormId = useSetAtom($formId)
   const [migratingCount, setMigratingCount] = useState(0)
   const [totalForms, setTotalForms] = useState(0)
 

@@ -1,11 +1,11 @@
 import { useFela } from 'react-fela'
-import { useAtomValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { showDraggableModal } from './styleHelpers'
 
 export default function ThemeControl({ fldKey }) {
-  const setDraggableModal = useSetRecoilState($draggableModal)
+  const setDraggableModal = useSetAtom($draggableModal)
   const { css } = useFela()
   const styles = useAtomValue($styles)
   const theme = styles.fields[fldKey]?.theme

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useAtomValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useResetRecoilState, useSetAtom } from 'recoil'
 import {
   $additionalSettings,
   $breakpointSize,
@@ -61,10 +61,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const formInfo = useAtomValue($formInfo)
   const { formName } = formInfo
   const newFormId = useAtomValue($newFormId)
-  const setAllForms = useSetRecoilState($forms)
+  const setAllForms = useSetAtom($forms)
   const builderHelperStates = useAtomValue($builderHelperStates)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
-  const setFieldLabels = useSetRecoilState($fieldLabels)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
+  const setFieldLabels = useSetAtom($fieldLabels)
   const resetUpdateBtn = useResetRecoilState($updateBtn)
   const [reports, setReports] = useRecoilState($reports)
   const currentReport = useAtomValue($reportSelector)
@@ -76,10 +76,10 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [additional, setAdditional] = useRecoilState($additionalSettings)
   const [confirmations, setConfirmations] = useRecoilState($confirmations)
   const styles = useAtomValue($styles)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
+  const setSelectedFieldId = useSetAtom($selectedFieldId)
   const builderSettings = useAtomValue($builderSettings)
   const staticStylesState = useAtomValue($staticStylesState)
   const breakpointSize = useAtomValue($breakpointSize)

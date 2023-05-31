@@ -1,6 +1,6 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import { $breakpoint, $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates/GlobalStates'
 import MobileIcon from '../Icons/MobileIcon'
@@ -17,8 +17,8 @@ export default function BreakpointSizeControl() {
   const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
   const [breakpointSize, setBreakpointSize] = useRecoilState($breakpointSize)
   const breakpoint = useAtomValue($breakpoint)
-  const setIsDraggable = useSetRecoilState($isDraggable)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setIsDraggable = useSetAtom($isDraggable)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const toggleRespectOrder = () => {
     if (builderHelperStates.respectLGLayoutOrder) setIsDraggable(true)

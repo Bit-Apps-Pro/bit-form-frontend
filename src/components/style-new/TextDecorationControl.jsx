@@ -1,6 +1,6 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetAtom } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -13,7 +13,7 @@ import { assignNestedObj, getObjByKey, getValueByObjPath, showDraggableModal } f
 
 export default function TextDecorationControl({ subtitle, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
-  const setThemeColors = useSetRecoilState($themeColors)
+  const setThemeColors = useSetAtom($themeColors)
   const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
 
   const [themeVars, setThemeVars] = useRecoilState($themeVars)

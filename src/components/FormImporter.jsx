@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'recoil'
 import { $forms } from '../GlobalStates/GlobalStates'
 import ut from '../styles/2.utilities'
 import app from '../styles/app.style'
@@ -15,7 +15,7 @@ import CustomFileUpload from './Utilities/CustomFileUpload'
 import TableCheckBox from './Utilities/TableCheckBox'
 
 export default function FormImporter({ setModal, setTempModal, newFormId, setSnackbar }) {
-  const setForms = useSetRecoilState($forms)
+  const setForms = useSetAtom($forms)
   const [importProp, setImportProp] = useState({ prop: ['all', 'additional', 'confirmation', 'workFlows', 'mailTem', 'integrations', 'reports'] })
   const [error, setError] = useState({ formDetail: '', prop: '' })
   const { css } = useFela()

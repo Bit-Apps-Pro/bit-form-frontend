@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useAtomValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useAtomValue, useSetAtom } from 'recoil'
 import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates/GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
 import StackIcn from '../Icons/StackIcn'
@@ -18,7 +18,7 @@ function RedirUrl({ removeIntegration }) {
   const [redirectUrls, setredirectUrls] = useState(null)
   const [allConf, setAllConf] = useRecoilState($confirmations)
   const fieldsArr = useAtomValue($fieldsArr)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { css } = useFela()
 
   useEffect(() => {
