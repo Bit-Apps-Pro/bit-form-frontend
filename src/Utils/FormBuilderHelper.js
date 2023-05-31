@@ -1,7 +1,7 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
-import { getRecoil, bitStore.set } from 'recoil-nexus'
+import { bitStore.get, bitStore.set } from 'recoil-nexus'
 import { $payments, $reCaptchaV2 } from '../GlobalStates/AppSettingsStates'
 import {
   $additionalSettings,
@@ -240,12 +240,12 @@ const FIELD_FILTER = {
 }
 
 export const checkFieldsExtraAttr = (field, parentField) => {
-  const paymentsIntegs = getRecoil($payments)
-  const reCaptchaV2 = getRecoil($reCaptchaV2)
+  const paymentsIntegs = bitStore.get($payments)
+  const reCaptchaV2 = bitStore.get($reCaptchaV2)
   // eslint-disable-next-line no-undef
-  const allFields = getRecoil($fields)
-  const bits = getRecoil($bits)
-  const additionalSettings = getRecoil($additionalSettings)
+  const allFields = bitStore.get($fields)
+  const bits = bitStore.get($bits)
+  const additionalSettings = bitStore.get($additionalSettings)
   if (field.lbl === 'Select Country' && !bits.isPro) {
     return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.') }
   }
@@ -410,7 +410,7 @@ export function prepareLayout(lays, respectLGLayoutOrder) {
 }
 
 export const addToBuilderHistory = (historyData, unsaved = true, index = undefined) => {
-  const builderHistoryState = getRecoil($builderHistory)
+  const builderHistoryState = bitStore.get($builderHistory)
   const changedHistory = create(builderHistoryState, draft => {
     if (index !== undefined) {
       if (!draft.histories[index]) draft.histories[index] = {}
@@ -429,19 +429,19 @@ export const addToBuilderHistory = (historyData, unsaved = true, index = undefin
   bitStore.set($builderHistory, changedHistory)
 
   if (unsaved) {
-    const updateBtn = getRecoil($updateBtn)
+    const updateBtn = bitStore.get($updateBtn)
     bitStore.set($updateBtn, { ...updateBtn, unsaved: true })
   }
 }
 
 const checkErrKeyIndex = (fieldKey, errorKey) => {
-  const updateBtn = getRecoil($updateBtn)
+  const updateBtn = bitStore.get($updateBtn)
   return Array.isArray(updateBtn.errors) ? updateBtn.errors.findIndex(({ fieldKey: fldKey,
     errorKey: errKey }) => (fieldKey || errorKey) && (fieldKey ? fieldKey === fldKey : true) && (errorKey ? errorKey === errKey : true)) : -1
 }
 
 export const addFormUpdateError = (err) => {
-  const updateBtn = getRecoil($updateBtn)
+  const updateBtn = bitStore.get($updateBtn)
   const { fieldKey, errorKey } = err
   const errIndex = checkErrKeyIndex(fieldKey, errorKey)
   if (errIndex > -1) return
@@ -455,7 +455,7 @@ export const addFormUpdateError = (err) => {
 }
 
 export const removeFormUpdateError = (fieldKey, errorKey) => {
-  const updateBtn = getRecoil($updateBtn)
+  const updateBtn = bitStore.get($updateBtn)
   const errIndex = checkErrKeyIndex(fieldKey, errorKey)
 
   if (errIndex < 0) return
@@ -623,8 +623,8 @@ export const propertyValueSumY = (propertyValue = '') => {
 export const filterNumber = numberString => Number(numberString.replace(/px|em|rem|!important/g, ''))
 
 export const reCalculateFldHeights = (fieldKey) => {
-  const builderHookState = getRecoil($builderHookStates)
-  const layouts = getRecoil($layouts)
+  const builderHookState = bitStore.get($builderHookStates)
+  const layouts = bitStore.get($layouts)
   const isExistInLayout = layouts.lg.find(itm => itm.i === fieldKey)
   if (fieldKey && isExistInLayout) {
     const newBuilderHookState = create(builderHookState, draft => {
@@ -655,7 +655,7 @@ export const reCalculateFldHeights = (fieldKey) => {
 }
 
 export const getParentFieldKey = (fieldKey) => {
-  const nestedLayout = getRecoil($nestedLayouts)
+  const nestedLayout = bitStore.get($nestedLayouts)
   let parentFieldKey = ''
   Object.entries(nestedLayout).forEach(([key, layout]) => {
     if (layout.lg.find(itm => itm.i === fieldKey)) {
@@ -684,12 +684,12 @@ export const generateHistoryData = (element, fieldKey, path, changedValue, state
 }
 
 export const getLatestState = (stateName) => {
-  if (stateName === 'fields') return getRecoil($fields)
-  if (stateName === 'styles') return getRecoil($styles)
-  if (stateName === 'themeVars') return getRecoil($themeVars)
-  if (stateName === 'themeColors') return getRecoil($themeColors)
-  if (stateName === 'breakpoint') return getRecoil($breakpoint)
-  if (stateName === 'colorScheme') return getRecoil($colorScheme)
+  if (stateName === 'fields') return bitStore.get($fields)
+  if (stateName === 'styles') return bitStore.get($styles)
+  if (stateName === 'themeVars') return bitStore.get($themeVars)
+  if (stateName === 'themeColors') return bitStore.get($themeColors)
+  if (stateName === 'breakpoint') return bitStore.get($breakpoint)
+  if (stateName === 'colorScheme') return bitStore.get($colorScheme)
 }
 
 const elementLabel = (element) => {
@@ -776,8 +776,8 @@ export const getResizableHandles = fieldType => {
 }
 
 export const setRequired = (e, callBack) => {
-  const fields = getRecoil($fields)
-  const fldKey = getRecoil($selectedFieldId)
+  const fields = bitStore.get($fields)
+  const fldKey = bitStore.get($selectedFieldId)
   const fieldData = deepCopy(fields[fldKey])
   if (e.target.checked) {
     const tmp = { ...fieldData.valid }
@@ -911,7 +911,7 @@ export function getAbsoluteElmHeight(el, withMargin = 1) {
 }
 
 export const generateSessionKey = key => {
-  const formId = getRecoil($formId)
+  const formId = bitStore.get($formId)
   if (!formId) return null
   return `btcd-${key}-bf-${formId}`
 }
@@ -938,7 +938,7 @@ export const getSessionStorageStates = (key, { strType } = {}) => {
 }
 
 export const getCurrentFormUrl = () => {
-  const formID = getRecoil($formId)
+  const formID = bitStore.get($formId)
   const { hash } = window.location
   const url = hash.replace('#', '')
   const regex = new RegExp(`/(.*?)${formID}`)
@@ -948,8 +948,8 @@ export const getCurrentFormUrl = () => {
 }
 
 export const getTotalLayoutHeight = () => {
-  const layouts = getRecoil($layouts)
-  const breakpoint = getRecoil($breakpoint)
+  const layouts = bitStore.get($layouts)
+  const breakpoint = bitStore.get($breakpoint)
   const layout = layouts[breakpoint]
 
   return layout.reduce((acc, { h, y }) => {
@@ -963,10 +963,10 @@ export const getTotalLayoutHeight = () => {
 }
 
 export const getFieldsBasedOnLayoutOrder = () => {
-  const fields = getRecoil($fields)
-  const layouts = getRecoil($layouts)
-  const breakpoint = getRecoil($breakpoint)
-  const nestedLayouts = getRecoil($nestedLayouts)
+  const fields = bitStore.get($fields)
+  const layouts = bitStore.get($layouts)
+  const breakpoint = bitStore.get($breakpoint)
+  const nestedLayouts = bitStore.get($nestedLayouts)
   const breakpointLayouts = layouts[breakpoint]
   const breakpointNestedLayouts = Object.entries(nestedLayouts).reduce((acc, [fieldKey, lays]) => {
     const fldPosition = breakpointLayouts.find((lay) => lay.i === fieldKey)
@@ -982,9 +982,9 @@ export const getFieldsBasedOnLayoutOrder = () => {
 }
 
 export const getNestedLayoutHeight = (fieldKey) => {
-  const nestedLayouts = getRecoil($nestedLayouts)
+  const nestedLayouts = bitStore.get($nestedLayouts)
   const layouts = nestedLayouts[fieldKey]
-  const breakpoint = getRecoil($breakpoint)
+  const breakpoint = bitStore.get($breakpoint)
   if (!layouts) return 0
   const layout = layouts[breakpoint]
   return layout.reduce((acc, { h, y }) => {

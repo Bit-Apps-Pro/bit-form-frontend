@@ -1,5 +1,5 @@
 import { create } from 'mutative'
-import { getRecoil, bitStore.set } from 'recoil-nexus'
+import { bitStore.get, bitStore.set } from 'recoil-nexus'
 import {
   $breakpoint,
   $contextMenu,
@@ -70,12 +70,12 @@ export const generateFieldLblForHistory = fldData => {
 }
 
 export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition) {
-  const formID = getRecoil($formId)
-  const uniqueFieldId = getRecoil($uniqueFieldId)
-  const fields = getRecoil($fields)
-  const styles = getRecoil($styles)
-  const themeVars = getRecoil($themeVars)
-  const staticStylesState = getRecoil($staticStylesState)
+  const formID = bitStore.get($formId)
+  const uniqueFieldId = bitStore.get($uniqueFieldId)
+  const fields = bitStore.get($fields)
+  const styles = bitStore.get($styles)
+  const themeVars = bitStore.get($themeVars)
+  const staticStylesState = bitStore.get($staticStylesState)
 
   let processedFieldData = handleFieldExtraAttr(fieldData)
   if (!processedFieldData) return
@@ -109,7 +109,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   const fldType = processedFieldData.typ
 
   if (fldType === 'section') {
-    const nestedLayouts = getRecoil($nestedLayouts)
+    const nestedLayouts = bitStore.get($nestedLayouts)
     bitStore.set($nestedLayouts, create(nestedLayouts, draftNestedLayouts => {
       draftNestedLayouts[newBlk] = { lg: [], md: [], sm: [] }
     }))
@@ -204,7 +204,7 @@ export const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
 }
 
 export const getInitHeightsForResizingTextarea = fldKey => {
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   const fldData = fields[fldKey]
   if (!fldData) return
   const fldType = fldData.typ
@@ -225,7 +225,7 @@ export const setResizingFldKey = (_, lay) => {
 }
 
 export const setResizingWX = (lays, lay) => {
-  const resizingFld = getRecoil($resizingFld)
+  const resizingFld = bitStore.get($resizingFld)
   if (resizingFld.fieldKey) {
     const layout = lays.find(l => l.i === resizingFld.fieldKey)
     const newResingFld = create(resizingFld, draftResizingFld => {
@@ -241,7 +241,7 @@ export const setResizingWX = (lays, lay) => {
 }
 
 export const removeFieldStyles = fldKey => {
-  const styles = getRecoil($styles)
+  const styles = bitStore.get($styles)
   const newStyles = create(styles, draftStyles => {
     delete draftStyles.fields[fldKey]
   })
@@ -249,12 +249,12 @@ export const removeFieldStyles = fldKey => {
 }
 
 export const cloneLayoutItem = (fldKey, layouts) => {
-  const fields = getRecoil($fields)
-  const styles = getRecoil($styles)
-  const proModal = getRecoil($proModal)
-  const uniqueFieldId = getRecoil($uniqueFieldId)
-  const formID = getRecoil($formId)
-  const breakpoint = getRecoil($breakpoint)
+  const fields = bitStore.get($fields)
+  const styles = bitStore.get($styles)
+  const proModal = bitStore.get($proModal)
+  const uniqueFieldId = bitStore.get($uniqueFieldId)
+  const formID = bitStore.get($formId)
+  const breakpoint = bitStore.get($breakpoint)
 
   if (!IS_PRO) {
     bitStore.set(proModal, { show: true, ...proHelperData.fieldClone })
@@ -317,10 +317,10 @@ export const cloneLayoutItem = (fldKey, layouts) => {
 }
 
 export const removeLayoutItem = (fldKey, layouts) => {
-  const fields = getRecoil($fields)
-  const breakpoint = getRecoil($breakpoint)
-  const deletedFldKey = getRecoil($deletedFldKey)
-  const staticStylesState = getRecoil($staticStylesState)
+  const fields = bitStore.get($fields)
+  const breakpoint = bitStore.get($breakpoint)
+  const deletedFldKey = bitStore.get($deletedFldKey)
+  const staticStylesState = bitStore.get($staticStylesState)
 
   const fldData = fields[fldKey]
   if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {

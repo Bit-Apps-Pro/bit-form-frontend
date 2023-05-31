@@ -1,9 +1,9 @@
-import { getRecoil } from 'recoil-nexus'
+import { bitStore.get } from 'recoil-nexus'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { firstCharCap } from '../Helpers'
 import { SmartTagField } from './SmartTagField'
 
-const fields = getRecoil($fields)
+const fields = bitStore.get($fields)
 const generateFldName = fld => (fld.lbl || fld.adminLbl || fld.txt)
 const generateFieldsOpts = () => Object.entries(fields).map(([fldKey, fldData]) => ({ lbl: generateFldName(fldData) || fldKey, val: `${fldKey}` }))
 const generateSmartTagOpts = () => SmartTagField.map(({ name, label }) => ({ lbl: label, val: `bfVars["${name}"]` }))

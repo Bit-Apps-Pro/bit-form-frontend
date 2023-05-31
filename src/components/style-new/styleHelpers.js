@@ -6,7 +6,7 @@ import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/fi
 import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { hexToCSSFilter } from 'hex-to-css-filter'
 import { create } from 'mutative'
-import { getRecoil, bitStore.set } from 'recoil-nexus'
+import { bitStore.get, bitStore.set } from 'recoil-nexus'
 import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
@@ -409,7 +409,7 @@ const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.override
 const filterUnusedStyles = (styles) => {
   if (isObjectEmpty(styles)) return styles
 
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   const fieldsArray = Object.keys(fields)
 
   return create(styles, draftStyle => {
@@ -487,7 +487,7 @@ export const removeUnusedStyles = () => {
     mdLightStyles,
     mdDarkStyles,
     smLightStyles,
-    smDarkStyles } = getRecoil($allStyles)
+    smDarkStyles } = bitStore.get($allStyles)
 
   const lgLightStylesUpdated = filterUnusedStyles(lgLightStyles)
   const lgDarkStylesUpdated = filterUnusedStyles(lgDarkStyles)
@@ -532,7 +532,7 @@ const addImportantToClasses = (styleObj, ignoredProps = []) => {
 }
 
 export const generateStylesWithImportantRule = styles => {
-  const { addImportantRuleToStyles } = getRecoil($builderSettings)
+  const { addImportantRuleToStyles } = bitStore.get($builderSettings)
   if (!addImportantRuleToStyles) return styles
   if (isObjectEmpty(styles)) return styles
 
@@ -556,8 +556,8 @@ const generateCombinedCSSWithImportantRule = (cssText, { combined = true } = {})
 }
 
 export const mergeOtherStylesWithAtomicCSS = () => {
-  const fields = getRecoil($fields)
-  const staticStyles = getRecoil($staticStylesState)
+  const fields = bitStore.get($fields)
+  const staticStyles = bitStore.get($staticStylesState)
   let cssText = ''
 
   if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up')) {
@@ -593,7 +593,7 @@ const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldS
 
 export const addDefaultStyleClasses = (fk, element) => {
   console.log('addDefaultStyleClasses', fk, element)
-  const allStyles = getRecoil($allStyles)
+  const allStyles = bitStore.get($allStyles)
   const allNewStyles = create(allStyles, drftAllStyles => {
     Object.keys(allStyles).forEach(brkPntColorSchema => {
       const fldTyp = allStyles[brkPntColorSchema]?.fields?.[fk]?.fieldType
@@ -728,13 +728,13 @@ export const findExistingFontStyleNWeight = (styles, themeVars) => {
 }
 
 export const updateGoogleFontUrl = (allStyles) => {
-  const themeVars = getRecoil($themeVars)
-  const themeVarsLgLight = getRecoil($themeVarsLgLight)
-  const themeVarsLgDark = getRecoil($themeVarsLgDark)
-  const themeVarsMdLight = getRecoil($themeVarsMdLight)
-  const themeVarsMdDark = getRecoil($themeVarsMdDark)
-  const themeVarsSmLight = getRecoil($themeVarsSmLight)
-  const themeVarsSmDark = getRecoil($themeVarsSmDark)
+  const themeVars = bitStore.get($themeVars)
+  const themeVarsLgLight = bitStore.get($themeVarsLgLight)
+  const themeVarsLgDark = bitStore.get($themeVarsLgDark)
+  const themeVarsMdLight = bitStore.get($themeVarsMdLight)
+  const themeVarsMdDark = bitStore.get($themeVarsMdDark)
+  const themeVarsSmLight = bitStore.get($themeVarsSmLight)
+  const themeVarsSmDark = bitStore.get($themeVarsSmDark)
   let fontWeights = []
   let fontStyleVariant = []
   if (allStyles?.lgLightStyles?.font?.fontType !== 'Google') return allStyles
@@ -822,8 +822,8 @@ export const getValueFromStateVar = (stateObj, val) => {
 }
 
 export const setIconFilterValue = (iconType, fldKey) => {
-  const styles = getRecoil($styles)
-  const themeColors = getRecoil($themeColors)
+  const styles = bitStore.get($styles)
+  const themeColors = bitStore.get($themeColors)
   const elementKey = styleClasses[iconType][0]
   const filterValue = styles?.fields?.[fldKey].classes[`.${fldKey}-${elementKey}`]?.filter
   const themeVal = getValueFromStateVar(themeColors, filterValue)

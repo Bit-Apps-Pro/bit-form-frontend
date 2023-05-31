@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 
-import { getRecoil, resetRecoil, bitStore.set } from 'recoil-nexus'
+import { bitStore.get, resetRecoil, bitStore.set } from 'recoil-nexus'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import {
@@ -687,9 +687,9 @@ export const setStyleRelatedStates = ({ themeVars, themeColors, styles }) => {
 }
 
 export const generateAndSaveAtomicCss = currentFormId => {
-  const styles = getRecoil($styles)
-  const lay = getRecoil($layouts)
-  const builderHelperStates = getRecoil($builderHelperStates)
+  const styles = bitStore.get($styles)
+  const lay = bitStore.get($layouts)
+  const builderHelperStates = bitStore.get($builderHelperStates)
   const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
   const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
   if (isStyleNotLoaded) return { layouts: sortedLayout }
@@ -722,22 +722,22 @@ export const generateAndSaveAtomicCss = currentFormId => {
 }
 
 export const generateUpdateFormData = (savedFormId) => {
-  const newFormId = getRecoil($newFormId)
-  const currentReport = getRecoil($reportSelector)
-  const fields = getRecoil($fields)
-  const formInfo = getRecoil($formInfo)
-  const reportId = getRecoil($reportId)
-  const additionalSettings = getRecoil($additionalSettings)
-  const workFlows = getRecoil($workflows)
-  const styles = getRecoil($styles)
-  const staticStylesState = getRecoil($staticStylesState)
-  const breakpointSize = getRecoil($breakpointSize)
-  const customCodes = getRecoil($customCodes)
-  const confirmations = getRecoil($confirmations)
-  const mailTemplates = getRecoil($mailTemplates)
-  const allIntegrations = getRecoil($integrations)
-  const builderSettings = getRecoil($builderSettings)
-  const deletedFldKey = getRecoil($deletedFldKey)
+  const newFormId = bitStore.get($newFormId)
+  const currentReport = bitStore.get($reportSelector)
+  const fields = bitStore.get($fields)
+  const formInfo = bitStore.get($formInfo)
+  const reportId = bitStore.get($reportId)
+  const additionalSettings = bitStore.get($additionalSettings)
+  const workFlows = bitStore.get($workflows)
+  const styles = bitStore.get($styles)
+  const staticStylesState = bitStore.get($staticStylesState)
+  const breakpointSize = bitStore.get($breakpointSize)
+  const customCodes = bitStore.get($customCodes)
+  const confirmations = bitStore.get($confirmations)
+  const mailTemplates = bitStore.get($mailTemplates)
+  const allIntegrations = bitStore.get($integrations)
+  const builderSettings = bitStore.get($builderSettings)
+  const deletedFldKey = bitStore.get($deletedFldKey)
   const { formName } = formInfo
   const {
     layouts,
@@ -827,7 +827,7 @@ export const generateUpdateFormData = (savedFormId) => {
 export const IS_PRO = (() => {
   let bits = {}
   try {
-    bits = getRecoil($bits)
+    bits = bitStore.get($bits)
   } catch (_) {
     bits = window?.bits
   }

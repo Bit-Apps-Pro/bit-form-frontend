@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
-import { getRecoil } from 'recoil-nexus'
+import { bitStore.get } from 'recoil-nexus'
 import { generateStylesWithImportantRule, mergeOtherStylesWithAtomicCSS, removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderHelperStates, $builderSettings, $fields, $formId, $nestedLayouts, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -12,9 +12,9 @@ import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers
 import { omitByObj } from './Helpers'
 
 export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = '' }) {
-  const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
-  const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
-  const nestedLayouts = getRecoil($nestedLayouts)
+  const { atomicClassPrefix, darkModeConfig } = bitStore.get($builderSettings)
+  const { styleMergeWithAtomicClasses } = bitStore.get($staticStylesState)
+  const nestedLayouts = bitStore.get($nestedLayouts)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
   const ignoreWithFallbackValues = {
@@ -55,14 +55,14 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     invalidPropValue,
   }
 
-  const formId = getRecoil($formId)
+  const formId = bitStore.get($formId)
 
   let atomicClassStart = 'A'
 
   // const layoutRowHeight = 2
 
-  const themeColorsLight = getRecoil($lightThemeColors)
-  const themeColorsDark = getRecoil($darkThemeColors)
+  const themeColorsLight = bitStore.get($lightThemeColors)
+  const themeColorsDark = bitStore.get($darkThemeColors)
 
   let { lgLightStyles: stylesLgLight,
     lgDarkStyles: stylesLgDark, // eslint-disable-line prefer-const
@@ -76,15 +76,15 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
   stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
 
-  const themeVarsLgLight = getRecoil($themeVarsLgLight)
-  const themeVarsMdLight = getRecoil($themeVarsMdLight)
-  const themeVarsSmLight = getRecoil($themeVarsSmLight)
+  const themeVarsLgLight = bitStore.get($themeVarsLgLight)
+  const themeVarsMdLight = bitStore.get($themeVarsMdLight)
+  const themeVarsSmLight = bitStore.get($themeVarsSmLight)
 
-  const themeVarsLgDark = getRecoil($themeVarsLgDark)
-  const themeVarsMdDark = getRecoil($themeVarsMdDark)
-  const themeVarsSmDark = getRecoil($themeVarsSmDark)
+  const themeVarsLgDark = bitStore.get($themeVarsLgDark)
+  const themeVarsMdDark = bitStore.get($themeVarsMdDark)
+  const themeVarsSmDark = bitStore.get($themeVarsSmDark)
 
-  const { md: mdBreakpointSize, sm: smBreakpointSize } = getRecoil($breakpointSize)
+  const { md: mdBreakpointSize, sm: smBreakpointSize } = bitStore.get($breakpointSize)
 
   // difference between main themecolor, themevar, style object and dark mode and mobo device breakpoint changes
   const lightThemeColors = themeColorsLight
@@ -262,8 +262,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
 }
 
 function generateNestedLayoutCSSText() {
-  const nestedLayouts = getRecoil($nestedLayouts)
-  const builderHelperStates = getRecoil($builderHelperStates)
+  const nestedLayouts = bitStore.get($nestedLayouts)
+  const builderHelperStates = bitStore.get($builderHelperStates)
   const nestedLayoutStyleText = { lg: '', md: '', sm: '' }
   const nestedLayoutsArr = Object.entries(nestedLayouts)
   const sortedNestedLayouts = {}
@@ -308,7 +308,7 @@ function flatenStyleObj(styleObj) {
 }
 
 function getConfirmationMsgStyles(styleObj) {
-  const workflows = getRecoil($workflows)
+  const workflows = bitStore.get($workflows)
   const tempStyleObj = {}
   let msgStyles = {}
   styleObj?.confirmations?.forEach(cmfObj => {
@@ -403,7 +403,7 @@ function addPrefixInObjectKeys(obj, prefix) {
 }
 
 export function generateLayoutStyle(layouts) {
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   let lgLayoutStyleText = ''
   let mdLayoutStyleText = ''
   let smLayoutStyleText = ''

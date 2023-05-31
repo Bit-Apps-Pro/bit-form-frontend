@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
-import { getRecoil } from 'recoil-nexus'
+import { bitStore.get } from 'recoil-nexus'
 import { removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { $breakpointSize, $builderSettings, $formId, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -11,8 +11,8 @@ import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
 export default function atomicStyleGenarate(sortedLayout) {
-  const { atomicClassPrefix, darkModeConfig } = getRecoil($builderSettings)
-  const { styleMergeWithAtomicClasses } = getRecoil($staticStylesState)
+  const { atomicClassPrefix, darkModeConfig } = bitStore.get($builderSettings)
+  const { styleMergeWithAtomicClasses } = bitStore.get($staticStylesState)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
   const ignoreWithFallbackValues = {
@@ -53,12 +53,12 @@ export default function atomicStyleGenarate(sortedLayout) {
   const SmLightAtomicClassPostfix = '-S'
   const SmDarkAtomicClassPostfix = '-P'
 
-  const formId = getRecoil($formId)
+  const formId = bitStore.get($formId)
 
   // const layoutRowHeight = 2
 
-  const themeColorsLight = getRecoil($lightThemeColors)
-  const themeColorsDark = getRecoil($darkThemeColors)
+  const themeColorsLight = bitStore.get($lightThemeColors)
+  const themeColorsDark = bitStore.get($darkThemeColors)
 
   let { lgLightStyles: stylesLgLight,
     lgDarkStyles: stylesLgDark, // eslint-disable-line prefer-const
@@ -72,23 +72,23 @@ export default function atomicStyleGenarate(sortedLayout) {
   stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
   stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
 
-  // const stylesLgLight = getRecoil($stylesLgLight)
-  // const stylesMdLight = getRecoil($stylesMdLight)
-  // const stylesSmLight = getRecoil($stylesSmLight)
+  // const stylesLgLight = bitStore.get($stylesLgLight)
+  // const stylesMdLight = bitStore.get($stylesMdLight)
+  // const stylesSmLight = bitStore.get($stylesSmLight)
 
-  // const stylesLgDark = getRecoil($stylesLgDark)
-  // const stylesMdDark = getRecoil($stylesMdDark)
-  // const stylesSmDark = getRecoil($stylesSmDark)
+  // const stylesLgDark = bitStore.get($stylesLgDark)
+  // const stylesMdDark = bitStore.get($stylesMdDark)
+  // const stylesSmDark = bitStore.get($stylesSmDark)
 
-  const themeVarsLgLight = getRecoil($themeVarsLgLight)
-  const themeVarsMdLight = getRecoil($themeVarsMdLight)
-  const themeVarsSmLight = getRecoil($themeVarsSmLight)
+  const themeVarsLgLight = bitStore.get($themeVarsLgLight)
+  const themeVarsMdLight = bitStore.get($themeVarsMdLight)
+  const themeVarsSmLight = bitStore.get($themeVarsSmLight)
 
-  const themeVarsLgDark = getRecoil($themeVarsLgDark)
-  const themeVarsMdDark = getRecoil($themeVarsMdDark)
-  const themeVarsSmDark = getRecoil($themeVarsSmDark)
+  const themeVarsLgDark = bitStore.get($themeVarsLgDark)
+  const themeVarsMdDark = bitStore.get($themeVarsMdDark)
+  const themeVarsSmDark = bitStore.get($themeVarsSmDark)
 
-  const { md: mdBreakpointSize, sm: smBreakpointSize } = getRecoil($breakpointSize)
+  const { md: mdBreakpointSize, sm: smBreakpointSize } = bitStore.get($breakpointSize)
 
   // difference between main themecolor, themevar, style object and dark mode and mobo device breakpoint changes
   const lightThemeColors = themeColorsLight
@@ -292,7 +292,7 @@ function flatenStyleObj(styleObj) {
 }
 
 function getConfirmationMsgStyles(styleObj) {
-  const workflows = getRecoil($workflows)
+  const workflows = bitStore.get($workflows)
   const tempStyleObj = {}
   let msgStyles = {}
   styleObj?.confirmations?.forEach(cmfObj => {
