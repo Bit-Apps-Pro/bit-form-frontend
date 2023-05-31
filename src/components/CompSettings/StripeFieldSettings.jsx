@@ -534,18 +534,6 @@ export default function StripeFieldSettings() {
               />
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
-              <div className="flx flx-between">
-                <b>{__('Show PO Box :')}</b>
-                <SingleToggle
-                  id="blockPoBox"
-                  className={css(ut.mr2)}
-                  name="blockPoBox"
-                  action={e => handleInput('config->address->blockPoBox', e.target.checked)}
-                  isChecked={fieldData.config?.address?.blockPoBox || false}
-                />
-              </div>
-            </div>
-            <div className={css(ut.mt2, { px: 1 })}>
               <b>{__('Name Mode:')}</b>
               <CheckBox
                 id="name-full"
