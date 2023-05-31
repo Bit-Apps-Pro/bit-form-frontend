@@ -1,5 +1,5 @@
 import { arrayMoveImmutable } from 'array-move'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import CloseEyeIcn from '../../../Icons/CloseEyeIcn'
@@ -49,7 +49,7 @@ const SortableElm = ({
   }
 
   const addOption = () => {
-    const newOption = produce(option, draft => {
+    const newOption = create(option, draft => {
       const id = newOptKey(optKey)
       // eslint-disable-next-line no-param-reassign
       draft.splice(optIndx + 1, 0, { id, [lblKey]: `Option ${id}` })
@@ -60,7 +60,7 @@ const SortableElm = ({
   }
 
   const setOpt = (e, ind, typ) => {
-    const newOption = produce(option, draft => {
+    const newOption = create(option, draft => {
       // eslint-disable-next-line no-param-reassign
       draft[ind][typ] = e.target.value
     })
@@ -69,7 +69,7 @@ const SortableElm = ({
     setScrolIndex(optIndx)
   }
   const setOptStatus = (ind, typ) => {
-    const newOption = produce(option, draft => {
+    const newOption = create(option, draft => {
       // eslint-disable-next-line no-param-reassign
       if (option[ind][typ]) {
         delete draft[ind][typ]
@@ -83,7 +83,7 @@ const SortableElm = ({
   }
 
   const setGroupTitle = e => {
-    const newOption = produce(option, draft => {
+    const newOption = create(option, draft => {
       // eslint-disable-next-line no-param-reassign
       draft[optIndx].groupLbl = e.target.value
     })

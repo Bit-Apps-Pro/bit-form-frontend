@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
@@ -20,7 +20,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
   const { success: successActions } = condGrp.actions
 
   const enableAction = (checked, typ) => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       if (checked) {
         if (typ === 'mailNotify') {
@@ -47,7 +47,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
   const checkKeyInArr = key => successActions?.some(v => v.type === key)
 
   const preventDelete = val => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { actions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd]
       actions.avoid_delete = val
     })

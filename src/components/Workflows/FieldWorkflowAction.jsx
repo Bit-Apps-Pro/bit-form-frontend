@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
 import ActionBlock from './ActionBlock'
@@ -15,7 +15,7 @@ export default function FieldWorkflowAction({ lgcGrp, lgcGrpInd, condGrp, condGr
   const { fields: fldActions } = condGrp.actions
 
   const addAction = () => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { fields: tmpFldActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       let actionVal = 'disable'
       if (draftWorkflow[lgcGrpInd].action_type === 'onsubmit') {

@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -52,7 +52,7 @@ export default function ZohoSignIntegLayout({
   }
 
   const handleNote = val => {
-    setSignConf(prevState => produce(prevState, draft => {
+    setSignConf(prevState => create(prevState, draft => {
       draft.notes = val
     }))
   }

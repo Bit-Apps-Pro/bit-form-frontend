@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { __ } from '../../../Utils/i18nwrap'
 import Loader from '../../Loaders/Loader'
@@ -15,7 +15,7 @@ export default function TelegramIntegLayout({ formFields, telegramConf, setTeleg
   }
 
   const setFromField = (val) => {
-    setTelegramConf(prevState => produce(prevState, draft => {
+    setTelegramConf(prevState => create(prevState, draft => {
       draft.body = val
     }))
   }

@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -35,14 +35,14 @@ export default function FilterController({ subtitle, action, value, objectPaths,
   const clearHandler = () => {
     switch (object) {
       case 'styles':
-        setStyles(prvStyle => produce(prvStyle, drft => {
+        setStyles(prvStyle => create(prvStyle, drft => {
           assignNestedObj(drft, paths?.filter, '')
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${paths?.filter}`, '', { styles: getLatestState('styles') }))
         break
 
       case 'themeColors':
-        setThemeColors(prvThemeClr => produce(prvThemeClr, drft => {
+        setThemeColors(prvThemeClr => create(prvThemeClr, drft => {
           assignNestedObj(drft, paths?.filter, '')
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${paths?.filter}`, '', { themeColors: getLatestState('themeColors') }))

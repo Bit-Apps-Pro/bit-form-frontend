@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
@@ -23,7 +23,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
 
     if (isGroup) logicData.push([logicObj, typ, logicObj])
     else logicData.push(logicObj)
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       let tmp = prv[lgcGrpInd].conditions[condGrpInd].logics
       tmp = accessToNested(tmp, path)
       tmp.push(...logicData)
@@ -33,7 +33,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   const delLogic = (lgcInd, subLgcInd, subSubLgcInd) => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       if (tmpLogics.length > 1) {
         if (subSubLgcInd !== undefined) {
@@ -84,7 +84,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   const changeLogic = (val, lgcInd, subLgcInd, subSubLgcInd) => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       if (subSubLgcInd !== undefined) {
         if (val === 'null') {
@@ -109,7 +109,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   const changeLogicChip = (val, lgcInd, subLgcInd, subSubLgcInd) => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       if (subSubLgcInd !== undefined) {
         tmpLogics[lgcInd][subLgcInd][subSubLgcInd] = val
@@ -135,7 +135,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   const changeValue = (val, lgcInd, subLgcInd, subSubLgcInd, valKey = '') => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       const logicPath = getLogicPath(tmpLogics, lgcInd, subLgcInd, subSubLgcInd)
 
@@ -155,7 +155,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
 
   const changeFormField = (val, lgcInd, subLgcInd, subSubLgcInd) => {
     const isSmartTag = SmartTagField.find(field => field.name === val)
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       const logicPath = getLogicPath(tmpLogics, lgcInd, subLgcInd, subSubLgcInd)
       if (subSubLgcInd !== undefined) {
@@ -176,7 +176,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   const addInlineLogic = (typ, lgcInd, subLgcInd, subSubLgcInd) => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       if (subSubLgcInd !== undefined) {
         tmpLogics[lgcInd][subLgcInd].splice(subSubLgcInd + 1, 0, typ, { field: '', logic: '', val: '' })
@@ -192,7 +192,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
   }
 
   const changeSmartKey = (val, lgcInd, subLgcInd, subSubLgcInd) => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       const tmpLogics = draftWorkflows[lgcGrpInd].conditions[condGrpInd].logics
       const logicPath = getLogicPath(tmpLogics, lgcInd, subLgcInd, subSubLgcInd)
       logicPath.smartKey = val
@@ -213,7 +213,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     if (isGroup) logicData.push([logicObj, typ, logicObj])
     else logicData.push(logicObj)
 
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       const { logics } = prvSt[lgcGrpInd].conditions[condGrpInd]
       const newLogics = [...logics[indx], ...logicData]
       prv[lgcGrpInd].conditions[condGrpInd].logics[indx] = newLogics

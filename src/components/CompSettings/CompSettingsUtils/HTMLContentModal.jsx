@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -26,7 +26,7 @@ export default function HTMLContentModal({ labelModal, setLabelModal }) {
   }, [labelModal])
 
   const setContent = val => {
-    const allFields = produce(fields, draft => {
+    const allFields = create(fields, draft => {
       draft[fldKey].content = val
     })
     setFields(allFields)
@@ -36,7 +36,7 @@ export default function HTMLContentModal({ labelModal, setLabelModal }) {
   const cancelModal = () => {
     fieldData.content = value
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     setLabelModal(false)
     addToBuilderHistory({ event: 'Cancel HTML Content Label ', type: 'cancel_html_content_label', state: { fields: allFields, fldKey } })

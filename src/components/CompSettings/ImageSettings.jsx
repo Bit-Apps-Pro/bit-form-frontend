@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -41,7 +41,7 @@ function ImageSettings() {
       fieldData.alt = value.replace(/\\\\/g, '$_bf_$')
     }
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({
       event: `Field alt Change ${fieldData.alt || fldKey}`,
@@ -58,7 +58,7 @@ function ImageSettings() {
       fieldData.bg_img = value.replace(/\\\\/g, '$_bf_$')
     }
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({
       event: `Field Image Change ${fieldData.bg_img || fldKey}`,
@@ -70,7 +70,7 @@ function ImageSettings() {
   const sizeHandler = (e) => {
     const { name, value } = e.target
     fieldData[name] = Number(value)
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     const getPropertyPath = (cssProperty) => `fields->${fldKey}->classes->.${fldKey}-fld-wrp->${cssProperty}`
 
@@ -80,7 +80,7 @@ function ImageSettings() {
       state: { fields: allFields, fldKey },
     })
     reCalculateFldHeights()
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath(name), `${Number(value)}px`)
       if (name === 'height') assignNestedObj(drftStyle, getPropertyPath('max-height'), `${Number(value)}px`)
     }))

@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $savedStyles, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
@@ -29,7 +29,7 @@ export default function ThemeStyleReset({ id, fk }) {
   }
 
   const resetStyle = () => {
-    setStyles(prvStyle => produce(prvStyle, draft => {
+    setStyles(prvStyle => create(prvStyle, draft => {
       if (fk) {
         draft.fields[fk].fieldSize = saveStyles?.fields[fk].fieldSize
         draft.fields[fk].classes = saveStyles?.fields[fk].classes

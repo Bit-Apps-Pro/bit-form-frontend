@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
@@ -57,7 +57,7 @@ function TitleSettings() {
 
   const handleTitle = ({ target: { value, name } }) => {
     fieldData[name] = value
-    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${name} Modified to ${value}`, type: `${name}_changes`, state: { fldKey: fieldKey, fields: allFields } })
   }
@@ -73,9 +73,9 @@ function TitleSettings() {
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
-      const newStyles = produce(styles, draft => {
+      const newStyles = create(styles, draft => {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       })
@@ -87,7 +87,7 @@ function TitleSettings() {
   const removeImage = (name) => {
     if (fieldData[name]) {
       delete fieldData[name]
-      const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fieldKey] = fieldData })
       setFields(allFields)
       reCalculateFldHeights(fieldKey)
       addToBuilderHistory({
@@ -108,7 +108,7 @@ function TitleSettings() {
       fieldData.titleHide = true
     }
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
     reCalculateFldHeights(fieldKey)
@@ -129,7 +129,7 @@ function TitleSettings() {
       fieldData.subtitleHide = true
     }
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
     reCalculateFldHeights(fieldKey)
@@ -146,7 +146,7 @@ function TitleSettings() {
     } else {
       delete fieldData[type]
     }
-    const allFields = produce(fields, draft => { draft[fieldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fieldKey] = fieldData })
     setFields(allFields)
     reCalculateFldHeights(fieldKey)
     addToBuilderHistory({
@@ -157,7 +157,7 @@ function TitleSettings() {
   }
 
   const flexDirectionHandle = (val, type) => {
-    const newStyles = produce(styles, drftStyle => {
+    const newStyles = create(styles, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     })
     setStyles(newStyles)
@@ -173,7 +173,7 @@ function TitleSettings() {
     let justifyContent = 'left'
     if (val === 'center') justifyContent = 'center'
     else if (val === 'flex-end') justifyContent = 'right'
-    const newStyles = produce(styles, drftStyle => {
+    const newStyles = create(styles, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
       drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
     })
@@ -184,7 +184,7 @@ function TitleSettings() {
   const handleSubtitleAlignment = (val) => {
     // console.log({ val })
     // console.log(styles.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content'])
-    const newStyles = produce(styles, drftStyle => {
+    const newStyles = create(styles, drftStyle => {
       if (val === 'start') {
         // console.log('first')
         delete drftStyle.fields[fieldKey].classes[`.${fieldKey}-sub-titl`]['justify-content']

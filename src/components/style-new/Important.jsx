@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -24,7 +24,7 @@ export default function Important({ paths = {}, propertyPath, className, id }) {
     } else {
       newStyleValue = `${styleValue} !important`
     }
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       assignNestedObj(drft, propertyPath, newStyleValue)
       props.map(propName => {
         if (isAlreadyImportant()) {

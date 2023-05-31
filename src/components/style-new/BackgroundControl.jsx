@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useSetRecoilState } from 'recoil'
@@ -44,19 +44,19 @@ export default function BackgroundControl({
   const clearHandler = () => {
     switch (stateObjName) {
       case 'themeColors':
-        setThemeColors(prvStyle => produce(prvStyle, drft => {
+        setThemeColors(prvStyle => create(prvStyle, drft => {
           drft[`${propertyPath}`] = ''
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${propertyPath}`, '', { themeColors: getLatestState('themeColors') }))
         break
       case 'themeVars':
-        setThemeVars(prvStyle => produce(prvStyle, drft => {
+        setThemeVars(prvStyle => create(prvStyle, drft => {
           drft[`${propertyPath}`] = ''
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${propertyPath}`, '', { themeVars: getLatestState('themeVars') }))
         break
       case 'styles':
-        setStyles(prvState => produce(prvState, drftStyles => {
+        setStyles(prvState => create(prvState, drftStyles => {
           backgroundProps.map(propName => {
             assignNestedObj(drftStyles, paths[propName], '')
           })

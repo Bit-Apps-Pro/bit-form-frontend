@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -29,7 +29,7 @@ export default function FileLblProperty({
       delete fieldData.config[typ]
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (

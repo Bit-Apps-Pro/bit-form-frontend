@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -31,7 +31,7 @@ export default function TextDecorationControlMenu({ objectPaths, id }) {
   const thicknesUnit = getStrFromStr(textDcrtnThickness) || 'px'
   const thicknessHandler = ({ value, unit }) => {
     const convertvalue = unitConverter(unit, value, thicknesUnit)
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, paths['text-decoration-thickness'], `${convertvalue}${unit}`)
     }))
   }

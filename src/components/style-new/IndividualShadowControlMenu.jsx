@@ -2,7 +2,7 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { Fragment, memo } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -68,7 +68,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
     if (importantAlreadyExist) {
       shadowArrToStr = `${shadowArrToStr} !important`
     }
-    setStyles(prvStyles => produce(prvStyles, drftStyles => {
+    setStyles(prvStyles => create(prvStyles, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, shadowArrToStr)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, shadowArrToStr, { styles: getLatestState('styles') }))
@@ -84,7 +84,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
   const addShadowHandler = () => {
     const getOldShadow = getShadowStyleVal()
     const newShadow = getOldShadow === undefined || getOldShadow === '' ? defaultValue : `${getOldShadow},${defaultValue}${importantAlreadyExist}`
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
+    setStyles(prvStyle => create(prvStyle, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, newShadow)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, newShadow, { styles: getLatestState('styles') }))
@@ -94,7 +94,7 @@ function IndividualShadowControlMenu({ propertyPath, id, propertyArray = ['xOffs
     const shadowArr = splitMultipleShadows(getOldShadow)
     if (shadowArr.length === 1) return
     shadowArr.splice(indx, 1)
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
+    setStyles(prvStyle => create(prvStyle, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, shadowArr.toString())
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, shadowArr.toString(), { styles: getLatestState('styles') }))

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -40,8 +40,8 @@ export default function RequiredSettings({ asteriskIsAllow = true }) {
       delete fieldData.valid.reqShow
     }
     // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    // setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     const req = checked ? 'on' : 'off'
     addToBuilderHistory({ event: `Asterisk Show ${req}: ${adminLabel || fieldData.lbl || fldKey}`, type: `asterisk_show_${req}`, state: { fields: allFields, fldKey } })
@@ -49,25 +49,25 @@ export default function RequiredSettings({ asteriskIsAllow = true }) {
 
   const setAsteriskPos = (posValue) => {
     fieldData.valid.reqPos = posValue
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     let newStyles = styles
     if (posValue === 'left') {
-      newStyles = produce(styles, drftStyles => {
+      newStyles = create(styles, drftStyles => {
         assignNestedObj(drftStyles, getPropertyPath('lbl', 'position'), 'relative')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'position'), 'absolute')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'right'), 'unset')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'left'), '0px')
       })
     } else if (posValue === 'right') {
-      newStyles = produce(styles, drftStyles => {
+      newStyles = create(styles, drftStyles => {
         assignNestedObj(drftStyles, getPropertyPath('lbl', 'position'), 'relative')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'position'), 'absolute')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'right'), '0px')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'left'), 'unset')
       })
     } else {
-      newStyles = produce(styles, drftStyles => {
+      newStyles = create(styles, drftStyles => {
         assignNestedObj(drftStyles, getPropertyPath('lbl', 'position'), 'unset')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'position'), 'unset')
         assignNestedObj(drftStyles, getPropertyPath('req-smbl', 'left'), 'unset')

@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useSetRecoilState } from 'recoil'
@@ -27,7 +27,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
 
   const addCondition = condType => {
     hideAll()
-    setWorkflows(prevWorkflows => produce(prevWorkflows, draftWorkflow => {
+    setWorkflows(prevWorkflows => create(prevWorkflows, draftWorkflow => {
       const { conditions } = draftWorkflow[lgcGrpInd]
       const condData = { ...defaultConds, cond_type: condType }
       if (condType === 'else') delete condData.logics
@@ -44,7 +44,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
 
     if (isGroup) logicData.push([logicObj, typ, logicObj])
     else logicData.push(logicObj)
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       let tmp = prv[lgcGrpInd].conditions[condGrpInd].logics
       tmp = accessToNested(tmp, logicPath)
       tmp.push(...logicData)
@@ -210,7 +210,7 @@ const WorkflowAccordionActions = ({ lgcGrpInd, condGrpInd, add, clone, remove })
 
   const deleteCondition = () => {
     setConfMdl({ show: false })
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       prv[lgcGrpInd].conditions.splice(condGrpInd, 1)
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
@@ -230,14 +230,14 @@ const WorkflowAccordionActions = ({ lgcGrpInd, condGrpInd, add, clone, remove })
   }
 
   const cloneCondition = () => {
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       prv[lgcGrpInd].conditions.splice(condGrpInd + 1, 0, deepCopy(prv[lgcGrpInd].conditions[condGrpInd]))
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addNewElseIf = () => {
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       prv[lgcGrpInd].conditions.splice(condGrpInd + 1, 0, {
         ...defaultConds,
         cond_type: 'else-if',

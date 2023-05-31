@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -33,7 +33,7 @@ export default function ButtonQuickTweaks() {
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'width') => {
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, propertyPath('btn', prop), v)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
@@ -53,7 +53,7 @@ export default function ButtonQuickTweaks() {
       propertyPath(elementKey, 'padding'),
     ]
     const values = btnSizeValues[value]
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       drftStyle.fields[fieldKey].fieldSize = value
       propertyPaths.map((path, index) => {
         assignNestedObj(drftStyle, path, values[index])

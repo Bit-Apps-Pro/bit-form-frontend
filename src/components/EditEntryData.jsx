@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
@@ -76,7 +76,7 @@ export default function EditEntryData(props) {
             }
           }
           setSnackbar({ show: true, msg: response.data.message })
-          setAllResp((oldResp) => produce(oldResp, (draft) => {
+          setAllResp((oldResp) => create(oldResp, (draft) => {
             const entryIndex = draft.findIndex(
               (e) => e.entry_id === props.entryID,
             )

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
@@ -16,14 +16,14 @@ export default function SpacingControlMenu() {
     '--fld-p': fldPadding } = themeVars
 
   const FldMarginHandler = (v) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    setThemeVars(preStyle => create(preStyle, drftStyle => {
       drftStyle['--fld-m'] = `${v}`
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Margin', v, { themeVars: getLatestState('themeVars') }))
   }
 
   const FldPaddingHandler = (v) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    setThemeVars(preStyle => create(preStyle, drftStyle => {
       drftStyle['--fld-p'] = `${v}`
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Padding', v, { themeVars: getLatestState('themeVars') }))
@@ -31,7 +31,7 @@ export default function SpacingControlMenu() {
 
   const undoHandler = (value) => {
     if (!savedThemeVars[value]) return
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    setThemeVars(preStyle => create(preStyle, drftStyle => {
       drftStyle[value] = savedThemeVars[value]
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Undo Field Spacing', savedThemeVars[value], { themeVars: getLatestState('themeVars') }))

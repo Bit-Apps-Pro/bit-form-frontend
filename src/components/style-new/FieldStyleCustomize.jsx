@@ -6,7 +6,7 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, Navigate, useParams } from 'react-router-dom'
@@ -77,11 +77,11 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   const overrideGlobalThemeHandler = ({ target: { checked } }, elmnt) => {
     // if (theme === 'material') return
     if (checked) {
-      setStyles(prvStyle => produce(prvStyle, drft => {
+      setStyles(prvStyle => create(prvStyle, drft => {
         drft.fields[fieldKey].overrideGlobalTheme = [...prvStyle.fields[fieldKey].overrideGlobalTheme, elmnt]
       }))
     } else {
-      setStyles(prvStyle => produce(prvStyle, drft => {
+      setStyles(prvStyle => create(prvStyle, drft => {
         const prvElmnt = [...prvStyle.fields[fieldKey].overrideGlobalTheme]
         prvElmnt.splice(prvElmnt.findIndex(el => el === elmnt), 1)
         drft.fields[fieldKey].overrideGlobalTheme = prvElmnt
@@ -230,7 +230,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   const customClsNamHandler = (e) => {
     const { value } = e.target
-    const allFields = produce(fields, drftFld => {
+    const allFields = create(fields, drftFld => {
       drftFld[fieldKey].customClasses[element] = value
     })
     setFields(allFields)
@@ -238,7 +238,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
 
   const addCustomAttribute = () => {
-    const allFields = produce(fields, drftFld => {
+    const allFields = create(fields, drftFld => {
       const preAttr = fields[fieldKey].customAttributes[element]
       if (preAttr) {
         drftFld[fieldKey].customAttributes[element] = [...preAttr, { key: '', value: '' }]
@@ -252,7 +252,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
 
   const attributeHandler = (e, index) => {
     const { name, value } = e.target
-    const allFields = produce(fields, drftFld => {
+    const allFields = create(fields, drftFld => {
       drftFld[fieldKey].customAttributes[element][index][name] = value
     })
     setFields(allFields)
@@ -260,7 +260,7 @@ const FieldStyleCustomize = memo(({ formType, formID, fieldKey, element }) => {
   }
 
   const deleteCustomAttribute = (index) => {
-    const allFields = produce(fields, drftFld => {
+    const allFields = create(fields, drftFld => {
       const prvAttbut = fields[fieldKey].customAttributes[element]
       const newAttbut = [...prvAttbut]
       newAttbut.splice(index, 1)

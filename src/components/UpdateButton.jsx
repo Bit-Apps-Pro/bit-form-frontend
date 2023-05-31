@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
@@ -88,7 +88,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
-      const newIntegrations = produce(integrations, draft => { draft.pop() })
+      const newIntegrations = create(integrations, draft => { draft.pop() })
       setIntegration(newIntegrations)
       saveForm('integrations', newIntegrations)
     }
@@ -97,7 +97,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   useEffect(() => {
     if (mailTem[mailTem.length - 1]?.updateTem) {
-      const newTem = produce(mailTem, draft => {
+      const newTem = create(mailTem, draft => {
         draft.pop()
       })
       setMailTem(newTem)

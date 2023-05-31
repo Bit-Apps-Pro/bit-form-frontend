@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
 import TableCheckBox from '../Utilities/TableCheckBox'
@@ -19,7 +19,7 @@ export default function WebhookWorkflowAction({ lgcGrpInd,
   const confirmations = useRecoilValue($confirmations)
 
   const setWebHooks = val => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       const findWebhook = draftSuccessActions.find(action => action.type === 'webHooks')
       if (findWebhook) findWebhook.details.id = val.map(itm => itm.value)

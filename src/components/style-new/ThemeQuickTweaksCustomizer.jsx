@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -68,7 +68,7 @@ export default function ThemeQuickTweaksCustomizer() {
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
 
-    setStyles(prvStyles => produce(prvStyles, draft => {
+    setStyles(prvStyles => create(prvStyles, draft => {
       draft.fieldsSize = value
       const flds = prvStyles.fields
       const fldKeyArr = Object.keys(flds)
@@ -106,7 +106,7 @@ export default function ThemeQuickTweaksCustomizer() {
       const existingFields = Object.keys(styles.fields)
       const previousFields = Object.keys(tmpStyles.fields)
 
-      setStyles(prv => produce(prv, drft => {
+      setStyles(prv => create(prv, drft => {
         existingFields.forEach((fldKey) => {
           if (previousFields.includes(fldKey)) {
             drft.fields[fldKey] = tmpStyles.fields[fldKey]

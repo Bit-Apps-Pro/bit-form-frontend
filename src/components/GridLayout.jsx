@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import {
   lazy, memo, Suspense,
   useEffect, useRef, useState
@@ -108,7 +108,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const fieldsCount = Object.keys(fields).length
     const layoutLgFieldsCount = getLayoutItemCount()
     if (fieldsCount === layoutLgFieldsCount) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draft => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draft => {
         Object.entries(draft).forEach(([fldKey, lay]) => {
           draft[fldKey] = fitAllLayoutItems(lay)
         })
@@ -192,7 +192,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const onBreakpointChange = bp => setBreakpoint(bp)
 
   const removeFieldStyles = fldKeys => {
-    setStyles(prevStyles => produce(prevStyles, draftStyles => {
+    setStyles(prevStyles => create(prevStyles, draftStyles => {
       fldKeys.forEach(fldKey => {
         delete draftStyles.fields[fldKey]
       })
@@ -223,17 +223,17 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       nestedLayouts[fldKey].lg.forEach(nestedField => {
         removedFldKeys.push(nestedField.i)
       })
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         delete draftNestedLayouts[fldKey]
       }))
     }
     if (!isExistInLayout) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         const parentFieldKey = getParentFieldKey(fldKey)
         draftNestedLayouts[parentFieldKey] = filterLayoutItem(fldKey, draftNestedLayouts[parentFieldKey])
       }))
     }
-    const tmpFields = produce(fields, draftFields => {
+    const tmpFields = create(fields, draftFields => {
       removedFldKeys.forEach(rmvfldKey => {
         delete draftFields[rmvfldKey]
       })
@@ -254,7 +254,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     const fldType = fldData?.typ
     if (paymentFields.includes(fldType)) {
-      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
+      setStaticStyleState(prevStaticStyleState => create(prevStaticStyleState, draftStaticStyleState => {
         delete draftStaticStyleState.staticStyles['.pos-rel']
         delete draftStaticStyleState.staticStyles['.form-loading::before']
         delete draftStaticStyleState.staticStyles['.form-loading::after']
@@ -307,7 +307,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     // clone field
     const clonedNewFieldKey = {}
-    const oldFields = produce(fields, draft => {
+    const oldFields = create(fields, draft => {
       cloneFldKeys.forEach(fldKeyToClone => {
         const fldData = draft[fldKeyToClone]
         const newBlk = `b${formID}-${uniqueFldId}`
@@ -320,7 +320,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setFields(oldFields)
 
     // clone style
-    setStyles(preStyles => produce(preStyles, draftStyle => {
+    setStyles(preStyles => create(preStyles, draftStyle => {
       cloneFldKeys.forEach(fldKeyToClone => {
         const fldStyle = draftStyle.fields[fldKeyToClone]
         const fldClasses = fldStyle.classes
@@ -338,7 +338,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     const allBreakpoints = ['sm', 'md', 'lg']
     if (isNestedField) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         const newFieldKey = clonedNewFieldKey[fldKey]
         const prevLayout = prevNestedLayouts[fldKey]
         draftNestedLayouts[newFieldKey] = deepCopy(prevLayout)
@@ -350,7 +350,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
         })
       }))
     } else if (!isExistInLayout) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         allBreakpoints.forEach(brkpnt => {
           const parentFieldKey = getParentFieldKey(fldKey)
           const layIndx = draftNestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
@@ -364,7 +364,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
     let tmpLayouts = layouts
     if (isExistInLayout) {
-      tmpLayouts = produce(layouts, draft => {
+      tmpLayouts = create(layouts, draft => {
         allBreakpoints.forEach(brkpnt => {
           const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
           const { y, h } = layouts[brkpnt][layIndx]
@@ -550,7 +550,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
             styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
           }
           navigate(styleUrl)
-          setFlags(prvFlags => produce(prvFlags, draft => {
+          setFlags(prvFlags => create(prvFlags, draft => {
             draft.inspectMode = false
           }))
           // setSelectedFieldId(attrVal)

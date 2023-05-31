@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
@@ -132,7 +132,7 @@ export default function SingleFormSettings() {
       || additionalSetting.enabled?.entry_limit
       || additionalSetting.settings?.blocked_ip?.[0]?.ip
       || additionalSetting.settings?.blocked_ip?.[0]?.ip
-    setStyles(prevStyle => produce(prevStyle, draft => {
+    setStyles(prevStyle => create(prevStyle, draft => {
       if (isTrue) {
         assignNestedObj(draft, 'form', {
           ...draft.form,
@@ -306,7 +306,7 @@ export default function SingleFormSettings() {
   const hideReCaptchaBadge = e => {
     const additional = deepCopy(additionalSetting)
     if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
-    setStaticStyleState(prvStyle => produce(prvStyle, draft => {
+    setStaticStyleState(prvStyle => create(prvStyle, draft => {
       if (e.target.checked) {
         additional.settings.recaptchav3.hideReCaptcha = true
         const path = 'staticStyles->.grecaptcha-badge->visibility'
@@ -489,7 +489,7 @@ export default function SingleFormSettings() {
     if (!val) hideAll()
     let date = val
     if (val) date = dateTimeFormatter(val, 'Y-m-d')
-    setadditional(prvState => produce(prvState, drft => {
+    setadditional(prvState => create(prvState, drft => {
       if (!drft.settings) drft.settings = {}
       if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
       if (!drft.settings.restrict_form.date) drft.settings.restrict_form.date = {}
@@ -503,7 +503,7 @@ export default function SingleFormSettings() {
       setProModal({ show: true, ...proHelperData.limit_submission })
       return false
     }
-    setadditional(prvState => produce(prvState, drft => {
+    setadditional(prvState => create(prvState, drft => {
       if (!drft.settings) drft.settings = {}
       if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
       if (!drft.settings.restrict_form.time) drft.settings.restrict_form.time = {}

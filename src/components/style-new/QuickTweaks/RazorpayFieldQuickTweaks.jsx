@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -22,8 +22,8 @@ export default function RazorpayFieldQuickTweaks() {
     const themeValue = e.target.value
     fieldData.btnTheme = themeValue
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setFields(allFields => create(allFields, draft => { draft[fieldKey] = fieldData }))
+    setStyles(prvStyle => create(prvStyle, drft => {
       let btnBg
       let border
       let color

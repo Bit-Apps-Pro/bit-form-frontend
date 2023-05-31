@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect } from 'react'
 import FieldMap from './FieldMap'
 
@@ -25,7 +25,7 @@ function Login({ fields, dataConf, setDataConf, pages, type, status }) {
   ]
 
   const inputHandler = (e) => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       const { name, value } = e.target
       // eslint-disable-next-line no-param-reassign
       draft[type][name] = value
@@ -33,14 +33,14 @@ function Login({ fields, dataConf, setDataConf, pages, type, status }) {
   }
 
   const handlePage = (e) => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       draft[type].redirect_url = e.target.value
     }))
   }
 
   useEffect(() => {
-    const tmpConf = produce(dataConf, draft => {
+    const tmpConf = create(dataConf, draft => {
       if (!draft[type]?.login_map?.[0]?.loginField) {
         draft[type].login_map = loginFields.filter(fld => fld.required).map(fl => ({ formField: '', loginField: fl.key, required: fl.required }))
       }

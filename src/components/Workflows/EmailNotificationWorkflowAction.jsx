@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $fieldsArr, $mailTemplates, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
@@ -55,7 +55,7 @@ export default function EmailNotificationWorkflowAction({
   }
 
   const setEmailSetting = (typ, value) => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       const findEmailActions = draftSuccessActions.find(val => val.type === actionKey)
       if (findEmailActions) findEmailActions.details[typ] = value

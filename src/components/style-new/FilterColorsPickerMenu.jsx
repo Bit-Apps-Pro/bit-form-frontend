@@ -4,7 +4,7 @@
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -78,21 +78,21 @@ function FilterColorsPickerMenu({ stateObjName,
 
     switch (stateObjName) {
       case 'themeColors':
-        setThemeColors(prvState => produce(prvState, drftThmClr => {
+        setThemeColors(prvState => create(prvState, drftThmClr => {
           drftThmClr[path] = hslaStr
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
-        setThemeVars(prvState => produce(prvState, drftThmVar => {
+        setThemeVars(prvState => create(prvState, drftThmVar => {
           drftThmVar[path] = hslaStr
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, path, hslaStr, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'styles':
-        setStyles(prvState => produce(prvState, drftStyles => {
+        setStyles(prvState => create(prvState, drftStyles => {
           let hslaColor = hslaStr
           const value = getValueByObjPath(drftStyles, path)
           const checkExistImportant = value?.match(/!important/gi)?.[0]
@@ -111,21 +111,21 @@ function FilterColorsPickerMenu({ stateObjName,
   const handleValue = (path, value) => {
     switch (stateObjName) {
       case 'themeColors':
-        setThemeColors(prvState => produce(prvState, drftThmClr => {
+        setThemeColors(prvState => create(prvState, drftThmClr => {
           drftThmClr[path] = value
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, path, value, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
-        setThemeVars(prvState => produce(prvState, drftThmVar => {
+        setThemeVars(prvState => create(prvState, drftThmVar => {
           drftThmVar[path] = value
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, path, value, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'styles':
-        setStyles(prvState => produce(prvState, drftStyles => {
+        setStyles(prvState => create(prvState, drftStyles => {
           let hslaColor = value
           const tempValue = getValueByObjPath(drftStyles, path)
           const checkExistImportant = tempValue?.match(/!important/gi)?.[0]

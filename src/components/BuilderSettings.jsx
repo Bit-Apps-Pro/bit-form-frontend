@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -81,7 +81,7 @@ export default function BuilderSettings() {
   const handleFormWidth = ({ value: val, unit }) => {
     const preUnit = getStrFromStr(formWidth)
     const convertValue = unitConverter(unit, val, preUnit)
-    setStaticStyleState(preStyle => produce(preStyle, draft => {
+    setStaticStyleState(preStyle => create(preStyle, draft => {
       const path = `styleMergeWithAtomicClasses->${brkpnt}LightStyles->form->._frm-bg-b${formID}->width`
       const value = convertValue + unit
       if (val === '') {

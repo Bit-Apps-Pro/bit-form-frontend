@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilValue } from 'recoil'
@@ -76,7 +76,7 @@ export default function GCLID() {
           setSnackbar({ show: true, msg: `${__('Authorization failed')} ${errorCause}. ${__('please try again')}` })
           setisLoading(false)
         } else {
-          const newConf = produce(gclidConf, draft => {
+          const newConf = create(gclidConf, draft => {
             // eslint-disable-next-line no-param-reassign
             draft.accountServer = grantTokenResponse['accounts-server']
           })

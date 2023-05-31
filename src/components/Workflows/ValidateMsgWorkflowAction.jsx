@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { __ } from '../../Utils/i18nwrap'
 import { $confirmations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
@@ -13,7 +13,7 @@ export default function ValidateMsgWorkflowAction({ lgcGrpInd,
   const { failure: validateAction } = condGrp.actions
 
   const changeValidateMsg = val => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions.failure = val
     })
     setWorkflows(tmpWorkflows)

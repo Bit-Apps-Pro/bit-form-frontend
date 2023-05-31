@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
@@ -10,7 +10,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   const setUpdateBtn = useSetRecoilState($updateBtn)
 
   const changeActionRun = typ => {
-    const tmpWorkflows = produce(workflows, draft => {
+    const tmpWorkflows = create(workflows, draft => {
       if (typ === 'delete') {
         delete draft[lgcGrpInd].action_type
       } else if (draft[lgcGrpInd].action_type === undefined) {
@@ -24,7 +24,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   }
 
   const changeActionEffect = typ => {
-    const tmpWorkflows = produce(workflows, draft => {
+    const tmpWorkflows = create(workflows, draft => {
       if (typ === 'onsubmit') {
         draft[lgcGrpInd].conditions.forEach(draftCond => {
           const len = draftCond.actions?.fields?.length
@@ -58,7 +58,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   }
 
   const changeActionBehave = typ => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       draftWorkflows[lgcGrpInd].action_behaviour = typ
       const [cond] = draftWorkflows[lgcGrpInd].conditions
       cond.cond_type = typ === 'cond' ? 'if' : typ

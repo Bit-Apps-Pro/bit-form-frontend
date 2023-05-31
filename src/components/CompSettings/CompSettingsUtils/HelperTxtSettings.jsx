@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -42,7 +42,7 @@ export default function HelperTxtSettings() {
     }
 
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
     reCalculateFldHeights(fldKey)
@@ -60,7 +60,7 @@ export default function HelperTxtSettings() {
       reCalculateFldHeights(fldKey)
     } else fieldData.helperTxt = value
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFldHeights(fldKey)
     addToBuilderHistory({
@@ -80,9 +80,9 @@ export default function HelperTxtSettings() {
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      setStyles(prvStyle => produce(prvStyle, draft => {
+      setStyles(prvStyle => create(prvStyle, draft => {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))

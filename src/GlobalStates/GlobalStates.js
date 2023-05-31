@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { atom, selector } from 'recoil'
 import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
 import { debouncer, getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
@@ -172,7 +172,7 @@ export const $uniqueFieldId = selector({ key: '$uniqueFieldId', get: ({ get }) =
 export const $reportSelector = selector({
   key: '$reportSelector',
   get: ({ get }) => get($reports)?.find(r => r.id === get($reportId)?.id?.toString()),
-  set: ({ set, get }, newReport) => set($reports, oldReports => produce(oldReports, draft => {
+  set: ({ set, get }, newReport) => set($reports, oldReports => create(oldReports, draft => {
     const reprtId = get($reportId)?.id?.toString()
     const rportIndx = oldReports.findIndex(r => r?.id && r.id.toString() === reprtId)
     draft[rportIndx] = newReport

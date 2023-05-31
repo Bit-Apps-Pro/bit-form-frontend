@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { useFela } from 'react-fela'
 import TableCheckBox from '../Utilities/TableCheckBox'
@@ -17,7 +17,7 @@ export default function SuccessMsgWorkflowAction({ lgcGrpInd,
   const confirmations = useRecoilValue($confirmations)
 
   const setSuccessMsg = val => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       const findSuccessMsg = draftSuccessActions.find(v => v.type === 'successMsg')
       if (findSuccessMsg) findSuccessMsg.details.id = val

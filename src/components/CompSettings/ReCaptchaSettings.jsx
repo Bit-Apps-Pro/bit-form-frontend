@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -34,13 +34,13 @@ export default function ReCaptchaSettings() {
   function setConfigValue(propName, value) {
     fieldData.config[propName] = value
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propName[0].toUpperCase() + propName.slice(1)} changed to ${value} : ${fieldData.adminLbl || fldKey}`, type: `${propName}_change`, state: { fields: allFields, fldKey } })
   }
 
   const flexDirectionHandle = (val, type) => {
-    const newStyles = produce(styles, drftStyle => {
+    const newStyles = create(styles, drftStyle => {
       drftStyle.fields[fldKey].classes[wrpCLass].display = 'flex'
       drftStyle.fields[fldKey].classes[wrpCLass][type] = val
     })

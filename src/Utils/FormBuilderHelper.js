@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $payments, $reCaptchaV2 } from '../GlobalStates/AppSettingsStates'
 import {
@@ -320,7 +320,7 @@ export function sortLayoutItemsByRowCol(layout) {
 }
 
 // export function produceNewLayouts(layouts, breakpointArr, cols) {
-//   return produce(layouts, draftLay => {
+//   return create(layouts, draftLay => {
 //     draftLay.lg = sortLayoutItemsByRowCol(draftLay.lg)
 //     const minFieldW = draftLay.lg.reduce((prv, cur) => (prv < cur ? prv : cur))
 //     const tmpLg = deepCopy(layouts.lg)
@@ -350,7 +350,7 @@ export function produceNewLayouts(layouts, breakpointArr, gridCols) {
 }
 
 // export function layoutOrderSortedByLg(lay, cols) {
-//   return produce(lay, drft => {
+//   return create(lay, drft => {
 //     const draftedLay = drft
 //     draftedLay.md = sortLayoutByLg(draftedLay.md, draftedLay.lg)
 //     draftedLay.sm = sortLayoutByLg(draftedLay.sm, draftedLay.lg)
@@ -411,7 +411,7 @@ export function prepareLayout(lays, respectLGLayoutOrder) {
 
 export const addToBuilderHistory = (historyData, unsaved = true, index = undefined) => {
   const builderHistoryState = getRecoil($builderHistory)
-  const changedHistory = produce(builderHistoryState, draft => {
+  const changedHistory = create(builderHistoryState, draft => {
     if (index !== undefined) {
       if (!draft.histories[index]) draft.histories[index] = {}
       const history = draft.histories[index]
@@ -445,7 +445,7 @@ export const addFormUpdateError = (err) => {
   const { fieldKey, errorKey } = err
   const errIndex = checkErrKeyIndex(fieldKey, errorKey)
   if (errIndex > -1) return
-  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+  const newUpdateBtn = create(updateBtn, draftUpdateBtn => {
     if (!draftUpdateBtn.errors) {
       draftUpdateBtn.errors = []
     }
@@ -460,7 +460,7 @@ export const removeFormUpdateError = (fieldKey, errorKey) => {
 
   if (errIndex < 0) return
   if (fieldKey && !errorKey) {
-    const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+    const newUpdateBtn = create(updateBtn, draftUpdateBtn => {
       // delete all matched fieldKey errors
       draftUpdateBtn.errors = draftUpdateBtn.errors.filter(({ fieldKey: fldKey }) => fldKey !== fieldKey)
       if (draftUpdateBtn.errors.length === 0) {
@@ -470,7 +470,7 @@ export const removeFormUpdateError = (fieldKey, errorKey) => {
     setRecoil($updateBtn, newUpdateBtn)
     return
   }
-  const newUpdateBtn = produce(updateBtn, draftUpdateBtn => {
+  const newUpdateBtn = create(updateBtn, draftUpdateBtn => {
     draftUpdateBtn.errors.splice(errIndex, 1)
 
     const otherFldErrors = draftUpdateBtn.errors.filter(({ errorKey: errKey }) => errorKey === errKey)
@@ -487,7 +487,7 @@ export const removeFormUpdateError = (fieldKey, errorKey) => {
   setRecoil($updateBtn, newUpdateBtn)
 }
 
-export const compactNewLayoutItem = (breakpoint, layout, layouts) => produce(layouts, drftLay => {
+export const compactNewLayoutItem = (breakpoint, layout, layouts) => create(layouts, drftLay => {
   let minFieldW = 55
   drftLay.lg.map(layItm => {
     if (layItm.w < minFieldW) {
@@ -510,13 +510,13 @@ export const compactNewLayoutItem = (breakpoint, layout, layouts) => produce(lay
   }
 })
 
-export const addNewItemInLayout = (layouts, newItem) => produce(layouts, draftLayouts => {
+export const addNewItemInLayout = (layouts, newItem) => create(layouts, draftLayouts => {
   draftLayouts.lg.push(newItem)
   draftLayouts.md.push(newItem)
   draftLayouts.sm.push(newItem)
 })
 
-export const filterLayoutItem = (fldKey, layouts) => produce(layouts, draft => {
+export const filterLayoutItem = (fldKey, layouts) => create(layouts, draft => {
   draft.lg = draft.lg.filter(l => l.i !== fldKey)
   draft.md = draft.md.filter(l => l.i !== fldKey)
   draft.sm = draft.sm.filter(l => l.i !== fldKey)
@@ -627,7 +627,7 @@ export const reCalculateFldHeights = (fieldKey) => {
   const layouts = getRecoil($layouts)
   const isExistInLayout = layouts.lg.find(itm => itm.i === fieldKey)
   if (fieldKey && isExistInLayout) {
-    const newBuilderHookState = produce(builderHookState, draft => {
+    const newBuilderHookState = create(builderHookState, draft => {
       const { counter } = draft.reCalculateSpecificFldHeight
       draft.reCalculateSpecificFldHeight = {
         fieldKey,
@@ -636,13 +636,13 @@ export const reCalculateFldHeights = (fieldKey) => {
     })
     setRecoil($builderHookStates, newBuilderHookState)
   } else if (isExistInLayout) {
-    const newBuilderHookState = produce(builderHookState, draft => {
+    const newBuilderHookState = create(builderHookState, draft => {
       draft.reCalculateFieldHeights += 1
     })
     setRecoil($builderHookStates, newBuilderHookState)
   } else if (!isExistInLayout) {
     const parentFieldKey = getParentFieldKey(fieldKey)
-    const newBuilderHookState = produce(builderHookState, draft => {
+    const newBuilderHookState = create(builderHookState, draft => {
       const { counter } = draft.recalculateNestedField
       draft.recalculateNestedField = {
         fieldKey,
@@ -793,7 +793,7 @@ export const setRequired = (e, callBack) => {
   } else {
     delete fieldData.valid.req
   }
-  const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  const allFields = create(fields, draft => { draft[fldKey] = fieldData })
   setRecoil($fields, allFields)
   const req = e.target.checked ? 'on' : 'off'
   addToBuilderHistory({ event: `Field required ${req}: ${fieldData.adminLbl || fieldData.lbl || fldKey}`, type: `required_${req}`, state: { fields: allFields, fldKey } })

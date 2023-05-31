@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
@@ -18,7 +18,7 @@ export default function ShadowControl({ value, subtitle, objectPaths, id }) {
   const clearValue = () => {
     switch (objectPaths.object) {
       case 'themeColors':
-        setThemeColors(prvColorVar => produce(prvColorVar, drft => {
+        setThemeColors(prvColorVar => create(prvColorVar, drft => {
           drft[objectPaths.paths.shadow] = ''
         }))
         break

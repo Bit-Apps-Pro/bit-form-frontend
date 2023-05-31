@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
 import { useEffect, useState } from 'react'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import FieldMap from './FieldMap'
 import { fogotPassTamplate } from '../../Utils/StaticData/tamplate'
 import EmailNotification from './EmailNotification'
@@ -19,7 +19,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
   ]
 
   useEffect(() => {
-    const tmpConf = produce(dataConf, draft => {
+    const tmpConf = create(dataConf, draft => {
       if (!draft[type]?.forgot_map?.[0]?.forgotField) {
         // eslint-disable-next-line no-param-reassign
         draft[type].forgot_map = forgotField.filter(fld => fld.required).map(fl => ({ formField: '', forgotField: fl.key, required: fl.required }))
@@ -29,7 +29,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
   }, [])
 
   const inputHandler = (e) => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       const { name, value } = e.target
       // eslint-disable-next-line no-param-reassign
       draft[type][name] = value
@@ -37,7 +37,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
   }
 
   const handlePage = (e) => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       draft[type].redirect_url = e.target.value
     }))

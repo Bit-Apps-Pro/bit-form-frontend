@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -66,7 +66,7 @@ export default function DropdownFieldSettings() {
 
   const handleConfigChange = (val, name) => {
     fieldData.config[name] = val
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[name]} ${val ? 'On' : 'Off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${name}_change`, state: { fields: allFields, fldKey } })
   }
@@ -75,7 +75,7 @@ export default function DropdownFieldSettings() {
     fieldData.config[name] = val
     fieldData.config.showChip = val
     fieldData.config.closeOnSelect = !val
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[name]} ${val ? 'On' : 'Off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${name}_change`, state: { fields: allFields, fldKey } })
   }
@@ -89,20 +89,20 @@ export default function DropdownFieldSettings() {
       fieldData.config.showSearchPh = false
     }
     const req = e.target.checked ? 'Show' : 'Hide'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } })
   }
 
   function setSearchPlaceholder(e) {
     fieldData.config.searchPlaceholder = e.target.value
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }
   const handleOptionList = ({ target }, index) => {
     fieldData.config.activeList = index
-    const allFields = produce(fields, draft => {
+    const allFields = create(fields, draft => {
       const defaultOpt = fieldData.optionsList[index][Object.keys(fieldData.optionsList[index])[0]].find(opt => opt.check)
       fieldData.config.defaultValue = defaultOpt ? (defaultOpt.val || defaultOpt.lbl) : ''
       draft[fldKey] = fieldData
@@ -111,7 +111,7 @@ export default function DropdownFieldSettings() {
     addToBuilderHistory({ event: `Change Active List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_active_list', state: { fields: allFields, fldKey } })
   }
   const handleEditOptions = newOpts => {
-    const allFields = produce(fields, draft => {
+    const allFields = create(fields, draft => {
       draft[fldKey].optionsList[currentOptList][Object.keys(fieldData.optionsList[currentOptList])[0]] = newOpts
       if (currentOptList === activeList) {
         const defaultOpt = newOpts.find(opt => opt.check)
@@ -138,7 +138,7 @@ export default function DropdownFieldSettings() {
         ],
       },
     ]
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Add New List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'add_new_list', state: { fields: allFields, fldKey } })
   }
@@ -155,7 +155,7 @@ export default function DropdownFieldSettings() {
 
   const handleRemoveList = (index) => {
     fieldData.optionsList.splice(index, 1)
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Remove List: ${fieldData.lbl || adminLabel || fldKey}`, type: 'remove_list', state: { fields: allFields, fldKey } })
   }
@@ -164,7 +164,7 @@ export default function DropdownFieldSettings() {
     const { target } = e
     if (!isListNameExist(target.value)) {
       fieldData.optionsList[index] = { [target.value]: fieldData.optionsList[index][target.defaultValue] }
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       addToBuilderHistory({ event: `List Name Change: ${fieldData.lbl || adminLabel || fldKey}`, type: 'list_name_change', state: { fields: allFields, fldKey } })
       setDuplicateListName(false)
@@ -190,7 +190,7 @@ export default function DropdownFieldSettings() {
       else if (propName === 'mx') fieldData.err.mx.dflt = `Maximum ${value} Option can select.`
 
       fieldData[propName] = value
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       addToBuilderHistory({ event: `${propNameLabel[propName]} '${String(value || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${propName}_changed`, state: { fields: allFields, fldKey } })
       // fieldData.mn > 0 && setRequired({ target: { checked: true } })
@@ -204,7 +204,7 @@ export default function DropdownFieldSettings() {
     } else {
       delete fieldData.valid.disableOnMax
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_disable_on_max', state: { fields: allFields, fldKey } })
   }

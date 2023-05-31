@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -122,14 +122,14 @@ export default function PaypalStyleEditor() {
       fieldData.style.color = 'white'
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setHeight = val => {
     if (val >= 25 && val <= 55) {
       fieldData.style.height = val
       // eslint-disable-next-line no-param-reassign
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     }
     setCustomHeight(val)
   }
@@ -146,14 +146,14 @@ export default function PaypalStyleEditor() {
       setCustomHeight(55)
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const setWidth = val => {
     if (val >= 150 && val <= 750) {
       fieldData.style.width = val
       // eslint-disable-next-line no-param-reassign
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     }
     setCustomWidth(val)
   }
@@ -170,7 +170,7 @@ export default function PaypalStyleEditor() {
       setCustomWidth(750)
     }
     // eslint-disable-next-line no-param-reassign
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   return (

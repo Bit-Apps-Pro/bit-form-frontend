@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
@@ -128,7 +128,7 @@ export default function AdditionalSettings() {
     e.preventDefault()
     if (!IS_PRO) return
     setIsLoading(true)
-    const tmpConf = produce(dataConf, draft => {
+    const tmpConf = create(dataConf, draft => {
       Object.keys(draft).forEach(key => type !== key && delete draft[key])
       draft.formId = formID
       draft.type = type

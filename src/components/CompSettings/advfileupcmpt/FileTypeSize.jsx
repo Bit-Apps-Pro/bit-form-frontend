@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -25,14 +25,14 @@ function FileTypeSize({ action }) {
     } else {
       delete fieldData.config[name]
     }
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory(generateHistoryData('', fldKey, 'File Size', e.target.checked, { fields: getLatestState('fields') }))
   }
 
   const sizeHandler = (value, unit, typ) => {
     const newVal = `${value}${unit}`
     fieldData.config[typ] = newVal
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory(generateHistoryData('', fldKey, typ, newVal, { fields: getLatestState('fields') }))
   }
   const getNumberValue = (propName) => getNumFromStr(fieldData.config[propName])

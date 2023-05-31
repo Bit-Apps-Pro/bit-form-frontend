@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-console */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -110,7 +110,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
     if (prop === 'borderColor' && hslaPaths) {
       const v = val.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
       const { h, s, l, a } = hslaPaths
-      setThemeColors(prvColor => produce(prvColor, (draft) => {
+      setThemeColors(prvColor => create(prvColor, (draft) => {
         draft[h] = v[0]
         draft[s] = v[1]
         draft[l] = v[2]

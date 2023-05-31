@@ -80,7 +80,7 @@ export default function BorderImageControlMenu({ stateObjName,
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         // fieldData[iconType] = attachment.url
-        // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+        // setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
         // setModal(false)
         onValueChange(paths['border-image'], `url(${attachment.url})`)
         setBorderImage(`url(${attachment.url})`)

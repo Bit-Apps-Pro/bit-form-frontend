@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -69,7 +69,7 @@ export default function FieldNameSettings() {
       removeFormUpdateError(fldKey, 'fieldNameEmpty')
     }
 
-    const tmpFields = produce(fields, draft => {
+    const tmpFields = create(fields, draft => {
       draft[fldKey] = fieldData
     })
     setFields(tmpFields)

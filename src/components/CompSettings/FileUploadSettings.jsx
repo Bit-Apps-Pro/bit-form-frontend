@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -67,20 +67,20 @@ export default function FileUploadSettings() {
   function maxSizeHandler(unit, value) {
     fieldData.config.maxSize = value
     fieldData.config.sizeUnit = unit
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Modify Maximum size to ${value}${unit}: ${fieldData.lbl || fldKey}`, type: 'modify_maximum_size', state: { fields: allFields, fldKey } })
   }
 
   // function setFileSelectStatus(e) {
   //   fieldData.config.fileSelectStatus = e.target.value
-  //   setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+  //   setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
   // }
 
   function setConfigValue(propName, value) {
     fieldData.config[propName] = value
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     const addStyleSettingType = [
       'showFileSize',
@@ -109,7 +109,7 @@ export default function FileUploadSettings() {
       else if (propName === 'maxFile') fieldData.err.maxFile.dflt = `Maximum ${value} File can uploaded`
 
       fieldData.config[propName] = value
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       addToBuilderHistory({ event: `${propNameLabel[propName]} '${String(value || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${propName}_changed`, state: { fields: allFields, fldKey } })
       fieldData.config.minFile > 0 && setRequired({ target: { checked: true } })
@@ -118,7 +118,7 @@ export default function FileUploadSettings() {
 
   function setUpBtnTxt(e) {
     fieldData.btnTxt = e.target.value
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Button Text Modify: ${fieldData.lbl || fldKey}`, type: 'modify_button_text', state: { fields: allFields, fldKey } })
   }
@@ -133,7 +133,7 @@ export default function FileUploadSettings() {
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       addToBuilderHistory({ event: `${iconElementLabel[iconType]} Icon Deleted`, type: `delete_${iconType}`, state: { fldKey, fields: allFields } })
     }
@@ -146,7 +146,7 @@ export default function FileUploadSettings() {
     } else {
       fieldData.config.allowedFileType = val.join(',._RF_,')
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     // eslint-disable-next-line no-param-reassign
     setFields(allFields)
     addToBuilderHistory({ event: `Changed Allowed File Type: ${fieldData.lbl || fldKey}`, type: 'allow_file_type', state: { fldKey, fields: allFields } })

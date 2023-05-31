@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -43,7 +43,7 @@ export default function SpacingControl({
 
     switch (object) {
       case 'styles':
-        setStyles(prvStyle => produce(prvStyle, drft => {
+        setStyles(prvStyle => create(prvStyle, drft => {
           pathKeys.map(prop => {
             assignNestedObj(drft, paths[prop], '')
           })
@@ -51,7 +51,7 @@ export default function SpacingControl({
         addToBuilderHistory(generateHistoryData(element, fieldKey, `${paths?.margin || paths?.padding} Clear`, '', { styles: getLatestState('styles') }))
         break
       case 'themeVars':
-        setThemeVars(preVars => produce(preVars, drft => {
+        setThemeVars(preVars => create(preVars, drft => {
           pathKeys.map(prop => {
             assignNestedObj(drft, paths[prop], '')
           })

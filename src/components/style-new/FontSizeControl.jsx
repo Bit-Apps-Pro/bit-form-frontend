@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -38,13 +38,13 @@ export default function FontSizeControl({ stateObjName, propertyPath, id }) {
     const v = `${convertvalue}${unit || globalVarUnit}`
     switch (stateObjName) {
       case 'themeVars':
-        setThemeVars(prvStyle => produce(prvStyle, drft => {
+        setThemeVars(prvStyle => create(prvStyle, drft => {
           drft[propertyPath] = v
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, v, { themeVars: getLatestState('themeVars') }))
         break
       case 'styles':
-        setStyle(prvStyle => produce(prvStyle, drft => {
+        setStyle(prvStyle => create(prvStyle, drft => {
           assignNestedObj(drft, propertyPath, v)
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, v, { styles: getLatestState('styles') }))

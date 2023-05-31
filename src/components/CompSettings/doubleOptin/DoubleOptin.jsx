@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
@@ -92,7 +92,7 @@ export default function DoubleOptin() {
     }
     setIsLoading(true)
 
-    const tmpConf = produce(tem, draft => {
+    const tmpConf = create(tem, draft => {
       draft.formId = formID
       draft.status = status
     })

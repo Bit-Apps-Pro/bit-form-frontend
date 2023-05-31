@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -32,7 +32,7 @@ export default function TextArea({
     if (tempResize.current.resize && !resizingFld.fieldKey) {
       tempResize.current.resize = false
       const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
-      setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      setStyles(prvStyle => create(prvStyle, drftStyle => {
         assignNestedObj(drftStyle, getPropertyPath('height'), textAreaRef.current.style.height)
       }))
     }

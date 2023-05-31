@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -40,12 +40,12 @@ export default function SizeControlMenu({ objectPaths }) {
 
   const setStateValueHandler = (value, propertyPath) => {
     if (object === 'themeVars') {
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      setThemeVars(preStyle => create(preStyle, drftStyle => {
         drftStyle[propertyPath] = `${value}`
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, value, { themeVars: getLatestState('themeVars') }))
     } else if (object === 'styles') {
-      setStyles(prvStyle => produce(prvStyle, drft => {
+      setStyles(prvStyle => create(prvStyle, drft => {
         const prevValue = getValueByObjPath(drft, propertyPath)
         const isAlreadyImportant = prevValue?.match(/!important/gi)?.[0]
         if (isAlreadyImportant) {
@@ -81,7 +81,7 @@ export default function SizeControlMenu({ objectPaths }) {
   const undoHandler = (v) => {
     if (object === 'themeVars') {
       // if (!savedThemeVars[v]) return
-      setThemeVars(preStyle => produce(preStyle, drftStyle => {
+      setThemeVars(preStyle => create(preStyle, drftStyle => {
         drftStyle[v] = savedThemeVars[v] || '0px'
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, v, '0px', { themeVars: getLatestState('themeVars') }))

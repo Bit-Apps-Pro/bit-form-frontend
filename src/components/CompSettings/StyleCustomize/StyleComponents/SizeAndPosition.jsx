@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -39,7 +39,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (val > maxValue[breakpoint].x) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].x = val
     })
@@ -53,7 +53,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (val > maxValue[breakpoint].w) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].w = val
     })
@@ -67,7 +67,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (maxValue[breakpoint].y !== null && val > maxValue[breakpoint].y) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].y = val
     })
@@ -81,7 +81,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (maxValue[breakpoint].h !== null && val > maxValue[breakpoint].h) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].h = val
     })

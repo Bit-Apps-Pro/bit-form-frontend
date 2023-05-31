@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
@@ -26,7 +26,7 @@ function EmailTemplateNew() {
   const { isPro } = bits
 
   const handleBody = value => {
-    setTem(prevState => produce(prevState, draft => {
+    setTem(prevState => create(prevState, draft => {
       draft.body = value
     }))
   }
@@ -36,7 +36,7 @@ function EmailTemplateNew() {
   }
 
   const save = () => {
-    const newMailTem = produce(mailTem, draft => {
+    const newMailTem = create(mailTem, draft => {
       draft.push(tem)
       draft.push({ updateTem: 1 })
     })

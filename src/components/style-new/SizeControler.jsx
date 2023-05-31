@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -21,7 +21,7 @@ export default function SizeControler({ subtitle, action, value, objectPaths, id
   const val = `W: ${getValueByObjPath(styles, paths?.width)}, H: ${getValueByObjPath(styles, paths?.height)}`
 
   const clearHandler = () => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       if (object === 'styles') {
         assignNestedObj(drft, paths?.width, '')
         assignNestedObj(drft, paths?.height, '')

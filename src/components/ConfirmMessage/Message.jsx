@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
@@ -48,7 +48,7 @@ function Message({ id, msgItem }) {
   }
 
   const handlePositionChange = ({ target: { value } }) => {
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.position = value
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
@@ -59,28 +59,28 @@ function Message({ id, msgItem }) {
       setProModal({ show: true, ...proHelperData[`${value}_msg`] })
       return
     }
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.msgType = value
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleMsgAnimation = ({ target: { value } }) => {
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.animation = value
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleDelay = ({ target: { value } }) => {
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.duration = value > 0 ? value : 1
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleAutoHide = () => {
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.autoHide = !draft.type.successMsg[id].config.autoHide
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
@@ -97,7 +97,7 @@ function Message({ id, msgItem }) {
 
   const handleConfirmationStyle = ({ target: { name, value } }) => {
     if (!IS_PRO) return
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.styles[name] = value
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
@@ -105,14 +105,14 @@ function Message({ id, msgItem }) {
 
   const handleConfirmationShadow = ({ target: { name, value } }, index) => {
     if (!IS_PRO) return
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.styles.boxShadow[index][name] = value
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleShadowDelete = (e, index) => {
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.styles.boxShadow.splice(index, 1)
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
@@ -120,7 +120,7 @@ function Message({ id, msgItem }) {
 
   const handleAddShadow = () => {
     if (!IS_PRO) return
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.styles.boxShadow.push({
         x: '0px',
         y: '27px',
@@ -134,7 +134,7 @@ function Message({ id, msgItem }) {
   }
 
   const handleMsg = (mg, idx) => {
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[idx].msg = mg
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
@@ -155,7 +155,7 @@ function Message({ id, msgItem }) {
     } else {
       v = `${values[0] || '0px'} ${values[1] || '0px'} ${values[2] || '0px'} ${values[3] || '0px'}`
     }
-    setAllConf(prevConf => produce(prevConf, draft => {
+    setAllConf(prevConf => create(prevConf, draft => {
       draft.type.successMsg[id].config.styles.padding = v
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))

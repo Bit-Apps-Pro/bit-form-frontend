@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { __ } from '../../Utils/i18nwrap'
 import Modal from '../Utilities/Modal'
 import TinyMCE from '../Utilities/TinyMCE'
@@ -9,7 +9,7 @@ export default function CustomMassageMdl({
   const temBody = dataConf[type].acti_succ_msg ? dataConf[type].acti_succ_msg : tamplate
 
   const handleBody = value => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       draft[type].acti_succ_msg = value
     }))
@@ -17,7 +17,7 @@ export default function CustomMassageMdl({
 
   const cancelModal = () => {
     setTimeout(() => {
-      setDataConf(tmpConf => produce(tmpConf, draft => {
+      setDataConf(tmpConf => create(tmpConf, draft => {
         // eslint-disable-next-line no-param-reassign
         draft[type].acti_succ_msg = tamplate
       }))

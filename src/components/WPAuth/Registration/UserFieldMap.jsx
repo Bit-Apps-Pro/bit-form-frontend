@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { __ } from '../../../Utils/i18nwrap'
 import Cooltip from '../../Utilities/Cooltip'
 import { userFields } from '../../../Utils/StaticData/userField'
@@ -17,7 +17,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
   const [customRedirectMdl, setCustomRedirectMdl] = useState(false)
 
   const handleInput = e => {
-    setUserConf(tmpConf => produce(tmpConf, draft => {
+    setUserConf(tmpConf => create(tmpConf, draft => {
       const { name, value } = e.target
       // eslint-disable-next-line no-param-reassign
       draft[type][name] = value
@@ -25,7 +25,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
   }
 
   const handleCheckd = e => {
-    setUserConf(tmpConf => produce(tmpConf, draft => {
+    setUserConf(tmpConf => create(tmpConf, draft => {
       const { name, checked } = e.target
       // eslint-disable-next-line no-param-reassign
       if (checked) {
@@ -39,7 +39,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
   }
 
   const handlePage = (e) => {
-    setUserConf(tmpConf => produce(tmpConf, draft => {
+    setUserConf(tmpConf => create(tmpConf, draft => {
       const { value } = e.target
       // eslint-disable-next-line no-param-reassign
       draft[type].redirect_url = value

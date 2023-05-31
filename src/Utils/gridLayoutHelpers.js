@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import {
   $breakpoint,
@@ -110,14 +110,14 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
 
   if (fldType === 'section') {
     const nestedLayouts = getRecoil($nestedLayouts)
-    setRecoil($nestedLayouts, produce(nestedLayouts, draftNestedLayouts => {
+    setRecoil($nestedLayouts, create(nestedLayouts, draftNestedLayouts => {
       draftNestedLayouts[newBlk] = { lg: [], md: [], sm: [] }
     }))
   }
 
   // add style
   const tempThemeVars = deepCopy(themeVars)
-  const newStyles = produce(styles, draftStyle => {
+  const newStyles = create(styles, draftStyle => {
     const globalTheme = draftStyle.theme
 
     if (globalTheme === 'bitformDefault') {
@@ -154,7 +154,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   setRecoil($themeVars, tempThemeVars)
 
   if (paymentFields.includes(fldType)) {
-    setRecoil($staticStylesState, produce(staticStylesState, draftStaticStyleState => {
+    setRecoil($staticStylesState, create(staticStylesState, draftStaticStyleState => {
       draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
       draftStaticStyleState.staticStyles['.form-loading::before'] = {
         position: 'absolute',
@@ -228,7 +228,7 @@ export const setResizingWX = (lays, lay) => {
   const resizingFld = getRecoil($resizingFld)
   if (resizingFld.fieldKey) {
     const layout = lays.find(l => l.i === resizingFld.fieldKey)
-    const newResingFld = produce(resizingFld, draftResizingFld => {
+    const newResingFld = create(resizingFld, draftResizingFld => {
       draftResizingFld.w = layout.w
       draftResizingFld.x = layout.x
     })
@@ -242,9 +242,9 @@ export const setResizingWX = (lays, lay) => {
 
 export const removeFieldStyles = fldKey => {
   const styles = getRecoil($styles)
-  const newStyles = produce(styles, prevStyles => produce(prevStyles, draftStyles => {
+  const newStyles = create(styles, draftStyles => {
     delete draftStyles.fields[fldKey]
-  }))
+  })
   setRecoil($styles, newStyles)
 }
 
@@ -268,7 +268,7 @@ export const cloneLayoutItem = (fldKey, layouts) => {
 
   const allBreakpoints = ['sm', 'md', 'lg']
 
-  const newLayouts = produce(layouts, draft => {
+  const newLayouts = create(layouts, draft => {
     allBreakpoints.forEach(brkpnt => {
       const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
       const { y, h } = layouts[brkpnt][layIndx]
@@ -279,12 +279,12 @@ export const cloneLayoutItem = (fldKey, layouts) => {
   })
 
   const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
-  const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
+  const oldFields = create(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
   // eslint-disable-next-line no-param-reassign
   setRecoil($fields, oldFields)
 
   // clone style
-  const newStyle = produce(styles, draftStyle => {
+  const newStyle = create(styles, draftStyle => {
     const fldStyle = draftStyle.fields[fldKey]
     const fldClasses = fldStyle.classes
     draftStyle.fields[newBlk] = { ...fldStyle }
@@ -336,12 +336,12 @@ export const removeLayoutItem = (fldKey, layouts) => {
     sm: layouts.sm.find(l => l.i === fldKey),
   }
   const newLayouts = filterLayoutItem(fldKey, layouts)
-  const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
+  const tmpFields = create(fields, draftFields => { delete draftFields[fldKey] })
 
   setRecoil($fields, tmpFields)
   setRecoil($selectedFieldId, null)
   removeFieldStyles(fldKey)
-  const newDeletedFldKey = produce(deletedFldKey, drft => {
+  const newDeletedFldKey = create(deletedFldKey, drft => {
     if (!drft.includes(fldKey)) {
       drft.push(fldKey)
     }
@@ -351,7 +351,7 @@ export const removeLayoutItem = (fldKey, layouts) => {
 
   const fldType = fldData?.typ
   if (paymentFields.includes(fldType)) {
-    const newStaticStyleState = produce(staticStylesState, draftStaticStyleState => {
+    const newStaticStyleState = create(staticStylesState, draftStaticStyleState => {
       delete draftStaticStyleState.staticStyles['.pos-rel']
       delete draftStaticStyleState.staticStyles['.form-loading::before']
       delete draftStaticStyleState.staticStyles['.form-loading::after']

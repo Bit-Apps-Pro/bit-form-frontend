@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useCallback, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
@@ -31,7 +31,7 @@ export default function ConfirmMsgPreview({
     }
   }
   useEffect(() => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       drft.confirmations?.filter(confMsgObj => {
         if (confMsgObj.confMsgId === msgId && (msgType === 'below' || IS_PRO)) {
           confMsgObj.style = styleObject()

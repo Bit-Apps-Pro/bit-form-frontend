@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -25,7 +25,7 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
   }, [errorModal])
 
   const setErrMsg = (name, val) => {
-    setFields(prevState => produce(prevState, draft => {
+    setFields(prevState => create(prevState, draft => {
       if (!draft[fldKey].err) draft[fldKey].err = {}
       if (!draft[fldKey].err[name]) draft[fldKey].err[name] = {}
       draft[fldKey].err[name].msg = val
@@ -37,7 +37,7 @@ export default function CustomErrorMessageModal({ errorModal, setErrorModal, typ
     fieldData.err[type].msg = value
     setTimeout(() => {
       // eslint-disable-next-line no-param-reassign
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
       setErrorModal(false)
     })
   }

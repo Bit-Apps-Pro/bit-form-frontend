@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
@@ -134,7 +134,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         fieldData[iconType] = attachment.url
-        setFields(allFields => produce(allFields, draft => {
+        setFields(allFields => create(allFields, draft => {
           draft[fldKey] = fieldData
         }))
         reCalculateFldHeights(fldKey)
@@ -181,11 +181,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           let newFields = fields
           let newStyles = allStyles
           setFields(allFields => {
-            newFields = produce(allFields, draft => { draft[fldKey] = fieldData })
+            newFields = create(allFields, draft => { draft[fldKey] = fieldData })
             return newFields
           })
           if (addPaddingOnSelect) {
-            newStyles = produce(allStyles, draft => {
+            newStyles = create(allStyles, draft => {
               Object.keys(allStyles).forEach(brkPnt => {
                 const path = `${brkPnt}->fields->${selectedFieldId}->classes->.${selectedFieldId}-fld->padding`
                 const padding = getValueByObjPath(allStyles, path) || ''
@@ -214,7 +214,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     const fileNameRegex = new RegExp(file, 'gi')
     if (fieldData[iconType]?.match(fileNameRegex)) {
       delete fieldData[iconType]
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     }
 
     bitsFetch({ file }, 'bitforms_icon_remove')
@@ -276,11 +276,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
 
   const selectedSaveIcon = () => {
     fieldData[iconType] = prefix.url
-    const newFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const newFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(newFields)
     let newStyles = allStyles
     if (addPaddingOnSelect) {
-      newStyles = produce(allStyles, draft => {
+      newStyles = create(allStyles, draft => {
         Object.keys(allStyles).forEach(brkPnt => {
           const path = `${brkPnt}->fields->${selectedFieldId}->classes->.${selectedFieldId}-fld->padding`
           const padding = getValueByObjPath(allStyles, path) || ''

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useRecoilValue } from 'recoil'
@@ -37,7 +37,7 @@ export default function ZohoMailIntegLayout({ formFields, mailConf, setMailConf 
   }
 
   const handleMailBody = val => {
-    setMailConf(prevState => produce(prevState, draft => {
+    setMailConf(prevState => create(prevState, draft => {
       draft.body = val
     }))
   }

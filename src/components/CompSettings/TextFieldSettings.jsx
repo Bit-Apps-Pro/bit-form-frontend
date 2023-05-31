@@ -7,7 +7,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
@@ -85,7 +85,7 @@ function TextFieldSettings() {
   //   } else {
   //     delete fieldData.ac
   //   }
-  //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  //   const allFields = create(fields, draft => { draft[fldKey] = fieldData })
   //   setFields(allFields)
   //   addToBuilderHistory({ event: `Auto complete ${e.target.checked ? 'on' : 'off'}: ${adminLabel || fieldData.lbl || fldKey}`, type: 'autocomplete_on_off', state: { fields: allFields, fldKey } })
   // }
@@ -99,7 +99,7 @@ function TextFieldSettings() {
       delete fieldData.adminLbl
     }
     const req = e.target.checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Admin label ${req}:  ${fieldData.lbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } })
   }
@@ -114,7 +114,7 @@ function TextFieldSettings() {
       delete fieldData.defaultValue
     }
     const req = e.target.checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Default value ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } })
   }
@@ -124,7 +124,7 @@ function TextFieldSettings() {
     if (value === '') delete fieldData.defaultValue
     else fieldData.defaultValue = value
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Default value updated: ${value || fieldData.lbl || adminLabel || fldKey}`, type: 'change_defaultValue', state: { fields: allFields, fldKey } })
   }
@@ -139,7 +139,7 @@ function TextFieldSettings() {
       fieldData.err.mn.dflt = `<p style="margin:0">Minimum number is ${e.target.value}<p>`
       fieldData.err.mn.show = true
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
   }
@@ -154,7 +154,7 @@ function TextFieldSettings() {
       fieldData.err.mx.dflt = `<p style="margin:0">Maximum number is ${e.target.value}</p>`
       fieldData.err.mx.show = true
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Max value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } })
   }
@@ -176,7 +176,7 @@ function TextFieldSettings() {
         delete fieldData.valid.validations
       }
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } })
   }
@@ -199,7 +199,7 @@ function TextFieldSettings() {
         delete fieldData.valid.validations
       }
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Regex Pattern updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_regexr', state: { fields: allFields, fldKey } })
   }
@@ -211,7 +211,7 @@ function TextFieldSettings() {
     } else {
       fieldData.valid.flags = e.target.value
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Regex Pattern Flag updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_flags', state: { fields: allFields, fldKey } })
   }
@@ -261,7 +261,7 @@ function TextFieldSettings() {
       delete fieldData.valid.regexr
       delete fieldData.err.regexr.show
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Password validation updated: ${fieldData.lbl || adminLabel || fldKey}`, type: `set_password_validation_${validations}`, state: { fields: allFields, fldKey } })
   }
@@ -279,7 +279,7 @@ function TextFieldSettings() {
     fieldData.err.regexr.dflt = generatePasswordErrMsg(validations)
 
     const limit = name === 'mx' ? 'max' : 'min'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Password ${limit} limit updated to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_password_${limit}_limit`, state: { fields: allFields, fldKey } })
   }
@@ -295,7 +295,7 @@ function TextFieldSettings() {
   //   if (value !== '') fieldData.ac = value
   //   else delete fieldData.ac
 
-  //   const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+  //   const allFields = create(fields, draft => { draft[fldKey] = fieldData })
   //   setFields(allFields)
   //   addToBuilderHistory({ event: `Auto Complete updated ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } }
   const seAutoComplete = (value) => {
@@ -323,7 +323,7 @@ function TextFieldSettings() {
     if (!val) delete fieldData.ac
     else fieldData.ac = val
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Auto Complete updated ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${value}`, state: { fields: allFields, fldKey } })
   }
@@ -332,7 +332,7 @@ function TextFieldSettings() {
     else delete fieldData.acHide
 
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Auto Complete  ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `change_autoComplete_${req}`, state: { fields: allFields, fldKey } })
   }
@@ -340,7 +340,7 @@ function TextFieldSettings() {
   const handleInputmode = ({ target: { value } }) => {
     if (value !== '') fieldData.inputMode = value
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Field Input mode update to ${value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_input_mode', state: { fields: allFields, fldKey } })
   }
@@ -354,9 +354,9 @@ function TextFieldSettings() {
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      const newStyles = produce(styles, draft => {
+      const newStyles = create(styles, draft => {
         const { padding } = styles.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]
         if (iconType === 'prefixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, 'left', false)
         if (iconType === 'suffixIcn') draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`].padding = paddingGenerator(padding, '', false)
@@ -368,7 +368,7 @@ function TextFieldSettings() {
 
   const handleSuggestions = newSuggestions => {
     fieldData.suggestions = newSuggestions
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     setUpdateBtn({ unsaved: true })
     addToBuilderHistory({ event: `Suggestion Update: ${fieldData.lbl || adminLabel || fldKey}`, type: 'suggestion_update', state: { fields: allFields, fldKey } })
@@ -383,7 +383,7 @@ function TextFieldSettings() {
       delete fieldData.suggestions
     }
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Suggestion ${req}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_defaultValue`, state: { fields: allFields, fldKey } })
   }

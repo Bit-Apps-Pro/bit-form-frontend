@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -35,7 +35,7 @@ export default function HtmlSelectSettings() {
   const options = fieldData.opt
 
   const handleOptions = newOpts => {
-    setFields(allFields => produce(allFields, draft => { draft[fldKey].opt = newOpts }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey].opt = newOpts }))
   }
   return (
     <>

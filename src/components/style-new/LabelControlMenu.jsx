@@ -1,6 +1,6 @@
 /* eslint-disable es/no-logical-assignment-operators */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -68,7 +68,7 @@ export default function LabelControlMenu() {
   const handleLabelPosition = (name) => {
     switch (name) {
       case 'top':
-        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+        setThemeVars(prvStyle => create(prvStyle, drftStyle => {
           drftStyle['--fld-wrp-dis'] = 'block'
           drftStyle['--lbl-wrp-width'] = ''
           drftStyle['--inp-wrp-width'] = ''
@@ -80,7 +80,7 @@ export default function LabelControlMenu() {
         reCalculateFldHeights()
         break
       case 'inline':
-        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+        setThemeVars(prvStyle => create(prvStyle, drftStyle => {
           drftStyle['--fld-wrp-dis'] = 'flex'
           drftStyle['--fld-wrp-fdir'] = ''
           drftStyle['--lbl-wrp-width'] ||= '40%'
@@ -92,7 +92,7 @@ export default function LabelControlMenu() {
         reCalculateFldHeights()
         break
       case 'inline-rev':
-        setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+        setThemeVars(prvStyle => create(prvStyle, drftStyle => {
           drftStyle['--fld-wrp-dis'] = 'flex'
           drftStyle['--fld-wrp-fdir'] = 'row-reverse'
           drftStyle['--lbl-wrp-width'] ||= '40%'
@@ -110,7 +110,7 @@ export default function LabelControlMenu() {
   }
 
   const updateState = (varName, value = '') => {
-    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+    setThemeVars(prvStyle => create(prvStyle, drftStyle => {
       drftStyle[varName] = value
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, varName, value, { themeVars: getLatestState('themeVars') }))

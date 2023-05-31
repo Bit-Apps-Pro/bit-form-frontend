@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
@@ -66,7 +66,7 @@ export default function PaypalFieldSettings() {
       delete fieldData[name]
     }
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[name]} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
@@ -92,7 +92,7 @@ export default function PaypalFieldSettings() {
     delete fieldData.amountFld
 
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Subscription "${e.target.checked ? 'On' : 'Off'}": ${fieldData.lbl || fldKey}`, type: 'toggle_subscription', state: { fields: allFields, fldKey } })
   }
@@ -104,7 +104,7 @@ export default function PaypalFieldSettings() {
     delete fieldData.amountFld
 
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Ammount Type Changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_amount', state: { fields: allFields, fldKey } })
   }
@@ -116,7 +116,7 @@ export default function PaypalFieldSettings() {
     delete fieldData.shippingFld
 
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Shipping Type changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_shipping_type', state: { fields: allFields, fldKey } })
   }
@@ -128,7 +128,7 @@ export default function PaypalFieldSettings() {
     delete fieldData.taxFld
 
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Tax type changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_tax_type', state: { fields: allFields, fldKey } })
   }
@@ -140,7 +140,7 @@ export default function PaypalFieldSettings() {
     delete fieldData.descFld
 
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Description type to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_description_type', state: { fields: allFields, fldKey } })
   }

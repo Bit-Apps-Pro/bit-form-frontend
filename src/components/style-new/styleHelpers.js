@@ -5,7 +5,7 @@ import { combineSelectors, objectToCssText } from 'atomize-css'
 import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css?inline'
 import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { getRecoil, setRecoil } from 'recoil-nexus'
 import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
@@ -320,7 +320,7 @@ export const setStyleStateObj = (objName, path, value, setStates) => {
   } else if (objName === 'themeColors') {
     setStateFunc = setStates.setThemeColors
   }
-  setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
+  setStateFunc?.(preStyle => create(preStyle, drftStyle => {
     assignNestedObj(drftStyle, path, value)
   }))
 }
@@ -412,7 +412,7 @@ const filterUnusedStyles = (styles) => {
   const fields = getRecoil($fields)
   const fieldsArray = Object.keys(fields)
 
-  return produce(styles, draftStyle => {
+  return create(styles, draftStyle => {
     fieldsArray.forEach(fldkey => {
       const fld = fields[fldkey]
       if (!fld.lbl) deleteStyles(draftStyle, styleClasses.lbl, fldkey)
@@ -594,7 +594,7 @@ const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldS
 export const addDefaultStyleClasses = (fk, element) => {
   console.log('addDefaultStyleClasses', fk, element)
   const allStyles = getRecoil($allStyles)
-  const allNewStyles = produce(allStyles, drftAllStyles => {
+  const allNewStyles = create(allStyles, drftAllStyles => {
     Object.keys(allStyles).forEach(brkPntColorSchema => {
       const fldTyp = allStyles[brkPntColorSchema]?.fields?.[fk]?.fieldType
       if (!fldTyp) return
@@ -790,7 +790,7 @@ export const updateGoogleFontUrl = (allStyles) => {
   }
 
   const url = generateFontUrl(globalFont, string)
-  const newStyles = produce(allStyles, drft => {
+  const newStyles = create(allStyles, drft => {
     drft.lgLightStyles.font.fontURL = url
   })
   return newStyles
@@ -836,7 +836,7 @@ export const setIconFilterValue = (iconType, fldKey) => {
         const valArr = parentThemeVal.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
         const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
         const setFilterValue = hexToCSSFilter(hexValue)
-        const newThemeColors = produce(themeColors, drft => {
+        const newThemeColors = create(themeColors, drft => {
           drft[getIconsGlobalFilterVariable(iconType)] = setFilterValue.filter
         })
         setRecoil($themeColors, newThemeColors)
@@ -845,7 +845,7 @@ export const setIconFilterValue = (iconType, fldKey) => {
       const valArr = parentColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
       const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
       const setFilterValue = hexToCSSFilter(hexValue)
-      const newStyles = produce(styles, drftStyles => {
+      const newStyles = create(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
           drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
@@ -854,7 +854,7 @@ export const setIconFilterValue = (iconType, fldKey) => {
       setRecoil($styles, newStyles)
     } else {
       const setFilterValue = hexToCSSFilter('#000000')
-      const newStyles = produce(styles, drftStyles => {
+      const newStyles = create(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
           drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]

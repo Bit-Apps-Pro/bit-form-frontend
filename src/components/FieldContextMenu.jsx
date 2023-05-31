@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import { CSSTransition } from 'react-transition-group'
@@ -68,7 +68,7 @@ export default function FieldContextMenu({
       setProModal({ show: true, ...proHelperData.hidden })
       return
     }
-    const allFields = produce(fields, draft => {
+    const allFields = create(fields, draft => {
       const fldData = draft[fldKey]
       if ('hide' in fldData.valid && fldData.valid?.hide === true) {
         delete fldData.valid.hide

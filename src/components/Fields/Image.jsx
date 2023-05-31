@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/jsx-props-no-spreading */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef } from 'react'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
@@ -28,19 +28,19 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
 
   if (resizingFld.fieldKey === fieldKey) {
     tempData.current.resize = true
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('max-height'), '')
     }))
   }
   if (tempData.current.resize && !resizingFld.fieldKey) {
     tempData.current.resize = false
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
       assignNestedObj(drftStyle, getPropertyPath('width'), `${wrap?.current?.parentElement.clientWidth}px`)
       assignNestedObj(drftStyle, getPropertyPath('max-height'), `${wrap?.current?.parentElement.clientHeight}px`)
     }))
 
-    setFields(prvFields => produce(prvFields, drftFields => {
+    setFields(prvFields => create(prvFields, drftFields => {
       drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
       drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
     }))
@@ -49,11 +49,11 @@ function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
 
   useEffect(() => {
     tempData.current.extarnalSource = placeholderImgUrl(wrap?.current?.parentElement.clientWidth, wrap?.current?.parentElement.clientHeight)
-    setFields(prvFields => produce(prvFields, drftFields => {
+    setFields(prvFields => create(prvFields, drftFields => {
       drftFields[fieldKey].height = wrap?.current?.parentElement.clientHeight
       drftFields[fieldKey].width = wrap?.current?.parentElement.clientWidth
     }))
-    // setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    // setStyles(prvStyle => create(prvStyle, drftStyle => {
     //   assignNestedObj(drftStyle, getPropertyPath('height'), `${wrap?.current?.parentElement.clientHeight}px`)
     //   assignNestedObj(drftStyle, getPropertyPath('width'), `${wrap?.current?.parentElement.clientWidth}px`)
     // }))

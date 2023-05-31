@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -217,7 +217,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     const convertvalue = unitConverter(unit, value, styleUnit)
     const propertyPath = getPropertyPath(property)
 
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       const preValue = getValueByObjPath(drft, propertyPath)
       const isAlreadyImportant = preValue?.match(/(!important)/gi)?.[0]
       let v = `${convertvalue}${unit}`
@@ -241,7 +241,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const addDynamicCssProps = (property, state = '') => {
     const configProperty = editorConfig?.[fieldType]?.[elementKey]?.properties[property]
     if (typeof configProperty === 'object') {
-      setStyles(prvStyle => produce(prvStyle, drft => {
+      setStyles(prvStyle => create(prvStyle, drft => {
         Object.keys(configProperty).map(prop => {
           if (configProperty[prop]) {
             const propPath = getPropertyPath(prop, state)
@@ -256,7 +256,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
       const defaultPropValue = editorConfig?.[fieldType]?.[elementKey]?.properties[property]
       const getValFromState = getValueByObjPath(styles, getPropertyPath(property))
 
-      setStyles(prvStyle => produce(prvStyle, drft => {
+      setStyles(prvStyle => create(prvStyle, drft => {
         assignNestedObj(drft, propPath, getValFromState || defaultPropValue)
       }))
       addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Property Added`, '', { styles: getLatestState('styles') }))
@@ -265,31 +265,31 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
 
   const setNewCssProp = (property, state = '') => {
     state = getPseudoPath(state)
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       assignNestedObj(drft, getPropertyPath(property, state), '')
     }))
     addDynamicCssProps(property, state)
   }
 
   const setAlign = (alignValue) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       drft.fields[fldKey].classes[`.${fldKey}-${elementKey}`]['text-align'] = alignValue
     }))
   }
 
   const delPropertyHandler = (property, state = '') => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       deleteNestedObj(drft, getPropertyPath(property, state))
     }))
     Object.keys(editorConfig[fieldType][elementKey].properties[property] || {})?.map(propName => {
-      setStyles(prvStyle => produce(prvStyle, drft => {
+      setStyles(prvStyle => create(prvStyle, drft => {
         deleteNestedObj(drft, getPropertyPath(propName, state))
       }))
     })
     addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Deleted`, '', { styles: getLatestState('styles') }))
   }
   const delMultiPropertyHandler = (propertyPaths, state = '') => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       propertyPaths.map(propertyPath => {
         deleteNestedObj(drft, propertyPath, state)
       })
@@ -297,7 +297,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${propertyPaths[0]} Deleted`, '', { styles: getLatestState('styles') }))
   }
   const clearHandler = (property, state = '') => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       assignNestedObj(drft, deleteNestedObj(property, state), '')
     }))
     addToBuilderHistory(generateHistoryData(elementKey, fldKey, `${property} Clear`, '', { styles: getLatestState('styles') }))
@@ -313,13 +313,13 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     let v = `${convertvalue}${unit}`
     const checkExistImportant = existImportant(getPropertyPath(prop, state))
     if (checkExistImportant) v += ' !important'
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath(prop, state), v)
     }))
     addToBuilderHistory(generateHistoryData(elementKey, fldKey, prop, v, { styles: getLatestState('styles') }))
   }
   const preDefinedValueHandler = (value, property, state = '') => {
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       const checkExistImportant = existImportant(getPropertyPath(property, state))
       if (checkExistImportant) value += ' !important'
       assignNestedObj(drftStyle, getPropertyPath(property, state), value)
@@ -328,7 +328,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   }
   const fontPropertyUpdateHandler = (property, val, state = '') => {
     // state = getPseudoPath(state)
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       let v = val
       const checkExistImportant = existImportant(getPropertyPath(property, state))
       if (checkExistImportant) v += ' !important'

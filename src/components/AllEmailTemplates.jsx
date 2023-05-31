@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
@@ -30,7 +30,7 @@ export default function AllEmailTemplates({ formID }) {
   const { pathname: url } = useLocation()
 
   const duplicateTem = i => {
-    const newMailTemObj = produce(mailTem, draft => {
+    const newMailTemObj = create(mailTem, draft => {
       draft.splice(i + 1, 0, { title: draft[i].title, sub: draft[i].sub, body: draft[i].body })
       draft.push({ updateTem: 1 })
     })

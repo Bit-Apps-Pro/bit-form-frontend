@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
@@ -132,10 +132,10 @@ function IconsModal({
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         // fieldData[iconType] = attachment.url
-        // setFields(allFields => produce(allFields, draft => {
+        // setFields(allFields => create(allFields, draft => {
         //   draft[fldKey] = fieldData
         // }))
-        const newOption = produce(option, draft => {
+        const newOption = create(option, draft => {
           draft[optIndx].img = attachment.url
         })
 
@@ -183,7 +183,7 @@ function IconsModal({
           fieldData[iconType] = res.data
           // let newFields = fields
           // setFields(allFields => {
-          //   newFields = produce(allFields, draft => { draft[fldKey] = fieldData })
+          //   newFields = create(allFields, draft => { draft[fldKey] = fieldData })
           //   return newFields
           // })
           // reCalculateFldHeights(fldKey)
@@ -192,7 +192,7 @@ function IconsModal({
           //   type: `add_${iconType}`,
           //   state: { fldKey, fields: newFields },
           // })
-          const newOption = produce(option, draft => {
+          const newOption = create(option, draft => {
             draft[optIndx].img = res.data
           })
 
@@ -210,7 +210,7 @@ function IconsModal({
     const fileNameRegex = new RegExp(file, 'gi')
     if (fieldData[iconType]?.match(fileNameRegex)) {
       delete fieldData[iconType]
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     }
 
     bitsFetch({ file }, 'bitforms_icon_remove')
@@ -272,9 +272,9 @@ function IconsModal({
 
   const selectedSaveIcon = () => {
     // fieldData[iconType] = prefix
-    // const newFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    // const newFields = create(fields, draft => { draft[fldKey] = fieldData })
     // setFields(newFields)
-    const newOption = produce(option, draft => {
+    const newOption = create(option, draft => {
       draft[optIndx].img = prefix.url
     })
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/button-has-type */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -47,9 +47,9 @@ export default function ErrorMessageSettings({
       delete fieldData.err[name].custom
     }
     // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    // setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Custom error message ${req}`, type: `custom_error_message_${req}`, state: { fields: allFields, fldKey } })
   }
@@ -65,8 +65,8 @@ export default function ErrorMessageSettings({
       delete fieldData.err[name].show
     }
     // eslint-disable-next-line no-param-reassign
-    // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    // setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: 'Custom error message updated', type: 'change_custom_error_message', state: { fields: allFields, fldKey } })
   }
@@ -78,7 +78,7 @@ export default function ErrorMessageSettings({
     if (!fieldData.err[type].msg) fieldData.err[type].msg = fieldData.err[type].dflt
     setTimeout(() => {
       // eslint-disable-next-line no-param-reassign
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
       setErrorModal(true)
     })
   }
@@ -93,7 +93,7 @@ export default function ErrorMessageSettings({
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
     }
   }

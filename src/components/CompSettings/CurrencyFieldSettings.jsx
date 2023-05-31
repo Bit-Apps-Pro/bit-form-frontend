@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -74,7 +74,7 @@ const CurrencyFieldSettings = () => {
 
   const handleOptions = newOpts => {
     const checkedOpt = newOpts.find(opt => opt.check)
-    const allFields = produce(fields, draft => {
+    const allFields = create(fields, draft => {
       draft[fldKey].options = newOpts
       draft[fldKey].config.defaultCurrencyKey = checkedOpt ? checkedOpt.i : ''
     })
@@ -84,7 +84,7 @@ const CurrencyFieldSettings = () => {
 
   const handleConfigChange = (val, name, config) => {
     fieldData[config][name] = val
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[name]} '${String(val || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
@@ -98,14 +98,14 @@ const CurrencyFieldSettings = () => {
       fieldData.config.showSearchPh = false
     }
     const req = e.target.checked ? 'Show' : 'Hide'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${req} Search Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: 'toggle_search_placeholder', state: { fields: allFields, fldKey } })
   }
 
   function setSearchPlaceholder(e) {
     fieldData.config.searchPlaceholder = e.target.value
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Search Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }

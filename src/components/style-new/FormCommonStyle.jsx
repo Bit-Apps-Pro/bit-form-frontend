@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Navigate, useParams } from 'react-router-dom'
@@ -45,7 +45,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const getPropertyPath = (cssProperty) => `form->${elemn}->${cssProperty}`
 
   const delPropertyHandler = (property) => {
-    setStyles(prvStyles => produce(prvStyles, drft => {
+    setStyles(prvStyles => create(prvStyles, drft => {
       if (Array.isArray(property)) {
         property.forEach(prop => deleteNestedObj(drft, getPropertyPath(prop)))
       } else {
@@ -60,14 +60,14 @@ export default function FormCommonStyle({ element, componentTitle }) {
     if (typeof editorConfig[element].properties[prop] !== 'object') {
       value = editorConfig[element].properties[prop]
     }
-    setStyles(prvStyles => produce(prvStyles, drft => {
+    setStyles(prvStyles => create(prvStyles, drft => {
       assignNestedObj(drft, getPropertyPath(prop), value)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, value, { styles: getLatestState('styles') }))
   }
 
   const clearHandler = (property) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       if (Array.isArray(property)) {
         property.forEach(prop => assignNestedObj(drft, getPropertyPath(prop), ''))
       } else {

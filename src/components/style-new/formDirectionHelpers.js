@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { isObjectEmpty } from '../../Utils/Helpers'
 
-export const changeFormStylesDir = (style, dir) => produce(style, drft => {
+export const changeFormStylesDir = (style, dir) => create(style, drft => {
   const fieldsKeysArr = Object.keys(drft.fields)
   const fieldsKeysArrLen = fieldsKeysArr.length
   for (let i = 0; i < fieldsKeysArrLen; i += 1) {
@@ -159,7 +159,7 @@ const switchFlexContent = justifyCont => {
   return justifyCont
 }
 
-export const changeFormThemeVarsDir = (themeVars, dir) => produce(themeVars, draftThemeVars => {
+export const changeFormThemeVarsDir = (themeVars, dir) => create(themeVars, draftThemeVars => {
   draftThemeVars['--dir'] = dir
   if ('--lbl-pre-i-m' in draftThemeVars) draftThemeVars['--lbl-pre-i-m'] = switchXSpacing(draftThemeVars['--lbl-pre-i-m'])
   if ('--lbl-suf-i-m' in draftThemeVars) draftThemeVars['--lbl-suf-i-m'] = switchXSpacing(draftThemeVars['--lbl-suf-i-m'])

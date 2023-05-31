@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
@@ -28,17 +28,17 @@ export default function TextDecorationControl({ subtitle, value, objectPaths, id
     switch (objectPaths.object) {
       case 'themeColors':
       case 'themeVars':
-        setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
+        setThemeVars(prvThemeVars => create(prvThemeVars, drft => {
           assignNestedObj(drft, paths['text-decoration-line'], '')
           assignNestedObj(drft, paths['text-decoration-style'], '')
           assignNestedObj(drft, paths['text-decoration-thickness'], '')
         }))
-        setThemeColors(prvThemeColors => produce(prvThemeColors, drft => {
+        setThemeColors(prvThemeColors => create(prvThemeColors, drft => {
           assignNestedObj(drft, paths['text-decoration-color'], '')
         }))
         break
       case 'styles':
-        setStyles(prvState => produce(prvState, drft => {
+        setStyles(prvState => create(prvState, drft => {
           Object.keys(paths).map(propPathKey => {
             assignNestedObj(drft, paths[propPathKey], '')
           })

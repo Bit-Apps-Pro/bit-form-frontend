@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -36,7 +36,7 @@ export default function IcnCustomizer({ elementKey }) {
   const icnUnit = (varName) => getStrFromStr(themeVars[varName])
 
   const updateState = (varName, value = '') => {
-    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+    setThemeVars(prvStyle => create(prvStyle, drftStyle => {
       drftStyle[varName] = value
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, varName, value, { themeVars: getLatestState('themeVars') }))

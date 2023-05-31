@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -41,7 +41,7 @@ export default function CustomThemeGallary({ fldKey }) {
 
   const handleThemeApply = (themeSlug) => {
     const fk = fldKey || selectedFieldId
-    const newStyles = produce(styles, drftStyle => {
+    const newStyles = create(styles, drftStyle => {
       const type = drftStyle.fields[fk].fieldType
       drftStyle.fields[fk] = getStyle(themeSlug, fk, type)
     })

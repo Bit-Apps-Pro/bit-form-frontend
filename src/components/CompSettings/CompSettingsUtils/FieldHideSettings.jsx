@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useRecoilState } from 'recoil'
@@ -20,7 +20,7 @@ export default function FieldHideSettings({ cls }) {
   const setHidden = ({ target }) => {
     if (!IS_PRO) return
     const { checked } = target
-    const allFields = produce(fields, draft => {
+    const allFields = create(fields, draft => {
       const fldData = draft[fldKey]
       if (!fldData.valid) fldData.valid = {}
       if (checked) {

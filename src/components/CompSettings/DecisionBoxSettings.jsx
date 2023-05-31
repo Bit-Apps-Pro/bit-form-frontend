@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
@@ -41,14 +41,14 @@ export default function DecisionBoxSettings() {
     } else {
       delete fieldData.valid.checked
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Check by default ${checked ? 'on' : 'off'} : ${fieldData.adminLbl || fldKey}`, type: 'set_check_by_default', state: { fields: allFields, fldKey } })
   }
 
   const setValue = (val, typ) => {
     fieldData.msg[typ] = val
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${typ[0].toUpperCase() + typ.slice(1)} Value Modified to "${val}"`, type: `${typ}_value_modify`, state: { fields: allFields, fldKey } })
   }

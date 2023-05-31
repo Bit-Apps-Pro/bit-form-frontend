@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { NavLink, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -35,7 +35,7 @@ function EmailTemplateEdit() {
   }
 
   const handleBody = val => {
-    setMailTem(prevState => produce(prevState, draft => {
+    setMailTem(prevState => create(prevState, draft => {
       draft[id].body = val
     }))
   }
@@ -47,7 +47,7 @@ function EmailTemplateEdit() {
   }
 
   const save = () => {
-    const newMailTem = produce(mailTemp, draft => {
+    const newMailTem = create(mailTemp, draft => {
       draft.push({ updateTem: 1 })
     })
     setMailTem(newMailTem)

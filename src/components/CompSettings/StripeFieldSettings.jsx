@@ -1,4 +1,4 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
@@ -68,7 +68,7 @@ export default function StripeFieldSettings() {
       }
     }
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[name]} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
@@ -103,7 +103,7 @@ export default function StripeFieldSettings() {
       removeFormUpdateError(fldKey, 'stripeCurrencyMissing')
       assignNestedObj(fieldData, 'config->options->currency', 'usd')
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
   }
 
@@ -114,7 +114,7 @@ export default function StripeFieldSettings() {
       delete fieldData.config.layout
     }
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel.layout} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
@@ -126,7 +126,7 @@ export default function StripeFieldSettings() {
       delete fieldData.config.theme
     }
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel.layout} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
@@ -155,7 +155,7 @@ export default function StripeFieldSettings() {
     }
 
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Ammount Type Changed to "${e.target.value}": ${fieldData.lbl || fldKey}`, type: 'set_amount', state: { fields: allFields, fldKey } })
   }
@@ -187,13 +187,13 @@ export default function StripeFieldSettings() {
 
   function setBtnTxt(e) {
     fieldData.txt = e.target.value
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Stripe button text updated : ${fieldData.txt}`, type: 'change_stripe_btn_txt', state: { fields: allFields, fldKey } })
   }
   function setPayBtnTxt(e) {
     fieldData.config.payBtnTxt = e.target.value
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Stripe pay button text updated : ${fieldData.config.payBtnTxt}`, type: 'change_stripe_pay_btn_txt', state: { fields: allFields, fldKey } })
   }
@@ -216,7 +216,7 @@ export default function StripeFieldSettings() {
         fieldData.config.address.mode = 'billing'
       }
     } else delete fieldData.config[type]
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
   }
 
