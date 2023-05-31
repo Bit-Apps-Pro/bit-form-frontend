@@ -1,11 +1,11 @@
 /* eslint-disable import/no-cycle */
-import { atom } from 'jotai'
+import { atomWithReset } from 'jotai/utils'
 import { $colorScheme } from './GlobalStates'
 
-export const $lightThemeColors = atom({})
-export const $darkThemeColors = atom({})
+export const $lightThemeColors = atomWithReset({})
+export const $darkThemeColors = atomWithReset({})
 
-export const $themeColors = atom(
+export const $themeColors = atomWithReset(
   (get) => {
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') return get($lightThemeColors)
@@ -18,7 +18,7 @@ export const $themeColors = atom(
   },
 )
 
-export const $allThemeColors = atom(
+export const $allThemeColors = atomWithReset(
   (get) => ({
     lightThemeColors: get($lightThemeColors),
     darkThemeColors: get($darkThemeColors),

@@ -1,15 +1,15 @@
 /* eslint-disable import/no-cycle */
-import { atom } from 'jotai'
+import { atomWithReset } from 'jotai/utils'
 import { $breakpoint, $colorScheme } from './GlobalStates'
 
-export const $themeVarsLgLight = atom({})
-export const $themeVarsMdLight = atom({})
-export const $themeVarsSmLight = atom({})
-export const $themeVarsLgDark = atom({})
-export const $themeVarsMdDark = atom({})
-export const $themeVarsSmDark = atom({})
+export const $themeVarsLgLight = atomWithReset({})
+export const $themeVarsMdLight = atomWithReset({})
+export const $themeVarsSmLight = atomWithReset({})
+export const $themeVarsLgDark = atomWithReset({})
+export const $themeVarsMdDark = atomWithReset({})
+export const $themeVarsSmDark = atomWithReset({})
 
-export const $themeVars = atom(
+export const $themeVars = atomWithReset(
   (get) => {
     const isDarkColorScheme = get($colorScheme) === 'dark'
     const breakpoint = get($breakpoint)
@@ -52,14 +52,14 @@ export const $themeVars = atom(
   },
 )
 
-export const $fieldsDirection = atom(
+export const $fieldsDirection = atomWithReset(
   (get) => {
     const themeVars = get($themeVars)
     return themeVars['--dir']
   },
 )
 
-export const $allThemeVars = atom(
+export const $allThemeVars = atomWithReset(
   (get) => ({
     lgLightThemeVars: get($themeVarsLgLight),
     lgDarkThemeVars: get($themeVarsLgDark),

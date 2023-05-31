@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import { atom } from 'jotai'
+import { atomWithReset } from 'jotai/utils'
 
-export const $staticStylesState = atom({
+export const $staticStylesState = atomWithReset({
   styleMergeWithAtomicClasses: {
     lgLightStyles: { form: {} },
     mdLightStyles: { form: {} },
