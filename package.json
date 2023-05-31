@@ -83,8 +83,6 @@
     "react-timekeeper": "^2.2.1",
     "react-tiny-virtual-list": "^2.2.0",
     "react-transition-group": "^4.4.5",
-    "recoil": "^0.7.7",
-    "recoil-nexus": "^0.3.18",
     "sortablejs": "^1.15.0",
     "tippy.js": "^6.3.7",
     "use-immer": "^0.9.0"
