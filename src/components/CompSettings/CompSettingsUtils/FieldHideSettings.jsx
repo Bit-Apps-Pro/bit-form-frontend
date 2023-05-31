@@ -22,6 +22,7 @@ export default function FieldHideSettings({ cls }) {
     const { checked } = target
     const allFields = produce(fields, draft => {
       const fldData = draft[fldKey]
+      if (!fldData.valid) fldData.valid = {}
       if (checked) {
         fldData.valid.hide = true
       } else {
