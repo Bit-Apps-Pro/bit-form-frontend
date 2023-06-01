@@ -1,6 +1,6 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import { $breakpoint, $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates/GlobalStates'
 import MobileIcon from '../Icons/MobileIcon'
@@ -14,11 +14,11 @@ import SingleToggle from './Utilities/SingleToggle'
 
 export default function BreakpointSizeControl() {
   const { css } = useFela()
-  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
-  const [breakpointSize, setBreakpointSize] = useRecoilState($breakpointSize)
-  const breakpoint = useRecoilValue($breakpoint)
-  const setIsDraggable = useSetRecoilState($isDraggable)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const [builderHelperStates, setBuilderHelperStates] = useAtom($builderHelperStates)
+  const [breakpointSize, setBreakpointSize] = useAtom($breakpointSize)
+  const breakpoint = useAtomValue($breakpoint)
+  const setIsDraggable = useSetAtom($isDraggable)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const toggleRespectOrder = () => {
     if (builderHelperStates.respectLGLayoutOrder) setIsDraggable(true)
@@ -27,7 +27,7 @@ export default function BreakpointSizeControl() {
   }
   const breakpointSizeHandler = ({ target: { name, value } }) => {
     // eslint-disable-next-line no-param-reassign
-    const size = produce(breakpointSize, draft => { draft[name] = Number(value) })
+    const size = create(breakpointSize, draft => { draft[name] = Number(value) })
     setBreakpointSize(size)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }

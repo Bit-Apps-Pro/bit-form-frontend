@@ -10,7 +10,7 @@
 import { memo } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
@@ -27,46 +27,46 @@ function SectionFieldSettings() {
   const { fieldKey: fldKey } = useParams()
 
   if (!fldKey) return <>No field exist with this field key</>
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
 
   return (
-      <div className="">
-        <FieldSettingTitle
-          title="Field Settings"
-          subtitle={fieldData.typ}
-          fieldKey={fldKey}
-        />
+    <div className="">
+      <FieldSettingTitle
+        title="Field Settings"
+        subtitle={fieldData.typ}
+        fieldKey={fldKey}
+      />
 
-        <FieldLabelSettings />
+      <FieldLabelSettings />
 
-        <FieldSettingsDivider />
+      <FieldSettingsDivider />
 
-        <SubTitleSettings />
+      <SubTitleSettings />
 
-        <FieldSettingsDivider />
+      <FieldSettingsDivider />
 
-        <AdminLabelSettings />
+      <AdminLabelSettings />
 
-        <FieldSettingsDivider />
+      <FieldSettingsDivider />
 
-        <SizeAndPosition />
+      <SizeAndPosition />
 
-        <FieldSettingsDivider />
+      <FieldSettingsDivider />
 
-        <HelperTxtSettings />
+      <HelperTxtSettings />
 
-        <FieldSettingsDivider />
+      <FieldSettingsDivider />
 
-        <RequiredSettings />
+      <RequiredSettings />
 
-        <FieldSettingsDivider />
+      <FieldSettingsDivider />
 
-        <FieldHideSettings />
+      <FieldHideSettings />
 
-        <FieldSettingsDivider />
+      <FieldSettingsDivider />
 
-      </div>
+    </div>
   )
 }
 

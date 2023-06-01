@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
@@ -19,7 +19,7 @@ export default function GroundhoggMetaFieldMap({ i, formFields, field, groundhog
   const requiredFlds = groundhoggConf?.contactMetaFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = groundhoggConf?.contactMetaFields.filter(fld => fld.required === false) || []
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   return (

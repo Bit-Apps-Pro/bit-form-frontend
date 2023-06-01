@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -21,13 +21,13 @@ import WorkflowLogicSection from './WorkflowLogicSection'
 
 export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
   const { css } = useFela()
-  const setWorkflows = useSetRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setWorkflows = useSetAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const generateAccrTtl = title => title.replace(/-/g, ' ').split(' ').map(word => firstCharCap(word)).join(' ')
 
   const addCondition = condType => {
     hideAll()
-    setWorkflows(prevWorkflows => produce(prevWorkflows, draftWorkflow => {
+    setWorkflows(prevWorkflows => create(prevWorkflows, draftWorkflow => {
       const { conditions } = draftWorkflow[lgcGrpInd]
       const condData = { ...defaultConds, cond_type: condType }
       if (condType === 'else') delete condData.logics
@@ -44,7 +44,7 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
 
     if (isGroup) logicData.push([logicObj, typ, logicObj])
     else logicData.push(logicObj)
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       let tmp = prv[lgcGrpInd].conditions[condGrpInd].logics
       tmp = accessToNested(tmp, logicPath)
       tmp.push(...logicData)
@@ -201,8 +201,8 @@ export default function WorkflowConditionSection({ lgcGrpInd, lgcGrp }) {
 
 const WorkflowAccordionActions = ({ lgcGrpInd, condGrpInd, add, clone, remove }) => {
   const [confMdl, setConfMdl] = useState({ show: false })
-  const setWorkflows = useSetRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setWorkflows = useSetAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const closeConfMdl = () => {
     setConfMdl({ show: false })
@@ -210,7 +210,7 @@ const WorkflowAccordionActions = ({ lgcGrpInd, condGrpInd, add, clone, remove })
 
   const deleteCondition = () => {
     setConfMdl({ show: false })
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       prv[lgcGrpInd].conditions.splice(condGrpInd, 1)
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
@@ -230,14 +230,14 @@ const WorkflowAccordionActions = ({ lgcGrpInd, condGrpInd, add, clone, remove })
   }
 
   const cloneCondition = () => {
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       prv[lgcGrpInd].conditions.splice(condGrpInd + 1, 0, deepCopy(prv[lgcGrpInd].conditions[condGrpInd]))
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const addNewElseIf = () => {
-    setWorkflows(prvSt => produce(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, prv => {
       prv[lgcGrpInd].conditions.splice(condGrpInd + 1, 0, {
         ...defaultConds,
         cond_type: 'else-if',

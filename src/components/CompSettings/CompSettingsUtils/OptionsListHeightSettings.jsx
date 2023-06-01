@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -12,7 +12,7 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function OptionsListHeightSettings({ cls }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
 
   const { css } = useFela()
@@ -20,7 +20,7 @@ export default function OptionsListHeightSettings({ cls }) {
   const handleHeightChange = (val) => {
     fieldData.config.maxHeight = val
     if (!val) delete fieldData.config.maxHeight
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Options List Height '${String(val || 'Off').replace('true', 'On')}': ${fieldData.lbl || fldKey}`, type: 'height_changed', state: { fields: allFields, fldKey } })
   }

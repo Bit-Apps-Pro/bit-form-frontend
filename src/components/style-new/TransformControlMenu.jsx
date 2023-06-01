@@ -2,11 +2,11 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import TrashIcn from '../../Icons/TrashIcn'
@@ -21,8 +21,8 @@ function TransformControlMenu({ propertyPath, id }) {
   const title = 'Transform'
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const themeVars = useRecoilValue($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
+  const themeVars = useAtomValue($themeVars)
+  const [styles, setStyles] = useAtom($styles)
   let checkImportant = ''
   const getTransformStyleVal = () => {
     let transformValue = getValueByObjPath(styles, propertyPath)
@@ -57,7 +57,7 @@ function TransformControlMenu({ propertyPath, id }) {
     if (checkImportant) {
       tnArrToStr = `${tnArrToStr} !important`
     }
-    setStyles(prvStyles => produce(prvStyles, drftStyles => {
+    setStyles(prvStyles => create(prvStyles, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, tnArrToStr)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, arrOfTransformStr.join(' '), { styles: getLatestState('styles') }))
@@ -68,7 +68,7 @@ function TransformControlMenu({ propertyPath, id }) {
     const val = getOldTransform === undefined || getOldTransform === ''
       ? newTransformVal(name, 0, transformProps[name].unit[0])
       : `${getOldTransform} ${newTransformVal(name, 0, transformProps[name].unit[0])}${checkImportant}`
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
+    setStyles(prvStyle => create(prvStyle, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, val)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { styles: getLatestState('styles') }))
@@ -79,7 +79,7 @@ function TransformControlMenu({ propertyPath, id }) {
     const transformArr = splitMultipleTransform(getOldTransform)
     if (transformArr.length === 1) return
     transformArr.splice(indx, 1)
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
+    setStyles(prvStyle => create(prvStyle, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, transformArr.join(' '))
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, transformArr.join(' '), { styles: getLatestState('styles') }))

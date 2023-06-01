@@ -2,11 +2,11 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -22,8 +22,8 @@ import { assignNestedObj, getNumFromStr, getStrFromStr, getValueByObjPath, split
 function TransitionControlMenu({ stateObjName, propertyPath, id }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const themeVars = useRecoilValue($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
+  const themeVars = useAtomValue($themeVars)
+  const [styles, setStyles] = useAtom($styles)
   let checkImportant = ''
   const getTransitionStyleVal = () => {
     let transitionValue = getValueByObjPath(styles, propertyPath)
@@ -63,7 +63,7 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
     if (checkImportant) {
       tnArrToStr = `${tnArrToStr} !important`
     }
-    setStyles(prvStyles => produce(prvStyles, drftStyles => {
+    setStyles(prvStyles => create(prvStyles, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, tnArrToStr)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, tnArrToStr, { styles: getLatestState('styles') }))
@@ -72,7 +72,7 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
   const addTransitionHandler = () => {
     const getOldTransition = getTransitionStyleVal()
     const newTransition = getOldTransition === undefined || getOldTransition === '' ? `all 0.1s 0.1s ease${checkImportant}` : `${getOldTransition},all 0.1s 0.1s ease${checkImportant}`
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
+    setStyles(prvStyle => create(prvStyle, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, newTransition)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, newTransition, { styles: getLatestState('styles') }))
@@ -82,7 +82,7 @@ function TransitionControlMenu({ stateObjName, propertyPath, id }) {
     const transitionArr = splitMultipleTransition(getOldTransition)
     if (transitionArr.length === 1) return
     transitionArr.splice(indx, 1)
-    setStyles(prvStyle => produce(prvStyle, drftStyles => {
+    setStyles(prvStyle => create(prvStyle, drftStyles => {
       assignNestedObj(drftStyles, propertyPath, transitionArr.toString())
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, transitionArr.toString(), { styles: getLatestState('styles') }))

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
@@ -14,7 +14,7 @@ export default function EmailNotification({
   const temBody = data?.body ? data?.body : tamplate
 
   const handleBody = value => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       const tmp = type ? draft[type] : draft
       tmp.body = value
@@ -22,7 +22,7 @@ export default function EmailNotification({
   }
   const cancelModal = () => {
     setTimeout(() => {
-      setDataConf(tmpConf => produce(tmpConf, draft => {
+      setDataConf(tmpConf => create(tmpConf, draft => {
         // eslint-disable-next-line no-param-reassign
         const tmp = type ? draft[type] : draft
         tmp.body = tamplate
@@ -34,7 +34,7 @@ export default function EmailNotification({
   }
 
   const handleInput = e => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       const { name, value } = e.target
       const tmp = type ? draft[type] : draft
       // eslint-disable-next-line no-param-reassign

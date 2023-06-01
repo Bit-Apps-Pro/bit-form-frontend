@@ -1,13 +1,13 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import StarIcn from '../../Icons/StarIcn'
 import Tip from '../Utilities/Tip'
 import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function Important({ paths = {}, propertyPath, className, id }) {
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const { css } = useFela()
   const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
   const isAlreadyImportant = () => {
@@ -24,7 +24,7 @@ export default function Important({ paths = {}, propertyPath, className, id }) {
     } else {
       newStyleValue = `${styleValue} !important`
     }
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       assignNestedObj(drft, propertyPath, newStyleValue)
       props.map(propName => {
         if (isAlreadyImportant()) {

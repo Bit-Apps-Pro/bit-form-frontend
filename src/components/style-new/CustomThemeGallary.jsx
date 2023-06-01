@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CheckMarkIcn from '../../Icons/CheckMarkIcn'
@@ -19,9 +19,9 @@ import themes from './themes/themeList'
 
 export default function CustomThemeGallary({ fldKey }) {
   const { css } = useFela()
-  const [styles, setStyles] = useRecoilState($styles)
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const fields = useRecoilValue($fields)
+  const [styles, setStyles] = useAtom($styles)
+  const selectedFieldId = useAtomValue($selectedFieldId)
+  const fields = useAtomValue($fields)
   const fieldType = fields[fldKey].typ
   const customThemes = [
     { name: 'Checkbox Theme', slug: 'individual', img: '', allowedFlds: ['check', 'radio'] },
@@ -41,7 +41,7 @@ export default function CustomThemeGallary({ fldKey }) {
 
   const handleThemeApply = (themeSlug) => {
     const fk = fldKey || selectedFieldId
-    const newStyles = produce(styles, drftStyle => {
+    const newStyles = create(styles, drftStyle => {
       const type = drftStyle.fields[fk].fieldType
       drftStyle.fields[fk] = getStyle(themeSlug, fk, type)
     })

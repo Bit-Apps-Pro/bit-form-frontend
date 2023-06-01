@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
@@ -9,7 +9,7 @@ import MtInput from '../../Utilities/MtInput'
 export default function ActiveCampaignFieldMap({ i, formFields, field, activeCampaingConf, setActiveCampaingConf }) {
   const isRequired = field.required
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const notResquiredField = activeCampaingConf?.default?.fields && Object.values(activeCampaingConf?.default?.fields).filter((f => !f.required))
   const addFieldMap = (indx) => {

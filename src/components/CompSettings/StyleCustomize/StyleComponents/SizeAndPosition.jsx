@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $breakpoint, $builderHookStates, $layouts, $nestedLayouts } from '../../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory, cols } from '../../../../Utils/FormBuilderHelper'
 import ut from '../../../../styles/2.utilities'
@@ -12,11 +12,11 @@ import SimpleAccordion from '../ChildComp/SimpleAccordion'
 function SizeAndPosition() {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const [layouts, setLayouts] = useRecoilState($layouts)
-  const nestedLayouts = useRecoilValue($nestedLayouts)
-  const breakpoint = useRecoilValue($breakpoint)
+  const [layouts, setLayouts] = useAtom($layouts)
+  const nestedLayouts = useAtomValue($nestedLayouts)
+  const breakpoint = useAtomValue($breakpoint)
   let fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey))
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
   if (!fieldSize) {
     Object.values(nestedLayouts).forEach((lay) => {
       const field = lay?.[breakpoint]?.find(fl => (fl.i === fldKey))
@@ -39,7 +39,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (val > maxValue[breakpoint].x) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].x = val
     })
@@ -53,7 +53,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (val > maxValue[breakpoint].w) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].w = val
     })
@@ -67,7 +67,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (maxValue[breakpoint].y !== null && val > maxValue[breakpoint].y) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].y = val
     })
@@ -81,7 +81,7 @@ function SizeAndPosition() {
     if (val < 0) return
     if (maxValue[breakpoint].h !== null && val > maxValue[breakpoint].h) return
 
-    const layout = produce(layouts, draft => {
+    const layout = create(layouts, draft => {
       const layIndex = draft[breakpoint].findIndex(fl => (fl.i === fldKey))
       draft[breakpoint][layIndex].h = val
     })

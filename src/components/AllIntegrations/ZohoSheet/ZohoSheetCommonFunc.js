@@ -1,7 +1,7 @@
-import { getRecoil } from 'recoil-nexus'
 import { __, sprintf } from '../../../Utils/i18nwrap'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { $bits } from '../../../GlobalStates/GlobalStates'
+import bitStore from '../../../GlobalStates/BitStore'
 
 export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
   let newConf = { ...sheetConf }
@@ -205,7 +205,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
     })
     return
   }
-  const bits = getRecoil($bits)
+  const bits = bitStore.get($bits)
   setisLoading(true)
   const scopes = 'ZohoSheet.dataAPI.READ,ZohoSheet.dataAPI.UPDATE'
   const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}?redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
@@ -239,7 +239,7 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  const bits = getRecoil($bits)
+  const bits = bitStore.get($bits)
   tokenRequestParams.redirectURI = bits.zohoRedirectURL
   bitsFetch(tokenRequestParams, 'bitforms_zsheet_generate_token')
     .then(result => result)

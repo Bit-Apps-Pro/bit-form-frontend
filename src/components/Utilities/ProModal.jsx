@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $proModal } from '../../GlobalStates/GlobalStates'
 import ProBadgeIcn from '../../Icons/ProBadgeIcn'
 import { __ } from '../../Utils/i18nwrap'
@@ -10,7 +10,7 @@ export default function ProModal({
   close, show, title, className, children, warning,
 }) {
   const { css } = useFela()
-  const [proModal, setProModal] = useRecoilState($proModal)
+  const [proModal, setProModal] = useAtom($proModal)
   return (
     <Modal
       sm

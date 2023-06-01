@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import FieldStyle from '../../../styles/FieldStyle.style'
@@ -19,10 +19,10 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import AutoResizeInput from './AutoResizeInput'
 
 export default function SubTitleSettings() {
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const { fieldKey: fldKey } = useParams()
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const [styles, setStyles] = useRecoilState($styles)
+  const selectedFieldId = useAtomValue($selectedFieldId)
+  const [styles, setStyles] = useAtom($styles)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const { css } = useFela()
@@ -41,7 +41,7 @@ export default function SubTitleSettings() {
       fieldData.subtitleHide = false
     }
     const req = checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
     reCalculateFldHeights(fldKey)
@@ -60,7 +60,7 @@ export default function SubTitleSettings() {
       fieldData.subtitle = value
     }
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFldHeights(fldKey)
     addToBuilderHistory({
@@ -80,9 +80,9 @@ export default function SubTitleSettings() {
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
-      setStyles(prvStyle => produce(prvStyle, draft => {
+      setStyles(prvStyle => create(prvStyle, draft => {
         if (iconType === 'prefixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-left']
         if (iconType === 'suffixIcn') delete draft.fields[selectedFieldId].classes[`.${selectedFieldId}-fld`]['padding-right']
       }))

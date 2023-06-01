@@ -1,17 +1,10 @@
 import loadable from '@loadable/component'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import bitIcn from '../../logo.svg'
-import BuilderLoader from '../components/Loaders/BuilderLoader'
-import Loader from '../components/Loaders/Loader'
-import PublishBtn from '../components/PublishBtn'
-import RouteByParams from '../components/RouteByParams'
-import UpdateButton from '../components/UpdateButton'
-import ConfirmModal from '../components/Utilities/ConfirmModal'
-import Modal from '../components/Utilities/Modal'
-import SegmentControl from '../components/Utilities/SegmentControl'
 import {
   $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
@@ -22,13 +15,21 @@ import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
-import navbar from '../styles/navbar.style'
-import bitsFetch from '../Utils/bitsFetch'
 import { addToBuilderHistory, getSessionStorageStates } from '../Utils/FormBuilderHelper'
-import { hideWpMenu, resetRecoilStates, showWpMenu } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
+import { getStatesToReset, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
+import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
+import BuilderLoader from '../components/Loaders/BuilderLoader'
+import Loader from '../components/Loaders/Loader'
+import PublishBtn from '../components/PublishBtn'
+import RouteByParams from '../components/RouteByParams'
+import UpdateButton from '../components/UpdateButton'
+import ConfirmModal from '../components/Utilities/ConfirmModal'
+import Modal from '../components/Utilities/Modal'
+import SegmentControl from '../components/Utilities/SegmentControl'
+import navbar from '../styles/navbar.style'
 
 const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
@@ -38,42 +39,43 @@ function FormDetails() {
   let componentMounted = true
   const navigate = useNavigate()
   const { formType, formID } = useParams()
-  const setReports = useSetRecoilState($reports)
-  const setFormId = useSetRecoilState($formId)
-  const setFields = useSetRecoilState($fields)
-  const setFieldLabels = useSetRecoilState($fieldLabels)
+  const setReports = useSetAtom($reports)
+  const setFormId = useSetAtom($formId)
+  const setFields = useSetAtom($fields)
+  const setFieldLabels = useSetAtom($fieldLabels)
   const [appFullScreen, setAppFullScreen] = useState(true)
   const [allResponse, setAllResponse] = useState([])
   const [isLoading, setisLoading] = useState(true)
-  const updateBtn = useRecoilValue($updateBtn)
-  const [formInfo, setFormInfo] = useRecoilState($formInfo)
+  const updateBtn = useAtomValue($updateBtn)
+  const [formInfo, setFormInfo] = useAtom($formInfo)
   const { formName } = formInfo
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const [proModal, setProModal] = useState({ show: false, msg: '' })
-  const setMailTem = useSetRecoilState($mailTemplates)
-  const setworkFlows = useSetRecoilState($workflows)
-  const setAdditional = useSetRecoilState($additionalSettings)
-  const [integrations, setIntegration] = useRecoilState($integrations)
-  const setConfirmations = useSetRecoilState($confirmations)
-  const setReportId = useSetRecoilState($reportId)
-  const setLayouts = useSetRecoilState($layouts)
-  const setNestedLayouts = useSetRecoilState($nestedLayouts)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
-  const setSavedStylesAndVars = useSetRecoilState($savedStylesAndVars)
-  const setIsNewThemeStyleLoaded = useSetRecoilState($isNewThemeStyleLoaded)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const newFormId = useRecoilValue($newFormId)
+  const setMailTem = useSetAtom($mailTemplates)
+  const setworkFlows = useSetAtom($workflows)
+  const setAdditional = useSetAtom($additionalSettings)
+  const [integrations, setIntegration] = useAtom($integrations)
+  const setConfirmations = useSetAtom($confirmations)
+  const setReportId = useSetAtom($reportId)
+  const setLayouts = useSetAtom($layouts)
+  const setNestedLayouts = useSetAtom($nestedLayouts)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
+  const setSavedStylesAndVars = useSetAtom($savedStylesAndVars)
+  const setIsNewThemeStyleLoaded = useSetAtom($isNewThemeStyleLoaded)
+  const setUpdateBtn = useSetAtom($updateBtn)
+  const newFormId = useAtomValue($newFormId)
   const { css } = useFela()
-  const [staticStylesState, setStaticStylesState] = useRecoilState($staticStylesState)
-  const setBreakpoint = useSetRecoilState($breakpoint)
-  const [builderHelperStates, setBuilderHelperStates] = useRecoilState($builderHelperStates)
-  const [builderSettings, setBuilderSettings] = useRecoilState($builderSettings)
-  const [colorScheme, setColorScheme] = useRecoilState($colorScheme)
-  const [customCodes, setCustomCodes] = useRecoilState($customCodes)
-  const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
-  const [breakpointSize, setBreakpointSize] = useRecoilState($breakpointSize)
+  const [staticStylesState, setStaticStylesState] = useAtom($staticStylesState)
+  const setBreakpoint = useSetAtom($breakpoint)
+  const [builderHelperStates, setBuilderHelperStates] = useAtom($builderHelperStates)
+  const [builderSettings, setBuilderSettings] = useAtom($builderSettings)
+  const [colorScheme, setColorScheme] = useAtom($colorScheme)
+  const [customCodes, setCustomCodes] = useAtom($customCodes)
+  const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
+  const [breakpointSize, setBreakpointSize] = useAtom($breakpointSize)
+  const atomResetters = getStatesToReset().map(stateAtom => useResetAtom(stateAtom))
 
   useEffect(() => { setFormId(formID) }, [formID])
 
@@ -126,7 +128,7 @@ function FormDetails() {
   const onUnmount = () => {
     showWpMenu()
     setAppFullScreen(false)
-    resetRecoilStates()
+    atomResetters.forEach(resetAtom => resetAtom())
   }
 
   useEffect(() => {

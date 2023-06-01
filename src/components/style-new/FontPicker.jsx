@@ -1,13 +1,13 @@
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { showDraggableModal } from './styleHelpers'
 
 export default function FontPicker({ id }) {
   const { css } = useFela()
-  const themeVars = useRecoilValue($themeVars)
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const themeVars = useAtomValue($themeVars)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
 
   const font = themeVars['--g-font-family']
   const fontName = font === 'inherit' ? 'Inherit' : font || 'Configure'

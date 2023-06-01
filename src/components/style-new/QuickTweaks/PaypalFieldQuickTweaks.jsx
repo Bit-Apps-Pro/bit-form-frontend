@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import ut from '../../../styles/2.utilities'
@@ -15,8 +15,8 @@ import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 export default function PaypalFieldQuickTweaks() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
-  const [fields, setFields] = useRecoilState($fields)
+  const [styles, setStyles] = useAtom($styles)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fieldKey])
 
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
@@ -50,13 +50,13 @@ export default function PaypalFieldQuickTweaks() {
 
   const paypalStyleHandler = (name, value) => {
     fieldData.style[name] = value
-    setFields(allFields => produce(allFields, draft => { draft[fieldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fieldKey] = fieldData }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, `Paypal ${name}`, value, { fields: getLatestState('fields') }))
   }
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, propertyPath('paypal-wrp', prop), v)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))

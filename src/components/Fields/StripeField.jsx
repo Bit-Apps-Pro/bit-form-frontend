@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { useEffect, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { addFormUpdateError, reCalculateFldHeights, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
@@ -10,9 +10,9 @@ import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 export default function StripeField({ fieldKey, formID, attr, isBuilder, styleClasses }) {
-  const payments = useRecoilValue($payments)
+  const payments = useAtomValue($payments)
   const [publishableKey, setPublishableKey] = useState('')
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
   const stripeElemnRaf = useRef(null)
   const stripeFldWrapRef = useRef(null)

@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
 
 export default function HtmlField({ fieldKey, attr, styleClasses }) {
-  const { styleMode } = useRecoilValue($flags)
+  const { styleMode } = useAtomValue($flags)
   const isHidden = attr.valid?.hide || false
   return (
     <>

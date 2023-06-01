@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -14,9 +14,9 @@ import { assignNestedObj, getValueByObjPath, getValueFromStateVar, showDraggable
 export default function FilterController({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
 
   const { object, paths } = objectPaths
   const val = getValueByObjPath(styles, paths?.filter)
@@ -35,14 +35,14 @@ export default function FilterController({ subtitle, action, value, objectPaths,
   const clearHandler = () => {
     switch (object) {
       case 'styles':
-        setStyles(prvStyle => produce(prvStyle, drft => {
+        setStyles(prvStyle => create(prvStyle, drft => {
           assignNestedObj(drft, paths?.filter, '')
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${paths?.filter}`, '', { styles: getLatestState('styles') }))
         break
 
       case 'themeColors':
-        setThemeColors(prvThemeClr => produce(prvThemeClr, drft => {
+        setThemeColors(prvThemeClr => create(prvThemeClr, drft => {
           assignNestedObj(drft, paths?.filter, '')
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, `Clear ${paths?.filter}`, '', { themeColors: getLatestState('themeColors') }))

@@ -1,8 +1,8 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addFormUpdateError, addToBuilderHistory, removeFormUpdateError } from '../../../Utils/FormBuilderHelper'
@@ -13,7 +13,7 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function FieldNameSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
   const adminLabel = fieldData.adminLbl || ''
@@ -69,7 +69,7 @@ export default function FieldNameSettings() {
       removeFormUpdateError(fldKey, 'fieldNameEmpty')
     }
 
-    const tmpFields = produce(fields, draft => {
+    const tmpFields = create(fields, draft => {
       draft[fldKey] = fieldData
     })
     setFields(tmpFields)

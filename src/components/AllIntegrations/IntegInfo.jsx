@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $integrations } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import app from '../../styles/app.style'
@@ -40,7 +40,7 @@ const GetgistAuthorization = lazy(() => import('./Getgist/GetgistAuthorization')
 const Loader = lazy(() => import('../Loaders/Loader'))
 
 export default function IntegInfo({ allIntegURL }) {
-  const integrations = useRecoilValue($integrations)
+  const integrations = useAtomValue($integrations)
   const { id } = useParams()
   const [snack, setSnackbar] = useState({ show: false })
   const integ = integrations[id]
@@ -73,7 +73,7 @@ export default function IntegInfo({ allIntegURL }) {
 }
 
 const IntegInfoComponents = ({ integ, location, setSnackbar }) => {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
 
   switch (integ.type) {
     case 'Zoho Analytics':

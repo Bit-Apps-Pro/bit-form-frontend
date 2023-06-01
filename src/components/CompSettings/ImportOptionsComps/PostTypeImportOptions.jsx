@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -15,7 +15,7 @@ export const generatePostOptions = (importOpts, lblKey, valKey) => {
 }
 
 export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const isPro = typeof bits !== 'undefined' && bits.isPro
   const [snack, setsnack] = useState({ show: false })
 

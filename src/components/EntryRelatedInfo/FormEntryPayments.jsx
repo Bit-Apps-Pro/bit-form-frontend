@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fieldLabels } from '../../GlobalStates/GlobalStates'
 import paymentFields from '../../Utils/StaticData/paymentFields'
 import bitsFetch from '../../Utils/bitsFetch'
@@ -10,8 +10,8 @@ import RazorpayInfo from './PaymentInfo/RazorpayInfo'
 import StripeInfo from './PaymentInfo/StripeInfo'
 
 export default function FormEntryPayments({ formID, rowDtl }) {
-  const allLabels = useRecoilValue($fieldLabels)
-  const bits = useRecoilValue($bits)
+  const allLabels = useAtomValue($fieldLabels)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const [paymentInfo, setPaymentInfo] = useState({})
   const [isLoading, setIsLoading] = useState(false)

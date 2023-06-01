@@ -1,10 +1,10 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-console */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
@@ -35,9 +35,9 @@ import SpaceControl from './SpaceControl'
 export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   const { css } = useFela()
   const { '*': rightBarUrl } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
   const [rightBar, element, fieldKey] = rightBarUrl.split('/')
 
   const fldStyleObj = styles?.fields?.[fieldKey]
@@ -110,7 +110,7 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
     if (prop === 'borderColor' && hslaPaths) {
       const v = val.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
       const { h, s, l, a } = hslaPaths
-      setThemeColors(prvColor => produce(prvColor, (draft) => {
+      setThemeColors(prvColor => create(prvColor, (draft) => {
         draft[h] = v[0]
         draft[s] = v[1]
         draft[l] = v[2]

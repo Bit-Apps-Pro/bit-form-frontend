@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line no-unused-vars
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { __ } from '../../../Utils/i18nwrap'
 
 export const addFieldMap = (authType, fldProp, i, confTmp, setConf) => {
-  setConf(tmpConf => produce(tmpConf, draft => {
+  setConf(tmpConf => create(tmpConf, draft => {
     draft[authType][fldProp].splice(i, 0, {})
   }))
 }
 
 export const delFieldMap = (authType, fldProp, i, confTmp, setConf) => {
-  setConf(tmpConf => produce(tmpConf, draft => {
+  setConf(tmpConf => create(tmpConf, draft => {
     if (draft[authType][fldProp].length > 1) {
       draft[authType][fldProp].splice(i, 1)
     }
@@ -27,7 +27,7 @@ export const handleFieldMapping = (authType, fldProp, event, index, conftTmp, se
     return
   }
 
-  setConf(tmpConf => produce(tmpConf, draft => {
+  setConf(tmpConf => create(tmpConf, draft => {
     draft[authType][fldProp][index][event.target.name] = event.target.value
   }))
 }

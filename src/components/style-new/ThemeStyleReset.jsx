@@ -1,6 +1,6 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $savedStyles, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -10,10 +10,10 @@ import Tip from '../Utilities/Tip'
 
 export default function ThemeStyleReset({ id, fk }) {
   const { css } = useFela()
-  const saveStyles = useRecoilValue($savedStyles) || {}
-  const [styles, setStyles] = useRecoilState($styles)
-  const setThemeVars = useSetRecoilState($themeVars)
-  const savedThemeVars = useRecoilValue($savedThemeVars)
+  const saveStyles = useAtomValue($savedStyles) || {}
+  const [styles, setStyles] = useAtom($styles)
+  const setThemeVars = useSetAtom($themeVars)
+  const savedThemeVars = useAtomValue($savedThemeVars)
 
   const previousFieldsStyle = Object.keys(saveStyles?.fields || {})
   let show = false
@@ -29,7 +29,7 @@ export default function ThemeStyleReset({ id, fk }) {
   }
 
   const resetStyle = () => {
-    setStyles(prvStyle => produce(prvStyle, draft => {
+    setStyles(prvStyle => create(prvStyle, draft => {
       if (fk) {
         draft.fields[fk].fieldSize = saveStyles?.fields[fk].fieldSize
         draft.fields[fk].classes = saveStyles?.fields[fk].classes

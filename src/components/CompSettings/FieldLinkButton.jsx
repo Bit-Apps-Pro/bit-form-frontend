@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -41,7 +41,7 @@ import { __ } from '../../Utils/i18nwrap'
 
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
   const { formType, formID } = useParams()
-  const setSeletedFieldId = useSetRecoilState($selectedFieldId)
+  const setSeletedFieldId = useSetAtom($selectedFieldId)
   const naviage = useNavigate()
   const dragEl = selectInGrid(`.${fieldKey}-fld-wrp.drag`)
 

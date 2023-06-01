@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -27,9 +27,9 @@ import StripeQuickTweaks from './QuickTweaks/StripeQuickTweaks'
 export default function FieldQuickTweaks({ fieldKey }) {
   const { css } = useFela()
   const { element } = useParams()
-  const themeVars = useRecoilValue($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
-  const fields = useRecoilValue($fields)
+  const themeVars = useAtomValue($themeVars)
+  const [styles, setStyles] = useAtom($styles)
+  const fields = useAtomValue($fields)
   const fieldData = deepCopy(fields[fieldKey])
   const fldStyleObj = styles?.fields?.[fieldKey] || {}
   const { fieldType, fieldSize } = fldStyleObj
@@ -44,7 +44,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   }
 
   const setSizes = ({ target: { value } }) => {
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       const fieldStyle = prvStyle.fields[fieldKey]
       const { theme } = prvStyle.fields[fieldKey]
       const updateStyle = updateFieldStyleByFieldSizing(fieldStyle, fieldKey, fieldData.typ, theme, value)
@@ -120,7 +120,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'border-radius') => {
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, propertyPath(getElementKeyByFieldType(), prop), v)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
@@ -181,7 +181,7 @@ export default function FieldQuickTweaks({ fieldKey }) {
   const [objName, objPath] = fldTypWiseAccentColorObjName()
 
   const handleDir = () => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       const fldType = prvStyle.fields[fieldKey].fieldType
       const clsName = fldType === 'phone-number' ? 'phone' : fldType
       const { classes: clss } = drft.fields[fieldKey]

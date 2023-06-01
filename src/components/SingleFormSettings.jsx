@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
@@ -14,7 +14,7 @@ import 'react-day-picker/dist/style.css'
  */
 import { Link, useParams } from 'react-router-dom'
 import Timekeeper from 'react-timekeeper'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
@@ -48,17 +48,17 @@ import SingleToggle2 from './Utilities/SingleToggle2'
 import { assignNestedObj } from './style-new/styleHelpers'
 
 export default function SingleFormSettings() {
-  const [additionalSetting, setadditional] = useRecoilState($additionalSettings)
-  const fields = useRecoilValue($fields)
+  const [additionalSetting, setadditional] = useAtom($additionalSettings)
+  const fields = useAtomValue($fields)
   const { formID } = useParams()
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
-  const reCaptchaV3 = useRecoilValue($reCaptchaV3)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setStaticStyleState = useSetRecoilState($staticStylesState)
-  const setProModal = useSetRecoilState($proModal)
+  const reCaptchaV3 = useAtomValue($reCaptchaV3)
+  const setUpdateBtn = useSetAtom($updateBtn)
+  const setStaticStyleState = useSetAtom($staticStylesState)
+  const setProModal = useSetAtom($proModal)
   // const [proModal, setProModal] = useState({ show: false, msg: '' })
-  const setStyles = useSetRecoilState($styles)
+  const setStyles = useSetAtom($styles)
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }
@@ -132,7 +132,7 @@ export default function SingleFormSettings() {
       || additionalSetting.enabled?.entry_limit
       || additionalSetting.settings?.blocked_ip?.[0]?.ip
       || additionalSetting.settings?.blocked_ip?.[0]?.ip
-    setStyles(prevStyle => produce(prevStyle, draft => {
+    setStyles(prevStyle => create(prevStyle, draft => {
       if (isTrue) {
         assignNestedObj(draft, 'form', {
           ...draft.form,
@@ -306,7 +306,7 @@ export default function SingleFormSettings() {
   const hideReCaptchaBadge = e => {
     const additional = deepCopy(additionalSetting)
     if (!additional.settings.recaptchav3) additional.settings.recaptchav3 = {}
-    setStaticStyleState(prvStyle => produce(prvStyle, draft => {
+    setStaticStyleState(prvStyle => create(prvStyle, draft => {
       if (e.target.checked) {
         additional.settings.recaptchav3.hideReCaptcha = true
         const path = 'staticStyles->.grecaptcha-badge->visibility'
@@ -489,7 +489,7 @@ export default function SingleFormSettings() {
     if (!val) hideAll()
     let date = val
     if (val) date = dateTimeFormatter(val, 'Y-m-d')
-    setadditional(prvState => produce(prvState, drft => {
+    setadditional(prvState => create(prvState, drft => {
       if (!drft.settings) drft.settings = {}
       if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
       if (!drft.settings.restrict_form.date) drft.settings.restrict_form.date = {}
@@ -503,7 +503,7 @@ export default function SingleFormSettings() {
       setProModal({ show: true, ...proHelperData.limit_submission })
       return false
     }
-    setadditional(prvState => produce(prvState, drft => {
+    setadditional(prvState => create(prvState, drft => {
       if (!drft.settings) drft.settings = {}
       if (!drft.settings.restrict_form) drft.settings.restrict_form = {}
       if (!drft.settings.restrict_form.time) drft.settings.restrict_form.time = {}

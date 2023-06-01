@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -8,9 +8,9 @@ import { json2CssStr } from './styleHelpers'
 
 export default function RenderThemeVarsAndFormCSS() {
   const { formID } = useParams()
-  const styles = useRecoilValue($styles)
-  const themeVars = useRecoilValue($themeVars)
-  const themeColors = useRecoilValue($themeColors)
+  const styles = useAtomValue($styles)
+  const themeVars = useAtomValue($themeVars)
+  const themeColors = useAtomValue($themeColors)
 
   return (
     <>

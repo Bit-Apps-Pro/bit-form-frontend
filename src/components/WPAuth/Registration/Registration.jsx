@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
 import UserMetaField from './UserMetaField'
@@ -21,7 +21,7 @@ export default function Registration({ formFields, dataConf, setDataConf, pages,
         setRoles(Object.values(res?.data))
       }
     })
-    const tmpConf = produce(dataConf, draft => {
+    const tmpConf = create(dataConf, draft => {
       if (!draft[type]?.user_map?.[0]?.userField) {
         draft[type].user_map = userFields.filter(fld => fld.required).map(fl => ({ formField: '', userField: fl.key, required: fl.required }))
       }

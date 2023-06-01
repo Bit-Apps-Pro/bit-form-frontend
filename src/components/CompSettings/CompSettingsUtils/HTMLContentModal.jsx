@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import app from '../../../styles/app.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
@@ -14,7 +14,7 @@ import TinyMCE from '../../Utilities/TinyMCE'
 
 export default function HTMLContentModal({ labelModal, setLabelModal }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
   const content = fieldData.content || fieldData?.info?.content
@@ -26,7 +26,7 @@ export default function HTMLContentModal({ labelModal, setLabelModal }) {
   }, [labelModal])
 
   const setContent = val => {
-    const allFields = produce(fields, draft => {
+    const allFields = create(fields, draft => {
       draft[fldKey].content = val
     })
     setFields(allFields)
@@ -36,7 +36,7 @@ export default function HTMLContentModal({ labelModal, setLabelModal }) {
   const cancelModal = () => {
     fieldData.content = value
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     setLabelModal(false)
     addToBuilderHistory({ event: 'Cancel HTML Content Label ', type: 'cancel_html_content_label', state: { fields: allFields, fldKey } })

@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -29,11 +29,11 @@ export default function FontPickerMenu({ id }) {
   const [fonts, setFonts] = useState([])
   const [isSorted, setSorted] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const [focusSearch, setfocusSearch] = useState(false)
   const [controller, setController] = useState(styles.font.fontType || ('Custom' || 'inherit'))
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const savedThemeVars = useRecoilValue($savedThemeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const savedThemeVars = useAtomValue($savedThemeVars)
 
   const inheritFont = themeVars['--g-font-family'] === 'inherit'
   const fontSource = (styles.font.fontType === 'Google')
@@ -130,14 +130,14 @@ export default function FontPickerMenu({ id }) {
   const setCheck = (fontFamily, variants) => {
     const [weight, style, string] = getGoogleFontWeightStyle(variants)
     const url = generateFontUrl(fontFamily, string)
-    setStyles(prvStyles => produce(prvStyles, draft => {
+    setStyles(prvStyles => create(prvStyles, draft => {
       draft.font.fontType = 'Google'
       draft.font.fontWeightVariants = weight
       draft.font.fontStyle = style
       draft.font.fontURL = url
       draft.form[`._frm-bg-b${formID}`]['font-family'] = fontFamily
     }))
-    setThemeVars(prvState => produce(prvState, draft => {
+    setThemeVars(prvState => create(prvState, draft => {
       draft['--g-font-family'] = fontFamily
     }))
     styles.font.fontType === 'Google' && checkedExistingGoogleFontVariantNStyle()
@@ -158,10 +158,10 @@ export default function FontPickerMenu({ id }) {
 
   const setThemeFont = ({ target: { checked } }) => {
     const font = checked ? 'inherit' : ''
-    setThemeVars(prvState => produce(prvState, draft => {
+    setThemeVars(prvState => create(prvState, draft => {
       draft['--g-font-family'] = font
     }))
-    setStyles(prvStyle => produce(prvStyle, draft => {
+    setStyles(prvStyle => create(prvStyle, draft => {
       draft.font.fontType = font
       draft.font.fontURL = ''
       draft.font.fontStyle = []
@@ -173,7 +173,7 @@ export default function FontPickerMenu({ id }) {
   const customFontHandler = ({ target: { name, value } }) => {
     if (name === 'fontURL') {
       if (!isValidURL(value)) return
-      setStyles(prvStyle => produce(prvStyle, draft => {
+      setStyles(prvStyle => create(prvStyle, draft => {
         draft.font.fontType = 'Custom'
         draft.font.fontURL = value
         draft.font.fontStyle = []
@@ -181,7 +181,7 @@ export default function FontPickerMenu({ id }) {
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles') }))
     } else {
-      setStyles(prvStyle => produce(prvStyle, draft => {
+      setStyles(prvStyle => create(prvStyle, draft => {
         if (prvStyle.font.fontType === 'Google') {
           draft.font.fontURL = ''
         }
@@ -189,7 +189,7 @@ export default function FontPickerMenu({ id }) {
         draft.font.fontStyle = []
         draft.font.fontWeightVariants = []
       }))
-      setThemeVars(prvState => produce(prvState, draft => {
+      setThemeVars(prvState => create(prvState, draft => {
         draft['--g-font-family'] = value
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Font', `Custom ${value}`, { styles: getLatestState('styles'), themeVars: getLatestState('themeVars') }))

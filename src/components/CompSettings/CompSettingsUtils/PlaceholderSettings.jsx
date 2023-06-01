@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
@@ -12,7 +12,7 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function PlaceholderSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
   const adminLabel = fieldData.adminLbl || ''
@@ -27,7 +27,7 @@ export default function PlaceholderSettings() {
       delete fieldData.ph
     }
     const req = e.target.checked ? 'Show' : 'Hide'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${req} Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } })
   }
@@ -38,7 +38,7 @@ export default function PlaceholderSettings() {
     } else {
       fieldData.ph = e.target.value
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Placeholder updated "${fieldData.ph}": ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }

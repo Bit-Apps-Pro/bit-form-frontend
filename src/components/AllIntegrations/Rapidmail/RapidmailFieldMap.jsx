@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -17,7 +17,7 @@ export default function RapidmailFieldMap({ i, formFields, field, rapidmailConf,
   const requiredFlds = rapidmailConf?.recipientsFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = rapidmailConf?.recipientsFields.filter(fld => fld.required === false) || []
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   return (

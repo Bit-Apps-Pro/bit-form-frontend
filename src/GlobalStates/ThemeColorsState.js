@@ -1,58 +1,33 @@
 /* eslint-disable import/no-cycle */
-import { atom, selector } from 'recoil'
-import { addToSessionStorage, generateSessionKey } from '../Utils/FormBuilderHelper'
-import { debouncer } from '../Utils/Helpers'
+import { atom } from 'jotai'
+import { atomWithReset } from 'jotai/utils'
 import { $colorScheme } from './GlobalStates'
 
-export const $lightThemeColors = atom({
-  key: '$lightThemeColors',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newLightThemeColors, _, isReset) => {
-      if (isReset) return
-      debouncer('lightThemeColors', () => {
-        addToSessionStorage(generateSessionKey('lightThemeColors'), newLightThemeColors, { strType: 'json' })
-      })
-    })
-  }],
-})
-export const $darkThemeColors = atom({
-  key: '$darkThemeColors',
-  default: {},
-  effects: [({ onSet }) => {
-    onSet((newDarkThemeColors, _, isReset) => {
-      if (isReset) return
-      debouncer('darkThemeColors', () => {
-        addToSessionStorage(generateSessionKey('darkThemeColors'), newDarkThemeColors, { strType: 'json' })
-      })
-    })
-  }],
-})
+export const $lightThemeColors = atomWithReset({})
+export const $darkThemeColors = atomWithReset({})
 
-export const $themeColors = selector({
-  key: '$themeColors',
-  get: ({ get }) => {
+export const $themeColors = atom(
+  (get) => {
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') return get($lightThemeColors)
     if (colorScheme === 'dark') return { ...get($lightThemeColors), ...get($darkThemeColors) }
   },
-  set: ({ set, get }, newColors) => {
+  (get, set, newColors) => {
     const colorScheme = get($colorScheme)
     if (colorScheme === 'light') set($lightThemeColors, newColors)
     if (colorScheme === 'dark') set($darkThemeColors, newColors)
   },
-})
+)
 
-export const $allThemeColors = selector({
-  key: '$allThemeColors',
-  get: ({ get }) => ({
+export const $allThemeColors = atom(
+  (get) => ({
     lightThemeColors: get($lightThemeColors),
     darkThemeColors: get($darkThemeColors),
   }),
-  set: ({ set }, newThemeColors) => {
+  (_, set, newThemeColors) => {
     if (!('lightThemeColors' in newThemeColors)) throw new Error('$allThemeColors: lightThemeColors is required')
     if (!('darkThemeColors' in newThemeColors)) throw new Error('$allThemeColors: darkThemeColors is required')
     set($lightThemeColors, newThemeColors.lightThemeColors)
     set($darkThemeColors, newThemeColors.darkThemeColors)
   },
-})
+)

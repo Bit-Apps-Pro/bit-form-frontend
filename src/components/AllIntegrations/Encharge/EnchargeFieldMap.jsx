@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -8,7 +8,7 @@ import MtInput from '../../Utilities/MtInput'
 export default function EnchargeFieldMap({ i, formFields, field, enchargeConf, setEnchargeConf }) {
   const isRequired = field.required
   const notResquiredField = enchargeConf?.default?.fields && Object.values(enchargeConf?.default?.fields).filter((f => !f.required))
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const addFieldMap = (indx) => {
     const newConf = { ...enchargeConf }

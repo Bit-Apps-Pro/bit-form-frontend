@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import TrashIcn from '../../Icons/TrashIcn'
@@ -17,8 +17,8 @@ import {
 export default function FilterControlMenu({ title = 'Filters', objectPaths, id }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
   const { object, paths } = objectPaths
 
   const getStateObj = () => getObjByKey(object, { styles, themeColors })

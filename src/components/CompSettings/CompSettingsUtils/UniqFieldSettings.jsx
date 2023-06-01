@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
 import { deepCopy, IS_PRO } from '../../../Utils/Helpers'
@@ -10,7 +10,7 @@ import ErrorMessageSettings from './ErrorMessageSettings'
 
 export default function UniqFieldSettings({ type, title, tipTitle, isUnique, className }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
 
   const setShowErrMsg = e => {
@@ -25,7 +25,7 @@ export default function UniqFieldSettings({ type, title, tipTitle, isUnique, cla
     } else {
       delete fieldData.err[type].show
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${title} ${checked ? 'On' : 'Off'}`, type: title, state: { fields: allFields, fldKey } })
   }

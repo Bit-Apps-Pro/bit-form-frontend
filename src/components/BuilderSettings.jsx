@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $breakpoint, $builderSettings } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import ut from '../styles/2.utilities'
@@ -21,10 +21,10 @@ import SingleToggle from './Utilities/SingleToggle'
 export default function BuilderSettings() {
   const { css } = useFela()
   const { formID } = useParams()
-  const [staticStylesState, setStaticStyleState] = useRecoilState($staticStylesState)
-  const breakpoints = useRecoilValue($breakpoint)
+  const [staticStylesState, setStaticStyleState] = useAtom($staticStylesState)
+  const breakpoints = useAtomValue($breakpoint)
   const [brkpnt, setBrkpnt] = useState(breakpoints)
-  const [{ atomicClassPrefix, darkModeConfig, addImportantRuleToStyles }, setBuilderSettings] = useRecoilState($builderSettings)
+  const [{ atomicClassPrefix, darkModeConfig, addImportantRuleToStyles }, setBuilderSettings] = useAtom($builderSettings)
   let darkModePrefereceInitialValue = 'disabled'
   if (darkModeConfig?.preferSystemColorScheme) darkModePrefereceInitialValue = 'system-preference'
   if (darkModeConfig?.darkModeSelector) darkModePrefereceInitialValue = 'selector'
@@ -81,7 +81,7 @@ export default function BuilderSettings() {
   const handleFormWidth = ({ value: val, unit }) => {
     const preUnit = getStrFromStr(formWidth)
     const convertValue = unitConverter(unit, val, preUnit)
-    setStaticStyleState(preStyle => produce(preStyle, draft => {
+    setStaticStyleState(preStyle => create(preStyle, draft => {
       const path = `styleMergeWithAtomicClasses->${brkpnt}LightStyles->form->._frm-bg-b${formID}->width`
       const value = convertValue + unit
       if (val === '') {

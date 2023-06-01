@@ -8,7 +8,7 @@
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { $builderRightPanelScroll, $flags } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
@@ -30,8 +30,8 @@ import ThemeQuickTweaksCustomizer from './ThemeQuickTweaksCustomizer'
 export default function ThemeCustomize() {
   const { css } = useFela()
   const { formType, formID, element } = useParams()
-  const setFlags = useSetRecoilState($flags)
-  const scrollTo = useRecoilValue($builderRightPanelScroll)
+  const setFlags = useSetAtom($flags)
+  const scrollTo = useAtomValue($builderRightPanelScroll)
 
   useEffect(() => {
     setFlags(oldFlgs => ({ ...oldFlgs, styleMode: true }))

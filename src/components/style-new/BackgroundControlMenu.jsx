@@ -3,12 +3,13 @@
 /* eslint-disable no-param-reassign */
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { $unsplashImgUrl, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -54,12 +55,12 @@ function BackgroundControlMenu({ stateObjName,
   })
   // const [bgPositionValue, setBgPositionValue] = useState('center')
   const [bgRepeat, setBgRepeat] = useState('initial')
-  const [styles, setStyles] = useRecoilState($styles)
-  const setThemeVars = useSetRecoilState($themeVars)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [unsplashMdl, setUnsplashMdl] = useRecoilState($unsplashMdl)
-  const resetUnsplashImgUrl = useResetRecoilState($unsplashImgUrl)
-  const [unsplashImgUrl, setUnsplashImgUrl] = useRecoilState($unsplashImgUrl)
+  const [styles, setStyles] = useAtom($styles)
+  const setThemeVars = useSetAtom($themeVars)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [unsplashMdl, setUnsplashMdl] = useAtom($unsplashMdl)
+  const resetUnsplashImgUrl = useResetAtom($unsplashImgUrl)
+  const [unsplashImgUrl, setUnsplashImgUrl] = useAtom($unsplashImgUrl)
 
   const stateObj = getObjByKey(object, { styles })
 
@@ -77,19 +78,19 @@ function BackgroundControlMenu({ stateObjName,
   const onValueChange = (pathName, val) => {
     switch (stateObjName) {
       case 'themeColors':
-        setThemeColors(prvStyle => produce(prvStyle, drft => {
+        setThemeColors(prvStyle => create(prvStyle, drft => {
           drft[`${propertyPath}`] = val
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { themeColors: getLatestState('themeColors') }))
         break
       case 'themeVars':
-        setThemeVars(prvStyle => produce(prvStyle, drft => {
+        setThemeVars(prvStyle => create(prvStyle, drft => {
           drft[`${propertyPath}`] = val
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, val, { themeVars: getLatestState('themeVars') }))
         break
       case 'styles':
-        setStyles(preStyle => produce(preStyle, drftStyle => {
+        setStyles(preStyle => create(preStyle, drftStyle => {
           let tempValue = val
           const value = getValueByObjPath(drftStyle, pathName)
           const checkExistImportant = value?.match(/(!important)/gi)?.[0]
@@ -149,21 +150,21 @@ function BackgroundControlMenu({ stateObjName,
     switch (stateObjName) {
       case 'themeColors':
         // eslint-disable-next-line no-case-declarations
-        setThemeColors(prevState => produce(prevState, drftThmClr => {
+        setThemeColors(prevState => create(prevState, drftThmClr => {
           drftThmClr[propertyPath] = hslaStr
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeColors: getLatestState('themeColors') }))
         break
 
       case 'themeVars':
-        setThemeVars(prvState => produce(prvState, drftThmVar => {
+        setThemeVars(prvState => create(prvState, drftThmVar => {
           drftThmVar[propertyPath] = hslaStr
         }))
         addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeVars: getLatestState('themeVars') }))
         break
 
       case 'styles':
-        setStyles(prvState => produce(prvState, drftStyles => {
+        setStyles(prvState => create(prvState, drftStyles => {
           let hslaColor = hslaStr
           const propertyPathArr = Array.isArray(paths) ? paths[0] : propertyPath
           const value = getValueByObjPath(drftStyles, propertyPathArr)
@@ -276,7 +277,7 @@ function BackgroundControlMenu({ stateObjName,
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         // fieldData[iconType] = attachment.url
-        // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+        // setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
         // setModal(false)
         onValueChange(paths['background-image'], `url(${attachment.url})`)
         setBgImage(`url(${attachment.url})`)

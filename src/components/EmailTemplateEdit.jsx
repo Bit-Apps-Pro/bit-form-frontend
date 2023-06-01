@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { NavLink, Navigate, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $bits, $fieldsArr, $mailTemplates } from '../GlobalStates/GlobalStates'
 import BackIcn from '../Icons/BackIcn'
 import app from '../styles/app.style'
@@ -15,11 +15,11 @@ import TinyMCE from './Utilities/TinyMCE'
 function EmailTemplateEdit() {
   const { formType, formID, id } = useParams()
   const navigate = useNavigate()
-  const [mailTemp, setMailTem] = useRecoilState($mailTemplates)
-  const formFields = useRecoilValue($fieldsArr)
+  const [mailTemp, setMailTem] = useAtom($mailTemplates)
+  const formFields = useAtomValue($fieldsArr)
   const { css } = useFela()
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   const handleTitle = e => {
@@ -35,7 +35,7 @@ function EmailTemplateEdit() {
   }
 
   const handleBody = val => {
-    setMailTem(prevState => produce(prevState, draft => {
+    setMailTem(prevState => create(prevState, draft => {
       draft[id].body = val
     }))
   }
@@ -47,7 +47,7 @@ function EmailTemplateEdit() {
   }
 
   const save = () => {
-    const newMailTem = produce(mailTemp, draft => {
+    const newMailTem = create(mailTemp, draft => {
       draft.push({ updateTem: 1 })
     })
     setMailTem(newMailTem)

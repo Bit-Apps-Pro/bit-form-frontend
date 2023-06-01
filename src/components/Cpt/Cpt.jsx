@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../GlobalStates/GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
@@ -11,7 +11,7 @@ import EditCpt from './EditCpt'
 export default function Cpt() {
   const [posts, setPosts] = useState([])
   const [types, setTypes] = useState([])
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   useEffect(() => {

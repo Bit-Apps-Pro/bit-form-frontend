@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -17,9 +17,9 @@ export default function SpacingControl({
 }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const [styles, setStyles] = useRecoilState($styles)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
+  const [styles, setStyles] = useAtom($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
 
   const { object, paths } = objectPaths
   const margin = themeVars[paths?.margin]
@@ -43,7 +43,7 @@ export default function SpacingControl({
 
     switch (object) {
       case 'styles':
-        setStyles(prvStyle => produce(prvStyle, drft => {
+        setStyles(prvStyle => create(prvStyle, drft => {
           pathKeys.map(prop => {
             assignNestedObj(drft, paths[prop], '')
           })
@@ -51,7 +51,7 @@ export default function SpacingControl({
         addToBuilderHistory(generateHistoryData(element, fieldKey, `${paths?.margin || paths?.padding} Clear`, '', { styles: getLatestState('styles') }))
         break
       case 'themeVars':
-        setThemeVars(preVars => produce(preVars, drft => {
+        setThemeVars(preVars => create(preVars, drft => {
           pathKeys.map(prop => {
             assignNestedObj(drft, paths[prop], '')
           })

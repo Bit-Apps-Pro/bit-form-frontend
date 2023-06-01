@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
 import ut from '../../../../styles/2.utilities'
@@ -19,13 +19,13 @@ export default function BorderImageControlMenu({ stateObjName,
   id,
   fldKey }) {
   const [controller, setController] = useState({ parent: 'Image', child: 'Upload' })
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
   const { css } = useFela()
   const { fieldKey, element } = useParams()
   const { object, bgObjName, paths } = objectPaths
   const [borderImage, setBorderImage] = useState('')
   const [repeat, setRepeat] = useState('initial')
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
 
   const stateObj = getObjByKey(object, { styles })
 
@@ -80,7 +80,7 @@ export default function BorderImageControlMenu({ stateObjName,
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         // fieldData[iconType] = attachment.url
-        // setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+        // setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
         // setModal(false)
         onValueChange(paths['border-image'], `url(${attachment.url})`)
         setBorderImage(`url(${attachment.url})`)

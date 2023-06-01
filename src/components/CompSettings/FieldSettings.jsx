@@ -2,7 +2,7 @@
 import loadable from '@loadable/component'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
@@ -31,8 +31,8 @@ const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <Fie
 
 export default function FieldSettings() {
   const { fieldKey, formType, formID } = useParams()
-  const fields = useRecoilValue($fields)
-  const styles = useRecoilValue($styles)
+  const fields = useAtomValue($fields)
+  const styles = useAtomValue($styles)
   const selectedFieldType = fields?.[fieldKey]?.typ
   const navigate = useNavigate()
   useEffect(() => {

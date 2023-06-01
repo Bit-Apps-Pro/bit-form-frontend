@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable camelcase */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import { deepCopy } from '../../Utils/Helpers'
@@ -11,13 +11,13 @@ import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 
 function SmartTags({ fieldName }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const formFields = useRecoilValue($fieldsArr)
+  const formFields = useAtomValue($fieldsArr)
   const { css } = useFela()
   const addField = (key) => {
     fieldData[fieldName] += `\${${key}}`
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
   }
 
   const fieldsList = formFields.filter(f => !f.type.match(/^(file-up|recaptcha|title)$/))

@@ -5,8 +5,8 @@ import { combineSelectors, objectToCssText } from 'atomize-css'
 import filepondPluginImagePreviewCSS from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css?inline'
 import filepondCSS from 'filepond/dist/filepond.min.css?inline'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import { produce } from 'immer'
-import { getRecoil, setRecoil } from 'recoil-nexus'
+import { create } from 'mutative'
+import bitStore from '../../GlobalStates/BitStore'
 import { $builderSettings, $fields } from '../../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../../GlobalStates/StylesState'
@@ -321,7 +321,7 @@ export const setStyleStateObj = (objName, path, value, setStates) => {
   } else if (objName === 'themeColors') {
     setStateFunc = setStates.setThemeColors
   }
-  setStateFunc?.(preStyle => produce(preStyle, drftStyle => {
+  setStateFunc?.(preStyle => create(preStyle, drftStyle => {
     assignNestedObj(drftStyle, path, value)
   }))
 }
@@ -416,10 +416,10 @@ const checkExistElmntInOvrdThm = (fldStyleObj, element) => fldStyleObj?.override
 const filterUnusedStyles = (styles) => {
   if (isObjectEmpty(styles)) return styles
 
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   const fieldsArray = Object.keys(fields)
 
-  return produce(styles, draftStyle => {
+  return create(styles, draftStyle => {
     fieldsArray.forEach(fldkey => {
       const fld = fields[fldkey]
       if (!fld.lbl) deleteStyles(draftStyle, styleClasses.lbl, fldkey)
@@ -485,7 +485,7 @@ const filterUnusedStyles = (styles) => {
 
 export const removeUnuseStylesAndUpdateState = () => {
   const updatedStyles = removeUnusedStyles()
-  setRecoil($allStyles, updatedStyles)
+  bitStore.set($allStyles, updatedStyles)
 }
 
 export const removeUnusedStyles = () => {
@@ -494,7 +494,7 @@ export const removeUnusedStyles = () => {
     mdLightStyles,
     mdDarkStyles,
     smLightStyles,
-    smDarkStyles } = getRecoil($allStyles)
+    smDarkStyles } = bitStore.get($allStyles)
 
   const lgLightStylesUpdated = filterUnusedStyles(lgLightStyles)
   const lgDarkStylesUpdated = filterUnusedStyles(lgDarkStyles)
@@ -539,7 +539,7 @@ const addImportantToClasses = (styleObj, ignoredProps = []) => {
 }
 
 export const generateStylesWithImportantRule = styles => {
-  const { addImportantRuleToStyles } = getRecoil($builderSettings)
+  const { addImportantRuleToStyles } = bitStore.get($builderSettings)
   if (!addImportantRuleToStyles) return styles
   if (isObjectEmpty(styles)) return styles
 
@@ -563,8 +563,8 @@ const generateCombinedCSSWithImportantRule = (cssText, { combined = true } = {})
 }
 
 export const mergeOtherStylesWithAtomicCSS = () => {
-  const fields = getRecoil($fields)
-  const staticStyles = getRecoil($staticStylesState)
+  const fields = bitStore.get($fields)
+  const staticStyles = bitStore.get($staticStylesState)
   let cssText = ''
 
   if (Object.keys(fields).find((f) => fields[f].typ === 'advanced-file-up')) {
@@ -598,8 +598,9 @@ const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldS
 }
 
 export const addDefaultStyleClasses = (fk, element) => {
-  const allStyles = getRecoil($allStyles)
-  const allNewStyles = produce(allStyles, drftAllStyles => {
+  console.log('addDefaultStyleClasses', fk, element)
+  const allStyles = bitStore.get($allStyles)
+  const allNewStyles = create(allStyles, drftAllStyles => {
     Object.keys(allStyles).forEach(brkPntColorSchema => {
       const fldTyp = allStyles[brkPntColorSchema]?.fields?.[fk]?.fieldType
       if (!fldTyp) return
@@ -699,7 +700,7 @@ export const addDefaultStyleClasses = (fk, element) => {
       }
     })
   })
-  setRecoil($allStyles, allNewStyles)
+  bitStore.set($allStyles, allNewStyles)
 }
 
 export const generateFontUrl = (font, string) => {
@@ -737,13 +738,13 @@ export const findExistingFontStyleNWeight = (styles, themeVars) => {
 }
 
 export const updateGoogleFontUrl = (allStyles) => {
-  const themeVars = getRecoil($themeVars)
-  const themeVarsLgLight = getRecoil($themeVarsLgLight)
-  const themeVarsLgDark = getRecoil($themeVarsLgDark)
-  const themeVarsMdLight = getRecoil($themeVarsMdLight)
-  const themeVarsMdDark = getRecoil($themeVarsMdDark)
-  const themeVarsSmLight = getRecoil($themeVarsSmLight)
-  const themeVarsSmDark = getRecoil($themeVarsSmDark)
+  const themeVars = bitStore.get($themeVars)
+  const themeVarsLgLight = bitStore.get($themeVarsLgLight)
+  const themeVarsLgDark = bitStore.get($themeVarsLgDark)
+  const themeVarsMdLight = bitStore.get($themeVarsMdLight)
+  const themeVarsMdDark = bitStore.get($themeVarsMdDark)
+  const themeVarsSmLight = bitStore.get($themeVarsSmLight)
+  const themeVarsSmDark = bitStore.get($themeVarsSmDark)
   let fontWeights = []
   let fontStyleVariant = []
   if (allStyles?.lgLightStyles?.font?.fontType !== 'Google') return allStyles
@@ -799,7 +800,7 @@ export const updateGoogleFontUrl = (allStyles) => {
   }
 
   const url = generateFontUrl(globalFont, string)
-  const newStyles = produce(allStyles, drft => {
+  const newStyles = create(allStyles, drft => {
     drft.lgLightStyles.font.fontURL = url
   })
   return newStyles
@@ -831,8 +832,8 @@ export const getValueFromStateVar = (stateObj, val) => {
 }
 
 export const setIconFilterValue = (iconType, fldKey) => {
-  const styles = getRecoil($styles)
-  const themeColors = getRecoil($themeColors)
+  const styles = bitStore.get($styles)
+  const themeColors = bitStore.get($themeColors)
   const elementKey = styleClasses[iconType][0]
   const filterValue = styles?.fields?.[fldKey].classes[`.${fldKey}-${elementKey}`]?.filter
   const themeVal = getValueFromStateVar(themeColors, filterValue)
@@ -845,31 +846,31 @@ export const setIconFilterValue = (iconType, fldKey) => {
         const valArr = parentThemeVal.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
         const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
         const setFilterValue = hexToCSSFilter(hexValue)
-        const newThemeColors = produce(themeColors, drft => {
+        const newThemeColors = create(themeColors, drft => {
           drft[getIconsGlobalFilterVariable(iconType)] = setFilterValue.filter
         })
-        setRecoil($themeColors, newThemeColors)
+        bitStore.set($themeColors, newThemeColors)
       }
     } else if (parentColor) {
       const valArr = parentColor.match(/[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)/gi)
       const hexValue = hslToHex(valArr[0], valArr[1], valArr[2])
       const setFilterValue = hexToCSSFilter(hexValue)
-      const newStyles = produce(styles, drftStyles => {
+      const newStyles = create(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
           drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
       })
-      setRecoil($styles, newStyles)
+      bitStore.set($styles, newStyles)
     } else {
       const setFilterValue = hexToCSSFilter('#000000')
-      const newStyles = produce(styles, drftStyles => {
+      const newStyles = create(styles, drftStyles => {
         drftStyles.fields[fldKey].classes[`.${fldKey}-${elementKey}`].filter = setFilterValue.filter
         if (!checkExistElmntInOvrdThm(drftStyles.fields[fldKey], elementKey)) {
           drftStyles.fields[fldKey].overrideGlobalTheme = [...styles.fields[fldKey].overrideGlobalTheme, elementKey]
         }
       })
-      setRecoil($styles, newStyles)
+      bitStore.set($styles, newStyles)
     }
   }
 }

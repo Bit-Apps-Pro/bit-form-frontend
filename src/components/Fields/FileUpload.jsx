@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import BitFileUpField from 'bit-file-up-field/src/bit-file-up-field'
 import { useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -11,9 +11,9 @@ import RenderStyle from '../style-new/RenderStyle'
 export default function FileUpload({ fieldKey, formID, styleClasses }) {
   const fileUploadWrapElmRef = useRef(null)
   const fileUploadFieldRef = useRef(null)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
 
   useEffect(() => {
     if (!fileUploadWrapElmRef?.current) {

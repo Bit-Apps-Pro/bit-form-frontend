@@ -3,7 +3,7 @@ import BitCurrencyField from 'bit-currency-field/src/bit-currency-field'
 import { observeElm } from 'bit-helpers/src'
 import bitVirtualizedList from 'bit-virtualized-list/src/bit-virtualized-list'
 import { useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, getDataDevAttrArr, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
@@ -12,9 +12,9 @@ import RenderStyle from '../style-new/RenderStyle'
 const CurrencyField = ({ fieldKey, formID, attr, onBlurHandler, contentID, styleClasses }) => {
   const currencyWrapElmRef = useRef(null)
   const currencyFieldRef = useRef(null)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const {
     selectedFlagImage,
     selectedCurrencyClearable,

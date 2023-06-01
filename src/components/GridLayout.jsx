@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import {
   lazy, memo, Suspense,
   useEffect, useRef, useState
@@ -10,7 +10,7 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -67,27 +67,27 @@ const CUSTOM_SCROLLBAR_GUTTER = isFirefox() ? 20 : 12
 // ⚠️ ALERT: Discuss with team before making any changes
 function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertMdl, formID }) {
   const { formType } = useParams()
-  const setProModal = useSetRecoilState($proModal)
-  const [fields, setFields] = useRecoilState($fields)
-  const [rootLayouts, setRootLayouts] = useRecoilState($layouts)
+  const setProModal = useSetAtom($proModal)
+  const [fields, setFields] = useAtom($fields)
+  const [rootLayouts, setRootLayouts] = useAtom($layouts)
   const [layouts, setLayouts] = useState(rootLayouts)
-  const [selectedFieldId, setSelectedFieldId] = useRecoilState($selectedFieldId)
-  const setDeletedFldKey = useSetRecoilState($deletedFldKey)
-  const draggingField = useRecoilValue($draggingField)
-  const [flags, setFlags] = useRecoilState($flags)
-  const builderHookStates = useRecoilValue($builderHookStates)
-  const isNewThemeStyleLoaded = useRecoilValue($isNewThemeStyleLoaded)
-  const [styles, setStyles] = useRecoilState($stylesLgLight)
-  const [breakpoint, setBreakpoint] = useRecoilState($breakpoint)
-  const [nestedLayouts, setNestedLayouts] = useRecoilState($nestedLayouts)
-  const setStaticStyleState = useSetRecoilState($staticStylesState)
+  const [selectedFieldId, setSelectedFieldId] = useAtom($selectedFieldId)
+  const setDeletedFldKey = useSetAtom($deletedFldKey)
+  const draggingField = useAtomValue($draggingField)
+  const [flags, setFlags] = useAtom($flags)
+  const builderHookStates = useAtomValue($builderHookStates)
+  const isNewThemeStyleLoaded = useAtomValue($isNewThemeStyleLoaded)
+  const [styles, setStyles] = useAtom($stylesLgLight)
+  const [breakpoint, setBreakpoint] = useAtom($breakpoint)
+  const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
+  const setStaticStyleState = useSetAtom($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [resizingFld, setResizingFld] = useState({})
   const [rowHeight, setRowHeight] = useState(1)
-  const uniqueFieldId = useRecoilValue($uniqueFieldId)
-  const isDraggable = useRecoilValue($isDraggable)
-  const [contextMenu, setContextMenu] = useRecoilState($contextMenu)
-  const setContextMenuRef = useSetRecoilState($contextMenuRef)
+  const uniqueFieldId = useAtomValue($uniqueFieldId)
+  const isDraggable = useAtomValue($isDraggable)
+  const [contextMenu, setContextMenu] = useAtom($contextMenu)
+  const setContextMenuRef = useSetAtom($contextMenuRef)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
   const navigate = useNavigate()
   const { reRenderGridLayoutByRootLay, reCalculateFieldHeights, reCalculateSpecificFldHeight } = builderHookStates
@@ -108,7 +108,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const fieldsCount = Object.keys(fields).length
     const layoutLgFieldsCount = getLayoutItemCount()
     if (fieldsCount === layoutLgFieldsCount) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draft => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draft => {
         Object.entries(draft).forEach(([fldKey, lay]) => {
           draft[fldKey] = fitAllLayoutItems(lay)
         })
@@ -192,7 +192,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const onBreakpointChange = bp => setBreakpoint(bp)
 
   const removeFieldStyles = fldKeys => {
-    setStyles(prevStyles => produce(prevStyles, draftStyles => {
+    setStyles(prevStyles => create(prevStyles, draftStyles => {
       fldKeys.forEach(fldKey => {
         delete draftStyles.fields[fldKey]
       })
@@ -223,17 +223,17 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       nestedLayouts[fldKey].lg.forEach(nestedField => {
         removedFldKeys.push(nestedField.i)
       })
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         delete draftNestedLayouts[fldKey]
       }))
     }
     if (!isExistInLayout) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         const parentFieldKey = getParentFieldKey(fldKey)
         draftNestedLayouts[parentFieldKey] = filterLayoutItem(fldKey, draftNestedLayouts[parentFieldKey])
       }))
     }
-    const tmpFields = produce(fields, draftFields => {
+    const tmpFields = create(fields, draftFields => {
       removedFldKeys.forEach(rmvfldKey => {
         delete draftFields[rmvfldKey]
       })
@@ -254,7 +254,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     const fldType = fldData?.typ
     if (paymentFields.includes(fldType)) {
-      setStaticStyleState(prevStaticStyleState => produce(prevStaticStyleState, draftStaticStyleState => {
+      setStaticStyleState(prevStaticStyleState => create(prevStaticStyleState, draftStaticStyleState => {
         delete draftStaticStyleState.staticStyles['.pos-rel']
         delete draftStaticStyleState.staticStyles['.form-loading::before']
         delete draftStaticStyleState.staticStyles['.form-loading::after']
@@ -307,7 +307,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     // clone field
     const clonedNewFieldKey = {}
-    const oldFields = produce(fields, draft => {
+    const oldFields = create(fields, draft => {
       cloneFldKeys.forEach(fldKeyToClone => {
         const fldData = draft[fldKeyToClone]
         const newBlk = `b${formID}-${uniqueFldId}`
@@ -320,7 +320,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     setFields(oldFields)
 
     // clone style
-    setStyles(preStyles => produce(preStyles, draftStyle => {
+    setStyles(preStyles => create(preStyles, draftStyle => {
       cloneFldKeys.forEach(fldKeyToClone => {
         const fldStyle = draftStyle.fields[fldKeyToClone]
         const fldClasses = fldStyle.classes
@@ -338,7 +338,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
     const allBreakpoints = ['sm', 'md', 'lg']
     if (isNestedField) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         const newFieldKey = clonedNewFieldKey[fldKey]
         const prevLayout = prevNestedLayouts[fldKey]
         draftNestedLayouts[newFieldKey] = deepCopy(prevLayout)
@@ -350,7 +350,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
         })
       }))
     } else if (!isExistInLayout) {
-      setNestedLayouts(prevNestedLayouts => produce(prevNestedLayouts, draftNestedLayouts => {
+      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
         allBreakpoints.forEach(brkpnt => {
           const parentFieldKey = getParentFieldKey(fldKey)
           const layIndx = draftNestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
@@ -364,7 +364,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
     let tmpLayouts = layouts
     if (isExistInLayout) {
-      tmpLayouts = produce(layouts, draft => {
+      tmpLayouts = create(layouts, draft => {
         allBreakpoints.forEach(brkpnt => {
           const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
           const { y, h } = layouts[brkpnt][layIndx]
@@ -550,7 +550,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
             styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
           }
           navigate(styleUrl)
-          setFlags(prvFlags => produce(prvFlags, draft => {
+          setFlags(prvFlags => create(prvFlags, draft => {
             draft.inspectMode = false
           }))
           // setSelectedFieldId(attrVal)

@@ -1,6 +1,6 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
@@ -15,12 +15,12 @@ import ValidateMsgWorkflowAction from './ValidateMsgWorkflowAction'
 
 export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const { css } = useFela()
-  const [workflows, setWorkflows] = useRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const [workflows, setWorkflows] = useAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { success: successActions } = condGrp.actions
 
   const enableAction = (checked, typ) => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       if (checked) {
         if (typ === 'mailNotify') {
@@ -47,7 +47,7 @@ export default function WorkflowActionSection({ lgcGrp, lgcGrpInd, condGrp, cond
   const checkKeyInArr = key => successActions?.some(v => v.type === key)
 
   const preventDelete = val => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { actions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd]
       actions.avoid_delete = val
     })

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { loadScript, select } from '../../Utils/globalHelpers'
@@ -10,7 +10,7 @@ import OldInputWrapper from '../OldInputWrapper'
 export default function RazorPay_old({
   fieldKey, contentID, formID, attr, buttonDisabled, resetFieldValue, isFrontend,
 }) {
-  const payments = useRecoilValue($payments)
+  const payments = useAtomValue($payments)
   const [clientID, setClientID] = useState('')
   const [amount, setAmount] = useState(attr.options.amount || 1)
   const [prefillName, setPrefillName] = useState('')

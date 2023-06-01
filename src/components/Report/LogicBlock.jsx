@@ -1,6 +1,6 @@
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fields, $fieldsArr } from '../../GlobalStates/GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
@@ -13,12 +13,12 @@ import { disabledLogicType, getLogicOptionByFieldType, additionalFields } from '
 function LogicBlock({
   fieldVal, delLogic, lgcInd, subLgcInd, subSubLgcInd, value, changeLogic, logicValue, changeValue, changeFormField,
 }) {
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
 
-  const flds = useRecoilValue($fieldsArr)
+  const flds = useAtomValue($fieldsArr)
   const formFields = flds.concat(additionalFields)
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { userMail } = bits
   const disabledLogics = disabledLogicType
 

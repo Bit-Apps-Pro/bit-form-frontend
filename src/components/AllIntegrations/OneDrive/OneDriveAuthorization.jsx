@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import CopyText from '../../Utilities/CopyText'
@@ -13,7 +13,7 @@ export default function OneDriveAuthorization({
 }) {
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [error, setError] = useState({ clientId: '', clientSecret: '' })
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { siteURL } = bits
 
   const nextPage = () => {

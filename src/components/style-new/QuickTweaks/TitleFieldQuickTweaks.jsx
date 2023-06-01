@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../../GlobalStates/StylesState'
 import DirectionIcn from '../../../Icons/DirectionIcn'
 import TxtAlignCntrIcn from '../../../Icons/TxtAlignCntrIcn'
@@ -16,14 +16,14 @@ import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 export default function TitleFieldQuickTweaks() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { classes } = fldStyleObj
   const wrpCLass = `.${fieldKey}-fld-wrp`
   const { 'align-items': position, 'flex-direction': flex } = classes[wrpCLass] || ''
 
   const flexDirectionHandle = (val, type) => {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'flex-direction', val, { styles: getLatestState('styles') }))
@@ -34,7 +34,7 @@ export default function TitleFieldQuickTweaks() {
     if (val === 'center') justifyContent = 'center'
     else if (val === 'flex-end') justifyContent = 'right'
 
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fieldKey].classes[wrpCLass][type] = val
       drftStyle.fields[fieldKey].classes[wrpCLass]['justify-content'] = justifyContent
     }))

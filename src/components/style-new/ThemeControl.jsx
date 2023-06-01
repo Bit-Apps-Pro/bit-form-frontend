@@ -1,13 +1,13 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { showDraggableModal } from './styleHelpers'
 
 export default function ThemeControl({ fldKey }) {
-  const setDraggableModal = useSetRecoilState($draggableModal)
+  const setDraggableModal = useSetAtom($draggableModal)
   const { css } = useFela()
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
   const theme = styles.fields[fldKey]?.theme
 
   const handleSpacingMenu = (e) => showDraggableModal(e, setDraggableModal, { component: 'theme-control', width: 600, fldKey })

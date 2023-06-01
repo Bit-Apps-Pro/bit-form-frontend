@@ -5,8 +5,6 @@ import customProperty from 'fela-plugin-custom-property'
 import ReactDOM from 'react-dom/client'
 import { RendererProvider } from 'react-fela'
 import { HashRouter } from 'react-router-dom'
-import { RecoilRoot } from 'recoil'
-import RecoilNexus from 'recoil-nexus'
 import App from './App'
 import './resource/sass/app.scss'
 import './resource/sass/global.scss'
@@ -47,14 +45,11 @@ const renderer = createRenderer({
 
 const root = ReactDOM.createRoot(document.getElementById('btcd-app'))
 root.render(
-  <RecoilRoot>
-    <RecoilNexus />
-    <RendererProvider renderer={renderer}>
-      <HashRouter>
-        <App />
-      </HashRouter>
-    </RendererProvider>
-  </RecoilRoot>,
+  <RendererProvider renderer={renderer}>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </RendererProvider>,
 )
 
 // serviceWorker.register();

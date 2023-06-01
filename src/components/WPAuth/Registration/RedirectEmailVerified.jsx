@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { __ } from '../../../Utils/i18nwrap'
@@ -14,7 +14,7 @@ export default function RedirectEmailVerified({
   const data = type ? dataConf[type] : dataConf
   const handleInput = (e) => {
     const { name, value } = e.target
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       const tmp = type ? draft[type] : draft
       tmp[name] = value
@@ -22,7 +22,7 @@ export default function RedirectEmailVerified({
   }
 
   const tinymceHandle = (val, name) => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       // eslint-disable-next-line no-param-reassign
       const tmp = type ? draft[type] : draft
       tmp[name] = val
@@ -31,7 +31,7 @@ export default function RedirectEmailVerified({
 
   useEffect(() => {
     if (!dataConf?.custom_redirect) {
-      setDataConf(tmpConf => produce(tmpConf, draft => {
+      setDataConf(tmpConf => create(tmpConf, draft => {
         // eslint-disable-next-line no-param-reassign
         const tmp = type ? draft[type] : draft
         tmp.custom_redirect = 0

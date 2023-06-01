@@ -5,7 +5,7 @@ import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $unsplashImgUrl } from '../../../GlobalStates/GlobalStates'
 import CPTIcn from '../../../Icons/CPTIcn'
 import SearchIcon from '../../../Icons/SearchIcon'
@@ -14,7 +14,7 @@ import LoaderSm from '../../Loaders/LoaderSm'
 
 function UnsplashImageViewer({ setModal, selected = '', uploadLbl = '' }) {
   const { fieldKey: fldKey } = useParams()
-  const setUnsplashImgUrl = useSetRecoilState($unsplashImgUrl)
+  const setUnsplashImgUrl = useSetAtom($unsplashImgUrl)
   const [files, setFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [dnLoading, setDnLoading] = useState(false)

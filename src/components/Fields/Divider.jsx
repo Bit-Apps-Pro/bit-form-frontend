@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $breakpoint, $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import RenderStyle from '../style-new/RenderStyle'
 
 function Divider({ fieldKey, styleClasses, attr: fieldData }) {
-  const breakpoint = useRecoilValue($breakpoint)
-  const { styleMode } = useRecoilValue($flags)
+  const breakpoint = useAtomValue($breakpoint)
+  const { styleMode } = useAtomValue($flags)
   const isHidden = fieldData.valid?.hidden?.includes(breakpoint) || false
   return (
     <>

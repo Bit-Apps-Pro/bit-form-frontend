@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
@@ -16,11 +16,11 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function FontWeightAndStyleControl({ fontWeightVar, fontStyleVar, id }) {
   const { css } = useFela()
   const { fieldKey, element } = useParams()
-  const styles = useRecoilValue($styles)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const styles = useAtomValue($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
 
   const fontVarSetHandler = (varName, val) => {
-    setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
+    setThemeVars(prvThemeVars => create(prvThemeVars, drft => {
       drft[varName] = val
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, varName, val, { themeVars: getLatestState('themeVars') }))

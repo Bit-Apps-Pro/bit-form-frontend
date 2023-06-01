@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $payments } from '../../../GlobalStates/AppSettingsStates'
 import { $bits, $fields } from '../../../GlobalStates/GlobalStates'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
@@ -22,10 +22,10 @@ const generateParsedRazorpayInfo = info => {
 }
 
 export default function RazorpayInfo({ paymentInfo, payInfoFound, fldKey, transactionID }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { formID } = useParams()
-  const payments = useRecoilValue($payments)
-  const fields = useRecoilValue($fields)
+  const payments = useAtomValue($payments)
+  const fields = useAtomValue($fields)
   const fldData = fields[fldKey]
   const { payIntegID } = fldData.options
   const razorpaySettings = payments.find(payment => payment.id === payIntegID)

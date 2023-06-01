@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $breakpoint, $layouts, $nestedLayouts } from '../GlobalStates/GlobalStates'
 import { cols } from '../Utils/FormBuilderHelper'
 import { generateLayoutStyle } from '../Utils/atomicStyleGenarate'
 
 export default function RenderGridLayoutStyle() {
-  const layouts = useRecoilValue($layouts)
-  const nestedLayouts = useRecoilValue($nestedLayouts)
-  const breakpoint = useRecoilValue($breakpoint)
+  const layouts = useAtomValue($layouts)
+  const nestedLayouts = useAtomValue($nestedLayouts)
+  const breakpoint = useAtomValue($breakpoint)
   // const layoutRowHeight = 2
 
   let { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(layouts)

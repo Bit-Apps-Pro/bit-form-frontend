@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
@@ -11,7 +11,7 @@ import RenderStyle from '../style-new/RenderStyle'
 import RenderHtml from '../Utilities/RenderHtml'
 
 export default function CheckBox({ attr, onBlurHandler, resetFieldValue, formID, fieldKey, styleClasses }) {
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const [checkBoxes, setCheckBoxes] = useState({ checked: [] })
   const fieldData = deepCopy(fields[fieldKey])
   const [otherOptValue, setOtherOptValue] = useState('')

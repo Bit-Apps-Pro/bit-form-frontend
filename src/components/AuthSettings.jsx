@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fieldsArr } from '../GlobalStates/GlobalStates'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
@@ -23,11 +23,11 @@ import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import ResetPassword from './WPAuth/ResetPassword'
 
 export default function AdditionalSettings() {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const [isLoading, setIsLoading] = useState(false)
   const [isLoad, setIsLoad] = useState(false)
-  const formFields = useRecoilValue($fieldsArr)
+  const formFields = useAtomValue($fieldsArr)
   const [type, setType] = useState('register')
   const { formID } = useParams()
   const { css } = useFela()
@@ -128,7 +128,7 @@ export default function AdditionalSettings() {
     e.preventDefault()
     if (!IS_PRO) return
     setIsLoading(true)
-    const tmpConf = produce(dataConf, draft => {
+    const tmpConf = create(dataConf, draft => {
       Object.keys(draft).forEach(key => type !== key && delete draft[key])
       draft.formId = formID
       draft.type = type

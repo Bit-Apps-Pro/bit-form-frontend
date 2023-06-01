@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $styles } from '../GlobalStates/StylesState'
 import { isObjectEmpty } from '../Utils/Helpers'
 import '../resource/sass/components.scss'
@@ -46,7 +46,7 @@ mul: multiple
 function MapComponents({
   atts, fieldKey, formID, onBlurHandler, resetFieldValue, handleReset, fieldData, buttonDisabled, contentID, isBuilder, entryID, handleFormValidationErrorMessages, resizingFld,
 }) {
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
 
   if (isObjectEmpty(styles) || !atts?.typ) return
 

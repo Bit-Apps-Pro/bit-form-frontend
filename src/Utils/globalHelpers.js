@@ -1,9 +1,9 @@
 import { diff } from 'deep-object-diff'
 import merge from 'deepmerge-alt'
 import { parse, stringify } from 'jcof'
-import { getRecoil } from 'recoil-nexus'
 import { $fields } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
+import bitStore from '../GlobalStates/BitStore'
 
 export function observeElement(element, property, callback, delay = 0) {
   const elementPrototype = Object.getPrototypeOf(element)
@@ -116,12 +116,12 @@ export function unescapeHTMLEntity(string) {
 }
 
 export const getCustomClsName = (fk, element) => {
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   return fields[fk]?.customClasses?.[element] ?? ''
 }
 
 export const getCustomAttributes = (fk, element) => {
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   const attr = fields[fk]?.customAttributes?.[element]
   if (!attr) return
   const obj = {}
@@ -139,7 +139,7 @@ export const getCustomAttributes = (fk, element) => {
 }
 
 export const getDataDevAttrArr = (fk, element) => {
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   const attr = fields[fk]?.customAttributes?.[element]
   const dataDevObj = [{ key: `data-dev-${element}`, value: fk }]
   if (!([element] in fields[fk].customAttributes)) return dataDevObj

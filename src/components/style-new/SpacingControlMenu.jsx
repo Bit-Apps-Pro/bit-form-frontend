@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../Utils/FormBuilderHelper'
@@ -9,21 +9,21 @@ import SpaceControl from '../CompSettings/StyleCustomize/ChildComp/SpaceControl'
 
 export default function SpacingControlMenu() {
   const { fieldKey, element } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const savedThemeVars = useRecoilValue($savedThemeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const savedThemeVars = useAtomValue($savedThemeVars)
 
   const { '--fld-m': fldMargin,
     '--fld-p': fldPadding } = themeVars
 
   const FldMarginHandler = (v) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    setThemeVars(preStyle => create(preStyle, drftStyle => {
       drftStyle['--fld-m'] = `${v}`
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Margin', v, { themeVars: getLatestState('themeVars') }))
   }
 
   const FldPaddingHandler = (v) => {
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    setThemeVars(preStyle => create(preStyle, drftStyle => {
       drftStyle['--fld-p'] = `${v}`
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Field Padding', v, { themeVars: getLatestState('themeVars') }))
@@ -31,7 +31,7 @@ export default function SpacingControlMenu() {
 
   const undoHandler = (value) => {
     if (!savedThemeVars[value]) return
-    setThemeVars(preStyle => produce(preStyle, drftStyle => {
+    setThemeVars(preStyle => create(preStyle, drftStyle => {
       drftStyle[value] = savedThemeVars[value]
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, 'Undo Field Spacing', savedThemeVars[value], { themeVars: getLatestState('themeVars') }))

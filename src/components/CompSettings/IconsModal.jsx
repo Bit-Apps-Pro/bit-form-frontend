@@ -1,13 +1,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -28,7 +28,7 @@ function IconsModal({
   iconType, setModal, optIndx, setOption, option, selected = '', uploadLbl = '', unsplash = false,
 }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [controller, setController] = useState({ parent: selected || 'Icons' })
   const [files, setFiles] = useState([])
@@ -46,7 +46,7 @@ function IconsModal({
   const { css } = useFela()
   const url = 'https://raw.githack.com'
   const ref = useRef()
-  const [allStyles, setAllStyles] = useRecoilState($allStyles)
+  const [allStyles, setAllStyles] = useAtom($allStyles)
   const clientId = 'n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU'
   const [pageNo, setPageNo] = useState(1)
   const [images, setImages] = useState([])
@@ -132,10 +132,10 @@ function IconsModal({
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         // fieldData[iconType] = attachment.url
-        // setFields(allFields => produce(allFields, draft => {
+        // setFields(allFields => create(allFields, draft => {
         //   draft[fldKey] = fieldData
         // }))
-        const newOption = produce(option, draft => {
+        const newOption = create(option, draft => {
           draft[optIndx].img = attachment.url
         })
 
@@ -183,7 +183,7 @@ function IconsModal({
           fieldData[iconType] = res.data
           // let newFields = fields
           // setFields(allFields => {
-          //   newFields = produce(allFields, draft => { draft[fldKey] = fieldData })
+          //   newFields = create(allFields, draft => { draft[fldKey] = fieldData })
           //   return newFields
           // })
           // reCalculateFldHeights(fldKey)
@@ -192,7 +192,7 @@ function IconsModal({
           //   type: `add_${iconType}`,
           //   state: { fldKey, fields: newFields },
           // })
-          const newOption = produce(option, draft => {
+          const newOption = create(option, draft => {
             draft[optIndx].img = res.data
           })
 
@@ -210,7 +210,7 @@ function IconsModal({
     const fileNameRegex = new RegExp(file, 'gi')
     if (fieldData[iconType]?.match(fileNameRegex)) {
       delete fieldData[iconType]
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     }
 
     bitsFetch({ file }, 'bitforms_icon_remove')
@@ -272,9 +272,9 @@ function IconsModal({
 
   const selectedSaveIcon = () => {
     // fieldData[iconType] = prefix
-    // const newFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    // const newFields = create(fields, draft => { draft[fldKey] = fieldData })
     // setFields(newFields)
-    const newOption = produce(option, draft => {
+    const newOption = create(option, draft => {
       draft[optIndx].img = prefix.url
     })
 

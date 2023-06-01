@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -17,7 +17,7 @@ export const generateAcfOptions = (importOpts, lblKey, valKey) => {
 }
 
 export default function AcfFieldOptions({ importOpts, setImportOpts }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const isPro = typeof bits !== 'undefined' && bits.isPro
   // const [loading, setLoading] = useState(false)
   const [snack, setsnack] = useState({ show: false })

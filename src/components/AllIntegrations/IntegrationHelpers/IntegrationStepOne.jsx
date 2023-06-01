@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import app from '../../../styles/app.style'
@@ -13,7 +13,7 @@ export default function IntegrationStepOne({
   step, confTmp, handleInput, error, handleAuthorize, isLoading, isAuthorized, nextPage, children,
 }) {
   const { css } = useFela()
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { siteURL } = bits
 
   return (

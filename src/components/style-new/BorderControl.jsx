@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -17,10 +17,10 @@ import { assignNestedObj, getValueByObjPath, getValueFromStateVar, showDraggable
 export default function BorderControl({ subtitle, objectPaths, id, allowImportant, state, hslaPaths }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [draggableModel, setDraggableModal] = useAtom($draggableModal)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [styles, setStyles] = useAtom($styles)
 
   /**
    * objectPaths is Array
@@ -74,11 +74,11 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
       objectPaths.map(obj => {
         const { paths } = obj
         if (obj.object === 'themeVars') {
-          setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
+          setThemeVars(prvThemeVars => create(prvThemeVars, drft => {
             assignValues(paths, drft)
           }))
         } else if (obj.object === 'themeColors') {
-          setThemeColors(prvThemeColor => produce(prvThemeColor, drft => {
+          setThemeColors(prvThemeColor => create(prvThemeColor, drft => {
             assignValues(paths, drft)
           }))
         }
@@ -86,7 +86,7 @@ export default function BorderControl({ subtitle, objectPaths, id, allowImportan
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Border Clear', '', { styles: getLatestState('styles') }))
     } else {
       const { paths } = objectPaths
-      setStyles(prvState => produce(prvState, drft => {
+      setStyles(prvState => create(prvState, drft => {
         assignValues(paths, drft)
       }))
       addToBuilderHistory(generateHistoryData(element, fieldKey, 'Border Clear', '', { styles: getLatestState('styles') }))

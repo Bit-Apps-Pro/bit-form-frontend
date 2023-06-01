@@ -71,7 +71,7 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         height: '18px',
         width: '18px',
       },
-      [`.${fk}-stripe-fld`]: {
+      [`.${fk}-stripe-wrp .StripeElement`]: {
         margin: '10px 0px',
       },
       [`.${fk}-stripe-wrp .stripe-pay-btn`]: {

@@ -1,18 +1,18 @@
 // create a react component
 
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $proModal } from '../../../../GlobalStates/GlobalStates'
 import { __ } from '../../../../Utils/i18nwrap'
 import proHelperData from '../../../../Utils/StaticData/proHelperData'
 
 export default function PremiumSettingsOverlay({ classes, hideText, proProperty }) {
-  const setProModal = useSetRecoilState($proModal)
+  const setProModal = useSetAtom($proModal)
   const { css } = useFela()
   const showProModal = () => setProModal({ show: true, ...proHelperData[proProperty] })
   return (
     <>
-      { !hideText && (
+      {!hideText && (
         <div className={css(style.content)}>
           {__('Note: This feature is only available to BitForm Pro users.')}
           <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">

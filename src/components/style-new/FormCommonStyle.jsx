@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { Navigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
@@ -25,11 +25,11 @@ import TransitionControl from './TransitionControl'
 export default function FormCommonStyle({ element, componentTitle }) {
   const { css } = useFela()
   const { fieldKey, formID, formType } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
   const elemn = `.${element}-b${formID}`
   const formWrpStylesObj = styles.form?.[elemn]
   const formWrpStylesPropertiesArr = Object.keys(formWrpStylesObj || {})
-  const themeColors = useRecoilValue($themeColors)
+  const themeColors = useAtomValue($themeColors)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function FormCommonStyle({ element, componentTitle }) {
   const getPropertyPath = (cssProperty) => `form->${elemn}->${cssProperty}`
 
   const delPropertyHandler = (property) => {
-    setStyles(prvStyles => produce(prvStyles, drft => {
+    setStyles(prvStyles => create(prvStyles, drft => {
       if (Array.isArray(property)) {
         property.forEach(prop => deleteNestedObj(drft, getPropertyPath(prop)))
       } else {
@@ -60,14 +60,14 @@ export default function FormCommonStyle({ element, componentTitle }) {
     if (typeof editorConfig[element].properties[prop] !== 'object') {
       value = editorConfig[element].properties[prop]
     }
-    setStyles(prvStyles => produce(prvStyles, drft => {
+    setStyles(prvStyles => create(prvStyles, drft => {
       assignNestedObj(drft, getPropertyPath(prop), value)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, value, { styles: getLatestState('styles') }))
   }
 
   const clearHandler = (property) => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       if (Array.isArray(property)) {
         property.forEach(prop => assignNestedObj(drft, getPropertyPath(prop), ''))
       } else {

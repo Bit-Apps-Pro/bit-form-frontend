@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
@@ -10,7 +10,7 @@ import ut from '../../../styles/2.utilities'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
 
 function KeyBoard({ clickAction, options }) {
-  const fieldArr = useRecoilValue($fieldsArr)
+  const fieldArr = useAtomValue($fieldsArr)
   const keyList = [
     { id: 25, type: 'back', content: <BackIcn size="18" /> },
     { id: 6, type: 'operator', content: '(' },

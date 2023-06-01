@@ -1,7 +1,7 @@
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
@@ -30,9 +30,9 @@ function LogicBlock({
   smartTagAllowed,
 }) {
   const { css } = useFela()
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const formFields = makeFieldsArrByLabel(fields, [])
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   let isSingleSelect = false
   let type = ''

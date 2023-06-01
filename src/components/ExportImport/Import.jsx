@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../GlobalStates/GlobalStates'
 import Modal from '../Utilities/Modal'
 import ImportStepOne from './ImportStepOne'
@@ -7,7 +7,7 @@ import ImportStepTwo from './ImportStepTwo'
 
 export default function Import({ cols, formID, close, showImportMdl }) {
   const columns = cols.filter((col) => col.Header !== '#' && typeof col.Header !== 'object')
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const formName = bits?.allForms?.find(form => form.id === formID)?.form_name
   const formRef = useRef(null)
   const [fileResponses, setResponses] = useState([])

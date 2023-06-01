@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
@@ -15,7 +15,7 @@ import SizeControl from '../StyleCustomize/ChildComp/SizeControl'
 
 function FileTypeSize({ action }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
   const fileSizeChange = (e) => {
@@ -25,14 +25,14 @@ function FileTypeSize({ action }) {
     } else {
       delete fieldData.config[name]
     }
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory(generateHistoryData('', fldKey, 'File Size', e.target.checked, { fields: getLatestState('fields') }))
   }
 
   const sizeHandler = (value, unit, typ) => {
     const newVal = `${value}${unit}`
     fieldData.config[typ] = newVal
-    setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+    setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory(generateHistoryData('', fldKey, typ, newVal, { fields: getLatestState('fields') }))
   }
   const getNumberValue = (propName) => getNumFromStr(fieldData.config[propName])

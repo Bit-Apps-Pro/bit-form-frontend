@@ -2,7 +2,7 @@ import loadable from '@loadable/component'
 import { useState, useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $breakpoint, $builderSettings, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
@@ -37,19 +37,19 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
   const { css } = useFela()
   const { formType, formID, '*': rightBarUrl } = useParams()
   const rightBar = rightBarUrl.split('/')?.[0]
-  const { darkModeConfig } = useRecoilValue($builderSettings)
-  const [flags, setFlags] = useRecoilState($flags)
-  const breakpoint = useRecoilValue($breakpoint)
-  const colorScheme = useRecoilValue($colorScheme)
-  const setColorScheme = useSetRecoilState($colorScheme)
+  const { darkModeConfig } = useAtomValue($builderSettings)
+  const [flags, setFlags] = useAtom($flags)
+  const breakpoint = useAtomValue($breakpoint)
+  const colorScheme = useAtomValue($colorScheme)
+  const setColorScheme = useSetAtom($colorScheme)
   const [responsiveMenu, setResponsiveMenu] = useState(false)
   const [modal, setModal] = useState(false)
-  const selectedFldId = useRecoilValue($selectedFieldId)
+  const selectedFldId = useAtomValue($selectedFieldId)
   const [settingsModalTab, setSettingsModalTab] = useState('Builder Settings')
   const navigate = useNavigate()
   const [defaultRightPanel, setDefaultRightPanel] = useState('fld-settings')
   const path = `/form/builder/${formType}/${formID}`
-  const setBreakpoint = useSetRecoilState($breakpoint)
+  const setBreakpoint = useSetAtom($breakpoint)
 
   useEffect(() => {
     if (rightBar.match(/fields-list|field-settings/)) {

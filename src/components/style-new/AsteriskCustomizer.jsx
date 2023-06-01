@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -24,15 +24,15 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function AsteriskCustomizer() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const themeColors = useRecoilValue($themeColors)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [fields, setFields] = useRecoilState($fields)
+  const themeColors = useAtomValue($themeColors)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [fields, setFields] = useAtom($fields)
 
   const lhVar = '--req-smbl-lh'
   const { '--req-smbl-c': flc } = themeColors
 
   const updateState = (varName, value = '') => {
-    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+    setThemeVars(prvStyle => create(prvStyle, drftStyle => {
       drftStyle[varName] = value
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, varName, value, { themeVars: getLatestState('themeVars') }))
@@ -52,28 +52,28 @@ export default function AsteriskCustomizer() {
 
   const setAsteriskPos = (posValue) => {
     if (posValue === 'left') {
-      setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+      setThemeVars(prvStyle => create(prvStyle, drftStyle => {
         drftStyle['--fld-lbl-pn'] = 'relative'
         drftStyle['--req-smbl-pn'] = 'absolute'
         drftStyle['--req-smbl-rt'] = 'unset'
         drftStyle['--req-smbl-lt'] = '0px'
       }))
     } else if (posValue === 'right') {
-      setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+      setThemeVars(prvStyle => create(prvStyle, drftStyle => {
         drftStyle['--fld-lbl-pn'] = 'relative'
         drftStyle['--req-smbl-pn'] = 'absolute'
         drftStyle['--req-smbl-rt'] = '0px'
         drftStyle['--req-smbl-lt'] = 'unset'
       }))
     } else {
-      setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+      setThemeVars(prvStyle => create(prvStyle, drftStyle => {
         drftStyle['--fld-lbl-pn'] = 'unset'
         drftStyle['--req-smbl-pn'] = 'unset'
         drftStyle['--req-smbl-rt'] = 'unset'
         drftStyle['--req-smbl-lt'] = 'unset'
       }))
 
-      setFields(prevFields => produce(prevFields, draftFields => {
+      setFields(prevFields => create(prevFields, draftFields => {
         Object.keys(fields).map(fldKey => {
           draftFields[fldKey].valid.reqPos = posValue
         })

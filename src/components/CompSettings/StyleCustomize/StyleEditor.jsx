@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Link, useNavigate } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $draggableModal } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -22,7 +22,7 @@ function StyleEditor({
 }) {
   const navigate = useNavigate()
 
-  const setDraggableModal = useSetRecoilState($draggableModal)
+  const setDraggableModal = useSetAtom($draggableModal)
 
   const goBackUrl = () => {
     if (navigate.location.pathname.match(/style\/fl\/.+/g)) return navigate.location.pathname.replace(/style\/fl\/.+/g, 'style/fl')

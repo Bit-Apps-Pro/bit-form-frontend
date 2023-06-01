@@ -1,10 +1,10 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { csvToJson, getFileExts, isType } from '../../../Utils/Helpers'
 import { checkIfHasColonLblVlu } from './importOptionsHelpers'
 
 export default function FileUploadImportOptions({ importOpts, setImportOpts }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const handleImportFile = e => {
     let tmpOpts = { ...importOpts }

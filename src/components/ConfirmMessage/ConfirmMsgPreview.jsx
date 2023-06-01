@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useCallback, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { IS_PRO } from '../../Utils/Helpers'
 import RenderStyle from '../style-new/RenderStyle'
@@ -15,9 +15,9 @@ import confirmMsgCssStyles from './confirmMsgCssStyles'
 export default function ConfirmMsgPreview({
   msgId, active, setActive, position, animation, autoHide, duration, msgType, message, confirmationStyles,
 }) {
-  //   const setSuccessMessageStyle = useSetRecoilState($successMessageStyle)
+  //   const setSuccessMessageStyle = useSetAtom($successMessageStyle)
   const { formID } = useParams()
-  const setStyles = useSetRecoilState($styles)
+  const setStyles = useSetAtom($styles)
 
   const styleObject = useCallback(
     () => confirmMsgCssStyles(formID, msgId, msgType, position, animation, confirmationStyles),
@@ -31,7 +31,7 @@ export default function ConfirmMsgPreview({
     }
   }
   useEffect(() => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       drft.confirmations?.filter(confMsgObj => {
         if (confMsgObj.confMsgId === msgId && (msgType === 'below' || IS_PRO)) {
           confMsgObj.style = styleObject()

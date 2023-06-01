@@ -1,5 +1,5 @@
-import { produce } from 'immer'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { create } from 'mutative'
+import { useAtom, useSetAtom } from 'jotai'
 import { useFela } from 'react-fela'
 import ActionBlock from './ActionBlock'
 import Button from '../Utilities/Button'
@@ -10,12 +10,12 @@ import Tip from '../Utilities/Tip'
 
 export default function FieldWorkflowAction({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const { css } = useFela()
-  const [workflows, setWorkflows] = useRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const [workflows, setWorkflows] = useAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { fields: fldActions } = condGrp.actions
 
   const addAction = () => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { fields: tmpFldActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       let actionVal = 'disable'
       if (draftWorkflow[lgcGrpInd].action_type === 'onsubmit') {

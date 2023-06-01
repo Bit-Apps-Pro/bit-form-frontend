@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $styles } from '../../../GlobalStates/StylesState'
 import { $themeVars } from '../../../GlobalStates/ThemeVarsState'
 import ut from '../../../styles/2.utilities'
@@ -15,8 +15,8 @@ import ThemeStylePropertyBlock from '../ThemeStylePropertyBlock'
 export default function StripeQuickTweaks() {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [styles, setStyles] = useRecoilState($styles)
-  const themeVars = useRecoilValue($themeVars)
+  const [styles, setStyles] = useAtom($styles)
+  const themeVars = useAtomValue($themeVars)
   const fldStyleObj = styles?.fields?.[fieldKey]
   const { fieldSize } = fldStyleObj
   const propertyPath = (elemnKey, property) => `fields->${fieldKey}->classes->.${fieldKey}-${elemnKey}->${property}`
@@ -33,7 +33,7 @@ export default function StripeQuickTweaks() {
   const onchangeHandler = ({ value, unit }, prvUnit, prop = 'width') => {
     const convertvalue = unitConverter(unit, value, prvUnit)
     const v = `${convertvalue}${unit}`
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, propertyPath('stripe-btn', prop), v)
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, prop, v, { styles: getLatestState('styles') }))
@@ -55,7 +55,7 @@ export default function StripeQuickTweaks() {
       propertyPath('stripe-icn', 'height'),
     ]
     const values = btnSizeValues[value]
-    setStyles(prvStyle => produce(prvStyle, drftStyle => {
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
       drftStyle.fields[fieldKey].fieldSize = value
       propertyPaths.map((path, index) => {
         assignNestedObj(drftStyle, path, values[index])

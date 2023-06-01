@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import LoaderSm from '../../Loaders/LoaderSm'
 
 export default function PresetsImportOptions({ importOpts, setImportOpts }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const [loading, setLoading] = useState(false)
   const presetVersion = 1.1

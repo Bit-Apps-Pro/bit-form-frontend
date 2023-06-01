@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -18,7 +18,7 @@ export const generateTermsOptions = (importOpts, lblKey, valKey) => {
 }
 
 export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const [snack, setsnack] = useState({ show: false })
 

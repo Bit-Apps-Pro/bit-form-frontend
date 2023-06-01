@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $flags } from '../GlobalStates/GlobalStates'
 import { $fieldsDirection } from '../GlobalStates/ThemeVarsState'
 import { getCustomAttributes, getCustomClsName } from '../Utils/globalHelpers'
@@ -12,8 +12,8 @@ export default function InputWrapper({
   formID, fieldKey, fieldData, children, noLabel, noErrMsg, isBuilder,
 }) {
   const { '*': rightBarUrl } = useParams()
-  const fieldDirection = useRecoilValue($fieldsDirection)
-  const flages = useRecoilValue($flags)
+  const fieldDirection = useAtomValue($fieldsDirection)
+  const flages = useAtomValue($flags)
   const { styleMode } = flages
   const [rightBar, element, urlFldKey] = rightBarUrl.split('/')
   const showAllErrorMsg = styleMode && rightBar === 'theme-customize' && (['err-msg', 'err-txt', 'err-txt-pre-i', 'err-txt-suf-i'].indexOf(element) >= 0)

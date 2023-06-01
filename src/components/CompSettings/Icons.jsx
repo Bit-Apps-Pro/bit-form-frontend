@@ -1,13 +1,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -28,7 +28,7 @@ import Grow from './StyleCustomize/ChildComp/Grow'
 
 function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '', unsplash = false }) {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const [controller, setController] = useState({ parent: selected || 'Icons' })
   const [files, setFiles] = useState([])
@@ -40,14 +40,14 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   const [searchLoading, setSearchLoading] = useState(false)
   const [scrollLoading, setScrollLoading] = useState(false)
   const uploadLabel = uploadLbl || 'Upload Icon'
-  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const selectedFieldId = useAtomValue($selectedFieldId)
   const [total, setTotal] = useState(10001)
   const [showWarning, setShowWarning] = useState(false)
   const [selectIcon, setSelectIcon] = useState()
   const { css } = useFela()
   const url = 'https://raw.githack.com'
   const ref = useRef()
-  const [allStyles, setAllStyles] = useRecoilState($allStyles)
+  const [allStyles, setAllStyles] = useAtom($allStyles)
   const clientId = 'n3pcVfA-CTg4OlOQsM3m6lEWLISyoSbtDqP2CfoukyU'
   const [pageNo, setPageNo] = useState(1)
   const [images, setImages] = useState([])
@@ -134,7 +134,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         fieldData[iconType] = attachment.url
-        setFields(allFields => produce(allFields, draft => {
+        setFields(allFields => create(allFields, draft => {
           draft[fldKey] = fieldData
         }))
         reCalculateFldHeights(fldKey)
@@ -181,11 +181,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
           let newFields = fields
           let newStyles = allStyles
           setFields(allFields => {
-            newFields = produce(allFields, draft => { draft[fldKey] = fieldData })
+            newFields = create(allFields, draft => { draft[fldKey] = fieldData })
             return newFields
           })
           if (addPaddingOnSelect) {
-            newStyles = produce(allStyles, draft => {
+            newStyles = create(allStyles, draft => {
               Object.keys(allStyles).forEach(brkPnt => {
                 const path = `${brkPnt}->fields->${selectedFieldId}->classes->.${selectedFieldId}-fld->padding`
                 const padding = getValueByObjPath(allStyles, path) || ''
@@ -214,7 +214,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     const fileNameRegex = new RegExp(file, 'gi')
     if (fieldData[iconType]?.match(fileNameRegex)) {
       delete fieldData[iconType]
-      setFields(allFields => produce(allFields, draft => { draft[fldKey] = fieldData }))
+      setFields(allFields => create(allFields, draft => { draft[fldKey] = fieldData }))
     }
 
     bitsFetch({ file }, 'bitforms_icon_remove')
@@ -276,11 +276,11 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
 
   const selectedSaveIcon = () => {
     fieldData[iconType] = prefix.url
-    const newFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const newFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(newFields)
     let newStyles = allStyles
     if (addPaddingOnSelect) {
-      newStyles = produce(allStyles, draft => {
+      newStyles = create(allStyles, draft => {
         Object.keys(allStyles).forEach(brkPnt => {
           const path = `${brkPnt}->fields->${selectedFieldId}->classes->.${selectedFieldId}-fld->padding`
           const padding = getValueByObjPath(allStyles, path) || ''

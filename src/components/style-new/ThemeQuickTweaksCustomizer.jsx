@@ -1,10 +1,10 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $builderSettings, $fields, $formId } from '../../GlobalStates/GlobalStates'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
@@ -45,30 +45,30 @@ import ThemeStyleReset from './ThemeStyleReset'
 export default function ThemeQuickTweaksCustomizer() {
   const { css } = useFela()
   const { fieldKey, element, formType } = useParams()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [styles, setStyles] = useRecoilState($styles)
-  const fields = useRecoilValue($fields)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [styles, setStyles] = useAtom($styles)
+  const fields = useAtomValue($fields)
   const { '--dir': direction } = themeVars
-  const tmpStyles = useRecoilValue($savedStyles)
-  const tmpThemeColors = useRecoilValue($savedThemeColors)
-  const tmpThemeVars = useRecoilValue($savedThemeVars)
-  const formId = useRecoilValue($formId)
+  const tmpStyles = useAtomValue($savedStyles)
+  const tmpThemeColors = useAtomValue($savedThemeColors)
+  const tmpThemeVars = useAtomValue($savedThemeVars)
+  const formId = useAtomValue($formId)
   const fieldsArray = Object.entries(fields)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
   const [styleResetTo, setStyleResetTo] = useState('initial')
   const { '--global-accent-color': globalPrimaryColor,
     '--global-font-color': globalFontColor,
     '--global-bg-color': globalBgColor,
     '--global-fld-bg-color': globalFldBgClr } = themeColors
-  const [{ addImportantRuleToStyles }, setBuilderSettings] = useRecoilState($builderSettings)
+  const [{ addImportantRuleToStyles }, setBuilderSettings] = useAtom($builderSettings)
 
   const setSizes = ({ target: { value } }) => {
     const tmpThemeVar = deepCopy(themeVars)
 
-    setStyles(prvStyles => produce(prvStyles, draft => {
+    setStyles(prvStyles => create(prvStyles, draft => {
       draft.fieldsSize = value
       const flds = prvStyles.fields
       const fldKeyArr = Object.keys(flds)
@@ -106,7 +106,7 @@ export default function ThemeQuickTweaksCustomizer() {
       const existingFields = Object.keys(styles.fields)
       const previousFields = Object.keys(tmpStyles.fields)
 
-      setStyles(prv => produce(prv, drft => {
+      setStyles(prv => create(prv, drft => {
         existingFields.forEach((fldKey) => {
           if (previousFields.includes(fldKey)) {
             drft.fields[fldKey] = tmpStyles.fields[fldKey]

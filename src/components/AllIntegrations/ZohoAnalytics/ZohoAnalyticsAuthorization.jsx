@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { checkValidEmail } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -13,7 +13,7 @@ import { handleAuthorize, refreshWorkspaces } from './ZohoAnalyticsCommonFunc'
 export default function ZohoAnalyticsAuthorization({
   formID, analyticsConf, setAnalyticsConf, step, setStep, isLoading, setisLoading, setSnackbar, redirectLocation, isInfo,
 }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { siteURL } = bits
   const [isAuthorized, setisAuthorized] = useState(false)
   const [error, setError] = useState({ dataCenter: '', clientId: '', clientSecret: '', ownerEmail: '' })

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 
-import { getRecoil } from 'recoil-nexus'
+import bitStore from '../GlobalStates/BitStore'
 import { $layouts, $nestedLayouts } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
 
@@ -276,8 +276,8 @@ export function compactResponsiveLayouts(layouts, cols) {
 }
 
 export function getLayoutItemCount() {
-  const layout = getRecoil($layouts)
-  const nestedLayouts = getRecoil($nestedLayouts)
+  const layout = bitStore.get($layouts)
+  const nestedLayouts = bitStore.get($nestedLayouts)
   const layoutItem = layout.lg.length
   const nestedLayoutItem = Object.values(nestedLayouts).reduce(
     (count, cur) => count + cur.lg.length,

@@ -1,6 +1,6 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $integrations, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import { IS_PRO } from '../../Utils/Helpers'
@@ -14,12 +14,12 @@ export default function IntegrationWorkflowAction({ lgcGrpInd,
   checkKeyInArr,
   getValueFromArr }) {
   const { css } = useFela()
-  const [workflows, setWorkflows] = useRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const integrations = useRecoilValue($integrations)
+  const [workflows, setWorkflows] = useAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
+  const integrations = useAtomValue($integrations)
 
   const setInteg = val => {
-    const tmpWorkflows = produce(workflows, draftWorkflow => {
+    const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       const findInteg = draftSuccessActions.find(v => v.type === 'integ')
       if (findInteg) findInteg.details.id = val.map(itm => itm.value)

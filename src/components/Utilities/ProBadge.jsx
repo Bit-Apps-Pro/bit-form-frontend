@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import 'tippy.js/animations/shift-away.css'
 import 'tippy.js/dist/backdrop.css'
 import 'tippy.js/dist/tippy.css'
@@ -11,7 +11,7 @@ export default function ProBadge({
   className, children, width = 'auto', icnSize = 18, tip = false, proProperty, text = 'PRO',
 }) {
   const { css } = useFela()
-  const setProModal = useSetRecoilState($proModal)
+  const setProModal = useSetAtom($proModal)
   return (
     // <Tippy
     //   animateFill

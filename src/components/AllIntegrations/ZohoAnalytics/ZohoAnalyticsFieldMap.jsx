@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -13,7 +13,7 @@ export const addFieldMap = (indx, analyticsConf, setAnalyticsConf) => {
 }
 
 export default function ZohoAnalyticsFieldMap({ i, formFields, field, analyticsConf, setAnalyticsConf }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   const delFieldMap = (indx) => {

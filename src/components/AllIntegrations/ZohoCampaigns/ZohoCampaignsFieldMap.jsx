@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -14,7 +14,7 @@ export const addFieldMap = (indx, campaignsConf, setCampaignsConf) => {
 export default function ZohoCampaignsFieldMap({ i, formFields, field, campaignsConf, setCampaignsConf }) {
   const isNotRequired = field.zohoFormField === '' || campaignsConf.default.fields[campaignsConf.list].required?.indexOf(field.zohoFormField) === -1
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   const delFieldMap = (indx) => {

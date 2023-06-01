@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-redundant-roles */
 import { useParams, useNavigate } from 'react-router-dom'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import { __ } from '../../Utils/i18nwrap'
 
 /* eslint-disable react/button-has-type */
 export default function Back2FldBtn({ className, size }) {
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
+  const setSelectedFieldId = useSetAtom($selectedFieldId)
   const { formType, formID } = useParams()
   const navigate = useNavigate()
 

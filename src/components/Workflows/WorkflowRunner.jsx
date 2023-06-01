@@ -1,16 +1,16 @@
-import { produce } from 'immer'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { create } from 'mutative'
+import { useAtom, useSetAtom } from 'jotai'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
 import CheckBox from '../Utilities/CheckBox'
 
 export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
-  const [workflows, setWorkflows] = useRecoilState($workflows)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const [workflows, setWorkflows] = useAtom($workflows)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const changeActionRun = typ => {
-    const tmpWorkflows = produce(workflows, draft => {
+    const tmpWorkflows = create(workflows, draft => {
       if (typ === 'delete') {
         delete draft[lgcGrpInd].action_type
       } else if (draft[lgcGrpInd].action_type === undefined) {
@@ -24,7 +24,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   }
 
   const changeActionEffect = typ => {
-    const tmpWorkflows = produce(workflows, draft => {
+    const tmpWorkflows = create(workflows, draft => {
       if (typ === 'onsubmit') {
         draft[lgcGrpInd].conditions.forEach(draftCond => {
           const len = draftCond.actions?.fields?.length
@@ -58,7 +58,7 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
   }
 
   const changeActionBehave = typ => {
-    const tmpWorkflows = produce(workflows, draftWorkflows => {
+    const tmpWorkflows = create(workflows, draftWorkflows => {
       draftWorkflows[lgcGrpInd].action_behaviour = typ
       const [cond] = draftWorkflows[lgcGrpInd].conditions
       cond.cond_type = typ === 'cond' ? 'if' : typ

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FUNDING, PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { useEffect, useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import bitsFetchFront from '../../Utils/bitsFetchFront'
 import { select } from '../../Utils/globalHelpers'
@@ -12,7 +12,7 @@ import InputWrapper from '../InputWrapper'
 function Paypal({
   fieldKey, formID, attr, contentID, resetFieldValue, isBuilder, handleFormValidationErrorMessages,
 }) {
-  const payments = useRecoilValue($payments)
+  const payments = useAtomValue($payments)
   const [clientID, setClientID] = useState('')
   const [render, setrender] = useState(false)
   const [amount, setAmount] = useState(attr?.amount || 1)

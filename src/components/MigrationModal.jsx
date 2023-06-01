@@ -1,19 +1,21 @@
+import { useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { useEffect, useState } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { $bits, $formId } from '../GlobalStates/GlobalStates'
+import { generateUpdateFormData, getConfirmationStyle, getStatesToReset, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import bitsFetch from '../Utils/bitsFetch'
-import { generateUpdateFormData, getConfirmationStyle, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import Loader from './Loaders/Loader'
-import themeProvider from './style-new/themes/themeProvider'
 import Modal from './Utilities/Modal'
 import Progressbar from './Utilities/Progressbar'
+import themeProvider from './style-new/themes/themeProvider'
 
 export default function MigrationModal() {
-  const bits = useRecoilValue($bits)
-  const setFormId = useSetRecoilState($formId)
+  const bits = useAtomValue($bits)
+  const setFormId = useSetAtom($formId)
   const [migratingCount, setMigratingCount] = useState(0)
   const [totalForms, setTotalForms] = useState(0)
+  const atomResetters = getStatesToReset().map(stateAtom => useResetAtom(stateAtom))
 
   useEffect(() => {
     if (bits.isMigratingToV2) {
@@ -37,7 +39,7 @@ export default function MigrationModal() {
               const migratedFormData = generateUpdateFormData(formID)
               const updateFormPromise = bitsFetch(migratedFormData, 'bitforms_update_form').then(() => { setMigratingCount(prevCount => prevCount + 1) })
               updateFormPromises.push(updateFormPromise)
-              resetRecoilStates()
+              atomResetters.forEach(resetAtom => resetAtom())
             })
             Promise.all(updateFormPromises)
               .then(() => {

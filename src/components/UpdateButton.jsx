@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom} from 'jotai/utils'
 import {
   $additionalSettings,
   $breakpointSize,
@@ -54,41 +55,41 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const { css } = useFela()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const [lay, setLay] = useRecoilState($layouts)
+  const [lay, setLay] = useAtom($layouts)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
-  const [deletedFldKey, setDeletedFldKey] = useRecoilState($deletedFldKey)
-  const fields = useRecoilValue($fields)
-  const formInfo = useRecoilValue($formInfo)
+  const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
+  const fields = useAtomValue($fields)
+  const formInfo = useAtomValue($formInfo)
   const { formName } = formInfo
-  const newFormId = useRecoilValue($newFormId)
-  const setAllForms = useSetRecoilState($forms)
-  const builderHelperStates = useRecoilValue($builderHelperStates)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
-  const setFieldLabels = useSetRecoilState($fieldLabels)
-  const resetUpdateBtn = useResetRecoilState($updateBtn)
-  const [reports, setReports] = useRecoilState($reports)
-  const currentReport = useRecoilValue($reportSelector)
-  const [reportId, setReportId] = useRecoilState($reportId)
-  const [mailTem, setMailTem] = useRecoilState($mailTemplates)
-  const [updateBtn, setUpdateBtn] = useRecoilState($updateBtn)
-  const [workFlows, setworkFlows] = useRecoilState($workflows)
-  const [integrations, setIntegration] = useRecoilState($integrations)
-  const [additional, setAdditional] = useRecoilState($additionalSettings)
-  const [confirmations, setConfirmations] = useRecoilState($confirmations)
-  const styles = useRecoilValue($styles)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
-  const setSelectedFieldId = useSetRecoilState($selectedFieldId)
-  const builderSettings = useRecoilValue($builderSettings)
-  const staticStylesState = useRecoilValue($staticStylesState)
-  const breakpointSize = useRecoilValue($breakpointSize)
-  const customCodes = useRecoilValue($customCodes)
-  const flags = useRecoilValue($flags)
+  const newFormId = useAtomValue($newFormId)
+  const setAllForms = useSetAtom($forms)
+  const builderHelperStates = useAtomValue($builderHelperStates)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
+  const setFieldLabels = useSetAtom($fieldLabels)
+  const resetUpdateBtn = useResetAtom($updateBtn)
+  const [reports, setReports] = useAtom($reports)
+  const currentReport = useAtomValue($reportSelector)
+  const [reportId, setReportId] = useAtom($reportId)
+  const [mailTem, setMailTem] = useAtom($mailTemplates)
+  const [updateBtn, setUpdateBtn] = useAtom($updateBtn)
+  const [workFlows, setworkFlows] = useAtom($workflows)
+  const [integrations, setIntegration] = useAtom($integrations)
+  const [additional, setAdditional] = useAtom($additionalSettings)
+  const [confirmations, setConfirmations] = useAtom($confirmations)
+  const styles = useAtomValue($styles)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const setAllStyles = useSetAtom($allStyles)
+  const setSelectedFieldId = useSetAtom($selectedFieldId)
+  const builderSettings = useAtomValue($builderSettings)
+  const staticStylesState = useAtomValue($staticStylesState)
+  const breakpointSize = useAtomValue($breakpointSize)
+  const customCodes = useAtomValue($customCodes)
+  const flags = useAtomValue($flags)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
-      const newIntegrations = produce(integrations, draft => { draft.pop() })
+      const newIntegrations = create(integrations, draft => { draft.pop() })
       setIntegration(newIntegrations)
       saveForm('integrations', newIntegrations)
     }
@@ -97,7 +98,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
 
   useEffect(() => {
     if (mailTem[mailTem.length - 1]?.updateTem) {
-      const newTem = produce(mailTem, draft => {
+      const newTem = create(mailTem, draft => {
         draft.pop()
       })
       setMailTem(newTem)

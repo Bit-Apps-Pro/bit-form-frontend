@@ -106,27 +106,34 @@ export default class BitStripeField {
     return ''
   }
 
-  #stripeComponent() {
-    const { Stripe } = window
+  #displayErrorMsg(msg = '') {
     const errWrp = bfSelect(`#form-${this.#contentId} .${this.#fieldKey}-err-wrp`)
     const errTxt = bfSelect(`.${this.#fieldKey}-err-txt`, errWrp)
     const errMsg = bfSelect(`.${this.#fieldKey}-err-msg`, errWrp)
-    this.#stripeWrpSelector.classList.remove('d-none')
-    const dynamicAmount = this.#getDynamicValue(this.#amountFld)
-
-    if (this.#amountType === 'dynamic' && !dynamicAmount) {
+    if (msg) {
       errMsg.style.removeProperty('display')
-      errTxt.innerHTML = 'Amount field is required'
+      errTxt.innerHTML = msg
       setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
       setStyleProperty(errWrp, 'opacity', 1)
       const fld = this.#querySelector(`#form-${this.#contentId} .btcd-fld-itm.${this.#fieldKey}`)
       scrollToFld(fld)
+    } else {
+      errTxt.innerHTML = ''
+      setStyleProperty(errMsg, 'display', 'none')
+      setStyleProperty(errWrp, 'height', 0)
+      setStyleProperty(errWrp, 'opacity', 0)
+    }
+  }
+
+  #stripeComponent() {
+    const { Stripe } = window
+    const dynamicAmount = this.#getDynamicValue(this.#amountFld)
+
+    if (this.#amountType === 'dynamic' && !dynamicAmount) {
+      this.#displayErrorMsg('Amount field is required')
       return
     }
-    errTxt.innerHTML = ''
-    setStyleProperty(errMsg, 'display', 'none')
-    setStyleProperty(errWrp, 'height', 0)
-    setStyleProperty(errWrp, 'opacity', 0)
+    this.#displayErrorMsg()
 
     const amount = (this.#amountType === 'fixed' ? this.#amount : dynamicAmount) * 100
     if (Stripe) {
@@ -145,7 +152,14 @@ export default class BitStripeField {
       }
       bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
         .then(res => {
-          const { clientSecret } = res.data
+          const { success, data } = res
+          if (!success) {
+            this.#displayErrorMsg(data.error.message)
+            return
+          }
+          this.#displayErrorMsg()
+          this.#stripeWrpSelector.classList.remove('d-none')
+          const { clientSecret } = data
 
           const config = {
             appearance: this.#theme,
@@ -154,7 +168,19 @@ export default class BitStripeField {
             // paymentMethodTypes: this.#options.paymentMethodTypes,
           }
           this.#elements = this.#stripInstance.elements(config)
-          this.#paymentElement = this.#elements.create('payment', this.#layout)
+          this.#paymentElement = this.#elements.create('payment', { layout: this.#layout })
+          if (this.#config?.linkAuthentication?.active) {
+            const email = this.#getDynamicValue(this.#config.linkAuthentication.emailFld)
+            const linkAuthenticationElm = this.#elements.create('linkAuthentication', { defaultValues: { email } })
+            const stripeAuthWrp = this.#querySelector(`#${this.#fieldKey}-stripe-auth-wrp`)
+            linkAuthenticationElm.mount(stripeAuthWrp)
+          }
+          if (this.#config?.address?.active) {
+            const { address } = this.#config
+            const addressElm = this.#elements.create('address', address)
+            const stripeAddrWrp = this.#querySelector(`#${this.#fieldKey}-stripe-addr-wrp`)
+            addressElm.mount(stripeAddrWrp)
+          }
           this.#paymentElement.mount(this.#stripeWrpSelector)
           this.#stripeBtnSpanner.classList.add('d-none')
         }).then(() => {

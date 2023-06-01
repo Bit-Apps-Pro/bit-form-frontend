@@ -3,7 +3,7 @@ import { memo } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import { getFieldsBasedOnLayoutOrder } from '../../Utils/FormBuilderHelper'
@@ -18,7 +18,7 @@ import NavBtn from './NavBtn'
 
 function StyleLayers() {
   const { css } = useFela()
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
   const navigate = useNavigate()
   const { formID, formType, '*': rightBar } = useParams()
   const fieldKey = rightBar.split('/')[2]

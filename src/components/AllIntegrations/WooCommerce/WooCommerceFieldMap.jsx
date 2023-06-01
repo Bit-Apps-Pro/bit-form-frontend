@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { deepCopy } from '../../../Utils/Helpers'
@@ -9,7 +9,7 @@ import MtInput from '../../Utilities/MtInput'
 export default function WooCommerceFieldMap({ i, formFields, field, wcConf, setWcConf, uploadFields }) {
   const isRequired = field.required === true
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   const addFieldMap = (indx) => {

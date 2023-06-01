@@ -4,11 +4,11 @@
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
 import { hexToCSSFilter } from 'hex-to-css-filter'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useEffect, useState, useTransition } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -41,14 +41,14 @@ function SimpleColorsPickerMenu({ stateObjName,
   id,
   fldKey }) {
   const { css } = useFela()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
   const [color, setColor] = useState()
   const { element, fieldKey } = useParams()
   const [, startColorTransition] = useTransition()
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [styles, setStyles] = useAtom($styles)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -103,7 +103,7 @@ function SimpleColorsPickerMenu({ stateObjName,
 
     switch (stateObjName) {
       case 'themeColors':
-        setThemeColors(prevState => produce(prevState, drftThmClr => {
+        setThemeColors(prevState => create(prevState, drftThmClr => {
           drftThmClr[propertyPath] = hslaStr
           if (hslaPaths) {
             if ('h' in hslaPaths) { drftThmClr[hslaPaths.h] = h }
@@ -141,7 +141,7 @@ function SimpleColorsPickerMenu({ stateObjName,
         break
 
       case 'themeVars':
-        setThemeVars(prevState => produce(prevState, drftThmVar => {
+        setThemeVars(prevState => create(prevState, drftThmVar => {
           drftThmVar[propertyPath] = hslaStr
           if (hslaPaths) {
             if ('h' in hslaPaths) { drftThmVar[hslaPaths.h] = h }
@@ -154,7 +154,7 @@ function SimpleColorsPickerMenu({ stateObjName,
         break
 
       case 'field-accent-color':
-        setStyles(prevStyles => produce(prevStyles, drftStyles => {
+        setStyles(prevStyles => create(prevStyles, drftStyles => {
           const v = `${hslaStr}!important`
           const sc = `0px 0px 0px 3px hsla(${h}, ${s}%, ${l}%, 0.30)!important`
           drftStyles.fields[fldKey].classes[`.${fldKey}-fld:focus`]['border-color'] = v
@@ -165,7 +165,7 @@ function SimpleColorsPickerMenu({ stateObjName,
         break
 
       case 'styles':
-        setStyles(prevStyles => produce(prevStyles, drftStyles => {
+        setStyles(prevStyles => create(prevStyles, drftStyles => {
           let hslaColor = hslaStr
           const propertyPathArr = Array.isArray(propertyPath) ? propertyPath[0] : propertyPath
           const value = getValueByObjPath(drftStyles, propertyPathArr)

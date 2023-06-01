@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import noData from '../../../resource/img/nodata.svg'
 import { dateTimeFormatter } from '../../../Utils/Helpers'
@@ -17,7 +17,7 @@ const generateParsedRazorpayInfo = info => {
 }
 
 export default function PaypalInfo({ paymentInfo, payInfoFound }) {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const dateTimeFormat = `${bits.dateFormat} ${bits.timeFormat}`
   const paypalResp = generateParsedRazorpayInfo(paymentInfo)
   const isSubscription = 'subscriber' in paypalResp

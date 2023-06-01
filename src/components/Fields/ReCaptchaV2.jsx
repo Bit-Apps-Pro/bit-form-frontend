@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $reCaptchaV2 } from '../../GlobalStates/AppSettingsStates'
 import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
@@ -9,13 +9,13 @@ import RenderStyle from '../style-new/RenderStyle'
 export default function ReCaptchaV2({ fieldKey, formId, styleClasses }) {
   const recaptchaWrapElmRef = useRef(null)
   const recaptchaResetIntervalRef = useRef(null)
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
-  const breakpoint = useRecoilValue($breakpoint)
-  const { styleMode } = useRecoilValue($flags)
+  const breakpoint = useAtomValue($breakpoint)
+  const { styleMode } = useAtomValue($flags)
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
   const recaptchaId = useRef(null)
-  const reCaptchaV2 = useRecoilValue($reCaptchaV2)
+  const reCaptchaV2 = useAtomValue($reCaptchaV2)
   const { siteKey = '' } = reCaptchaV2 || {}
 
   useEffect(() => {

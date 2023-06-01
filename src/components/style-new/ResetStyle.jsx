@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $savedStyles, $savedThemeColors, $savedThemeVars } from '../../GlobalStates/SavedStylesAndVars'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -13,12 +13,12 @@ import Tip from '../Utilities/Tip'
 import { assignNestedObj, getValueByObjPath } from './styleHelpers'
 
 export default function ResetStyle({ stateObjName, propertyPath, id }) {
-  const tmpThemeColors = useRecoilValue($savedThemeColors)
-  const tmpThemeVars = useRecoilValue($savedThemeVars)
-  const tmpStyles = useRecoilValue($savedStyles)
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [themeVar, setThemeVar] = useRecoilState($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
+  const tmpThemeColors = useAtomValue($savedThemeColors)
+  const tmpThemeVars = useAtomValue($savedThemeVars)
+  const tmpStyles = useAtomValue($savedStyles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [themeVar, setThemeVar] = useAtom($themeVars)
+  const [styles, setStyles] = useAtom($styles)
   const { css } = useFela()
   let show = false
   switch (stateObjName) {
@@ -68,18 +68,18 @@ export default function ResetStyle({ stateObjName, propertyPath, id }) {
     switch (stateObjName) {
       case 'themeVars':
         if (!tmpThemeVars[path]) return
-        setThemeVar(prvStyle => produce(prvStyle, drft => { drft[path] = tmpThemeVars[path] }))
+        setThemeVar(prvStyle => create(prvStyle, drft => { drft[path] = tmpThemeVars[path] }))
         break
       case 'themeColors':
         if (!tmpThemeColors[path]) return
-        setThemeColors(prvStyle => produce(prvStyle, drft => {
+        setThemeColors(prvStyle => create(prvStyle, drft => {
           drft[path] = tmpThemeColors[path]
         }))
         break
       case 'styles':
         const value = tmpStyles && Object.keys(tmpStyles).length > 0 && getValueByObjPath(tmpStyles, path)
         if (value) {
-          setStyles(prvStyle => produce(prvStyle, drft => {
+          setStyles(prvStyle => create(prvStyle, drft => {
             assignNestedObj(drft, path, value)
           }))
         }

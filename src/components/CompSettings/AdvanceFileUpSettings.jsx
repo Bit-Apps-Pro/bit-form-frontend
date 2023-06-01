@@ -4,11 +4,11 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import { $builderHookStates, $fields, $layouts } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import ut from '../../styles/2.utilities'
@@ -42,11 +42,11 @@ function AdvanceFileUpSettings() {
   const [lblPropertyMdl, setLblPropertyMdl] = useState(false)
   const [imgValdiateMdl, setImgValdiateMdl] = useState(false)
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
-  const setLayouts = useSetRecoilState($layouts)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
+  const setLayouts = useSetAtom($layouts)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
 
   const handle = ({ target: { checked, name } }) => {
     if (checked) {
@@ -54,7 +54,7 @@ function AdvanceFileUpSettings() {
     } else {
       fieldData.config[name] = false
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${name} ${checked ? 'on' : 'off'} : ${fieldData.lbl || fldKey}`, type: name, state: { fldKey, fields: allFields } })
   }
@@ -67,7 +67,7 @@ function AdvanceFileUpSettings() {
       fieldData.config[name] = value
 
       if (name === 'stylePanelLayout' && value === 'circle') {
-        setLayouts(prevLayouts => produce(prevLayouts, draftLayouts => {
+        setLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
           const fldLayoutsLg = draftLayouts.lg.findIndex(itm => itm.i === fldKey)
 
           draftLayouts.lg[fldLayoutsLg].w = 20
@@ -78,7 +78,7 @@ function AdvanceFileUpSettings() {
     } else {
       delete fieldData.config[name]
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${name} value changed to ${value} : ${fieldData.lbl || fldKey}`, type: name, state: { fldKey, fields: allFields } })
   }
@@ -90,7 +90,7 @@ function AdvanceFileUpSettings() {
     }
     fieldData.config[typ] = val
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Modify Accepted File Type : ${fieldData.lbl || fldKey}`, type: typ, state: { fldKey, fields: allFields } })
   }
@@ -112,7 +112,7 @@ function AdvanceFileUpSettings() {
       fieldData.config.allowImageTransform = true
     }
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${typ} Plugin ${checked ? 'on' : 'off'} : ${fieldData.lbl || fldKey}`, type: typ, state: { fldKey, fields: allFields } })
   }

@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $builderRightPanelScroll } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import style from '../../../styles/FieldSettingTitle.style'
@@ -11,7 +11,7 @@ import FieldNameSettings from '../CompSettingsUtils/FieldNameSettings'
 import FieldSettingsDivider from '../CompSettingsUtils/FieldSettingsDivider'
 
 export default function FieldSettingTitle({ title, subtitle, fieldKey }) {
-  const scrollTo = useRecoilValue($builderRightPanelScroll)
+  const scrollTo = useAtomValue($builderRightPanelScroll)
   const { css } = useFela()
   return (
     <>

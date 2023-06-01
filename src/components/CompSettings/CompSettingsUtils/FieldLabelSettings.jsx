@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import ut from '../../../styles/2.utilities'
@@ -28,12 +28,12 @@ import AutoResizeInput from './AutoResizeInput'
 
 export default function FieldLabelSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
   const label = fieldData.lbl || ''
   const { css } = useFela()
-  const selectedFieldId = useRecoilValue($selectedFieldId)
+  const selectedFieldId = useAtomValue($selectedFieldId)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
 
@@ -45,7 +45,7 @@ export default function FieldLabelSettings() {
       fieldData.lbl = value.replace(/\\\\/g, '$_bf_$')
     }
     // eslint-disable-next-line no-param-reassign
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFldHeights(fldKey)
     addToBuilderHistory({
@@ -66,7 +66,7 @@ export default function FieldLabelSettings() {
     }
     // eslint-disable-next-line no-param-reassign
     const req = !e.target.checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFldHeights(fldKey)
     addToBuilderHistory({
@@ -79,7 +79,7 @@ export default function FieldLabelSettings() {
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       reCalculateFldHeights(fldKey)
       addToBuilderHistory({

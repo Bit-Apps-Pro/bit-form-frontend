@@ -221,13 +221,6 @@ export default class BitCurrencyField {
         }
       }
 
-      // if (p.type === 'decimal') {
-      //   // formatOptions.decimalSeparator = p.value
-      //   formatOptions = produce(formatOptions, draft => {
-      //     draft.decimalSeparator = p.value
-      //   })
-      // }
-
       return p.value
     }).join('')
 

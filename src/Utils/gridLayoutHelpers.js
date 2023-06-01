@@ -1,5 +1,5 @@
-import { produce } from 'immer'
-import { getRecoil, setRecoil } from 'recoil-nexus'
+import { create } from 'mutative'
+import bitStore from '../GlobalStates/BitStore'
 import {
   $breakpoint,
   $contextMenu,
@@ -18,14 +18,15 @@ import {
   addFormUpdateError,
   addNewItemInLayout, addToBuilderHistory,
   filterLayoutItem, getAbsoluteElmHeight, getLatestState,
-  getResizableHandles, reCalculateFldHeights, removeFormUpdateError,
+  getResizableHandles,
+  handleFieldExtraAttr,
+  reCalculateFldHeights, removeFormUpdateError,
 } from './FormBuilderHelper'
 import { IS_PRO, deepCopy } from './Helpers'
+import paymentFields from './StaticData/paymentFields'
 import proHelperData from './StaticData/proHelperData'
 import { selectInGrid } from './globalHelpers'
 import { __ } from './i18nwrap'
-import { handleFieldExtraAttr } from './FormBuilderHelper'
-import paymentFields from './StaticData/paymentFields'
 
 const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
   const { typ: fldType } = fieldData
@@ -70,12 +71,12 @@ export const generateFieldLblForHistory = fldData => {
 }
 
 export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition) {
-  const formID = getRecoil($formId)
-  const uniqueFieldId = getRecoil($uniqueFieldId)
-  const fields = getRecoil($fields)
-  const styles = getRecoil($styles)
-  const themeVars = getRecoil($themeVars)
-  const staticStylesState = getRecoil($staticStylesState)
+  const formID = bitStore.get($formId)
+  const uniqueFieldId = bitStore.get($uniqueFieldId)
+  const fields = bitStore.get($fields)
+  const styles = bitStore.get($styles)
+  const themeVars = bitStore.get($themeVars)
+  const staticStylesState = bitStore.get($staticStylesState)
 
   let processedFieldData = handleFieldExtraAttr(fieldData)
   if (!processedFieldData) return
@@ -96,7 +97,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
   const newFields = { ...fields, [newBlk]: processedFieldData }
 
-  setRecoil($fields, newFields)
+  bitStore.set($fields, newFields)
   sessionStorage.setItem('btcd-lc', '-')
 
   // add to history
@@ -109,15 +110,15 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   const fldType = processedFieldData.typ
 
   if (fldType === 'section' || fldType === 'repeater') {
-    const nestedLayouts = getRecoil($nestedLayouts)
-    setRecoil($nestedLayouts, produce(nestedLayouts, draftNestedLayouts => {
+    const nestedLayouts = bitStore.get($nestedLayouts)
+    bitStore.set($nestedLayouts, create(nestedLayouts, draftNestedLayouts => {
       draftNestedLayouts[newBlk] = { lg: [], md: [], sm: [] }
     }))
   }
 
   // add style
   const tempThemeVars = deepCopy(themeVars)
-  const newStyles = produce(styles, draftStyle => {
+  const newStyles = create(styles, draftStyle => {
     const globalTheme = draftStyle.theme
 
     if (globalTheme === 'bitformDefault') {
@@ -150,11 +151,11 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
       })
     }
   })
-  setRecoil($styles, newStyles)
-  setRecoil($themeVars, tempThemeVars)
+  bitStore.set($styles, newStyles)
+  bitStore.set($themeVars, tempThemeVars)
 
   if (paymentFields.includes(fldType)) {
-    setRecoil($staticStylesState, produce(staticStylesState, draftStaticStyleState => {
+    bitStore.set($staticStylesState, create(staticStylesState, draftStaticStyleState => {
       draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
       draftStaticStyleState.staticStyles['.form-loading::before'] = {
         position: 'absolute',
@@ -204,7 +205,7 @@ export const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
 }
 
 export const getInitHeightsForResizingTextarea = fldKey => {
-  const fields = getRecoil($fields)
+  const fields = bitStore.get($fields)
   const fldData = fields[fldKey]
   if (!fldData) return
   const fldType = fldData.typ
@@ -221,43 +222,43 @@ export const getInitHeightsForResizingTextarea = fldKey => {
 
 export const setResizingFldKey = (_, lay) => {
   const fldKey = lay.i
-  setRecoil($resizingFld, { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
+  bitStore.set($resizingFld, { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
 }
 
 export const setResizingWX = (lays, lay) => {
-  const resizingFld = getRecoil($resizingFld)
+  const resizingFld = bitStore.get($resizingFld)
   if (resizingFld.fieldKey) {
     const layout = lays.find(l => l.i === resizingFld.fieldKey)
-    const newResingFld = produce(resizingFld, draftResizingFld => {
+    const newResingFld = create(resizingFld, draftResizingFld => {
       draftResizingFld.w = layout.w
       draftResizingFld.x = layout.x
     })
-    setRecoil($resizingFld, newResingFld)
+    bitStore.set($resizingFld, newResingFld)
     return
   }
   const fldKey = lay.i
   const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
-  setRecoil($resizingFld, { ...resizingData, w: lay.w, x: lay.x })
+  bitStore.set($resizingFld, { ...resizingData, w: lay.w, x: lay.x })
 }
 
 export const removeFieldStyles = fldKey => {
-  const styles = getRecoil($styles)
-  const newStyles = produce(styles, prevStyles => produce(prevStyles, draftStyles => {
+  const styles = bitStore.get($styles)
+  const newStyles = create(styles, draftStyles => {
     delete draftStyles.fields[fldKey]
-  }))
-  setRecoil($styles, newStyles)
+  })
+  bitStore.set($styles, newStyles)
 }
 
 export const cloneLayoutItem = (fldKey, layouts) => {
-  const fields = getRecoil($fields)
-  const styles = getRecoil($styles)
-  const proModal = getRecoil($proModal)
-  const uniqueFieldId = getRecoil($uniqueFieldId)
-  const formID = getRecoil($formId)
-  const breakpoint = getRecoil($breakpoint)
+  const fields = bitStore.get($fields)
+  const styles = bitStore.get($styles)
+  const proModal = bitStore.get($proModal)
+  const uniqueFieldId = bitStore.get($uniqueFieldId)
+  const formID = bitStore.get($formId)
+  const breakpoint = bitStore.get($breakpoint)
 
   if (!IS_PRO) {
-    setRecoil(proModal, { show: true, ...proHelperData.fieldClone })
+    bitStore.set(proModal, { show: true, ...proHelperData.fieldClone })
     return
   }
   const fldData = fields[fldKey]
@@ -268,7 +269,7 @@ export const cloneLayoutItem = (fldKey, layouts) => {
 
   const allBreakpoints = ['sm', 'md', 'lg']
 
-  const newLayouts = produce(layouts, draft => {
+  const newLayouts = create(layouts, draft => {
     allBreakpoints.forEach(brkpnt => {
       const layIndx = layouts[brkpnt].findIndex(lay => lay.i === fldKey)
       const { y, h } = layouts[brkpnt][layIndx]
@@ -279,12 +280,12 @@ export const cloneLayoutItem = (fldKey, layouts) => {
   })
 
   const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
-  const oldFields = produce(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
+  const oldFields = create(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
   // eslint-disable-next-line no-param-reassign
-  setRecoil($fields, oldFields)
+  bitStore.set($fields, oldFields)
 
   // clone style
-  const newStyle = produce(styles, draftStyle => {
+  const newStyle = create(styles, draftStyle => {
     const fldStyle = draftStyle.fields[fldKey]
     const fldClasses = fldStyle.classes
     draftStyle.fields[newBlk] = { ...fldStyle }
@@ -294,7 +295,7 @@ export const cloneLayoutItem = (fldKey, layouts) => {
       draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
     })
   })
-  setRecoil($styles, newStyle)
+  bitStore.set($styles, newStyle)
 
   sessionStorage.setItem('btcd-lc', '-')
 
@@ -312,15 +313,15 @@ export const cloneLayoutItem = (fldKey, layouts) => {
   addToBuilderHistory({ event, type, state })
 
   // resetContextMenu()
-  setRecoil($contextMenu, {})
+  bitStore.set($contextMenu, {})
   return { newBlk, newFldName, newLayouts }
 }
 
 export const removeLayoutItem = (fldKey, layouts) => {
-  const fields = getRecoil($fields)
-  const breakpoint = getRecoil($breakpoint)
-  const deletedFldKey = getRecoil($deletedFldKey)
-  const staticStylesState = getRecoil($staticStylesState)
+  const fields = bitStore.get($fields)
+  const breakpoint = bitStore.get($breakpoint)
+  const deletedFldKey = bitStore.get($deletedFldKey)
+  const staticStylesState = bitStore.get($staticStylesState)
 
   const fldData = fields[fldKey]
   if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
@@ -336,28 +337,28 @@ export const removeLayoutItem = (fldKey, layouts) => {
     sm: layouts.sm.find(l => l.i === fldKey),
   }
   const newLayouts = filterLayoutItem(fldKey, layouts)
-  const tmpFields = produce(fields, draftFields => { delete draftFields[fldKey] })
+  const tmpFields = create(fields, draftFields => { delete draftFields[fldKey] })
 
-  setRecoil($fields, tmpFields)
-  setRecoil($selectedFieldId, null)
+  bitStore.set($fields, tmpFields)
+  bitStore.set($selectedFieldId, null)
   removeFieldStyles(fldKey)
-  const newDeletedFldKey = produce(deletedFldKey, drft => {
+  const newDeletedFldKey = create(deletedFldKey, drft => {
     if (!drft.includes(fldKey)) {
       drft.push(fldKey)
     }
   })
-  setRecoil($deletedFldKey, newDeletedFldKey)
+  bitStore.set($deletedFldKey, newDeletedFldKey)
   sessionStorage.setItem('btcd-lc', '-')
 
   const fldType = fldData?.typ
   if (paymentFields.includes(fldType)) {
-    const newStaticStyleState = produce(staticStylesState, draftStaticStyleState => {
+    const newStaticStyleState = create(staticStylesState, draftStaticStyleState => {
       delete draftStaticStyleState.staticStyles['.pos-rel']
       delete draftStaticStyleState.staticStyles['.form-loading::before']
       delete draftStaticStyleState.staticStyles['.form-loading::after']
       if (fldType === 'razorpay') delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
     })
-    setRecoil($staticStylesState, newStaticStyleState)
+    bitStore.set($staticStylesState, newStaticStyleState)
   }
 
   // add to history

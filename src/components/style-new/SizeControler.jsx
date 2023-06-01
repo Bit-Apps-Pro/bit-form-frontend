@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -13,15 +13,15 @@ import { assignNestedObj, getValueByObjPath, showDraggableModal } from './styleH
 export default function SizeControler({ subtitle, action, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
+  const [styles, setStyles] = useAtom($styles)
 
   const { object, paths } = objectPaths
   // const val = getValueByObjPath(styles, paths?.width || paths?.height)
   const val = `W: ${getValueByObjPath(styles, paths?.width)}, H: ${getValueByObjPath(styles, paths?.height)}`
 
   const clearHandler = () => {
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       if (object === 'styles') {
         assignNestedObj(drft, paths?.width, '')
         assignNestedObj(drft, paths?.height, '')

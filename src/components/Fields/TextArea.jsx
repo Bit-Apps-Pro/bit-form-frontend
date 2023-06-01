@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import validateForm from '../../user-frontend/validation'
 import { getAbsoluteElmHeight } from '../../Utils/FormBuilderHelper'
@@ -17,7 +17,7 @@ export default function TextArea({
   const [value, setValue] = useState(attr.val)
   const textAreaRef = useRef(null)
   const tempResize = useRef({ resize: false })
-  const setStyles = useSetRecoilState($styles)
+  const setStyles = useSetAtom($styles)
 
   useEffect(() => {
     if (resizingFld.fieldKey === fieldKey) {
@@ -32,7 +32,7 @@ export default function TextArea({
     if (tempResize.current.resize && !resizingFld.fieldKey) {
       tempResize.current.resize = false
       const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
-      setStyles(prvStyle => produce(prvStyle, drftStyle => {
+      setStyles(prvStyle => create(prvStyle, drftStyle => {
         assignNestedObj(drftStyle, getPropertyPath('height'), textAreaRef.current.style.height)
       }))
     }

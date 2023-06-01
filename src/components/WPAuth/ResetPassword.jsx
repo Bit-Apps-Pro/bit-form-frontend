@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useEffect } from 'react'
 import FieldMap from './FieldMap'
 
@@ -20,14 +20,14 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
   ]
 
   const inputHandler = (e) => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       const { name, value } = e.target
       draft[type][name] = value
     }))
   }
 
   useEffect(() => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       if (!draft[type]?.reset_map?.[0]?.resetField) {
         draft[type].reset_map = resetPasswordFields.filter(fld => fld.required).map(fl => ({ formField: '', resetField: fl.key, required: fl.required }))
       }
@@ -35,7 +35,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
   }, [])
 
   const handlePage = (e) => {
-    setDataConf(tmpConf => produce(tmpConf, draft => {
+    setDataConf(tmpConf => create(tmpConf, draft => {
       draft[type].redirect_url = e.target.value
     }))
   }

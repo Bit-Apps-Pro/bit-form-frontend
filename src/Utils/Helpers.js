@@ -1,10 +1,10 @@
 /* eslint-disable no-nested-ternary */
 
-import { getRecoil, resetRecoil, setRecoil } from 'recoil-nexus'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
+import bitStore from '../GlobalStates/BitStore'
 import {
-  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
+  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import {
@@ -542,57 +542,58 @@ export const compareBetweenVersions = (ver1, ver2) => {
 
 export const isFirefox = () => navigator.userAgent.includes('Firefox')
 
-export const resetRecoilStates = () => {
-  resetRecoil($additionalSettings)
-  resetRecoil($breakpoint)
-  resetRecoil($breakpointSize)
-  resetRecoil($builderHistory)
-  resetRecoil($builderHelperStates)
-  resetRecoil($builderHookStates)
-  resetRecoil($builderRightPanelScroll)
-  resetRecoil($builderSettings)
-  resetRecoil($confirmations)
-  resetRecoil($colorScheme)
-  resetRecoil($customCodes)
-  resetRecoil($draggingField)
-  resetRecoil($deletedFldKey)
-  resetRecoil($draggableModal)
-  resetRecoil($formId)
-  resetRecoil($formInfo)
-  resetRecoil($fieldLabels)
-  resetRecoil($fields)
-  resetRecoil($flags)
-  resetRecoil($integrations)
-  resetRecoil($isNewThemeStyleLoaded)
-  resetRecoil($layouts)
-  resetRecoil($mailTemplates)
-  resetRecoil($reports)
-  resetRecoil($reportId)
-  resetRecoil($selectedFieldId)
-  resetRecoil($updateBtn)
-  resetRecoil($unsplashMdl)
-  resetRecoil($unsplashImgUrl)
-  resetRecoil($workflows)
+export const getStatesToReset = () => [
+  $additionalSettings,
+  $breakpoint,
+  $breakpointSize,
+  $builderHistory,
+  $builderHelperStates,
+  $builderHookStates,
+  $builderRightPanelScroll,
+  $builderSettings,
+  $confirmations,
+  $colorScheme,
+  $customCodes,
+  $draggingField,
+  $deletedFldKey,
+  $draggableModal,
+  $formId,
+  $formInfo,
+  $fieldLabels,
+  $fields,
+  $flags,
+  $integrations,
+  $isNewThemeStyleLoaded,
+  $layouts,
+  $nestedLayouts,
+  $mailTemplates,
+  $reports,
+  $reportId,
+  $selectedFieldId,
+  $updateBtn,
+  $unsplashMdl,
+  $unsplashImgUrl,
+  $workflows,
 
-  resetRecoil($lightThemeColors)
-  resetRecoil($darkThemeColors)
+  $lightThemeColors,
+  $darkThemeColors,
 
-  resetRecoil($stylesLgLight)
-  resetRecoil($stylesLgDark)
-  resetRecoil($stylesMdLight)
-  resetRecoil($stylesMdDark)
-  resetRecoil($stylesSmLight)
-  resetRecoil($stylesSmDark)
+  $stylesLgLight,
+  $stylesLgDark,
+  $stylesMdLight,
+  $stylesMdDark,
+  $stylesSmLight,
+  $stylesSmDark,
 
-  resetRecoil($themeVarsLgLight)
-  resetRecoil($themeVarsLgDark)
-  resetRecoil($themeVarsMdLight)
-  resetRecoil($themeVarsMdDark)
-  resetRecoil($themeVarsSmLight)
-  resetRecoil($themeVarsSmDark)
+  $themeVarsLgLight,
+  $themeVarsLgDark,
+  $themeVarsMdLight,
+  $themeVarsMdDark,
+  $themeVarsSmLight,
+  $themeVarsSmDark,
 
-  resetRecoil($styles)
-}
+  $styles,
+]
 
 export const trimCSS = (cssStr = '') => cssStr.replace(/\/\*[^*]*\*+([^/][^*]*\*+)*\//g, '').replace(/\n/gm, '')
 
@@ -614,42 +615,42 @@ export const setFormReponseDataToStates = (responseData) => {
   const formsSessionDataFound = false
   if (!formsSessionDataFound) {
     // setLayouts(responseData.form_content.layout)
-    setRecoil($layouts, responseData.form_content.layout)
+    bitStore.set($layouts, responseData.form_content.layout)
     addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
   }
   if (!formsSessionDataFound) {
     // setFields(responseData.form_content.fields)
-    setRecoil($fields, responseData.form_content.fields)
+    bitStore.set($fields, responseData.form_content.fields)
     addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
   }
   if (!formsSessionDataFound) {
     // setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
-    setRecoil($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+    bitStore.set($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
   }
   // setworkFlows(responseData.workFlows)
-  setRecoil($workflows, responseData.workFlows)
+  bitStore.set($workflows, responseData.workFlows)
   // setAdditional(responseData.additional)
-  setRecoil($additionalSettings, responseData.additional)
+  bitStore.set($additionalSettings, responseData.additional)
   // setIntegration(responseData.formSettings.integrations)
-  setRecoil($integrations, responseData.formSettings.integrations)
+  bitStore.set($integrations, responseData.formSettings.integrations)
   // setConfirmations(responseData.formSettings.confirmation)
-  setRecoil($confirmations, responseData.formSettings.confirmation)
+  bitStore.set($confirmations, responseData.formSettings.confirmation)
   // setMailTem(responseData.formSettings.mailTem)
-  setRecoil($mailTemplates, responseData.formSettings.mailTem)
+  bitStore.set($mailTemplates, responseData.formSettings.mailTem)
   // if (!formsSessionDataFound && responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
-  if (!formsSessionDataFound && responseData.builderSettings) setRecoil($builderSettings, responseData.builderSettings)
+  if (!formsSessionDataFound && responseData.builderSettings) bitStore.set($builderSettings, responseData.builderSettings)
   // setReportId({
   //   id: responseData?.form_content?.report_id || defaultReport?.id,
   //   isDefault: responseData?.form_content?.report_id === null,
   // })
-  setRecoil($reportId, {
+  bitStore.set($reportId, {
     id: responseData?.form_content?.report_id || defaultReport?.id,
     isDefault: responseData?.form_content?.report_id === null,
   })
   // setFieldLabels(responseData.Labels)
-  setRecoil($fieldLabels, responseData.Labels)
+  bitStore.set($fieldLabels, responseData.Labels)
   // setReports(responseData.reports || [])
-  setRecoil($reports, responseData.reports || [])
+  bitStore.set($reports, responseData.reports || [])
 }
 
 export const getConfirmationStyle = (formData) => {
@@ -668,28 +669,28 @@ export const getConfirmationStyle = (formData) => {
 }
 
 export const setStyleRelatedStates = ({ themeVars, themeColors, styles }) => {
-  setRecoil($themeVarsLgLight, themeVars.lgLightThemeVars)
-  setRecoil($themeVarsLgDark, themeVars.lgDarkThemeVars)
-  setRecoil($themeVarsMdLight, themeVars.mdLightThemeVars)
-  setRecoil($themeVarsMdDark, themeVars.mdDarkThemeVars)
-  setRecoil($themeVarsSmLight, themeVars.smLightThemeVars)
-  setRecoil($themeVarsSmDark, themeVars.smDarkThemeVars)
+  bitStore.set($themeVarsLgLight, themeVars.lgLightThemeVars)
+  bitStore.set($themeVarsLgDark, themeVars.lgDarkThemeVars)
+  bitStore.set($themeVarsMdLight, themeVars.mdLightThemeVars)
+  bitStore.set($themeVarsMdDark, themeVars.mdDarkThemeVars)
+  bitStore.set($themeVarsSmLight, themeVars.smLightThemeVars)
+  bitStore.set($themeVarsSmDark, themeVars.smDarkThemeVars)
 
-  setRecoil($lightThemeColors, themeColors.lightThemeColors)
-  setRecoil($darkThemeColors, themeColors.darkThemeColors)
+  bitStore.set($lightThemeColors, themeColors.lightThemeColors)
+  bitStore.set($darkThemeColors, themeColors.darkThemeColors)
 
-  setRecoil($stylesLgLight, styles.lgLightStyles)
-  setRecoil($stylesLgDark, styles.lgDarkStyles)
-  setRecoil($stylesMdLight, styles.mdLightStyles)
-  setRecoil($stylesMdDark, styles.mdDarkStyles)
-  setRecoil($stylesSmLight, styles.smLightStyles)
-  setRecoil($stylesSmDark, styles.smDarkStyles)
+  bitStore.set($stylesLgLight, styles.lgLightStyles)
+  bitStore.set($stylesLgDark, styles.lgDarkStyles)
+  bitStore.set($stylesMdLight, styles.mdLightStyles)
+  bitStore.set($stylesMdDark, styles.mdDarkStyles)
+  bitStore.set($stylesSmLight, styles.smLightStyles)
+  bitStore.set($stylesSmDark, styles.smDarkStyles)
 }
 
 export const generateAndSaveAtomicCss = currentFormId => {
-  const styles = getRecoil($styles)
-  const lay = getRecoil($layouts)
-  const builderHelperStates = getRecoil($builderHelperStates)
+  const styles = bitStore.get($styles)
+  const lay = bitStore.get($layouts)
+  const builderHelperStates = bitStore.get($builderHelperStates)
   const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
   const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
   if (isStyleNotLoaded) return { layouts: sortedLayout }
@@ -722,22 +723,22 @@ export const generateAndSaveAtomicCss = currentFormId => {
 }
 
 export const generateUpdateFormData = (savedFormId) => {
-  const newFormId = getRecoil($newFormId)
-  const currentReport = getRecoil($reportSelector)
-  const fields = getRecoil($fields)
-  const formInfo = getRecoil($formInfo)
-  const reportId = getRecoil($reportId)
-  const additionalSettings = getRecoil($additionalSettings)
-  const workFlows = getRecoil($workflows)
-  const styles = getRecoil($styles)
-  const staticStylesState = getRecoil($staticStylesState)
-  const breakpointSize = getRecoil($breakpointSize)
-  const customCodes = getRecoil($customCodes)
-  const confirmations = getRecoil($confirmations)
-  const mailTemplates = getRecoil($mailTemplates)
-  const allIntegrations = getRecoil($integrations)
-  const builderSettings = getRecoil($builderSettings)
-  const deletedFldKey = getRecoil($deletedFldKey)
+  const newFormId = bitStore.get($newFormId)
+  const currentReport = bitStore.get($reportSelector)
+  const fields = bitStore.get($fields)
+  const formInfo = bitStore.get($formInfo)
+  const reportId = bitStore.get($reportId)
+  const additionalSettings = bitStore.get($additionalSettings)
+  const workFlows = bitStore.get($workflows)
+  const styles = bitStore.get($styles)
+  const staticStylesState = bitStore.get($staticStylesState)
+  const breakpointSize = bitStore.get($breakpointSize)
+  const customCodes = bitStore.get($customCodes)
+  const confirmations = bitStore.get($confirmations)
+  const mailTemplates = bitStore.get($mailTemplates)
+  const allIntegrations = bitStore.get($integrations)
+  const builderSettings = bitStore.get($builderSettings)
+  const deletedFldKey = bitStore.get($deletedFldKey)
   const { formName } = formInfo
   const {
     layouts,
@@ -827,7 +828,7 @@ export const generateUpdateFormData = (savedFormId) => {
 export const IS_PRO = (() => {
   let bits = {}
   try {
-    bits = getRecoil($bits)
+    bits = bitStore.get($bits)
   } catch (_) {
     bits = window?.bits
   }

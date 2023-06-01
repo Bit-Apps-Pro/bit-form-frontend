@@ -1,7 +1,7 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
@@ -14,7 +14,7 @@ import AutoResizeInput from './AutoResizeInput'
 export default function AdminLabelSettings() {
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const adminLabel = fieldData.adminLbl || ''
 
@@ -24,7 +24,7 @@ export default function AdminLabelSettings() {
     } else {
       fieldData.adminLbl = e.target.value
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Admin label updated: ${adminLabel || fieldData.adminLbl || fldKey}`, type: 'change_adminlabel', state: { fields: allFields, fldKey } })
   }
@@ -38,7 +38,7 @@ export default function AdminLabelSettings() {
       delete fieldData.adminLbl
     }
     const req = e.target.checked ? 'on' : 'off'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Admin label ${req}:  ${fieldData.adminLbl || adminLabel || fldKey}`, type: `adminlabel_${req}`, state: { fields: allFields, fldKey } })
   }

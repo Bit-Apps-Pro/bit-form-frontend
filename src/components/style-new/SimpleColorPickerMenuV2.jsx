@@ -2,10 +2,10 @@
 /* eslint-disable no-param-reassign */
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -18,12 +18,12 @@ import ColorPreview from './ColorPreview'
 
 function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
   const { css } = useFela()
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
   const [color, setColor] = useState()
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
-  const [themeColors, setThemeColors] = useRecoilState($themeColors)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [styles, setStyles] = useAtom($styles)
   const options = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -75,7 +75,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
 
     switch (action.type) {
       case 'global-accent-color':
-        setThemeColors(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => create(prvState, drft => {
           drft['--global-accent-color'] = hsla
           drft['--gah'] = h
           drft['--gas'] = `${s}%`
@@ -84,7 +84,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
         }))
         break
       case 'global-font-color':
-        setThemeColors(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => create(prvState, drft => {
           drft['--global-font-color'] = hsla
           drft['--gfh'] = Math.round(_h)
           drft['--gfs'] = `${s}%`
@@ -93,7 +93,7 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
         }))
         break
       case 'global-bg-color':
-        setThemeColors(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => create(prvState, drft => {
           drft['--global-bg-color'] = hsla
           drft['--gbg-h'] = Math.round(_h)
           drft['--gbg-s'] = `${s}%`
@@ -102,27 +102,27 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
         }))
         break
       case 'global-fld-bdr-clr':
-        setThemeColors(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => create(prvState, drft => {
           drft['--global-fld-bdr-clr'] = hsla
         }))
         break
       case 'global-fld-bg-color':
-        setThemeColors(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => create(prvState, drft => {
           drft['--global-fld-bg-color'] = hsla
         }))
         break
       case 'fw-bg':
-        setThemeColors(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => create(prvState, drft => {
           drft['--fld-wrp-bg'] = hsla
         }))
         break
       case 'individul-color':
-        setStyles(prvStyle => produce(prvStyle, drft => {
+        setStyles(prvStyle => create(prvStyle, drft => {
           drft.fields[objectPaths.fk].classes[objectPaths.selector][objectPaths.property] = hsla
         }))
         break
       default:
-        return setThemeVars(prvState => produce(prvState, drft => {
+        return setThemeVars(prvState => create(prvState, drft => {
           drft[`--${action.type}`] = hsla
         }))
     }
@@ -135,12 +135,12 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
 
     switch (action.type) {
       case 'global-fld-bdr-clr':
-        setThemeColors(prvState => produce(prvState, drft => {
+        setThemeColors(prvState => create(prvState, drft => {
           drft['--global-fld-bdr-clr'] = colorVar
         }))
         break
       default:
-        return setThemeVars(prvState => produce(prvState, drft => {
+        return setThemeVars(prvState => create(prvState, drft => {
           drft[`--${action.type}`] = colorVar
         }))
     }

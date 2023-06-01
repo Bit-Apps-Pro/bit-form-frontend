@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import LayerAccordion from '../CompSettings/StyleCustomize/ChildComp/LayerAccordion'
@@ -7,14 +7,14 @@ import { isLabelOverrideStyles, styleClasses } from '../style-new/styleHelpers'
 import NavBtn from './NavBtn'
 
 export default function ElementConfiguration({ fldKey }) {
-  const styles = useRecoilValue($styles)
+  const styles = useAtomValue($styles)
   const { formType, formID } = useParams()
   const navigate = useNavigate()
 
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldObj = fields[fldKey]
 
-  const selectedFieldKey = useRecoilValue($selectedFieldId)
+  const selectedFieldKey = useAtomValue($selectedFieldId)
 
   const styleHandler = (route) => {
     navigate(`/form/builder/${formType}/${formID}/field-theme-customize/${route}/${fldKey}`)

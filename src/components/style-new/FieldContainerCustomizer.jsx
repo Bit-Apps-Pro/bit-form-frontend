@@ -1,5 +1,5 @@
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
@@ -12,8 +12,8 @@ import SpacingControl from './SpacingControl'
 import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function FieldContainerCustomizer() {
-  const themeColors = useRecoilValue($themeColors)
-  const themeVars = useRecoilValue($themeVars)
+  const themeColors = useAtomValue($themeColors)
+  const themeVars = useAtomValue($themeVars)
   const { css } = useFela()
 
   const { '--fld-wrp-m': wrpMagin,

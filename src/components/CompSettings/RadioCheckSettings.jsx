@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { getRecoil } from 'recoil-nexus'
+import { useAtom, useAtomValue } from 'jotai'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -36,11 +35,11 @@ import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function RadioCheckSettings() {
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
   const { css } = useFela()
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const options = deepCopy(fields[fldKey].opt)
   const adminLabel = fieldData.adminLbl || ''
@@ -51,7 +50,7 @@ function RadioCheckSettings() {
   const min = fieldData.mn || ''
   const max = fieldData.mx || ''
   const dataSrc = fieldData?.customType?.type || 'fileupload'
-  const [styles, setStyles] = useRecoilState($styles)
+  const [styles, setStyles] = useAtom($styles)
 
   let fieldObject = null
   let disabled = false
@@ -66,7 +65,7 @@ function RadioCheckSettings() {
   function setRound({ target: { checked } }) {
     const fldClsSelector = fieldData.typ === 'radio' ? 'rdo' : 'ck'
     const path = `fields->${fldKey}->classes->.${fldKey}-${fldClsSelector}->border-radius`
-    const newStyles = produce(styles, drft => {
+    const newStyles = create(styles, drft => {
       let bdr = '5px'
       if (checked) {
         fieldData.round = true
@@ -77,7 +76,7 @@ function RadioCheckSettings() {
         assignNestedObj(drft, path, bdr)
       }
     })
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     setStyles(newStyles)
     addToBuilderHistory({ event: `Option rounded ${checked ? 'on' : 'off'}`, type: 'set_round', state: { fields: allFields, styles: newStyles, fldKey } })
@@ -103,7 +102,7 @@ function RadioCheckSettings() {
       fieldData.err.mn.show = true
     }
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Min value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
     if (e.target.value >= 1 && !fieldData.req) setRequired({ target: { checked: true } })
@@ -120,7 +119,7 @@ function RadioCheckSettings() {
       fieldData.err.mx.dflt = `<p style="margin:0">Maximum ${e.target.value} option${Number(e.target.value) > 1 ? 's' : ''}</p>`
       fieldData.err.mx.show = true
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Max value updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } })
   }
@@ -132,7 +131,7 @@ function RadioCheckSettings() {
     } else {
       delete fieldData.valid.disableOnMax
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Disable on max selected ${e.target.checked ? 'on' : 'off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_disable_on_max', state: { fields: allFields, fldKey } })
   }
@@ -140,7 +139,7 @@ function RadioCheckSettings() {
   const handleOptions = newOpts => {
     const reqOpts = newOpts.filter(opt => opt.req)
     reqOpts.length && setRequired({ target: { checked: true } })
-    const allFields = produce(getRecoil($fields), draft => {
+    const allFields = create(fields, draft => {
       draft[fldKey].opt = newOpts
       if (reqOpts.length && draft[fldKey].err.req) {
         draft[fldKey].err.req.custom = true
@@ -162,9 +161,9 @@ function RadioCheckSettings() {
     } else {
       fieldData.optionCol = value
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
 
-    const newStyles = produce(styles, drft => {
+    const newStyles = create(styles, drft => {
       const gridStyle = {
         display: 'grid',
         'grid-template-columns': `repeat(${value}, 1fr)`,

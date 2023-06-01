@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/jsx-pascal-case */
 import { useEffect } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { $builderHookStates } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import ChevronDownIcn from '../Icons/ChevronDownIcn'
@@ -30,7 +30,7 @@ export default function FieldBlockWrapper({
     navigateToStyle(layoutItem.i)
   }
 
-  const setBuilderHookState = useSetRecoilState($builderHookStates)
+  const setBuilderHookState = useSetAtom($builderHookStates)
 
   useEffect(() => {
     setBuilderHookState(prv => ({ ...prv, reCalculateFieldHeights: prv.reCalculateFieldHeights + 1 }))

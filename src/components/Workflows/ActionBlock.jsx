@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 // import MtInput from './MtInput'
@@ -11,10 +11,10 @@ import CalculatorField from '../Utilities/CalculationField/CalculatorField'
 import MtSelect from '../Utilities/MtSelect'
 
 function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
-  const setWorkflows = useSetRecoilState($workflows)
-  const fields = useRecoilValue($fields)
-  const formFields = useRecoilValue($fieldsArr)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
+  const setWorkflows = useSetAtom($workflows)
+  const fields = useAtomValue($fields)
+  const formFields = useAtomValue($fieldsArr)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { css } = useFela()
   let fieldKey = ''
   let type = ''
@@ -65,7 +65,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   }
 
   const changeAction = val => {
-    setWorkflows(prv => produce(prv, draft => {
+    setWorkflows(prv => create(prv, draft => {
       const { fields: fldActions } = draft[lgcGrpInd].conditions[condGrpInd].actions
       fldActions[actionInd].action = val
     }))
@@ -73,7 +73,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   }
 
   const changeAtnVal = val => {
-    setWorkflows(prv => produce(prv, draft => {
+    setWorkflows(prv => create(prv, draft => {
       const { fields: fldActions } = draft[lgcGrpInd].conditions[condGrpInd].actions
       fldActions[actionInd].val = val
     }))
@@ -81,7 +81,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   }
 
   const changeAtnField = val => {
-    setWorkflows(prv => produce(prv, draft => {
+    setWorkflows(prv => create(prv, draft => {
       const { fields: fldActions } = draft[lgcGrpInd].conditions[condGrpInd].actions
       fldActions[actionInd].field = val
       fldActions[actionInd].val = ''
@@ -90,7 +90,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   }
 
   const delAction = () => {
-    setWorkflows(prv => produce(prv, draft => {
+    setWorkflows(prv => create(prv, draft => {
       const { fields: fldActions } = draft[lgcGrpInd].conditions[condGrpInd].actions
       if (fldActions.length > 1) {
         fldActions.splice(actionInd, 1)

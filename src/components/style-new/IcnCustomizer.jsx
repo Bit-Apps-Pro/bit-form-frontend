@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import ut from '../../styles/2.utilities'
@@ -21,8 +21,8 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function IcnCustomizer({ elementKey }) {
   const { css } = useFela()
   const { element, fieldKey } = useParams()
-  const themeColors = useRecoilValue($themeColors)
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
+  const themeColors = useAtomValue($themeColors)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
   const weightVar = `--${elementKey}-w`
   const heightVar = `--${elementKey}-h`
 
@@ -36,7 +36,7 @@ export default function IcnCustomizer({ elementKey }) {
   const icnUnit = (varName) => getStrFromStr(themeVars[varName])
 
   const updateState = (varName, value = '') => {
-    setThemeVars(prvStyle => produce(prvStyle, drftStyle => {
+    setThemeVars(prvStyle => create(prvStyle, drftStyle => {
       drftStyle[varName] = value
     }))
     addToBuilderHistory(generateHistoryData(element, fieldKey, varName, value, { themeVars: getLatestState('themeVars') }))

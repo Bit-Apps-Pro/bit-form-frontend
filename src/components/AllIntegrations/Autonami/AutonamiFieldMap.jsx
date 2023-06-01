@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -8,7 +8,7 @@ import MtInput from '../../Utilities/MtInput'
 export default function AutonamiFieldMap({ i, formFields, field, autonamiConf, setAutonamiConf }) {
   const isRequired = field.required
   const notResquiredField = autonamiConf?.default?.fields && Object.values(autonamiConf?.default?.fields).filter((f => !f.required))
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   const addFieldMap = (indx) => {

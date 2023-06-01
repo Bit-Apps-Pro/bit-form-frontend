@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import ut from '../../../styles/2.utilities'
 import FieldStyle from '../../../styles/FieldStyle.style'
@@ -16,7 +16,7 @@ import ErrorMessageSettings from './ErrorMessageSettings'
 
 export default function OtherOptionSettings() {
   const { fieldKey: fldKey } = useParams()
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
   const { css } = useFela()
 
@@ -37,7 +37,7 @@ export default function OtherOptionSettings() {
       delete fieldData.addOtherOpt
     }
     const evnt = e.target.checked ? 'Add' : 'Remove'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({
       event: `${evnt} Other Option: ${fieldData.lbl || adminLabel || fldKey}`,
@@ -59,7 +59,7 @@ export default function OtherOptionSettings() {
     }
 
     const evnt = e.target.checked ? 'Requred' : 'Optional'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${evnt} Required Other Option: ${fieldData.lbl || adminLabel || fldKey}`, type: `${evnt.toLowerCase()}_Other_Option`, state: { fields: allFields, fldKey } })
   }
@@ -73,7 +73,7 @@ export default function OtherOptionSettings() {
       delete fieldData.otherInpPh
     }
     const req = e.target.checked ? 'Show' : 'Hide'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${req} Placeholder: ${fieldData.lbl || adminLabel || fldKey}`, type: `${req.toLowerCase()}_placeholder`, state: { fields: allFields, fldKey } })
   }
@@ -84,7 +84,7 @@ export default function OtherOptionSettings() {
     } else {
       fieldData.otherInpPh = e.target.value
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Other Input Placeholder updated: ${fieldData.lbl || adminLabel || fldKey}`, type: 'change_placeholder', state: { fields: allFields, fldKey } })
   }

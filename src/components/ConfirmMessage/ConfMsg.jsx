@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { memo, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import { $confirmations, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -21,9 +21,9 @@ import Message from './Message'
 
 function ConfMsg({ removeIntegration }) {
   const [confMdl, setConfMdl] = useState({ show: false, action: null })
-  const [allConf, setAllConf] = useRecoilState($confirmations)
-  const setUpdateBtn = useSetRecoilState($updateBtn)
-  const setStyles = useSetRecoilState($styles)
+  const [allConf, setAllConf] = useAtom($confirmations)
+  const setUpdateBtn = useSetAtom($updateBtn)
+  const setStyles = useSetAtom($styles)
   const allConfirmations = deepCopy(allConf)
   const { css } = useFela()
 
@@ -45,7 +45,7 @@ function ConfMsg({ removeIntegration }) {
       config: msgDefaultConfig,
     }
     const { msgType, position, animation, styles: defaultStyle } = msgDefaultConfig || {}
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       drft.confirmations.push({
         confMsgId: TEMP_CONF_ID,
         style: confirmMsgCssStyles('formId', TEMP_CONF_ID, msgType, position, animation, defaultStyle),
@@ -67,7 +67,7 @@ function ConfMsg({ removeIntegration }) {
   const rmvMsg = async i => {
     const tmpData = allConfirmations.type.successMsg.splice(i, 1)[0]
     setConfMdl({ show: false })
-    setStyles(prvStyle => produce(prvStyle, drft => {
+    setStyles(prvStyle => create(prvStyle, drft => {
       const tempId = tmpData.id || `_tmp_${i}_conf_id`
       drft.confirmations = drft.confirmations.filter(confObj => confObj.confMsgId !== tempId)
     }))

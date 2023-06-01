@@ -1,6 +1,6 @@
-import { produce } from 'immer'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useAtom, useSetAtom } from 'jotai'
 import { $draggableModal } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
@@ -13,11 +13,11 @@ import { assignNestedObj, getObjByKey, getValueByObjPath, showDraggableModal } f
 
 export default function TextDecorationControl({ subtitle, value, objectPaths, id, allowImportant }) {
   const { css } = useFela()
-  const setThemeColors = useSetRecoilState($themeColors)
-  const [draggableModel, setDraggableModal] = useRecoilState($draggableModal)
+  const setThemeColors = useSetAtom($themeColors)
+  const [draggableModel, setDraggableModal] = useAtom($draggableModal)
 
-  const [themeVars, setThemeVars] = useRecoilState($themeVars)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [themeVars, setThemeVars] = useAtom($themeVars)
+  const [styles, setStyles] = useAtom($styles)
 
   const stateObj = getObjByKey(objectPaths.object, { themeVars, styles })
   const { paths } = objectPaths
@@ -28,17 +28,17 @@ export default function TextDecorationControl({ subtitle, value, objectPaths, id
     switch (objectPaths.object) {
       case 'themeColors':
       case 'themeVars':
-        setThemeVars(prvThemeVars => produce(prvThemeVars, drft => {
+        setThemeVars(prvThemeVars => create(prvThemeVars, drft => {
           assignNestedObj(drft, paths['text-decoration-line'], '')
           assignNestedObj(drft, paths['text-decoration-style'], '')
           assignNestedObj(drft, paths['text-decoration-thickness'], '')
         }))
-        setThemeColors(prvThemeColors => produce(prvThemeColors, drft => {
+        setThemeColors(prvThemeColors => create(prvThemeColors, drft => {
           assignNestedObj(drft, paths['text-decoration-color'], '')
         }))
         break
       case 'styles':
-        setStyles(prvState => produce(prvState, drft => {
+        setStyles(prvState => create(prvState, drft => {
           Object.keys(paths).map(propPathKey => {
             assignNestedObj(drft, paths[propPathKey], '')
           })

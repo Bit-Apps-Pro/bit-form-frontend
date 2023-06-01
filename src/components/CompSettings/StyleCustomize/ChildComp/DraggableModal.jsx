@@ -3,7 +3,7 @@ import { lazy, memo, Suspense, useEffect, useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import { useFela } from 'react-fela'
 import { useLocation } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { $draggableModal } from '../../../../GlobalStates/GlobalStates'
 import CloseIcn from '../../../../Icons/CloseIcn'
 import ut from '../../../../styles/2.utilities'
@@ -86,7 +86,7 @@ const setTitle = (component) => {
 
 function DraggableModal({ setBuilderPointerEventNone }) {
   const { css } = useFela()
-  const [draggableModal, setDraggableModal] = useRecoilState($draggableModal)
+  const [draggableModal, setDraggableModal] = useAtom($draggableModal)
   const {
     show, position, component, width, stateObjName, propertyPath, propertyArray, mainTitle, subtitle, action, value, defaultValue, objectPaths, state, id, fldKey, hslaPaths, canSetVariable,
   } = draggableModal

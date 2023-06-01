@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { __ } from '../../../Utils/i18nwrap'
@@ -21,7 +21,7 @@ export default function SendFoxListFieldMap({ i, formFields, field, sendFoxConf,
   const requiredFlds = sendFoxConf?.listFields.filter(fld => fld.required === true) || []
   const nonRequiredFlds = sendFoxConf?.listFields.filter(fld => fld.required === false) || []
 
-  const bits = useRecoilValue($bits)
+  const bits = useAtomValue($bits)
   const { isPro } = bits
 
   return (

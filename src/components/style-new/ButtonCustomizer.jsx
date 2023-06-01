@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 import { useFela } from 'react-fela'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
@@ -16,7 +16,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 
 export default function ButtonCustomizer() {
   const { css } = useFela()
-  const themeColors = useRecoilValue($themeColors)
+  const themeColors = useAtomValue($themeColors)
 
   const { // '--btn-bgc': btnBgc,
     '--btn-bg': btnBg,

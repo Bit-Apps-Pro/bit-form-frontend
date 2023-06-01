@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { useParams } from 'react-router-dom'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../Utils/Helpers'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
@@ -10,7 +10,7 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 
 function DividerSettings() {
   const { fieldKey: fldKey } = useParams()
-  const fields = useRecoilValue($fields)
+  const fields = useAtomValue($fields)
   const fieldData = deepCopy(fields[fldKey])
 
   return (

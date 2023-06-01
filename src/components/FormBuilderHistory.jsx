@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
   $breakpoint,
   $builderHistory,
@@ -44,18 +44,18 @@ export default function FormBuilderHistory() {
   const { css } = useFela()
   const [disabled, setDisabled] = useState(false)
   const [showHistory, setShowHistory] = useState(null)
-  const setFields = useSetRecoilState($fields)
-  const setLayouts = useSetRecoilState($layouts)
-  const setColorScheme = useSetRecoilState($colorScheme)
-  const setBreakpoint = useSetRecoilState($breakpoint)
-  const setStyles = useSetRecoilState($styles)
-  const setThemeColors = useSetRecoilState($themeColors)
-  const setThemeVars = useSetRecoilState($themeVars)
-  const setAllStyles = useSetRecoilState($allStyles)
-  const setAllThemeColors = useSetRecoilState($allThemeColors)
-  const setAllThemeVars = useSetRecoilState($allThemeVars)
-  const [builderHistory, setBuilderHistory] = useRecoilState($builderHistory)
-  const setBuilderHookStates = useSetRecoilState($builderHookStates)
+  const setFields = useSetAtom($fields)
+  const setLayouts = useSetAtom($layouts)
+  const setColorScheme = useSetAtom($colorScheme)
+  const setBreakpoint = useSetAtom($breakpoint)
+  const setStyles = useSetAtom($styles)
+  const setThemeColors = useSetAtom($themeColors)
+  const setThemeVars = useSetAtom($themeVars)
+  const setAllStyles = useSetAtom($allStyles)
+  const setAllThemeColors = useSetAtom($allThemeColors)
+  const setAllThemeVars = useSetAtom($allThemeVars)
+  const [builderHistory, setBuilderHistory] = useAtom($builderHistory)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
   const rowVirtualizer = useRef(null)
   const { active, histories } = builderHistory
 

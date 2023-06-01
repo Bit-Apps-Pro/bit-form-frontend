@@ -1,11 +1,11 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { $btcbi } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import { SpecialTagField } from '../../../Utils/StaticData/SpecialTagField'
 
 export default function OneDriveFieldMap({ i, formFields, field, oneDriveConf, setOneDriveConf }) {
-  const { isPro } = useRecoilValue($btcbi)
+  const { isPro } = useAtomValue($btcbi)
 
   const handleFieldMapping = (event, index) => {
     const newConf = { ...oneDriveConf }
