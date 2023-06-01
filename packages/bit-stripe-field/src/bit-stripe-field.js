@@ -107,7 +107,7 @@ export default class BitStripeField {
   }
 
   #displayErrorMsg(msg = '') {
-    const errWrp = bfSelect(`#form-${this.#contentId} .${this.#fieldKey}-err-wrp`)
+    const errWrp = bfSelect(`${this.#formSelector} .${this.#fieldKey}-err-wrp`)
     const errTxt = bfSelect(`.${this.#fieldKey}-err-txt`, errWrp)
     const errMsg = bfSelect(`.${this.#fieldKey}-err-msg`, errWrp)
     if (msg) {
@@ -115,7 +115,7 @@ export default class BitStripeField {
       errTxt.innerHTML = msg
       setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
       setStyleProperty(errWrp, 'opacity', 1)
-      const fld = this.#querySelector(`#form-${this.#contentId} .btcd-fld-itm.${this.#fieldKey}`)
+      const fld = this.#querySelector(`${this.#formSelector} .btcd-fld-itm.${this.#fieldKey}`)
       scrollToFld(fld)
     } else {
       errTxt.innerHTML = ''
@@ -172,13 +172,13 @@ export default class BitStripeField {
           if (this.#config?.linkAuthentication?.active) {
             const email = this.#getDynamicValue(this.#config.linkAuthentication.emailFld)
             const linkAuthenticationElm = this.#elements.create('linkAuthentication', { defaultValues: { email } })
-            const stripeAuthWrp = this.#querySelector(`#${this.#fieldKey}-stripe-auth-wrp`)
+            const stripeAuthWrp = this.#querySelector(`${this.#formSelector} .${this.#fieldKey}-stripe-auth-wrp`)
             linkAuthenticationElm.mount(stripeAuthWrp)
           }
           if (this.#config?.address?.active) {
             const { address } = this.#config
             const addressElm = this.#elements.create('address', address)
-            const stripeAddrWrp = this.#querySelector(`#${this.#fieldKey}-stripe-addr-wrp`)
+            const stripeAddrWrp = this.#querySelector(`${this.#formSelector} .${this.#fieldKey}-stripe-addr-wrp`)
             addressElm.mount(stripeAddrWrp)
           }
           this.#paymentElement.mount(this.#stripeWrpSelector)
@@ -400,11 +400,15 @@ export default class BitStripeField {
   }
 
   destroy() {
+    this.#paymentElement?.destroy()
     const stripeFldElm = this.#querySelector(`.${this.#fieldKey}-stripe-fld`)
-    stripeFldElm.innerHTML = ''
+    const stripeAuthWrpElm = this.#querySelector(`.${this.#fieldKey}-stripe-auth-wrp`)
+    const stripeAddrWrpElm = this.#querySelector(`.${this.#fieldKey}-stripe-addr-wrp`)
     stripeFldElm.classList.add('d-none')
+    stripeFldElm.innerHTML = ''
     this.#stripeWrpSelector.innerHTML = ''
-    this.#paymentElement.destroy()
+    if (stripeAuthWrpElm) stripeAuthWrpElm.innerHTML = ''
+    if (stripeAddrWrpElm) stripeAddrWrpElm.innerHTML = ''
   }
 
   reset() {
