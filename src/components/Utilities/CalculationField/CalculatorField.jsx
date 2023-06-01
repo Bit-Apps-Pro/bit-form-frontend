@@ -3,12 +3,12 @@
 /* eslint-disable no-param-reassign */
 
 import Tippy from '@tippyjs/react'
+import { useAtomValue } from 'jotai'
+import { create } from 'mutative'
 import { useRef, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'jotai'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
-import { useImmer } from 'use-immer'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import BdrDottedIcn from '../../../Icons/BdrDottedIcn'
 import { makeFieldsArrByLabel } from '../../../Utils/Helpers'
@@ -23,8 +23,8 @@ function CalculatorField({
   const { css } = useFela()
   const fields = useAtomValue($fields)
   const fieldArr = makeFieldsArrByLabel(fields)
-  const [expressions, setExpressions] = useImmer(() => initialExpression(value, fieldArr))
-  const [caretPosition, setCaretPosition] = useImmer(expressions.length)
+  const [expressions, setExpressions] = useState(() => initialExpression(value, fieldArr))
+  const [caretPosition, setCaretPosition] = useState(expressions.length)
   const [keyboardActive, setKeyboardActive] = useState(false)
   const expRef = useRef(null)
   const enableCalculator = expressions.length > 0
@@ -57,13 +57,15 @@ function CalculatorField({
   }
 
   const onFocusInAction = () => {
-    !keyboardActive && setExpressions(preExp => { preExp.splice(caretPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } }) })
+    !keyboardActive && setExpressions(oldExp => create(oldExp, draftExp => {
+      draftExp.splice(caretPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
+    }))
   }
 
   const inputKeyPressAction = (event) => {
     const { key } = event
     const newPosition = event.target.selectionEnd
-    setCaretPosition(oldPosition => oldPosition = newPosition)
+    setCaretPosition(newPosition)
     if (enableCalculator) keyPressAction({ key })
   }
 
@@ -72,66 +74,66 @@ function CalculatorField({
     event.preventDefault && event.preventDefault()
     if ((key === 'ArrowUp' || key === 'Home') && caretPosition > 0) {
       setExpressions(oldExp => {
-        oldExp = oldExp.filter(exp => exp.type !== 'caret')
-        oldExp.unshift({ id: 0, type: 'caret', dataObj: { content: '' } })
-        return oldExp
+        const exps = oldExp.filter(exp => exp.type !== 'caret')
+        exps.unshift({ id: 0, type: 'caret', dataObj: { content: '' } })
+        return exps
       })
-      setCaretPosition(oldPosition => oldPosition = 0)
+      setCaretPosition(0)
     } else if ((key === 'ArrowDown' || key === 'End') && caretPosition < expressions.length - 1) {
       const newCaretPos = expressions.length - 1
       setExpressions(oldExp => {
-        oldExp = oldExp.filter(exp => exp.type !== 'caret')
-        oldExp.push({ id: 0, type: 'caret', dataObj: { content: '' } })
-        return oldExp
+        const exps = oldExp.filter(exp => exp.type !== 'caret')
+        exps.push({ id: 0, type: 'caret', dataObj: { content: '' } })
+        return exps
       })
-      setCaretPosition(oldPosition => oldPosition = newCaretPos)
+      setCaretPosition(newCaretPos)
     } else if (key === 'ArrowLeft' && caretPosition > 0) {
       const newCaretPos = caretPosition - 1
-      setCaretPosition(oldPosition => oldPosition = newCaretPos)
-      setExpressions(oldExp => {
-        [oldExp[newCaretPos], oldExp[newCaretPos + 1]] = [oldExp[newCaretPos + 1], oldExp[newCaretPos]]
-      })
+      setCaretPosition(newCaretPos)
+      setExpressions(oldExp => create(oldExp, draftExp => {
+        [draftExp[newCaretPos], draftExp[newCaretPos + 1]] = [draftExp[newCaretPos + 1], draftExp[newCaretPos]]
+      }))
     } else if (key === 'ArrowRight' && caretPosition < expressions.length - 1) {
       const newCaretPos = caretPosition + 1
 
-      setCaretPosition(oldPosition => oldPosition = newCaretPos)
-      setExpressions(oldExp => {
-        [oldExp[newCaretPos - 1], oldExp[newCaretPos]] = [oldExp[newCaretPos], oldExp[newCaretPos - 1]]
-      })
+      setCaretPosition(newCaretPos)
+      setExpressions(oldExp => create(oldExp, draftExp => {
+        [draftExp[newCaretPos - 1], draftExp[newCaretPos]] = [draftExp[newCaretPos], draftExp[newCaretPos - 1]]
+      }))
     } else if (key === 'Backspace') {
       if (caretPosition > 0) {
-        setExpressions(oldState => oldState = oldState.slice(0, caretPosition - 1).concat(oldState.slice(caretPosition)))
-        setCaretPosition(oldPosition => oldPosition -= 1)
+        setExpressions(oldState => oldState.slice(0, caretPosition - 1).concat(oldState.slice(caretPosition)))
+        setCaretPosition(oldPosition => oldPosition - 1)
       }
     } else if (key === 'Delete') {
       if (caretPosition < expressions.length) {
-        setExpressions(oldState => oldState = oldState.slice(0, caretPosition + 1).concat(oldState.slice(caretPosition + 2)))
+        setExpressions(oldState => oldState.slice(0, caretPosition + 1).concat(oldState.slice(caretPosition + 2)))
       }
     } else if (/^\s{1}/.test(key)) {
-      setExpressions(oldState => {
-        oldState.splice(caretPosition, 0, { type: 'space', dataObj: { content: key } })
-      })
-      setCaretPosition(oldPosition => oldPosition += 1)
-    } else if ((!isNaN(key)) || key === '.') {
-      setExpressions(oldState => {
-        oldState.splice(caretPosition, 0, { type: 'number', dataObj: { content: key } })
-      })
-      setCaretPosition(oldPosition => oldPosition += 1)
+      setExpressions(oldExp => create(oldExp, draftExp => {
+        draftExp.splice(caretPosition, 0, { type: 'space', dataObj: { content: key } })
+      }))
+      setCaretPosition(oldPosition => oldPosition + 1)
+    } else if ((!Number.isNaN(key)) || key === '.') {
+      setExpressions(oldExp => create(oldExp, draftExp => {
+        draftExp.splice(caretPosition, 0, { type: 'number', dataObj: { content: key } })
+      }))
+      setCaretPosition(oldPosition => oldPosition + 1)
     } else if ('+-*/(),<>'.indexOf(key) !== -1) {
-      setExpressions(oldState => {
-        oldState.splice(caretPosition, 0, { type: 'operator', dataObj: { content: key } })
-      })
-      setCaretPosition(oldPosition => oldPosition += 1)
+      setExpressions(oldExp => create(oldExp, draftExp => {
+        draftExp.splice(caretPosition, 0, { type: 'operator', dataObj: { content: key } })
+      }))
+      setCaretPosition(oldPosition => oldPosition + 1)
     } else if (/^[!@#$%^&*(),.?"':{}|_<>]$/.test(key)) {
-      setExpressions(oldState => {
-        oldState.splice(caretPosition, 0, { type: 'symbol', dataObj: { content: key } })
-      })
-      setCaretPosition(oldPosition => oldPosition += 1)
+      setExpressions(oldExp => create(oldExp, draftExp => {
+        draftExp.splice(caretPosition, 0, { type: 'symbol', dataObj: { content: key } })
+      }))
+      setCaretPosition(oldPosition => oldPosition + 1)
     } else if (/^([A-Z]|[a-z]){1}\b/.test(key)) {
-      setExpressions(oldState => {
-        oldState.splice(caretPosition, 0, { type: 'letters', dataObj: { content: key } })
-      })
-      setCaretPosition(oldPosition => oldPosition += 1)
+      setExpressions(oldExp => create(oldExp, draftExp => {
+        draftExp.splice(caretPosition, 0, { type: 'letters', dataObj: { content: key } })
+      }))
+      setCaretPosition(oldPosition => oldPosition + 1)
     }
   }
 
@@ -140,36 +142,36 @@ function CalculatorField({
     if (side === 'straight') {
       if (caretPosition !== newPosition) {
         setExpressions(oldExpression => {
-          oldExpression = oldExpression.filter(exp => exp.type !== 'caret')
-          oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
-          return oldExpression
+          const exps = oldExpression.filter(exp => exp.type !== 'caret')
+          exps.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
+          return exps
         })
-        setCaretPosition(oldPosition => oldPosition = newPosition)
+        setCaretPosition(newPosition)
       }
     } else if (side === 'before' && caretPosition !== newPosition - 1) {
       if (caretPosition < newPosition) newPosition -= 1
       setExpressions(oldExpression => {
-        oldExpression = oldExpression.filter(exp => exp.type !== 'caret')
-        oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
-        return oldExpression
+        const exps = oldExpression.filter(exp => exp.type !== 'caret')
+        exps.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
+        return exps
       })
-      setCaretPosition(oldPosition => oldPosition = newPosition)
+      setCaretPosition(newPosition)
     } else if (side === 'after' && caretPosition !== newPosition + 1) {
       newPosition += 1
       if (caretPosition < newPosition) newPosition -= 1
       setExpressions(oldExpression => {
-        oldExpression = oldExpression.filter(exp => exp.type !== 'caret')
-        oldExpression.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
-        return oldExpression
+        const exps = oldExpression.filter(exp => exp.type !== 'caret')
+        exps.splice(newPosition, 0, { id: 0, type: 'caret', dataObj: { content: '' } })
+        return exps
       })
-      setCaretPosition(oldPosition => oldPosition = newPosition)
+      setCaretPosition(newPosition)
     }
   }
 
   /* Input Click action for Specified caret Position */
   const inputClickAction = (event) => {
     const newPosition = event.target.selectionStart
-    setCaretPosition(oldPosition => oldPosition = newPosition)
+    setCaretPosition(newPosition)
   }
 
   /* Calculator Field Click Action For Specified Caret Position */
@@ -234,33 +236,30 @@ function CalculatorField({
     if (expressions.length === 0) {
       if (btnType === 'back' && value) {
         onChange(value.slice(0, caretPosition - 1) + value.slice(caretPosition))
-        setCaretPosition(oldPosition => oldPosition -= (valueLength || 1))
+        setCaretPosition(oldPosition => oldPosition - (valueLength || 1))
       } else if (btnType !== 'field') {
         const newValue = value.slice(0, caretPosition) + dataObj.content + value.slice(caretPosition)
-        setCaretPosition(oldPosition => oldPosition += (valueLength || 1))
+        setCaretPosition(oldPosition => oldPosition + (valueLength || 1))
         onChange(newValue)
       } else {
         const newValue = `${value.slice(0, caretPosition)}\${${dataObj.content}}${value.slice(caretPosition)}`
         const newExp = initialExpression(newValue, fieldArr)
         setExpressions(newExp)
-        setCaretPosition(oldPosition => oldPosition += (valueLength || 1))
+        setCaretPosition(oldPosition => oldPosition + (valueLength || 1))
       }
     } else if (btnType === 'back') {
       if (caretPosition > 0) {
-        setExpressions(oldExpression => oldExpression = oldExpression.slice(0, caretPosition - 1).concat(oldExpression.slice(caretPosition)))
-        setCaretPosition(oldPosition => oldPosition -= (valueLength || 1))
+        setExpressions(oldExpression => oldExpression.slice(0, caretPosition - 1).concat(oldExpression.slice(caretPosition)))
+        setCaretPosition(oldPosition => oldPosition - (valueLength || 1))
       }
     } else if (dataObj.isFunction) {
       dataObj.content = dataObj.content.slice(0, dataObj.content.indexOf('('))
-      setExpressions(oldExpression => {
-        oldExpression = oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }, { id: id + 1, type: 'operator', dataObj: { content: '(' } }], oldExpression.slice(caretPosition, caretPosition + 1), [{ id: id + 2, type: 'operator', dataObj: { content: ')' } }], oldExpression.slice(caretPosition + 1))
-        return oldExpression
-      })
-      setCaretPosition(oldPosition => oldPosition += (valueLength || 2))
+      setExpressions(oldExpression => oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }, { id: id + 1, type: 'operator', dataObj: { content: '(' } }], oldExpression.slice(caretPosition, caretPosition + 1), [{ id: id + 2, type: 'operator', dataObj: { content: ')' } }], oldExpression.slice(caretPosition + 1)))
+      setCaretPosition(oldPosition => oldPosition + (valueLength || 2))
     } else {
-      setExpressions(oldExpression => oldExpression = oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }], oldExpression.slice(caretPosition)))
+      setExpressions(oldExpression => oldExpression.slice(0, caretPosition).concat([{ id, type: btnType, dataObj }], oldExpression.slice(caretPosition)))
 
-      setCaretPosition(oldPosition => oldPosition += (valueLength || 1))
+      setCaretPosition(oldPosition => oldPosition + (valueLength || 1))
     }
     setTimeout(() => expRef.current?.focus(), 0)
   }
