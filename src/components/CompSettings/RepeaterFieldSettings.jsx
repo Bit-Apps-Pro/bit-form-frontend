@@ -7,12 +7,12 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { produce } from 'immer'
+import { useAtom } from 'jotai'
+import { create } from 'mutative'
 import { memo } from 'react'
 import { useFela } from 'react-fela'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -35,8 +35,8 @@ import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
 function RepeaterFieldSettings() {
   const { fieldKey: fldKey } = useParams()
   if (!fldKey) return <>No field exist with this field key</>
-  const [fields, setFields] = useRecoilState($fields)
-  const [styles, setStyles] = useRecoilState($styles)
+  const [fields, setFields] = useAtom($fields)
+  const [styles, setStyles] = useAtom($styles)
   const { css } = useFela()
   const fieldData = deepCopy(fields[fldKey])
   const adminLabel = fieldData.adminLbl || ''
@@ -47,7 +47,7 @@ function RepeaterFieldSettings() {
     } else {
       fieldData.defaultRow = e.target.value
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Default Row updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
   }
@@ -62,7 +62,7 @@ function RepeaterFieldSettings() {
       fieldData.err.minRow.dflt = `<p style="margin:0">Minimum Repeatable Row is ${e.target.value}<p>`
       fieldData.err.minRow.show = true
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Minimum Row updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_min', state: { fields: allFields, fldKey } })
   }
@@ -77,46 +77,46 @@ function RepeaterFieldSettings() {
       fieldData.err.maxRow.dflt = `<p style="margin:0">Maximum Repeatable Row is ${e.target.value}</p>`
       fieldData.err.maxRow.show = true
     }
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Maximum Row updated to ${e.target.value}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_max', state: { fields: allFields, fldKey } })
   }
 
   function handleButtonPosition({ target: { value: val } }) {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-rpt-wrp`]['flex-direction'] = val
     }))
     fieldData.btnPosition = val
-    setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
+    setFields(create(fields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory({ event: `Button Position changed to ${val}: ${fieldData.txt}`, type: 'set_btn_posn', state: { fields, fldKey } })
   }
 
   function handleButtonAlignment({ target: { value: val } }) {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-pair-btn-wrp`]['align-self'] = val
     }))
     fieldData.btnAlignment = val
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Button Alignment updated to ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_btn_align', state: { fields: allFields, fldKey } })
   }
 
   function handleAddToEndBtnAlignment({ target: { value: val } }) {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-add-to-end-btn-wrp`]['align-self'] = val
     }))
     fieldData.btnAlignment = val
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Button Alignment updated to ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_to_end_btn_align', state: { fields: allFields, fldKey } })
   }
 
   function handleButtonView({ target: { value: val } }) {
-    setStyles(preStyle => produce(preStyle, drftStyle => {
+    setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-pair-btn-wrp`]['flex-direction'] = val
     }))
     fieldData.btnView = val
-    setFields(produce(fields, draft => { draft[fldKey] = fieldData }))
+    setFields(create(fields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory({ event: `Button View to ${val}: ${fieldData.txt}`, type: 'set_btn_posn', state: { fields, fldKey } })
   }
 

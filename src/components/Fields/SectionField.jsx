@@ -1,8 +1,8 @@
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, memo, useEffect, useRef, useState } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -31,7 +31,7 @@ import RenderStyle from '../style-new/RenderStyle'
 import { getAbsoluteSize } from '../style-new/styleHelpers'
 
 /* eslint-disable react/jsx-props-no-spreading */
-export default function SectionField({
+function SectionField({
   fieldKey, attr: fieldData, styleClasses, formID,
 }) {
   const { formType } = useParams()
@@ -49,6 +49,7 @@ export default function SectionField({
   const breakpoint = useAtomValue($breakpoint)
   const builderHookStates = useAtomValue($builderHookStates)
   const setIsDraggable = useSetAtom($isDraggable)
+  const draggingField = useAtomValue($draggingField)
   const { recalculateNestedField } = builderHookStates
   const { fieldKey: changedFieldKey, parentFieldKey, counter: fieldChangeCounter } = recalculateNestedField
   const navigate = useNavigate()
@@ -70,8 +71,6 @@ export default function SectionField({
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
-
-  const draggingField = useAtomValue($draggingField)
 
   const onDrop = (e, dropPosition) => {
     const dragFieldData = handleFieldExtraAttr(draggingField.fieldData, 'section')
@@ -355,3 +354,5 @@ export default function SectionField({
     </>
   )
 }
+
+export default memo(SectionField)

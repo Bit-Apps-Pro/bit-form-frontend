@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
-import { produce } from 'immer'
+import { useAtom, useAtomValue } from 'jotai'
+import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
@@ -18,10 +18,10 @@ import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import AutoResizeInput from './AutoResizeInput'
 
 export default function RepeaterButtonSettings({ btnType, btnName, switching, handleButtonAlignment, btnAlignmentList }) {
-  const [fields, setFields] = useRecoilState($fields)
+  const [fields, setFields] = useAtom($fields)
   const { fieldKey: fldKey } = useParams()
-  const selectedFieldId = useRecoilValue($selectedFieldId)
-  const [styles, setStyles] = useRecoilState($styles)
+  const selectedFieldId = useAtomValue($selectedFieldId)
+  const [styles, setStyles] = useAtom($styles)
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
   const { css } = useFela()
@@ -35,7 +35,7 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
     fieldData[btnType].show = checked
     // addDefaultStyleClasses(selectedFieldId, 'subTitl')
     const status = checked ? 'Show' : 'Hide'
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     // recalculate builder field height
     reCalculateFldHeights(fldKey)
@@ -49,7 +49,7 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
   const setButtonText = ({ target: { value } }) => {
     fieldData[btnType].txt = value
 
-    const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+    const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     reCalculateFldHeights(fldKey)
     addToBuilderHistory({
@@ -69,7 +69,7 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
   const removeIcon = (iconType) => {
     if (fieldData[iconType]) {
       delete fieldData[iconType]
-      const allFields = produce(fields, draft => { draft[fldKey] = fieldData })
+      const allFields = create(fields, draft => { draft[fldKey] = fieldData })
       setFields(allFields)
       reCalculateFldHeights(fldKey)
     }
