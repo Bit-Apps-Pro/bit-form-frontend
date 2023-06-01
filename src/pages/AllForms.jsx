@@ -2,11 +2,22 @@
 /* eslint-disable react/no-unstable-nested-components */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import loadable from '@loadable/component'
+import { useAtom, useAtomValue } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'jotai'
+import { $bits, $forms, $newFormId } from '../GlobalStates/GlobalStates'
+import CopyIcn from '../Icons/CopyIcn'
+import DownloadIcon from '../Icons/DownloadIcon'
+import EditIcn from '../Icons/EditIcn'
+import TrashIcn from '../Icons/TrashIcn'
+import { dateTimeFormatter, generateAndSaveAtomicCss, generateUpdateFormData, getStatesToReset, replaceFormId, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
+import { formsReducer } from '../Utils/Reducers'
+import bitsFetch from '../Utils/bitsFetch'
+import { JCOF } from '../Utils/globalHelpers'
+import { __ } from '../Utils/i18nwrap'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import CopyText from '../components/Utilities/CopyText'
@@ -16,17 +27,7 @@ import Progressbar from '../components/Utilities/Progressbar'
 import SingleToggle2 from '../components/Utilities/SingleToggle2'
 import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
-import { $bits, $forms, $newFormId } from '../GlobalStates/GlobalStates'
-import CopyIcn from '../Icons/CopyIcn'
-import DownloadIcon from '../Icons/DownloadIcon'
-import EditIcn from '../Icons/EditIcn'
-import TrashIcn from '../Icons/TrashIcn'
 import app from '../styles/app.style'
-import bitsFetch from '../Utils/bitsFetch'
-import { JCOF } from '../Utils/globalHelpers'
-import { dateTimeFormatter, generateAndSaveAtomicCss, generateUpdateFormData, replaceFormId, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
-import { formsReducer } from '../Utils/Reducers'
 
 const Welcome = loadable(() => import('./Welcome'), { fallback: <div>Loading...</div> })
 
@@ -38,6 +39,7 @@ function AllFroms() {
   const newFormId = useAtomValue($newFormId)
   const bits = useAtomValue($bits)
   const { css } = useFela()
+  const atomResetters = getStatesToReset().map(stateAtom => useResetAtom(stateAtom))
 
   const handleStatus = (e, id) => {
     const status = e.target.checked
@@ -227,7 +229,7 @@ function AllFroms() {
             generateAndSaveAtomicCss(data.id)
             const updatedFormData = generateUpdateFormData(newFormId)
             bitsFetch(updatedFormData, 'bitforms_update_form')
-            resetRecoilStates()
+            atomResetters.forEach(resetAtom => resetAtom())
 
             setAllForms(allforms => formsReducer(allforms, {
               type: 'add',

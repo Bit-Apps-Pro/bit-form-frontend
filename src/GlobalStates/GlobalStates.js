@@ -1,12 +1,12 @@
-import { atomWithReset } from 'jotai/utils'
 import { atom } from 'jotai'
+import { atomWithReset } from 'jotai/utils'
 import { create } from 'mutative'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 import blankTemplate from '../Utils/StaticData/form-templates/blankTemplate'
 
 // atoms
 export const $additionalSettings = atomWithReset(blankTemplate.additionalSettings)
-export const $bits = atomWithReset(typeof window.bits !== 'undefined' ? window.bits : {})
+export const $bits = atom(typeof window.bits !== 'undefined' ? window.bits : {})
 export const $breakpoint = atomWithReset('lg')
 export const $breakpointSize = atomWithReset({ lg: 1024, md: 960, sm: 570 })
 export const $builderHistory = atomWithReset({ histories: [{ event: 'reset', state: { breakpoint: 'lg', colorScheme: 'light' } }], active: 0 })
@@ -29,7 +29,7 @@ export const $deletedFldKey = atomWithReset([])
 export const $draggableModal = atomWithReset({ show: false, component: null, position: { x: 0, y: 0 }, width: 250 })
 export const $formId = atomWithReset(0)
 export const $formInfo = atomWithReset({ formName: 'Untitled Form' })
-export const $forms = atomWithReset(getFormsFromPhpVariable())
+export const $forms = atom(getFormsFromPhpVariable())
 export const $fieldLabels = atomWithReset([])
 export const $fields = atomWithReset({})
 export const $flags = atomWithReset({ saveStyle: true, styleMode: false, inspectMode: false })

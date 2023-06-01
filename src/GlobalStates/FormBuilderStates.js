@@ -1,3 +1,3 @@
-import { atomWithReset } from 'jotai/utils'
+import { atom } from 'jotai'
 
-export const $isDraggable = atomWithReset(true)
+export const $isDraggable = atom(true)

@@ -1,4 +1,4 @@
-import { atomWithReset } from 'jotai/utils'
+import { atom } from 'jotai'
 
 // helper functions
 const paymentsState = () => {
@@ -28,6 +28,6 @@ const getReCaptchaState = ver => {
   }
 }
 
-export const $payments = atomWithReset(paymentsState())
-export const $reCaptchaV2 = atomWithReset(getReCaptchaState('v2'))
-export const $reCaptchaV3 = atomWithReset(getReCaptchaState('v3'))
+export const $payments = atom(paymentsState())
+export const $reCaptchaV2 = atom(getReCaptchaState('v2'))
+export const $reCaptchaV3 = atom(getReCaptchaState('v3'))

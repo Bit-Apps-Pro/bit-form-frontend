@@ -1,15 +1,16 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
-import { useSetAtom } from 'jotai'
 import { $forms } from '../GlobalStates/GlobalStates'
-import ut from '../styles/2.utilities'
-import app from '../styles/app.style'
+import { deepCopy, generateAndSaveAtomicCss, generateUpdateFormData, getStatesToReset, replaceFormId, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
+import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
 import { JCOF } from '../Utils/globalHelpers'
-import { deepCopy, generateAndSaveAtomicCss, generateUpdateFormData, replaceFormId, resetRecoilStates, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
-import { formsReducer } from '../Utils/Reducers'
+import ut from '../styles/2.utilities'
+import app from '../styles/app.style'
 import LoaderSm from './Loaders/LoaderSm'
 import CustomFileUpload from './Utilities/CustomFileUpload'
 import TableCheckBox from './Utilities/TableCheckBox'
@@ -20,6 +21,8 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
   const [error, setError] = useState({ formDetail: '', prop: '' })
   const { css } = useFela()
   const [isLoading, setLoading] = useState(false)
+  const atomResetters = getStatesToReset().map(stateAtom => useResetAtom(stateAtom))
+
   const handleChange = (ev) => {
     if (error[ev.target.name]) {
       setError({ ...error, [ev.target.name]: '' })
@@ -130,7 +133,7 @@ export default function FormImporter({ setModal, setTempModal, newFormId, setSna
         generateAndSaveAtomicCss(data.id)
         const updatedFormData = generateUpdateFormData(newFormId)
         bitsFetch(updatedFormData, 'bitforms_update_form')
-        resetRecoilStates()
+        atomResetters.forEach(resetAtom => resetAtom())
 
         setForms(allforms => formsReducer(allforms, {
           type: 'add',

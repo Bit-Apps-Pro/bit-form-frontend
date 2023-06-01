@@ -1,17 +1,10 @@
 import loadable from '@loadable/component'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import bitIcn from '../../logo.svg'
-import BuilderLoader from '../components/Loaders/BuilderLoader'
-import Loader from '../components/Loaders/Loader'
-import PublishBtn from '../components/PublishBtn'
-import RouteByParams from '../components/RouteByParams'
-import UpdateButton from '../components/UpdateButton'
-import ConfirmModal from '../components/Utilities/ConfirmModal'
-import Modal from '../components/Utilities/Modal'
-import SegmentControl from '../components/Utilities/SegmentControl'
 import {
   $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
@@ -22,13 +15,21 @@ import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
-import navbar from '../styles/navbar.style'
-import bitsFetch from '../Utils/bitsFetch'
 import { addToBuilderHistory, getSessionStorageStates } from '../Utils/FormBuilderHelper'
-import { hideWpMenu, resetRecoilStates, showWpMenu } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
+import { getStatesToReset, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
+import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
+import BuilderLoader from '../components/Loaders/BuilderLoader'
+import Loader from '../components/Loaders/Loader'
+import PublishBtn from '../components/PublishBtn'
+import RouteByParams from '../components/RouteByParams'
+import UpdateButton from '../components/UpdateButton'
+import ConfirmModal from '../components/Utilities/ConfirmModal'
+import Modal from '../components/Utilities/Modal'
+import SegmentControl from '../components/Utilities/SegmentControl'
+import navbar from '../styles/navbar.style'
 
 const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
@@ -74,6 +75,7 @@ function FormDetails() {
   const [customCodes, setCustomCodes] = useAtom($customCodes)
   const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
   const [breakpointSize, setBreakpointSize] = useAtom($breakpointSize)
+  const atomResetters = getStatesToReset().map(stateAtom => useResetAtom(stateAtom))
 
   useEffect(() => { setFormId(formID) }, [formID])
 
@@ -126,7 +128,7 @@ function FormDetails() {
   const onUnmount = () => {
     showWpMenu()
     setAppFullScreen(false)
-    resetRecoilStates()
+    atomResetters.forEach(resetAtom => resetAtom())
   }
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyle
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import bitStore from '../GlobalStates/BitStore'
 import {
-  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
+  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import {
@@ -542,57 +542,58 @@ export const compareBetweenVersions = (ver1, ver2) => {
 
 export const isFirefox = () => navigator.userAgent.includes('Firefox')
 
-export const resetRecoilStates = () => {
-  // resetRecoil($additionalSettings)
-  // resetRecoil($breakpoint)
-  // resetRecoil($breakpointSize)
-  // resetRecoil($builderHistory)
-  // resetRecoil($builderHelperStates)
-  // resetRecoil($builderHookStates)
-  // resetRecoil($builderRightPanelScroll)
-  // resetRecoil($builderSettings)
-  // resetRecoil($confirmations)
-  // resetRecoil($colorScheme)
-  // resetRecoil($customCodes)
-  // resetRecoil($draggingField)
-  // resetRecoil($deletedFldKey)
-  // resetRecoil($draggableModal)
-  // resetRecoil($formId)
-  // resetRecoil($formInfo)
-  // resetRecoil($fieldLabels)
-  // resetRecoil($fields)
-  // resetRecoil($flags)
-  // resetRecoil($integrations)
-  // resetRecoil($isNewThemeStyleLoaded)
-  // resetRecoil($layouts)
-  // resetRecoil($mailTemplates)
-  // resetRecoil($reports)
-  // resetRecoil($reportId)
-  // resetRecoil($selectedFieldId)
-  // resetRecoil($updateBtn)
-  // resetRecoil($unsplashMdl)
-  // resetRecoil($unsplashImgUrl)
-  // resetRecoil($workflows)
+export const getStatesToReset = () => [
+  $additionalSettings,
+  $breakpoint,
+  $breakpointSize,
+  $builderHistory,
+  $builderHelperStates,
+  $builderHookStates,
+  $builderRightPanelScroll,
+  $builderSettings,
+  $confirmations,
+  $colorScheme,
+  $customCodes,
+  $draggingField,
+  $deletedFldKey,
+  $draggableModal,
+  $formId,
+  $formInfo,
+  $fieldLabels,
+  $fields,
+  $flags,
+  $integrations,
+  $isNewThemeStyleLoaded,
+  $layouts,
+  $nestedLayouts,
+  $mailTemplates,
+  $reports,
+  $reportId,
+  $selectedFieldId,
+  $updateBtn,
+  $unsplashMdl,
+  $unsplashImgUrl,
+  $workflows,
 
-  // resetRecoil($lightThemeColors)
-  // resetRecoil($darkThemeColors)
+  $lightThemeColors,
+  $darkThemeColors,
 
-  // resetRecoil($stylesLgLight)
-  // resetRecoil($stylesLgDark)
-  // resetRecoil($stylesMdLight)
-  // resetRecoil($stylesMdDark)
-  // resetRecoil($stylesSmLight)
-  // resetRecoil($stylesSmDark)
+  $stylesLgLight,
+  $stylesLgDark,
+  $stylesMdLight,
+  $stylesMdDark,
+  $stylesSmLight,
+  $stylesSmDark,
 
-  // resetRecoil($themeVarsLgLight)
-  // resetRecoil($themeVarsLgDark)
-  // resetRecoil($themeVarsMdLight)
-  // resetRecoil($themeVarsMdDark)
-  // resetRecoil($themeVarsSmLight)
-  // resetRecoil($themeVarsSmDark)
+  $themeVarsLgLight,
+  $themeVarsLgDark,
+  $themeVarsMdLight,
+  $themeVarsMdDark,
+  $themeVarsSmLight,
+  $themeVarsSmDark,
 
-  // resetRecoil($styles)
-}
+  $styles,
+]
 
 export const trimCSS = (cssStr = '') => cssStr.replace(/\/\*[^*]*\*+([^/][^*]*\*+)*\//g, '').replace(/\n/gm, '')
 
