@@ -2,15 +2,18 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import {
-  lazy, memo, Suspense,
-  useEffect, useRef, useState
+  Suspense,
+  lazy, memo,
+  startTransition,
+  useDeferredValue,
+  useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
@@ -23,12 +26,10 @@ import {
   $flags,
   $isNewThemeStyleLoaded,
   $layouts, $nestedLayouts, $proModal,
-  $selectedFieldId,
-  $uniqueFieldId,
+  $selectedFieldId
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
-import '../resource/css/grid-layout.css'
 import {
   addToBuilderHistory,
   builderBreakpoints,
@@ -44,15 +45,16 @@ import {
   isLayoutSame,
   produceNewLayouts,
   propertyValueSumY,
-  removeFormUpdateError
+  removeFormUpdateError,
 } from '../Utils/FormBuilderHelper'
+import { IS_PRO, deepCopy, getNewId, isFirefox, isObjectEmpty } from '../Utils/Helpers'
+import paymentFields from '../Utils/StaticData/paymentFields'
+import proHelperData from '../Utils/StaticData/proHelperData'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts, getLayoutItemCount } from '../Utils/gridLayoutHelper'
 import { addNewFieldToGridLayout, generateFieldLblForHistory, generateNewFldName, getInitHeightsForResizingTextarea } from '../Utils/gridLayoutHelpers'
-import { deepCopy, getNewId, IS_PRO, isFirefox, isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
-import paymentFields from '../Utils/StaticData/paymentFields'
-import proHelperData from '../Utils/StaticData/proHelperData'
+import '../resource/css/grid-layout.css'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
@@ -70,7 +72,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const setProModal = useSetAtom($proModal)
   const [fields, setFields] = useAtom($fields)
   const [rootLayouts, setRootLayouts] = useAtom($layouts)
-  const [layouts, setLayouts] = useState(rootLayouts)
+  const [layouts, setLayouts] = useState(deepCopy(rootLayouts))
   const [selectedFieldId, setSelectedFieldId] = useAtom($selectedFieldId)
   const setDeletedFldKey = useSetAtom($deletedFldKey)
   const draggingField = useAtomValue($draggingField)
@@ -84,8 +86,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
   const [resizingFld, setResizingFld] = useState({})
   const [rowHeight, setRowHeight] = useState(1)
-  const uniqueFieldId = useAtomValue($uniqueFieldId)
-  const isDraggable = useAtomValue($isDraggable)
+  const isDraggableAtomVal = useAtomValue($isDraggable)
+  const isDraggable = useDeferredValue(isDraggableAtomVal)
   const [contextMenu, setContextMenu] = useAtom($contextMenu)
   const setContextMenuRef = useSetAtom($contextMenuRef)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
@@ -108,16 +110,20 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const fieldsCount = Object.keys(fields).length
     const layoutLgFieldsCount = getLayoutItemCount()
     if (fieldsCount === layoutLgFieldsCount) {
-      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draft => {
-        Object.entries(draft).forEach(([fldKey, lay]) => {
-          draft[fldKey] = fitAllLayoutItems(lay)
-        })
-      }))
+      startTransition(() => {
+        setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draft => {
+          Object.entries(draft).forEach(([fldKey, lay]) => {
+            draft[fldKey] = fitAllLayoutItems(lay)
+          })
+        }))
+      })
       const nl = fitAllLayoutItems(layouts)
       const nl2 = compactResponsiveLayouts(nl, cols)
       if (!isLayoutSame(layouts, nl2)) {
         setLayouts(nl2)
-        setRootLayouts(nl2)
+        startTransition(() => {
+          setRootLayouts(nl2)
+        })
       }
     }
 
@@ -132,7 +138,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (fieldKey) {
       const nl = fitSpecificLayoutItem(layouts, fieldKey)
       setLayouts(nl)
-      setRootLayouts(nl)
+      startTransition(() => {
+        setRootLayouts(nl)
+      })
     }
   }, [fieldChangeCounter])
 
@@ -145,12 +153,16 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (breakpoint === 'md' && lgLength !== mdLength) {
       const newLayouts = produceNewLayouts(layouts, ['md'], cols)
       setLayouts(newLayouts)
-      setRootLayouts(newLayouts)
+      startTransition(() => {
+        setRootLayouts(newLayouts)
+      })
     }
     if (breakpoint === 'sm' && lgLength !== smLength) {
       const newLayouts = produceNewLayouts(layouts, ['sm'], cols)
       setLayouts(newLayouts)
-      setRootLayouts(newLayouts)
+      startTransition(() => {
+        setRootLayouts(newLayouts)
+      })
     }
   }, [breakpoint])
 
@@ -218,21 +230,23 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const nwLay = filterLayoutItem(fldKey, layouts)
     const removedFldKeys = [fldKey]
     setLayouts(nwLay)
-    setRootLayouts(nwLay)
-    if (isNestedField) {
-      nestedLayouts[fldKey].lg.forEach(nestedField => {
-        removedFldKeys.push(nestedField.i)
-      })
-      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
-        delete draftNestedLayouts[fldKey]
-      }))
-    }
-    if (!isExistInLayout) {
-      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
-        const parentFieldKey = getParentFieldKey(fldKey)
-        draftNestedLayouts[parentFieldKey] = filterLayoutItem(fldKey, draftNestedLayouts[parentFieldKey])
-      }))
-    }
+    startTransition(() => {
+      setRootLayouts(nwLay)
+      if (isNestedField) {
+        nestedLayouts[fldKey].lg.forEach(nestedField => {
+          removedFldKeys.push(nestedField.i)
+        })
+        setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
+          delete draftNestedLayouts[fldKey]
+        }))
+      }
+      if (!isExistInLayout) {
+        setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
+          const parentFieldKey = getParentFieldKey(fldKey)
+          draftNestedLayouts[parentFieldKey] = filterLayoutItem(fldKey, draftNestedLayouts[parentFieldKey])
+        }))
+      }
+    })
     const tmpFields = create(fields, draftFields => {
       removedFldKeys.forEach(rmvfldKey => {
         delete draftFields[rmvfldKey]
@@ -281,7 +295,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const { newLayouts } = addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition)
 
     setLayouts(newLayouts)
-    setRootLayouts(newLayouts)
+    startTransition(() => {
+      setRootLayouts(newLayouts)
+    })
   }
 
   const cloneLayoutItem = fldKey => {
@@ -337,31 +353,33 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     const newLayItem = {}
 
     const allBreakpoints = ['sm', 'md', 'lg']
-    if (isNestedField) {
-      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
-        const newFieldKey = clonedNewFieldKey[fldKey]
-        const prevLayout = prevNestedLayouts[fldKey]
-        draftNestedLayouts[newFieldKey] = deepCopy(prevLayout)
-        allBreakpoints.forEach(brkpnt => {
-          draftNestedLayouts[newFieldKey][brkpnt].forEach((nestedField, indx) => {
-            const newBlk = clonedNewFieldKey[nestedField.i]
-            draftNestedLayouts[newFieldKey][brkpnt][indx].i = newBlk
-          })
-        })
-      }))
-    } else if (!isExistInLayout) {
-      setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
-        allBreakpoints.forEach(brkpnt => {
-          const parentFieldKey = getParentFieldKey(fldKey)
-          const layIndx = draftNestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
-          const { y, h } = draftNestedLayouts[parentFieldKey][brkpnt][layIndx]
+    startTransition(() => {
+      if (isNestedField) {
+        setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
           const newFieldKey = clonedNewFieldKey[fldKey]
-          const newLayoutItem = { ...draftNestedLayouts[parentFieldKey][brkpnt][layIndx], i: newFieldKey, y: y + h }
-          newLayItem[brkpnt] = newLayoutItem
-          draftNestedLayouts[parentFieldKey][brkpnt].splice(layIndx + 1, 0, newLayoutItem)
-        })
-      }))
-    }
+          const prevLayout = prevNestedLayouts[fldKey]
+          draftNestedLayouts[newFieldKey] = deepCopy(prevLayout)
+          allBreakpoints.forEach(brkpnt => {
+            draftNestedLayouts[newFieldKey][brkpnt].forEach((nestedField, indx) => {
+              const newBlk = clonedNewFieldKey[nestedField.i]
+              draftNestedLayouts[newFieldKey][brkpnt][indx].i = newBlk
+            })
+          })
+        }))
+      } else if (!isExistInLayout) {
+        setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
+          allBreakpoints.forEach(brkpnt => {
+            const parentFieldKey = getParentFieldKey(fldKey)
+            const layIndx = draftNestedLayouts[parentFieldKey][brkpnt].findIndex(lay => lay.i === fldKey)
+            const { y, h } = draftNestedLayouts[parentFieldKey][brkpnt][layIndx]
+            const newFieldKey = clonedNewFieldKey[fldKey]
+            const newLayoutItem = { ...draftNestedLayouts[parentFieldKey][brkpnt][layIndx], i: newFieldKey, y: y + h }
+            newLayItem[brkpnt] = newLayoutItem
+            draftNestedLayouts[parentFieldKey][brkpnt].splice(layIndx + 1, 0, newLayoutItem)
+          })
+        }))
+      }
+    })
     let tmpLayouts = layouts
     if (isExistInLayout) {
       tmpLayouts = create(layouts, draft => {
@@ -375,7 +393,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
         })
       })
       setLayouts(tmpLayouts)
-      setRootLayouts(tmpLayouts)
+      startTransition(() => {
+        setRootLayouts(tmpLayouts)
+      })
     }
 
     sessionStorage.setItem('btcd-lc', '-')
@@ -402,8 +422,10 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
 
   const handleLayoutChange = (l, layoutsFromGrid) => {
     if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
-      setRootLayouts(layoutsFromGrid)
       setLayouts(layoutsFromGrid)
+      startTransition(() => {
+        setRootLayouts(layoutsFromGrid)
+      })
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
@@ -588,12 +610,16 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const setResizingWX = (lays, lay) => {
     if (resizingFld.fieldKey) {
       const layout = lays.find(l => l.i === resizingFld.fieldKey)
-      setResizingFld(prevState => ({ ...prevState, w: layout.w, x: layout.x }))
+      startTransition(() => {
+        setResizingFld(prevState => ({ ...prevState, w: layout.w, x: layout.x }))
+      })
       return
     }
     const fldKey = lay.i
     const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
-    setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
+    startTransition(() => {
+      setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
+    })
   }
 
   const setRegenarateLayFlag = () => {
@@ -647,7 +673,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   layouts={layouts}
                   onBreakpointChange={onBreakpointChange}
                   onDragStart={setResizingFldKey}
-                  // onDrag={setResizingWX}
+                  onDrag={setResizingWX}
                   onDragStop={setRegenarateLayFlag}
                   onResizeStart={setResizingFldKey}
                   onResize={setResizingWX}
