@@ -72,6 +72,7 @@ export default function StripeFieldSettings() {
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[name]} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
+
   function findCommonItems(types) {
     if (!types || types.length === 0) return currencyCodes
     const cntris = paymentMethodType.filter(item => types.includes(item.type))
@@ -118,6 +119,7 @@ export default function StripeFieldSettings() {
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel.layout} to ${value}: ${fieldData.lbl || fldKey}`, type: `${name}_changed`, state: { fields: allFields, fldKey } })
   }
+
   const handleTheme = (value) => {
     if (value) {
       fieldData.config.theme.name = value
@@ -201,7 +203,15 @@ export default function StripeFieldSettings() {
   const getSpecifiedFields = type => {
     let pattern
     if (type === 'email') {
-      pattern = /text|email/g
+      pattern = /^(text|email)$/
+    } else if (type === 'text') {
+      pattern = /^(text|textarea|username)$/
+    } else if (type === 'number') {
+      pattern = /^(number)$/
+    } else if (type === 'phone') {
+      pattern = /^(number|phone-number)$/
+    } else if (type === 'country') {
+      pattern = /^(text|country)$/
     }
     const filteredFields = formFields.filter(field => field[1].typ.match(pattern))
     return filteredFields.map(itm => (<option key={itm[0]} value={itm[0]}>{itm[1].adminLbl || itm[1].lbl}</option>))
@@ -459,7 +469,7 @@ export default function StripeFieldSettings() {
               value={fieldData.config?.linkAuthentication?.emailFld || ''}
             >
               <option value="">{__('Select Field')}</option>
-              {getSpecifiedFields()}
+              {getSpecifiedFields('email')}
             </select>
           </div>
         </SimpleAccordion>
@@ -563,7 +573,7 @@ export default function StripeFieldSettings() {
                   value={fieldData.config?.address?.defaultValues?.name || ''}
                 >
                   <option value="">{__('Select Field')}</option>
-                  {getSpecifiedFields()}
+                  {getSpecifiedFields('text')}
                 </select>
               </div>
             )}
@@ -579,7 +589,7 @@ export default function StripeFieldSettings() {
                     value={fieldData.config?.address?.defaultValues?.firstName || ''}
                   >
                     <option value="">{__('Select Field')}</option>
-                    {getSpecifiedFields()}
+                    {getSpecifiedFields('text')}
                   </select>
                 </div>
                 <div className={css(ut.mt2, { px: 1 })}>
@@ -592,7 +602,7 @@ export default function StripeFieldSettings() {
                     value={fieldData.config?.address?.defaultValues?.lastName || ''}
                   >
                     <option value="">{__('Select Field')}</option>
-                    {getSpecifiedFields()}
+                    {getSpecifiedFields('text')}
                   </select>
                 </div>
               </>
@@ -620,7 +630,7 @@ export default function StripeFieldSettings() {
                   value={fieldData.config?.address?.defaultValues?.phone || ''}
                 >
                   <option value="">{__('Select Field')}</option>
-                  {getSpecifiedFields()}
+                  {getSpecifiedFields('phone')}
                 </select>
               </div>
             )}
@@ -634,7 +644,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.line1 || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields()}
+                {getSpecifiedFields('text')}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -647,7 +657,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.line2 || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields()}
+                {getSpecifiedFields('text')}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -660,7 +670,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.city || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields()}
+                {getSpecifiedFields('text')}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -673,7 +683,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.state || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields()}
+                {getSpecifiedFields('text')}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -686,7 +696,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.postal_code || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields()}
+                {getSpecifiedFields('number')}
               </select>
             </div>
             <div className={css(ut.mt2, { px: 1 })}>
@@ -699,7 +709,7 @@ export default function StripeFieldSettings() {
                 value={fieldData.config?.address?.defaultValues?.address?.country || ''}
               >
                 <option value="">{__('Select Field')}</option>
-                {getSpecifiedFields()}
+                {getSpecifiedFields('country')}
               </select>
             </div>
           </div>
