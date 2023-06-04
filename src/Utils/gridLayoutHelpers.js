@@ -206,7 +206,7 @@ export const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
 export const getInitHeightsForResizingTextarea = fldKey => {
   const fields = bitStore.get($fields)
   const fldData = fields[fldKey]
-  if (!fldData) return
+  if (!fldData) return {}
   const fldType = fldData.typ
   if (fldType === 'textarea') {
     const wrpElm = selectInGrid(`[data-key="${fldKey}"]`)

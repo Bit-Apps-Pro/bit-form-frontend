@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
 import {
   Suspense,
   lazy, memo,
@@ -26,7 +26,7 @@ import {
   $flags,
   $isNewThemeStyleLoaded,
   $layouts, $nestedLayouts, $proModal,
-  $selectedFieldId
+  $selectedFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $stylesLgLight } from '../GlobalStates/StylesState'
@@ -526,7 +526,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }
     setResizingFalse()
     if (styleMode) return
-    navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
+    startTransition(() => {
+      navigate(`/form/builder/${formType}/${formID}/field-settings/${fieldId}`)
+    })
   }
 
   const highlightElmEvent = event => {
@@ -608,17 +610,20 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   }
 
   const setResizingWX = (lays, lay) => {
-    if (resizingFld.fieldKey) {
-      const layout = lays.find(l => l.i === resizingFld.fieldKey)
-      startTransition(() => {
-        setResizingFld(prevState => ({ ...prevState, w: layout.w, x: layout.x }))
-      })
-      return
-    }
-    const fldKey = lay.i
-    const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
     startTransition(() => {
-      setResizingFld({ ...resizingData, w: lay.w, x: lay.x })
+      setResizingFld(prevState => create(prevState, draftState => {
+        if (draftState.fieldKey) {
+          const layout = lays.find(l => l.i === draftState.fieldKey)
+          draftState.w = layout.w
+          draftState.x = layout.x
+          return draftState
+        }
+        const fldKey = lay.i
+        const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
+        resizingData.w = lay.w
+        resizingData.x = lay.x
+        return rawReturn(resizingData)
+      }))
     })
   }
 
