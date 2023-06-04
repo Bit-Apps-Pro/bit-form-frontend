@@ -1,26 +1,18 @@
 /* eslint-disable no-param-reassign */
 import loadable from '@loadable/component'
 import merge from 'deepmerge-alt'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
-  createRef, StrictMode, useCallback,
+  StrictMode,
+  createRef,
+  startTransition,
+  useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState
+  useReducer, useRef, useState,
 } from 'react'
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
-import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
-import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
-import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
-import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
-import ToolbarLoader from '../components/Loaders/ToolbarLoader'
-import OptionToolBar from '../components/OptionToolBar'
-import RenderCssInPortal from '../components/RenderCssInPortal'
-import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
-import ConfirmModal from '../components/Utilities/ConfirmModal'
-import ProModal from '../components/Utilities/ProModal'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $alertModal,
@@ -32,12 +24,23 @@ import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
+import { addToBuilderHistory, builderBreakpoints, calculateFormGutter } from '../Utils/FormBuilderHelper'
+import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
-import { addToBuilderHistory, builderBreakpoints, calculateFormGutter } from '../Utils/FormBuilderHelper'
 import { JCOF, select } from '../Utils/globalHelpers'
-import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import j2c from '../Utils/j2c.es6'
+import BuilderRightPanel from '../components/CompSettings/BuilderRightPanel'
+import DraggableModal from '../components/CompSettings/StyleCustomize/ChildComp/DraggableModal'
+import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemeProvider_Old'
+import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
+import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
+import ToolbarLoader from '../components/Loaders/ToolbarLoader'
+import OptionToolBar from '../components/OptionToolBar'
+import RenderCssInPortal from '../components/RenderCssInPortal'
+import ConfirmModal from '../components/Utilities/ConfirmModal'
+import ProModal from '../components/Utilities/ProModal'
+import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
 
 const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
 const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })
@@ -305,16 +308,16 @@ const FormBuilder = ({ isLoading }) => {
     if (gw < builderBreakpoints.md) {
       setbrkPoint('sm')
       if (builderHelperStates.respectLGLayoutOrder) {
-        setIsDraggable(false)
+        startTransition(() => { setIsDraggable(false) })
       }
     } else if (gw >= builderBreakpoints.md && gw < builderBreakpoints.lg) {
       setbrkPoint('md')
       if (builderHelperStates.respectLGLayoutOrder) {
-        setIsDraggable(false)
+        startTransition(() => { setIsDraggable(false) })
       }
     } else if (gw >= builderBreakpoints.lg) {
       setbrkPoint('lg')
-      setIsDraggable(true)
+      startTransition(() => { setIsDraggable(true) })
     }
   }
 
