@@ -3,19 +3,19 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-else-return */
 import { arrayMoveImmutable } from 'array-move'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { $bits, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import { $bits, $formId, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
-import ut from '../../styles/2.utilities'
+import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
-import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
+import ut from '../../styles/2.utilities'
 import Accordions from '../Utilities/Accordions'
 import Button from '../Utilities/Button'
 import ConfirmModal from '../Utilities/ConfirmModal'
@@ -23,7 +23,8 @@ import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import WorkflowConditionSection from './WorkflowConditionSection'
 import WorkflowRunner from './WorkflowRunner'
 
-function Workflow({ formID }) {
+function Workflow() {
+  const formID = useAtomValue($formId)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [workflows, setWorkflows] = useAtom($workflows)
   const setUpdateBtn = useSetAtom($updateBtn)

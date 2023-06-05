@@ -1,4 +1,6 @@
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
+import { startTransition } from 'react'
+import bitStore from '../GlobalStates/BitStore'
 import {
   $breakpoint,
   $contextMenu,
@@ -17,15 +19,15 @@ import {
   addFormUpdateError,
   addNewItemInLayout, addToBuilderHistory,
   filterLayoutItem, getAbsoluteElmHeight, getLatestState,
-  getResizableHandles, reCalculateFldHeights, removeFormUpdateError,
+  getResizableHandles,
+  handleFieldExtraAttr,
+  reCalculateFldHeights, removeFormUpdateError,
 } from './FormBuilderHelper'
 import { IS_PRO, deepCopy } from './Helpers'
+import paymentFields from './StaticData/paymentFields'
 import proHelperData from './StaticData/proHelperData'
 import { selectInGrid } from './globalHelpers'
 import { __ } from './i18nwrap'
-import { handleFieldExtraAttr } from './FormBuilderHelper'
-import paymentFields from './StaticData/paymentFields'
-import bitStore from '../GlobalStates/BitStore'
 
 const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
   const { typ: fldType } = fieldData
@@ -225,19 +227,23 @@ export const setResizingFldKey = (_, lay) => {
 }
 
 export const setResizingWX = (lays, lay) => {
-  const resizingFld = bitStore.get($resizingFld)
-  if (resizingFld.fieldKey) {
-    const layout = lays.find(l => l.i === resizingFld.fieldKey)
-    const newResingFld = create(resizingFld, draftResizingFld => {
-      draftResizingFld.w = layout.w
-      draftResizingFld.x = layout.x
+  startTransition(() => {
+    const resizingFld = bitStore.get($resizingFld)
+    const newResizingData = create(resizingFld, draftState => {
+      if (draftState.fieldKey) {
+        const layout = lays.find(l => l.i === draftState.fieldKey)
+        draftState.w = layout.w
+        draftState.x = layout.x
+        return draftState
+      }
+      const fldKey = lay.i
+      const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
+      resizingData.w = lay.w
+      resizingData.x = lay.x
+      return rawReturn(resizingData)
     })
-    bitStore.set($resizingFld, newResingFld)
-    return
-  }
-  const fldKey = lay.i
-  const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
-  bitStore.set($resizingFld, { ...resizingData, w: lay.w, x: lay.x })
+    bitStore.set($resizingFld, newResizingData)
+  })
 }
 
 export const removeFieldStyles = fldKey => {

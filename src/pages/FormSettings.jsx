@@ -30,7 +30,7 @@ const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))
 
-function FormSettings({ setProModal }) {
+function FormSettings() {
   // const { path } = useMatch()
   const { formType, formID } = useParams()
   const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useAtom($isNewThemeStyleLoaded)
@@ -121,12 +121,12 @@ function FormSettings({ setProModal }) {
         <Suspense fallback={<FSettingsLoader />}>
           <Routes>
             <Route path="form-settings" element={<SingleFormSettings />} />
-            <Route path="auth-settings" element={<WpAuth formID={formID} />} />
-            <Route path="confirmations/*" element={<ConfType formType={formType} formID={formID} />} />
-            <Route path="email-templates/*" element={<EmailTemplate formID={formID} />} />
-            <Route path="double-optin" element={<DoubleOptin formID={formID} />} />
-            <Route path="workflow" element={<Workflow setProModal={setProModal} formID={formID} />} />
-            <Route path="integrations/*" element={<Integrations setProModal={setProModal} />} />
+            <Route path="auth-settings" element={<WpAuth />} />
+            <Route path="confirmations/*" element={<ConfType formType={formType} />} />
+            <Route path="email-templates/*" element={<EmailTemplate />} />
+            <Route path="double-optin" element={<DoubleOptin />} />
+            <Route path="workflow" element={<Workflow />} />
+            <Route path="integrations/*" element={<Integrations />} />
           </Routes>
         </Suspense>
         {/* <Routes>

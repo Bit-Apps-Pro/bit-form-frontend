@@ -275,7 +275,7 @@ function SectionField({
                 layout={gridNestedLayouts[breakpoint]}
                 // onBreakpointChange={onBreakpointChange}
                 onDragStart={setResizingFldKey}
-                // onDrag={setResizingWX}
+                onDrag={setResizingWX}
                 onDragStop={() => {
                   startTransition(() => {
                     setIsDraggable(true)
@@ -307,12 +307,9 @@ function SectionField({
                           layoutItem,
                           removeLayoutItem: removeNestedLayoutItem,
                           cloneLayoutItem: cloneNestedLayoutItem,
-                          fields,
-                          formID,
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
-                          resizingFld,
                         }}
                       />
                     </Suspense>
@@ -338,12 +335,9 @@ function SectionField({
                           layoutItem,
                           removeLayoutItem: removeNestedLayoutItem,
                           cloneLayoutItem: cloneNestedLayoutItem,
-                          fields,
-                          formID,
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
-                          resizingFld,
                         }}
                       />
                     </Suspense>
