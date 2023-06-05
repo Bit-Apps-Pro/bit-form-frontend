@@ -306,6 +306,10 @@ function copyStatics(mode) {
         src: absPath('packages/bit-stripe-field/dist/bit-stripe-field.min.js'),
         dest: absPath('../assets'),
       },
+      {
+        src: absPath('packages/bit-repeater-field/dist/bit-repeater-field.min.js'),
+        dest: absPath('../assets'),
+      },
     ],
   })
 }
