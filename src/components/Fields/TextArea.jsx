@@ -25,9 +25,10 @@ export default function TextArea({
     tempResize.current.resize = true
     const wrpElm = selectInGrid(`[data-key="${fieldKey}"]`)
     const currentWrpHeight = getAbsoluteElmHeight(wrpElm)
-    if (resizingFld.wrpHeight < resizingFld.fldHeight) return
-    const height = `${resizingFld.fldHeight + (currentWrpHeight - resizingFld.wrpHeight)}px`
-    textAreaRef.current.style.height = height
+    if (resizingFld.wrpHeight >= resizingFld.fldHeight) {
+      const height = `${resizingFld.fldHeight + (currentWrpHeight - resizingFld.wrpHeight)}px`
+      textAreaRef.current.style.height = height
+    }
   }
 
   if (tempResize.current.resize && !resizingFld.fieldKey) {
