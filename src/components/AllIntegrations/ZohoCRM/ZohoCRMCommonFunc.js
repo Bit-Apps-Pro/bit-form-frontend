@@ -1,7 +1,7 @@
-import bitStore from '../../../GlobalStates/BitStore'
+import { getAtom } from '../../../GlobalStates/BitStore'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { sprintf, __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, recordTab, crmConf, setCrmConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
   let newConf = { ...crmConf }
@@ -350,7 +350,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
     })
     return
   }
-  const bits = bitStore.get($bits)
+  const bits = getAtom($bits)
   setisLoading(true)
   const scopes = 'ZohoCRM.modules.ALL,ZohoCRM.settings.ALL,ZohoCRM.users.Read,zohocrm.files.CREATE'
   const apiEndpoint = `https://accounts.zoho.${confTmp.dataCenter}/oauth/v2/auth?scope=${scopes}&response_type=code&client_id=${confTmp.clientId}&prompt=Consent&access_type=offline&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.zohoRedirectURL)}`
@@ -380,7 +380,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 }
 
 const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading, setSnackbar) => {
-  const bits = bitStore.get($bits)
+  const bits = getAtom($bits)
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId
