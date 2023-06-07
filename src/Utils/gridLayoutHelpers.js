@@ -1,4 +1,5 @@
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
+import { startTransition } from 'react'
 import bitStore from '../GlobalStates/BitStore'
 import {
   $breakpoint,
@@ -226,19 +227,23 @@ export const setResizingFldKey = (_, lay) => {
 }
 
 export const setResizingWX = (lays, lay) => {
-  const resizingFld = bitStore.get($resizingFld)
-  if (resizingFld.fieldKey) {
-    const layout = lays.find(l => l.i === resizingFld.fieldKey)
-    const newResingFld = create(resizingFld, draftResizingFld => {
-      draftResizingFld.w = layout.w
-      draftResizingFld.x = layout.x
+  startTransition(() => {
+    const resizingFld = bitStore.get($resizingFld)
+    const newResizingData = create(resizingFld, draftState => {
+      if (draftState.fieldKey) {
+        const layout = lays.find(l => l.i === draftState.fieldKey)
+        draftState.w = layout.w
+        draftState.x = layout.x
+        return draftState
+      }
+      const fldKey = lay.i
+      const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
+      resizingData.w = lay.w
+      resizingData.x = lay.x
+      return rawReturn(resizingData)
     })
-    bitStore.set($resizingFld, newResingFld)
-    return
-  }
-  const fldKey = lay.i
-  const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
-  bitStore.set($resizingFld, { ...resizingData, w: lay.w, x: lay.x })
+    bitStore.set($resizingFld, newResizingData)
+  })
 }
 
 export const removeFieldStyles = fldKey => {

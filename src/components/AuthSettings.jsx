@@ -5,7 +5,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
-import { $bits, $fieldsArr } from '../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $formId } from '../GlobalStates/GlobalStates'
 import app from '../styles/app.style'
 import bitsFetch from '../Utils/bitsFetch'
 import { IS_PRO } from '../Utils/Helpers'
@@ -22,14 +22,14 @@ import Register from './WPAuth/Registration/Registration'
 import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import ResetPassword from './WPAuth/ResetPassword'
 
-export default function AdditionalSettings() {
+export default function AuthSettings() {
   const bits = useAtomValue($bits)
   const { isPro } = bits
   const [isLoading, setIsLoading] = useState(false)
   const [isLoad, setIsLoad] = useState(false)
   const formFields = useAtomValue($fieldsArr)
   const [type, setType] = useState('register')
-  const { formID } = useParams()
+  const formID = useAtomValue($formId)
   const { css } = useFela()
 
   const [dataConf, setDataConf] = useState({

@@ -4,7 +4,7 @@
 import { create } from 'mutative'
 import { useEffect, useRef } from 'react'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { $breakpoint, $fields, $flags } from '../../GlobalStates/GlobalStates'
+import { $breakpoint, $fields, $flags, $resizingFld } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { getCustomAttributes, getCustomClsName } from '../../Utils/globalHelpers'
 import { deepCopy } from '../../Utils/Helpers'
@@ -14,9 +14,10 @@ import { assignNestedObj } from '../style-new/styleHelpers'
 // const placeholderImgUrl = (h, w) => `https://via.placeholder.com/${w}x${h}`
 const placeholderImgUrl = (h, w) => `https://fakeimg.pl/${h}x${w}/?text=${h} x ${w}`
 
-function Image({ fieldKey, attr: fieldData, styleClasses, resizingFld }) {
+function Image({ fieldKey, attr: fieldData, styleClasses }) {
   const wrap = useRef()
   const tempData = useRef({ extarnalSource: placeholderImgUrl(100, 40) })
+  const resizingFld = useAtomValue($resizingFld)
   const breakpoint = useAtomValue($breakpoint)
   const { styleMode } = useAtomValue($flags)
   const setStyles = useSetAtom($styles)

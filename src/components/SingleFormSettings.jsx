@@ -12,12 +12,12 @@ import 'react-day-picker/dist/style.css'
 /**
  * https://reactjsexample.com/google-keep-app-inspired-time-picker-for-react/
  */
-import { Link, useParams } from 'react-router-dom'
-import Timekeeper from 'react-timekeeper'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { Link } from 'react-router-dom'
+import Timekeeper from 'react-timekeeper'
 import { hideAll } from 'tippy.js'
 import { $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
-import { $additionalSettings, $fields, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
+import { $additionalSettings, $fields, $formId, $proModal, $updateBtn } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $styles } from '../GlobalStates/StylesState'
 import BlockIcn from '../Icons/BlockIcn'
@@ -50,7 +50,7 @@ import { assignNestedObj } from './style-new/styleHelpers'
 export default function SingleFormSettings() {
   const [additionalSetting, setadditional] = useAtom($additionalSettings)
   const fields = useAtomValue($fields)
-  const { formID } = useParams()
+  const formID = useAtomValue($formId)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const [showCaptchaAdvanced, setShowCaptchaAdvanced] = useState(false)
   const reCaptchaV3 = useAtomValue($reCaptchaV3)
