@@ -275,6 +275,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-frontend/dist/bitform-elementor.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-frontend/dist/bitsFetchFront.min.js'),
         dest: absPath('../assets'),
       },
