@@ -1,4 +1,5 @@
 import { getDefaultStore } from 'jotai'
 
 const bitStore = getDefaultStore()
-export default bitStore
+export const getAtom = bitStore.get
+export const setAtom = bitStore.set

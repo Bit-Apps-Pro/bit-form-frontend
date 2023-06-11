@@ -23,9 +23,10 @@ const addedHiddenFld = (contentId, props) => {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  Object.keys(window?.bf_globals || {}).forEach((contentId) => {
+export default function setAllHiddenTokenFld(formContentId = null) {
+  const contentIds = formContentId ? [formContentId] : Object.keys(window?.bf_globals || {})
+  contentIds.forEach((contentId) => {
     const props = window.bf_globals[contentId]
     addedHiddenFld(contentId, props)
   })
-})
+}

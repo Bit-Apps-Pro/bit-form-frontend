@@ -1,8 +1,8 @@
-import { __, sprintf } from '../../../Utils/i18nwrap'
-import bitsFetch from '../../../Utils/bitsFetch'
-import { deepCopy } from '../../../Utils/Helpers'
+import { getAtom } from '../../../GlobalStates/BitStore'
 import { $bits } from '../../../GlobalStates/GlobalStates'
-import bitStore from '../../../GlobalStates/BitStore'
+import { deepCopy } from '../../../Utils/Helpers'
+import bitsFetch from '../../../Utils/bitsFetch'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 
 export const handleInput = (e, sheetConf, setSheetConf, formID, setisLoading, setSnackbar, isNew, error, setError) => {
   let newConf = { ...sheetConf }
@@ -190,7 +190,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
   }
   setisLoading(true)
   const scopes = 'https://www.googleapis.com/auth/drive'
-  const bits = bitStore.get($bits)
+  const bits = getAtom($bits)
   const apiEndpoint = `https://accounts.google.com/o/oauth2/v2/auth?scope=${scopes}&access_type=offline&prompt=consent&response_type=code&state=${encodeURIComponent(window.location.href)}/redirect&redirect_uri=${encodeURIComponent(bits.googleRedirectURL)}&client_id=${confTmp.clientId}`
   const authWindow = window.open(apiEndpoint, 'googleSheet', 'width=400,height=609,toolbar=off')
   const popupURLCheckTimer = setInterval(() => {
@@ -221,7 +221,7 @@ const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.clientId = confTmp.clientId
   tokenRequestParams.clientSecret = confTmp.clientSecret
-  const bits = bitStore.get($bits)
+  const bits = getAtom($bits)
   tokenRequestParams.redirectURI = bits.googleRedirectURL
 
   bitsFetch(tokenRequestParams, 'bitforms_gsheet_generate_token')

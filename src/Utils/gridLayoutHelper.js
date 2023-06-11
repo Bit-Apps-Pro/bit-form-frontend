@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-
-import bitStore from '../GlobalStates/BitStore'
+import { getAtom } from '../GlobalStates/BitStore'
 import { $layouts, $nestedLayouts } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
 
@@ -276,8 +275,8 @@ export function compactResponsiveLayouts(layouts, cols) {
 }
 
 export function getLayoutItemCount() {
-  const layout = bitStore.get($layouts)
-  const nestedLayouts = bitStore.get($nestedLayouts)
+  const layout = getAtom($layouts)
+  const nestedLayouts = getAtom($nestedLayouts)
   const layoutItem = layout.lg.length
   const nestedLayoutItem = Object.values(nestedLayouts).reduce(
     (count, cur) => count + cur.lg.length,
