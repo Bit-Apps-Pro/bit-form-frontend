@@ -155,6 +155,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/react": "^18.0.14",
     "@vitejs/plugin-react": "4.0.0",
     "@wordpress/babel-plugin-makepot": "^5.16.0",
     "@wordpress/i18n": "4.32.0",

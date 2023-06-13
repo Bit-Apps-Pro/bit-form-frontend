@@ -15,7 +15,7 @@ const renderer = createRenderer({
     customProperty(customProperties),
   ],
   filterClassName: cls => cls.indexOf('cp') !== -1,
-  devMode: true,
+  devMode: process.env.NODE_ENV === 'development',
 })
 
 // if (typeof bits !== 'undefined' && bits.assetsURL !== undefined) {
