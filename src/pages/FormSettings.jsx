@@ -23,6 +23,7 @@ import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
+const PdfTemplate = lazy(() => import('../components/PDF/PdfTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
 const Integrations = loadable(() => import('../components/Integrations'), { fallback: <IntegLoader /> })
 const Workflow = lazy(() => import('../components/Workflows/Workflow'))
@@ -109,6 +110,13 @@ function FormSettings({ setProModal }) {
           {__('Integrations')}
         </NavLink>
         <NavLink
+          to={`/form/settings/${formType}/${formID}/pdf-templates`}
+          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+        >
+          <span className="mr-1"><CodeSnippetIcn size="19" /></span>
+          {__('PDF Templates')}
+        </NavLink>
+        <NavLink
           to={`/form/settings/${formType}/${formID}/auth-settings`}
           className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
         >
@@ -124,6 +132,7 @@ function FormSettings({ setProModal }) {
             <Route path="auth-settings" element={<WpAuth formID={formID} />} />
             <Route path="confirmations/*" element={<ConfType formType={formType} formID={formID} />} />
             <Route path="email-templates/*" element={<EmailTemplate formID={formID} />} />
+            <Route path="pdf-templates/*" element={<PdfTemplate formID={formID} />} />
             <Route path="double-optin" element={<DoubleOptin formID={formID} />} />
             <Route path="workflow" element={<Workflow setProModal={setProModal} formID={formID} />} />
             <Route path="integrations/*" element={<Integrations setProModal={setProModal} />} />

@@ -47,7 +47,7 @@ export default function TinyMCE({
       tinymce.init({
         selector: `textarea#${id}-settings`,
         menubar,
-        height: height || 260,
+        min_height: height || 260,
         width: width || '100%',
         branding: false,
         resize: 'verticle',
