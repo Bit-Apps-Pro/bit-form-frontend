@@ -1,7 +1,7 @@
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { $bits, $fieldsArr, $mailTemplates, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $mailTemplates, $pdfTemplates, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import DropDown from '../Utilities/DropDown'
@@ -19,10 +19,10 @@ export default function EmailNotificationWorkflowAction({
   const { css } = useFela()
   const [workflows, setWorkflows] = useAtom($workflows)
   const mailTem = useAtomValue($mailTemplates)
+  const pdfTem = useAtomValue($pdfTemplates)
   const fieldsArr = useAtomValue($fieldsArr)
   const setUpdateBtn = useSetAtom($updateBtn)
   const bits = useAtomValue($bits)
-
   const fileInFormField = () => {
     const file = []
     fieldsArr.map(field => {
@@ -60,7 +60,6 @@ export default function EmailNotificationWorkflowAction({
       const findEmailActions = draftSuccessActions.find(val => val.type === actionKey)
       if (findEmailActions) findEmailActions.details[typ] = value
     })
-
     setWorkflows(tmpWorkflows)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
@@ -158,6 +157,27 @@ export default function EmailNotificationWorkflowAction({
             className="w-10 mt-1"
             options={fileInFormField()}
           />
+          <div className="mt-2">
+            <label htmlFor="pdf-template" className="f-m f-5">
+              {__('PDF Attachment Template:')}
+            </label>
+            <div className="mt-1" />
+            <select
+              className="btcd-paper-inp w-7"
+              onChange={e => setEmailSetting('pdfId', e.target.value)}
+              value={getValueFromArr(actionKey, 'pdfTempId')}
+            >
+              <option value="">{__('Select PDF Template')}</option>
+              {pdfTem?.map((itm, i) => (
+                <option
+                  key={`sem-${i + 2.3}`}
+                  value={itm.id ? JSON.stringify({ id: String(itm.id) }) : JSON.stringify({ index: String(i) })}
+                >
+                  {itm.title}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       )}
     </div>

@@ -17,7 +17,7 @@ export const $builderHookStates = atomWithReset({
   forceBuilderWidthToLG: 0,
   forceBuilderWidthToBrkPnt: 0,
   reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 },
-  recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 }
+  recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 },
 })
 export const $builderRightPanelScroll = atomWithReset(false)
 export const $builderSettings = atomWithReset({ atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false }, addImportantRuleToStyles: false })

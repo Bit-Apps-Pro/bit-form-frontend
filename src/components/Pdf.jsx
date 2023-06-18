@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
-import { useAtomValue } from 'jotai'
+import { useAtom } from 'jotai'
+import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { $bits } from '../GlobalStates/GlobalStates'
@@ -12,7 +13,7 @@ import CheckBox from './Utilities/CheckBox'
 import SnackMsg from './Utilities/SnackMsg'
 
 export default function Pdf() {
-  const bits = useAtomValue($bits)
+  const [bits, setBits] = useAtom($bits)
   const { isPro } = bits
 
   const [snack, setSnackbar] = useState({ show: false })
@@ -57,6 +58,9 @@ export default function Pdf() {
           if (res.data && res.data.id) {
             tempSetting.id = res.data.id
           }
+          setBits(prvState => create(prvState, draft => {
+            draft.allFormSettings.pdf = tempSetting
+          }))
           setPdfSetting(tempSetting)
         }
         setSnackbar({ show: true, msg: `${res.data.message}` })
