@@ -49,6 +49,7 @@ export default function Pdf() {
   }
 
   const saveConfig = () => {
+    if (!isPro) return
     const tempSetting = { ...pdfSetting }
     setisLoading(true)
 
