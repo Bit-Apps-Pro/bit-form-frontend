@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
-import bitStore from '../../../../GlobalStates/BitStore'
+import { getAtom } from '../../../../GlobalStates/BitStore'
 import { $fields } from '../../../../GlobalStates/GlobalStates'
 import { deepCopy } from '../../../../Utils/Helpers'
 import { assignNestedObj } from '../../styleHelpers'
 
 const getPaddingForExistIcn = (fk, size) => {
-  const fields = bitStore.get($fields)
+  const fields = getAtom($fields)
   let value
   if ('prefixIcn' in fields[fk] && 'suffixIcn' in fields[fk]) {
     value = `var(--fld-p) ${size}px var(--fld-p) ${size}px !important`

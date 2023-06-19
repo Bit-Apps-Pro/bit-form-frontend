@@ -1,12 +1,15 @@
 import loadable from '@loadable/component'
+import { useAtomValue } from 'jotai'
 import { Route, Routes } from 'react-router-dom'
+import { $formId } from '../GlobalStates/GlobalStates'
 import AllEmailTemplates from './AllEmailTemplates'
 import FSettingsLoader from './Loaders/FSettingsLoader'
 
 const EmailTemplateNew = loadable(() => import('./EmailTemplateNew'), { fallback: <FSettingsLoader /> })
 const EmailTemplateEdit = loadable(() => import('./EmailTemplateEdit'), { fallback: <FSettingsLoader /> })
 
-export default function EmailTemplate({ formID }) {
+export default function EmailTemplate() {
+  const formID = useAtomValue($formId)
   return (
     <Routes>
       <Route index element={<AllEmailTemplates formID={formID} />} />

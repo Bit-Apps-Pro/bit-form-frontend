@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
-import { useSetAtom } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import validateForm from '../../user-frontend/validation'
 import { getAbsoluteElmHeight } from '../../Utils/FormBuilderHelper'
@@ -10,33 +10,34 @@ import { getCustomAttributes, getCustomClsName, observeElement, select, selectIn
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 import { assignNestedObj } from '../style-new/styleHelpers'
+import { $resizingFld } from '../../GlobalStates/GlobalStates'
 
 export default function TextArea({
-  fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses, resizingFld,
+  fieldKey, attr, onBlurHandler, resetFieldValue, formID, styleClasses,
 }) {
   const [value, setValue] = useState(attr.val)
+  const resizingFld = useAtomValue($resizingFld)
   const textAreaRef = useRef(null)
   const tempResize = useRef({ resize: false })
   const setStyles = useSetAtom($styles)
 
-  useEffect(() => {
-    if (resizingFld.fieldKey === fieldKey) {
-      tempResize.current.resize = true
-      const wrpElm = selectInGrid(`[data-key="${fieldKey}"]`)
-      const currentWrpHeight = getAbsoluteElmHeight(wrpElm)
-      if (resizingFld.wrpHeight < resizingFld.fldHeight) return
+  if (resizingFld.fieldKey === fieldKey) {
+    tempResize.current.resize = true
+    const wrpElm = selectInGrid(`[data-key="${fieldKey}"]`)
+    const currentWrpHeight = getAbsoluteElmHeight(wrpElm)
+    if (resizingFld.wrpHeight >= resizingFld.fldHeight) {
       const height = `${resizingFld.fldHeight + (currentWrpHeight - resizingFld.wrpHeight)}px`
       textAreaRef.current.style.height = height
     }
+  }
 
-    if (tempResize.current.resize && !resizingFld.fieldKey) {
-      tempResize.current.resize = false
-      const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
-      setStyles(prvStyle => create(prvStyle, drftStyle => {
-        assignNestedObj(drftStyle, getPropertyPath('height'), textAreaRef.current.style.height)
-      }))
-    }
-  }, [resizingFld])
+  if (tempResize.current.resize && !resizingFld.fieldKey) {
+    tempResize.current.resize = false
+    const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('height'), textAreaRef.current.style.height)
+    }))
+  }
 
   useEffect(() => {
     if (attr.val !== undefined && !attr.userinput) {

@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
+import { useAtom, useSetAtom } from 'jotai'
 import { lazy, memo, Suspense, useEffect } from 'react'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
-import { useAtom, useSetAtom } from 'jotai'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import ProModal from '../components/Utilities/ProModal'
@@ -31,7 +31,7 @@ const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))
 
-function FormSettings({ setProModal }) {
+function FormSettings() {
   // const { path } = useMatch()
   const { formType, formID } = useParams()
   const [isNewThemeStyleLoaded, setIsNewThemeStyleLoaded] = useAtom($isNewThemeStyleLoaded)
@@ -129,13 +129,13 @@ function FormSettings({ setProModal }) {
         <Suspense fallback={<FSettingsLoader />}>
           <Routes>
             <Route path="form-settings" element={<SingleFormSettings />} />
-            <Route path="auth-settings" element={<WpAuth formID={formID} />} />
-            <Route path="confirmations/*" element={<ConfType formType={formType} formID={formID} />} />
-            <Route path="email-templates/*" element={<EmailTemplate formID={formID} />} />
-            <Route path="pdf-templates/*" element={<PdfTemplate formID={formID} />} />
-            <Route path="double-optin" element={<DoubleOptin formID={formID} />} />
-            <Route path="workflow" element={<Workflow setProModal={setProModal} formID={formID} />} />
-            <Route path="integrations/*" element={<Integrations setProModal={setProModal} />} />
+            <Route path="auth-settings" element={<WpAuth />} />
+            <Route path="confirmations/*" element={<ConfType formType={formType} />} />
+            <Route path="email-templates/*" element={<EmailTemplate />} />
+            <Route path="pdf-templates/*" element={<PdfTemplate />} />
+            <Route path="double-optin" element={<DoubleOptin />} />
+            <Route path="workflow" element={<Workflow />} />
+            <Route path="integrations/*" element={<Integrations />} />
           </Routes>
         </Suspense>
         {/* <Routes>

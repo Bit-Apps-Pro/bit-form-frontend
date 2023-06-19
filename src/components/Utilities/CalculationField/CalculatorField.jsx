@@ -114,7 +114,7 @@ function CalculatorField({
         draftExp.splice(caretPosition, 0, { type: 'space', dataObj: { content: key } })
       }))
       setCaretPosition(oldPosition => oldPosition + 1)
-    } else if ((!Number.isNaN(key)) || key === '.') {
+    } else if ((!isNaN(key)) || key === '.') {
       setExpressions(oldExp => create(oldExp, draftExp => {
         draftExp.splice(caretPosition, 0, { type: 'number', dataObj: { content: key } })
       }))
@@ -124,7 +124,7 @@ function CalculatorField({
         draftExp.splice(caretPosition, 0, { type: 'operator', dataObj: { content: key } })
       }))
       setCaretPosition(oldPosition => oldPosition + 1)
-    } else if (/^[!@#$%^&*(),.?"':{}|_<>]$/.test(key)) {
+    } else if (/^[!@#$%^&*()\\=,.?"':{}|_<>]$/.test(key)) {
       setExpressions(oldExp => create(oldExp, draftExp => {
         draftExp.splice(caretPosition, 0, { type: 'symbol', dataObj: { content: key } })
       }))
@@ -237,7 +237,7 @@ function CalculatorField({
       if (btnType === 'back' && value) {
         onChange(value.slice(0, caretPosition - 1) + value.slice(caretPosition))
         setCaretPosition(oldPosition => oldPosition - (valueLength || 1))
-      } else if (btnType !== 'field') {
+      } else if (btnType !== 'field' && btnType !== 'back') {
         const newValue = value.slice(0, caretPosition) + dataObj.content + value.slice(caretPosition)
         setCaretPosition(oldPosition => oldPosition + (valueLength || 1))
         onChange(newValue)
@@ -353,7 +353,7 @@ function initialExpression(value, fieldArr) {
         expArr.push({ id, type: 'number', dataObj: { content } })
       } else if (/^[+\-*/(),<>]{1}$/g.test(content)) {
         expArr.push({ id, type: 'operator', dataObj: { content } })
-      } else if (/^[!@#$%^&*(),.?"':{}|_<>]$/g.test(content)) {
+      } else if (/^[!@#$%^&*()\\=,.?"':{}|_<>]$/g.test(content)) {
         expArr.push({ id, type: 'symbol', dataObj: { content } })
       } else if (/\${\w[^]*[\d\D\s]\)}/g.test(content)) {
         let functionName = content.replace(/^\${|}$/g, '')

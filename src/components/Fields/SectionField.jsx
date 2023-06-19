@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
-import { Suspense, memo, useEffect, useRef, useState } from 'react'
+import { Suspense, memo, startTransition, useEffect, useRef, useState } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
@@ -58,15 +58,19 @@ function SectionField({
     if (fieldChangeCounter > 0 && fieldKey === parentFieldKey) {
       const nl = fitSpecificLayoutItem(gridNestedLayouts, changedFieldKey)
       setGridNestedLayouts(nl)
-      setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = nl }))
-      reCalculateFldHeights(fieldKey)
+      startTransition(() => {
+        setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = nl }))
+        reCalculateFldHeights(fieldKey)
+      })
     }
   }, [fieldChangeCounter, parentFieldKey, changedFieldKey])
 
   const handleLayoutChange = (lay) => {
     if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
       setGridNestedLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
-      setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey][breakpoint] = lay }))
+      startTransition(() => {
+        setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey][breakpoint] = lay }))
+      })
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
@@ -78,9 +82,11 @@ function SectionField({
     if (!dragFieldData) return
     const { newLayouts } = addNewFieldToGridLayout(gridNestedLayouts, dragFieldData, draggingField.fieldSize, dropPosition)
     setGridNestedLayouts(newLayouts)
-    setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
-    setIsDraggable(true)
-    reCalculateFldHeights(fieldKey)
+    startTransition(() => {
+      setIsDraggable(true)
+      setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
+      reCalculateFldHeights(fieldKey)
+    })
   }
   const inpWrpElm = selectInGrid(`.${fieldKey}-inp-fld-wrp`)
   const absoluteSizes = inpWrpElm && getAbsoluteSize(inpWrpElm)
@@ -207,16 +213,20 @@ function SectionField({
     if (!handleFieldExtraAttr(fldData)) return
     const { newLayouts } = cloneLayoutItem(fldKey, gridNestedLayouts)
     setGridNestedLayouts(newLayouts)
-    setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
-    reCalculateFldHeights(fieldKey)
+    startTransition(() => {
+      setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
+      reCalculateFldHeights(fieldKey)
+    })
   }
 
   const removeNestedLayoutItem = fldKey => {
     const newLayouts = removeLayoutItem(fldKey, gridNestedLayouts)
     setGridNestedLayouts(newLayouts)
-    setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
+    startTransition(() => {
+      setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
+      reCalculateFldHeights()
+    })
     navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
-    reCalculateFldHeights(fieldKey)
   }
 
   return (
@@ -240,8 +250,8 @@ function SectionField({
             id={`${fieldKey}-layout-wrapper`}
             onDragOver={e => e.preventDefault()}
             onDragEnter={e => e.preventDefault()}
-            onMouseMove={() => setIsDraggable(false)}
-            onMouseLeave={() => setIsDraggable(true)}
+            onMouseMove={() => startTransition(() => { setIsDraggable(false) })}
+            onMouseLeave={() => startTransition(() => { setIsDraggable(true) })}
           // onClick={resetContextMenu}
           >
             {!styleMode ? (
@@ -265,11 +275,13 @@ function SectionField({
                 layout={gridNestedLayouts[breakpoint]}
                 // onBreakpointChange={onBreakpointChange}
                 onDragStart={setResizingFldKey}
-                // onDrag={setResizingWX}
+                onDrag={setResizingWX}
                 onDragStop={() => {
-                  setIsDraggable(true)
-                  reCalculateFldHeights(fieldKey)
-                  setResizingFalse()
+                  startTransition(() => {
+                    setIsDraggable(true)
+                    reCalculateFldHeights(fieldKey)
+                    setResizingFalse()
+                  })
                 }}
                 onResizeStart={setResizingFldKey}
                 onResize={setResizingWX}
@@ -295,12 +307,9 @@ function SectionField({
                           layoutItem,
                           removeLayoutItem: removeNestedLayoutItem,
                           cloneLayoutItem: cloneNestedLayoutItem,
-                          fields,
-                          formID,
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
-                          resizingFld,
                         }}
                       />
                     </Suspense>
@@ -326,12 +335,9 @@ function SectionField({
                           layoutItem,
                           removeLayoutItem: removeNestedLayoutItem,
                           cloneLayoutItem: cloneNestedLayoutItem,
-                          fields,
-                          formID,
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
-                          resizingFld,
                         }}
                       />
                     </Suspense>

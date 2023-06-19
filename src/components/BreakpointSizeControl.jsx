@@ -1,12 +1,13 @@
-import { create } from 'mutative'
-import { useFela } from 'react-fela'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { create } from 'mutative'
+import { startTransition } from 'react'
+import { useFela } from 'react-fela'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import { $breakpoint, $breakpointSize, $builderHelperStates, $updateBtn } from '../GlobalStates/GlobalStates'
 import MobileIcon from '../Icons/MobileIcon'
 import TabletIcon from '../Icons/TabletIcon'
-import ut from '../styles/2.utilities'
 import { IS_PRO } from '../Utils/Helpers'
+import ut from '../styles/2.utilities'
 import PremiumSettingsOverlay from './CompSettings/StyleCustomize/ChildComp/PremiumSettingsOverlay'
 import Cooltip from './Utilities/Cooltip'
 import ProBadge from './Utilities/ProBadge'
@@ -21,8 +22,10 @@ export default function BreakpointSizeControl() {
   const setUpdateBtn = useSetAtom($updateBtn)
 
   const toggleRespectOrder = () => {
-    if (builderHelperStates.respectLGLayoutOrder) setIsDraggable(true)
-    else if (breakpoint !== 'lg') setIsDraggable(false)
+    startTransition(() => {
+      if (builderHelperStates.respectLGLayoutOrder) setIsDraggable(true)
+      else if (breakpoint !== 'lg') setIsDraggable(false)
+    })
     setBuilderHelperStates(prv => ({ ...prv, respectLGLayoutOrder: !prv.respectLGLayoutOrder }))
   }
   const breakpointSizeHandler = ({ target: { name, value } }) => {

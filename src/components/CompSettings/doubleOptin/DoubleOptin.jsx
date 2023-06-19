@@ -6,7 +6,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
-import { $bits, $fieldsArr } from '../../../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $formId } from '../../../GlobalStates/GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import app from '../../../styles/app.style'
 import bitsFetch from '../../../Utils/bitsFetch'
@@ -45,8 +45,7 @@ export default function DoubleOptin() {
   const [isLoading, setIsLoading] = useState(false)
   const formFields = useAtomValue($fieldsArr)
   const [snack, setSnackbar] = useState({ show: false })
-
-  const { formID } = useParams()
+  const formID = useAtomValue($formId)
 
   useEffect(() => {
     setIsLoad(true)

@@ -20,17 +20,14 @@ import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import { addToBuilderHistory, getSessionStorageStates } from '../Utils/FormBuilderHelper'
 import { getStatesToReset, hideWpMenu, showWpMenu } from '../Utils/Helpers'
-import { ShowProModalContext } from '../Utils/StaticData/Contexts'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
 import bitsFetch from '../Utils/bitsFetch'
-import { __ } from '../Utils/i18nwrap'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
 import RouteByParams from '../components/RouteByParams'
 import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
-import Modal from '../components/Utilities/Modal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import navbar from '../styles/navbar.style'
 
@@ -53,7 +50,6 @@ function FormDetails() {
   const [formInfo, setFormInfo] = useAtom($formInfo)
   const { formName } = formInfo
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
-  const [proModal, setProModal] = useState({ show: false, msg: '' })
   const setMailTem = useSetAtom($mailTemplates)
   const setPdfTem = useSetAtom($pdfTemplates)
   const setworkFlows = useSetAtom($workflows)
@@ -80,8 +76,6 @@ function FormDetails() {
   const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
   const [breakpointSize, setBreakpointSize] = useAtom($breakpointSize)
   const atomResetters = getStatesToReset().map(stateAtom => useResetAtom(stateAtom))
-
-  useEffect(() => { setFormId(formID) }, [formID])
 
   const activePath = () => {
     const loaciton = useLocation()
@@ -122,6 +116,7 @@ function FormDetails() {
   const onMount = () => {
     window.scrollTo(0, 0)
     hideWpMenu()
+    setFormId(formID)
     if (formType !== 'edit') {
       setNewFormInitialStates()
       return
@@ -290,168 +285,72 @@ function FormDetails() {
   }
 
   return (
-    <ShowProModalContext.Provider value={setProModal}>
-      <div className={`btcd-builder-wrp ${appFullScreen && 'btcd-ful-scn'}`}>
-        <Modal
-          sm
-          show={proModal.show}
-          setModal={() => setProModal({ show: false })}
-          title={__('Premium Feature')}
-          className="pro-modal"
-        >
-          <h4 className="txt-center mt-5">
-            {proModal.msg}
-          </h4>
-          <div className="txt-center">
-            <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer"><button className="btn btn-lg blue" type="button">{__('Buy Premium')}</button></a>
+    <div className={`btcd-builder-wrp ${appFullScreen && 'btcd-ful-scn'}`}>
+      <ConfirmModal
+        title={modal.title}
+        action={modal.action}
+        show={modal.show}
+        body={modal.msg}
+        btnTxt={modal.btnTxt}
+        cancelBtn={modal.cancelBtn}
+        close={closeModal}
+      />
+      <nav className={css(navbar.btct_bld_nav)}>
+        <div className={css(navbar.btcd_bld_title)}>
+          <NavLink className={css(navbar.nav_back_icn)} to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
+          </NavLink>
+          <div className={css(navbar.bit_icn)}>
+            <img width="16" src={bitIcn} alt="BitForm logo" />
           </div>
-        </Modal>
-        <ConfirmModal
-          title={modal.title}
-          action={modal.action}
-          show={modal.show}
-          body={modal.msg}
-          btnTxt={modal.btnTxt}
-          cancelBtn={modal.cancelBtn}
-          close={closeModal}
-        />
-        <nav className={css(navbar.btct_bld_nav)}>
-          <div className={css(navbar.btcd_bld_title)}>
-            <NavLink className={css(navbar.nav_back_icn)} to="/" onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
-              <span className="g-c"><BackIcn size="22" className="mr-2" stroke="3" /></span>
-            </NavLink>
-            <div className={css(navbar.bit_icn)}>
-              <img width="16" src={bitIcn} alt="BitForm logo" />
-            </div>
-            <input
-              className={css(navbar.btcd_bld_title_inp)}
-              onChange={({ target: { value } }) => {
-                setFormInfo(oldInfo => ({ ...oldInfo, formName: value }))
-                setUpdateBtn(oldUpdateBtn => ({ ...oldUpdateBtn, unsaved: true }))
-              }}
-              value={formName}
-              data-testid="form-name"
-            />
-          </div>
-          <div className={css(navbar.btcd_bld_lnk)}>
-            <SegmentControl
-              defaultActive={activePath()}
-              options={options}
-              size="90"
-              component="button"
-              onChange={onChangeHandler}
-              variant="blue"
-            />
-          </div>
-          <div className={css(navbar.btcd_bld_btn)}>
-            {/* <FeedbackBtn /> */}
-            {formType === 'edit' && <PublishBtn />}
-            <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
-            <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
-              <CloseIcn size="14" />
-            </NavLink>
-          </div>
-        </nav>
-        <div className={css(navbar.builder_routes)}>
-
-          <RouteByParams
-            page="responses"
-            formType
-            formID
-            render={(
-              <FormEntries
-                isLoading={isLoading}
-                allResp={allResponse}
-                setAllResp={setAllResponse}
-                integrations={integrations}
-              />
-            )}
+          <input
+            className={css(navbar.btcd_bld_title_inp)}
+            onChange={({ target: { value } }) => {
+              setFormInfo(oldInfo => ({ ...oldInfo, formName: value }))
+              setUpdateBtn(oldUpdateBtn => ({ ...oldUpdateBtn, unsaved: true }))
+            }}
+            value={formName}
+            data-testid="form-name"
           />
-          <RouteByParams page="builder" formType formID render={<FormBuilder isLoading={isLoading} />} />
-          <RouteByParams page="settings" formType formID render={<FormSettings setProModal={setProModal} />} />
-          {/* <Routes> */}
-          {/* <Route path=":rightBar/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}
-          {/* <Route path=":rightBar/:element/:fieldKey" element={<FormBuilderHOC isLoading={isLoading} />} /> */}
-          {/* </Routes> */}
-
-          {/* <RouteByParams
-            page="builder"
-            formType
-            formId
-            rightBar="?"
-            fieldKey="?"
-            element="?"
-            render={<FormBuilderHOC isLoading={isLoading} />}
-          /> */}
-          {/* <RouteByParams
-            page="responses"
-            formType
-            formId
-            render={
-
-            }
-          /> */}
-
-          {/* <Routes> */}
-
-          {/* <Route
-              path="/builder/:formType/:formID/:rightBar/:element/:fieldKey"
-              element={(
-                <Suspense fallback={<BuilderLoader />}>
-                  <FormBuilderHOC isLoading={isLoading} />
-                </Suspense>
-              )}
-            /> */}
-          {/* <Route
-              path="/builder/:formType/:formID/:rightBar/:element"
-              element={(
-                <Suspense fallback={<BuilderLoader />}>
-                  <FormBuilderHOC isLoading={isLoading} />
-                </Suspense>
-              )}
-            /> */}
-          {/* <Route
-              path="/builder/:formType/:formID/:rightBar"
-              element={(
-                <Suspense fallback={<BuilderLoader />}>
-                  <FormBuilderHOC isLoading={isLoading} />
-                </Suspense>
-              )}
-            /> */}
-          {/* <Route
-              path="/builder/:formType/:formID"
-              element={(
-                <Suspense fallback={<BuilderLoader />}>
-                  <FormBuilderHOC isLoading={isLoading} />
-                </Suspense>
-              )}
-            /> */}
-
-          {/* // <Route
-            //   path="/responses/:formType/:formID"
-            //   element={
-            //     !isLoading ? (
-            //       <FormEntries
-            //         allResp={allResponse}
-            //         setAllResp={setAllResponse}
-            //         integrations={integrations}
-            //       />
-            //     ) : <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} />
-            //   }
-            // /> */}
-
-          {/* <Route
-              path="/settings/:formType/:formID"
-              element={<FormSettings setProModal={setProModal} />}
-            /> */}
-          {/* <Route
-              path="/settings/:formType/:formID/:settings"
-              element={<FormSettings setProModal={setProModal} />}
-            /> */}
-          {/* </Routes> */}
         </div>
+        <div className={css(navbar.btcd_bld_lnk)}>
+          <SegmentControl
+            defaultActive={activePath()}
+            options={options}
+            size="90"
+            component="button"
+            onChange={onChangeHandler}
+            variant="blue"
+          />
+        </div>
+        <div className={css(navbar.btcd_bld_btn)}>
+          {/* <FeedbackBtn /> */}
+          {formType === 'edit' && <PublishBtn />}
+          <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
+          <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>
+            <CloseIcn size="14" />
+          </NavLink>
+        </div>
+      </nav>
+      <div className={css(navbar.builder_routes)}>
+
+        <RouteByParams
+          page="responses"
+          formType
+          formID
+          render={(
+            <FormEntries
+              isLoading={isLoading}
+              allResp={allResponse}
+              setAllResp={setAllResponse}
+              integrations={integrations}
+            />
+          )}
+        />
+        <RouteByParams page="builder" formType formID render={<FormBuilder isLoading={isLoading} />} />
+        <RouteByParams page="settings" formType formID render={<FormSettings />} />
       </div>
-    </ShowProModalContext.Provider>
+    </div>
   )
 }
 
