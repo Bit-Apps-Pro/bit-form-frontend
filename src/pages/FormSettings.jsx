@@ -1,7 +1,7 @@
 import loadable from '@loadable/component'
+import { useAtom, useSetAtom } from 'jotai'
 import { lazy, memo, Suspense, useEffect } from 'react'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
-import { useAtom, useSetAtom } from 'jotai'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import ProModal from '../components/Utilities/ProModal'
@@ -29,6 +29,7 @@ const Workflow = lazy(() => import('../components/Workflows/Workflow'))
 const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))
+const FormAbandonment = lazy(() => import('../components/FormSettings/FormAbandonment'))
 
 function FormSettings() {
   // const { path } = useMatch()
@@ -115,6 +116,13 @@ function FormSettings() {
           <span className="mr-1"><UserIcn size="18" /></span>
           {__('WP Auth')}
         </NavLink>
+        <NavLink
+          to={`/form/settings/${formType}/${formID}/form-abandonment`}
+          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+        >
+          <span className="mr-1"><UserIcn size="18" /></span>
+          {__('Form Abandonment')}
+        </NavLink>
       </aside>
 
       <div id="btcd-settings-wrp" className="btcd-s-wrp">
@@ -127,6 +135,7 @@ function FormSettings() {
             <Route path="double-optin" element={<DoubleOptin />} />
             <Route path="workflow" element={<Workflow />} />
             <Route path="integrations/*" element={<Integrations />} />
+            <Route path="form-abandonment" element={<FormAbandonment />} />
           </Routes>
         </Suspense>
         {/* <Routes>

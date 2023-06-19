@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { useResetAtom} from 'jotai/utils'
 import {
   $additionalSettings,
   $breakpointSize,
@@ -20,6 +20,7 @@ import {
   $fieldLabels,
   $fields,
   $flags,
+  $formAbandonment,
   $formInfo,
   $forms,
   $integrations,
@@ -27,8 +28,8 @@ import {
   $mailTemplates,
   $newFormId,
   $reportId,
-  $reports,
   $reportSelector,
+  $reports,
   $selectedFieldId,
   $updateBtn,
   $workflows,
@@ -37,17 +38,16 @@ import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
-import navbar from '../styles/navbar.style'
-import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
-import bitsFetch from '../Utils/bitsFetch'
-import { getCurrentFormUrl, prepareLayout, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
-import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher, generateAndSaveAtomicCss, isObjectEmpty } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
+import { getCurrentFormUrl, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
+import { bitDecipher, generateAndSaveAtomicCss, isObjectEmpty } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
+import paymentFields from '../Utils/StaticData/paymentFields'
+import bitsFetch from '../Utils/bitsFetch'
+import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
+import { __ } from '../Utils/i18nwrap'
+import navbar from '../styles/navbar.style'
 import LoaderSm from './Loaders/LoaderSm'
 import { removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
-import paymentFields from '../Utils/StaticData/paymentFields'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
@@ -86,6 +86,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const breakpointSize = useAtomValue($breakpointSize)
   const customCodes = useAtomValue($customCodes)
   const flags = useAtomValue($flags)
+  const formAbandonment = useAtomValue($formAbandonment)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -296,6 +297,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         confirmation: confirmations,
         mailTem: mailTemplates,
         integrations: allIntegrations,
+        formAbandonment,
       },
       builderSettings,
     }
