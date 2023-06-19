@@ -16,7 +16,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import { addToBuilderHistory, getSessionStorageStates } from '../Utils/FormBuilderHelper'
-import { getStatesToReset, hideWpMenu, showWpMenu } from '../Utils/Helpers'
+import { clearAllSWRCache, getStatesToReset, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
 import bitsFetch from '../Utils/bitsFetch'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
@@ -124,6 +124,7 @@ function FormDetails() {
     showWpMenu()
     setAppFullScreen(false)
     atomResetters.forEach(resetAtom => resetAtom())
+    clearAllSWRCache()
   }
 
   useEffect(() => {
