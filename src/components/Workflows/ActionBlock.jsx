@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
+import { useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useAtomValue, useSetAtom } from 'jotai'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 // import MtInput from './MtInput'
@@ -100,7 +100,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   }
 
   const fldType = fields[action.field]?.typ || ''
-  const isNotFileUpField = fields[action.field]?.typ !== 'file-up'
+  const isNotFileUpField = fields[action.field]?.typ !== 'file-up' && fields[action.field]?.typ !== 'advanced-file-up'
   const isNotButtonField = fields[action.field]?.typ !== 'button'
   const isNotSubmitAction = actionType !== 'onsubmit'
   const isNotValidateAction = actionType !== 'onvalidate'
@@ -141,10 +141,12 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
         )}
         {(isNotFileUpField && isNotButtonField && isNotValidateAction)
           && <option value="value">{__('Value')}</option>}
+        {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable')}</option>}
         {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField)
           && <option value="readonly">{__('Readonly')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable')}</option>}
+        {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField)
+          && <option value="writeable">{__('Writeable')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="hide">{__('Hide')}</option>}
         {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show')}</option>}
         {actionType === 'onvalidate' && <option value="required">{__('Required')}</option>}
