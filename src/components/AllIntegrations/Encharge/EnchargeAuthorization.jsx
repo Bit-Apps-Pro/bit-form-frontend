@@ -117,7 +117,7 @@ export default function EnchargeAuthorization({
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage(2)}
+              nextPageHandler={() => nextPage(2)}
               disabled={!isAuthorized}
             />
           </>

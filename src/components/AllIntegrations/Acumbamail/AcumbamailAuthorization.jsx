@@ -90,7 +90,7 @@ export default function AcumbamailAuthorization({
           />
           <br />
           <NextBtn
-            nextPageHanlder={() => nextPage()}
+            nextPageHandler={() => nextPage()}
             disabled={!isAuthorized}
           />
         </>

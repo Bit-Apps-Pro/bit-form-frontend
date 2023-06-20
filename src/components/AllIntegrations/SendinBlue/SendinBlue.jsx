@@ -85,7 +85,7 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
           setError={setError}
         />
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={sendinBlueConf.field_map.length < 1}
         />
         {/* <button

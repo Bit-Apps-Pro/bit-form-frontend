@@ -109,7 +109,7 @@ function SendFox({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage()}
+          nextPageHandler={() => nextPage()}
           disabled={isDisabled(sendFoxConf)}
         />
         {/* <button

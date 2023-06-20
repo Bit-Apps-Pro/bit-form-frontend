@@ -77,7 +77,7 @@ function ZohoCampaigns({ formFields, setIntegration, integrations, allIntegURL }
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={campaignsConf.list === '' || campaignsConf.table === '' || campaignsConf.field_map.length < 1}
         />
         {/* <button

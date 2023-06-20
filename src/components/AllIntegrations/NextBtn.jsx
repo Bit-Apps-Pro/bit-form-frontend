@@ -4,12 +4,12 @@ import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
 
-export default function NextBtn({ nextPageHanlder, disabled }) {
+export default function NextBtn({ nextPageHandler, disabled }) {
   const { css } = useFela()
   return (
     <Btn
       variant={disabled ? 'disabled' : 'success'}
-      onClick={nextPageHanlder}
+      onClick={nextPageHandler}
       className={css(ut.ftRight)}
       disabled={disabled}
     >

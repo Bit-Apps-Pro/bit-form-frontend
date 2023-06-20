@@ -135,7 +135,7 @@ export default function ZohoCampaignsAuthorization({
               <BackIcn className="ml-1 rev-icn" />
             </button> */}
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
           </>

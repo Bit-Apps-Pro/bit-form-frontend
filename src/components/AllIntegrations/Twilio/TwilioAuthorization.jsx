@@ -125,7 +125,7 @@ export default function TwilioAuthorization({
           />
           <br />
           <NextBtn
-            nextPageHanlder={() => nextPage()}
+            nextPageHandler={() => nextPage()}
             disabled={!isAuthorized}
           />
         </>

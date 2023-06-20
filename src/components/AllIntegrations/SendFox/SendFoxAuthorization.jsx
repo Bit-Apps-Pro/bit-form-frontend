@@ -92,7 +92,7 @@ export default function SendFoxAuthorization({
           />
           <br />
           <NextBtn
-            nextPageHanlder={() => nextPage()}
+            nextPageHandler={() => nextPage()}
             disabled={!isAuthorized}
           />
         </>

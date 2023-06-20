@@ -77,7 +77,7 @@ function OneDrive({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <NextBtn
-          nextPageHanlder={() => setStep(3)}
+          nextPageHandler={() => setStep(3)}
           disabled={!oneDriveConf.actions.attachments || !oneDriveConf.folder}
         />
         {/* <button
