@@ -80,7 +80,7 @@ function ZohoCRM({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={crmConf.module === '' || crmConf.layout === '' || crmConf.field_map.length < 1}
         />
         {/* <button

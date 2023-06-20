@@ -75,7 +75,7 @@ export default function AutonamiAuthorization({ autonamiConf, setAutonamiConf, s
         />
         <br />
         <NextBtn
-          nextPageHanlder={() => nextPage(2)}
+          nextPageHandler={() => nextPage(2)}
           disabled={!isAuthorized}
         />
       </div>

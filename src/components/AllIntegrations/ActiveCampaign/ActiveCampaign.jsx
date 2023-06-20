@@ -45,6 +45,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
       }
     }
   }
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
@@ -85,7 +86,7 @@ function ActiveCampaign({ formFields, setIntegration, integrations, allIntegURL 
           <BackIcn className="ml-1 rev-icn" />
         </button> */}
         <NextBtn
-          nextPage={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={!activeCampaingConf?.listId || activeCampaingConf.field_map.length < 1}
         />
       </div>

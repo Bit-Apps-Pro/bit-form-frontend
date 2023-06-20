@@ -91,7 +91,7 @@ function Acumbamail({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={!acumbamailConf.mainAction || !checkMappedFields(acumbamailConf)}
         />
       </div>

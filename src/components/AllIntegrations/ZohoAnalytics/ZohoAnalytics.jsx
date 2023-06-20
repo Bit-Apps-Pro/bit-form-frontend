@@ -70,7 +70,7 @@ export default function ZohoAnalytics({ formFields, setIntegration, integrations
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage()}
+          nextPageHandler={() => nextPage()}
           disabled={analyticsConf.workspace === '' || analyticsConf.table === '' || analyticsConf.field_map.length < 1}
         />
 

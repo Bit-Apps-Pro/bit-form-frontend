@@ -120,7 +120,7 @@ export default function ElasticEmailAuthorization({ elasticEmailConf, setElastic
           />
           <br />
           <NextBtn
-            nextPageHanlder={() => nextPage(2)}
+            nextPageHandler={() => nextPage(2)}
             disabled={!isAuthorized}
           />
         </>
