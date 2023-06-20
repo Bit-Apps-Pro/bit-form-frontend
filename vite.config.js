@@ -303,7 +303,7 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
+        src: absPath('packages/bit-frontend/dist/bitform-init.min.js'),
         dest: absPath('../assets'),
       },
       {
@@ -312,6 +312,18 @@ function copyStatics(mode) {
       },
       {
         src: absPath('packages/bit-repeater-field/dist/bit-repeater-field.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-repeater-field/dist/checkRepeatedField.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-repeater-field/dist/getRepeatedIndexes.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-repeater-field/dist/getIndexesBaseOnConditions.min.js'),
         dest: absPath('../assets'),
       },
     ],

@@ -1,6 +1,12 @@
 /* eslint-disable import/prefer-default-export */
 export const SmartTagField = [
   {
+    id: 43,
+    name: '_bf_separator',
+    label: 'Separator',
+    type: 'text',
+  },
+  {
     id: 1,
     name: '_bf_current_time',
     label: 'Current Date Time',
@@ -228,6 +234,14 @@ export const SmartTagField = [
     id: 37,
     name: '_bf_count()',
     label: 'Count',
+    type: 'number',
+    functionParam: true,
+    custom: true,
+  },
+  {
+    id: 42,
+    name: '_bf_calc()',
+    label: 'Calculation',
     type: 'number',
     functionParam: true,
     custom: true,
