@@ -3,8 +3,6 @@ export default class BitRepeaterField {
 
   #repeatableWrapper
 
-  #hiddenFieldsInput
-
   #hiddenIndexInput
 
   #window
@@ -15,6 +13,10 @@ export default class BitRepeaterField {
 
   #fieldKey
 
+  #fieldName
+
+  #contentId
+
   #defaultRow
 
   #minimumRow
@@ -23,17 +25,17 @@ export default class BitRepeaterField {
 
   #showAddButton
 
-  #addButton
-
-  #removeButton
-
   #showAddToEndButton
 
   #addToEndBtnWrapper
 
   #addToEndButton
 
-  #cloneElement
+  #rowNumber = 1
+
+  #indexArray = []
+
+  #customFields = []
 
   constructor(selector, config) {
     this.#setConfigPropertiesToVariables(config)
@@ -50,6 +52,7 @@ export default class BitRepeaterField {
     this.#window = config.window || window
     this.#document = config.document || document
     this.#fieldKey = config.fieldKey
+    this.#fieldName = config.fieldName
     this.#contentId = config.contentId
     this.#defaultRow = config.defaultRow
     this.#minimumRow = config.minimumRow
@@ -59,28 +62,26 @@ export default class BitRepeaterField {
   }
 
   init() {
-    this.#repeatableWrapper = this.#select(`.${this.#fieldKey}-rpt-wrp`)
-
-    this.#detectRepeatableFields()
-
-    const cloneElement = this.#elementClone(this.#repeatableWrapper)
-
-    const replacedElement = this.#replaceClassAndId(cloneElement, rowNumber = 1)
-
-    this.#repeatableWrapper.remove()
-
-    cloneElement.classList.add('rpt-index-1')
-    cloneElement.querySelector(`.${this.#fieldKey}-rpt-add-btn`).dataset.index = 1
-    cloneElement.querySelector(`.${this.#fieldKey}-rpt-rmv-btn`).dataset.index = 1
-
-    if (this.#showAddButton) {
-      // this.#addButton = this.#select(`.${this.#fieldKey}-rpt-add-btn`)
-      this.#addButton = cloneElement.querySelector(`.${this.#fieldKey}-rpt-add-btn`)
-      this.#addEvent(this.#addButton, 'click', e => this.#handleAdd(e))
+    if (this.#maximumRow > 0 && this.#maximumRow < this.#defaultRow) {
+      this.#defaultRow = this.#maximumRow
     }
-    // this.#removeButton = this.#select(`.${this.#fieldKey}-rpt-rmv-btn`)
-    this.#removeButton = cloneElement.querySelector(`.${this.#fieldKey}-rpt-rmv-btn`)
-    this.#addEvent(this.#removeButton, 'click', e => this.#handleRemove(e))
+    if (this.#maximumRow > 0 && this.#maximumRow < this.#minimumRow) {
+      this.#minimumRow = this.#maximumRow
+    }
+    if (this.#minimumRow < 1) { this.#minimumRow = 1 }
+    this.#repeatableWrapper = this.#elementClone(this.#select(`.${this.#fieldKey}-rpt-wrp`))
+    this.#hiddenIndexInput = this.#select(`[name='${this.#fieldName}-repeat-index']`)
+
+    this.#detectFields()
+
+    // this.#repeatableWrapper.remove()
+
+    this.#selectAll(`.${this.#fieldKey}-rpt-wrp`).forEach((rptWrp) => {
+      this.#replaceClassAndId(rptWrp, this.#rowNumber)
+      this.#addRowIndex(this.#rowNumber)
+      this.#initializeCustomFields(this.#rowNumber)
+      this.#rowNumber += 1
+    })
 
     if (this.#showAddToEndButton) {
       this.#addToEndBtnWrapper = this.#select(`.${this.#fieldKey}-add-to-end-btn-wrp`)
@@ -88,41 +89,226 @@ export default class BitRepeaterField {
       this.#addEvent(this.#addToEndButton, 'click', e => this.#handleAddToEnd(e))
     }
 
-    this.#repeaterFieldWrapper.prepend(cloneElement)
+    this.#handleButtonEnableDisable()
   }
 
-  #detectRepeatableFields() {
-    this.#selectAll('input[name]', this.#repeatableWrapper).forEach((input) => {
-      const { name } = input
-      const { value } = input
-      const hiddenInput = this.#document.createElement('input')
-      hiddenInput.type = 'hidden'
-      hiddenInput.name = name
-      hiddenInput.value = value
-      this.#repeatableWrapper.append(hiddenInput)
+  #detectFields() {
+    const props = bf_globals[this.#contentId]
+    const fieldNames = []
+    const fieldKeys = []
+    const repeatFields = []
+    const customFieldTypes = ['select', 'country', 'currency', 'phone-number', 'file-up']
+    this.#selectAll('input[name],select[name],textarea[name]', this.#repeatableWrapper).forEach((input) => {
+      const name = input.getAttribute('name')
+      fieldNames.push(name.replace('[]', ''))
+    })
+    const { fields } = props
+    new Set(fieldNames).forEach((name) => {
+      Object.entries(fields).forEach(([key, field]) => {
+        if (field.fieldName === name) {
+          repeatFields.push(key)
+          if (customFieldTypes.indexOf(field.typ) !== -1) {
+            fieldKeys.push({ key, name, type: field.typ })
+          }
+        }
+      })
+    })
+
+    if (!props.repeatFields) {
+      props.repeatFields = {}
+    }
+    props.repeatFields = { ...props.repeatFields, [this.#fieldKey]: repeatFields }
+
+    this.#customFields = fieldKeys
+  }
+
+  #initializeCustomFields(rowNumber) {
+    if (rowNumber > 1) {
+      this.#customFields.forEach((field) => {
+        bf_globals[this.#contentId].inits[`${field.key}[${rowNumber}]`] = this.#window.getFldInstance(this.#contentId, field.key, field.type, `.rpt-index-${rowNumber} `)
+      })
+    }
+  }
+
+  #removeCustomFieldInstances(rowNumber) {
+    this.#customFields.forEach((field) => {
+      delete bf_globals[this.#contentId].inits[`${field.key}[${rowNumber}]`]
     })
   }
 
   #replaceClassAndId(element, rowNumber) {
     const replacedElement = element
+    const inputs = this.#selectAll('input[name],select[name],textarea[name]', replacedElement)
+    const props = this.#window.bf_globals[this.#contentId]
+
+    replacedElement.classList.add(`rpt-index-${rowNumber}`)
+    replacedElement.dataset.index = rowNumber
+    this.#setHeight(replacedElement, true)
+    // replace name and id
+    inputs.forEach((input) => {
+      const id = input.getAttribute('id')
+      if (id) input.setAttribute('id', `${id}-rpt-${rowNumber}`)
+      const name = input.getAttribute('name')
+      // check is name contains '[]'
+      if (name.indexOf('[]') !== -1) {
+        input.setAttribute('name', name.replace('[]', `[${rowNumber}][]`))
+      } else {
+        input.setAttribute('name', `${name}[${rowNumber}]`)
+      }
+      const onaction = ['checkbox', 'radio'].includes(input.type) ? 'input' : 'blur'
+      if (props.validateFocusLost) {
+        input.addEventListener(onaction, e => validateForm({ input: e.target }))
+      }
+      if (props.onfieldCondition) {
+        input.addEventListener('input', e => bit_conditionals(e))
+        observeElm(input, 'value', (oldValue, newValue) => {
+          if (oldValue !== newValue) {
+            bit_conditionals({ target: input })
+          }
+        })
+      }
+    })
+
+    // replace label for attribute
+    const labels = this.#selectAll('label', replacedElement) || []
+    labels.forEach((label) => {
+      const forAttr = label.getAttribute('for')
+      label.setAttribute('for', `${forAttr}-rpt-${rowNumber}`)
+    })
+
+    if (this.#showAddButton) {
+      // this.#addButton = this.#select(`.${this.#fieldKey}-rpt-add-btn`)
+      const addButton = this.#select(`.${this.#fieldKey}-rpt-add-btn`, replacedElement)
+      addButton.dataset.index = rowNumber
+      this.#addEvent(addButton, 'click', e => this.#handleAdd(e))
+    }
+    // this.#removeButton = this.#select(`.${this.#fieldKey}-rpt-rmv-btn`)
+    const removeButton = this.#select(`.${this.#fieldKey}-rpt-rmv-btn`, replacedElement)
+    removeButton.dataset.index = rowNumber
+    this.#addEvent(removeButton, 'click', e => this.#handleRemove(e))
+
+    return replacedElement
+  }
+
+  #getHeight(element) {
+    const fld = this.#window.getComputedStyle(element)
+    let heightCount = 0
+    if (fld.boxSizing === 'border-box') {
+      heightCount = element.scrollHeight
+    } else {
+      heightCount = (
+        parseInt(fld.paddingTop)
+        + parseInt(fld.paddingBottom)
+        + element.scrollHeight
+        + parseInt(fld.marginTop)
+        + parseInt(fld.marginBottom)
+        + parseInt(fld.borderTopWidth)
+        + parseInt(fld.borderBottomWidth)
+      )
+    }
+    return heightCount
+  }
+
+  #setHeight(element, val) {
+    let heightCount = this.#getHeight(element)
+    setStyleProperty(element, 'height', `${heightCount}px`)
+    if (!val) {
+      setTimeout(() => { setStyleProperty(element, 'height', '0px') }, 0)
+      element.classList.add('fld-hide')
+    } else {
+      element.classList.remove('fld-hide')
+      heightCount = this.#getHeight(element)
+      setStyleProperty(element, 'height', `${heightCount}px`)
+    }
+    setTimeout(() => {
+      element.style.removeProperty('height')
+      if (!val) element.remove()
+    }, 300)
   }
 
   #handleAdd(e) {
-    const { target } = e
-    const parent = target.closest(`.${this.#fieldKey}-rpt-wrp`)
-    this.#cloneElement = this.#elementClone(this.#repeatableWrapper)
-    parent.after(this.#cloneElement)
+    e.preventDefault()
+    if (this.#maximumRow > 0 && this.#indexArray.length >= this.#maximumRow) return
+    const { currentTarget } = e
+    const indexNumber = currentTarget.dataset.index
+    const parent = currentTarget.closest(`.${this.#fieldKey}-rpt-wrp`)
+    const cloneElement = this.#elementClone(this.#repeatableWrapper)
+    const replacedElement = this.#replaceClassAndId(cloneElement, this.#rowNumber)
+    replacedElement.classList.add('fld-hide')
+    this.#addRowIndex(this.#rowNumber, indexNumber)
+    parent.after(replacedElement)
+    this.#setHeight(replacedElement, true)
+    this.#initializeCustomFields(this.#rowNumber)
+    this.#handleButtonEnableDisable()
+    scrollToFld(replacedElement)
+    this.#rowNumber += 1
   }
 
   #handleRemove(e) {
-    const { target } = e
-    const parent = target.closest(`.${this.#fieldKey}-rpt-wrp`)
-    parent.remove()
+    e.preventDefault()
+    if (this.#minimumRow >= this.#indexArray.length) return
+    const { currentTarget } = e
+    const rowNumber = currentTarget.dataset.index
+    const parent = currentTarget.closest(`.${this.#fieldKey}-rpt-wrp`)
+    this.#setHeight(parent, false)
+    this.#removeRowIndex(rowNumber)
+    this.#removeCustomFieldInstances(rowNumber)
+    this.#handleButtonEnableDisable()
+    if (parent.previousElementSibling) scrollToFld(parent.previousElementSibling)
   }
 
-  #handleAddToEnd() {
-    this.#cloneElement = this.#elementClone(this.#repeatableWrapper)
-    this.#addToEndBtnWrapper.before(this.#cloneElement)
+  #handleAddToEnd(e) {
+    e.preventDefault()
+    if (this.#maximumRow > 0 && this.#indexArray.length >= this.#maximumRow) return
+    const cloneElement = this.#elementClone(this.#repeatableWrapper)
+    const replacedElement = this.#replaceClassAndId(cloneElement, this.#rowNumber)
+    replacedElement.classList.add('fld-hide')
+    this.#addRowIndex(this.#rowNumber)
+    this.#addToEndBtnWrapper.before(replacedElement)
+    this.#setHeight(replacedElement, true)
+    this.#initializeCustomFields(this.#rowNumber)
+    this.#handleButtonEnableDisable()
+    this.#rowNumber += 1
+  }
+
+  #addRowIndex(indexNumber, beforeIndex) {
+    // const tempArray = JSON.parse(this.#hiddenIndexInput.value)
+    if (beforeIndex) {
+      const index = this.#indexArray.indexOf(parseInt(beforeIndex, 10)) + 1
+      this.#indexArray.splice(index, 0, indexNumber)
+    } else {
+      this.#indexArray.push(indexNumber)
+    }
+    this.#hiddenIndexInput.value = this.#indexArray.join(',')
+  }
+
+  #removeRowIndex(indexNumber) {
+    // const tempArray = JSON.parse(this.#hiddenIndexInput.value)
+    const index = this.#indexArray.indexOf(parseInt(indexNumber, 10))
+    this.#indexArray.splice(index, 1)
+    this.#hiddenIndexInput.value = this.#indexArray.join(',')
+  }
+
+  #handleButtonEnableDisable() {
+    let disabled = false
+    if (this.#maximumRow > 0 && this.#indexArray.length >= this.#maximumRow) {
+      disabled = true
+    } else {
+      disabled = false
+    }
+    this.#selectAll(`.${this.#fieldKey}-rpt-add-btn`).forEach((btn) => {
+      btn.disabled = disabled
+    })
+    if (this.#addToEndButton) this.#addToEndButton.disabled = disabled
+
+    if (this.#minimumRow > 0 && this.#indexArray.length <= this.#minimumRow) {
+      disabled = true
+    } else {
+      disabled = false
+    }
+    this.#selectAll(`.${this.#fieldKey}-rpt-rmv-btn`).forEach((btn) => {
+      btn.disabled = disabled
+    })
   }
 
   #select(selector, element) {
