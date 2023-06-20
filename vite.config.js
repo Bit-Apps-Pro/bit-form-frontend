@@ -279,11 +279,11 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/bitsFetchFront.min.js'),
+        src: absPath('packages/bit-frontend/dist/bitform-init.min.js'),
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
+        src: absPath('packages/bit-frontend/dist/bitsFetchFront.min.js'),
         dest: absPath('../assets'),
       },
       {
