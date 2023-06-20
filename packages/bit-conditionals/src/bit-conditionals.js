@@ -3,24 +3,42 @@ import { setActions } from './setActions'
 
 const getFieldKeyByFldName = (fldName, fields) => Object.keys(fields).find(key => fields[key].fieldName === fldName)
 
-const generateFieldName = fldName => (fldName.slice(-2) === '[]' ? fldName.slice(0, fldName.length - 2) : fldName)
+const generateFieldName = fldName => fldName.replace(/\[\d*\]/g, '')
 
 const getAllFieldsValueFromForm = (form, props) => {
   const formData = new FormData(form)
   const { fields } = props
   const formEntries = {}
   const entries = Array.from(formData.entries())
-  entries.forEach(([key, value]) => {
-    const fldKey = getFieldKeyByFldName(generateFieldName(key), fields)
+  entries.forEach(([fldName, value]) => {
+    const fldKey = getFieldKeyByFldName(generateFieldName(fldName), fields)
+    const indexInFldName = fldName.match(/\[(\d+)\]/)?.[1]
+    const entriesKey = indexInFldName ? `${fldKey}[${indexInFldName}]` : fldKey
     if (!(fldKey in fields)) return
-    if (formEntries[fldKey]) {
-      if (!Array.isArray(formEntries[fldKey])) formEntries[fldKey] = [formEntries[fldKey]]
-      formEntries[fldKey].push(value)
-    } else formEntries[fldKey] = value
+    if (formEntries[entriesKey]) {
+      if (!Array.isArray(formEntries[entriesKey])) formEntries[entriesKey] = [formEntries[entriesKey]]
+      formEntries[entriesKey].push(value)
+    } else formEntries[entriesKey] = value
   })
   Object.keys(fields).filter(key => fields[key].btnTyp === 'button').forEach(fldKey => { formEntries[fldKey] = '' })
 
-  return Object.entries(formEntries).reduce((acc, [key, value]) => ({ ...acc, [key]: { value, type: fields[key].typ, multiple: Array.isArray(value) } }), {})
+  return Object.entries(formEntries).reduce((acc, [key, value]) => ({ ...acc, [key]: { value, type: fields[key.replace(/\[\d*\]/g, '')].typ, multiple: Array.isArray(value) } }), {})
+}
+
+function isFieldExistInLogics(logics, fldKey) {
+  if (Array.isArray(logics)) return logics.some(lgc => isFieldExistInLogics(lgc, fldKey))
+  if (typeof logics === 'object') return logics.field === fldKey
+  return false
+}
+
+function getIndexesByFieldKey(fieldKey, props) {
+  if (typeof checkRepeatedField !== 'undefined') {
+    const repeatFieldKey = checkRepeatedField(fieldKey, props)
+    if (repeatFieldKey) {
+      return getRepeatedIndexes(repeatFieldKey, props)
+    }
+  }
+  return false
 }
 
 export default function onBlurHandler(event) {
@@ -32,6 +50,8 @@ export default function onBlurHandler(event) {
   const props = window.bf_globals?.[contentId]
 
   if (!props) return
+
+  const elementIndex = element.name.match(/\[(\d+)\]/)?.[1]
 
   const targetFieldName = generateFieldName(element.name)
 
@@ -50,7 +70,7 @@ export default function onBlurHandler(event) {
 
   const oninputConds = onfieldCondition.filter(cond => cond.event_type === 'on_input')
 
-  const oninputCondsForTargetField = oninputConds.filter(cond => cond.conditions.some(c => c?.logics?.some(lgc => lgc.field === fldKey)))
+  const oninputCondsForTargetField = oninputConds.filter(cond => cond.conditions.some(c => isFieldExistInLogics(c?.logics, fldKey)))
 
   if (!oninputCondsForTargetField.length) return
 
@@ -58,18 +78,24 @@ export default function onBlurHandler(event) {
     const { conditions } = workflow
     const { length } = conditions
     let logicStatus = false
-    let condIndx = 0
-    for (condIndx = 0; condIndx < length; condIndx += 1) {
-      const condition = conditions[condIndx]
-      if (['if', 'else-if'].includes(condition.cond_type)) {
-        const { logics } = condition
-        const clickLogics = logics.filter(logic => logic.logic === 'on_click')
-        if (clickLogics.length && fldKey !== clickLogics[0].field) return false /* check is target equal to button click of logic */
-        logicStatus = checkLogic(logics, fieldValues, props)
-        if (logicStatus) break
+    let rowIndexes = elementIndex ? [elementIndex] : false
+    if (!elementIndex && typeof getIndexesBaseOnConditions !== 'undefined') rowIndexes = getIndexesBaseOnConditions(conditions, props)
+    let rowIndex = rowIndexes ? rowIndexes.pop() : false
+    do {
+      let condIndx = 0
+      for (condIndx = 0; condIndx < length; condIndx += 1) {
+        const condition = conditions[condIndx]
+        if (['if', 'else-if'].includes(condition.cond_type)) {
+          const { logics } = condition
+          const clickLogics = logics.filter(logic => logic.logic === 'on_click')
+          if (clickLogics.length && fldKey !== clickLogics[0].field) return false /* check is target equal to button click of logic */
+          logicStatus = checkLogic(logics, fieldValues, props, rowIndex)
+          if (logicStatus) break
+        }
       }
-    }
-    condsStatus.push({ workflowIndx, condIndx, logicStatus })
+      condsStatus.push({ workflowIndx, condIndx, logicStatus, rowIndex })
+      rowIndex = rowIndexes ? rowIndexes.pop() : false
+    } while (rowIndex)
   })
 
   // Actions Part
@@ -77,19 +103,25 @@ export default function onBlurHandler(event) {
 
   condsStatus.reverse()
 
-  condsStatus.forEach(({ workflowIndx, condIndx, logicStatus }) => {
+  condsStatus.forEach(({ workflowIndx, condIndx, logicStatus, rowIndex }) => {
     const { conditions } = oninputCondsForTargetField[workflowIndx]
     const elseActions = conditions.find(cond => cond.cond_type === 'else') || {}
     const condActions = logicStatus ? conditions[condIndx].actions : elseActions.actions
     condActions?.fields?.forEach(actionDetail => {
-      if (!alreadySetActions[actionDetail.field]) {
-        alreadySetActions[actionDetail.field] = []
-      }
-      if (!alreadySetActions[actionDetail.field].includes(actionDetail.action)) {
-        alreadySetActions[actionDetail.field].push(actionDetail.action)
-        const smartFields = Object.entries(props.smartTags).reduce((acc, [key, value]) => ({ ...acc, [`\${${key}}`]: { value, type: 'text', multiple: false } }), {})
-        setActions(actionDetail, fldKey, props, { ...fieldValues, ...smartFields })
-      }
+      let indexes = [rowIndex]
+      if (!rowIndex) indexes = getIndexesByFieldKey(actionDetail.field, props)
+      if (!indexes) indexes = ['']
+      indexes.forEach(index => {
+        const propertyKey = `${actionDetail.field}[${index}]`
+        if (!alreadySetActions[propertyKey]) {
+          alreadySetActions[propertyKey] = []
+        }
+        if (!alreadySetActions[propertyKey].includes(actionDetail.action)) {
+          alreadySetActions[propertyKey].push(actionDetail.action)
+          const smartFields = Object.entries(props.smartTags).reduce((acc, [key, value]) => ({ ...acc, [`\${${key}}`]: { value, type: 'text', multiple: false } }), {})
+          setActions(actionDetail, fldKey, props, { ...fieldValues, ...smartFields }, index)
+        }
+      })
     })
   })
 }

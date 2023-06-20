@@ -1,7 +1,14 @@
-import { replaceWithField } from './checkLogic'
+import { isRepeatedField, replaceWithField } from './checkLogic'
 
-const select = (contentId, selector) => document.querySelector(`#form-${contentId} ${selector}`)
-const selectAll = (contentId, selector) => document.querySelectorAll(`#form-${contentId} ${selector}`)
+let rowIndexClass = ''
+let rowIndex = ''
+const select = (contentId, selector) => document.querySelector(`#form-${contentId} ${rowIndexClass} ${selector}`)
+const selectAll = (contentId, selector) => document.querySelectorAll(`#form-${contentId} ${rowIndexClass} ${selector}`)
+const getInitPropertyName = (fldKey, props) => {
+  const initFldKey = isRepeatedField(fldKey, props) ? `${fldKey}[${rowIndex}]` : fldKey
+  if (props.inits && !props.inits[initFldKey]) return fldKey
+  return initFldKey
+}
 
 const setFieldValue = (contentId, fldData, val) => {
   const { fieldName, typ } = fldData
@@ -33,9 +40,9 @@ const setFieldValue = (contentId, fldData, val) => {
 }
 
 const setActiveList = (actionDetail, props, fieldValues) => {
-  const fldKey = actionDetail.field
+  const fldKey = getInitPropertyName(actionDetail.field, props)
   if (props.inits && props.inits[fldKey]) {
-    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props) : ''
+    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
     props.inits[fldKey].activelist = actionValue
   }
 }
@@ -43,8 +50,9 @@ const setActiveList = (actionDetail, props, fieldValues) => {
 const setDisabled = (fldKey, props, val) => {
   const fldData = props.fields[fldKey]
   const { fieldName, typ } = fldData
-  if (props.inits && props.inits[fldKey]) {
-    props.inits[fldKey].disabled = val
+  const initPropKey = getInitPropertyName(fldKey, props)
+  if (props.inits && props.inits[initPropKey]) {
+    props.inits[initPropKey].disabled = val
   } else {
     if (typ === 'check') {
       selectAll(props.contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
@@ -74,16 +82,17 @@ const setDisabled = (fldKey, props, val) => {
 }
 
 const setReadonly = (fldKey, props, val) => {
-  if (props.inits && props.inits[fldKey]) {
-    props.inits[fldKey].readonly = val
+  const initPropKey = getInitPropertyName(fldKey, props)
+  if (props.inits && props.inits[initPropKey]) {
+    props.inits[initPropKey].readonly = val
   } else {
-    select(props.contentId, `.${fldKey}-fld`).readonly = val
+    select(props.contentId, `.${fldKey}-fld`).readOnly = val
   }
 }
 
 const setActionValue = (actionDetail, props, fieldValues) => {
   if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
-    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props) : ''
+    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
     setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
   }
 }
@@ -130,7 +139,9 @@ const setActionHide = (actionDetail, props, val) => {
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const setActions = (actionDetail, fldKey, props, fieldValues) => {
+export const setActions = (actionDetail, fldKey, props, fieldValues, rowIndx) => {
+  rowIndex = rowIndx
+  rowIndexClass = (rowIndx && isRepeatedField(actionDetail.field, props)) ? `.rpt-index-${rowIndx}` : ''
   if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
     if (!props.fields[actionDetail.field].valid) {
       props.fields[actionDetail.field].valid = {}
@@ -151,6 +162,11 @@ export const setActions = (actionDetail, fldKey, props, fieldValues) => {
       case 'readonly':
         if (props.fields[actionDetail.field]) {
           setReadonly(actionDetail.field, props, true)
+        }
+        break
+      case 'writeable':
+        if (props.fields[actionDetail.field]) {
+          setReadonly(actionDetail.field, props, false)
         }
         break
 
