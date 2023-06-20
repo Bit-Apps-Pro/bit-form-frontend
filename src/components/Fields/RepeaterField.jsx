@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
-import { Suspense, memo, useEffect, useRef, useState } from 'react'
+import { Suspense, memo, startTransition, useEffect, useRef, useState } from 'react'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { $isDraggable } from '../../GlobalStates/FormBuilderStates'
@@ -61,19 +61,23 @@ function RepeaterField({
     if (fieldChangeCounter > 0 && fieldKey === parentFieldKey) {
       const nl = fitSpecificLayoutItem(gridNestedLayouts, changedFieldKey)
       setGridNestedLayouts(nl)
-      setNestedLayouts(prv => create(prv, draft => {
-        draft[fieldKey] = nl
-      }))
-      reCalculateFldHeights(fieldKey)
+      startTransition(() => {
+        setNestedLayouts(prv => create(prv, draft => {
+          draft[fieldKey] = nl
+        }))
+        reCalculateFldHeights(fieldKey)
+      })
     }
   }, [fieldChangeCounter, parentFieldKey, changedFieldKey])
   const handleLayoutChange = (lay) => {
     if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
       setGridNestedLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
-      setNestedLayouts(prv => create(prv, draft => {
-        if (!draft[fieldKey]) return
-        draft[fieldKey][breakpoint] = lay
-      }))
+      startTransition(() => {
+        setNestedLayouts(prv => create(prv, draft => {
+          if (!draft[fieldKey]) return
+          draft[fieldKey][breakpoint] = lay
+        }))
+      })
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
@@ -83,9 +87,11 @@ function RepeaterField({
     if (!dragFieldData) return
     const { newLayouts } = addNewFieldToGridLayout(gridNestedLayouts, dragFieldData, draggingField.fieldSize, dropPosition)
     setGridNestedLayouts(newLayouts)
-    setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
-    setIsDraggable(true)
-    reCalculateFldHeights(fieldKey)
+    startTransition(() => {
+      setNestedLayouts(prevLayouts => create(prevLayouts, draftLayouts => { draftLayouts[fieldKey] = newLayouts }))
+      setIsDraggable(true)
+      reCalculateFldHeights(fieldKey)
+    })
   }
   const inpWrpElm = selectInGrid(`.${fieldKey}-rpt-grid-wrp`)
   const absoluteSizes = inpWrpElm && getAbsoluteSize(inpWrpElm)
@@ -212,20 +218,24 @@ function RepeaterField({
     if (!handleFieldExtraAttr(fldData)) return
     const { newLayouts } = cloneLayoutItem(fldKey, gridNestedLayouts)
     setGridNestedLayouts(newLayouts)
-    setNestedLayouts(prevLayout => create(prevLayout, draftLayout => {
-      draftLayout[fieldKey] = newLayouts
-    }))
-    reCalculateFldHeights(fieldKey)
+    startTransition(() => {
+      setNestedLayouts(prevLayout => create(prevLayout, draftLayout => {
+        draftLayout[fieldKey] = newLayouts
+      }))
+      reCalculateFldHeights(fieldKey)
+    })
   }
 
   const removeNestedLayoutItem = fldKey => {
     const newLayouts = removeLayoutItem(fldKey, gridNestedLayouts)
     setGridNestedLayouts(newLayouts)
-    setNestedLayouts(prevLayout => create(prevLayout, draftLayout => {
-      draftLayout[fieldKey] = newLayouts
-    }))
+    startTransition(() => {
+      setNestedLayouts(prevLayout => create(prevLayout, draftLayout => {
+        draftLayout[fieldKey] = newLayouts
+      }))
+      reCalculateFldHeights(fieldKey)
+    })
     navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
-    reCalculateFldHeights(fieldKey)
   }
 
   return (
@@ -267,8 +277,8 @@ function RepeaterField({
                   id={`${fieldKey}-layout-wrapper`}
                   onDragOver={e => e.preventDefault()}
                   onDragEnter={e => e.preventDefault()}
-                  onMouseMove={() => setIsDraggable(false)}
-                  onMouseLeave={() => setIsDraggable(true)}
+                  onMouseMove={() => startTransition(() => { setIsDraggable(false) })}
+                  onMouseLeave={() => startTransition(() => { setIsDraggable(true) })}
                   // onClick={resetContextMenu}
                 >
                   {!styleMode ? (
@@ -294,9 +304,11 @@ function RepeaterField({
                       onDragStart={setResizingFldKey}
                       // onDrag={setResizingWX}
                       onDragStop={() => {
-                        setIsDraggable(true)
-                        reCalculateFldHeights(fieldKey)
-                        setResizingFalse()
+                        startTransition(() => {
+                          setIsDraggable(true)
+                          reCalculateFldHeights(fieldKey)
+                          setResizingFalse()
+                        })
                       }}
                       onResizeStart={setResizingFldKey}
                       onResize={setResizingWX}
