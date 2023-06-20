@@ -13,7 +13,7 @@ export default function repeaterStyle_2_atlassian({ fk, type, breakpoint, colorS
         'border-width': '1px',
         padding: '3px',
       },
-      [`.${fk}-rpt-flx-wrp`]: {
+      [`.${fk}-rpt-fld-wrp`]: {
         display: 'flex',
         'flex-direction': 'column',
       },
@@ -57,6 +57,11 @@ export default function repeaterStyle_2_atlassian({ fk, type, breakpoint, colorS
       [`.${fk}-rpt-add-btn:hover`]: {
         'background-color': 'hsl(0, 0%, 86%, 1) !important',
       },
+      [`.${fk}-rpt-add-btn:disabled`]: {
+        cursor: 'not-allowed',
+        'pointer-events': 'none',
+        opacity: '0.5',
+      },
       [`.${fk}-rpt-add-btn-pre-i`]: {
         width: '15px',
       },
@@ -87,6 +92,11 @@ export default function repeaterStyle_2_atlassian({ fk, type, breakpoint, colorS
       },
       [`.${fk}-rpt-rmv-btn:hover`]: {
         'background-color': 'hsl(0, 0%, 86%, 1) !important',
+      },
+      [`.${fk}-rpt-rmv-btn:disabled`]: {
+        cursor: 'not-allowed',
+        'pointer-events': 'none',
+        opacity: '0.5',
       },
       [`.${fk}-rpt-rmv-btn-pre-i`]: {
         width: '15px',
@@ -120,7 +130,18 @@ export default function repeaterStyle_2_atlassian({ fk, type, breakpoint, colorS
         display: 'flex',
         'justify-content': 'center',
         'align-items': 'center',
-        transition: 'background-color 0.2s, transform 0.2s',
+        transition: '',
+      },
+      [`.${fk}-add-to-end-btn:hover`]: {
+        'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
+      },
+      [`.${fk}-add-to-end-btn:active`]: {
+        transform: '',
+      },
+      [`.${fk}-add-to-end-btn:disabled`]: {
+        cursor: 'not-allowed',
+        'pointer-events': 'none',
+        opacity: '0.5',
       },
       [`.${fk}-add-to-end-btn-pre-i`]: {
         width: '15px',

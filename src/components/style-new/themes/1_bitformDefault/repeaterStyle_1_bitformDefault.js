@@ -13,13 +13,14 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         'border-width': '1px',
         padding: '3px',
       },
-      [`.${fk}-rpt-flx-wrp`]: {
+      [`.${fk}-rpt-fld-wrp`]: {
         display: 'flex',
         'flex-direction': 'column',
       },
       [`.${fk}-rpt-wrp`]: {
         display: 'flex',
         'flex-direction': 'row',
+        transition: 'all .2s ease',
       },
       [`.${fk}-rpt-grid-wrp`]: {
         width: 'calc(100% - 60px)',
@@ -57,6 +58,11 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
       [`.${fk}-rpt-add-btn:hover`]: {
         'background-color': 'hsl(0, 0%, 86%, 1) !important',
       },
+      [`.${fk}-rpt-add-btn:disabled`]: {
+        cursor: 'not-allowed',
+        'pointer-events': 'none',
+        opacity: '0.5',
+      },
       [`.${fk}-rpt-add-btn-pre-i`]: {
         width: '15px',
       },
@@ -87,6 +93,11 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
       },
       [`.${fk}-rpt-rmv-btn:hover`]: {
         'background-color': 'hsl(0, 0%, 86%, 1) !important',
+      },
+      [`.${fk}-rpt-rmv-btn:disabled`]: {
+        cursor: 'not-allowed',
+        'pointer-events': 'none',
+        opacity: '0.5',
       },
       [`.${fk}-rpt-rmv-btn-pre-i`]: {
         width: '15px',
@@ -127,6 +138,11 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
       },
       [`.${fk}-add-to-end-btn:active`]: {
         transform: 'scale(0.95)',
+      },
+      [`.${fk}-add-to-end-btn:disabled`]: {
+        cursor: 'not-allowed',
+        'pointer-events': 'none',
+        opacity: '0.5',
       },
       [`.${fk}-add-to-end-btn:focus-visible`]: {
         outline: '2px solid var(--global-accent-color)',

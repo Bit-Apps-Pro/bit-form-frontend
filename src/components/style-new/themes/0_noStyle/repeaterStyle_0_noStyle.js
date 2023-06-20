@@ -7,7 +7,7 @@ export default function repeaterStyle_0_noStyle({ fk, type, breakpoint, colorSch
       ...inputWrapperClasses(fk),
       [`.${fk}-inp-fld-wrp`]: {
       },
-      [`.${fk}-rpt-flx-wrp`]: {
+      [`.${fk}-rpt-fld-wrp`]: {
         display: 'flex',
         'flex-direction': 'column',
       },
