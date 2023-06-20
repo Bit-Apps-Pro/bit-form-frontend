@@ -89,7 +89,7 @@ export default function WooCommerceAuthorization({ wcConf, setWcConf, step, setS
 
         {isAuthorized && (
           <NextBtn
-            nextPageHanlder={() => setStep(2)}
+            nextPageHandler={() => setStep(2)}
             disabled={!isAuthorized}
           />
         )}

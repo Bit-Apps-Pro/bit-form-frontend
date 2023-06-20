@@ -83,7 +83,7 @@ function ZohoMarketingHub({ formFields, setIntegration, integrations, allIntegUR
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={marketingHubConf.list === '' || marketingHubConf.table === '' || marketingHubConf.field_map.length < 1}
         />
 

@@ -107,7 +107,7 @@ export default function MailerLiteAuthorization({
           />
           <br />
           <NextBtn
-            nextPageHanlder={() => nextPage()}
+            nextPageHandler={() => nextPage()}
             disabled={!isAuthorized}
           />
         </div>

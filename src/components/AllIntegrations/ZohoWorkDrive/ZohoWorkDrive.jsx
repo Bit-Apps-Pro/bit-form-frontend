@@ -68,7 +68,7 @@ function ZohoWorkDrive({ formFields, setIntegration, integrations, allIntegURL }
           setSnackbar={setSnackbar}
         />
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={workDriveConf.team === '' || workDriveConf.folder === ''}
         />
         {/* <button

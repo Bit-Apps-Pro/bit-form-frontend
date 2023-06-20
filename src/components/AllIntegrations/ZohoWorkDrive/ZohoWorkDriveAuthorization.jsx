@@ -132,7 +132,7 @@ export default function ZohoWorkDriveAuthorization({
               <BackIcn className="ml-1 rev-icn" />
             </button> */}
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               isAuthorized={isAuthorized}
             />
           </>

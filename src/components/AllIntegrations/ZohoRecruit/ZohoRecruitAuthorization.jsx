@@ -120,7 +120,7 @@ export default function ZohoRecruitAuthorization({
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
           </>

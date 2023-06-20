@@ -137,7 +137,7 @@ export default function ZohoBiginAuthorization({
             </button> */}
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
             {/* <button

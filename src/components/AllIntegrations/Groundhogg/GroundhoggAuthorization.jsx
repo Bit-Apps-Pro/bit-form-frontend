@@ -100,7 +100,7 @@ export default function GroundhoggAuthorization({
           />
           <br />
           <NextBtn
-            nextPageHanlder={() => nextPage()}
+            nextPageHandler={() => nextPage()}
             disabled={!isAuthorized}
           />
         </>

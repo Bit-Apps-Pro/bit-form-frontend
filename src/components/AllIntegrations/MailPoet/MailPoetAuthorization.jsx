@@ -68,7 +68,7 @@ export default function MailPoetAuthorization({
         />
         <br />
         <NextBtn
-          nextPageHanlder={() => nextPage(2)}
+          nextPageHandler={() => nextPage(2)}
           disabled={!isAuthorized}
         />
       </div>

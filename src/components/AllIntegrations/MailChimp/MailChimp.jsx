@@ -88,7 +88,7 @@ function MailChimp({ formFields, setIntegration, integrations, allIntegURL }) {
           setSnackbar={setSnackbar}
         />
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={!sheetConf.listId || sheetConf.field_map.length < 1}
         />
 

@@ -133,7 +133,7 @@ export default function ZohoMarketingAuthorization({
               <BackIcn className="ml-1 rev-icn" />
             </button> */}
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               dixabled={!isAuthorized}
             />
           </>

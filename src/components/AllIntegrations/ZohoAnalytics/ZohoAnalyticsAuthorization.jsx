@@ -132,7 +132,7 @@ export default function ZohoAnalyticsAuthorization({
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
           </>
