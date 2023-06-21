@@ -105,7 +105,8 @@ function RepeaterFieldSettings() {
     setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-add-to-end-btn-wrp`]['align-self'] = val
     }))
-    fieldData.btnAlignment = val
+    if (!fieldData.addToEndBtn) fieldData.addToEndBtn = {}
+    fieldData.addToEndBtn.btnAlignment = val
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Button Alignment updated to ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_to_end_btn_align', state: { fields: allFields, fldKey } })
