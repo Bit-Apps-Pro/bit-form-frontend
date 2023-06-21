@@ -193,7 +193,22 @@ export default function EditPdfTemplate() {
                 />
               </label>
             </div>
+
             <div className="mt-4">
+              <label htmlFor="watermarkText">
+                <b>{__('Watermark Text')}</b>
+                <input
+                  id="watermarkText"
+                  name="watermarkText"
+                  onChange={(e) => settingHandler(e.target.name, e.target.value)}
+                  value={pdfConf.setting.watermarkText}
+                  className="btcd-paper-inp mt-1"
+                  placeholder="Watermark Text"
+                  type="text"
+                />
+              </label>
+            </div>
+            {/* <div className="mt-4">
               <label htmlFor="fontColor" className={css(cs.font)}>
                 <b>{__('Font Color')}</b>
                 <input
@@ -205,7 +220,7 @@ export default function EditPdfTemplate() {
                   onChange={(e) => settingHandler(e.target.name, e.target.value)}
                 />
               </label>
-            </div>
+            </div> */}
 
             <div className="mt-2">
               <label htmlFor="direction">

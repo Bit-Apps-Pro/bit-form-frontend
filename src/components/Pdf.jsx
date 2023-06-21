@@ -26,6 +26,7 @@ export default function Pdf() {
     fontSize: 10,
     fontColor: '#000000',
     direction: 'ltr',
+    fontFamily: 'aboriginalsansregular',
   })
 
   useEffect(() => {
@@ -50,7 +51,10 @@ export default function Pdf() {
 
   const saveConfig = () => {
     if (!isPro) return
+    const fontObj = fontList.find((item) => item.font === pdfSetting.font)
+
     const tempSetting = { ...pdfSetting }
+    tempSetting.fontFamily = fontObj.fontFamily
     setisLoading(true)
 
     bitsFetch({ pdfSetting }, 'bitforms_save_pdf_setting')
@@ -157,7 +161,22 @@ export default function Pdf() {
             />
           </label>
         </div>
+
         <div className="mt-4">
+          <label htmlFor="watermarkText">
+            <b>{__('Watermark Text')}</b>
+            <input
+              id="watermarkText"
+              name="watermarkText"
+              onChange={(e) => handleInput(e.target.name, e.target.value)}
+              value={pdfSetting.watermarkText}
+              className="btcd-paper-inp mt-1"
+              placeholder="Watermark Text"
+              type="text"
+            />
+          </label>
+        </div>
+        {/* <div className="mt-4">
           <label htmlFor="fontColor" className={css(c.font)}>
             <b>{__('Font Color')}</b>
             <input
@@ -169,7 +188,7 @@ export default function Pdf() {
               onChange={(e) => handleInput(e.target.name, e.target.value)}
             />
           </label>
-        </div>
+        </div> */}
 
         <div className="mt-2">
           <label htmlFor="direction">

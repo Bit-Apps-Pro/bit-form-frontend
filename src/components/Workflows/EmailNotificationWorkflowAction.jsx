@@ -55,11 +55,13 @@ export default function EmailNotificationWorkflowAction({
   }
 
   const setEmailSetting = (typ, value) => {
+    console.log({ typ, value })
     const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       const findEmailActions = draftSuccessActions.find(val => val.type === actionKey)
       if (findEmailActions) findEmailActions.details[typ] = value
     })
+    console.log({ tmpWorkflows })
     setWorkflows(tmpWorkflows)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
