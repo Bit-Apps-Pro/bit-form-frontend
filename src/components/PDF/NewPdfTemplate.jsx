@@ -426,17 +426,17 @@ export default function NewPdfTemplate() {
               />
             </label>
           </div>
+          {/* ============== */}
+          <button
+            id="secondary-update-btn"
+            onClick={save}
+            className={`${css(app.btn)} blue f-right`}
+            type="button"
+          >
+            {__('Save Template')}
+          </button>
         </>
       )}
-      {/* ============== */}
-      <button
-        id="secondary-update-btn"
-        onClick={save}
-        className={`${css(app.btn)} blue f-right`}
-        type="button"
-      >
-        {__('Save Template')}
-      </button>
     </div>
   )
 }

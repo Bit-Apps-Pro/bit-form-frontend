@@ -376,9 +376,20 @@ export default function EditPdfTemplate() {
                 />
               </label>
             </div>
+
+            {/* ============== */}
+            <button
+              id="secondary-update-btn"
+              onClick={update}
+              className={`${css(app.btn)} blue f-right`}
+              type="button"
+            >
+              {__('Update Template')}
+
+            </button>
           </>
+
         )}
-        {/* ============== */}
       </div>
     )
   )
