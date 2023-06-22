@@ -11,9 +11,11 @@ import BackIcn from '../../Icons/BackIcn'
 import { fontList, pageSizes } from '../../Utils/StaticData/pdfConfigurationData'
 import { __ } from '../../Utils/i18nwrap'
 import app from '../../styles/app.style'
+import Btn from '../Utilities/Btn'
 import CheckBox from '../Utilities/CheckBox'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import TinyMCE from '../Utilities/TinyMCE'
+import { assignNestedObj } from '../style-new/styleHelpers'
 
 export default function NewPdfTemplate() {
   const [pdfTem, setPdfTem] = useAtom($pdfTemplates)
@@ -62,14 +64,10 @@ export default function NewPdfTemplate() {
     body: 'PDF body',
   })
 
-  const handleBody = value => {
+  const handleInput = (path, value) => {
     setTem(prevState => create(prevState, draft => {
-      draft.body = value
+      assignNestedObj(draft, path, value)
     }))
-  }
-
-  const handleInput = ({ target: { name, value } }) => {
-    setTem(prev => ({ ...prev, [name]: value }))
   }
 
   const save = () => {
@@ -87,6 +85,24 @@ export default function NewPdfTemplate() {
       if (e.target.checked) draft.setting.override = true
       else draft.setting.override = false
     }))
+  }
+
+  const setWpMedia = () => {
+    if (typeof wp !== 'undefined' && wp.media) {
+      const wpMediaMdl = wp.media({
+        title: 'Media',
+        button: { text: 'Select picture' },
+        library: { type: 'image' },
+        multiple: false,
+      })
+
+      wpMediaMdl.on('select', () => {
+        const { url } = wpMediaMdl.state().get('selection').first().toJSON()
+        handleInput('watermark->img->src', url)
+      })
+
+      wpMediaMdl.open()
+    }
   }
 
   return (
@@ -125,7 +141,7 @@ export default function NewPdfTemplate() {
           {' '}
         </b>
         <input
-          onChange={handleInput}
+          onChange={(e) => handleInput(e.target.name, e.target.value)}
           name="title"
           type="text"
           className="btcd-paper-inp w-9"
@@ -144,7 +160,7 @@ export default function NewPdfTemplate() {
             id={`pdf-tem-${formID}`}
             formFields={formFields}
             value={tem.body}
-            onChangeHandler={handleBody}
+            onChangeHandler={(value) => handleInput('body', value)}
             width="100%"
             height={300}
           />
@@ -167,7 +183,7 @@ export default function NewPdfTemplate() {
               <select
                 id="paper_size"
                 name="paperSize"
-                onChange={(e) => handleInput(e.target.name, e.target.value)}
+                onChange={(e) => handleInput('setting->paperSize', e.target.value)}
                 value={tem.setting.paperSize}
                 className="btcd-paper-inp mt-1"
               >
@@ -188,7 +204,7 @@ export default function NewPdfTemplate() {
               <select
                 id="orientation"
                 name="orientation"
-                onChange={(e) => handleInput(e.target.name, e.target.value)}
+                onChange={(e) => handleInput('setting->orientation', e.target.value)}
                 value={tem.setting.orientation}
                 className="btcd-paper-inp mt-1"
               >
@@ -204,7 +220,7 @@ export default function NewPdfTemplate() {
               <select
                 id="font"
                 name="font"
-                onChange={(e) => handleInput(e.target.name, e.target.value)}
+                onChange={(e) => handleInput('setting->font', e.target.value)}
                 value={tem.setting.font}
                 className="btcd-paper-inp mt-1"
               >
@@ -227,7 +243,7 @@ export default function NewPdfTemplate() {
               <input
                 id="fontSize"
                 name="fontSize"
-                onChange={(e) => handleInput(e.target.name, e.target.value)}
+                onChange={(e) => handleInput('setting->fontSize', e.target.value)}
                 value={tem.setting.fontSize}
                 className="btcd-paper-inp mt-1"
                 placeholder="Font Size"
@@ -235,20 +251,146 @@ export default function NewPdfTemplate() {
               />
             </label>
           </div>
-          <div className="mt-4">
-            <label htmlFor="watermarkText">
-              <b>{__('Font Size (Pixels)')}</b>
-              <input
-                id="watermarkText"
-                name="watermarkText"
-                onChange={(e) => handleInput(e.target.name, e.target.value)}
-                value={tem.setting.watermarkText}
-                className="btcd-paper-inp mt-1"
-                placeholder="Watermark Text"
-                type="text"
+
+          {/* watermark */}
+
+          <div className="mt-2">
+            <label htmlFor="active">
+              <b>{__('Watermark')}</b>
+              <CheckBox
+                radio
+                name="active"
+                onChange={e => handleInput('setting->watermark->active', e.target.value)}
+                checked={tem.setting?.watermark?.active === 'txt'}
+                title={<small className="txt-dp"><b>Text</b></small>}
+                value="txt"
+              />
+              <CheckBox
+                radio
+                name="active"
+                onChange={e => handleInput('setting->watermark->active', e.target.value)}
+                checked={tem.setting?.watermark?.active === 'img'}
+                title={<small className="txt-dp"><b>Image</b></small>}
+                value="img"
               />
             </label>
           </div>
+          { tem.setting.watermark?.active && (
+            <div className={css(cs.bdr)}>
+              {tem.setting.watermark.active === 'txt' && (
+                <div className="mt-4">
+                  <label htmlFor="watermarkText">
+                    <b>{__('Watermark Text')}</b>
+                    <input
+                      id="watermarkText"
+                      name="watermarkText"
+                      onChange={(e) => handleInput('setting->watermark->txt', e.target.value)}
+                      value={tem.setting?.watermark?.txt}
+                      className="btcd-paper-inp mt-1"
+                      placeholder="Watermark Text"
+                      type="text"
+                    />
+                  </label>
+                </div>
+              )}
+              {tem.setting.watermark.active === 'img' && (
+                <>
+                  <div className="mt-4">
+                    <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
+                      <b>{__('Watermark Text')}</b>
+                      <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
+                    </label>
+                  </div>
+                  <div className={css(cs.size)}>
+                    <label htmlFor="width" className={css({ w: 300 })}>
+                      <b>{__('Width')}</b>
+                      <input
+                        id="width"
+                        onChange={(e) => handleInput('setting->watermark->img->width', e.target.value)}
+                        value={tem.setting?.watermark?.img?.width}
+                        className="btcd-paper-inp mt-1"
+                        placeholder="Image width"
+                        type="number"
+                      />
+                    </label>
+                    <label htmlFor="height" className={css({ w: 300 })}>
+                      <b>{__('Height')}</b>
+                      <input
+                        id="height"
+                        onChange={(e) => handleInput('setting->watermark->img->height', e.target.value)}
+                        value={tem.setting?.watermark?.img?.height}
+                        className="btcd-paper-inp mt-1"
+                        placeholder="Image height"
+                        type="number"
+                      />
+                    </label>
+                  </div>
+                  <div className={css(cs.size)}>
+                    <label htmlFor="posX" className={css({ w: 300 })}>
+                      <b>{__('Position X (Units in millimeters)')}</b>
+                      <input
+                        id="posX"
+                        onChange={(e) => handleInput('setting->watermark->img->posX', e.target.value)}
+                        value={tem.setting?.watermark?.img?.posX}
+                        className="btcd-paper-inp mt-1"
+                        placeholder="Position x"
+                        type="number"
+                      />
+                    </label>
+                    <label htmlFor="posY" className={css({ w: 300 })}>
+                      <b>{__('Position Y (Units in millimeters)')}</b>
+                      <input
+                        id="posY"
+                        onChange={(e) => handleInput('setting->watermark->img->posY', e.target.value)}
+                        value={tem.setting?.watermark?.img?.posY}
+                        className="btcd-paper-inp mt-1"
+                        placeholder="Position Y"
+                        type="number"
+                      />
+                    </label>
+                  </div>
+                  <div className="mt-2">
+                    <label htmlFor="imgBehind">
+                      <b>{__('Show watermark behind the page content')}</b>
+                      <CheckBox
+                        radio
+                        name="imgBehind"
+                        onChange={e => handleInput('setting->watermark->img->imgBehind', e.target.value)}
+                        checked={tem.setting?.watermark?.img?.imgBehind === 'true'}
+                        title={<small className="txt-dp"><b>Yes</b></small>}
+                        value="true"
+                      />
+                      <CheckBox
+                        radio
+                        name="imgBehind"
+                        onChange={e => handleInput('setting->watermark->img->imgBehind', e.target.value)}
+                        checked={tem.setting?.watermark?.img?.imgBehind === 'false'}
+                        title={<small className="txt-dp"><b>No</b></small>}
+                        value="false"
+                      />
+                    </label>
+                  </div>
+                </>
+              )}
+              <div className="mt-2">
+                <label htmlFor="opacity">
+                  <b>{__('Opacity (0-100)')}</b>
+                  <input
+                    id="opacity"
+                    name="alpha"
+                    onChange={(e) => handleInput('setting->watermark->alpha', e.target.value)}
+                    value={tem.setting?.watermark?.alpha}
+                    className="btcd-paper-inp mt-1"
+                    placeholder="Opacity"
+                    max="100"
+                    type="number"
+                  />
+                </label>
+              </div>
+
+            </div>
+          )}
+
           {/* <div className="mt-4">
             <label htmlFor="fontColor" className={css(cs.font)}>
               <b>{__('Font Color')}</b>
@@ -269,7 +411,7 @@ export default function NewPdfTemplate() {
               <CheckBox
                 radio
                 name="direction"
-                onChange={e => handleInput(e.target.name, e.target.value)}
+                onChange={e => handleInput('setting->direction', e.target.value)}
                 checked={tem.setting.direction === 'ltr'}
                 title={<small className="txt-dp"><b>LTR</b></small>}
                 value="ltr"
@@ -277,7 +419,7 @@ export default function NewPdfTemplate() {
               <CheckBox
                 radio
                 name="direction"
-                onChange={e => handleInput(e.target.name, e.target.value)}
+                onChange={e => handleInput('setting->direction', e.target.value)}
                 checked={tem.setting.direction === 'rtl'}
                 title={<small className="txt-dp"><b>RTL</b></small>}
                 value="rtl"
@@ -287,7 +429,14 @@ export default function NewPdfTemplate() {
         </>
       )}
       {/* ============== */}
-
+      <button
+        id="secondary-update-btn"
+        onClick={save}
+        className={`${css(app.btn)} blue f-right`}
+        type="button"
+      >
+        {__('Save Template')}
+      </button>
     </div>
   )
 }
@@ -304,5 +453,12 @@ const cs = {
     w: 30,
     h: 30,
     ml: 20,
+  },
+  bdr: {
+    pl: 15,
+  },
+  size: {
+    flx: 'center-between',
+    mt: 20,
   },
 }

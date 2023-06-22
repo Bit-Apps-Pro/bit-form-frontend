@@ -11,8 +11,10 @@ import BackIcn from '../../Icons/BackIcn'
 import { fontList, pageSizes } from '../../Utils/StaticData/pdfConfigurationData'
 import { __ } from '../../Utils/i18nwrap'
 import app from '../../styles/app.style'
+import Btn from '../Utilities/Btn'
 import CheckBox from '../Utilities/CheckBox'
 import TinyMCE from '../Utilities/TinyMCE'
+import { assignNestedObj } from '../style-new/styleHelpers'
 
 export default function EditPdfTemplate() {
   const { formType, formID, id } = useParams()
@@ -22,12 +24,6 @@ export default function EditPdfTemplate() {
   const { css } = useFela()
 
   const pdfConf = pdfTemp[id]
-
-  const inputHandler = (key, val) => {
-    setPdfTem(prevState => create(prevState, draft => {
-      draft[id][key] = val
-    }))
-  }
 
   const update = () => {
     const newPdfTem = create(pdfTemp, draft => {
@@ -44,10 +40,29 @@ export default function EditPdfTemplate() {
     }))
   }
 
-  const settingHandler = (key, value) => {
+  const settingHandler = (path, value) => {
     setPdfTem(prevState => create(prevState, draft => {
-      draft[id].setting[key] = value
+      assignNestedObj(draft[id], path, value)
     }))
+  }
+
+  const setWpMedia = () => {
+    if (typeof wp !== 'undefined' && wp.media) {
+      const wpMediaMdl = wp.media({
+        title: 'Media',
+        button: { text: 'Select picture' },
+        library: { type: 'image' },
+        multiple: false,
+      })
+
+      wpMediaMdl.on('select', () => {
+        const { url } = wpMediaMdl.state().get('selection').first().toJSON()
+
+        settingHandler('watermark->img->src', url)
+      })
+
+      wpMediaMdl.open()
+    }
   }
 
   return (
@@ -81,7 +96,7 @@ export default function EditPdfTemplate() {
             {__('Template Name:')}
           </b>
           <input
-            onChange={(e) => inputHandler(e.target.name, e.target.value)}
+            onChange={(e) => settingHandler(e.target.name, e.target.value)}
             type="text"
             className="btcd-paper-inp w-9"
             placeholder="Name"
@@ -103,7 +118,7 @@ export default function EditPdfTemplate() {
               id={`mail-tem-${formID}`}
               formFields={formFields}
               value={pdfConf.body}
-              onChangeHandler={(val) => inputHandler('body', val)}
+              onChangeHandler={(val) => settingHandler('body', val)}
               width="100%"
             />
           </label>
@@ -125,7 +140,7 @@ export default function EditPdfTemplate() {
                 <select
                   id="paper_size"
                   name="paperSize"
-                  onChange={(e) => settingHandler(e.target.name, e.target.value)}
+                  onChange={(e) => settingHandler('setting->paperSize', e.target.value)}
                   value={pdfConf.setting.paperSize}
                   className="btcd-paper-inp mt-1"
                 >
@@ -146,7 +161,7 @@ export default function EditPdfTemplate() {
                 <select
                   id="orientation"
                   name="orientation"
-                  onChange={(e) => settingHandler(e.target.name, e.target.value)}
+                  onChange={(e) => settingHandler('setting->orientation', e.target.value)}
                   value={pdfConf.setting.orientation}
                   className="btcd-paper-inp mt-1"
                 >
@@ -162,7 +177,7 @@ export default function EditPdfTemplate() {
                 <select
                   id="font"
                   name="font"
-                  onChange={(e) => settingHandler(e.target.name, e.target.value)}
+                  onChange={(e) => settingHandler('setting->font', e.target.value)}
                   value={pdfConf.setting.font}
                   className="btcd-paper-inp mt-1"
                 >
@@ -185,7 +200,7 @@ export default function EditPdfTemplate() {
                 <input
                   id="fontSize"
                   name="fontSize"
-                  onChange={(e) => settingHandler(e.target.name, e.target.value)}
+                  onChange={(e) => settingHandler('setting->fontSize', e.target.value)}
                   value={pdfConf.setting.fontSize}
                   className="btcd-paper-inp mt-1"
                   placeholder="Font Size"
@@ -194,20 +209,140 @@ export default function EditPdfTemplate() {
               </label>
             </div>
 
-            <div className="mt-4">
-              <label htmlFor="watermarkText">
-                <b>{__('Watermark Text')}</b>
-                <input
-                  id="watermarkText"
-                  name="watermarkText"
-                  onChange={(e) => settingHandler(e.target.name, e.target.value)}
-                  value={pdfConf.setting.watermarkText}
-                  className="btcd-paper-inp mt-1"
-                  placeholder="Watermark Text"
-                  type="text"
+            <div className="mt-2">
+              <label htmlFor="active">
+                <b>{__('Watermark')}</b>
+                <CheckBox
+                  radio
+                  name="active"
+                  onChange={e => settingHandler('setting->watermark->active', e.target.value)}
+                  checked={pdfConf.setting?.watermark?.active === 'txt'}
+                  title={<small className="txt-dp"><b>Text</b></small>}
+                  value="txt"
+                />
+                <CheckBox
+                  radio
+                  name="active"
+                  onChange={e => settingHandler('setting->watermark->active', e.target.value)}
+                  checked={pdfConf.setting?.watermark?.active === 'img'}
+                  title={<small className="txt-dp"><b>Image</b></small>}
+                  value="img"
                 />
               </label>
             </div>
+            { pdfConf.setting.watermark?.active && (
+              <div className={css(cs.bdr)}>
+                {pdfConf.setting.watermark.active === 'txt' && (
+                  <div className="mt-4">
+                    <label htmlFor="watermarkText">
+                      <b>{__('Watermark Text')}</b>
+                      <input
+                        id="watermarkText"
+                        name="watermarkText"
+                        onChange={(e) => settingHandler('setting->watermark->txt', e.target.value)}
+                        value={pdfConf.setting?.watermark?.txt}
+                        className="btcd-paper-inp mt-1"
+                        placeholder="Watermark Text"
+                        type="text"
+                      />
+                    </label>
+                  </div>
+                )}
+                {pdfConf.setting.watermark.active === 'img' && (
+                  <>
+                    <div className="mt-4">
+                      <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
+                        <b>{__('Watermark Text')}</b>
+                        <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
+                      </label>
+                    </div>
+                    <div className={css(cs.size)}>
+                      <label htmlFor="width" className={css({ w: 300 })}>
+                        <b>{__('Width')}</b>
+                        <input
+                          id="width"
+                          onChange={(e) => settingHandler('setting->watermark->img->width', e.target.value)}
+                          value={pdfConf.setting?.watermark?.img?.width}
+                          className="btcd-paper-inp mt-1"
+                          placeholder="Image width"
+                          type="number"
+                        />
+                      </label>
+                      <label htmlFor="height" className={css({ w: 300 })}>
+                        <b>{__('Height')}</b>
+                        <input
+                          id="height"
+                          onChange={(e) => settingHandler('setting->watermark->img->height', e.target.value)}
+                          value={pdfConf.setting?.watermark?.img?.height}
+                          className="btcd-paper-inp mt-1"
+                          placeholder="Image height"
+                          type="number"
+                        />
+                      </label>
+                    </div>
+                    <div className={css(cs.size)}>
+                      <label htmlFor="posX" className={css({ w: 300 })}>
+                        <b>{__('Position X (Units in millimeters)')}</b>
+                        <input
+                          id="posX"
+                          onChange={(e) => settingHandler('setting->watermark->img->posX', e.target.value)}
+                          value={pdfConf.setting?.watermark?.img?.posX}
+                          className="btcd-paper-inp mt-1"
+                          placeholder="Position x"
+                          type="number"
+                        />
+                      </label>
+                      <label htmlFor="posY" className={css({ w: 300 })}>
+                        <b>{__('Position Y (Units in millimeters)')}</b>
+                        <input
+                          id="posY"
+                          onChange={(e) => settingHandler('setting->watermark->img->posY', e.target.value)}
+                          value={pdfConf.setting?.watermark?.img?.posY}
+                          className="btcd-paper-inp mt-1"
+                          placeholder="Position Y"
+                          type="number"
+                        />
+                      </label>
+                    </div>
+                    <div className="mt-2">
+                      <label htmlFor="imgBehind">
+                        <b>{__('Show watermark behind the page content')}</b>
+                        <CheckBox
+                          radio
+                          onChange={e => settingHandler('setting->watermark->img->imgBehind', e.target.value)}
+                          checked={pdfConf.setting?.watermark?.img?.imgBehind === 'true'}
+                          title={<small className="txt-dp"><b>Yes</b></small>}
+                          value="true"
+                        />
+                        <CheckBox
+                          radio
+                          onChange={e => settingHandler('setting->watermark->img->imgBehind', e.target.value)}
+                          checked={pdfConf.setting?.watermark?.img?.imgBehind === 'false'}
+                          title={<small className="txt-dp"><b>No</b></small>}
+                          value="false"
+                        />
+                      </label>
+                    </div>
+                  </>
+                )}
+                <div className="mt-2">
+                  <label htmlFor="opacity">
+                    <b>{__('Opacity (0-100)')}</b>
+                    <input
+                      id="opacity"
+                      onChange={(e) => settingHandler('setting->watermark->alpha', e.target.value)}
+                      value={pdfConf.setting?.watermark?.alpha}
+                      className="btcd-paper-inp mt-1"
+                      placeholder="Opacity"
+                      max="100"
+                      type="number"
+                    />
+                  </label>
+                </div>
+
+              </div>
+            )}
+
             {/* <div className="mt-4">
               <label htmlFor="fontColor" className={css(cs.font)}>
                 <b>{__('Font Color')}</b>
@@ -227,16 +362,14 @@ export default function EditPdfTemplate() {
                 <b>{__('Language Direction')}</b>
                 <CheckBox
                   radio
-                  name="direction"
-                  onChange={e => settingHandler(e.target.name, e.target.value)}
+                  onChange={e => settingHandler('setting->direction', e.target.value)}
                   checked={pdfConf.setting.direction === 'ltr'}
                   title={<small className="txt-dp"><b>LTR</b></small>}
                   value="ltr"
                 />
                 <CheckBox
                   radio
-                  name="direction"
-                  onChange={e => settingHandler(e.target.name, e.target.value)}
+                  onChange={e => settingHandler('setting->direction', e.target.value)}
                   checked={pdfConf.setting.direction === 'rtl'}
                   title={<small className="txt-dp"><b>RTL</b></small>}
                   value="rtl"
@@ -262,5 +395,12 @@ const cs = {
     w: 30,
     h: 30,
     ml: 20,
+  },
+  bdr: {
+    pl: 15,
+  },
+  size: {
+    flx: 'center-between',
+    mt: 20,
   },
 }

@@ -11,6 +11,7 @@ import LoaderSm from './Loaders/LoaderSm'
 import Btn from './Utilities/Btn'
 import CheckBox from './Utilities/CheckBox'
 import SnackMsg from './Utilities/SnackMsg'
+import { assignNestedObj } from './style-new/styleHelpers'
 
 export default function Pdf() {
   const [bits, setBits] = useAtom($bits)
@@ -27,6 +28,19 @@ export default function Pdf() {
     fontColor: '#000000',
     direction: 'ltr',
     fontFamily: 'aboriginalsansregular',
+    watermark: {
+      // active: 'txt',
+      // alpha: 20,
+      // txt: 'Biform',
+      // img: {
+      //   src: 'link',
+      //   width: null,
+      //   height: null,
+      //   posX: null,
+      //   posY: null,
+      //   imgBehind: false,
+      // },
+    },
   })
 
   useEffect(() => {
@@ -44,17 +58,27 @@ export default function Pdf() {
   const { css } = useFela()
 
   const handleInput = (typ, val) => {
-    const tmp = { ...pdfSetting }
-    tmp[typ] = val
-    setPdfSetting(tmp)
+    setPdfSetting(prvState => create(prvState, draft => {
+      assignNestedObj(draft, typ, val)
+    }))
   }
 
   const saveConfig = () => {
     if (!isPro) return
     const fontObj = fontList.find((item) => item.font === pdfSetting.font)
 
+    pdfSetting.fontFamily = fontObj.fontFamily
+
+    if (pdfSetting.watermark?.active === 'txt') {
+      delete pdfSetting.watermark.img
+    }
+
+    if (pdfSetting.watermark?.active === 'img') {
+      delete pdfSetting.watermark.txt
+    }
+
     const tempSetting = { ...pdfSetting }
-    tempSetting.fontFamily = fontObj.fontFamily
+
     setisLoading(true)
 
     bitsFetch({ pdfSetting }, 'bitforms_save_pdf_setting')
@@ -71,6 +95,28 @@ export default function Pdf() {
         setSnackbar({ show: true, msg: `${res.data.message}` })
         setisLoading(false)
       })
+  }
+
+  const setWpMedia = () => {
+    if (typeof wp !== 'undefined' && wp.media) {
+      const wpMediaMdl = wp.media({
+        title: 'Media',
+        button: { text: 'Select picture' },
+        library: { type: 'image' },
+        multiple: false,
+      })
+
+      wpMediaMdl.on('select', () => {
+        const { url } = wpMediaMdl.state().get('selection').first().toJSON()
+        const tempSetting = create(pdfSetting, draft => {
+          assignNestedObj(draft, 'watermark->img->src', url)
+        })
+
+        setPdfSetting(tempSetting)
+      })
+
+      wpMediaMdl.open()
+    }
   }
 
   return (
@@ -162,20 +208,145 @@ export default function Pdf() {
           </label>
         </div>
 
-        <div className="mt-4">
-          <label htmlFor="watermarkText">
-            <b>{__('Watermark Text')}</b>
-            <input
-              id="watermarkText"
-              name="watermarkText"
-              onChange={(e) => handleInput(e.target.name, e.target.value)}
-              value={pdfSetting.watermarkText}
-              className="btcd-paper-inp mt-1"
-              placeholder="Watermark Text"
-              type="text"
+        {/* watermark */}
+
+        <div className="mt-2">
+          <label htmlFor="active">
+            <b>{__('Watermark')}</b>
+            <CheckBox
+              radio
+              name="active"
+              onChange={e => handleInput('watermark->active', e.target.value)}
+              checked={pdfSetting?.watermark?.active === 'txt'}
+              title={<small className="txt-dp"><b>Text</b></small>}
+              value="txt"
+            />
+            <CheckBox
+              radio
+              name="active"
+              onChange={e => handleInput('watermark->active', e.target.value)}
+              checked={pdfSetting?.watermark?.active === 'img'}
+              title={<small className="txt-dp"><b>Image</b></small>}
+              value="img"
             />
           </label>
         </div>
+        { pdfSetting.watermark?.active && (
+          <div className={css(c.bdr)}>
+            {pdfSetting.watermark.active === 'txt' && (
+              <div className="mt-4">
+                <label htmlFor="watermarkText">
+                  <b>{__('Watermark Text')}</b>
+                  <input
+                    id="watermarkText"
+                    name="watermarkText"
+                    onChange={(e) => handleInput('watermark->txt', e.target.value)}
+                    value={pdfSetting?.watermark?.txt}
+                    className="btcd-paper-inp mt-1"
+                    placeholder="Watermark Text"
+                    type="text"
+                  />
+                </label>
+              </div>
+            )}
+            {pdfSetting.watermark.active === 'img' && (
+              <>
+                <div className="mt-4">
+                  <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
+                    <b>{__('Watermark Text')}</b>
+                    <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
+                  </label>
+                </div>
+                <div className={css(c.size)}>
+                  <label htmlFor="width" className={css({ w: 300 })}>
+                    <b>{__('Width')}</b>
+                    <input
+                      id="width"
+                      onChange={(e) => handleInput('watermark->img->width', e.target.value)}
+                      value={pdfSetting?.watermark?.img?.width}
+                      className="btcd-paper-inp mt-1"
+                      placeholder="Image width"
+                      type="number"
+                    />
+                  </label>
+                  <label htmlFor="height" className={css({ w: 300 })}>
+                    <b>{__('Height')}</b>
+                    <input
+                      id="height"
+                      onChange={(e) => handleInput('watermark->img->height', e.target.value)}
+                      value={pdfSetting?.watermark?.img?.height}
+                      className="btcd-paper-inp mt-1"
+                      placeholder="Image height"
+                      type="number"
+                    />
+                  </label>
+                </div>
+                <div className={css(c.size)}>
+                  <label htmlFor="posX" className={css({ w: 300 })}>
+                    <b>{__('Position X (Units in millimeters)')}</b>
+                    <input
+                      id="posX"
+                      onChange={(e) => handleInput('watermark->img->posX', e.target.value)}
+                      value={pdfSetting?.watermark?.img?.posX}
+                      className="btcd-paper-inp mt-1"
+                      placeholder="Position x"
+                      type="number"
+                    />
+                  </label>
+                  <label htmlFor="posY" className={css({ w: 300 })}>
+                    <b>{__('Position Y (Units in millimeters)')}</b>
+                    <input
+                      id="posY"
+                      onChange={(e) => handleInput('watermark->img->posY', e.target.value)}
+                      value={pdfSetting?.watermark?.img?.posY}
+                      className="btcd-paper-inp mt-1"
+                      placeholder="Position Y"
+                      type="number"
+                    />
+                  </label>
+                </div>
+                <div className="mt-2">
+                  <label htmlFor="imgBehind">
+                    <b>{__('Show watermark behind the page content')}</b>
+                    <CheckBox
+                      radio
+                      name="imgBehind"
+                      onChange={e => handleInput('watermark->img->imgBehind', e.target.value)}
+                      checked={pdfSetting?.watermark?.img?.imgBehind}
+                      title={<small className="txt-dp"><b>Yes</b></small>}
+                      value="true"
+                    />
+                    <CheckBox
+                      radio
+                      name="imgBehind"
+                      onChange={e => handleInput('watermark->img->imgBehind', e.target.value)}
+                      checked={pdfSetting?.watermark?.img?.imgBehind}
+                      title={<small className="txt-dp"><b>No</b></small>}
+                      value="false"
+                    />
+                  </label>
+                </div>
+              </>
+            )}
+            <div className="mt-2">
+              <label htmlFor="opacity">
+                <b>{__('Opacity (0-100)')}</b>
+                <input
+                  id="opacity"
+                  name="alpha"
+                  onChange={(e) => handleInput('watermark->alpha', e.target.value)}
+                  value={pdfSetting?.watermark?.alpha}
+                  className="btcd-paper-inp mt-1"
+                  placeholder="Opacity"
+                  max="100"
+                  type="number"
+                />
+              </label>
+            </div>
+
+          </div>
+        )}
+
         {/* <div className="mt-4">
           <label htmlFor="fontColor" className={css(c.font)}>
             <b>{__('Font Color')}</b>
@@ -214,6 +385,7 @@ export default function Pdf() {
 
         <Btn
           onClick={() => saveConfig()}
+          className="mt-2"
         >
           {pdfSetting.id ? __('Update') : __('Save')}
           {isLoading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
@@ -232,5 +404,12 @@ const c = {
     w: 30,
     h: 30,
     ml: 20,
+  },
+  bdr: {
+    pl: 15,
+  },
+  size: {
+    flx: 'center-between',
+    mt: 20,
   },
 }
