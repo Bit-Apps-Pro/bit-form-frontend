@@ -102,7 +102,7 @@ function Twilio({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
         />
         {/* <button
           onClick={() => nextPage(3)}

@@ -115,7 +115,7 @@ export default function TelegramAuthorization({ telegramConf, setTelegramConf, s
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage(2)}
+              nextPageHandler={() => nextPage(2)}
               disabled={!isAuthorized}
             />
           </>

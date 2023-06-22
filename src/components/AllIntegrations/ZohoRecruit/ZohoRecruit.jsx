@@ -82,7 +82,7 @@ function ZohoRecruit({ formFields, setIntegration, integrations, allIntegURL }) 
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={recruitConf.module === '' || recruitConf.field_map.length < 1}
         />
         {/* <button

@@ -74,7 +74,7 @@ function ZohoSheet({ formFields, setIntegration, integrations, allIntegURL }) {
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={sheetConf.workbook === '' || sheetConf.worksheet === '' || sheetConf.field_map.length < 1}
         />
         {/* <button

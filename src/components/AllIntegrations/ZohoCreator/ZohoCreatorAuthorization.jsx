@@ -152,7 +152,7 @@ export default function ZohoCreatorAuthorization({
               <BackIcn className="ml-1 rev-icn" />
             </button> */}
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
           </>

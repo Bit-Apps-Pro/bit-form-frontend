@@ -64,7 +64,7 @@ export default function WooCommerce({ formFields, setIntegration, integrations, 
         />
 
         <NextBtn
-          nextPageHanlder={() => nextPage()}
+          nextPageHandler={() => nextPage()}
           disabled={wcConf.workspace === '' || wcConf.table === '' || wcConf.field_map.length < 1}
         />
         {/* <button

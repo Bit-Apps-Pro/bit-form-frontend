@@ -94,7 +94,7 @@ function ZohoProjects({ formFields, setIntegration, integrations, allIntegURL })
         </button> */}
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={projectsConf.portalId === '' || projectsConf.event === ''}
         />
 

@@ -120,7 +120,7 @@ export default function ZohoProjectsAuthorization({
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
           </>

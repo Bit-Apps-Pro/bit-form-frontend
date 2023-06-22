@@ -84,7 +84,7 @@ function ZohoCreator({ formFields, setIntegration, integrations, allIntegURL }) 
           {__('Next')}
           <BackIcn className="ml-1 rev-icn" />
         </button> */}
-        <NextBtn nextPageHanlder={() => nextPage(3)} />
+        <NextBtn nextPageHandler={() => nextPage(3)} />
       </div>
 
       {/* STEP 3 */}

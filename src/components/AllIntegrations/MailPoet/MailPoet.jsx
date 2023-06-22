@@ -84,7 +84,7 @@ export default function MailPoet({ formFields, setIntegration, integrations, all
         <br />
         <br />
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={mailPoetConf.lists === '' || mailPoetConf.field_map.length < 1}
         />
         {/* <button
