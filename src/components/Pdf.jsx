@@ -23,7 +23,11 @@ export default function Pdf() {
   const [pdfSetting, setPdfSetting] = useState({
     paperSize: 'a4',
     orientation: 'p',
-    font: 'AboriginalSansREGULAR.ttf',
+    // font: 'AboriginalSansREGULAR.ttf',
+    font: { name: 'DejaVuSansCondensed',
+      fontFamily: 'dejavusanscondensed',
+      color: '#000000',
+      size: 10 },
     fontSize: 10,
     fontColor: '#000000',
     direction: 'ltr',
@@ -58,15 +62,20 @@ export default function Pdf() {
   const { css } = useFela()
 
   const handleInput = (typ, val) => {
+    let tempValue = val
     setPdfSetting(prvState => create(prvState, draft => {
-      assignNestedObj(draft, typ, val)
+      if (typ === 'font') {
+        const fontObj = fontList.find((item) => item.name === val)
+        tempValue = fontObj
+      }
+      assignNestedObj(draft, typ, tempValue)
     }))
   }
 
   const saveConfig = () => {
     if (!isPro) return
-    const fontObj = fontList.find((item) => item.font === pdfSetting.font)
-
+    const fontObj = fontList.find((item) => item.name === pdfSetting.font.name)
+    console.log({ fontObj })
     pdfSetting.fontFamily = fontObj.fontFamily
 
     if (pdfSetting.watermark?.active === 'txt') {
@@ -78,7 +87,7 @@ export default function Pdf() {
     }
 
     const tempSetting = { ...pdfSetting }
-
+    console.log({ pdfSetting })
     setisLoading(true)
 
     bitsFetch({ pdfSetting }, 'bitforms_save_pdf_setting')
@@ -177,13 +186,13 @@ export default function Pdf() {
               id="font"
               name="font"
               onChange={(e) => handleInput(e.target.name, e.target.value)}
-              value={pdfSetting.font}
+              value={pdfSetting.font.name}
               className="btcd-paper-inp mt-1"
             >
               {fontList.map((item, index) => (
                 <option
                   key={`${index}-${item.name}`}
-                  value={item.font}
+                  value={item.name}
                 >
                   {item.name}
                 </option>

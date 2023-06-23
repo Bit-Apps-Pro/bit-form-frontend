@@ -167,7 +167,7 @@ export default function EmailNotificationWorkflowAction({
             <select
               className="btcd-paper-inp w-7"
               onChange={e => setEmailSetting('pdfId', e.target.value)}
-              value={getValueFromArr(actionKey, 'pdfTempId')}
+              value={getValueFromArr(actionKey, 'pdfId')}
             >
               <option value="">{__('Select PDF Template')}</option>
               {pdfTem?.map((itm, i) => (

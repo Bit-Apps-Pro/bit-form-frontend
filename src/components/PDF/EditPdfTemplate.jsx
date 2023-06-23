@@ -26,6 +26,7 @@ export default function EditPdfTemplate() {
   const pdfConf = pdfTemp[id]
 
   const update = () => {
+    console.log({ pdfTemp })
     const newPdfTem = create(pdfTemp, draft => {
       draft.push({ updateTem: 1 })
     })
@@ -177,8 +178,8 @@ export default function EditPdfTemplate() {
                 <select
                   id="font"
                   name="font"
-                  onChange={(e) => settingHandler('setting->font', e.target.value)}
-                  value={pdfConf.setting.font}
+                  onChange={(e) => settingHandler('setting->font->name', e.target.value)}
+                  value={pdfConf.setting.font.name}
                   className="btcd-paper-inp mt-1"
                 >
                   {fontList.map((item, index) => (
