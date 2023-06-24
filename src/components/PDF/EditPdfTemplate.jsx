@@ -26,7 +26,6 @@ export default function EditPdfTemplate() {
   const pdfConf = pdfTemp[id]
 
   const update = () => {
-    console.log({ pdfTemp })
     const newPdfTem = create(pdfTemp, draft => {
       draft.push({ updateTem: 1 })
     })
@@ -48,7 +47,7 @@ export default function EditPdfTemplate() {
         const fontObj = fontList.find((item) => item.name === val)
         val = fontObj
       }
-      console.log({ val })
+
       assignNestedObj(draft[id], path, val)
     }))
   }
@@ -95,7 +94,6 @@ export default function EditPdfTemplate() {
           type="button"
         >
           {__('Update Template')}
-
         </button>
 
         <div className="mt-3 flx">
@@ -427,5 +425,5 @@ const cs = {
   img: {
     w: 50,
     ml: 20,
-  }
+  },
 }

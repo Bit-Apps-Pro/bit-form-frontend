@@ -25,9 +25,7 @@ export default function Pdf() {
     orientation: 'p',
     // font: 'AboriginalSansREGULAR.ttf',
     font: { name: 'DejaVuSansCondensed',
-      fontFamily: 'dejavusanscondensed',
-      color: '#000000',
-      size: 10 },
+      fontFamily: 'dejavusanscondensed' },
     fontSize: 10,
     fontColor: '#000000',
     direction: 'ltr',
@@ -75,7 +73,6 @@ export default function Pdf() {
   const saveConfig = () => {
     if (!isPro) return
     const fontObj = fontList.find((item) => item.name === pdfSetting.font.name)
-    console.log({ fontObj })
     pdfSetting.fontFamily = fontObj.fontFamily
 
     if (pdfSetting.watermark?.active === 'txt') {
@@ -87,7 +84,6 @@ export default function Pdf() {
     }
 
     const tempSetting = { ...pdfSetting }
-    console.log({ pdfSetting })
     setisLoading(true)
 
     bitsFetch({ pdfSetting }, 'bitforms_save_pdf_setting')
