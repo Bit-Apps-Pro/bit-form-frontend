@@ -42,8 +42,14 @@ export default function EditPdfTemplate() {
   }
 
   const settingHandler = (path, value) => {
+    let val = value
     setPdfTem(prevState => create(prevState, draft => {
-      assignNestedObj(draft[id], path, value)
+      if (path === 'setting->font') {
+        const fontObj = fontList.find((item) => item.name === val)
+        val = fontObj
+      }
+      console.log({ val })
+      assignNestedObj(draft[id], path, val)
     }))
   }
 
@@ -59,7 +65,7 @@ export default function EditPdfTemplate() {
       wpMediaMdl.on('select', () => {
         const { url } = wpMediaMdl.state().get('selection').first().toJSON()
 
-        settingHandler('watermark->img->src', url)
+        settingHandler('setting->watermark->img->src', url)
       })
 
       wpMediaMdl.open()
@@ -178,14 +184,14 @@ export default function EditPdfTemplate() {
                 <select
                   id="font"
                   name="font"
-                  onChange={(e) => settingHandler('setting->font->name', e.target.value)}
+                  onChange={(e) => settingHandler('setting->font', e.target.value)}
                   value={pdfConf.setting.font.name}
                   className="btcd-paper-inp mt-1"
                 >
                   {fontList.map((item, index) => (
                     <option
                       key={`${index}-${item.name}`}
-                      value={item.font}
+                      value={item.name}
                     >
                       {item.name}
                     </option>
@@ -253,8 +259,11 @@ export default function EditPdfTemplate() {
                   <>
                     <div className="mt-4">
                       <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
-                        <b>{__('Watermark Text')}</b>
+                        <b>{__('Watermark Image')}</b>
                         <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
+
+                        <img className={css(cs.img)} src={pdfConf.setting.watermark?.img?.src} alt="" />
+
                       </label>
                     </div>
                     <div className={css(cs.size)}>
@@ -415,4 +424,8 @@ const cs = {
     flx: 'center-between',
     mt: 20,
   },
+  img: {
+    w: 50,
+    ml: 20,
+  }
 }

@@ -64,12 +64,10 @@ export default function NewPdfTemplate() {
     body: 'PDF body',
   })
 
-  console.log('tem', tem)
-
   const handleInput = (path, value) => {
     let val = value
     setTem(prevState => create(prevState, draft => {
-      if (path === 'font') {
+      if (path === 'setting->font') {
         const fontObj = fontList.find((item) => item.name === val)
         val = fontObj
       }
@@ -227,7 +225,7 @@ export default function NewPdfTemplate() {
               <select
                 id="font"
                 name="font"
-                onChange={(e) => handleInput('setting->font->name', e.target.value)}
+                onChange={(e) => handleInput('setting->font', e.target.value)}
                 value={tem.setting.font.name}
                 className="btcd-paper-inp mt-1"
               >

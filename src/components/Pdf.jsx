@@ -262,8 +262,10 @@ export default function Pdf() {
               <>
                 <div className="mt-4">
                   <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
-                    <b>{__('Watermark Text')}</b>
+                    <b>{__('Watermark Image')}</b>
                     <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
+
+                    <img className={css(c.img)} src={pdfSetting.watermark?.img?.src} alt="" />
                   </label>
                 </div>
                 <div className={css(c.size)}>
@@ -420,5 +422,9 @@ const c = {
   size: {
     flx: 'center-between',
     mt: 20,
+  },
+  img: {
+    w: 50,
+    ml: 20,
   },
 }
