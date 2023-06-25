@@ -638,6 +638,26 @@ export const toolsList = [
     },
   },
   {
+    name: 'Draft Button',
+    keywords: 'Button, Submit, Save, Save Draft, Submit Button, Submit Form, Click, Click button',
+    icn: <BtnIcn size="23" />,
+    pos: { h: 60, w: 60, i: 'shadow_block' },
+    elm: {
+      typ: 'button',
+      btnTyp: 'save-draft',
+      btnSiz: 'md',
+      txt: __('Save Draft'),
+      align: 'start',
+      icn: {
+        pos: '',
+        url: '',
+      },
+      valid: {},
+      customClasses: {},
+      customAttributes: {},
+    },
+  },
+  {
     name: __('Paypal'),
     keywords: 'Paypal, payment, credit card, credit card payment',
     icn: <PaypalIcn w="23" />,
