@@ -46,6 +46,7 @@ export default function ButtonSettings() {
   const type = [
     { name: 'Reset', value: 'reset', disabled: false },
     { name: 'Button', value: 'button', disabled: false },
+    { name: 'Save default', value: 'save-default', disabled: false },
   ]
 
   function setSubBtnTxt(e) {
@@ -56,7 +57,9 @@ export default function ButtonSettings() {
   }
 
   function setBtnTyp(e) {
-    fieldData.btnTyp = e.target.value
+    const { value } = e.target
+
+    fieldData.btnTyp = value
     if (fieldData.btnTyp === 'submit' && checkSubmitBtn()) {
       setError({ btnTyp: __('Already have a submit button') })
       setTimeout(() => {
@@ -68,13 +71,38 @@ export default function ButtonSettings() {
     if (error.btnTyp) {
       setError({ btnTyp: '' })
     }
+
+    let bgClr = 'var(--btn-bg)'
+    let clr = 'var(--btn-c)'
+    let bdrClr = 'var(--btn-bdr-clr)'
+    let bdrStl = 'var(--btn-bdr)'
+    let bdrWdth = 'var(--btn-bdr-width)'
+
+    if (value === 'reset') {
+      bgClr = 'hsla(240, 12%, 94%, 100)'
+      clr = 'hsla(208, 46%, 25%, 100)'
+    }
+
+    if (value === 'save-default') {
+      bgClr = 'hsla(0, 0%, 100%, 100)'
+      clr = 'var(--btn-bgc)'
+      bdrClr = 'var(--btn-bgc)'
+      bdrStl = 'solid'
+      bdrWdth = '1px'
+    }
+
     setStyles(preStyle => create(preStyle, drftStyle => {
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].background = e.target.value === 'reset' ? 'hsla(240, 12%, 94%, 100)' : 'var(--btn-bgc)'
-      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].color = e.target.value === 'reset' ? 'hsla(208, 46%, 25%, 100)' : 'var(--btn-c)'
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].background = bgClr
+      drftStyle.fields[fldKey].classes[`.${fldKey}-btn`].color = clr
+      if (value !== 'save-draft') {
+        drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['border-color'] = bdrClr
+        drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['border-style'] = bdrStl
+        drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['border-width'] = bdrWdth
+      }
     }))
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
-    addToBuilderHistory({ event: `Button Type updated to ${e.target.value}: ${fieldData.txt}`, type: 'set_btn_typ', state: { fields: allFields, fldKey } })
+    addToBuilderHistory({ event: `Button Type updated to ${value}: ${fieldData.txt}`, type: 'set_btn_typ', state: { fields: allFields, fldKey } })
   }
 
   function setButtonAlign(e) {
@@ -231,8 +259,22 @@ export default function ButtonSettings() {
           open
         >
           <div className={css(FieldStyle.placeholder)}>
-            <select data-testid="btn-typ-slct" className={css(FieldStyle.input)} name="" id="" value={btnTyp} onChange={setBtnTyp}>
-              {type.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
+            <select
+              data-testid="btn-typ-slct"
+              className={css(FieldStyle.input)}
+              name=""
+              id=""
+              value={btnTyp}
+              onChange={setBtnTyp}
+            >
+              {type.map(itm => (
+                <option
+                  key={`btcd-k-${itm.name}`}
+                  value={itm.value}
+                >
+                  {itm.name}
+                </option>
+              ))}
             </select>
           </div>
           {error.btnTyp && <span className={css({ cr: 'red', ml: 10 })}>{error.btnTyp}</span>}

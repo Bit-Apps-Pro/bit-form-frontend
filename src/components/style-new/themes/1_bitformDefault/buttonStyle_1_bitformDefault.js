@@ -5,6 +5,25 @@ export default function buttonStyle_1_bitformDefault({
   fk, breakpoint, direction, colorScheme, align, txtAlign, btnTyp, fulW,
 }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
+    let bgClr = 'var(--btn-bg)'
+    let clr = 'var(--btn-c)'
+    let bdrClr = 'var(--btn-bdr-clr)'
+    let bdrStl = 'var(--btn-bdr)'
+    let bdrWdth = 'var(--btn-bdr-width)'
+
+    if (btnTyp === 'reset') {
+      bgClr = 'hsla(240, 12%, 94%, 100)'
+      clr = 'hsla(208, 46%, 25%, 100)'
+    }
+
+    if (btnTyp === 'save-draft') {
+      bgClr = 'hsla(0, 0%, 100%, 100)'
+      clr = 'var(--btn-bgc)'
+      bdrClr = 'var(--btn-bgc)'
+      bdrStl = 'solid'
+      bdrWdth = '1px'
+    }
+
     return {
       ...inputWrapperClasses(fk),
       [`.${fk}-inp-fld-wrp`]: {
@@ -17,12 +36,12 @@ export default function buttonStyle_1_bitformDefault({
         'font-size': 'var(--btn-fs)!important',
         padding: 'var(--btn-p)!important',
         // 'background-color': 'var(--btn-bgc)',
-        background: btnTyp === 'reset' ? 'hsla(240, 12%, 94%, 100)' : 'var(--btn-bg)',
-        color: btnTyp === 'reset' ? 'hsla(208, 46%, 25%, 100)' : 'var(--btn-c)',
+        background: bgClr,
+        color: clr,
         'font-weight': 'var(--btn-fw)',
-        'border-style': 'var(--btn-bdr)',
-        'border-color': 'var(--btn-bdr-clr)',
-        'border-width': 'var(--btn-bdr-width)',
+        'border-style': bdrStl,
+        'border-color': bdrClr,
+        'border-width': bdrWdth,
         'border-radius': 'var(--btn-bdr-rad) !important',
         'box-shadow': 'var(--btn-sh)',
         cursor: 'pointer',
