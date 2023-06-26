@@ -9,6 +9,7 @@ import { $fields, $fieldsArr, $updateBtn, $workflows } from '../../GlobalStates/
 import TrashIcn from '../../Icons/TrashIcn'
 import CalculatorField from '../Utilities/CalculationField/CalculatorField'
 import MtSelect from '../Utilities/MtSelect'
+import { extraFields } from './WorkflowHelpers'
 
 function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
   const setWorkflows = useSetAtom($workflows)
@@ -104,6 +105,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
   const isNotButtonField = fields[action.field]?.typ !== 'button'
   const isNotSubmitAction = actionType !== 'onsubmit'
   const isNotValidateAction = actionType !== 'onvalidate'
+  const isForm = action.field === '_bf_form'
 
   return (
     <div className="flx pos-rel btcd-logic-blk">
@@ -115,6 +117,14 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
       >
         <option value="">{__('Select One')}</option>
         {formFields.map(itm => (
+          <option
+            key={`ff-Ab-${itm.key}`}
+            value={itm.key}
+          >
+            {itm.name}
+          </option>
+        ))}
+        {extraFields.map(itm => (
           <option
             key={`ff-Ab-${itm.key}`}
             value={itm.key}
@@ -136,22 +146,25 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
         className="w-4"
       >
         <option value="">{__('Select One')}</option>
-        {(!isNotButtonField && lgcGrp.action_type === 'oninput') && (
-          <option value="click">{__('Click')}</option>
-        )}
-        {(isNotFileUpField && isNotButtonField && isNotValidateAction)
-          && <option value="value">{__('Value')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable')}</option>}
-        {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField)
-          && <option value="readonly">{__('Readonly')}</option>}
-        {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField)
-          && <option value="writeable">{__('Writeable')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="hide">{__('Hide')}</option>}
-        {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show')}</option>}
-        {actionType === 'onvalidate' && <option value="required">{__('Required')}</option>}
-        {actionType === 'onvalidate' && <option value="notrequired">{__('Not Required')}</option>}
-        {fldType === 'select' && <option value="activelist">{__('Active List')}</option>}
+        {isForm && <option value="save_draft">{__('Save Draft')}</option>}
+        {!isForm
+          && (
+            <>
+              {(!isNotButtonField && lgcGrp.action_type === 'oninput') && (
+                <option value="click">{__('Click')}</option>
+              )}
+              {(isNotFileUpField && isNotButtonField && isNotValidateAction) && <option value="value">{__('Value')}</option>}
+              {(isNotSubmitAction && isNotValidateAction) && <option value="enable">{__('Enable')}</option>}
+              {(isNotSubmitAction && isNotValidateAction) && <option value="disable">{__('Disable')}</option>}
+              {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="readonly">{__('Readonly')}</option>}
+              {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="writeable">{__('Writeable')}</option>}
+              {(isNotSubmitAction && isNotValidateAction) && <option value="hide">{__('Hide')}</option>}
+              {(isNotSubmitAction && isNotValidateAction) && <option value="show">{__('Show')}</option>}
+              {actionType === 'onvalidate' && <option value="required">{__('Required')}</option>}
+              {actionType === 'onvalidate' && <option value="notrequired">{__('Not Required')}</option>}
+              {fldType === 'select' && <option value="activelist">{__('Active List')}</option>}
+            </>
+          )}
       </MtSelect>
 
       {(action.action === 'value' || action.action === 'activelist') && (

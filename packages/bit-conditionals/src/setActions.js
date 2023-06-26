@@ -47,6 +47,12 @@ const setActiveList = (actionDetail, props, fieldValues) => {
   }
 }
 
+const handleFormSaveDraft = (actionDetail, props) => {
+  if (typeof saveFormProgress !== 'undefined') {
+    saveFormProgress(props.contentId)
+  }
+}
+
 const setDisabled = (fldKey, props, val) => {
   const fldData = props.fields[fldKey]
   const { fieldName, typ } = fldData
@@ -185,6 +191,11 @@ export const setActions = (actionDetail, fldKey, props, fieldValues, rowIndx) =>
       case 'activelist':
         if (props.fields[actionDetail.field]) {
           setActiveList(actionDetail, props, fieldValues)
+        }
+        break
+      case 'save_draft':
+        if (actionDetail.field === '_bf_form') {
+          handleFormSaveDraft(actionDetail, props)
         }
         break
       default:
