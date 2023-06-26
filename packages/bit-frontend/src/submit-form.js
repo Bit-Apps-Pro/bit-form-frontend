@@ -85,6 +85,7 @@ function submitResponse(resp, contentId, formData) {
       let responsedRedirectPage = null
       let hitCron = null
       let newNonce = ''
+      const props = window.bf_globals[contentId]
       if (result !== undefined && result.success) {
         const form = bfSelect(`#form-${contentId}`)
         bfReset(contentId)
@@ -122,6 +123,7 @@ function submitResponse(resp, contentId, formData) {
             error: false,
           })
         }
+        localStorage.removeItem(`bitform-partial-form-${props.formId}`)
       } else {
         const errorEvent = new CustomEvent('bf-form-submit-error', {
           detail: { formId: contentId, errors: result.data },
@@ -192,7 +194,7 @@ export default function addSubmitEventToForms(formContentId = null) {
   formIds.forEach((contentId) => {
     const frm = bfSelect(`#form-${contentId}`)
     if (frm) {
-      frm.addEventListener('submit', (e) => bitFormSubmitAction(e))
+      frm.addEventListener('submit', (e) => { bitFormSubmitAction(e) })
       bfSelect('button[type="reset"]', frm)
         ?.addEventListener('click', () => bfReset(frm.id.replace('form-', ''), true))
     }
