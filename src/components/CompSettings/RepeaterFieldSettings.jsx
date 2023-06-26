@@ -15,7 +15,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useParams } from 'react-router-dom'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import FieldStyle from '../../styles/FieldStyle.style'
@@ -89,6 +89,7 @@ function RepeaterFieldSettings() {
     fieldData.btnPosition = val
     setFields(create(fields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory({ event: `Button Position changed to ${val}: ${fieldData.txt}`, type: 'set_btn_posn', state: { fields, fldKey } })
+    reCalculateFldHeights(fldKey)
   }
 
   function handleButtonAlignment({ target: { value: val } }) {
@@ -110,6 +111,7 @@ function RepeaterFieldSettings() {
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `Button Alignment updated to ${val}: ${fieldData.lbl || adminLabel || fldKey}`, type: 'set_to_end_btn_align', state: { fields: allFields, fldKey } })
+    reCalculateFldHeights(fldKey)
   }
 
   function handleButtonView({ target: { value: val } }) {
@@ -119,6 +121,7 @@ function RepeaterFieldSettings() {
     fieldData.btnView = val
     setFields(create(fields, draft => { draft[fldKey] = fieldData }))
     addToBuilderHistory({ event: `Button View to ${val}: ${fieldData.txt}`, type: 'set_btn_posn', state: { fields, fldKey } })
+    reCalculateFldHeights(fldKey)
   }
 
   return (
@@ -157,7 +160,12 @@ function RepeaterFieldSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion id="rpt-count-stng" title="Repeatable Row Count(Min/Max):" className={css(FieldStyle.fieldSection)}>
+      <SimpleAccordion
+        id="rpt-count-stng"
+        title="Repeatable Row Count(Min/Max):"
+        className={css(FieldStyle.fieldSection)}
+        isPro
+      >
         {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
         <div className={css({ mx: 5 })}>
           <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
@@ -228,7 +236,12 @@ function RepeaterFieldSettings() {
 
       <FieldSettingsDivider />
 
-      <SimpleAccordion id="rpt-count-stng" title="Button Layout and Position:" className={css(FieldStyle.fieldSection)}>
+      <SimpleAccordion
+        id="rpt-count-stng"
+        title="Button Layout and Position:"
+        className={css(FieldStyle.fieldSection)}
+        isPro
+      >
         {/* <input aria-label="Maximum number for this field" className={css(FieldStyle.input)} type="text" value={placeholder} onChange={setPlaceholder} /> */}
         <div className={css({ mx: 5 })}>
           <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>

@@ -87,6 +87,7 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
         toggleAction={handleToggleAction}
         toggleChecked={fieldData?.[btnType].show}
         // disable={!fieldData?.[btnType].show}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <AutoResizeInput
@@ -104,7 +105,6 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
           styleRoute={`${styleRoute[btnType]}-pre-i`}
           setIcon={() => setIconModel(`${btnType}PreIcn`)}
           removeIcon={() => removeIcon(`${btnType}PreIcn`)}
-          isPro
           proProperty="leadingIcon"
         />
 
@@ -114,7 +114,6 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
           styleRoute={`${styleRoute[btnType]}-suf-i`}
           setIcon={() => setIconModel(`${btnType}SufIcn`)}
           removeIcon={() => removeIcon(`${btnType}SufIcn`)}
-          isPro
           proProperty="trailingIcon"
         />
 
