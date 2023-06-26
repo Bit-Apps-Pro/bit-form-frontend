@@ -23,7 +23,7 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         transition: 'all .2s ease',
       },
       [`.${fk}-rpt-grid-wrp`]: {
-        width: 'calc(100% - 60px)',
+        width: '100%',
       },
       [`.${fk}-pair-btn-wrp`]: {
         display: 'flex',
@@ -35,13 +35,13 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
       },
       [`.${fk}-rpt-add-btn`]: {
         'font-size': 'var(--btn-fs)!important',
-        padding: '4px',
+        padding: '6px',
         // background: 'var(--btn-bg)',
         color: 'var(--global-font-color) !important',
         'font-weight': 'var(--btn-fw)',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
-        'border-radius': '50%',
+        'border-radius': '20px',
         'border-width': 'var(--g-bdr-width) !important',
         'box-shadow': 'var(--btn-sh)',
         cursor: 'pointer',
@@ -64,20 +64,20 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         opacity: '0.5',
       },
       [`.${fk}-rpt-add-btn-pre-i`]: {
-        width: '15px',
+        width: '18px',
       },
       [`.${fk}-rpt-add-btn-suf-i`]: {
-        width: '15px',
+        width: '18px',
       },
       [`.${fk}-rpt-rmv-btn`]: {
         'font-size': 'var(--btn-fs)!important',
-        padding: '4px',
+        padding: '6px',
         // background: 'var(--btn-bg)',
         color: 'var(--global-font-color) !important',
         'font-weight': 'var(--btn-fw)',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
-        'border-radius': '50%',
+        'border-radius': '20px',
         'border-width': 'var(--g-bdr-width) !important',
         'box-shadow': 'var(--btn-sh)',
         cursor: 'pointer',
@@ -100,10 +100,10 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         opacity: '0.5',
       },
       [`.${fk}-rpt-rmv-btn-pre-i`]: {
-        width: '15px',
+        width: '18px',
       },
       [`.${fk}-rpt-rmv-btn-suf-i`]: {
-        width: '15px',
+        width: '18px',
       },
       [`.${fk}-add-to-end-btn-wrp`]: {
         display: 'flex',
@@ -153,11 +153,11 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         'outline-offset': 0,
       },
       [`.${fk}-add-to-end-btn-pre-i`]: {
-        width: '15px',
+        width: '18px',
         filter: 'invert(1)',
       },
       [`.${fk}-add-to-end-btn-suf-i`]: {
-        width: '15px',
+        width: '18px',
         filter: 'invert(1)',
       },
     }
