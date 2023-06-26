@@ -297,7 +297,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         confirmation: confirmations,
         mailTem: mailTemplates,
         integrations: allIntegrations,
-        formAbandonment,
+        ...(!isObjectEmpty(formAbandonment) && { formAbandonment }),
       },
       builderSettings,
     }

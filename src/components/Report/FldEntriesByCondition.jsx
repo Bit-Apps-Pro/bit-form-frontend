@@ -14,7 +14,7 @@ import 'tippy.js/themes/light-border.css'
 
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
-import { $bits, $fieldsArr, $reportId, $reports, $reportSelector } from '../../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $reportId, $reports, $reportSelector, $updateBtn } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
 import MoreVerticalIcn from '../../Icons/MoreVerticalIcn'
 import PlusIcn from '../../Icons/PlusIcn'
@@ -363,6 +363,7 @@ const ReportsList = ({
   const { isPro } = bits
   const currentReport = useAtomValue($reportSelector)
   const [reports, setReports] = useAtom($reports)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const searchReport = (e) => {
     const { value } = e.target
@@ -373,6 +374,7 @@ const ReportsList = ({
   const handleInput = (val) => {
     if (val === currentReport?.id) return
     reportFetchById(val)
+    setUpdateBtn(oldUpdateBtn => ({ ...oldUpdateBtn, unsaved: true }))
   }
 
   const editCurrentReport = (val) => {

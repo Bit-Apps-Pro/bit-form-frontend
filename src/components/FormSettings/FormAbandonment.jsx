@@ -1,12 +1,14 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
-import { $formAbandonment, $formId, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { useState } from 'react'
+import { $additionalSettings, $formAbandonment, $formId, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { IS_PRO } from '../../Utils/Helpers'
 import tutorialLinks from '../../Utils/StaticData/tutorialLinks'
 import { __ } from '../../Utils/i18nwrap'
 import useSWROnce from '../../hooks/useSWROnce'
 import Loader from '../Loaders/Loader'
 import CheckBox from '../Utilities/CheckBox'
+import ConfirmModal from '../Utilities/ConfirmModal'
 import Cooltip from '../Utilities/Cooltip'
 import SingleToggle2 from '../Utilities/SingleToggle2'
 import { assignNestedObj } from '../style-new/styleHelpers'
@@ -15,6 +17,8 @@ const FormAbandonment = () => {
   const [abandonmentConf, setAbandonmentConf] = useAtom($formAbandonment)
   const setUpdateBtn = useSetAtom($updateBtn)
   const formID = useAtomValue($formId)
+  const additionalSettings = useAtomValue($additionalSettings)
+  const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
   const { isLoading } = useSWROnce(['bitforms_get_form_abandonment_config', formID], { formID }, data => setAbandonmentConf(data))
 
   const handleChanges = (path, val) => {
@@ -31,9 +35,18 @@ const FormAbandonment = () => {
         if (!val) delete draftConf.saveMode
         else draftConf.saveMode = 'always'
       }
+      if (path === 'repopulateForm' && val && additionalSettings.enabled.submission) {
+        const msg = __('In order to repopulate form fields, it is necessary to store the submitted data in the database. Please make sure to turn off the "disable storing form submission data" option in the form settings.')
+        setAlertMdl({ show: true, msg })
+        delete draftConf.repopulateForm
+      }
     }))
 
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+  }
+
+  const clsAlertMdl = () => {
+    setAlertMdl({ show: false })
   }
 
   const wrpStyle = {}
@@ -174,7 +187,8 @@ const FormAbandonment = () => {
                     `)}
                   </Cooltip>
                 </div>
-                {abandonmentConf.saveFormDraft && (
+                {/* TODO: remove false from condition if needs to be used */}
+                {false && abandonmentConf.saveFormDraft && (
                   <div className="mt-3">
                     <b className="wdt-150 d-in-b">{__('When to save: ')}</b>
                     <br />
@@ -201,6 +215,20 @@ const FormAbandonment = () => {
             </div>
           )
       }
+      <ConfirmModal
+        className="custom-conf-mdl"
+        mainMdlCls="o-v"
+        btnClass="red"
+        btnTxt="Close"
+        show={alertMdl.show}
+        close={clsAlertMdl}
+        action={clsAlertMdl}
+        title="Sorry"
+      >
+        <div className="txt-center">
+          {alertMdl.msg}
+        </div>
+      </ConfirmModal>
     </div>
   )
 }
