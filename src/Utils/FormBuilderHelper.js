@@ -236,7 +236,7 @@ const FIELDS_EXTRA_ATTR = {
 
 const FIELD_FILTER = {
   section: ['section', 'repeater'],
-  repeater: ['repeater', 'section', 'button', 'recaptcha', 'advanced-file-up', ...paymentFields],
+  repeater: ['repeater', 'section', 'button', 'recaptcha', 'advanced-file-up', 'decision-box', ...paymentFields],
 }
 
 export const checkFieldsExtraAttr = (field, parentField) => {
@@ -995,4 +995,47 @@ export const getNestedLayoutHeight = (fieldKey) => {
       totalHeight: acc.totalHeight + (newH - prevH),
     }
   }, { maxHeightsByY: {}, totalHeight: 0 }).totalHeight
+}
+
+export const isValidJsonString = (str) => {
+  try {
+    JSON.parse(str)
+  } catch (e) {
+    return false
+  }
+  return true
+}
+
+export const getUploadedFilesArr = files => {
+  try {
+    if (Array.isArray(files)) return files
+    const parsedFiles = files ? JSON.parse(files) : []
+    if (Array.isArray(parsedFiles)) {
+      return parsedFiles
+    }
+    if (Object.prototype.toString.call(parsedFiles) === '[object Object]') {
+      return Object.values(parsedFiles)
+    }
+    return parsedFiles
+  } catch (_) {
+    return []
+  }
+}
+
+export const splitFileName = (fileId) => {
+  const bits = getAtom($bits)
+  const fileName = fileId?.split(bits?.configs?.bf_separator)
+  if (fileName.length > 1) {
+    return fileName[1]
+  }
+  return fileId
+}
+
+export const splitFileLink = (fileId) => {
+  const bits = getAtom($bits)
+  const fileName = fileId?.split(bits?.configs?.bf_separator)
+  if (fileName.length > 1) {
+    return fileName[0]
+  }
+  return fileId
 }

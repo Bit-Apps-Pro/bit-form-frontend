@@ -1,10 +1,22 @@
 /* eslint-disable no-use-before-define */
+import { useAtomValue, useSetAtom } from 'jotai'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAtomValue, useSetAtom } from 'jotai'
+import {
+  $bits, $fieldLabels, $forms, $nestedLayouts, $reportId,
+  $reportSelector,
+  $reports,
+} from '../GlobalStates/GlobalStates'
+import SettingsIcn from '../Icons/SettingsIcn'
+import { getUploadedFilesArr, splitFileLink, splitFileName } from '../Utils/FormBuilderHelper'
+import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
+import { formsReducer } from '../Utils/Reducers'
+import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
 import EditEntryData from '../components/EditEntryData'
 import EntryRelatedInfo from '../components/EntryRelatedInfo/EntryRelatedInfo'
 import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
+import RepeaterDataTable from '../components/RepeaterDataTable'
 import EntriesFilter from '../components/Report/EntriesFilter'
 import FldEntriesByCondition from '../components/Report/FldEntriesByCondition'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
@@ -13,18 +25,11 @@ import SnackMsg from '../components/Utilities/SnackMsg'
 import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
-import {
-  $bits, $fieldLabels, $forms, $reportId, $reports, $reportSelector
-} from '../GlobalStates/GlobalStates'
-import SettingsIcn from '../Icons/SettingsIcn'
 import noData from '../resource/img/nodata.svg'
-import bitsFetch from '../Utils/bitsFetch'
-import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
-import { formsReducer } from '../Utils/Reducers'
 
 function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const allLabels = useAtomValue($fieldLabels)
+  const nestedLayouts = useAtomValue($nestedLayouts)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(isFetching)
   const { formID } = useParams()
@@ -35,6 +40,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const [entryID, setEntryID] = useState(null)
   const [rowDtl, setRowDtl] = useState({ show: false, data: {} })
   const [confMdl, setconfMdl] = useState({ show: false })
+  const [repeaterDataMdl, setRepeaterDataMdl] = useState({ show: false })
   const [tableColumns, setTableColumns] = useState([])
   const [entryLabels, setEntryLabels] = useState([])
   const setForms = useSetAtom($forms)
@@ -49,9 +55,17 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const filterFieldType = ['divider', 'image', 'title', 'section']
 
   useEffect(() => {
+    const repeatedFieldKeys = Object.entries(nestedLayouts).reduce((acc, [key, val]) => {
+      val.lg.forEach((itm) => {
+        acc.push(itm.i)
+      })
+      return acc
+    }, [])
+
+    const tempAllLabels = allLabels.filter((itm) => !repeatedFieldKeys.includes(itm.key))
     if (currentReportData) {
       const allLabelObj = {}
-      allLabels.map((itm) => {
+      tempAllLabels.map((itm) => {
         allLabelObj[itm.key] = itm
       })
       const labels = []
@@ -67,12 +81,12 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
         }
       })
       // temporary tuen off report feature
-      tableHeaderHandler(labels.length ? labels : allLabels)
-    } else if (allLabels.length) {
-      tableHeaderHandler(allLabels)
+      tableHeaderHandler(labels.length ? labels : tempAllLabels)
+    } else if (tempAllLabels.length) {
+      tableHeaderHandler(tempAllLabels)
     }
     // tableHeaderHandler(currentReportData?.details?.order || allLabels)
-  }, [allLabels])
+  }, [allLabels, nestedLayouts])
 
   const closeConfMdl = useCallback(() => {
     confMdl.show = false
@@ -190,13 +204,14 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   )
 
   const tableHeaderHandler = (labels = []) => {
+    console.log('labels', labels)
     const cols = labels?.map((val) => ({
       Header: val.adminLbl || val.name || val.key,
       accessor: val.key,
       fieldType: val.type,
       minWidth: 50,
       ...('type' in val
-        && val.type.match(/^(file-up|advanced-file-up|check|select|sys)$/) && {
+        && val.type.match(/^(file-up|advanced-file-up|check|select|sys|repeater)$/) && {
         Cell: (row) => {
           if (
             row.cell.value !== null
@@ -214,6 +229,24 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
                     />
                   ))}
                 </>
+              )
+            }
+            if (val.type === 'repeater') {
+              return (
+                <a
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setRepeaterDataMdl({
+                      show: true,
+                      data: row.cell.value,
+                      entryId: row.cell.row.original.entry_id,
+                      title: val.adminLbl || val.name || val.key,
+                    })
+                  }}
+                >
+                  {__('View Repeater Data')}
+                </a>
               )
             }
             if (val.type === 'check' || val.type === 'select') {
@@ -410,38 +443,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
 
   const filterEntryLabels = () => entryLabels.filter(el => !['sl', 'table_ac'].includes(el.accessor) && !filterFieldType.includes(el.fieldType))
 
-  const getUploadedFilesArr = files => {
-    try {
-      const parsedFiles = files ? JSON.parse(files) : []
-      if (Array.isArray(parsedFiles)) {
-        return parsedFiles
-      }
-      if (Object.prototype.toString.call(parsedFiles) === '[object Object]') {
-        return Object.values(parsedFiles)
-      }
-      return parsedFiles
-    } catch (_) {
-      return []
-    }
-  }
-
-  const splitFileName = (fileId) => {
-    const fileName = fileId?.split(bits?.configs?.bf_separator)
-    if (fileName.length > 1) {
-      return fileName[1]
-    }
-    return fileId
-  }
-
-  const splitFileLink = (fileId) => {
-    const fileName = fileId?.split(bits?.configs?.bf_separator)
-    if (fileName.length > 1) {
-      return fileName[0]
-    }
-    return fileId
-  }
-
   const drawerEntryMap = (entry) => {
+    console.log('entry', entry)
     if (entry.fieldType === 'file-up' || entry.fieldType === 'advanced-file-up') {
       return (
         getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => (
@@ -452,6 +455,24 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
             link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${splitFileLink(it)}`}
           />
         ))
+      )
+    }
+    if (entry.fieldType === 'repeater') {
+      return (
+        <a
+          href=""
+          onClick={(e) => {
+            e.preventDefault()
+            setRepeaterDataMdl({
+              show: true,
+              data: allResp[rowDtl.idx]?.[entry.accessor],
+              entryId: allResp[rowDtl.idx].entry_id,
+              title: entry.Header,
+            })
+          }}
+        >
+          {__('View Repeater Data')}
+        </a>
       )
     }
     if (entry.fieldType === 'color') {
@@ -560,6 +581,18 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
           </tbody>
         </table>
       </Drawer>
+
+      {
+        repeaterDataMdl.show && (
+          <RepeaterDataTable
+            close={() => setRepeaterDataMdl(prevData => ({ ...prevData, show: false }))}
+            rptData={repeaterDataMdl.data}
+            show={repeaterDataMdl.show}
+            entryId={repeaterDataMdl.entryId}
+            title={repeaterDataMdl.title}
+          />
+        )
+      }
 
       <div className="forms">
         <Table
