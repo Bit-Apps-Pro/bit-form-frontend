@@ -56,6 +56,7 @@ function RepeaterField({
   const { fieldKey: changedFieldKey, parentFieldKey, counter: fieldChangeCounter } = recalculateNestedField
   const navigate = useNavigate()
   const location = useLocation()
+  const { btnPosition } = fieldData
 
   useEffect(() => {
     if (fieldChangeCounter > 0 && fieldKey === parentFieldKey) {
@@ -93,9 +94,18 @@ function RepeaterField({
       reCalculateFldHeights(fieldKey)
     })
   }
-  const inpWrpElm = selectInGrid(`.${fieldKey}-rpt-grid-wrp`)
-  const absoluteSizes = inpWrpElm && getAbsoluteSize(inpWrpElm)
-  const inpWrpWidth = absoluteSizes ? absoluteSizes.width - (absoluteSizes.paddingLeft + absoluteSizes.paddingRight + absoluteSizes.borderLeft + absoluteSizes.borderRight) : 0
+  const rptWrp = selectInGrid(`.${fieldKey}-rpt-wrp`)
+  const rptWrpSizes = rptWrp && getAbsoluteSize(rptWrp)
+  const rptWrpWidth = rptWrpSizes ? rptWrpSizes.width - (rptWrpSizes.paddingLeft + rptWrpSizes.paddingRight + rptWrpSizes.borderLeft + rptWrpSizes.borderRight) : 0
+
+  const pairBtnWrp = selectInGrid(`.${fieldKey}-pair-btn-wrp`)
+  const pairBtnWrpSizes = pairBtnWrp && getAbsoluteSize(pairBtnWrp)
+  const pairBtnWrpWidth = pairBtnWrpSizes && ['row', 'row-reverse'].includes(btnPosition) ? pairBtnWrpSizes.width : 0
+
+  const rptGridWrp = selectInGrid(`.${fieldKey}-rpt-grid-wrp`)
+  const rptGridSizes = rptGridWrp && getAbsoluteSize(rptGridWrp)
+
+  const inpWrpWidth = (rptWrpWidth - pairBtnWrpWidth) - (rptGridSizes ? (rptGridSizes.paddingLeft + rptGridSizes.paddingRight + rptGridSizes.borderLeft + rptGridSizes.borderRight) : 0)
 
   const resetContextMenu = () => {
     setContextMenu({})
