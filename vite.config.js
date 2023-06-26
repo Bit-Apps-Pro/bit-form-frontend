@@ -326,6 +326,26 @@ function copyStatics(mode) {
         src: absPath('packages/bit-repeater-field/dist/getIndexesBaseOnConditions.min.js'),
         dest: absPath('../assets'),
       },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/bit-form-abandonment.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/saveFormProgress.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/setFieldValues.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/autoSavePartial.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-page-lifecycle/dist/bit-page-lifecycle.min.js'),
+        dest: absPath('../assets'),
+      },
     ],
   })
 }

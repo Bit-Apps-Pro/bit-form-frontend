@@ -124,10 +124,13 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
     const globalTheme = draftStyle.theme
 
     if (globalTheme === 'bitformDefault') {
+      const btnType = processedFieldData?.btnTyp
+
       const defaultFieldStyle = bitformDefaultTheme({
         type: processedFieldData.typ,
         fieldKey: newBlk,
         direction: themeVars['--dir'],
+        buttonOptions: { btnTyp: btnType },
       })
       if (draftStyle.fieldsSize !== 'medium') {
         const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, draftStyle.fieldsSize, tempThemeVars)

@@ -1,10 +1,12 @@
 /* eslint-disable no-nested-ternary */
 
-import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
-import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
+import { mutate } from 'swr'
 import { getAtom, setAtom } from '../GlobalStates/BitStore'
 import {
-  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
+  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formAbandonment, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId,
+  $reportSelector,
+  $reports,
+  $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import {
@@ -12,9 +14,11 @@ import {
 } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
+import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
+import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
 import atomicStyleGenarate from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
-import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
 import { JCOF } from './globalHelpers'
 
 /* eslint-disable no-param-reassign */
@@ -574,6 +578,7 @@ export const getStatesToReset = () => [
   $unsplashMdl,
   $unsplashImgUrl,
   $workflows,
+  $formAbandonment,
 
   $lightThemeColors,
   $darkThemeColors,
@@ -819,3 +824,5 @@ export const IS_PRO = (() => {
   }
   return !!bits?.isPro
 })()
+
+export const clearAllSWRCache = () => mutate(() => true, undefined, { revalidate: false })
