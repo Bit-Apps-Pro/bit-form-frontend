@@ -70,6 +70,17 @@ export default function Pdf() {
     }))
   }
 
+  const watermarkHandler = (e, value) => {
+    // checked
+    setPdfSetting(prvState => create(prvState, draft => {
+      if (e.target.checked) {
+        draft.watermark.active = value
+      } else {
+        delete draft.watermark.active
+      }
+    }))
+  }
+
   const saveConfig = () => {
     if (!isPro) return
     const fontObj = fontList.find((item) => item.name === pdfSetting.font.name)
@@ -219,20 +230,16 @@ export default function Pdf() {
           <label htmlFor="active">
             <b>{__('Watermark')}</b>
             <CheckBox
-              radio
               name="active"
-              onChange={e => handleInput('watermark->active', e.target.value)}
+              onChange={(e) => watermarkHandler(e, 'txt')}
               checked={pdfSetting?.watermark?.active === 'txt'}
               title={<small className="txt-dp"><b>Text</b></small>}
-              value="txt"
             />
             <CheckBox
-              radio
               name="active"
-              onChange={e => handleInput('watermark->active', e.target.value)}
+              onChange={e => watermarkHandler(e, 'img')}
               checked={pdfSetting?.watermark?.active === 'img'}
               title={<small className="txt-dp"><b>Image</b></small>}
-              value="img"
             />
           </label>
         </div>

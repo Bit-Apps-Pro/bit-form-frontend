@@ -52,6 +52,16 @@ export default function EditPdfTemplate() {
     }))
   }
 
+  const watermarkHandler = (e, value) => {
+    setPdfTem(prvState => create(prvState, draft => {
+      if (e.target.checked) {
+        draft[id].setting.watermark.active = value
+      } else {
+        delete draft[id].setting.watermark.active
+      }
+    }))
+  }
+
   const setWpMedia = () => {
     if (typeof wp !== 'undefined' && wp.media) {
       const wpMediaMdl = wp.media({
@@ -218,20 +228,16 @@ export default function EditPdfTemplate() {
               <label htmlFor="active">
                 <b>{__('Watermark')}</b>
                 <CheckBox
-                  radio
                   name="active"
-                  onChange={e => settingHandler('setting->watermark->active', e.target.value)}
+                  onChange={e => watermarkHandler(e, 'txt')}
                   checked={pdfConf.setting?.watermark?.active === 'txt'}
                   title={<small className="txt-dp"><b>Text</b></small>}
-                  value="txt"
                 />
                 <CheckBox
-                  radio
                   name="active"
-                  onChange={e => settingHandler('setting->watermark->active', e.target.value)}
+                  onChange={e => watermarkHandler(e, 'img')}
                   checked={pdfConf.setting?.watermark?.active === 'img'}
                   title={<small className="txt-dp"><b>Image</b></small>}
-                  value="img"
                 />
               </label>
             </div>
@@ -422,8 +428,12 @@ const cs = {
     flx: 'center-between',
     mt: 20,
   },
+
   img: {
     w: 50,
     ml: 20,
+    b: '1px solid var(--white-0-89)',
+    bs: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+    brs: 5,
   },
 }

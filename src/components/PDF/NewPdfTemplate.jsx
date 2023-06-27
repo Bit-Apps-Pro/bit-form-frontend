@@ -75,6 +75,16 @@ export default function NewPdfTemplate() {
     }))
   }
 
+  const watermarkHandler = (e, value) => {
+    setTem(prvState => create(prvState, draft => {
+      if (e.target.checked) {
+        draft.setting.watermark.active = value
+      } else {
+        delete draft.setting.watermark.active
+      }
+    }))
+  }
+
   const save = () => {
     const newPdfTem = create(pdfTem, draft => {
       draft.push(tem)
@@ -263,20 +273,16 @@ export default function NewPdfTemplate() {
             <label htmlFor="active">
               <b>{__('Watermark')}</b>
               <CheckBox
-                radio
                 name="active"
-                onChange={e => handleInput('setting->watermark->active', e.target.value)}
+                onChange={e => watermarkHandler(e, 'txt')}
                 checked={tem.setting?.watermark?.active === 'txt'}
                 title={<small className="txt-dp"><b>Text</b></small>}
-                value="txt"
               />
               <CheckBox
-                radio
                 name="active"
-                onChange={e => handleInput('setting->watermark->active', e.target.value)}
+                onChange={e => watermarkHandler(e, 'img')}
                 checked={tem.setting?.watermark?.active === 'img'}
                 title={<small className="txt-dp"><b>Image</b></small>}
-                value="img"
               />
             </label>
           </div>
@@ -304,6 +310,7 @@ export default function NewPdfTemplate() {
                     <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
                       <b>{__('Watermark Text')}</b>
                       <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
+                      <img className={css(cs.img)} src={tem.setting.watermark?.img?.src} alt="" />
                     </label>
                   </div>
                   <div className={css(cs.size)}>
@@ -465,5 +472,12 @@ const cs = {
   size: {
     flx: 'center-between',
     mt: 20,
+  },
+  img: {
+    w: 50,
+    ml: 20,
+    b: '1px solid var(--white-0-89)',
+    bs: 'rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px',
+    brs: 5,
   },
 }

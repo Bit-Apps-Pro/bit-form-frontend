@@ -17,6 +17,7 @@ import ReCaptchaIcn from '../Icons/ReCaptchaIcn'
 import SettingsIcn from '../Icons/SettingsIcn'
 import { __ } from '../Utils/i18nwrap'
 import Pdf from '../components/Pdf'
+import PdfIcn from '../Icons/PdfIcn'
 
 function AppSettingsPage() {
   return (
@@ -75,7 +76,8 @@ function AppSettingsPage() {
           to="/app-settings/pdf"
           className={({ isActive }) => (isActive ? 'btcd-app-s-a' : '')}
         >
-          <SettingsIcn size="18" className="mr-2" />
+          {/* <SettingsIcn size="18" className="mr-2" /> */}
+          <PdfIcn size="18" className="mr-2" />
           <span className="ml-2">{__('PDF')}</span>
         </NavLink>
       </aside>

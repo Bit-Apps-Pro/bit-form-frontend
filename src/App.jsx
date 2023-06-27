@@ -29,7 +29,7 @@ export default function App() {
     const { pathname } = useLocation()
     const url = pathname.split('/')
     const len = url.length
-    const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments', 'general']
+    const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments', 'general', 'pdf']
     const active = nav.includes(url[len - 1]) || false
     return active
   }

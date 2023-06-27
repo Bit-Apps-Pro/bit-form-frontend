@@ -21,6 +21,7 @@ import bitsFetch from '../Utils/bitsFetch'
 import { JCOF } from '../Utils/globalHelpers'
 import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import PdfIcn from '../Icons/PdfIcn'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const PdfTemplate = lazy(() => import('../components/PDF/PdfTemplate'))
@@ -113,7 +114,9 @@ function FormSettings() {
           to={`/form/settings/${formType}/${formID}/pdf-templates`}
           className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
         >
-          <span className="mr-1"><CodeSnippetIcn size="19" /></span>
+          <span className="mr-1">
+            <PdfIcn size="19" />
+          </span>
           {__('PDF Templates')}
         </NavLink>
         <NavLink
