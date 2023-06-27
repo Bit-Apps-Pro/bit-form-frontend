@@ -60,6 +60,7 @@ export default function Pdf() {
   const { css } = useFela()
 
   const handleInput = (typ, val) => {
+    console.log(typ, val)
     let tempValue = val
     setPdfSetting(prvState => create(prvState, draft => {
       if (typ === 'font') {
@@ -326,7 +327,7 @@ export default function Pdf() {
                       radio
                       name="imgBehind"
                       onChange={e => handleInput('watermark->img->imgBehind', e.target.value)}
-                      checked={pdfSetting?.watermark?.img?.imgBehind}
+                      checked={pdfSetting?.watermark?.img?.imgBehind === 'true'}
                       title={<small className="txt-dp"><b>Yes</b></small>}
                       value="true"
                     />
@@ -334,7 +335,7 @@ export default function Pdf() {
                       radio
                       name="imgBehind"
                       onChange={e => handleInput('watermark->img->imgBehind', e.target.value)}
-                      checked={pdfSetting?.watermark?.img?.imgBehind}
+                      checked={pdfSetting?.watermark?.img?.imgBehind === 'false'}
                       title={<small className="txt-dp"><b>No</b></small>}
                       value="false"
                     />
