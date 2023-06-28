@@ -1,12 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 import { useAtom } from 'jotai'
 import { create } from 'mutative'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { $bits } from '../GlobalStates/GlobalStates'
+import { IS_PRO } from '../Utils/Helpers'
 import { fontList, pageSizes } from '../Utils/StaticData/pdfConfigurationData'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import useSWROnce from '../hooks/useSWROnce'
 import LoaderSm from './Loaders/LoaderSm'
 import Btn from './Utilities/Btn'
 import CheckBox from './Utilities/CheckBox'
@@ -45,22 +47,18 @@ export default function Pdf() {
     },
   })
 
-  useEffect(() => {
-    bitsFetch({}, 'bitforms_get_pdf_setting').then((res) => {
-      if (res !== undefined && res.success) {
-        if (res.data?.integration_details) {
-          const tmp = JSON.parse(res.data.integration_details)
-          tmp.id = res.data.id
-          setPdfSetting(tmp)
-        }
+  const { mutate } = useSWROnce('bitforms_get_pdf_setting', {}, { fetchCondition: IS_PRO,
+    onSuccess: (data) => {
+      if (data?.integration_details) {
+        const tmp = JSON.parse(data.integration_details)
+        tmp.id = data.id
+        setPdfSetting(tmp)
       }
-    })
-  }, [])
+    } })
 
   const { css } = useFela()
 
   const handleInput = (typ, val) => {
-    console.log(typ, val)
     let tempValue = val
     setPdfSetting(prvState => create(prvState, draft => {
       if (typ === 'font') {
@@ -108,6 +106,7 @@ export default function Pdf() {
             draft.allFormSettings.pdf = tempSetting
           }))
           setPdfSetting(tempSetting)
+          mutate(tempSetting)
         }
         setSnackbar({ show: true, msg: `${res.data.message}` })
         setisLoading(false)
@@ -424,8 +423,9 @@ const c = {
     pl: 15,
   },
   size: {
-    flx: 'center-between',
+    flx: 'align-center',
     mt: 20,
+    gp: 40,
   },
   img: {
     w: 50,
