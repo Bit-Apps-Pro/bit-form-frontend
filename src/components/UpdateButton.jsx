@@ -27,6 +27,7 @@ import {
   $layouts,
   $mailTemplates,
   $newFormId,
+  $pdfTemplates,
   $reportId,
   $reportSelector,
   $reports,
@@ -71,6 +72,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const currentReport = useAtomValue($reportSelector)
   const [reportId, setReportId] = useAtom($reportId)
   const [mailTem, setMailTem] = useAtom($mailTemplates)
+  const [pdfTem, setPdfTem] = useAtom($pdfTemplates)
   const [updateBtn, setUpdateBtn] = useAtom($updateBtn)
   const [workFlows, setworkFlows] = useAtom($workflows)
   const [integrations, setIntegration] = useAtom($integrations)
@@ -107,6 +109,17 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mailTem])
+
+  useEffect(() => {
+    if (pdfTem[pdfTem.length - 1]?.updateTem) {
+      const newTem = create(pdfTem, draft => {
+        draft.pop()
+      })
+      setPdfTem(newTem)
+      saveForm('pdf-template', newTem)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pdfTem])
 
   const updateBtnEvent = e => {
     if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
@@ -186,10 +199,14 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (savedFormId) setbuttonDisabled(true)
 
     let mailTemplates = mailTem
+    let pdfTemplates = pdfTem
     let additionalSettings = additional
     let allIntegrations = integrations
+
     if (type === 'email-template') {
       mailTemplates = updatedData
+    } else if (type === 'pdf-template') {
+      pdfTemplates = updatedData
     } else if (type === 'additional') {
       additionalSettings = updatedData
     } else if (type === 'integrations') {
@@ -296,6 +313,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         formName,
         confirmation: confirmations,
         mailTem: mailTemplates,
+        pdfTem: pdfTemplates,
         integrations: allIntegrations,
         ...(!isObjectEmpty(formAbandonment) && { formAbandonment }),
       },
@@ -305,7 +323,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       formData.deletedFldKey = deletedFldKey
     }
     const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
-
     const formSavePromise = bitsFetch(formData, action)
       .then(response => {
         if (response?.success && componentMounted) {
@@ -317,6 +334,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           data?.workFlows && setworkFlows(data.workFlows)
           data?.formSettings?.integrations && setIntegration(data.formSettings.integrations)
           data?.formSettings?.mailTem && setMailTem(data.formSettings.mailTem)
+
+          data?.formSettings?.pdfTem && setPdfTem(data.formSettings.pdfTem)
           data?.additional && setAdditional(data.additional)
           data?.Labels && setFieldLabels(data.Labels)
           data?.reports && setReports(data?.reports || [])

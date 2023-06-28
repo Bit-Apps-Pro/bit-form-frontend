@@ -21,8 +21,10 @@ import bitsFetch from '../Utils/bitsFetch'
 import { JCOF } from '../Utils/globalHelpers'
 import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import PdfIcn from '../Icons/PdfIcn'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
+const PdfTemplate = lazy(() => import('../components/PDF/PdfTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
 const Integrations = loadable(() => import('../components/Integrations'), { fallback: <IntegLoader /> })
 const Workflow = lazy(() => import('../components/Workflows/Workflow'))
@@ -110,6 +112,15 @@ function FormSettings() {
           {__('Integrations')}
         </NavLink>
         <NavLink
+          to={`/form/settings/${formType}/${formID}/pdf-templates`}
+          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+        >
+          <span className="mr-1">
+            <PdfIcn size="19" />
+          </span>
+          {__('PDF Templates')}
+        </NavLink>
+        <NavLink
           to={`/form/settings/${formType}/${formID}/auth-settings`}
           className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
         >
@@ -132,6 +143,7 @@ function FormSettings() {
             <Route path="auth-settings" element={<WpAuth />} />
             <Route path="confirmations/*" element={<ConfType formType={formType} />} />
             <Route path="email-templates/*" element={<EmailTemplate />} />
+            <Route path="pdf-templates/*" element={<PdfTemplate />} />
             <Route path="double-optin" element={<DoubleOptin />} />
             <Route path="workflow" element={<Workflow />} />
             <Route path="integrations/*" element={<Integrations />} />

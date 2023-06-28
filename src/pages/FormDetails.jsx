@@ -6,7 +6,10 @@ import { useFela } from 'react-fela'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
 import bitIcn from '../../logo.svg'
 import {
-  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $updateBtn, $workflows,
+  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates,
+  $nestedLayouts, $newFormId,
+  $pdfTemplates,
+  $reportId, $reports, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -48,6 +51,7 @@ function FormDetails() {
   const { formName } = formInfo
   const [modal, setModal] = useState({ show: false, title: '', msg: '', action: () => closeModal(), btnTxt: '' })
   const setMailTem = useSetAtom($mailTemplates)
+  const setPdfTem = useSetAtom($pdfTemplates)
   const setworkFlows = useSetAtom($workflows)
   const setAdditional = useSetAtom($additionalSettings)
   const [integrations, setIntegration] = useAtom($integrations)
@@ -227,6 +231,7 @@ function FormDetails() {
             setIntegration(responseData.formSettings.integrations)
             setConfirmations(responseData.formSettings.confirmation)
             setMailTem(responseData.formSettings.mailTem)
+            setPdfTem(responseData.formSettings.pdfTem)
             if (!formsSessionDataFound && responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
             setReportId({
               id: responseData?.form_content?.report_id || defaultReport?.id,
