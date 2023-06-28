@@ -470,8 +470,9 @@ const cs = {
     pl: 15,
   },
   size: {
-    flx: 'center-between',
+    flx: 'align-center',
     mt: 20,
+    gp: 40,
   },
   img: {
     w: 50,
