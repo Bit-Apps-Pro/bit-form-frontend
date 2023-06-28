@@ -2,19 +2,17 @@
 import { useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
+import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import TrashIcn from '../../Icons/TrashIcn'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
-// import MtInput from './MtInput'
-import { $fields, $fieldsArr, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
-import TrashIcn from '../../Icons/TrashIcn'
 import CalculatorField from '../Utilities/CalculationField/CalculatorField'
 import MtSelect from '../Utilities/MtSelect'
 import { extraFields } from './WorkflowHelpers'
 
-function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType }) {
+function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType, formFields }) {
   const setWorkflows = useSetAtom($workflows)
   const fields = useAtomValue($fields)
-  const formFields = useAtomValue($fieldsArr)
   const setUpdateBtn = useSetAtom($updateBtn)
   const { css } = useFela()
   let fieldKey = ''

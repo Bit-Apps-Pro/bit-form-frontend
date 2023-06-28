@@ -1,6 +1,6 @@
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
@@ -9,7 +9,7 @@ import Downmenu from '../Utilities/Downmenu'
 import Tip from '../Utilities/Tip'
 import LogicBlock from './LogicBlock'
 import LogicChip from './LogicChip'
-import { accessToNested } from './WorkflowHelpers'
+import { accessToNested, filterFormFields } from './WorkflowHelpers'
 
 export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const { css } = useFela()
@@ -213,12 +213,13 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
     if (isGroup) logicData.push([logicObj, typ, logicObj])
     else logicData.push(logicObj)
 
-    setWorkflows(prvSt => create(prvSt, prv => {
+    setWorkflows(prvSt => create(prvSt, draft => {
       const { logics } = prvSt[lgcGrpInd].conditions[condGrpInd]
       const newLogics = [...logics[indx], ...logicData]
-      prv[lgcGrpInd].conditions[condGrpInd].logics[indx] = newLogics
+      draft[lgcGrpInd].conditions[condGrpInd].logics[indx] = newLogics
     }))
   }
+
   return (
     condGrp?.logics?.map((logic, ind) => (
       <span key={`logic-${ind + 44}`}>
@@ -238,6 +239,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
             value={logic.val}
             actionType={lgcGrp?.action_type}
             smartTagAllowed={isSmartTagNeeded(condGrp.logics, ind)}
+            formFields={filterFormFields(condGrp)}
           />
         )}
         {typeof logic === 'string' && (
@@ -264,6 +266,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                     value={subLogic.val}
                     actionType={lgcGrp?.action_type}
                     smartTagAllowed={isSmartTagNeeded(logic, subInd)}
+                    formFields={filterFormFields(condGrp)}
                   />
                 )}
                 {typeof subLogic === 'string' && (
@@ -295,6 +298,7 @@ export default function WorkflowLogicSection({ lgcGrp, lgcGrpInd, condGrp, condG
                             value={subSubLogic.val}
                             actionType={lgcGrp?.action_type}
                             smartTagAllowed={isSmartTagNeeded(subLogic, subSubLgcInd)}
+                            formFields={filterFormFields(condGrp)}
                           />
                         )}
                         {typeof subSubLogic === 'string' && (

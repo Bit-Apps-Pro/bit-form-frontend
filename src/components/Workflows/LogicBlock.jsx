@@ -1,14 +1,14 @@
+import { useAtomValue } from 'jotai'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
-import { useAtomValue } from 'jotai'
-import { $bits, $fields } from '../../GlobalStates/GlobalStates'
+import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import TrashIcn from '../../Icons/TrashIcn'
-import { makeFieldsArrByLabel } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
+import { IS_PRO } from '../../Utils/Helpers'
 import conditionalLogicsList from '../../Utils/StaticData/ConditionalLogicsList'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
+import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 import CalculatorField from '../Utilities/CalculationField/CalculatorField'
 import MtInput from '../Utilities/MtInput'
@@ -28,12 +28,10 @@ function LogicBlock({
   changeSmartKey,
   changeFormField,
   smartTagAllowed,
+  formFields,
 }) {
   const { css } = useFela()
   const fields = useAtomValue($fields)
-  const formFields = makeFieldsArrByLabel(fields, [])
-  const bits = useAtomValue($bits)
-  const { isPro } = bits
   let isSingleSelect = false
   let type = ''
   let fldType = ''
@@ -152,9 +150,9 @@ function LogicBlock({
                 </optgroup>
               )}
               {smartTagAllowed && (
-                <optgroup label={`General Smart Codes ${isPro ? '' : '(PRO)'}`}>
+                <optgroup label={`General Smart Codes ${IS_PRO ? '' : '(PRO)'}`}>
                   {SmartTagField?.map(({ name, label }) => (
-                    <option key={`ff-rm-${name}`} value={`\${${name}}`} disabled={!isPro}>
+                    <option key={`ff-rm-${name}`} value={`\${${name}}`} disabled={!IS_PRO}>
                       {label}
                     </option>
                   ))}
