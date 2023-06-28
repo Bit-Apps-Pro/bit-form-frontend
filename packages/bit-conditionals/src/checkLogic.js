@@ -248,24 +248,64 @@ const checkBetweenLogic = (logics, fields, targetFieldValue, logicsVal) => {
 
 const cehckIsFunction = (data) => data.match(/\([A-Za-z\s0-9+-\\*]*\)/g)
 
-const getFunctionValue = (funtionName, params, fldType) => {
+const getFunctionValue = (funtionName, params, fieldValues, props, fldType) => {
   switch (funtionName) {
     case '_bf_length':
-      return params[0].length
+      return params.length
     case '_bf_count':
-      if (fldType.match(/check|radio|select/)) { return params[0].trim().split(',').length }
-      return params[0].split(/\b\W+\b/g).length
-    default: return params[0]
+      if (fldType.match(/check|radio|select/)) { return params.trim().split(',').length }
+      return params.split(/\b\W+\b/g).length
+    case '_bf_calc': {
+      const calcParams = params.split(',')
+      const fieldKey = calcParams[0].substring(2, calcParams[0].length - 1)
+      if (isRepeatedField(fieldKey, props)) {
+        const repeateFieldKey = checkRepeatedField(fieldKey, props)
+        const indexes = getRepeatedIndexes(repeateFieldKey, props)
+        let result = 0
+        if (typeof calcParams[1] === 'undefined' || calcParams[1] === 'sum') {
+          indexes.forEach(index => {
+            result += Number(fieldValues[`${fieldKey}[${index}]`].value)
+          })
+        } else if (calcParams[1] === 'avg') {
+          indexes.forEach(index => {
+            result += Number(fieldValues[`${fieldKey}[${index}]`].value)
+          })
+          result /= indexes.length
+        } else if (calcParams[1] === 'min') {
+          indexes.forEach(index => {
+            if (result === 0 || Number(fieldValues[`${fieldKey}[${index}]`].value) < result) {
+              result = Number(fieldValues[`${fieldKey}[${index}]`].value)
+            }
+          })
+        } else if (calcParams[1] === 'max') {
+          indexes.forEach(index => {
+            if (Number(fieldValues[`${fieldKey}[${index}]`].value) > result) {
+              result = Number(fieldValues[`${fieldKey}[${index}]`].value)
+            }
+          })
+        } else if (calcParams[1] === 'count') {
+          result = indexes.length
+        } else if (calcParams[1] === 'mul') {
+          result = 1
+          indexes.forEach(index => {
+            result *= Number(fieldValues[`${fieldKey}[${index}]`].value)
+          })
+        }
+        return result
+      }
+      return fieldValues[fieldKey].value || ''
+    }
+    default: return params
   }
 }
 
-export const checkLogic = (logics, fields, props) => {
+export const checkLogic = (logics, fields, props, rowIndex) => {
   if (Array.isArray(logics)) {
     let conditionStatus = false
     for (let lgcIndx = 0; lgcIndx < logics.length; lgcIndx += 1) {
       const lgc = logics[lgcIndx]
       if (typeof lgc !== 'string') {
-        const isCondition = checkLogic(lgc, fields, props)
+        const isCondition = checkLogic(lgc, fields, props, rowIndex)
         if (lgcIndx === 0) {
           conditionStatus = isCondition
         }
@@ -278,17 +318,19 @@ export const checkLogic = (logics, fields, props) => {
     return conditionStatus
   }
 
-  const logicsVal = replaceWithField(logics.val, fields)
+  const logicsVal = replaceWithField(logics.val, fields, props, rowIndex)
   const smartFields = Object.entries(props.smartTags).reduce((acc, [key, value]) => ({ ...acc, [`\${${key}${typeof value === 'string' ? '' : '()'}}`]: { value: typeof value === 'string' ? value : (value?.[logics?.smartKey] || ''), type: 'text', multiple: false } }), {})
   const flds = { ...fields, ...smartFields }
-  if (flds[logics.field] !== undefined) {
-    const targetFieldValue = flds[logics.field].value
-    return compareValueLogic(logics, flds, targetFieldValue, logicsVal)
+  const fldsPropKey = isRepeatedField(logics.field, props) ? `${logics.field}[${rowIndex}]` : logics.field
+  const tempLogics = { ...logics, field: fldsPropKey }
+  if (flds[fldsPropKey] !== undefined) {
+    const targetFieldValue = flds[fldsPropKey].value
+    return compareValueLogic(tempLogics, flds, targetFieldValue, logicsVal)
   }
 
   if (cehckIsFunction(logics.field)) {
     const funtionName = logics.field.substring(2, logics.field.length - 1).replace(/\([A-Za-z\s0-9+-\\*]*\)/g, '')
-    const targetFieldValue = getFunctionValue(funtionName, [flds[logics.smartKey].value], flds[logics.smartKey].type)
+    const targetFieldValue = getFunctionValue(funtionName, flds[logics.smartKey].value, flds, props, flds[logics.smartKey].type)
     if (isNaN(targetFieldValue)) flds[logics.field] = { type: 'text' }
     else flds[logics.field] = { type: 'number' }
     return compareValueLogic(logics, flds, targetFieldValue, logicsVal)
@@ -296,15 +338,25 @@ export const checkLogic = (logics, fields, props) => {
   return false
 }
 
-const mutateString = (dataString, fieldValues) => {
-  const matchedFields = dataString.match(/\${\w[^${}]*}/g)
+const mutateString = (dataString, fieldValues, props, rowIndex) => {
   let mutatedString = dataString
+  // select calculation functions
+  const calculationMatch = dataString.match(/\${_bf_calc\([^)]+\)}/g) || []
+  calculationMatch.map(calculation => {
+    const calculationParams = calculation.substring(11, calculation.length - 2)
+    const calculationValue = getFunctionValue('_bf_calc', calculationParams, fieldValues, props)
+    mutatedString = mutatedString.replace(calculation, calculationValue)
+  })
+
+  // select all fields/functions which are in ${} format and not under ${} format
+  const matchedFields = mutatedString.match(/\${\w[^${}]*}/g)
 
   matchedFields.map(field => {
     let fieldName = field
     if (!fieldValues[fieldName]) {
       fieldName = field.substring(2, field.length - 1)
     }
+    fieldName = isRepeatedField(fieldName, props) ? `${fieldName}[${rowIndex}]` : fieldName
     let val2Rplc = ''
     if (fieldValues[fieldName]) {
       val2Rplc = fieldValues[fieldName].value
@@ -317,13 +369,13 @@ const mutateString = (dataString, fieldValues) => {
     } else if (cehckIsFunction(fieldName)) {
       const funcName = fieldName.replace(/\([A-Za-z\s0-9+-\\*]*\)/g, '')
       const params = fieldName.substring(fieldName.indexOf('(') + 1, fieldName.length - 1)
-      val2Rplc = getFunctionValue(funcName, [params], '')
+      val2Rplc = getFunctionValue(funcName, params, fieldValues, props, '')
     }
     mutatedString = mutatedString.replace(field, val2Rplc)
   })
   return mutatedString
 }
-export const replaceWithField = (stringToReplace, fieldValues) => {
+export const replaceWithField = (stringToReplace, fieldValues, props, rowIndex) => {
   if (!stringToReplace) {
     return stringToReplace
   }
@@ -356,7 +408,7 @@ export const replaceWithField = (stringToReplace, fieldValues) => {
   //   })
   // }
   while (mutatedString.match(/\${\w[^${}]*}/g)) {
-    mutatedString = mutateString(mutatedString, fieldValues)
+    mutatedString = mutateString(mutatedString, fieldValues, props, rowIndex)
   }
 
   return evalMathExpression(mutatedString)
@@ -388,3 +440,5 @@ export const evalMathExpression = (stringToReplace) => {
   }
   return mutatedString
 }
+
+export const isRepeatedField = (fieldKey, props) => (typeof checkRepeatedField !== 'undefined' ? checkRepeatedField(fieldKey, props) : false)

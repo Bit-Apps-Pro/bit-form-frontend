@@ -31,8 +31,10 @@ import PhoneNumberIcn from '../../Icons/PhoneNumberIcn'
 import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
+import RepeatIcon from '../../Icons/RepeatIcon'
 import SearchIcon from '../../Icons/SearchIcon'
 import SectionIcon from '../../Icons/SectionIcon'
+import StripeIcn from '../../Icons/StripeIcn'
 import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TimeIcn from '../../Icons/TimeIcn'
@@ -52,7 +54,6 @@ import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
-import StripeIcn from '../../Icons/StripeIcn'
 
 export const toolsList = [
   {
@@ -720,6 +721,7 @@ export const toolsList = [
     icn: <StripeIcn size="23" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     pro: 'This field is available only in pro version',
+    new: true,
     elm: {
       typ: 'stripe',
       adminLbl: __('Stripe'),
@@ -825,7 +827,7 @@ export const toolsList = [
   {
     name: __('Section'),
     keywords: 'Section, Field Group, Group, Section Field',
-    icn: <SectionIcon size="18" stroke={3} />,
+    icn: <SectionIcon size="18" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     new: true,
     elm: {
@@ -839,6 +841,62 @@ export const toolsList = [
       err: {},
       customClasses: {}, // { key(elementkey): 'class1 class2 class3'}
       customAttributes: {}, // { key(elementKey) : [{attrKey: attrValue}, {attrKey: attrValue}]}
+    },
+  },
+  {
+    name: __('Repeater'),
+    keywords: 'Repeater, Field Group, Group, Repeater Field',
+    icn: <RepeatIcon size="18" />,
+    pos: { h: 80, w: 60, i: 'shadow_block' },
+    new: true,
+    elm: {
+      typ: 'repeater',
+      lbl: __('Repeater'),
+      layout: {
+        autoHeight: 1,
+      },
+      valid: {},
+      err: {},
+      customClasses: {},
+      customAttributes: {},
+      addBtn: {
+        show: true,
+        btnTyp: 'button',
+        btnSiz: 'md',
+        txt: __(''),
+        icn: {
+          pos: '',
+          url: '',
+        },
+      },
+      addBtnPreIcn: `${bits.assetsURL}/../static/repeater/plusicon.svg`,
+      removeBtn: {
+        show: true,
+        btnTyp: 'button',
+        btnSiz: 'md',
+        txt: __(''),
+        icn: {
+          pos: '',
+          url: '',
+        },
+      },
+      removeBtnPreIcn: `${bits.assetsURL}/../static/repeater/minusicon.svg`,
+      addToEndBtn: {
+        btnAlignment: 'start',
+        show: false,
+        btnTyp: 'button',
+        btnSiz: 'md',
+        txt: __('Add New'),
+        icn: {
+          pos: '',
+          url: '',
+        },
+      },
+      addToEndBtnPreIcn: `${bits.assetsURL}/../static/repeater/plusicon.svg`,
+      btnPosition: 'row',
+      btnAlignment: 'center',
+      btnView: 'row',
+      repeatDirecton: 'column',
     },
   },
   /* {
@@ -1019,7 +1077,7 @@ function Toolbar({ setNewData }) {
                     </div>
                   </ProBadge>
                 )}
-                {tool.new && (
+                {(IS_PRO || !tool.pro) && tool.new && (
                   <ProBadge width="18" text="New" />
                 )}
               </Tools>

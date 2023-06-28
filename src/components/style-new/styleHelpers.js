@@ -31,6 +31,7 @@ import htmlStyle_1_bitformDefault from './themes/1_bitformDefault/htmlStyle_1_bi
 import imageStyle1BitformDefault from './themes/1_bitformDefault/imageStyle_1_bitformDefault'
 import phoneNumberStyle_1_bitformDefault from './themes/1_bitformDefault/phoneNumberStyle_1_bitformDefault'
 import recaptchaStyle_1_bitformDefault from './themes/1_bitformDefault/recaptchaStyle_1_bitformDefault'
+import repeaterStyle_1_bitformDefault from './themes/1_bitformDefault/repeaterStyle_1_bitformDefault'
 import sectionStyle_1_bitformDefault from './themes/1_bitformDefault/sectionStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './themes/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from './themes/1_bitformDefault/textStyle_1_bitformDefault'
@@ -374,6 +375,12 @@ export const styleClasses = {
   showFilePreview: ['file-preview'],
   showFileSize: ['file-size'],
   otherOptions: ['other-inp-wrp', 'other-inp', 'other-inp:focus', 'other-inp:hover'],
+  addBtnPreIcn: ['rpt-add-btn-pre-i'],
+  addBtnSufIcn: ['rpt-add-btn-suf-i'],
+  removeBtnPreIcn: ['rpt-rmv-btn-pre-i'],
+  removeBtnSufIcn: ['rpt-rmv-btn-suf-i'],
+  addToEndBtnPreIcn: ['add-to-end-btn-pre-i'],
+  addToEndBtnSufIcn: ['add-to-end-btn-suf-i'],
 }
 
 export const iconElementLabel = {
@@ -586,7 +593,6 @@ const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldS
     const clsNam = `.${fk}-${replaceWithFk}`
     const path = `${brkPntColorSchema}->fields->${fk}->classes->${clsNam}`
     if (!fieldStyle[clsNam]) return
-    console.log('addStyleInState', fieldStyle[clsNam])
     assignNestedObj(drftAllStyles, path, fieldStyle[clsNam])
   })
 }
@@ -684,6 +690,10 @@ export const addDefaultStyleClasses = (fk, element) => {
         case 'section':
           const sectionStyleBiformDefault = sectionStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
           addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: sectionStyleBiformDefault })
+          break
+        case 'repeater':
+          const repeaterStyleBiformDefault = repeaterStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: repeaterStyleBiformDefault })
           break
         default:
           break

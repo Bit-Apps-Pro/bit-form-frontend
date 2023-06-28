@@ -1,17 +1,9 @@
 export default function customFieldsReset(props) {
-  const customFields = [
-    'select',
-    'phone-number',
-    'country',
-    'currency',
-    'file-up',
-    'advanced-file-up',
-    'stripe',
-  ]
-
-  Object.entries(props?.fields || {}).map(([fieldKey, fieldData]) => {
-    if (customFields.includes(fieldData.typ)) {
-      props.inits[fieldKey].reset(fieldData.val)
+  Object.entries(props.inits || {}).map(([fieldKey, initData]) => {
+    if (initData.reset) {
+      const fldKey = fieldKey.replace(/\[\w+\]/g, '')
+      const fieldData = props.fields[fldKey]
+      initData.reset(fieldData.val)
     }
   })
 }

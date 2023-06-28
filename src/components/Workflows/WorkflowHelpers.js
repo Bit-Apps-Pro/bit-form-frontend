@@ -7,3 +7,8 @@ export const accessToNested = (obj, path = '') => {
   restPath.forEach(p => { obj = obj[p] })
   return paths.length ? obj[paths[lastIndex]] : obj
 }
+
+export const extraFields = [{
+  key: '_bf_form',
+  name: 'Form',
+}]

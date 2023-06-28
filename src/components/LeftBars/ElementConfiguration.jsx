@@ -636,7 +636,198 @@ export default function ElementConfiguration({ fldKey }) {
             )}
           </>
         )}
+      {fieldObj.typ.match(/^(section|repeater)$/gi) && (
+        <NavBtn
+          subRoute={fldKey}
+          route="inp-fld-wrp"
+          label="Inner Fields Container"
+          offset="2.5"
+          highlightSelector={`[data-dev-inp-fld-wrp="${fldKey}"]`}
+        />
+      )}
+      {fieldObj.typ === 'repeater' && (
+        <>
+          <NavBtn
+            subRoute={fldKey}
+            route="rpt-wrp"
+            label="Repeatative Container"
+            offset="2.5"
+            highlightSelector={`[data-dev-rpt-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-wrp')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="rpt-grid-wrp"
+            label="Grid Container"
+            offset="2.5"
+            highlightSelector={`[data-dev-rpt-grid-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-grid-wrp')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="pair-btn-wrp"
+            label="Button Container"
+            offset="2.5"
+            highlightSelector={`[data-dev-pair-btn-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'pair-btn-wrp')}
+          />
 
+          {!(fieldObj.addBtnPreIcn || fieldObj.addBtnSufIcn) && (
+            <NavBtn
+              cssSelector={`.${fldKey}-rpt-add-btn`}
+              subRoute={fldKey}
+              route="rpt-add-btn"
+              label="Add Button"
+              offset="2.5"
+              highlightSelector={`[data-dev-rpt-add-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-add-btn')}
+            />
+          )}
+          {(fieldObj.addBtnPreIcn || fieldObj.addBtnSufIcn) && (
+            <LayerAccordion
+              childrenAccodin
+              onClick={() => styleHandler('rpt-add-btn')}
+              offset="3.1"
+              title="Add Button"
+              fldData={fieldObj}
+              key={`${fldKey}-add-btn`}
+              open={fldKey === selectedFieldKey && (fieldObj.addBtnPreIcn || fieldObj.addBtnSufIcn)}
+              highlightSelector={`[data-dev-rpt-add-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-add-btn')}
+            >
+              {fieldObj.addBtnPreIcn && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.addBtnPreIcn[0]}`}
+                  subRoute={fldKey}
+                  route="rpt-add-btn-pre-i"
+                  label="Leading Icon"
+                  offset="3.3"
+                  highlightSelector={`[data-dev-rpt-add-btn-pre-i="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-add-btn-pre-i')}
+                />
+              )}
+              {fieldObj.addBtnSufIcn && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.addBtnSufIcn[0]}`}
+                  subRoute={fldKey}
+                  route="rpt-add-btn-suf-i"
+                  label="Trailing Icon"
+                  offset="3.3"
+                  highlightSelector={`[data-dev-rpt-add-btn-suf-i="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-add-btn-suf-i')}
+                />
+              )}
+            </LayerAccordion>
+          )}
+
+          {!(fieldObj.removeBtnPreIcn || fieldObj.removeBtnSufIcn) && (
+            <NavBtn
+              cssSelector={`.${fldKey}-rpt-rmv-btn`}
+              subRoute={fldKey}
+              route="rpt-rmv-btn"
+              label="Remove Button"
+              offset="2.5"
+              highlightSelector={`[data-dev-rpt-rmv-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-rmv-btn')}
+            />
+          )}
+          {(fieldObj.removeBtnPreIcn || fieldObj.removeBtnSufIcn) && (
+            <LayerAccordion
+              childrenAccodin
+              onClick={() => styleHandler('rpt-rmv-btn')}
+              offset="3.1"
+              title="Remove Button"
+              fldData={fieldObj}
+              key={`${fldKey}-rmv-btn`}
+              open={fldKey === selectedFieldKey && (fieldObj.removeBtnPreIcn || fieldObj.removeBtnSufIcn)}
+              highlightSelector={`[data-dev-rpt-rmv-btn="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-rmv-btn')}
+            >
+              {fieldObj.removeBtnPreIcn && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.removeBtnPreIcn[0]}`}
+                  subRoute={fldKey}
+                  route="rpt-rmv-btn-pre-i"
+                  label="Leading Icon"
+                  offset="3.3"
+                  highlightSelector={`[data-dev-rpt-rmv-btn-pre-i="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-rmv-btn-pre-i')}
+                />
+              )}
+              {fieldObj.removeBtnSufIcn && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-${styleClasses.removeBtnSufIcn[0]}`}
+                  subRoute={fldKey}
+                  route="rpt-rmv-btn-suf-i"
+                  label="Trailing Icon"
+                  offset="3.3"
+                  highlightSelector={`[data-dev-rpt-rmv-btn-suf-i="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'rpt-rmv-btn-suf-i')}
+                />
+              )}
+            </LayerAccordion>
+          )}
+          {fieldObj.addToEndBtn.show && (
+            <>
+              <NavBtn
+                subRoute={fldKey}
+                route="add-to-end-btn-wrp"
+                label="End Button Container"
+                offset="2.5"
+                highlightSelector={`[data-dev-add-to-end-btn-wrp="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'add-to-end-btn-wrp')}
+              />
+              {!(fieldObj.addToEndBtnPreIcn || fieldObj.addToEndBtnSufIcn) && (
+                <NavBtn
+                  cssSelector={`.${fldKey}-add-to-end-btn`}
+                  subRoute={fldKey}
+                  route="add-to-end-btn"
+                  label="Add to End Button"
+                  offset="2.5"
+                  highlightSelector={`[data-dev-add-to-end-btn="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'add-to-end-btn')}
+                />
+              )}
+              {(fieldObj.addToEndBtnPreIcn || fieldObj.addToEndBtnSufIcn) && (
+                <LayerAccordion
+                  childrenAccodin
+                  onClick={() => styleHandler('add-to-end-btn')}
+                  offset="3.1"
+                  title="Add To End Button"
+                  fldData={fieldObj}
+                  key={`${fldKey}-add-end-btn`}
+                  open={fldKey === selectedFieldKey && (fieldObj.addToEndBtnPreIcn || fieldObj.addToEndBtnSufIcn)}
+                  highlightSelector={`[data-dev-add-to-end-btn="${fldKey}"]`}
+                  styleOverride={isLabelOverrideStyles(styles, fldKey, 'add-to-end-btn')}
+                >
+                  {fieldObj.addToEndBtnPreIcn && (
+                    <NavBtn
+                      cssSelector={`.${fldKey}-${styleClasses.addToEndBtnPreIcn[0]}`}
+                      subRoute={fldKey}
+                      route="add-to-end-btn-pre-i"
+                      label="Leading Icon"
+                      offset="3.3"
+                      highlightSelector={`[data-dev-add-to-end-btn-pre-i="${fldKey}"]`}
+                      styleOverride={isLabelOverrideStyles(styles, fldKey, 'add-to-end-btn-pre-i')}
+                    />
+                  )}
+                  {fieldObj.addToEndBtnSufIcn && (
+                    <NavBtn
+                      cssSelector={`.${fldKey}-${styleClasses.addToEndBtnSufIcn[0]}`}
+                      subRoute={fldKey}
+                      route="add-to-end-btn-suf-i"
+                      label="Trailing Icon"
+                      offset="3.3"
+                      highlightSelector={`[data-dev-add-to-end-btn-suf-i="${fldKey}"]`}
+                      styleOverride={isLabelOverrideStyles(styles, fldKey, 'add-to-end-btn-suf-i')}
+                    />
+                  )}
+                </LayerAccordion>
+              )}
+            </>
+          )}
+        </>
+      )}
       {(fieldObj.helperTxt || fieldObj.hlpPreIcn || fieldObj.hlpSufIcn)
         && (
           <>

@@ -38,6 +38,7 @@
     "bit-recaptcha-field": "workspace:*",
     "bit-select-field": "workspace:*",
     "bit-stripe-field": "workspace:*",
+    "bit-repeater-field": "workspace:*",
     "bit-virtualized-list": "workspace:*",
     "bit-form-abandonment": "workspace:*",
     "bit-page-lifecycle": "workspace:*",
@@ -118,6 +119,7 @@
     "hot": "vite --force",
     "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
     "build-bit-stripe": "cd ./packages/bit-stripe-field && pnpm run build && cp -r ./dist/* ../../../assets",
+    "build-bit-repeater": "cd ./packages/bit-repeater-field && pnpm run build && cp -r ./dist/* ../../../assets",
     "build-bit-frontend": "cd ./packages/bit-frontend && pnpm run build && cp -r ./dist/* ../../../assets",
     "build-bit-form-abandonment": "cd ./packages/bit-form-abandonment && pnpm run build && cp -r ./dist/* ../../../assets"
   },

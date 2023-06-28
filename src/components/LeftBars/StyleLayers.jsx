@@ -243,15 +243,6 @@ function StyleLayers() {
                 />
               )}
               <ElementConfiguration fldKey={fldKey} />
-              {fldData.typ.match(/^(section)$/gi) && (
-                <NavBtn
-                  subRoute={fldKey}
-                  route="inp-fld-wrp"
-                  label="Inner Fields Container"
-                  offset="2.5"
-                  highlightSelector={`[data-dev-inp-fld-wrp="${fldKey}"]`}
-                />
-              )}
               {fldData.typ.match(/^(check|radio|decision-box)/gi) && (
                 <>
                   <NavBtn
@@ -910,7 +901,7 @@ function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|html|razorpay|paypal|recaptcha)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|html|razorpay|paypal|recaptcha|section|repeater)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="err-msg"

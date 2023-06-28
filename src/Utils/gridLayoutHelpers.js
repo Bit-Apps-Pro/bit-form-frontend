@@ -24,6 +24,7 @@ import {
   reCalculateFldHeights, removeFormUpdateError,
 } from './FormBuilderHelper'
 import { IS_PRO, deepCopy } from './Helpers'
+import nestedLayoutFields from './StaticData/nestedLayoutFields'
 import paymentFields from './StaticData/paymentFields'
 import proHelperData from './StaticData/proHelperData'
 import { selectInGrid } from './globalHelpers'
@@ -110,7 +111,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   }, 500)
   const fldType = processedFieldData.typ
 
-  if (fldType === 'section') {
+  if (nestedLayoutFields.includes(fldType)) {
     const nestedLayouts = getAtom($nestedLayouts)
     setAtom($nestedLayouts, create(nestedLayouts, draftNestedLayouts => {
       draftNestedLayouts[newBlk] = { lg: [], md: [], sm: [] }
