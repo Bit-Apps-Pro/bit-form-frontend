@@ -1,20 +1,23 @@
-import { useState } from 'react'
+import { useSetAtom } from 'jotai'
 import { create } from 'mutative'
+import { useState } from 'react'
+import { $updateBtn } from '../../../GlobalStates/GlobalStates'
+import EditIcn from '../../../Icons/EditIcn'
+import { userFields } from '../../../Utils/StaticData/userField'
 import { __ } from '../../../Utils/i18nwrap'
 import Cooltip from '../../Utilities/Cooltip'
-import { userFields } from '../../../Utils/StaticData/userField'
-import FieldMap from './FieldMap'
-import { addFieldMap } from './UserHelperFunction'
 import SnackMsg from '../../Utilities/SnackMsg'
 import TableCheckBox from '../../Utilities/TableCheckBox'
 import EmailNotification from '../EmailNotification'
-import EditIcn from '../../../Icons/EditIcn'
+import FieldMap from './FieldMap'
 import RedirectEmailVerified from './RedirectEmailVerified'
+import { addFieldMap } from './UserHelperFunction'
 
 export default function UserFieldMap({ formFields, userConf, setUserConf, pages, roles, type }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [showMdl, setshowMdl] = useState(false)
   const [customRedirectMdl, setCustomRedirectMdl] = useState(false)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const handleInput = e => {
     setUserConf(tmpConf => create(tmpConf, draft => {
@@ -22,6 +25,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
       // eslint-disable-next-line no-param-reassign
       draft[type][name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleCheckd = e => {
@@ -36,6 +40,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
         delete draft[type][name]
       }
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handlePage = (e) => {
@@ -44,6 +49,7 @@ export default function UserFieldMap({ formFields, userConf, setUserConf, pages,
       // eslint-disable-next-line no-param-reassign
       draft[type].redirect_url = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

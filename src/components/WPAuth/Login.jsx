@@ -1,11 +1,15 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useEffect } from 'react'
+import { $updateBtn } from '../../GlobalStates/GlobalStates'
 import FieldMap from './FieldMap'
 
 function Login({ fields, dataConf, setDataConf, pages, type, status }) {
+  const setUpdateBtn = useSetAtom($updateBtn)
+
   const loginFields = [
     {
       key: 'user_login',
@@ -30,6 +34,7 @@ function Login({ fields, dataConf, setDataConf, pages, type, status }) {
       // eslint-disable-next-line no-param-reassign
       draft[type][name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handlePage = (e) => {
@@ -37,6 +42,7 @@ function Login({ fields, dataConf, setDataConf, pages, type, status }) {
       // eslint-disable-next-line no-param-reassign
       draft[type].redirect_url = e.target.value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   useEffect(() => {

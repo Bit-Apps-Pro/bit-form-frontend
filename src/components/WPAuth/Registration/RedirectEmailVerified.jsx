@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
+import { $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBox from '../../Utilities/CheckBox'
 import Cooltip from '../../Utilities/Cooltip'
@@ -11,6 +13,7 @@ import TinyMCE from '../../Utilities/TinyMCE'
 export default function RedirectEmailVerified({
   dataConf, setDataConf, showMdl, setCustomRedirectMdl, pages, title, type = '',
 }) {
+  const setUpdateBtn = useSetAtom($updateBtn)
   const data = type ? dataConf[type] : dataConf
   const handleInput = (e) => {
     const { name, value } = e.target
@@ -19,6 +22,7 @@ export default function RedirectEmailVerified({
       const tmp = type ? draft[type] : draft
       tmp[name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const tinymceHandle = (val, name) => {
@@ -27,6 +31,7 @@ export default function RedirectEmailVerified({
       const tmp = type ? draft[type] : draft
       tmp[name] = val
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   useEffect(() => {

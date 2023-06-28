@@ -1,17 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-param-reassign */
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { $bits, $fieldsArr, $formId } from '../../../GlobalStates/GlobalStates'
+import { $bits, $fieldsArr, $formId, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import EditIcn from '../../../Icons/EditIcn'
 import { IS_PRO, deepCopy } from '../../../Utils/Helpers'
 import { dblOptinTamplate } from '../../../Utils/StaticData/tamplate'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
 import bitsFetch from '../../../Utils/bitsFetch'
 import { __ } from '../../../Utils/i18nwrap'
+import useSWROnce from '../../../hooks/useSWROnce'
 import app from '../../../styles/app.style'
 import Loader from '../../Loaders/Loader'
 import Btn from '../../Utilities/Btn'
@@ -40,26 +41,24 @@ export default function DoubleOptin() {
   const [dfltTampMdl, setDfltTamMdl] = useState(false)
   const [status, setStatus] = useState(false)
   const { isPro, allPages } = bits
-  const [isLoad, setIsLoad] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const formFields = useAtomValue($fieldsArr)
   const [snack, setSnackbar] = useState({ show: false })
   const formID = useAtomValue($formId)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
-  useEffect(() => {
-    setIsLoad(true)
-    bitsFetch({ formID }, 'bitforms_get_double_opt_in').then((res) => {
-      if (res?.success && !res?.data?.errors) {
-        setStatus(Number(res.data[0]?.status))
-        const details = JSON.parse(res.data[0]?.integration_details)
-        setTem(details)
-      }
-      setIsLoad(false)
-    })
-  }, [])
+  const { isLoading: isLoad, mutate: mutateDoubleOptIn } = useSWROnce('bitforms_get_double_opt_in', { formID }, {
+    fetchCondition: IS_PRO,
+    onSuccess: data => {
+      setStatus(Number(data[0]?.status))
+      const details = JSON.parse(data[0]?.integration_details)
+      setTem(details)
+    },
+  })
 
   const handleInput = ({ target: { name, value } }) => {
     setTem(prev => ({ ...prev, [name]: value }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
   const toggleHandle = ({ target: { checked } }, name) => {
     const temp = deepCopy(tem)
@@ -69,6 +68,7 @@ export default function DoubleOptin() {
       delete temp[name]
     }
     setTem(temp)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleStatus = (e) => {
@@ -78,6 +78,7 @@ export default function DoubleOptin() {
     } else {
       setStatus(0)
     }
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const saveSettings = (e) => {
@@ -102,6 +103,7 @@ export default function DoubleOptin() {
       .then((res) => {
         if (res?.success && !res?.data?.errors) {
           setIsLoading(false)
+          mutateDoubleOptIn(tmpConf)
         }
       })
     toast.promise(prom, {

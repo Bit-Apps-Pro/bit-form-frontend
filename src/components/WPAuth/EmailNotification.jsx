@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
+import { $updateBtn } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
@@ -9,6 +11,7 @@ import TinyMCE from '../Utilities/TinyMCE'
 export default function EmailNotification({
   dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title,
 }) {
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { css } = useFela()
   const data = type ? dataConf[type] : dataConf
   const temBody = data?.body ? data?.body : tamplate
@@ -19,6 +22,7 @@ export default function EmailNotification({
       const tmp = type ? draft[type] : draft
       tmp.body = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
   const cancelModal = () => {
     setTimeout(() => {
@@ -40,6 +44,7 @@ export default function EmailNotification({
       // eslint-disable-next-line no-param-reassign
       tmp[name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

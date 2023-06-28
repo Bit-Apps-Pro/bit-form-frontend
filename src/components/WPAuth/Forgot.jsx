@@ -1,15 +1,18 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
-import { useEffect, useState } from 'react'
+import { useSetAtom } from 'jotai'
 import { create } from 'mutative'
-import FieldMap from './FieldMap'
-import { fogotPassTamplate } from '../../Utils/StaticData/tamplate'
-import EmailNotification from './EmailNotification'
+import { useEffect, useState } from 'react'
+import { $updateBtn } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
+import { fogotPassTamplate } from '../../Utils/StaticData/tamplate'
 import Cooltip from '../Utilities/Cooltip'
+import EmailNotification from './EmailNotification'
+import FieldMap from './FieldMap'
 
 function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
   const [showMdl, setshowMdl] = useState(false)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const forgotField = [
     {
       key: 'login',
@@ -34,6 +37,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
       // eslint-disable-next-line no-param-reassign
       draft[type][name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handlePage = (e) => {
@@ -41,6 +45,7 @@ function Forgot({ fields, dataConf, setDataConf, pages, type, status }) {
       // eslint-disable-next-line no-param-reassign
       draft[type].redirect_url = e.target.value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

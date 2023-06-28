@@ -1,22 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useAsyncDebounce } from 'react-table'
 import CacheIcn from '../Icons/CacheIcn'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import useSWROnce from '../hooks/useSWROnce'
 import SingleToggle2 from './Utilities/SingleToggle2'
 
 export default function General() {
-  const [appConf, setAppConf] = useState({
+  const defaultConf = {
     cache_plugin: false,
     delete_table: false,
-  })
+  }
+  const [appConf, setAppConf] = useState(defaultConf)
+  const { mutate: mutateGeneralSettings } = useSWROnce('bitforms_get_generel_settings', {}, { onSuccess: conf => setAppConf(conf) })
 
   const saveSettings = (name) => {
     const config = { ...appConf }
     const saveProm = bitsFetch({ config }, 'bitforms_save_generel_settings')
       .then((res) => {
         if ('success' in res && res.success) {
+          mutateGeneralSettings(config)
           return 'Save successfully done'
         }
         delete config[name]
@@ -29,23 +33,6 @@ export default function General() {
     })
   }
   const debouncedUpdateConfig = useAsyncDebounce(saveSettings, 500)
-
-  useEffect(() => {
-    const loadApiKeyProm = bitsFetch({}, 'bitforms_get_generel_settings').then((res) => {
-      if (res !== undefined && res.success) {
-        setAppConf(res.data)
-      }
-      if (res?.data) return 'Fetched.'
-      return 'Error'
-    })
-    toast.promise(loadApiKeyProm, {
-      success: data => data,
-      error: __('Error Occured'),
-      loading: __('Fetching Generel Settings...'),
-    })
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const handler = ({ target: { name, checked } }) => {
     const config = { ...appConf }

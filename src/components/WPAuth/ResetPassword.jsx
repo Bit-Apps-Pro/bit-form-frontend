@@ -1,11 +1,14 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { __ } from '@wordpress/i18n'
+import { useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useEffect } from 'react'
+import { $updateBtn } from '../../GlobalStates/GlobalStates'
 import FieldMap from './FieldMap'
 
 function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
+  const setUpdateBtn = useSetAtom($updateBtn)
   const resetPasswordFields = [
     {
       key: 'new_password',
@@ -24,6 +27,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
       const { name, value } = e.target
       draft[type][name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   useEffect(() => {
@@ -38,6 +42,7 @@ function ResetPassword({ fields, dataConf, setDataConf, type, pages, status }) {
     setDataConf(tmpConf => create(tmpConf, draft => {
       draft[type].redirect_url = e.target.value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

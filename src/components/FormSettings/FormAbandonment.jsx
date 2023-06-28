@@ -2,7 +2,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { $additionalSettings, $formAbandonment, $formId, $updateBtn } from '../../GlobalStates/GlobalStates'
-import { IS_PRO } from '../../Utils/Helpers'
+import { IS_PRO, isObjectEmpty } from '../../Utils/Helpers'
 import tutorialLinks from '../../Utils/StaticData/tutorialLinks'
 import { __ } from '../../Utils/i18nwrap'
 import useSWROnce from '../../hooks/useSWROnce'
@@ -19,7 +19,17 @@ const FormAbandonment = () => {
   const formID = useAtomValue($formId)
   const additionalSettings = useAtomValue($additionalSettings)
   const [alertMdl, setAlertMdl] = useState({ show: false, msg: '' })
-  const { isLoading } = useSWROnce(['bitforms_get_form_abandonment_config', formID], { formID }, data => setAbandonmentConf(data))
+  const { isLoading } = useSWROnce(
+    ['bitforms_get_form_abandonment_config', formID],
+    { formID },
+    {
+      fetchCondition: IS_PRO,
+      onSuccess: data => setAbandonmentConf(data),
+      onMount: data => {
+        if (isObjectEmpty(abandonmentConf)) setAbandonmentConf(data)
+      },
+    },
+  )
 
   const handleChanges = (path, val) => {
     setAbandonmentConf(oldConf => create(oldConf, draftConf => {
@@ -59,8 +69,6 @@ const FormAbandonment = () => {
     wrpStyle.pointerEvents = 'none'
     wrpStyle.userSelect = 'none'
   }
-
-  console.log({ abandonmentConf })
 
   return (
     <div className="pos-rel">

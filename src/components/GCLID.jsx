@@ -1,12 +1,13 @@
+import { useAtomValue } from 'jotai'
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../GlobalStates/GlobalStates'
-import app from '../styles/app.style'
-import bitsFetch from '../Utils/bitsFetch'
 import { IS_PRO } from '../Utils/Helpers'
+import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import useSWROnce from '../hooks/useSWROnce'
+import app from '../styles/app.style'
 import { setGrantTokenResponse } from './AllIntegrations/IntegrationHelpers/IntegrationHelpers'
 import LoaderSm from './Loaders/LoaderSm'
 import CopyText from './Utilities/CopyText'
@@ -14,7 +15,6 @@ import SnackMsg from './Utilities/SnackMsg'
 
 export default function GCLID() {
   const bits = useAtomValue($bits)
-  const { isPro } = bits
   const [gclidConf, setGclidConf] = useState({
     name: 'Gclid',
     type: 'Google',
@@ -29,18 +29,10 @@ export default function GCLID() {
 
   const { css } = useFela()
 
-  useEffect(() => {
-    window.opener && setGrantTokenResponse('gclid')
-  }, [])
+  useSWROnce('bitform_google_adword_config', {}, { fetchCondition: IS_PRO, onSuccess: data => (data?.[0]?.integration_details) && setGclidConf(JSON.parse(data[0].integration_details)) })
 
   useEffect(() => {
-    bitsFetch({}, 'bitform_google_adword_config').then((res) => {
-      if (res !== undefined && res.success) {
-        if (res.data?.[0]?.integration_details) {
-          setGclidConf(JSON.parse(res.data[0].integration_details))
-        }
-      }
-    })
+    window.opener && setGrantTokenResponse('gclid')
   }, [])
 
   const handleAuthorize = () => {
@@ -132,7 +124,7 @@ export default function GCLID() {
   return (
     <div className="btcd-captcha w-5">
       <div className="pos-rel">
-        {!isPro && (
+        {!IS_PRO && (
           <div className="pro-blur flx" style={{ height: '110%', left: -15, width: '104%', top: -3 }}>
             <div className="pro">
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">

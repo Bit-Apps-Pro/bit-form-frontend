@@ -1,3 +1,5 @@
+import { useSetAtom } from 'jotai'
+import { $updateBtn } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -7,6 +9,7 @@ import { addFieldMap, delFieldMap, handleFieldMapping } from './UserHelperFuncti
 export default function FieldMap({
   i, type, formFields, field, userConf, setUserConf, customFields, setSnackbar, fieldType, authType,
 }) {
+  const setUpdateBtn = useSetAtom($updateBtn)
   const fldType = {
     user: {
       propName: 'user_map',
@@ -23,6 +26,7 @@ export default function FieldMap({
     const newConf = deepCopy(userConf)
     newConf[authType][propName][indx].customValue = event.target.value
     setUserConf(newConf)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
   const isRequired = !!customFields.find(fl => fl.key === field[fldName] && fl.required)
 

@@ -1,14 +1,14 @@
-import { memo, useEffect, useState } from 'react'
-import { useFela } from 'react-fela'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { memo, useState } from 'react'
+import { useFela } from 'react-fela'
 import { $confirmations, $fieldsArr, $updateBtn } from '../GlobalStates/GlobalStates'
 import CloseIcn from '../Icons/CloseIcn'
 import StackIcn from '../Icons/StackIcn'
 import TrashIcn from '../Icons/TrashIcn'
-import ut from '../styles/2.utilities'
-import bitsFetch from '../Utils/bitsFetch'
 import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import useSWROnce from '../hooks/useSWROnce'
+import ut from '../styles/2.utilities'
 import Accordions from './Utilities/Accordions'
 import Button from './Utilities/Button'
 import ConfirmModal from './Utilities/ConfirmModal'
@@ -21,14 +21,7 @@ function RedirUrl({ removeIntegration }) {
   const setUpdateBtn = useSetAtom($updateBtn)
   const { css } = useFela()
 
-  useEffect(() => {
-    bitsFetch(null, 'bitforms_get_all_wp_pages')
-      .then(res => {
-        if (res?.success && res?.data) {
-          setredirectUrls(res.data)
-        }
-      })
-  }, [])
+  useSWROnce('bitforms_get_all_wp_pages', null, { onSuccess: data => setredirectUrls(data) })
 
   const handleUrlTitle = (e, idx) => {
     const confirmation = deepCopy(allConf)

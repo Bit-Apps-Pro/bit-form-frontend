@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useAtomValue } from 'jotai'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../GlobalStates/GlobalStates'
-import app from '../styles/app.style'
-import bitsFetch from '../Utils/bitsFetch'
 import { IS_PRO } from '../Utils/Helpers'
+import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import useSWROnce from '../hooks/useSWROnce'
+import app from '../styles/app.style'
 import LoaderSm from './Loaders/LoaderSm'
 import CopyText from './Utilities/CopyText'
 import SnackMsg from './Utilities/SnackMsg'
@@ -21,11 +22,12 @@ const randomKey = () => {
 export default function Apikey() {
   const [key, setKey] = useState('')
   const bits = useAtomValue($bits)
-  const { isPro, siteURL } = bits
+  const { siteURL } = bits
   const [snack, setSnack] = useState({ show: false })
   const [isLoading, setisLoading] = useState(false)
   const { css } = useFela()
 
+  const { mutate: mutateKey } = useSWROnce('bitforms_api_key', {}, { fetchCondition: IS_PRO, onSuccess: apiKey => setKey(apiKey) })
   const handleSubmit = () => {
     if (!IS_PRO) return
     setisLoading(true)
@@ -34,6 +36,7 @@ export default function Apikey() {
         setisLoading(false)
         if (res?.success) {
           setKey(res.data)
+          mutateKey(res.data)
           return __('API key saved successfully')
         }
         return res?.data || __('Error Occured')
@@ -49,28 +52,10 @@ export default function Apikey() {
     setKey(randomKey())
   }
 
-  useEffect(() => {
-    if (isPro) {
-      const loadApiKeyProm = bitsFetch({}, 'bitforms_api_key').then((res) => {
-        if (res !== undefined && res.success) {
-          setKey(res.data)
-        }
-        if (res?.data) return 'Fetched.'
-        return 'Error'
-      })
-      toast.promise(loadApiKeyProm, {
-        success: data => data,
-        error: __('Error Occured'),
-        loading: __('Fetching API key...'),
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
     <div className="btcd-captcha w-5">
       <div className="pos-rel">
-        {!isPro && (
+        {!IS_PRO && (
           <div className="pro-blur flx" style={{ height: '135%', left: -12, width: '104%', marginTop: 10 }}>
             <div className="pro">
               <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
