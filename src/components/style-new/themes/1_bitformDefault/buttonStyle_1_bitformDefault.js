@@ -58,6 +58,7 @@ export default function buttonStyle_1_bitformDefault({
       },
       [`.${fk}-btn:hover`]: {
         'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
+        ...btnTyp === 'save-draft' && { color:  'var(--btn-c)'},
       },
       [`.${fk}-btn:active`]: {
         transform: 'scale(0.95)',
