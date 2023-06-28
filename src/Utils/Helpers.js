@@ -825,4 +825,13 @@ export const IS_PRO = (() => {
   return !!bits?.isPro
 })()
 
-export const clearAllSWRCache = () => mutate(() => true, undefined, { revalidate: false })
+export const clearAllSWRCache = () => mutate(() => true, undefined)
+
+export const isVarEmpty = data => {
+  // check if null or undefined or empty string
+  if (data === null || data === undefined || data === '') return true
+  // check if array or object and empty
+  if (Array.isArray(data) && data.length === 0) return true
+  if (isObjectEmpty(data)) return true
+  return false
+}
