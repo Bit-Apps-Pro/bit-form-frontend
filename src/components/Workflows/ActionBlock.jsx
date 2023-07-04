@@ -10,7 +10,9 @@ import CalculatorField from '../Utilities/CalculationField/CalculatorField'
 import MtSelect from '../Utilities/MtSelect'
 import { extraFields } from './WorkflowHelpers'
 
-function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType, formFields }) {
+function ActionBlock({
+  action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionType, formFields,
+}) {
   const setWorkflows = useSetAtom($workflows)
   const fields = useAtomValue($fields)
   const setUpdateBtn = useSetAtom($updateBtn)
@@ -176,6 +178,7 @@ function ActionBlock({ action, lgcGrp, lgcGrpInd, actionInd, condGrpInd, actionT
             onChange={changeAtnVal}
             value={action.val || ''}
             options={getOptions()}
+            formFields={formFields}
           />
         </>
       )}

@@ -234,6 +234,7 @@ function LogicBlock({
                     onChange={val => changeValue(val, lgcInd, subLgcInd, subSubLgcInd)}
                     value={value || ''}
                     options={getOptions()}
+                    formFields={formFields}
                   />
                 )}
             </div>

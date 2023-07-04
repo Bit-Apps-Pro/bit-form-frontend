@@ -1,16 +1,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'jotai'
 import { hideAll } from 'tippy.js'
-import { $fieldsArr } from '../../../GlobalStates/GlobalStates'
 import BackIcn from '../../../Icons/BackIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
-import ut from '../../../styles/2.utilities'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
+import ut from '../../../styles/2.utilities'
 
-function KeyBoard({ clickAction, options }) {
-  const fieldArr = useAtomValue($fieldsArr)
+function KeyBoard({ clickAction, options, formFields }) {
   const keyList = [
     { id: 25, type: 'back', content: <BackIcn size="18" /> },
     { id: 6, type: 'operator', content: '(' },
@@ -82,7 +79,7 @@ function KeyBoard({ clickAction, options }) {
           </>
         )}
         <h4 className={css({ m: 0 })}>Form Fields</h4>
-        {fieldArr.map((field, index) => (
+        {formFields?.map((field, index) => (
           <div
             role="button"
             className={css(style.field)}
