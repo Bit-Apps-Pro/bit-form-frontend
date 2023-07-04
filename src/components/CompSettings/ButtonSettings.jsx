@@ -1,21 +1,22 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
+import { useAtom, useAtomValue } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import FieldStyle from '../../styles/FieldStyle.style'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
+import FieldStyle from '../../styles/FieldStyle.style'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
+import { addDefaultStyleClasses, iconElementLabel, isStyleExist, setIconFilterValue, styleClasses } from '../style-new/styleHelpers'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import HelperTxtSettings from './CompSettingsUtils/HelperTxtSettings'
 import Icons from './Icons'
@@ -23,7 +24,6 @@ import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from './StyleCustomize/StyleComponents/SizeAndPosition'
-import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 
 export default function ButtonSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -98,6 +98,7 @@ export default function ButtonSettings() {
         drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['border-color'] = bdrClr
         drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['border-style'] = bdrStl
         drftStyle.fields[fldKey].classes[`.${fldKey}-btn`]['border-width'] = bdrWdth
+        drftStyle.fields[fldKey].classes[`.${fldKey}-btn:hover`].color = 'var(--btn-c)'
       }
     }))
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
