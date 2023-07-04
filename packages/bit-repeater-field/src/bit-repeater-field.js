@@ -37,6 +37,8 @@ export default class BitRepeaterField {
 
   #customFields = []
 
+  #isReset = false
+
   constructor(selector, config) {
     this.#setConfigPropertiesToVariables(config)
     if (typeof selector === 'string') {
@@ -64,6 +66,9 @@ export default class BitRepeaterField {
   init() {
     if (this.#maximumRow > 0 && this.#maximumRow < this.#defaultRow) {
       this.#defaultRow = this.#maximumRow
+    }
+    if (this.#minimumRow > 0 && this.#minimumRow > this.#defaultRow) {
+      this.#defaultRow = this.#minimumRow
     }
     if (this.#maximumRow > 0 && this.#maximumRow < this.#minimumRow) {
       this.#minimumRow = this.#maximumRow
@@ -240,7 +245,7 @@ export default class BitRepeaterField {
     this.#setHeight(replacedElement, true)
     this.#initializeCustomFields(this.#rowNumber)
     this.#handleButtonEnableDisable()
-    scrollToFld(replacedElement)
+    if (!this.#isReset) scrollToFld(replacedElement)
     this.#rowNumber += 1
   }
 
@@ -254,7 +259,7 @@ export default class BitRepeaterField {
     this.#removeRowIndex(rowNumber)
     this.#removeCustomFieldInstances(rowNumber)
     this.#handleButtonEnableDisable()
-    if (parent.previousElementSibling) scrollToFld(parent.previousElementSibling)
+    if (parent.previousElementSibling && !this.#isReset) scrollToFld(parent.previousElementSibling)
   }
 
   #handleAddToEnd(e) {
@@ -309,6 +314,25 @@ export default class BitRepeaterField {
     this.#selectAll(`.${this.#fieldKey}-rpt-rmv-btn`).forEach((btn) => {
       btn.disabled = disabled
     })
+  }
+
+  reset() {
+    let currentRow = this.#indexArray.length
+    if (currentRow === this.#defaultRow) return
+    this.#isReset = true
+    while (currentRow < this.#defaultRow) {
+      const lastRow = this.#indexArray[this.#indexArray.length - 1]
+      // Remove button is targeted because add button may not be available every time
+      const lastRemoveBtn = this.#select(`.${this.#fieldKey}-rpt-rmv-btn[data-index="${lastRow}"]`)
+      this.#handleAdd({ currentTarget: lastRemoveBtn, preventDefault: () => { } })
+      currentRow += 1
+    }
+    while (currentRow > this.#defaultRow) {
+      const lastRow = this.#indexArray[this.#indexArray.length - 1]
+      this.#select(`.${this.#fieldKey}-rpt-rmv-btn[data-index="${lastRow}"]`).click()
+      currentRow -= 1
+    }
+    this.#isReset = false
   }
 
   #select(selector, element) {
