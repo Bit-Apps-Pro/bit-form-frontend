@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
+import { $fieldsArr, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { __ } from '../../Utils/i18nwrap'
 import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
@@ -9,6 +11,8 @@ import TinyMCE from '../Utilities/TinyMCE'
 export default function EmailNotification({
   dataConf, setDataConf, type, showMdl, setshowMdl, tamplate = '', title,
 }) {
+  const setUpdateBtn = useSetAtom($updateBtn)
+  const formFields = useAtomValue($fieldsArr)
   const { css } = useFela()
   const data = type ? dataConf[type] : dataConf
   const temBody = data?.body ? data?.body : tamplate
@@ -64,6 +68,7 @@ export default function EmailNotification({
           >
             <TinyMCE
               id={`mail-tem-${data?.formID}`}
+              formFields={formFields}
               value={temBody}
               onChangeHandler={handleBody}
               width="100%"

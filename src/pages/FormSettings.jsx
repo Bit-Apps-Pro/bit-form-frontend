@@ -1,10 +1,7 @@
 import loadable from '@loadable/component'
-import { lazy, memo, Suspense, useEffect } from 'react'
-import { NavLink, Route, Routes, useParams } from 'react-router-dom'
 import { useAtom, useSetAtom } from 'jotai'
-import FSettingsLoader from '../components/Loaders/FSettingsLoader'
-import IntegLoader from '../components/Loaders/IntegLoader'
-import ProModal from '../components/Utilities/ProModal'
+import { Suspense, lazy, memo, useEffect } from 'react'
+import { NavLink, Route, Routes, useParams } from 'react-router-dom'
 import { $isNewThemeStyleLoaded } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles } from '../GlobalStates/StylesState'
@@ -15,12 +12,16 @@ import ConditionalIcn from '../Icons/ConditionalIcn'
 import EmailInbox from '../Icons/EmailInbox'
 import InfoIcn from '../Icons/InfoIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
+import PdfIcn from '../Icons/PdfIcn'
 import Settings2 from '../Icons/Settings2'
 import UserIcn from '../Icons/UserIcn'
+import { isObjectEmpty } from '../Utils/Helpers'
 import bitsFetch from '../Utils/bitsFetch'
 import { JCOF } from '../Utils/globalHelpers'
-import { isObjectEmpty } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
+import FSettingsLoader from '../components/Loaders/FSettingsLoader'
+import IntegLoader from '../components/Loaders/IntegLoader'
+import ProModal from '../components/Utilities/ProModal'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const WpAuth = lazy(() => import('../components/AuthSettings'))
@@ -93,6 +94,15 @@ function FormSettings({ setProModal }) {
         >
           <span className="mr-1"><MailOpenIcn size="21" /></span>
           {__('Email Templates')}
+        </NavLink>
+        <NavLink
+          to={`/form/settings/${formType}/${formID}/pdf-templates`}
+          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+        >
+          <span className="mr-1">
+            <PdfIcn size="19" />
+          </span>
+          {__('PDF Templates')}
         </NavLink>
         <NavLink
           to={`/form/settings/${formType}/${formID}/double-optin`}

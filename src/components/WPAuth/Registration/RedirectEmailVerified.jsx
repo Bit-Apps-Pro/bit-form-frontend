@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+import { useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
+import { $fieldsArr, $updateBtn } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import CheckBox from '../../Utilities/CheckBox'
 import Cooltip from '../../Utilities/Cooltip'
@@ -11,6 +13,8 @@ import TinyMCE from '../../Utilities/TinyMCE'
 export default function RedirectEmailVerified({
   dataConf, setDataConf, showMdl, setCustomRedirectMdl, pages, title, type = '',
 }) {
+  const setUpdateBtn = useSetAtom($updateBtn)
+  const formFields = useAtomValue($fieldsArr)
   const data = type ? dataConf[type] : dataConf
   const handleInput = (e) => {
     const { name, value } = e.target
@@ -187,11 +191,12 @@ export default function RedirectEmailVerified({
                   <label htmlFor="mail-tem-acti_succ_msg" className="mt-2">
                     <TinyMCE
                       id="acti_succ_msg"
+                      formFields={formFields}
                       value={data?.acti_succ_msg}
                       onChangeHandler={val => tinymceHandle(val, 'acti_succ_msg')}
                       // width="100%"
                       height="5px"
-                      toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
+                      // toolbarMnu="form | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
                     />
                   </label>
                 </div>
@@ -202,11 +207,12 @@ export default function RedirectEmailVerified({
                   <label htmlFor="already_activated_msg" className="mt-2">
                     <TinyMCE
                       id="already_activated_msg"
+                      formFields={formFields}
                       value={data?.already_activated_msg}
                       onChangeHandler={val => tinymceHandle(val, 'already_activated_msg')}
                       // width="100%"
                       height="5px"
-                      toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
+                      // toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
                     />
                   </label>
                 </div>
@@ -217,11 +223,12 @@ export default function RedirectEmailVerified({
                   <label htmlFor="invalid_key_msg" className="mt-2">
                     <TinyMCE
                       id="invalid_key_msg"
+                      formFields={formFields}
                       value={data?.invalid_key_msg}
                       onChangeHandler={val => tinymceHandle(val, 'invalid_key_msg')}
                       // width="100%"
                       height="5px"
-                      toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
+                      // toolbarMnu="formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code "
                     />
                   </label>
                 </div>

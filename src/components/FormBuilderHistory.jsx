@@ -202,7 +202,7 @@ export default function FormBuilderHistory() {
             type="button"
             className={`${css([OptionToolBarStyle.icn_btn, ut.icn_hover])} ${showHistory ? 'active' : ''}`}
           >
-            <EllipsisIcon size="38" />
+            <HistoryIcn size="25" />
           </button>
 
           <div className={css(builderHistoryStyle.menu)}>
