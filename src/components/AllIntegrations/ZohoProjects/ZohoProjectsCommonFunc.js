@@ -1,7 +1,7 @@
-import bitStore from '../../../GlobalStates/BitStore'
+import { getAtom } from '../../../GlobalStates/BitStore'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import bitsFetch from '../../../Utils/bitsFetch'
-import { sprintf, __ } from '../../../Utils/i18nwrap'
+import { __, sprintf } from '../../../Utils/i18nwrap'
 
 const clearLowerEvents = (projectsConf, name) => {
   const newConf = { ...projectsConf }
@@ -596,7 +596,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
     })
     return
   }
-  const bits = bitStore.get($bits)
+  const bits = getAtom($bits)
   setisLoading(true)
   // eslint-disable-next-line max-len
   const scopes = 'ZohoProjects.portals.READ,ZohoProjects.projects.READ,ZohoProjects.projects.CREATE,ZohoProjects.projects.UPDATE,ZohoProjects.milestones.READ,ZohoProjects.milestones.CREATE,ZohoProjects.milestones.UPDATE,ZohoProjects.tasklists.READ,ZohoProjects.tasklists.CREATE,ZohoProjects.tasklists.UPDATE,ZohoProjects.tasks.READ,ZohoProjects.tasks.CREATE,ZohoProjects.tasks.UPDATE,ZohoProjects.bugs.READ,ZohoProjects.bugs.CREATE,ZohoProjects.bugs.UPDATE,ZohoProjects.tags.ALL,ZohoProjects.users.READ,ZohoProjects.users.CREATE,ZohoProjects.timesheets.CREATE,ZohoPC.files.ALL'
@@ -627,7 +627,7 @@ export const handleAuthorize = (confTmp, setConf, setError, setisAuthorized, set
 }
 
 const tokenHelper = (grantToken, confTmp, setConf, setisAuthorized, setisLoading, setSnackbar) => {
-  const bits = bitStore.get($bits)
+  const bits = getAtom($bits)
   const tokenRequestParams = { ...grantToken }
   tokenRequestParams.dataCenter = confTmp.dataCenter
   tokenRequestParams.clientId = confTmp.clientId

@@ -1,12 +1,13 @@
-import { create } from 'mutative'
 import { useAtom, useSetAtom } from 'jotai'
+import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import ActionBlock from './ActionBlock'
-import Button from '../Utilities/Button'
-import CloseIcn from '../../Icons/CloseIcn'
 import { $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
+import CloseIcn from '../../Icons/CloseIcn'
 import ut from '../../styles/2.utilities'
+import Button from '../Utilities/Button'
 import Tip from '../Utilities/Tip'
+import ActionBlock from './ActionBlock'
+import { filterFormFields } from './WorkflowHelpers'
 
 export default function FieldWorkflowAction({ lgcGrp, lgcGrpInd, condGrp, condGrpInd }) {
   const { css } = useFela()
@@ -39,6 +40,7 @@ export default function FieldWorkflowAction({ lgcGrp, lgcGrpInd, condGrp, condGr
             action={action}
             actionInd={actionInd}
             actionType={lgcGrp.action_type}
+            formFields={filterFormFields(condGrp)}
           />
         </div>
       ))}

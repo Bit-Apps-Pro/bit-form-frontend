@@ -1,4 +1,6 @@
-import { create } from 'mutative'
+import { create, rawReturn } from 'mutative'
+import { startTransition } from 'react'
+import { getAtom, setAtom } from '../GlobalStates/BitStore'
 import {
   $breakpoint,
   $contextMenu,
@@ -17,15 +19,16 @@ import {
   addFormUpdateError,
   addNewItemInLayout, addToBuilderHistory,
   filterLayoutItem, getAbsoluteElmHeight, getLatestState,
-  getResizableHandles, reCalculateFldHeights, removeFormUpdateError,
+  getResizableHandles,
+  handleFieldExtraAttr,
+  reCalculateFldHeights, removeFormUpdateError,
 } from './FormBuilderHelper'
 import { IS_PRO, deepCopy } from './Helpers'
+import nestedLayoutFields from './StaticData/nestedLayoutFields'
+import paymentFields from './StaticData/paymentFields'
 import proHelperData from './StaticData/proHelperData'
 import { selectInGrid } from './globalHelpers'
 import { __ } from './i18nwrap'
-import { handleFieldExtraAttr } from './FormBuilderHelper'
-import paymentFields from './StaticData/paymentFields'
-import bitStore from '../GlobalStates/BitStore'
 
 const setUpdateErrorMsgByDefault = (fldKey, fieldData) => {
   const { typ: fldType } = fieldData
@@ -70,12 +73,12 @@ export const generateFieldLblForHistory = fldData => {
 }
 
 export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPosition) {
-  const formID = bitStore.get($formId)
-  const uniqueFieldId = bitStore.get($uniqueFieldId)
-  const fields = bitStore.get($fields)
-  const styles = bitStore.get($styles)
-  const themeVars = bitStore.get($themeVars)
-  const staticStylesState = bitStore.get($staticStylesState)
+  const formID = getAtom($formId)
+  const uniqueFieldId = getAtom($uniqueFieldId)
+  const fields = getAtom($fields)
+  const styles = getAtom($styles)
+  const themeVars = getAtom($themeVars)
+  const staticStylesState = getAtom($staticStylesState)
 
   let processedFieldData = handleFieldExtraAttr(fieldData)
   if (!processedFieldData) return
@@ -96,7 +99,7 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   const newLayouts = addNewItemInLayout(layouts, newLayoutItem)
   const newFields = { ...fields, [newBlk]: processedFieldData }
 
-  bitStore.set($fields, newFields)
+  setAtom($fields, newFields)
   sessionStorage.setItem('btcd-lc', '-')
 
   // add to history
@@ -108,9 +111,9 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
   }, 500)
   const fldType = processedFieldData.typ
 
-  if (fldType === 'section') {
-    const nestedLayouts = bitStore.get($nestedLayouts)
-    bitStore.set($nestedLayouts, create(nestedLayouts, draftNestedLayouts => {
+  if (nestedLayoutFields.includes(fldType)) {
+    const nestedLayouts = getAtom($nestedLayouts)
+    setAtom($nestedLayouts, create(nestedLayouts, draftNestedLayouts => {
       draftNestedLayouts[newBlk] = { lg: [], md: [], sm: [] }
     }))
   }
@@ -121,10 +124,13 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
     const globalTheme = draftStyle.theme
 
     if (globalTheme === 'bitformDefault') {
+      const btnType = processedFieldData?.btnTyp
+
       const defaultFieldStyle = bitformDefaultTheme({
         type: processedFieldData.typ,
         fieldKey: newBlk,
         direction: themeVars['--dir'],
+        buttonOptions: { btnTyp: btnType },
       })
       if (draftStyle.fieldsSize !== 'medium') {
         const updateStyle = updateFieldStyleByFieldSizing(defaultFieldStyle, newBlk, processedFieldData.typ, draftStyle.fieldsSize, tempThemeVars)
@@ -150,11 +156,11 @@ export function addNewFieldToGridLayout(layouts, fieldData, fieldSize, addPositi
       })
     }
   })
-  bitStore.set($styles, newStyles)
-  bitStore.set($themeVars, tempThemeVars)
+  setAtom($styles, newStyles)
+  setAtom($themeVars, tempThemeVars)
 
   if (paymentFields.includes(fldType)) {
-    bitStore.set($staticStylesState, create(staticStylesState, draftStaticStyleState => {
+    setAtom($staticStylesState, create(staticStylesState, draftStaticStyleState => {
       draftStaticStyleState.staticStyles['.pos-rel'] = { position: 'relative' }
       draftStaticStyleState.staticStyles['.form-loading::before'] = {
         position: 'absolute',
@@ -204,7 +210,7 @@ export const generateNewFldName = (oldFldName, oldFLdKey, newFldKey) => {
 }
 
 export const getInitHeightsForResizingTextarea = fldKey => {
-  const fields = bitStore.get($fields)
+  const fields = getAtom($fields)
   const fldData = fields[fldKey]
   if (!fldData) return {}
   const fldType = fldData.typ
@@ -221,43 +227,47 @@ export const getInitHeightsForResizingTextarea = fldKey => {
 
 export const setResizingFldKey = (_, lay) => {
   const fldKey = lay.i
-  bitStore.set($resizingFld, { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
+  setAtom($resizingFld, { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) })
 }
 
 export const setResizingWX = (lays, lay) => {
-  const resizingFld = bitStore.get($resizingFld)
-  if (resizingFld.fieldKey) {
-    const layout = lays.find(l => l.i === resizingFld.fieldKey)
-    const newResingFld = create(resizingFld, draftResizingFld => {
-      draftResizingFld.w = layout.w
-      draftResizingFld.x = layout.x
+  startTransition(() => {
+    const resizingFld = getAtom($resizingFld)
+    const newResizingData = create(resizingFld, draftState => {
+      if (draftState.fieldKey) {
+        const layout = lays.find(l => l.i === draftState.fieldKey)
+        draftState.w = layout.w
+        draftState.x = layout.x
+        return draftState
+      }
+      const fldKey = lay.i
+      const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
+      resizingData.w = lay.w
+      resizingData.x = lay.x
+      return rawReturn(resizingData)
     })
-    bitStore.set($resizingFld, newResingFld)
-    return
-  }
-  const fldKey = lay.i
-  const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
-  bitStore.set($resizingFld, { ...resizingData, w: lay.w, x: lay.x })
+    setAtom($resizingFld, newResizingData)
+  })
 }
 
 export const removeFieldStyles = fldKey => {
-  const styles = bitStore.get($styles)
+  const styles = getAtom($styles)
   const newStyles = create(styles, draftStyles => {
     delete draftStyles.fields[fldKey]
   })
-  bitStore.set($styles, newStyles)
+  setAtom($styles, newStyles)
 }
 
 export const cloneLayoutItem = (fldKey, layouts) => {
-  const fields = bitStore.get($fields)
-  const styles = bitStore.get($styles)
-  const proModal = bitStore.get($proModal)
-  const uniqueFieldId = bitStore.get($uniqueFieldId)
-  const formID = bitStore.get($formId)
-  const breakpoint = bitStore.get($breakpoint)
+  const fields = getAtom($fields)
+  const styles = getAtom($styles)
+  const proModal = getAtom($proModal)
+  const uniqueFieldId = getAtom($uniqueFieldId)
+  const formID = getAtom($formId)
+  const breakpoint = getAtom($breakpoint)
 
   if (!IS_PRO) {
-    bitStore.set(proModal, { show: true, ...proHelperData.fieldClone })
+    setAtom(proModal, { show: true, ...proHelperData.fieldClone })
     return
   }
   const fldData = fields[fldKey]
@@ -281,7 +291,7 @@ export const cloneLayoutItem = (fldKey, layouts) => {
   const newFldName = generateNewFldName(fldData.fieldName, fldKey, newBlk)
   const oldFields = create(fields, draft => { draft[newBlk] = { ...fldData, fieldName: newFldName } })
   // eslint-disable-next-line no-param-reassign
-  bitStore.set($fields, oldFields)
+  setAtom($fields, oldFields)
 
   // clone style
   const newStyle = create(styles, draftStyle => {
@@ -294,7 +304,7 @@ export const cloneLayoutItem = (fldKey, layouts) => {
       draftStyle.fields[newBlk].classes[newClassName] = fldClasses[cls]
     })
   })
-  bitStore.set($styles, newStyle)
+  setAtom($styles, newStyle)
 
   sessionStorage.setItem('btcd-lc', '-')
 
@@ -312,15 +322,15 @@ export const cloneLayoutItem = (fldKey, layouts) => {
   addToBuilderHistory({ event, type, state })
 
   // resetContextMenu()
-  bitStore.set($contextMenu, {})
+  setAtom($contextMenu, {})
   return { newBlk, newFldName, newLayouts }
 }
 
 export const removeLayoutItem = (fldKey, layouts) => {
-  const fields = bitStore.get($fields)
-  const breakpoint = bitStore.get($breakpoint)
-  const deletedFldKey = bitStore.get($deletedFldKey)
-  const staticStylesState = bitStore.get($staticStylesState)
+  const fields = getAtom($fields)
+  const breakpoint = getAtom($breakpoint)
+  const deletedFldKey = getAtom($deletedFldKey)
+  const staticStylesState = getAtom($staticStylesState)
 
   const fldData = fields[fldKey]
   if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
@@ -338,15 +348,15 @@ export const removeLayoutItem = (fldKey, layouts) => {
   const newLayouts = filterLayoutItem(fldKey, layouts)
   const tmpFields = create(fields, draftFields => { delete draftFields[fldKey] })
 
-  bitStore.set($fields, tmpFields)
-  bitStore.set($selectedFieldId, null)
+  setAtom($fields, tmpFields)
+  setAtom($selectedFieldId, null)
   removeFieldStyles(fldKey)
   const newDeletedFldKey = create(deletedFldKey, drft => {
     if (!drft.includes(fldKey)) {
       drft.push(fldKey)
     }
   })
-  bitStore.set($deletedFldKey, newDeletedFldKey)
+  setAtom($deletedFldKey, newDeletedFldKey)
   sessionStorage.setItem('btcd-lc', '-')
 
   const fldType = fldData?.typ
@@ -357,7 +367,7 @@ export const removeLayoutItem = (fldKey, layouts) => {
       delete draftStaticStyleState.staticStyles['.form-loading::after']
       if (fldType === 'razorpay') delete draftStaticStyleState.staticStyles['.razorpay-checkout-frame']
     })
-    bitStore.set($staticStylesState, newStaticStyleState)
+    setAtom($staticStylesState, newStaticStyleState)
   }
 
   // add to history

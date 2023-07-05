@@ -105,7 +105,7 @@ function Rapidmail({ formFields, setIntegration, integrations, allIntegURL }) {
         </button> */}
 
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={!rapidmailConf?.recipient_id}
         />
       </div>

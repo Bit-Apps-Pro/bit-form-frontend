@@ -85,6 +85,7 @@ function submitResponse(resp, contentId, formData) {
       let responsedRedirectPage = null
       let hitCron = null
       let newNonce = ''
+      const props = window.bf_globals[contentId]
       if (result !== undefined && result.success) {
         const form = bfSelect(`#form-${contentId}`)
         bfReset(contentId)
@@ -122,6 +123,7 @@ function submitResponse(resp, contentId, formData) {
             error: false,
           })
         }
+        localStorage.removeItem(`bitform-partial-form-${props.formId}`)
       } else {
         const errorEvent = new CustomEvent('bf-form-submit-error', {
           detail: { formId: contentId, errors: result.data },
@@ -187,20 +189,25 @@ function disabledSubmitButton(contentId, disabled) {
   if (spanner) spanner.classList.toggle('d-none')
 }
 
-document.querySelectorAll('form').forEach((frm) => {
-  if (frm.id?.startsWith('form-bitforms')) {
-    frm.addEventListener('submit', (e) => bitFormSubmitAction(e))
-    bfSelect('button[type="reset"]', frm)
-      ?.addEventListener('click', (e) => bfReset(frm.id.replace('form-', ''), true))
-  }
-})
-
-document.querySelectorAll('.msg-backdrop,.bf-msg-close').forEach((elm) => {
-  elm.addEventListener('click', e => {
-    if (e.target === elm) {
-      e.stopPropagation()
-      bfSelect(`#${elm.dataset.contentid} .msg-container-${elm.dataset.msgid}`).classList.replace('active', 'deactive')
+export default function addSubmitEventToForms(formContentId = null) {
+  const formIds = formContentId ? [formContentId] : Object.keys(window.bf_globals)
+  formIds.forEach((contentId) => {
+    const frm = bfSelect(`#form-${contentId}`)
+    if (frm) {
+      frm.addEventListener('submit', (e) => { bitFormSubmitAction(e) })
+      bfSelect('button[type="reset"]', frm)
+        ?.addEventListener('click', () => bfReset(frm.id.replace('form-', ''), true))
     }
   })
-})
-localStorage.setItem('bf-entry-id', '')
+
+  document.querySelectorAll('.msg-backdrop,.bf-msg-close').forEach((elm) => {
+    elm.addEventListener('click', e => {
+      if (e.target === elm) {
+        e.stopPropagation()
+        bfSelect(`#${elm.dataset.contentid} .msg-container-${elm.dataset.msgid}`).classList.replace('active', 'deactive')
+      }
+    })
+  })
+
+  localStorage.setItem('bf-entry-id', '')
+}

@@ -1,6 +1,8 @@
 function dispatchFieldError(fldErrors, contentId) {
   Object.keys(fldErrors).forEach((fk) => {
-    const errWrp = bfSelect(`#form-${contentId} .${fk}-err-wrp`)
+    const rowIndex = fk.match(/\[(\d+)\]/)?.[1]
+    const rptIndexClass = rowIndex ? ` .rpt-index-${rowIndex}` : ''
+    const errWrp = bfSelect(`#form-${contentId}${rptIndexClass} .${fk}-err-wrp`)
     const errTxt = bfSelect(`.${fk}-err-txt`, errWrp)
     bfSelect(`.${fk}-err-msg`, errWrp).style.removeProperty('display')
     errTxt.innerHTML = fldErrors[fk]

@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { useAtomValue } from 'jotai'
-import { $bits } from '../../GlobalStates/GlobalStates'
-import bitsFetch from '../../Utils/bitsFetch'
+import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import useSWROnce from '../../hooks/useSWROnce'
 import ProOverlay from '../CompSettings/StyleCustomize/ChildComp/ProOverlay'
 import CptTypeAdd from './CptTypeAdd'
 import EditCpt from './EditCpt'
@@ -11,22 +10,19 @@ import EditCpt from './EditCpt'
 export default function Cpt() {
   const [posts, setPosts] = useState([])
   const [types, setTypes] = useState([])
-  const bits = useAtomValue($bits)
-  const { isPro } = bits
 
-  useEffect(() => {
-    bitsFetch({}, 'bitforms_getAll_post_type').then((res) => {
-      if (res?.success) {
-        setPosts(res.data.all_cpt)
-        setTypes(res.data.types)
-      }
-    })
-  }, [])
+  useSWROnce('bitforms_getAll_post_type', {}, {
+    fetchCondition: IS_PRO,
+    onSuccess: data => {
+      setPosts(data.all_cpt)
+      setTypes(data.types)
+    },
+  })
 
   return (
     <div className="p-2 w-6">
       <div className="pos-rel">
-        {!isPro && (
+        {!IS_PRO && (
           <ProOverlay />
         )}
         <Tabs

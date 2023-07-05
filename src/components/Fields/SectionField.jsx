@@ -49,6 +49,7 @@ function SectionField({
   const breakpoint = useAtomValue($breakpoint)
   const builderHookStates = useAtomValue($builderHookStates)
   const setIsDraggable = useSetAtom($isDraggable)
+  const draggingField = useAtomValue($draggingField)
   const { recalculateNestedField } = builderHookStates
   const { fieldKey: changedFieldKey, parentFieldKey, counter: fieldChangeCounter } = recalculateNestedField
   const navigate = useNavigate()
@@ -74,8 +75,6 @@ function SectionField({
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
   }
-
-  const draggingField = useAtomValue($draggingField)
 
   const onDrop = (e, dropPosition) => {
     const dragFieldData = handleFieldExtraAttr(draggingField.fieldData, 'section')
@@ -275,7 +274,7 @@ function SectionField({
                 layout={gridNestedLayouts[breakpoint]}
                 // onBreakpointChange={onBreakpointChange}
                 onDragStart={setResizingFldKey}
-                // onDrag={setResizingWX}
+                onDrag={setResizingWX}
                 onDragStop={() => {
                   startTransition(() => {
                     setIsDraggable(true)
@@ -307,12 +306,9 @@ function SectionField({
                           layoutItem,
                           removeLayoutItem: removeNestedLayoutItem,
                           cloneLayoutItem: cloneNestedLayoutItem,
-                          fields,
-                          formID,
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
-                          resizingFld,
                         }}
                       />
                     </Suspense>
@@ -338,12 +334,9 @@ function SectionField({
                           layoutItem,
                           removeLayoutItem: removeNestedLayoutItem,
                           cloneLayoutItem: cloneNestedLayoutItem,
-                          fields,
-                          formID,
                           navigateToFieldSettings,
                           navigateToStyle,
                           handleContextMenu,
-                          resizingFld,
                         }}
                       />
                     </Suspense>

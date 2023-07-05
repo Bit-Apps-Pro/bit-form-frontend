@@ -1,20 +1,20 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
-import { generateStylesWithImportantRule, mergeOtherStylesWithAtomicCSS, removeUnusedStyles } from '../components/style-new/styleHelpers'
+import { getAtom } from '../GlobalStates/BitStore'
 import { $breakpointSize, $builderHelperStates, $builderSettings, $fields, $formId, $nestedLayouts, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import { generateStylesWithImportantRule, mergeOtherStylesWithAtomicCSS, removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { getLayoutDiff, prepareLayout } from './FormBuilderHelper'
-import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 import { omitByObj } from './Helpers'
-import bitStore from '../GlobalStates/BitStore'
+import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
 
 export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = '' }) {
-  const { atomicClassPrefix, darkModeConfig } = bitStore.get($builderSettings)
-  const { styleMergeWithAtomicClasses } = bitStore.get($staticStylesState)
-  const nestedLayouts = bitStore.get($nestedLayouts)
+  const { atomicClassPrefix, darkModeConfig } = getAtom($builderSettings)
+  const { styleMergeWithAtomicClasses } = getAtom($staticStylesState)
+  const nestedLayouts = getAtom($nestedLayouts)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
   const ignoreWithFallbackValues = {
@@ -55,14 +55,14 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     invalidPropValue,
   }
 
-  const formId = bitStore.get($formId)
+  const formId = getAtom($formId)
 
   let atomicClassStart = 'A'
 
   // const layoutRowHeight = 2
 
-  const themeColorsLight = bitStore.get($lightThemeColors)
-  const themeColorsDark = bitStore.get($darkThemeColors)
+  const themeColorsLight = getAtom($lightThemeColors)
+  const themeColorsDark = getAtom($darkThemeColors)
 
   let { lgLightStyles: stylesLgLight,
     lgDarkStyles: stylesLgDark, // eslint-disable-line prefer-const
@@ -76,15 +76,15 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
   stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
 
-  const themeVarsLgLight = bitStore.get($themeVarsLgLight)
-  const themeVarsMdLight = bitStore.get($themeVarsMdLight)
-  const themeVarsSmLight = bitStore.get($themeVarsSmLight)
+  const themeVarsLgLight = getAtom($themeVarsLgLight)
+  const themeVarsMdLight = getAtom($themeVarsMdLight)
+  const themeVarsSmLight = getAtom($themeVarsSmLight)
 
-  const themeVarsLgDark = bitStore.get($themeVarsLgDark)
-  const themeVarsMdDark = bitStore.get($themeVarsMdDark)
-  const themeVarsSmDark = bitStore.get($themeVarsSmDark)
+  const themeVarsLgDark = getAtom($themeVarsLgDark)
+  const themeVarsMdDark = getAtom($themeVarsMdDark)
+  const themeVarsSmDark = getAtom($themeVarsSmDark)
 
-  const { md: mdBreakpointSize, sm: smBreakpointSize } = bitStore.get($breakpointSize)
+  const { md: mdBreakpointSize, sm: smBreakpointSize } = getAtom($breakpointSize)
 
   // difference between main themecolor, themevar, style object and dark mode and mobo device breakpoint changes
   const lightThemeColors = themeColorsLight
@@ -262,8 +262,8 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
 }
 
 function generateNestedLayoutCSSText() {
-  const nestedLayouts = bitStore.get($nestedLayouts)
-  const builderHelperStates = bitStore.get($builderHelperStates)
+  const nestedLayouts = getAtom($nestedLayouts)
+  const builderHelperStates = getAtom($builderHelperStates)
   const nestedLayoutStyleText = { lg: '', md: '', sm: '' }
   const nestedLayoutsArr = Object.entries(nestedLayouts)
   const sortedNestedLayouts = {}
@@ -308,7 +308,7 @@ function flatenStyleObj(styleObj) {
 }
 
 function getConfirmationMsgStyles(styleObj) {
-  const workflows = bitStore.get($workflows)
+  const workflows = getAtom($workflows)
   const tempStyleObj = {}
   let msgStyles = {}
   styleObj?.confirmations?.forEach(cmfObj => {
@@ -403,7 +403,7 @@ function addPrefixInObjectKeys(obj, prefix) {
 }
 
 export function generateLayoutStyle(layouts) {
-  const fields = bitStore.get($fields)
+  const fields = getAtom($fields)
   let lgLayoutStyleText = ''
   let mdLayoutStyleText = ''
   let smLayoutStyleText = ''

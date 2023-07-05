@@ -17,7 +17,7 @@ export const $builderHookStates = atomWithReset({
   forceBuilderWidthToLG: 0,
   forceBuilderWidthToBrkPnt: 0,
   reCalculateSpecificFldHeight: { fieldKey: '', counter: 0 },
-  recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 }
+  recalculateNestedField: { fieldKey: '', parentFieldKey: '', counter: 0 },
 })
 export const $builderRightPanelScroll = atomWithReset(false)
 export const $builderSettings = atomWithReset({ atomicClassPrefix: '', darkModeConfig: { darkModeSelector: '', preferSystemColorScheme: false }, addImportantRuleToStyles: false })
@@ -37,6 +37,7 @@ export const $integrations = atomWithReset([])
 export const $isNewThemeStyleLoaded = atomWithReset(false)
 export const $layouts = atomWithReset({ lg: [], md: [], sm: [] })
 export const $mailTemplates = atomWithReset([])
+export const $pdfTemplates = atomWithReset([])
 export const $reports = atomWithReset([])
 export const $reportId = atomWithReset({})
 export const $selectedFieldId = atomWithReset(null)
@@ -50,6 +51,7 @@ export const $contextMenuRef = atomWithReset({})
 export const $proModal = atomWithReset({ show: false })
 export const $alertModal = atomWithReset({ show: false, msg: '' })
 export const $nestedLayouts = atomWithReset({})
+export const $formAbandonment = atomWithReset({})
 
 // selectors
 export const $fieldsArr = atom((get) => makeFieldsArrByLabel(get($fields), get($fieldLabels), []))

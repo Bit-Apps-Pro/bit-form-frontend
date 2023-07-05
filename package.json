@@ -38,7 +38,10 @@
     "bit-recaptcha-field": "workspace:*",
     "bit-select-field": "workspace:*",
     "bit-stripe-field": "workspace:*",
+    "bit-repeater-field": "workspace:*",
     "bit-virtualized-list": "workspace:*",
+    "bit-form-abandonment": "workspace:*",
+    "bit-page-lifecycle": "workspace:*",
     "create-file-list": "^1.1.0",
     "date-fns": "^2.30.0",
     "deep-object-diff": "^1.1.9",
@@ -84,6 +87,7 @@
     "react-tiny-virtual-list": "^2.2.0",
     "react-transition-group": "^4.4.5",
     "sortablejs": "^1.15.0",
+    "swr": "^2.1.5",
     "tippy.js": "^6.3.7"
   },
   "scripts": {
@@ -115,8 +119,9 @@
     "hot": "vite --force",
     "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
     "build-bit-stripe": "cd ./packages/bit-stripe-field && pnpm run build && cp -r ./dist/* ../../../assets",
+    "build-bit-repeater": "cd ./packages/bit-repeater-field && pnpm run build && cp -r ./dist/* ../../../assets",
     "build-bit-frontend": "cd ./packages/bit-frontend && pnpm run build && cp -r ./dist/* ../../../assets",
-    "build-bit-helper": "cd ./packages/bit-helpers && pnpm run build && cp -r ./dist/* ../../../assets"
+    "build-bit-form-abandonment": "cd ./packages/bit-form-abandonment && pnpm run build && cp -r ./dist/* ../../../assets"
   },
   "husky": {
     "hooks": {
@@ -155,6 +160,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/react": "^18.0.14",
     "@vitejs/plugin-react": "4.0.0",
     "@wordpress/babel-plugin-makepot": "^5.16.0",
     "@wordpress/i18n": "4.32.0",

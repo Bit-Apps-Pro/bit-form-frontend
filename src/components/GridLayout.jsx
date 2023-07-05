@@ -3,7 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-param-reassign */
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { create, rawReturn } from 'mutative'
+import { create } from 'mutative'
 import {
   Suspense,
   lazy, memo,
@@ -26,6 +26,7 @@ import {
   $flags,
   $isNewThemeStyleLoaded,
   $layouts, $nestedLayouts, $proModal,
+  $resizingFld,
   $selectedFieldId,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -52,7 +53,7 @@ import paymentFields from '../Utils/StaticData/paymentFields'
 import proHelperData from '../Utils/StaticData/proHelperData'
 import { selectInGrid } from '../Utils/globalHelpers'
 import { compactResponsiveLayouts, getLayoutItemCount } from '../Utils/gridLayoutHelper'
-import { addNewFieldToGridLayout, generateFieldLblForHistory, generateNewFldName, getInitHeightsForResizingTextarea } from '../Utils/gridLayoutHelpers'
+import { addNewFieldToGridLayout, generateFieldLblForHistory, generateNewFldName, getInitHeightsForResizingTextarea, setResizingWX } from '../Utils/gridLayoutHelpers'
 import { __ } from '../Utils/i18nwrap'
 import '../resource/css/grid-layout.css'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
@@ -84,7 +85,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
   const setStaticStyleState = useSetAtom($staticStylesState)
   const [gridContentMargin, setgridContentMargin] = useState([0, 0])
-  const [resizingFld, setResizingFld] = useState({})
+  const [resizingFld, setResizingFld] = useAtom($resizingFld)
   const [rowHeight, setRowHeight] = useState(1)
   const isDraggableAtomVal = useAtomValue($isDraggable)
   const isDraggable = useDeferredValue(isDraggableAtomVal)
@@ -609,24 +610,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     }, 700)
   }
 
-  const setResizingWX = (lays, lay) => {
-    startTransition(() => {
-      setResizingFld(prevState => create(prevState, draftState => {
-        if (draftState.fieldKey) {
-          const layout = lays.find(l => l.i === draftState.fieldKey)
-          draftState.w = layout.w
-          draftState.x = layout.x
-          return draftState
-        }
-        const fldKey = lay.i
-        const resizingData = { fieldKey: fldKey, ...getInitHeightsForResizingTextarea(fldKey) }
-        resizingData.w = lay.w
-        resizingData.x = lay.x
-        return rawReturn(resizingData)
-      }))
-    })
-  }
-
   const setRegenarateLayFlag = () => {
     sessionStorage.setItem('btcd-lc', '-')
     setResizingFalse()
@@ -661,7 +644,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   compactType="vertical"
                   useCSSTransforms
                   isDroppable={draggingField !== null && breakpoint === 'lg'}
-                  // isDroppable={false}
                   className="layout"
                   style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
                   onDrop={onDrop}
@@ -702,12 +684,9 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                             layoutItem,
                             removeLayoutItem,
                             cloneLayoutItem,
-                            fields,
-                            formID,
                             navigateToFieldSettings,
                             navigateToStyle,
                             handleContextMenu,
-                            resizingFld,
                           }}
                         />
                       </Suspense>
@@ -733,11 +712,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                             layoutItem,
                             removeLayoutItem,
                             cloneLayoutItem,
-                            fields,
-                            formID,
                             navigateToFieldSettings,
                             navigateToStyle,
-                            resizingFld,
                           }}
                         />
                       </Suspense>

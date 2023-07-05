@@ -7,6 +7,7 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
 import SectionFieldSettings from './SectionFieldSettings'
+import RepeaterFieldSettings from './RepeaterFieldSettings'
 
 const AdvanceFileUpSettings = loadable(() => import('./AdvanceFileUpSettings'), { fallback: <FieldSettingsLoader /> })
 const ButtonSettings = loadable(() => import('./ButtonSettings'), { fallback: <FieldSettingsLoader /> })
@@ -79,6 +80,7 @@ export default function FieldSettings() {
     case 'country': return <CountryFieldSettings />
     case 'phone-number': return <PhoneNumberFieldSettings />
     case 'section': return <SectionFieldSettings />
+    case 'repeater': return <RepeaterFieldSettings />
 
     default: return <>No field found with this key.</>
   }

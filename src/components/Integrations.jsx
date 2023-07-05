@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom'
 import { useAtom, useAtomValue } from 'jotai'
-import { $bits, $integrations } from '../GlobalStates/GlobalStates'
+import { $bits, $formId, $integrations } from '../GlobalStates/GlobalStates'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
 import PlusIcn from '../Icons/PlusIcn'
@@ -72,7 +72,8 @@ function Integrations() {
   const [showMdl, setShowMdl] = useState(false)
   const [confMdl, setconfMdl] = useState({ show: false })
   const [snack, setSnackbar] = useState({ show: false })
-  const { formType, formID } = useParams()
+  const { formType } = useParams()
+  const formID = useAtomValue($formId)
   const navigate = useNavigate()
   const bits = useAtomValue($bits)
   const { isPro, proInfo } = bits

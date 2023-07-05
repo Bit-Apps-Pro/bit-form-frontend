@@ -47,7 +47,7 @@ export default function TinyMCE({
       tinymce.init({
         selector: `textarea#${id}-settings`,
         menubar,
-        height: height || 260,
+        min_height: height || 260,
         width: width || '100%',
         branding: false,
         resize: 'verticle',
@@ -67,7 +67,7 @@ export default function TinyMCE({
             tooltip: 'Add Form Field Value in Message',
             type: 'menubutton',
             icon: false,
-            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha|section|divider|image)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
           })
           SmartTagField && editor.addButton('addSmartField', {
             text: 'Smart Tag Fields',

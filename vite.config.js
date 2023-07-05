@@ -275,11 +275,15 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/bitsFetchFront.min.js'),
+        src: absPath('packages/bit-frontend/dist/bitform-elementor.min.js'),
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
+        src: absPath('packages/bit-frontend/dist/bitform-init.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-frontend/dist/bitsFetchFront.min.js'),
         dest: absPath('../assets'),
       },
       {
@@ -299,11 +303,47 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
-        src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
+        src: absPath('packages/bit-frontend/dist/bitform-init.min.js'),
         dest: absPath('../assets'),
       },
       {
         src: absPath('packages/bit-stripe-field/dist/bit-stripe-field.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-repeater-field/dist/bit-repeater-field.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-repeater-field/dist/checkRepeatedField.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-repeater-field/dist/getRepeatedIndexes.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-repeater-field/dist/getIndexesBaseOnConditions.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/bit-form-abandonment.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/saveFormProgress.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/setFieldValues.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-form-abandonment/dist/autoSavePartial.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
+        src: absPath('packages/bit-page-lifecycle/dist/bit-page-lifecycle.min.js'),
         dest: absPath('../assets'),
       },
     ],

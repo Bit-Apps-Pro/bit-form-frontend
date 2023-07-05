@@ -110,7 +110,7 @@ export default function GetgistAuthorization({ getgistConf, setGetgistConf, step
           />
           <br />
           <NextBtn
-            nextPageHanlder={() => nextPage(2)}
+            nextPageHandler={() => nextPage(2)}
             disabled={!isAuthorized}
           />
         </>

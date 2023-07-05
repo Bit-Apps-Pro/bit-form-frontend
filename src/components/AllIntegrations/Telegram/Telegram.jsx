@@ -79,7 +79,7 @@ export default function Telegram({ formFields, setIntegration, integrations, all
           <BackIcn className="ml-1 rev-icn" />
         </button> */}
         <NextBtn
-          nextPageHanlder={() => nextPage(3)}
+          nextPageHandler={() => nextPage(3)}
           disabled={telegramConf.chat_id === ''}
         />
       </div>

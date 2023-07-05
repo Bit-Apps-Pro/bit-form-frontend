@@ -23,6 +23,7 @@ export default function RedirectEmailVerified({
       const tmp = type ? draft[type] : draft
       tmp[name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const tinymceHandle = (val, name) => {
@@ -31,6 +32,7 @@ export default function RedirectEmailVerified({
       const tmp = type ? draft[type] : draft
       tmp[name] = val
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   useEffect(() => {

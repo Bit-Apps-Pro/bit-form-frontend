@@ -2432,5 +2432,86 @@ const editorConfig = {
       },
     },
   },
+  repeater: {
+    ...textFldCssProps,
+    'inp-fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'rpt-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'rpt-grid-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'pair-btn-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+        'text-decoration': {
+          'text-decoration-line': true,
+          'text-decoration-style': true,
+          'text-decoration-color': true,
+          'text-decoration-thickness': true,
+        },
+      },
+    },
+    'rpt-add-btn': {
+      states: ['hover', 'focus'],
+      properties: { ...buttonCssProps },
+    },
+    'rpt-add-btn-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'rpt-add-btn-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'rpt-rmv-btn': {
+      states: ['hover', 'focus'],
+      properties: { ...buttonCssProps },
+    },
+    'rpt-rmv-btn-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'rpt-rmv-btn-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'add-to-end-btn': {
+      states: ['hover', 'focus'],
+      properties: { ...buttonCssProps },
+    },
+    'add-to-end-btn-pre-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'add-to-end-btn-suf-i': {
+      states: ['hover'],
+      properties: { ...iconCssProps },
+    },
+    'add-to-end-btn-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+        'text-decoration': {
+          'text-decoration-line': true,
+          'text-decoration-style': true,
+          'text-decoration-color': true,
+          'text-decoration-thickness': true,
+        },
+      },
+    },
+  },
 }
 export default editorConfig

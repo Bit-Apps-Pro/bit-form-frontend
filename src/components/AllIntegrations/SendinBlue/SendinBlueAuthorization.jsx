@@ -122,7 +122,7 @@ export default function SendinBlueAuthorization({ sendinBlueConf, setSendinBlueC
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage(2)}
+              nextPageHandler={() => nextPage(2)}
               disabled={!isAuthorized}
             />
           </>

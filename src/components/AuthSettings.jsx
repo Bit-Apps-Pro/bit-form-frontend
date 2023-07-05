@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
+import { useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'jotai'
-import { $bits, $fieldsArr } from '../GlobalStates/GlobalStates'
-import app from '../styles/app.style'
-import bitsFetch from '../Utils/bitsFetch'
+import { $fieldsArr, $formId, $updateBtn } from '../GlobalStates/GlobalStates'
 import { IS_PRO } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
 import { activationTamplate, fogotPassTamplate } from '../Utils/StaticData/tamplate'
+import bitsFetch from '../Utils/bitsFetch'
+import { __ } from '../Utils/i18nwrap'
+import useSWROnce from '../hooks/useSWROnce'
+import app from '../styles/app.style'
 import Loader from './Loaders/Loader'
 import LoaderSm from './Loaders/LoaderSm'
 import CheckBox from './Utilities/CheckBox'
@@ -22,14 +22,11 @@ import Register from './WPAuth/Registration/Registration'
 import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import ResetPassword from './WPAuth/ResetPassword'
 
-export default function AdditionalSettings() {
-  const bits = useAtomValue($bits)
-  const { isPro } = bits
+export default function AuthSettings() {
   const [isLoading, setIsLoading] = useState(false)
-  const [isLoad, setIsLoad] = useState(false)
   const formFields = useAtomValue($fieldsArr)
   const [type, setType] = useState('register')
-  const { formID } = useParams()
+  const formID = useAtomValue($formId)
   const { css } = useFela()
 
   const [dataConf, setDataConf] = useState({
@@ -62,25 +59,19 @@ export default function AdditionalSettings() {
   const [pages, setPages] = useState([])
   const [status, setStatus] = useState(0)
   const [snack, setSnackbar] = useState({ show: false })
+  const setUpdateBtn = useSetAtom($updateBtn)
 
-  useEffect(() => {
-    setIsLoad(true)
-    bitsFetch({ formID }, 'bitforms_get_auth_set').then((res) => {
-      const tmpConf = { ...dataConf }
-      if (res?.success && !res?.data?.errors) {
-        tmpConf[res.data[0]?.integration_name] = JSON.parse(res.data[0]?.integration_details)
-        setDataConf(tmpConf)
-        setType(res.data[0]?.integration_name)
-        setStatus(Number(res.data[0]?.status))
-      }
-      setIsLoad(false)
-    })
-    bitsFetch({}, 'bitforms_get_all_wp_pages').then((res) => {
-      if (res !== undefined && res.success) {
-        setPages(res?.data)
-      }
-    })
-  }, [])
+  const { isLoading: isLoad, mutate: mutateAuthSettings } = useSWROnce('bitforms_get_auth_set', { formID }, {
+    fetchCondition: IS_PRO,
+    onSuccess: data => {
+      setDataConf(oldConf => create(oldConf, draft => {
+        draft[data[0]?.integration_name] = JSON.parse(data[0]?.integration_details)
+      }))
+      setType(data[0]?.integration_name)
+      setStatus(Number(data[0]?.status))
+    },
+  })
+  useSWROnce('bitforms_get_all_wp_pages', {}, { fetchCondition: IS_PRO, onSuccess: data => setPages(data) })
 
   const handleInput = e => {
     if (!IS_PRO) return
@@ -89,6 +80,7 @@ export default function AdditionalSettings() {
     const tmpData = { ...dataConf }
     tmpData[name] = value
     setDataConf(tmpData)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const handleStatus = (e) => {
@@ -145,6 +137,7 @@ export default function AdditionalSettings() {
     )
       .then((res) => {
         if (res !== undefined && res.success) {
+          mutateAuthSettings(tmpConf)
           setIsLoading(false)
         }
       })
@@ -209,7 +202,7 @@ export default function AdditionalSettings() {
     <div className="pos-rel">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <h2 className="">{__('WP Authentication')}</h2>
-      {!isPro && (
+      {!IS_PRO && (
         <div className="pro-blur flx" style={{ height: '111%', left: -53, width: '104%' }}>
           <div className="pro">
             {__('Available On')}

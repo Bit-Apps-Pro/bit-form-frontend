@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-unused-expressions */
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { useResetAtom} from 'jotai/utils'
 import {
   $additionalSettings,
   $breakpointSize,
@@ -20,15 +20,17 @@ import {
   $fieldLabels,
   $fields,
   $flags,
+  $formAbandonment,
   $formInfo,
   $forms,
   $integrations,
   $layouts,
   $mailTemplates,
   $newFormId,
+  $pdfTemplates,
   $reportId,
-  $reports,
   $reportSelector,
+  $reports,
   $selectedFieldId,
   $updateBtn,
   $workflows,
@@ -37,17 +39,16 @@ import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
-import navbar from '../styles/navbar.style'
-import atomicStyleGenarate from '../Utils/atomicStyleGenarate'
-import bitsFetch from '../Utils/bitsFetch'
-import { getCurrentFormUrl, prepareLayout, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
-import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
-import { bitCipher, bitDecipher, generateAndSaveAtomicCss, isObjectEmpty } from '../Utils/Helpers'
-import { __ } from '../Utils/i18nwrap'
+import { getCurrentFormUrl, reCalculateFldHeights } from '../Utils/FormBuilderHelper'
+import { bitDecipher, generateAndSaveAtomicCss, isObjectEmpty } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
+import paymentFields from '../Utils/StaticData/paymentFields'
+import bitsFetch from '../Utils/bitsFetch'
+import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
+import { __ } from '../Utils/i18nwrap'
+import navbar from '../styles/navbar.style'
 import LoaderSm from './Loaders/LoaderSm'
 import { removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
-import paymentFields from '../Utils/StaticData/paymentFields'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
@@ -71,6 +72,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const currentReport = useAtomValue($reportSelector)
   const [reportId, setReportId] = useAtom($reportId)
   const [mailTem, setMailTem] = useAtom($mailTemplates)
+  const [pdfTem, setPdfTem] = useAtom($pdfTemplates)
   const [updateBtn, setUpdateBtn] = useAtom($updateBtn)
   const [workFlows, setworkFlows] = useAtom($workflows)
   const [integrations, setIntegration] = useAtom($integrations)
@@ -86,6 +88,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const breakpointSize = useAtomValue($breakpointSize)
   const customCodes = useAtomValue($customCodes)
   const flags = useAtomValue($flags)
+  const formAbandonment = useAtomValue($formAbandonment)
 
   useEffect(() => {
     if (integrations[integrations.length - 1]?.newItegration || integrations[integrations.length - 1]?.editItegration) {
@@ -106,6 +109,17 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mailTem])
+
+  useEffect(() => {
+    if (pdfTem[pdfTem.length - 1]?.updateTem) {
+      const newTem = create(pdfTem, draft => {
+        draft.pop()
+      })
+      setPdfTem(newTem)
+      saveForm('pdf-template', newTem)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pdfTem])
 
   const updateBtnEvent = e => {
     if ((e.key === 's' || e.key === 'S') && e.ctrlKey) {
@@ -185,10 +199,14 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
     if (savedFormId) setbuttonDisabled(true)
 
     let mailTemplates = mailTem
+    let pdfTemplates = pdfTem
     let additionalSettings = additional
     let allIntegrations = integrations
+
     if (type === 'email-template') {
       mailTemplates = updatedData
+    } else if (type === 'pdf-template') {
+      pdfTemplates = updatedData
     } else if (type === 'additional') {
       additionalSettings = updatedData
     } else if (type === 'integrations') {
@@ -295,7 +313,9 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         formName,
         confirmation: confirmations,
         mailTem: mailTemplates,
+        pdfTem: pdfTemplates,
         integrations: allIntegrations,
+        ...(!isObjectEmpty(formAbandonment) && { formAbandonment }),
       },
       builderSettings,
     }
@@ -303,7 +323,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       formData.deletedFldKey = deletedFldKey
     }
     const action = savedFormId ? 'bitforms_update_form' : 'bitforms_create_new_form'
-
     const formSavePromise = bitsFetch(formData, action)
       .then(response => {
         if (response?.success && componentMounted) {
@@ -315,6 +334,8 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
           data?.workFlows && setworkFlows(data.workFlows)
           data?.formSettings?.integrations && setIntegration(data.formSettings.integrations)
           data?.formSettings?.mailTem && setMailTem(data.formSettings.mailTem)
+
+          data?.formSettings?.pdfTem && setPdfTem(data.formSettings.pdfTem)
           data?.additional && setAdditional(data.additional)
           data?.Labels && setFieldLabels(data.Labels)
           data?.reports && setReports(data?.reports || [])

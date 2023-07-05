@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const allContentids = window.bf_globals
+const addEventsToValidateFocusAndWorkflows = (formContentId = null) => {
+  const allContentids = formContentId ? { [formContentId]: window.bf_globals[formContentId] } : window.bf_globals
   if (allContentids) {
     Object.keys(allContentids).forEach((contentId) => {
       const props = window.bf_globals[contentId]
@@ -24,4 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
   }
-})
+}
+
+export default addEventsToValidateFocusAndWorkflows

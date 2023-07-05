@@ -23,6 +23,7 @@ export default function EmailNotification({
       const tmp = type ? draft[type] : draft
       tmp.body = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
   const cancelModal = () => {
     setTimeout(() => {
@@ -44,6 +45,7 @@ export default function EmailNotification({
       // eslint-disable-next-line no-param-reassign
       tmp[name] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (

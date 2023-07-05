@@ -115,7 +115,7 @@ export default function MailChimpAuthorization({
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
           </>

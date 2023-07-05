@@ -1,10 +1,12 @@
 /* eslint-disable no-nested-ternary */
 
-import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
-import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
-import bitStore from '../GlobalStates/BitStore'
+import { mutate } from 'swr'
+import { getAtom, setAtom } from '../GlobalStates/BitStore'
 import {
-  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId, $reports, $reportSelector, $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
+  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formAbandonment, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId,
+  $reportSelector,
+  $reports,
+  $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
 } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import {
@@ -12,9 +14,11 @@ import {
 } from '../GlobalStates/StylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
+import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
+import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
 import atomicStyleGenarate from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
-import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
 import { JCOF } from './globalHelpers'
 
 /* eslint-disable no-param-reassign */
@@ -574,6 +578,7 @@ export const getStatesToReset = () => [
   $unsplashMdl,
   $unsplashImgUrl,
   $workflows,
+  $formAbandonment,
 
   $lightThemeColors,
   $darkThemeColors,
@@ -614,43 +619,28 @@ export const setFormReponseDataToStates = (responseData) => {
   const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
   const formsSessionDataFound = false
   if (!formsSessionDataFound) {
-    // setLayouts(responseData.form_content.layout)
-    bitStore.set($layouts, responseData.form_content.layout)
+    setAtom($layouts, responseData.form_content.layout)
     addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
   }
   if (!formsSessionDataFound) {
-    // setFields(responseData.form_content.fields)
-    bitStore.set($fields, responseData.form_content.fields)
+    setAtom($fields, responseData.form_content.fields)
     addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
   }
   if (!formsSessionDataFound) {
-    // setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
-    bitStore.set($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+    setAtom($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
   }
-  // setworkFlows(responseData.workFlows)
-  bitStore.set($workflows, responseData.workFlows)
-  // setAdditional(responseData.additional)
-  bitStore.set($additionalSettings, responseData.additional)
-  // setIntegration(responseData.formSettings.integrations)
-  bitStore.set($integrations, responseData.formSettings.integrations)
-  // setConfirmations(responseData.formSettings.confirmation)
-  bitStore.set($confirmations, responseData.formSettings.confirmation)
-  // setMailTem(responseData.formSettings.mailTem)
-  bitStore.set($mailTemplates, responseData.formSettings.mailTem)
-  // if (!formsSessionDataFound && responseData.builderSettings) setBuilderSettings(responseData.builderSettings)
-  if (!formsSessionDataFound && responseData.builderSettings) bitStore.set($builderSettings, responseData.builderSettings)
-  // setReportId({
-  //   id: responseData?.form_content?.report_id || defaultReport?.id,
-  //   isDefault: responseData?.form_content?.report_id === null,
-  // })
-  bitStore.set($reportId, {
+  setAtom($workflows, responseData.workFlows)
+  setAtom($additionalSettings, responseData.additional)
+  setAtom($integrations, responseData.formSettings.integrations)
+  setAtom($confirmations, responseData.formSettings.confirmation)
+  setAtom($mailTemplates, responseData.formSettings.mailTem)
+  if (!formsSessionDataFound && responseData.builderSettings) setAtom($builderSettings, responseData.builderSettings)
+  setAtom($reportId, {
     id: responseData?.form_content?.report_id || defaultReport?.id,
     isDefault: responseData?.form_content?.report_id === null,
   })
-  // setFieldLabels(responseData.Labels)
-  bitStore.set($fieldLabels, responseData.Labels)
-  // setReports(responseData.reports || [])
-  bitStore.set($reports, responseData.reports || [])
+  setAtom($fieldLabels, responseData.Labels)
+  setAtom($reports, responseData.reports || [])
 }
 
 export const getConfirmationStyle = (formData) => {
@@ -669,28 +659,28 @@ export const getConfirmationStyle = (formData) => {
 }
 
 export const setStyleRelatedStates = ({ themeVars, themeColors, styles }) => {
-  bitStore.set($themeVarsLgLight, themeVars.lgLightThemeVars)
-  bitStore.set($themeVarsLgDark, themeVars.lgDarkThemeVars)
-  bitStore.set($themeVarsMdLight, themeVars.mdLightThemeVars)
-  bitStore.set($themeVarsMdDark, themeVars.mdDarkThemeVars)
-  bitStore.set($themeVarsSmLight, themeVars.smLightThemeVars)
-  bitStore.set($themeVarsSmDark, themeVars.smDarkThemeVars)
+  setAtom($themeVarsLgLight, themeVars.lgLightThemeVars)
+  setAtom($themeVarsLgDark, themeVars.lgDarkThemeVars)
+  setAtom($themeVarsMdLight, themeVars.mdLightThemeVars)
+  setAtom($themeVarsMdDark, themeVars.mdDarkThemeVars)
+  setAtom($themeVarsSmLight, themeVars.smLightThemeVars)
+  setAtom($themeVarsSmDark, themeVars.smDarkThemeVars)
 
-  bitStore.set($lightThemeColors, themeColors.lightThemeColors)
-  bitStore.set($darkThemeColors, themeColors.darkThemeColors)
+  setAtom($lightThemeColors, themeColors.lightThemeColors)
+  setAtom($darkThemeColors, themeColors.darkThemeColors)
 
-  bitStore.set($stylesLgLight, styles.lgLightStyles)
-  bitStore.set($stylesLgDark, styles.lgDarkStyles)
-  bitStore.set($stylesMdLight, styles.mdLightStyles)
-  bitStore.set($stylesMdDark, styles.mdDarkStyles)
-  bitStore.set($stylesSmLight, styles.smLightStyles)
-  bitStore.set($stylesSmDark, styles.smDarkStyles)
+  setAtom($stylesLgLight, styles.lgLightStyles)
+  setAtom($stylesLgDark, styles.lgDarkStyles)
+  setAtom($stylesMdLight, styles.mdLightStyles)
+  setAtom($stylesMdDark, styles.mdDarkStyles)
+  setAtom($stylesSmLight, styles.smLightStyles)
+  setAtom($stylesSmDark, styles.smDarkStyles)
 }
 
 export const generateAndSaveAtomicCss = currentFormId => {
-  const styles = bitStore.get($styles)
-  const lay = bitStore.get($layouts)
-  const builderHelperStates = bitStore.get($builderHelperStates)
+  const styles = getAtom($styles)
+  const lay = getAtom($layouts)
+  const builderHelperStates = getAtom($builderHelperStates)
   const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
   const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
   if (isStyleNotLoaded) return { layouts: sortedLayout }
@@ -723,22 +713,22 @@ export const generateAndSaveAtomicCss = currentFormId => {
 }
 
 export const generateUpdateFormData = (savedFormId) => {
-  const newFormId = bitStore.get($newFormId)
-  const currentReport = bitStore.get($reportSelector)
-  const fields = bitStore.get($fields)
-  const formInfo = bitStore.get($formInfo)
-  const reportId = bitStore.get($reportId)
-  const additionalSettings = bitStore.get($additionalSettings)
-  const workFlows = bitStore.get($workflows)
-  const styles = bitStore.get($styles)
-  const staticStylesState = bitStore.get($staticStylesState)
-  const breakpointSize = bitStore.get($breakpointSize)
-  const customCodes = bitStore.get($customCodes)
-  const confirmations = bitStore.get($confirmations)
-  const mailTemplates = bitStore.get($mailTemplates)
-  const allIntegrations = bitStore.get($integrations)
-  const builderSettings = bitStore.get($builderSettings)
-  const deletedFldKey = bitStore.get($deletedFldKey)
+  const newFormId = getAtom($newFormId)
+  const currentReport = getAtom($reportSelector)
+  const fields = getAtom($fields)
+  const formInfo = getAtom($formInfo)
+  const reportId = getAtom($reportId)
+  const additionalSettings = getAtom($additionalSettings)
+  const workFlows = getAtom($workflows)
+  const styles = getAtom($styles)
+  const staticStylesState = getAtom($staticStylesState)
+  const breakpointSize = getAtom($breakpointSize)
+  const customCodes = getAtom($customCodes)
+  const confirmations = getAtom($confirmations)
+  const mailTemplates = getAtom($mailTemplates)
+  const allIntegrations = getAtom($integrations)
+  const builderSettings = getAtom($builderSettings)
+  const deletedFldKey = getAtom($deletedFldKey)
   const { formName } = formInfo
   const {
     layouts,
@@ -828,9 +818,20 @@ export const generateUpdateFormData = (savedFormId) => {
 export const IS_PRO = (() => {
   let bits = {}
   try {
-    bits = bitStore.get($bits)
+    bits = getAtom($bits)
   } catch (_) {
     bits = window?.bits
   }
   return !!bits?.isPro
 })()
+
+export const clearAllSWRCache = () => mutate(() => true, undefined)
+
+export const isVarEmpty = data => {
+  // check if null or undefined or empty string
+  if (data === null || data === undefined || data === '') return true
+  // check if array or object and empty
+  if (Array.isArray(data) && data.length === 0) return true
+  if (isObjectEmpty(data)) return true
+  return false
+}

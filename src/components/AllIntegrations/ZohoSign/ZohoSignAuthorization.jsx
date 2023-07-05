@@ -124,7 +124,7 @@ export default function ZohoSingAuthorization({
             />
             <br />
             <NextBtn
-              nextPageHanlder={() => nextPage()}
+              nextPageHandler={() => nextPage()}
               disabled={!isAuthorized}
             />
           </>

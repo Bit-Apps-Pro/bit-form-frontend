@@ -1,18 +1,18 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable camelcase */
 import { atomizeCss, combineSelectors, expressAndCleanCssVars, objectToCssText, optimizeAndDefineCssClassProps } from 'atomize-css'
-import { removeUnusedStyles } from '../components/style-new/styleHelpers'
+import { getAtom } from '../GlobalStates/BitStore'
 import { $breakpointSize, $builderSettings, $formId, $workflows } from '../GlobalStates/GlobalStates'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
 import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
+import { removeUnusedStyles } from '../components/style-new/styleHelpers'
 import { getLayoutDiff } from './FormBuilderHelper'
 import { getObjectDiff, getOneLvlObjDiff, mergeNestedObj } from './globalHelpers'
-import bitStore from '../GlobalStates/BitStore'
 
 export default function atomicStyleGenarate(sortedLayout) {
-  const { atomicClassPrefix, darkModeConfig } = bitStore.get($builderSettings)
-  const { styleMergeWithAtomicClasses } = bitStore.get($staticStylesState)
+  const { atomicClassPrefix, darkModeConfig } = getAtom($builderSettings)
+  const { styleMergeWithAtomicClasses } = getAtom($staticStylesState)
   const { darkModeSelector, preferSystemColorScheme } = darkModeConfig
   const darkModeOnSystemPreference = preferSystemColorScheme
   const ignoreWithFallbackValues = {
@@ -53,12 +53,12 @@ export default function atomicStyleGenarate(sortedLayout) {
   const SmLightAtomicClassPostfix = '-S'
   const SmDarkAtomicClassPostfix = '-P'
 
-  const formId = bitStore.get($formId)
+  const formId = getAtom($formId)
 
   // const layoutRowHeight = 2
 
-  const themeColorsLight = bitStore.get($lightThemeColors)
-  const themeColorsDark = bitStore.get($darkThemeColors)
+  const themeColorsLight = getAtom($lightThemeColors)
+  const themeColorsDark = getAtom($darkThemeColors)
 
   let { lgLightStyles: stylesLgLight,
     lgDarkStyles: stylesLgDark, // eslint-disable-line prefer-const
@@ -72,23 +72,23 @@ export default function atomicStyleGenarate(sortedLayout) {
   stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
   stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
 
-  // const stylesLgLight = bitStore.get($stylesLgLight)
-  // const stylesMdLight = bitStore.get($stylesMdLight)
-  // const stylesSmLight = bitStore.get($stylesSmLight)
+  // const stylesLgLight = getAtom($stylesLgLight)
+  // const stylesMdLight = getAtom($stylesMdLight)
+  // const stylesSmLight = getAtom($stylesSmLight)
 
-  // const stylesLgDark = bitStore.get($stylesLgDark)
-  // const stylesMdDark = bitStore.get($stylesMdDark)
-  // const stylesSmDark = bitStore.get($stylesSmDark)
+  // const stylesLgDark = getAtom($stylesLgDark)
+  // const stylesMdDark = getAtom($stylesMdDark)
+  // const stylesSmDark = getAtom($stylesSmDark)
 
-  const themeVarsLgLight = bitStore.get($themeVarsLgLight)
-  const themeVarsMdLight = bitStore.get($themeVarsMdLight)
-  const themeVarsSmLight = bitStore.get($themeVarsSmLight)
+  const themeVarsLgLight = getAtom($themeVarsLgLight)
+  const themeVarsMdLight = getAtom($themeVarsMdLight)
+  const themeVarsSmLight = getAtom($themeVarsSmLight)
 
-  const themeVarsLgDark = bitStore.get($themeVarsLgDark)
-  const themeVarsMdDark = bitStore.get($themeVarsMdDark)
-  const themeVarsSmDark = bitStore.get($themeVarsSmDark)
+  const themeVarsLgDark = getAtom($themeVarsLgDark)
+  const themeVarsMdDark = getAtom($themeVarsMdDark)
+  const themeVarsSmDark = getAtom($themeVarsSmDark)
 
-  const { md: mdBreakpointSize, sm: smBreakpointSize } = bitStore.get($breakpointSize)
+  const { md: mdBreakpointSize, sm: smBreakpointSize } = getAtom($breakpointSize)
 
   // difference between main themecolor, themevar, style object and dark mode and mobo device breakpoint changes
   const lightThemeColors = themeColorsLight
@@ -292,7 +292,7 @@ function flatenStyleObj(styleObj) {
 }
 
 function getConfirmationMsgStyles(styleObj) {
-  const workflows = bitStore.get($workflows)
+  const workflows = getAtom($workflows)
   const tempStyleObj = {}
   let msgStyles = {}
   styleObj?.confirmations?.forEach(cmfObj => {

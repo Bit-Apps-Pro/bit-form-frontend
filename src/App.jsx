@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import loadable from '@loadable/component'
-import { useEffect, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
-import { HashRouter, Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
+import { useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
+import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
+import { $bits } from './GlobalStates/GlobalStates'
+import { __ } from './Utils/i18nwrap'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import MigrationModal from './components/MigrationModal'
 import RollbackButton from './components/RollbackButton'
-import { $bits } from './GlobalStates/GlobalStates'
 import AllForms from './pages/AllForms'
 import DocNSupport from './pages/DocNSupport'
-import { __ } from './Utils/i18nwrap'
 
 const loaderStyle = { height: '90vh' }
 const AppSettings = loadable(() => import('./pages/AppSettings'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
@@ -29,7 +29,7 @@ export default function App() {
     const { pathname } = useLocation()
     const url = pathname.split('/')
     const len = url.length
-    const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments', 'general']
+    const nav = ['recaptcha', 'gclid', 'smtp', 'cpt', 'api', 'payments', 'general', 'pdf']
     const active = nav.includes(url[len - 1]) || false
     return active
   }

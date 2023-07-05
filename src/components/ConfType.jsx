@@ -1,15 +1,18 @@
 /* eslint-disable no-undef */
 
+import { useAtomValue } from 'jotai'
 import toast from 'react-hot-toast'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
+import { $formId } from '../GlobalStates/GlobalStates'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import ConfMsg from './ConfirmMessage/ConfMsg'
 import RedirUrl from './RedirUrl'
 import WebHooks from './WebHooks'
 
-export default function ConfType({ formID, formType }) {
-  const { '*': confirmationType } = useParams()
+export default function ConfType() {
+  const { '*': confirmationType, formType } = useParams()
+  const formID = useAtomValue($formId)
   const path = `/form/settings/${formType}/${formID}/confirmations`
   const removeIntegration = async (id, type = null) => {
     let action = 'bitforms_delete_integration'
