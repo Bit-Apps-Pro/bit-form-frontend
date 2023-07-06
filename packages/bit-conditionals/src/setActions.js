@@ -149,7 +149,7 @@ export const setActions = (actionDetail, fldKey, props, fieldValues, rowIndx) =>
   rowIndex = rowIndx
   rowIndexClass = (rowIndx && isRepeatedField(actionDetail.field, props)) ? `.rpt-index-${rowIndx}` : ''
   if (actionDetail.action !== undefined && actionDetail.field !== undefined) {
-    if (!props.fields[actionDetail.field].valid) {
+    if (actionDetail.field in props.fields && !props.fields[actionDetail.field].valid) {
       props.fields[actionDetail.field].valid = {}
     }
     switch (actionDetail.action) {
