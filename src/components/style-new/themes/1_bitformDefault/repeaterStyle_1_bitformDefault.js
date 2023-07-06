@@ -63,6 +63,10 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         'pointer-events': 'none',
         opacity: '0.5',
       },
+      [`.${fk}-rpt-add-btn:focus`]: {
+        'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
+        'border-color': 'var(--global-accent-color) !important',
+      },
       [`.${fk}-rpt-add-btn-pre-i`]: {
         width: '18px',
       },
@@ -98,6 +102,10 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         cursor: 'not-allowed',
         'pointer-events': 'none',
         opacity: '0.5',
+      },
+      [`.${fk}-rpt-rmv-btn:focus`]: {
+        'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
+        'border-color': 'var(--global-accent-color) !important',
       },
       [`.${fk}-rpt-rmv-btn-pre-i`]: {
         width: '18px',

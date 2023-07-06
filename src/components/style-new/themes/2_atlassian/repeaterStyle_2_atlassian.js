@@ -62,6 +62,10 @@ export default function repeaterStyle_2_atlassian({ fk, type, breakpoint, colorS
         'pointer-events': 'none',
         opacity: '0.5',
       },
+      [`.${fk}-rpt-add-btn:focus`]: {
+        'box-shadow': 'none !important',
+        'border-color': 'var(--global-accent-color) !important',
+      },
       [`.${fk}-rpt-add-btn-pre-i`]: {
         width: '15px',
       },
@@ -97,6 +101,10 @@ export default function repeaterStyle_2_atlassian({ fk, type, breakpoint, colorS
         cursor: 'not-allowed',
         'pointer-events': 'none',
         opacity: '0.5',
+      },
+      [`.${fk}-rpt-rmv-btn:focus`]: {
+        'box-shadow': 'none !important',
+        'border-color': 'var(--global-accent-color) !important',
       },
       [`.${fk}-rpt-rmv-btn-pre-i`]: {
         width: '15px',
