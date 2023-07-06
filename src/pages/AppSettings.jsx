@@ -80,14 +80,6 @@ function AppSettingsPage() {
           <SettingsIcn size="18" className="mr-2" />
           <span className="ml-2">{__('General')}</span>
         </NavLink>
-        <NavLink
-          to="/app-settings/pdf"
-          className={({ isActive }) => (isActive ? 'btcd-app-s-a' : '')}
-        >
-          {/* <SettingsIcn size="18" className="mr-2" /> */}
-          <PdfIcn size="18" className="mr-2" />
-          <span className="ml-2">{__('PDF')}</span>
-        </NavLink>
       </aside>
 
       <Routes>

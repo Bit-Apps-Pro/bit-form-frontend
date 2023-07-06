@@ -121,15 +121,6 @@ function FormSettings() {
           {__('Integrations')}
         </NavLink>
         <NavLink
-          to={`/form/settings/${formType}/${formID}/pdf-templates`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1">
-            <PdfIcn size="19" />
-          </span>
-          {__('PDF Templates')}
-        </NavLink>
-        <NavLink
           to={`/form/settings/${formType}/${formID}/auth-settings`}
           className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
         >
