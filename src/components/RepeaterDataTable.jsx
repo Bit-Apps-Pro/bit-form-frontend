@@ -12,7 +12,8 @@ function RepeaterDataTable(props) {
   const fields = useAtomValue($fields)
   const { title, rptData, entryId } = props
   const allResp = isValidJsonString(rptData) ? JSON.parse(rptData) : []
-  const tableColumns = Object.keys(allResp[0] || []).map((fieldKey) => {
+  const filterdKeys = Object.keys(allResp[0] || []).filter(fldKey => !['divider', 'image', 'title'].includes(fields[fldKey].typ))
+  const tableColumns = filterdKeys.map((fieldKey) => {
     const fldData = fields[fieldKey]
     return {
       Header: fldData.adminLbl || fldData.lbl || fldData.fieldName || fieldKey,
