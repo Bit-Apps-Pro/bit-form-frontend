@@ -643,6 +643,8 @@ export const toolsList = [
     keywords: 'Button, Submit, Save, Save Draft, Submit Button, Submit Form, Click, Click button',
     icn: <BtnIcn size="23" />,
     pos: { h: 60, w: 60, i: 'shadow_block' },
+    pro: 'This field is available only in pro version',
+    new: true,
     elm: {
       typ: 'button',
       btnTyp: 'save-draft',

@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { IS_PRO, deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import FieldStyle from '../../styles/FieldStyle.style'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
@@ -42,6 +42,7 @@ function RepeaterFieldSettings() {
   const adminLabel = fieldData.adminLbl || ''
 
   function setDefaultRow(e) {
+    if (!IS_PRO) return
     if (e.target.value === '') {
       delete fieldData.defaultRow
     } else {
@@ -53,6 +54,7 @@ function RepeaterFieldSettings() {
   }
 
   function setMinRow(e) {
+    if (!IS_PRO) return
     if (e.target.value === '') {
       delete fieldData.minRow
     } else {
@@ -68,6 +70,7 @@ function RepeaterFieldSettings() {
   }
 
   function setMaxRow(e) {
+    if (!IS_PRO) return
     if (e.target.value === '') {
       delete fieldData.maxRow
     } else {
@@ -83,6 +86,7 @@ function RepeaterFieldSettings() {
   }
 
   function handleButtonPosition({ target: { value: val } }) {
+    if (!IS_PRO) return
     setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-rpt-wrp`]['flex-direction'] = val
     }))
@@ -93,6 +97,7 @@ function RepeaterFieldSettings() {
   }
 
   function handleButtonAlignment({ target: { value: val } }) {
+    if (!IS_PRO) return
     setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-pair-btn-wrp`]['align-self'] = val
     }))
@@ -103,6 +108,7 @@ function RepeaterFieldSettings() {
   }
 
   function handleAddToEndBtnAlignment({ target: { value: val } }) {
+    if (!IS_PRO) return
     setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-add-to-end-btn-wrp`]['align-self'] = val
     }))
@@ -115,6 +121,7 @@ function RepeaterFieldSettings() {
   }
 
   function handleButtonView({ target: { value: val } }) {
+    if (!IS_PRO) return
     setStyles(preStyle => create(preStyle, drftStyle => {
       drftStyle.fields[fldKey].classes[`.${fldKey}-pair-btn-wrp`]['flex-direction'] = val
     }))

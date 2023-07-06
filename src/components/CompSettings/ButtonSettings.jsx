@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
+import { IS_PRO, deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import FieldStyle from '../../styles/FieldStyle.style'
 import Modal from '../Utilities/Modal'
@@ -46,8 +46,10 @@ export default function ButtonSettings() {
   const type = [
     { name: 'Reset', value: 'reset', disabled: false },
     { name: 'Button', value: 'button', disabled: false },
-    { name: 'Save default', value: 'save-default', disabled: false },
   ]
+  if (IS_PRO) {
+    type.push({ name: 'Save Draft', value: 'save-draft', disabled: false })
+  }
 
   function setSubBtnTxt(e) {
     fieldData.txt = e.target.value

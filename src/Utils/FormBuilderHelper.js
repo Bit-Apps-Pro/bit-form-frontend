@@ -13,7 +13,7 @@ import { $styles } from '../GlobalStates/StylesState'
 import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { addDefaultStyleClasses, sortArrOfObjByMultipleProps } from '../components/style-new/styleHelpers'
-import { deepCopy } from './Helpers'
+import { IS_PRO, deepCopy } from './Helpers'
 import paymentFields from './StaticData/paymentFields'
 import proHelperData from './StaticData/proHelperData'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
@@ -244,9 +244,8 @@ export const checkFieldsExtraAttr = (field, parentField) => {
   const reCaptchaV2 = getAtom($reCaptchaV2)
   // eslint-disable-next-line no-undef
   const allFields = getAtom($fields)
-  const bits = getAtom($bits)
   const additionalSettings = getAtom($additionalSettings)
-  if (field.lbl === 'Select Country' && !bits.isPro) {
+  if (field.lbl === 'Select Country' && !IS_PRO) {
     return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.') }
   }
 
@@ -259,7 +258,7 @@ export const checkFieldsExtraAttr = (field, parentField) => {
   }
 
   // eslint-disable-next-line no-undef
-  if (FIELDS_EXTRA_ATTR[field.typ]?.pro && !bits.isPro) {
+  if (FIELDS_EXTRA_ATTR[field.typ]?.pro && !IS_PRO) {
     return { validType: 'pro', msg: __(`${field.typ} field is available in Pro Version!`) }
   }
 
@@ -269,6 +268,10 @@ export const checkFieldsExtraAttr = (field, parentField) => {
 
   if (field.typ === 'button' && FIELDS_EXTRA_ATTR[field.btnTyp]?.onlyOne && Object.values(allFields).find(fld => fld.typ === field.typ)) {
     return { validType: 'onlyOne', msg: __(`You cannot add more than one ${field.btnTyp} button in the same form.`) }
+  }
+
+  if (field.typ === 'button' && field.btnTyp === 'save-draft' && !IS_PRO) {
+    return { validType: 'pro', msg: __('Save Draft Button available in Pro version of Bit Form.') }
   }
 
   if (parentField !== 'root' && FIELD_FILTER[parentField]?.includes(field.typ)) {
@@ -999,7 +1002,7 @@ export const getNestedLayoutHeight = (fieldKey) => {
 
 export const isValidJsonString = (str) => {
   try {
-    JSON.parse(str)
+    if (!JSON.parse(str)) return false
   } catch (e) {
     return false
   }

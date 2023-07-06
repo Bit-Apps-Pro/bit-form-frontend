@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import { $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import { $styles } from '../../../GlobalStates/StylesState'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../../Utils/Helpers'
+import { IS_PRO, deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import FieldStyle from '../../../styles/FieldStyle.style'
 import Modal from '../../Utilities/Modal'
@@ -47,6 +47,7 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
   }
 
   const setButtonText = ({ target: { value } }) => {
+    if (!IS_PRO) return
     fieldData[btnType].txt = value
 
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
@@ -60,6 +61,7 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
   }
 
   const setIconModel = (typ) => {
+    if (!IS_PRO) return
     if (!isStyleExist(styles, fldKey, styleClasses[typ])) addDefaultStyleClasses(selectedFieldId, typ)
     setIconFilterValue(typ, fldKey)
     setIcnType(typ)
@@ -67,6 +69,7 @@ export default function RepeaterButtonSettings({ btnType, btnName, switching, ha
   }
 
   const removeIcon = (iconType) => {
+    if (!IS_PRO) return
     if (fieldData[iconType]) {
       delete fieldData[iconType]
       const allFields = create(fields, draft => { draft[fldKey] = fieldData })
