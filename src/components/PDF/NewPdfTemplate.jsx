@@ -267,6 +267,21 @@ export default function NewPdfTemplate() {
             </label>
           </div>
 
+          <div className="mt-4">
+            <label htmlFor="pdfFileName">
+              <b>{__('PDF File Name')}</b>
+              <input
+                id="pdfFileName"
+                name="pdfFileName"
+                onChange={(e) => handleInput('setting->pdfFileName', e.target.value)}
+                value={tem.setting?.pdfFileName}
+                className="btcd-paper-inp mt-1"
+                placeholder="PDF File Name"
+                type="text"
+              />
+            </label>
+          </div>
+
           {/* watermark */}
 
           <div className="mt-2">
