@@ -224,6 +224,21 @@ export default function EditPdfTemplate() {
               </label>
             </div>
 
+            <div className="mt-4">
+              <label htmlFor="pdfFileName">
+                <b>{__('PDF File Name')}</b>
+                <input
+                  id="pdfFileName"
+                  name="pdfFileName"
+                  onChange={(e) => settingHandler('setting->pdfFileName', e.target.value)}
+                  value={pdfConf.setting?.pdfFileName}
+                  className="btcd-paper-inp mt-1"
+                  placeholder="PDF File Name"
+                  type="text"
+                />
+              </label>
+            </div>
+
             <div className="mt-2">
               <label htmlFor="active">
                 <b>{__('Watermark')}</b>
