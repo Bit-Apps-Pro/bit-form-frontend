@@ -12,44 +12,50 @@ export default function setFieldValues(formContentId) {
       'currency',
       'file-up',
       'advanced-file-up',
+      'repeater',
     ]
-    const checkBasedFields = ['radio', 'checkbox', 'decision-box']
+    const checkBasedFields = ['radio', 'check', 'decision-box']
     const form = bfSelect(`#form-${contentId}`)
-    Object.entries(fields).map(([fieldKey, fieldData]) => {
+    Object.entries(fields).forEach(([fieldKey, fieldData]) => {
       const fldTyp = fieldData.typ
-      const fldName = fieldData.fieldName
+      let fldName = fieldData.fieldName
+      const fldValue = formData[fieldKey]
+      if (!fldValue) return
       if (customFields.includes(fldTyp)) {
-        console.log({ props, fieldKey }, props.inits, props.inits[fieldKey])
+        // console.log({ props, fieldKey }, props.inits, props.inits[fieldKey])
         // custom fields
-        props.inits[fieldKey].value = formData[fieldKey]
+        props.inits[fieldKey].value = fldValue
       } else if (checkBasedFields.includes(fldTyp)) {
         // radio buttons, checkboxes, decision boxes
+        if (fldTyp === 'check') fldName += '[]'
         const field = form.querySelectorAll(`input[name="${fldName}"]`)
-        let optFound = false
+        const fldValues = fldValue?.split(props?.configs?.bf_separator) || []
+
         field.forEach(f => {
-          if (f.value === formData[fieldKey]) {
+          if (fldValues.includes(f.value)) {
             f.checked = true
-            optFound = true
+            const index = fldValues.indexOf(f.value)
+            fldValues.splice(index, 1)
           }
         })
         // set other option value  input[data-oopt]: check input[data-bf-other-inp]: text
-        if (!optFound && formData[fieldKey]) {
+        if (fldValues.length) {
           const otherOpt = form.querySelector(`[data-oopt="${fieldKey}"]`)
           if (otherOpt) {
             otherOpt.checked = true
             const otherInp = form.querySelector(`.${fieldKey}-cw input[data-bf-other-inp]`)
             if (otherInp) {
-              otherInp.value = formData[fieldKey]
-              otherOpt.value = formData[fieldKey]
+              otherInp.value = fldValues.join(', ')
+              otherOpt.value = fldValues.join(', ')
               otherOpt.dispatchEvent(new Event('input'))
             }
           }
         }
-      } else if (formData[fieldKey]) {
+      } else if (fldValue) {
         // text based fields
         const field = document.querySelector(`#form-${contentId} [name="${fldName}"]`)
         if (field) {
-          field.value = formData[fieldKey]
+          field.value = fldValue
         }
       }
     })
