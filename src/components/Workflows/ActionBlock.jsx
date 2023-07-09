@@ -4,6 +4,7 @@ import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
+import { IS_PRO } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 import CalculatorField from '../Utilities/CalculationField/CalculatorField'
@@ -146,7 +147,7 @@ function ActionBlock({
         className="w-4"
       >
         <option value="">{__('Select One')}</option>
-        {isForm && <option value="save_draft">{__('Save Draft')}</option>}
+        {isForm && <option value="save_draft" {...!IS_PRO && { disabled: true }}>{__(`Save Draft ${IS_PRO ? '' : '(PRO)'}`)}</option>}
         {!isForm
           && (
             <>
