@@ -10,15 +10,15 @@ const defaultOpts = {
   revalidateOnReconnect: false,
 }
 
-const checkData = data => data?.success && !data?.data?.errors && !isVarEmpty(data.data)
+const checkData = (data: DataResponseType) => data?.success && !data?.data?.errors && !isVarEmpty(data.data)
 
-const useSWROnce = (key, urlData, options = {}) => {
+const useSWROnce = (key: string | string[], urlData: object, options: IOptionsType = {}) => {
   const shouldFetch = ('fetchCondition' in options) ? options.fetchCondition : true
   const swrKey = shouldFetch ? key : null
 
   const swrData = useSWR(
     swrKey,
-    url => {
+    (url: string | string[]) => {
       const resp = bitsFetch(urlData, Array.isArray(url) ? url[0] : url)
       if (swrData.isLoading) {
         toast.promise(resp, {
@@ -32,7 +32,7 @@ const useSWROnce = (key, urlData, options = {}) => {
     {
       ...defaultOpts,
       ...options,
-      onSuccess: data => checkData(data) && options.onSuccess(data.data),
+      onSuccess: data => options.onSuccess && checkData(data) && options.onSuccess(data.data),
     },
   )
 
@@ -41,7 +41,7 @@ const useSWROnce = (key, urlData, options = {}) => {
     const { data } = swrData.data
     if (options.onMount) {
       options.onMount(data)
-    } else {
+    } else if (options.onSuccess) {
       options.onSuccess(data)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,3 +51,16 @@ const useSWROnce = (key, urlData, options = {}) => {
 }
 
 export default useSWROnce
+
+interface DataResponseType {
+  success: boolean
+  data: {
+    errors?: object
+  } | any
+}
+
+interface IOptionsType {
+  fetchCondition?: boolean
+  onSuccess?: (data: any) => void
+  onMount?: (data: any) => void
+}
