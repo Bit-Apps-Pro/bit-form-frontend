@@ -19,6 +19,8 @@ export default class BitRepeaterField {
 
   #defaultRow
 
+  #defaultValue
+
   #minimumRow
 
   #maximumRow
@@ -38,6 +40,8 @@ export default class BitRepeaterField {
   #customFields = []
 
   #isReset = false
+
+  #customFieldTypes = ['select', 'country', 'currency', 'phone-number', 'file-up']
 
   constructor(selector, config) {
     this.#setConfigPropertiesToVariables(config)
@@ -61,6 +65,7 @@ export default class BitRepeaterField {
     this.#maximumRow = config.maximumRow
     this.#showAddButton = config.showAddBtn
     this.#showAddToEndButton = config.showAddToEndBtn
+    this.#defaultValue = config.defaultValue
   }
 
   init() {
@@ -95,6 +100,9 @@ export default class BitRepeaterField {
     }
 
     this.#handleButtonEnableDisable()
+    if (this.#defaultValue) {
+      this.value = this.#defaultValue
+    }
   }
 
   #detectFields() {
@@ -102,7 +110,7 @@ export default class BitRepeaterField {
     const fieldNames = []
     const fieldKeys = []
     const repeatFields = []
-    const customFieldTypes = ['select', 'country', 'currency', 'phone-number', 'file-up']
+
     this.#selectAll('input[name],select[name],textarea[name]', this.#repeatableWrapper).forEach((input) => {
       const name = input.getAttribute('name')
       fieldNames.push(name.replace('[]', ''))
@@ -112,7 +120,7 @@ export default class BitRepeaterField {
       Object.entries(fields).forEach(([key, field]) => {
         if (field.fieldName === name) {
           repeatFields.push(key)
-          if (customFieldTypes.indexOf(field.typ) !== -1) {
+          if (this.#customFieldTypes.indexOf(field.typ) !== -1) {
             fieldKeys.push({ key, name, type: field.typ })
           }
         }
@@ -350,5 +358,77 @@ export default class BitRepeaterField {
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
     this.#allEventListeners.push({ selector, eventType, cb })
+    this.value = 0
+  }
+
+  get value() {
+    return this.#hiddenIndexInput.value
+  }
+
+  set value(dataString) {
+    if (!dataString) return
+    const dataArr = JSON.parse(dataString)
+    if (!dataArr.length) return
+    const dataLength = dataArr.length
+    let currentRow = this.#indexArray.length
+    if (currentRow < dataLength) {
+      while (currentRow < dataLength) {
+        const lastRow = this.#indexArray[this.#indexArray.length - 1]
+        const lastRemoveBtn = this.#select(`.${this.#fieldKey}-rpt-rmv-btn[data-index="${lastRow}"]`)
+        this.#handleAdd({ currentTarget: lastRemoveBtn, preventDefault: () => { } })
+        currentRow += 1
+      }
+    }
+    const props = window.bf_globals[this.#contentId]
+    const { fields } = props
+    dataArr.forEach((data, index) => {
+      const rowNumber = this.#indexArray[index]
+      const row = this.#select(`.${this.#fieldKey}-rpt-wrp[data-index="${rowNumber}"]`)
+
+      Object.entries(data).forEach(([fieldKey, fieldValue]) => {
+        const fieldData = fields[fieldKey]
+        if (!fieldData || !fieldValue) return
+        const fldTyp = fieldData.typ
+        let fldName = `${fieldData.fieldName}[${rowNumber}]`
+        if (this.#customFieldTypes.includes(fldTyp)) {
+          // custom fields
+          const fldValues = Array.isArray(fieldValue) ? fieldValue.join(props?.configs?.bf_separator) : fieldValue
+          if (props.inits[`${fieldKey}[${rowNumber}]`]) {
+            props.inits[`${fieldKey}[${rowNumber}]`].value = fldValues
+          } else { props.inits[`${fieldKey}`].value = fldValues }
+        } else if (['radio', 'check'].includes(fldTyp)) {
+          const fldValues = Array.isArray(fieldValue) ? fieldValue : (fieldValue?.split(props?.configs?.bf_separator) || [])
+          // radio buttons, checkboxes
+          if (fldTyp === 'check') fldName += '[]'
+          const field = this.#selectAll(`input[name="${fldName}"]`, row)
+          field.forEach(f => {
+            if (fldValues.includes(f.value)) {
+              f.checked = true
+              const indx = fldValues.indexOf(f.value)
+              fldValues.splice(indx, 1)
+            }
+          })
+          // set other option value  input[data-oopt]: check input[data-bf-other-inp]: text
+          if (fldValues.length) {
+            const otherOpt = this.#select(`[data-oopt="${fieldKey}"]`, row)
+            if (otherOpt) {
+              otherOpt.checked = true
+              const otherInp = this.#select(`.${fieldKey}-cw input[data-bf-other-inp]`, row)
+              if (otherInp) {
+                otherInp.value = fldValues.join(', ')
+                otherOpt.value = fldValues.join(', ')
+                otherOpt.dispatchEvent(new Event('input'))
+              }
+            }
+          }
+        } else if (fieldValue) {
+          // for text based fields
+          const field = this.#select(`[name="${fldName}"]`, row)
+          if (field) {
+            field.value = fieldValue
+          }
+        }
+      })
+    })
   }
 }

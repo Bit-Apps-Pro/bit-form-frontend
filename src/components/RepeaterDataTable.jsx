@@ -12,15 +12,15 @@ function RepeaterDataTable(props) {
   const fields = useAtomValue($fields)
   const { title, rptData, entryId } = props
   const allResp = isValidJsonString(rptData) ? JSON.parse(rptData) : []
-  const filterdKeys = Object.keys(allResp[0] || []).filter(fldKey => !['divider', 'image', 'title'].includes(fields[fldKey].typ))
+  const filterdKeys = Object.keys(allResp[0] || []).filter(fldKey => !['divider', 'image', 'title'].includes(fields[fldKey]?.typ))
   const tableColumns = filterdKeys.map((fieldKey) => {
-    const fldData = fields[fieldKey]
+    const fldData = fields[fieldKey] || {}
     return {
       Header: fldData.adminLbl || fldData.lbl || fldData.fieldName || fieldKey,
       accessor: fieldKey,
       fieldType: fldData.typ,
       minWidth: 50,
-      ...(fldData.typ.match(/^(file-up|check|select)$/) && {
+      ...(fldData.typ?.match(/^(file-up|check|select)$/) && {
         Cell: (row) => {
           if (
             row.cell.value !== null
