@@ -379,7 +379,7 @@ export default class BitRepeaterField {
         currentRow += 1
       }
     }
-    const props = window.bf_globals[this.#contentId]
+    const props = this.#window.bf_globals[this.#contentId]
     const { fields } = props
     dataArr.forEach((data, index) => {
       const rowNumber = this.#indexArray[index]
@@ -395,7 +395,9 @@ export default class BitRepeaterField {
           const fldValues = Array.isArray(fieldValue) ? fieldValue.join(props?.configs?.bf_separator) : fieldValue
           if (props.inits[`${fieldKey}[${rowNumber}]`]) {
             props.inits[`${fieldKey}[${rowNumber}]`].value = fldValues
-          } else { props.inits[`${fieldKey}`].value = fldValues }
+          } else if (props.inits[fieldKey]) {
+            props.inits[fieldKey].value = fldValues
+          }
         } else if (['radio', 'check'].includes(fldTyp)) {
           const fldValues = Array.isArray(fieldValue) ? fieldValue : (fieldValue?.split(props?.configs?.bf_separator) || [])
           // radio buttons, checkboxes
