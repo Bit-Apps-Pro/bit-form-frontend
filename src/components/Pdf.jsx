@@ -32,6 +32,7 @@ export default function Pdf() {
     fontColor: '#000000',
     direction: 'ltr',
     fontFamily: 'aboriginalsansregular',
+    pdfFileName: 'bitform',
     watermark: {
       // active: 'txt',
       // alpha: 20,
