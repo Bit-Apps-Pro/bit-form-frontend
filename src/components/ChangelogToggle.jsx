@@ -27,6 +27,8 @@ export default function ChangelogToggle() {
       })
   }
 
+  if (!currenChangelog) return
+
   return (
     <div className="changelog-toggle">
       <button
@@ -80,9 +82,14 @@ function getChangesList(listObj, css) {
           {label}
           {tag && <span className={css(styles.tag)}>{tag}</span>}
         </li>
-        <ul className={css(styles.ul)}>
-          {list.map(tempObj => getChangesList(tempObj, css))}
-        </ul>
+        {
+          list && (
+            <ul className={css(styles.ul)}>
+              {list.map(tempObj => getChangesList(tempObj, css))}
+            </ul>
+          )
+        }
+
       </Fragment>
     )
   }
