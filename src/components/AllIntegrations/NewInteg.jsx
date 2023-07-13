@@ -1,13 +1,23 @@
+import { useAtom, useAtomValue } from 'jotai'
 import { lazy, Suspense } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'jotai'
 import { $fieldsArr, $integrations } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
+import AdvancedFormIntegration from './AdvancedFormIntegration/AdvancedFormIntegration'
+import AutomatorWP from './AutomatorWP/AutomatorWP'
+import FlowMattic from './FlowMattic/FlowMattic'
+import IFTTT from './IFTTT/IFTTT'
+import N8NIO from './n8nIO/N8NIO'
+import SperseIO from './SperseIO/SperseIO'
+import ThriveAutomator from './ThriveAutomator/ThriveAutomator'
+import UncannyAutomator from './UncannyAutomator/UncannyAutomator'
+import WPWebhooks from './WPWebhooks/WPWebhooks'
+import SureTriggers from './SureTriggers/SureTriggers'
 
 const ZohoCRM = lazy(() => import('./ZohoCRM/ZohoCRM'))
 const ZohoAnalytics = lazy(() => import('./ZohoAnalytics/ZohoAnalytics'))
@@ -148,6 +158,26 @@ export default function NewInteg({ allIntegURL }) {
         return <MailerLite allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Twilio':
         return <Twilio allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'FlowMattic':
+        return <FlowMattic allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'AutomatorWP':
+        return <AutomatorWP allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Uncanny Automator':
+        return <UncannyAutomator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Automate Hub SperseIO':
+        return <SperseIO allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Thrive Automator':
+        return <ThriveAutomator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'WP Webhooks':
+        return <WPWebhooks allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Advanced Form Integration':
+        return <AdvancedFormIntegration allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'IFTTT':
+        return <IFTTT allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'N8NIO':
+        return <N8NIO allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'SureTriggers':
+        return <SureTriggers allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break
     }
