@@ -147,5 +147,45 @@ const tutorialLinks = {
     title: 'How to Configure Double Opt-In',
     link: 'https://docs.form.bitapps.pro/wpbitform-double-opt-in',
   },
+  flowmattic: {
+    title: 'How to Setup FlowMattic integration',
+    link: '#',
+  },
+  automatorwp: {
+    title: 'How to Setup AutomatorWP integration',
+    link: '#',
+  },
+  uncannyAutomator: {
+    title: 'How to Setup Uncanny Automator integration',
+    link: '#',
+  },
+  sperseIO: {
+    title: 'How to Setup Automate Hub by Sperse.IO integration',
+    link: '#',
+  },
+  thriveAutomator: {
+    title: 'How to Setup Thrive Automator integration',
+    link: '#',
+  },
+  wpWebhooks: {
+    title: 'How to Setup WP Webhooks integration',
+    link: '#',
+  },
+  advancedFormIntegration: {
+    title: 'How to Setup Advanced Form Integration',
+    link: '#',
+  },
+  ifttt: {
+    title: 'How to Setup IFTTT integration',
+    link: '#',
+  },
+  n8nIO: {
+    title: 'How to Setup n8n.io integration',
+    link: '#',
+  },
+  sureTriggers: {
+    title: 'How to Setup Sure Triggers integration',
+    link: '#',
+  },
 }
 export default tutorialLinks

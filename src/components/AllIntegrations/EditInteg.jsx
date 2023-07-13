@@ -1,14 +1,23 @@
+import { useAtom, useAtomValue } from 'jotai'
 import { lazy, Suspense } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'jotai'
 import { $fieldsArr, $integrations } from '../../GlobalStates/GlobalStates'
+import ChevronLeft from '../../Icons/ChevronLeft'
+import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
-import app from '../../styles/app.style'
-import ChevronLeft from '../../Icons/ChevronLeft'
-import customInputControlStyle from '../../styles/customInputControl.style'
+import EditAdvancedFormIntegration from './AdvancedFormIntegration/EditAdvancedFormIntegration'
+import EditAutomatorWP from './AutomatorWP/EditAutomatorWP'
+import EditFlowMattic from './FlowMattic/EditFlowMattic'
+import EditIFTTT from './IFTTT/EditIFTTT'
+import EditN8NIO from './n8nIO/EditN8NIO'
+import EditSperseIO from './SperseIO/EditSperseIO'
+import EditThriveAutomator from './ThriveAutomator/EditThriveAutomator'
+import EditUncannyAutomator from './UncannyAutomator/EditUncannyAutomator'
+import EditWPWebhooks from './WPWebhooks/EditWPWebhooks'
+import EditSureTriggers from './SureTriggers/EditSureTriggers'
 
 const EditZohoAnalytics = lazy(() => import('./ZohoAnalytics/EditZohoAnalytics'))
 const EditZohoBigin = lazy(() => import('./ZohoBigin/EditZohoBigin'))
@@ -149,6 +158,26 @@ export default function EditInteg({ allIntegURL }) {
         return <EditMailerLite allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       case 'Twilio':
         return <EditTwilio allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'FlowMattic':
+        return <EditFlowMattic allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'AutomatorWP':
+        return <EditAutomatorWP allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Uncanny Automator':
+        return <EditUncannyAutomator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Automate Hub SperseIO':
+        return <EditSperseIO allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Thrive Automator':
+        return <EditThriveAutomator allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'WP Webhooks':
+        return <EditWPWebhooks allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'Advanced Form Integration':
+        return <EditAdvancedFormIntegration allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'IFTTT':
+        return <EditIFTTT allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'N8NIO':
+        return <EditN8NIO allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
+      case 'SureTriggers':
+        return <EditSureTriggers allIntegURL={allIntegURL} formFields={formFields} integrations={integrations} setIntegration={setIntegration} />
       default:
         break
     }
