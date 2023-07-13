@@ -1,72 +1,44 @@
 const changelogInfo = {
-  '2.1.0': {
-    date: '2020-01-01',
+  '2.2.0': {
+    date: '15-July-2023',
     changes: {
       added: {
         label: 'Added',
         list: [
           {
-            label: 'WP Auth',
+            label: 'New Field',
             tag: 'new',
             list: [
+              'Repeater Field - to create repeated forms with complex conditional logics calculation',
+            ],
+          },
+          {
+            label: 'Features',
+            list: [
               {
-                label: 'Registration',
-                list: [
-                  'Auto Login after registration',
-                  {
-                    label: 'Approval System',
-                    tag: 'New Feature',
-                    list: [
-                      'Auto',
-                      'Admin Review',
-                      'Email Activation',
-                    ],
-                  },
-                  'WordPress Email Notification (Admin & User)',
-                  'User Meta Field Mapping',
-                ],
+                label: 'Form Abandonment or Partial Form Submission',
+                tag: 'new',
               },
-              'login',
-              'logout',
-              'password reset',
-              'forgot password',
+              {
+                label: 'Pdf Attachment of Form Entry in Email Notifications',
+                tag: 'new',
+              },
             ],
           },
-          {
-            label: 'Form Settings',
-            list: [
-              'Required user to be logged in for submit form',
-              'Empty form submission disallow',
-              'Disable entry storing in Database & Bit Form',
-            ],
-          },
-          {
-            label: 'Fields',
-            list: [
-              '(New) Username - unique WordPress user name validation',
-              'Email - unique WordPress user email validation',
-              'Password - encrypted by default on WP user management',
-              'Unique entry - Text, username, multi text, checkbox, radio, number, dropdown, country, email, url, date, color picker',
-            ],
-          },
-          "Field required asterisk class name 'fld-req-symbol' added.",
-        ],
-      },
-      imporovement: {
-        label: 'Improvement',
-        list: [
-          'Form Builder UI',
-          'Form Builder UX',
-          'Form Builder Performance',
-          'Form Builder Accessibility',
         ],
       },
       fixed: {
         label: 'Fixed',
         list: [
-          'Form Builder UI',
-          'Form Builder UX',
-          'Form Builder Performance',
+          'Form entry edit route 404 issue',
+          "Forms not initializing on Elementor page builder's modal",
+          'Telegram Integration issue regarding multiple uploaded files',
+          'MailerLite Integration timeline log issue',
+          'Zoho workdrive integration next button disabled issue',
+          'Country field default value issue from Conditional Logics',
+          'bitform_dequeue_styles hook issue with form ids',
+          'Deprycated notice from shortcode function if form content is empty',
+          'alt attribute not updating from custom attribute settings',
         ],
       },
     },
