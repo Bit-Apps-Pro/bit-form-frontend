@@ -7,6 +7,7 @@ import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
 import { $bits } from './GlobalStates/GlobalStates'
 import { __ } from './Utils/i18nwrap'
+import ChangelogToggle from './components/ChangelogToggle'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import MigrationModal from './components/MigrationModal'
@@ -95,9 +96,12 @@ export default function App() {
                 </NavLink>
               </nav>
             </div>
-            {bits.canRollbackToV1 && (
-              <RollbackButton />
-            )}
+            <div className="flx flx-center">
+              <ChangelogToggle />
+              {bits.canRollbackToV1 && (
+                <RollbackButton />
+              )}
+            </div>
           </div>
         </div>
 
