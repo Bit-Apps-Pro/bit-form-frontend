@@ -153,7 +153,6 @@ export default function WebHooksLayouts({
         </div>
       </div>
       <br />
-      <br />
       <div className="f-m">{__('Add Url Parameter: (optional)')}</div>
       <div className="btcd-param-t-wrp mt-1">
         <div className="btcd-param-t">
@@ -222,7 +221,6 @@ export default function WebHooksLayouts({
               {isLoading && <LoaderSm size={14} clr="#022217" className="ml-2" />}
               <ExternalLinkIcn size={18} className="ml-1" />
             </Button>
-            <br />
             <div className="wh-resp-box">
               <div className="f-m wh-resp-box-title">{__('Response:')}</div>
               <div
@@ -232,11 +230,20 @@ export default function WebHooksLayouts({
                 Test Webhook to see the response.
               </div>
             </div>
-            <br />
           </>
         )
       }
-      {(!isInfo && create) && <br />}
+      <small className="d-blk mt-2 mb-2">
+        {__('Try our free webhook test website: ')}
+        <a
+          className="btcd-link"
+          href="https://webhook.is"
+          target="_blank"
+          rel="noreferrer"
+        >
+          https://webhook.is
+        </a>
+      </small>
       {
         create && (
           <>
