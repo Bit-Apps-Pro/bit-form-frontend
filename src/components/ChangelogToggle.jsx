@@ -13,7 +13,7 @@ export default function ChangelogToggle() {
   const [bits, setBits] = useAtom($bits)
   const [show, setShow] = useState(bits.changelogVersion !== bits.version)
   const [currentVersion, setCurrentVersion] = useState(bits.version)
-  const currenChangelog = changelogInfo[currentVersion]
+  const currenChangelog = changelogInfo['2.2.0']
   const { css } = useFela()
 
   const setChangeLogVersion = () => {
@@ -43,12 +43,12 @@ export default function ChangelogToggle() {
       <Modal sm show={show} onCloseMdl={setChangeLogVersion}>
         <div>
           <div className="flx flx-col flx-center">
-            <h3 className={css({ m: 5 })}>{__('Versions Changelog')}</h3>
+            <h3 className={css({ m: 5 })}>{__('What\'s New?')}</h3>
           </div>
           <div>
             <h3 className={css({ m: 0 })}>
               <a href="https://bit-apps.bitcode.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
-                {`Version ${currentVersion}`}
+                {`Version ${currentVersion} `}
                 <ExternalLinkIcn size="14" />
               </a>
             </h3>
@@ -64,6 +64,13 @@ export default function ChangelogToggle() {
                 </ul>
               </div>
             ))}
+          </div>
+          <div className={css({})}>
+            <span className={css({ m: '0px 5px 5px' })}>{__('For more details,')}</span>
+            <a href="https://bit-apps.bitcode.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
+              {__('Click here ')}
+              <ExternalLinkIcn size="14" />
+            </a>
           </div>
         </div>
       </Modal>
