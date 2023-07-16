@@ -18,7 +18,7 @@ import KeyBoard from './KeyBoard'
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 function CalculatorField({
-  label, onChange, value, disabled, type, textarea, className, options, formFields
+  label, onChange, value, disabled, type, textarea, className, options, formFields,
 }) {
   const { css } = useFela()
   const fields = useAtomValue($fields)
@@ -124,7 +124,7 @@ function CalculatorField({
         draftExp.splice(caretPosition, 0, { type: 'operator', dataObj: { content: key } })
       }))
       setCaretPosition(oldPosition => oldPosition + 1)
-    } else if (/^[!@#$%^&*()\\=,.?"':{}|_<>]$/.test(key)) {
+    } else if (/^[!@#$%^&*()\\=,.?"':{}[\]|_<>]$/.test(key)) {
       setExpressions(oldExp => create(oldExp, draftExp => {
         draftExp.splice(caretPosition, 0, { type: 'symbol', dataObj: { content: key } })
       }))
@@ -354,7 +354,7 @@ function initialExpression(value, fieldArr) {
         expArr.push({ id, type: 'number', dataObj: { content } })
       } else if (/^[+\-*/(),<>]{1}$/g.test(content)) {
         expArr.push({ id, type: 'operator', dataObj: { content } })
-      } else if (/^[!@#$%^&*()\\=,.?"':{}|_<>]$/g.test(content)) {
+      } else if (/^[!@#$%^&*()\\=,.?"':{}[\]|_<>]$/g.test(content)) {
         expArr.push({ id, type: 'symbol', dataObj: { content } })
       } else if (/\${\w[^]*[\d\D\s]\)}/g.test(content)) {
         let functionName = content.replace(/^\${|}$/g, '')

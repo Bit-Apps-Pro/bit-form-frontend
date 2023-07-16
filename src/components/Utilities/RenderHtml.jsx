@@ -1,10 +1,10 @@
-import htmr from 'htmr'
+import parse from 'html-react-parser';
 
 export default function RenderHtml({ html }) {
   try {
     return (
       <>
-        {htmr(html)}
+        {parse(html)}
       </>
     )
   } catch (_) {

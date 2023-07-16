@@ -22,6 +22,12 @@ export default function repeaterStyle_1_bitformDefault({ fk, type, breakpoint, c
         'flex-direction': 'row',
         transition: 'all .2s ease',
       },
+      [`.${fk}-rpt-wrp:nth-child(n+2)`]: {
+        'border-top': 'solid',
+        'border-color': 'var(--global-fld-bdr-clr) !important',
+        'border-width': '1px !important',
+        'border-radius': '0px',
+      },
       [`.${fk}-rpt-grid-wrp`]: {
         width: '100%',
       },

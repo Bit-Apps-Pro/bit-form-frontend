@@ -20,7 +20,7 @@ const bitformsIcon = () => (
 )
 
 registerBlockType('bitforms/form-shortcode', {
-  title: __('Bit Form'),
+  title: __('Bit Form - Contact Form Builder Plugin for WordPress'),
   icon: bitformsIcon,
   category: 'widgets',
   keywords: ['Form', 'Contact Form', 'Bitform'],

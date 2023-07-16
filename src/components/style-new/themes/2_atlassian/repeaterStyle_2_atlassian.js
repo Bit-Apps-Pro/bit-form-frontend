@@ -21,6 +21,12 @@ export default function repeaterStyle_2_atlassian({ fk, type, breakpoint, colorS
         display: 'flex',
         'flex-direction': 'row',
       },
+      [`.${fk}-rpt-wrp:nth-child(n+2)`]: {
+        'border-top': 'solid',
+        'border-color': 'var(--global-fld-bdr-clr) !important',
+        'border-width': '1px !important',
+        'border-radius': '0px',
+      },
       [`.${fk}-rpt-grid-wrp`]: {
         width: 'calc(100% - 60px)',
       },
