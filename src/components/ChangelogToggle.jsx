@@ -47,7 +47,7 @@ export default function ChangelogToggle() {
           </div>
           <div>
             <h3 className={css({ m: 0 })}>
-              <a href="https://bit-apps.bitcode.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
+              <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
                 {`Version ${currentVersion} `}
                 <ExternalLinkIcn size="14" />
               </a>
@@ -67,7 +67,7 @@ export default function ChangelogToggle() {
           </div>
           <div className={css({})}>
             <span className={css({ m: '0px 5px 5px' })}>{__('For more details,')}</span>
-            <a href="https://bit-apps.bitcode.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
+            <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
               {__('Click here ')}
               <ExternalLinkIcn size="14" />
             </a>
