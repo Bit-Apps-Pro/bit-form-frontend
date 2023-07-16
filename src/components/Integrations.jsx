@@ -95,7 +95,7 @@ function Integrations() {
     { type: 'MetaBox', logo: metabox },
     { type: 'Pods', logo: pods },
     { type: 'Mail Poet', logo: mailPoet },
-    { type: 'SendinBlue', logo: sendinblue },
+    { type: 'Brevo(SendinBlue)', logo: sendinblue, title: 'Brevo(SendinBlue)' },
     { type: 'WooCommerce', logo: wooCommerce },
     { type: 'ActiveCampaign', logo: activeCampaign },
     { type: 'Telegram', logo: telegram },
@@ -176,6 +176,13 @@ function Integrations() {
     return null
   }
 
+  const getStrInsideParenthesis = (str) => {
+    const startIndex = str.indexOf('(')
+    const endIndex = str.indexOf(')')
+    return str.slice(startIndex + 1, endIndex)
+  }
+
+
   const setNewInteg = inte => {
     if (inte.pro && !proInfo?.installedVersion && !isPro) {
       toast.error('This integration is only available in Bit Form Pro.')
@@ -186,8 +193,10 @@ function Integrations() {
       return false
     }
     const { type } = inte
+
+    const action = type.includes('(') || type.includes(')') ? getStrInsideParenthesis(type) : type
     closeIntegModal()
-    navigate(`${allIntegURL}/new/${type}`)
+    navigate(`${allIntegURL}/new/${action}`)
   }
 
   const closeIntegModal = () => {
@@ -202,7 +211,10 @@ function Integrations() {
 
   const searchInteg = e => {
     const { value } = e.target
-    const filtered = integs.filter(integ => integ.type.toLowerCase().includes(value.toLowerCase()))
+    const filtered = integs.filter(integ => {
+      const integName = (integ.title || integ.type).toLowerCase()
+      return integName.includes(value.toLowerCase())
+    })
     setAvailableIntegs(sortArrOfObj(filtered, 'type'))
   }
 
@@ -289,7 +301,7 @@ function Integrations() {
                           )} */}
                           <img className={css(style.thumbImg)} loading="lazy" src={inte.logo} alt="" />
                           <div className={css(style.thumbTitle)}>
-                            {inte.type}
+                            {inte.title || inte.type}
                           </div>
                         </div>
                       ))}

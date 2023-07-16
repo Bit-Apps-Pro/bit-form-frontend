@@ -162,7 +162,9 @@ export default function NewInteg({ allIntegURL }) {
           &nbsp;Back
         </Link>
         <div className="w-8 txt-center">
-          <div className="mb-1"><b className="f-lg">{integUrlName}</b></div>
+          <div className="mb-1">
+            <b className="f-lg">{integUrlName === 'SendinBlue' ? 'Brevo(SendinBlue)' : integUrlName}</b>
+          </div>
           <div>{__('Integration Settings')}</div>
         </div>
       </div>
