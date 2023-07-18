@@ -773,6 +773,7 @@ export const getResizableHandles = fieldType => {
     // case 'divider':
     case 'textarea':
     case 'image':
+    case 'signature':
       return ['se', 'e']
     default:
   }

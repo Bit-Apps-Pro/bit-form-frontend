@@ -346,6 +346,10 @@ function copyStatics(mode) {
         src: absPath('packages/bit-page-lifecycle/dist/bit-page-lifecycle.min.js'),
         dest: absPath('../assets'),
       },
+      {
+        src: absPath('packages/bit-signature-field/dist/bit-signature-field.min.js'),
+        dest: absPath('../assets'),
+      },
     ],
   })
 }

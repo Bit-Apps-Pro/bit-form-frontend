@@ -1,5 +1,5 @@
-import { memo } from 'react'
 import { useAtomValue } from 'jotai'
+import { memo } from 'react'
 import { $styles } from '../GlobalStates/StylesState'
 import { isObjectEmpty } from '../Utils/Helpers'
 import '../resource/sass/components.scss'
@@ -23,11 +23,12 @@ import RazorpayField from './Fields/RazorpayField'
 import ReCaptchaV2 from './Fields/ReCaptchaV2'
 import RepeaterField from './Fields/RepeaterField'
 import SectionField from './Fields/SectionField'
+import StripeField from './Fields/StripeField'
 import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
 import TitleField from './Fields/TitleField'
-import StripeField from './Fields/StripeField'
+import SignatureField from './Fields/SignatureField'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -116,6 +117,8 @@ function MapComponents({
       return <SectionField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'repeater':
       return <RepeaterField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
+    case 'signature':
+      return <SignatureField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

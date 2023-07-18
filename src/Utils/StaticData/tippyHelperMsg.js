@@ -21,5 +21,7 @@ const tippyHelperMsg = {
   userUnique: __('Enabling this option will check from your WordPress user database whether its value is duplicate.'),
   stripeTheme: __('Stripe provide a variety of themes for the payment form. You can choose the theme that best suits theme your payment form. <a target="_blank" href="https://stripe.com/docs/elements/appearance-api">Learn more</a>'),
   amountType: __("Stripe provide minimum or maximum amount for different payment method type and currency. <a target='_blank' href='https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts'>learn more</a>"),
+  undoBtn: __('You can add or remove Undo button form Signature Field. You can toggle this option to add or remove the Undo button.'),
+  clrBtn: __('You can add or remove Clear button form Signature Field. You can toggle this option to add or remove the Clear button.'),
 }
 export default tippyHelperMsg

@@ -54,6 +54,7 @@ import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
+import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 
 export const toolsList = [
   {
@@ -899,6 +900,38 @@ export const toolsList = [
       btnAlignment: 'center',
       btnView: 'row',
       repeatDirecton: 'column',
+    },
+  },
+  {
+    name: 'Signature',
+    keywords: 'Signature Editor, Signature Field, Signature, Signature Block, Canvas',
+    icn: <SignaturePenIcn size="22" />,
+    pos: { h: 80, w: 60, i: 'shadow_block' },
+    new: true,
+    elm: {
+      typ: 'signature',
+      adminLbl: __('Signature'),
+      lbl: __('Signature'),
+      adminLblHide: true,
+      valid: {},
+      customClasses: {},
+      customAttributes: {},
+      btnAlign: 'start',
+      config: {
+        maxWidth: 2.5,
+        penColor: '#000000',
+        backgroundColor: '#ffffff',
+        imgTyp: 'image/png',
+      },
+      clrBtnHide: false,
+      clrBtn: __('Clear'),
+      clrPreIcn: '',
+      clrSufIcn: '',
+
+      undoBtnHide: false,
+      undoBtn: __('Undo'),
+      undoPreIcn: '',
+      undoSufIcn: '',
     },
   },
   /* {

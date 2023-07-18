@@ -7,7 +7,6 @@ import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
 import SectionFieldSettings from './SectionFieldSettings'
-import RepeaterFieldSettings from './RepeaterFieldSettings'
 
 const AdvanceFileUpSettings = loadable(() => import('./AdvanceFileUpSettings'), { fallback: <FieldSettingsLoader /> })
 const ButtonSettings = loadable(() => import('./ButtonSettings'), { fallback: <FieldSettingsLoader /> })
@@ -28,6 +27,8 @@ const RazorpayFieldSettings = loadable(() => import('./RazorpayFieldSettings'), 
 const ReCaptchaSettings = loadable(() => import('./ReCaptchaSettings'), { fallback: <FieldSettingsLoader /> })
 const TextFieldSettings = loadable(() => import('./TextFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <FieldSettingsLoader /> })
+const RepeaterFieldSettings = loadable(() => import('./RepeaterFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const SignatureFieldSettings = loadable(() => import('./SignatureField/SignatureFieldSettings'), { fallback: <FieldSettingsLoader /> })
 
 export default function FieldSettings() {
   const { fieldKey, formType, formID } = useParams()
@@ -81,6 +82,7 @@ export default function FieldSettings() {
     case 'phone-number': return <PhoneNumberFieldSettings />
     case 'section': return <SectionFieldSettings />
     case 'repeater': return <RepeaterFieldSettings />
+    case 'signature': return <SignatureFieldSettings />
 
     default: return <>No field found with this key.</>
   }
