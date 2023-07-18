@@ -34,6 +34,7 @@
     "bit-helpers": "workspace:*",
     "bit-paypal-field": "workspace:*",
     "bit-phone-number-field": "workspace:*",
+    "bit-signature-field": "workspace:*",
     "bit-razorpay-field": "workspace:*",
     "bit-recaptcha-field": "workspace:*",
     "bit-select-field": "workspace:*",
@@ -118,7 +119,7 @@
     "build-pkg": "turbo run build",
     "hot": "vite --force",
     "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
-    "build-bit-stripe": "cd ./packages/bit-stripe-field && pnpm run build && cp -r ./dist/* ../../../assets",
+    "build-bit-signature": "cd ./packages/bit-signature-field && pnpm run build && cp -r ./dist/* ../../../assets",
     "build-bit-repeater": "cd ./packages/bit-repeater-field && pnpm run build && cp -r ./dist/* ../../../assets",
     "build-bit-frontend": "cd ./packages/bit-frontend && pnpm run build && cp -r ./dist/* ../../../assets",
     "build-bit-form-abandonment": "cd ./packages/bit-form-abandonment && pnpm run build && cp -r ./dist/* ../../../assets"
