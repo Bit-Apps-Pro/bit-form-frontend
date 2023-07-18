@@ -381,6 +381,12 @@ export const styleClasses = {
   removeBtnSufIcn: ['rpt-rmv-btn-suf-i'],
   addToEndBtnPreIcn: ['add-to-end-btn-pre-i'],
   addToEndBtnSufIcn: ['add-to-end-btn-suf-i'],
+  undoSufIcn: ['undo-btn-suf-i'],
+  undoPreIcn: ['undo-btn-pre-i'],
+  clrPreIcn: ['clr-btn-suf-i'],
+  clrSufIcn: ['clr-btn-pre-i'],
+  undoBtn: ['undo-btn', 'undo-btn:hover', 'undo-btn:active', 'undo-btn:focus-visible', 'undo-btn:active:focus-visible', 'undo-btn:disabled'],
+  clrBtn: ['clr-btn', 'clr-btn:hover', 'clr-btn:active', 'clr-btn:focus-visible', 'clr-btn:active:focus-visible', 'clr-btn:disabled'],
 }
 
 export const iconElementLabel = {
@@ -585,6 +591,7 @@ const breakpointAndColorScheme = {
   mdDarkStyles: { breakpoint: 'md', colorScheme: 'dark' },
   smLightStyles: { breakpoint: 'sm', colorScheme: 'light' },
   smDarkStyles: { breakpoint: 'sm', colorScheme: 'dark' },
+
 }
 
 const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle }) => {
@@ -598,7 +605,6 @@ const addStyleInState = ({ element, brkPntColorSchema, fk, drftAllStyles, fieldS
 }
 
 export const addDefaultStyleClasses = (fk, element) => {
-  console.log('addDefaultStyleClasses', fk, element)
   const allStyles = getAtom($allStyles)
   const allNewStyles = create(allStyles, drftAllStyles => {
     Object.keys(allStyles).forEach(brkPntColorSchema => {
@@ -694,6 +700,10 @@ export const addDefaultStyleClasses = (fk, element) => {
         case 'repeater':
           const repeaterStyleBiformDefault = repeaterStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
           addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: repeaterStyleBiformDefault })
+          break
+        case 'signature':
+          const signatureStyleBiformDefault = repeaterStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: signatureStyleBiformDefault })
           break
         default:
           break
@@ -1047,6 +1057,7 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'chip-icn': 'selected-opt-lbl .chip-icn',
     'chip-clear-btn': 'selected-opt-lbl .chip-clear-btn',
     'stripe-pay-btn': 'stripe-wrp .stripe-pay-btn',
+    'signature-pad': 'signature-pad',
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
