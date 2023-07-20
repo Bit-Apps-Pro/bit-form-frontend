@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import SignaturePad from 'signature_pad'
 
 export default class BitSignatureField {
@@ -17,8 +18,16 @@ export default class BitSignatureField {
 
   #fieldKey = null
 
-  constructor(canvas, config) {
-    this.#canvas = canvas
+  #signatureFld = null
+
+  #contentId = null
+
+  constructor(selector, config) {
+    if (typeof selector === 'string') {
+      this.#canvas = document.querySelector(selector)
+    } else {
+      this.#canvas = selector
+    }
 
     this.#options = {
       maxWidth: config.maxWidth || 2.5,
@@ -30,7 +39,9 @@ export default class BitSignatureField {
 
     this.#fieldKey = config.fieldKey
 
-    this.#signatureImgType = config.signatureImgType || 'image/png'
+    this.#signatureImgType = config.imgTyp || 'image/png'
+
+    this.#contentId = config?.contentId
 
     this.init()
   }
@@ -38,6 +49,8 @@ export default class BitSignatureField {
   init() {
     this.#clearButton = this.#document.querySelector(`.${this.#fieldKey}-clr-btn`)
     this.#undoButton = this.#document.querySelector(`.${this.#fieldKey}-undo-btn`)
+    this.#signatureFld = this.#document?.querySelector(`.${this.#fieldKey}-signature-fld`)
+
     this.#signaturePad = new SignaturePad(this.#canvas, this.#options)
 
     window.onresize = this.resizeCanvas
@@ -45,6 +58,10 @@ export default class BitSignatureField {
     this.resizeCanvas()
     this.#clearCanvas()
     this.#undoCanvas()
+
+    this.#signaturePad.addEventListener('endStroke', () => {
+      this.putSignature()
+    })
   }
 
   resizeCanvas() {
@@ -61,6 +78,7 @@ export default class BitSignatureField {
     if (!this.#clearButton) return
     this.#clearButton.addEventListener('click', () => {
       this.#signaturePad.clear()
+      this.#signatureFld.value = ''
     })
   }
 
@@ -72,12 +90,24 @@ export default class BitSignatureField {
       if (data) {
         data.pop() // remove the last dot or line
         this.#signaturePad.fromData(data)
+        this.putSignature()
       }
     })
+  }
+
+  putSignature() {
+    if (this.#signaturePad.isEmpty()) return
+    const data = this.#signaturePad.toDataURL(this.#signatureImgType)
+    this.#signatureFld.value = data
   }
 
   destroy() {
     this.#document = null
     this.#canvas = null
+  }
+
+  reset() {
+    this.#signaturePad.clear()
+    this.#signatureFld.value = ''
   }
 }
