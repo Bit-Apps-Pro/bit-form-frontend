@@ -89,7 +89,7 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
                 data-testid={`${fieldKey}-clr-btn`}
                 data-dev-clr-btn={fieldKey}
               >
-                {fieldData.preIcn && (
+                {fieldData.clrPreIcn && (
                   <img
                     data-testid={`${fieldKey}-clr-btn-pre-i`}
                     data-dev-clr-btn-pre-i={fieldKey}
