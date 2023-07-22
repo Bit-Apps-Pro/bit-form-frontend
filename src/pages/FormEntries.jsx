@@ -204,24 +204,28 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   )
 
   const tableHeaderHandler = (labels = []) => {
-    console.log('labels', labels)
     const cols = labels?.map((val) => ({
       Header: val.adminLbl || val.name || val.key,
       accessor: val.key,
       fieldType: val.type,
       minWidth: 50,
       ...('type' in val
-        && val.type.match(/^(file-up|advanced-file-up|check|select|sys|repeater)$/) && {
+        && val.type.match(/^(file-up|advanced-file-up|signature|check|select|sys|repeater)$/) && {
+        // eslint-disable-next-line react/no-unstable-nested-components
         Cell: (row) => {
           if (
             row.cell.value !== null
             && row.cell.value !== undefined
             && row.cell.value !== ''
           ) {
-            if (val.type === 'file-up' || val.type === 'advanced-file-up') {
+            if (val.type === 'file-up' || val.type === 'advanced-file-up' || val.type === 'signature') {
+              let cellValue = row.cell.value
+              if (cellValue.toString()) {
+                cellValue = [cellValue]
+              }
               return (
                 <>
-                  {getUploadedFilesArr(row.cell.value).map((itm, i) => (
+                  {getUploadedFilesArr(cellValue).map((itm, i) => (
                     <TableFileLink
                       key={`file-n-${row.cell.row.index + i}`}
                       fname={splitFileName(itm)}
@@ -233,6 +237,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
             }
             if (val.type === 'repeater') {
               return (
+                // eslint-disable-next-line jsx-a11y/anchor-is-valid
                 <a
                   href=""
                   onClick={(e) => {
@@ -269,6 +274,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
               return getEntryStatus(status)
             }
 
+            // eslint-disable-next-line no-restricted-globals
             if (val.key === '__user_ip' && isFinite(Number(row.cell.value))) {
               return formatIpNumbers(row.cell.value)
             }
@@ -445,10 +451,13 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const filterEntryLabels = () => entryLabels.filter(el => !['sl', 'table_ac'].includes(el.accessor) && !filterFieldType.includes(el.fieldType))
 
   const drawerEntryMap = (entry) => {
-    console.log('entry', entry)
-    if (entry.fieldType === 'file-up' || entry.fieldType === 'advanced-file-up') {
+    if (entry.fieldType === 'file-up' || entry.fieldType === 'advanced-file-up' || entry.fieldType === 'signature') {
+      let cellVal = allResp[rowDtl.idx]?.[entry.accessor]
+      if (cellVal.toString()) {
+        cellVal = [cellVal]
+      }
       return (
-        getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => (
+        getUploadedFilesArr(cellVal)?.map((it, i) => (
           <TableFileLink
             key={`file-n-${i + 1.1}`}
             fname={splitFileName(it)}
@@ -461,7 +470,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     if (entry.fieldType === 'repeater') {
       return (
         <a
-          href=""
+          href="#"
           onClick={(e) => {
             e.preventDefault()
             setRepeaterDataMdl({
