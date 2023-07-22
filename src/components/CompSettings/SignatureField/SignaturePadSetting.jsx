@@ -14,7 +14,7 @@ const msg = {
   penColor: __('Pen Color'),
   backgroundColor: __('Background Color'),
   maxWidth: __('Pen Width'),
-  impTyp: __('Image Type'),
+  imgTyp: __('Image Type'),
 }
 
 export default function SignaturePadSetting() {
@@ -55,12 +55,12 @@ export default function SignaturePadSetting() {
           />
         </div>
         <div className={css(s.inpWrp)}>
-          <label htmlFor="impTyp">Image Type</label>
+          <label htmlFor="imgTyp">Image Type</label>
           <select
             className={css(FieldStyle.input, { w: '30%' })}
-            name="impTyp"
-            id="impTyp"
-            value={fieldData.config.impTyp}
+            name="imgTyp"
+            id="imgTyp"
+            value={fieldData.config.imgTyp}
             onChange={inputHandler}
           >
             <option value="image/png">PNG</option>
