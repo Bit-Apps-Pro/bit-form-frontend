@@ -42,6 +42,13 @@ export default function TinyMCE({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formFields, id, disabled, tinymceInWp])
 
+  const insertFieldKey = (fld) => {
+    if (fld.typ === 'signature') {
+      return `<img width="250" src="\${${fld.key}}" alt="${fld.key}" />`
+    }
+    return `\${${fld.key}}`
+  }
+
   const timyMceInit = () => {
     if (typeof tinymce !== 'undefined') {
       tinymce.init({
@@ -67,7 +74,7 @@ export default function TinyMCE({
             tooltip: 'Add Form Field Value in Message',
             type: 'menubutton',
             icon: false,
-            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha|section|divider|image)$/) && ({ text: i.name, onClick() { editor.insertContent(`\${${i.key}}`) } })),
+            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/) && ({ text: i.name, onClick() { editor.insertContent(insertFieldKey(i)) } })),
           })
           SmartTagField && editor.addButton('addSmartField', {
             text: 'Smart Tag Fields',
