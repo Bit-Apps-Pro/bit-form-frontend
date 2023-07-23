@@ -1,9 +1,8 @@
-import { useId } from 'react'
 import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import TrashIcn from '../../../Icons/TrashIcn'
-import { __ } from '../../../Utils/i18nwrap'
 import { SmartTagField } from '../../../Utils/StaticData/SmartTagField'
+import { __ } from '../../../Utils/i18nwrap'
 import MtInput from '../../Utilities/MtInput'
 import { addFieldMap, delFieldMap, handleFieldMapping } from './MetaboxHelperFunction'
 
@@ -80,7 +79,7 @@ export default function FieldMap({
           <option value="">{__('Select Field')}</option>
           {
             customFields?.map(header => (
-              <option key={`${useId()}-1`} value={header.key}>
+              <option key={`${header.name}-1`} value={header.key}>
                 {`${header.name}`}
               </option>
             ))
