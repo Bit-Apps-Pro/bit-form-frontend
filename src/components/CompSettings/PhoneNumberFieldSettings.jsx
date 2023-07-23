@@ -1,8 +1,8 @@
+import { useAtom } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
@@ -339,7 +339,7 @@ const PhoneNumberFieldSettings = () => {
         tip="By disabling this option, are not detect county by ip"
         title={__('Detect Country By IP')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp', 'config')}
-        isChecked={detectCountryByIp}
+        isChecked={detectCountryByIp || false}
         isPro
         proProperty="detectCountryByIp"
       />
@@ -352,7 +352,7 @@ const PhoneNumberFieldSettings = () => {
         tip="By disabling this option, are not detect county by Geo location"
         title={__('Detect Country By Geo')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo', 'config')}
-        isChecked={detectCountryByGeo}
+        isChecked={detectCountryByGeo || false}
         isPro
         proProperty="detectCountryByGeo"
       />
