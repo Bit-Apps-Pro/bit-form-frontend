@@ -287,6 +287,10 @@ function copyStatics(mode) {
         dest: absPath('../assets'),
       },
       {
+        src: absPath('packages/bit-frontend/dist/validate-focus.min.js'),
+        dest: absPath('../assets'),
+      },
+      {
         src: absPath('packages/bit-frontend/dist/hidden-token-field.min.js'),
         dest: absPath('../assets'),
       },
