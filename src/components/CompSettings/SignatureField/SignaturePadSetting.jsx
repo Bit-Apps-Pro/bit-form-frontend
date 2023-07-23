@@ -54,20 +54,7 @@ export default function SignaturePadSetting() {
             onChange={inputHandler}
           />
         </div>
-        <div className={css(s.inpWrp)}>
-          <label htmlFor="imgTyp">Image Type</label>
-          <select
-            className={css(FieldStyle.input, { w: '30%' })}
-            name="imgTyp"
-            id="imgTyp"
-            value={fieldData.config.imgTyp}
-            onChange={inputHandler}
-          >
-            <option value="image/png">PNG</option>
-            <option value="image/jpeg">JPEG</option>
-            <option value="image/svg+xml">SVG</option>
-          </select>
-        </div>
+
         <div className={css(s.inpWrp)}>
           <label htmlFor="penColor">Pen Color</label>
           <input
@@ -89,6 +76,20 @@ export default function SignaturePadSetting() {
             value={fieldData.config.backgroundColor}
             onChange={inputHandler}
           />
+        </div>
+        <div className={css(s.inpWrp)}>
+          <label htmlFor="imgTyp">Image Type</label>
+          <select
+            className={css(FieldStyle.input, { w: '30%' })}
+            name="imgTyp"
+            id="imgTyp"
+            value={fieldData.config.imgTyp}
+            onChange={inputHandler}
+          >
+            <option value="image/png">PNG</option>
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/svg+xml">SVG</option>
+          </select>
         </div>
       </div>
     </SimpleAccordion>
