@@ -261,7 +261,7 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   }
 }
 
-function generateNestedLayoutCSSText() {
+export function generateNestedLayoutCSSText() {
   const nestedLayouts = getAtom($nestedLayouts)
   const builderHelperStates = getAtom($builderHelperStates)
   const nestedLayoutStyleText = { lg: '', md: '', sm: '' }
