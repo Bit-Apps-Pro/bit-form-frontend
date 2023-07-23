@@ -25,6 +25,7 @@ import selectStyle_0_noStyle from './selectStyle_0_noStyle'
 import textStyle_0_noStyle from './textStyle_0_noStyle'
 import titleStyle_0_noStyle from './titleStyle_0_noStyle'
 import stripeStyle_0_noStyle from './stripeStyle_0_noStyle'
+import signature_0_noStyle from './signature_0_noStyle'
 
 export default function noStyleTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
@@ -106,6 +107,8 @@ export default function noStyleTheme({
       return repeater({ type, fk, breakpoint, colorScheme })
     case 'stripe':
       return stripe({ type, fk, breakpoint, colorScheme })
+    case 'signature':
+      return signature({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = noStyleTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light' })
@@ -646,6 +649,19 @@ const button = ({ type, fk, direction, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: buttonStyle_0_noStyle({ fk, direction, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const signature = ({ type, fk, direction, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'noStyle',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: signature_0_noStyle({ fk, direction, breakpoint, colorScheme }),
     }
   }
   return {}
