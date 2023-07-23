@@ -116,7 +116,7 @@
     "sb": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "del-modules": "npkill",
-    "build-pkg": "turbo run build",
+    "build-pkg": "turbo run build --force",
     "hot": "vite --force",
     "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
     "build-bit-stripe": "cd ./packages/bit-stripe-field && pnpm run build && cp -r ./dist/* ../../../assets",
