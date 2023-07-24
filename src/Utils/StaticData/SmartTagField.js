@@ -239,7 +239,7 @@ export const SmartTagField = [
     custom: true,
   },
   {
-    id: 42,
+    id: 44,
     name: '_bf_calc()',
     label: 'Calculation',
     type: 'number',

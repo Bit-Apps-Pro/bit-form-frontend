@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { useAtom } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import FieldStyle from '../../styles/FieldStyle.style'
-import { isDev } from '../../Utils/config'
 import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
+import { isDev } from '../../Utils/config'
 import { __ } from '../../Utils/i18nwrap'
+import FieldStyle from '../../styles/FieldStyle.style'
 import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
@@ -256,7 +256,7 @@ const CountryFieldSettings = () => {
         tip="By disabling this option, are not detect county by ip"
         title={__('Detect Country By IP')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByIp')}
-        isChecked={detectCountryByIp}
+        isChecked={detectCountryByIp || false}
         isPro
         proProperty="detectCountryByIp"
       />
@@ -269,7 +269,7 @@ const CountryFieldSettings = () => {
         tip="By disabling this option, are not detect county by Geo location"
         title={__('Detect Country By Geo')}
         action={e => handleConfigChange(e.target.checked, 'detectCountryByGeo')}
-        isChecked={detectCountryByGeo}
+        isChecked={detectCountryByGeo || false}
         isPro
         proProperty="detectCountryByGeo"
       />

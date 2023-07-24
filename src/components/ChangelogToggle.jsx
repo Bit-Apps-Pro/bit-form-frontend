@@ -48,7 +48,7 @@ export default function ChangelogToggle() {
           <div>
             <h3 className={css({ m: 0 })}>
               <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
-                {`Version ${currentVersion} `}
+                {'Version 2.2.0 '}
                 <ExternalLinkIcn size="14" />
               </a>
             </h3>

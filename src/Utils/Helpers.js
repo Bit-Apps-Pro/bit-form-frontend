@@ -17,7 +17,7 @@ import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLigh
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
 import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
-import atomicStyleGenarate from './atomicStyleGenarate'
+import atomicStyleGenarate, { generateNestedLayoutCSSText } from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
 import { JCOF } from './globalHelpers'
 
@@ -683,7 +683,10 @@ export const generateAndSaveAtomicCss = currentFormId => {
   const builderHelperStates = getAtom($builderHelperStates)
   const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
   const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
-  if (isStyleNotLoaded) return { layouts: sortedLayout }
+  if (isStyleNotLoaded) {
+    const { sortedNestedLayouts } = generateNestedLayoutCSSText()
+    return { layouts: sortedLayout, nestedLayouts: sortedNestedLayouts }
+  }
 
   const generatedAtomicStyles = atomicStyleGenarate({ sortedLayout })
 

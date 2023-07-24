@@ -1,24 +1,25 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-param-reassign */
+import { useAtom } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import EditIcn from '../../Icons/EditIcn'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { deepCopy } from '../../Utils/Helpers'
+import { isDev } from '../../Utils/config'
+import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
 import ErrorMessages from '../../styles/ErrorMessages.style'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { isDev } from '../../Utils/config'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
 import Cooltip from '../Utilities/Cooltip'
 import SingleToggle from '../Utilities/SingleToggle'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import DecisionBoxLabelModal from './CompSettingsUtils/DecisionBoxLabelModal'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
+import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import RequiredSettings from './CompSettingsUtils/RequiredSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
@@ -121,6 +122,10 @@ export default function DecisionBoxSettings() {
       <FieldSettingsDivider />
 
       <FieldDisabledSettings />
+
+      <FieldSettingsDivider />
+
+      <FieldHideSettings />
 
       <FieldSettingsDivider />
 

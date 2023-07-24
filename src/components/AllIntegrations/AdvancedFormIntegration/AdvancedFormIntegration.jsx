@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useState } from 'react'
+import { lazy, useState } from 'react'
 import 'react-multiple-select-dropdown-lite/dist/index.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import tutorialLinks from '../../../Utils/StaticData/tutorialLinks'
@@ -7,8 +7,9 @@ import SnackMsg from '../../Utilities/SnackMsg'
 import Steps from '../../Utilities/Steps'
 import TutorialLink from '../../Utilities/TutorialLink'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
-import WebHooksIntegration from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
+
+const WebHooksIntegration = lazy(() => import('../IntegrationHelpers/WebHooksIntegration'))
 
 function AdvancedFormIntegration({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
