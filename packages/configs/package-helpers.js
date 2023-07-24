@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 export const packagesFileLists = {
+  // package-name: [file-names]
   'bit-advanced-file-up-field': ['bit-advanced-file-up-field'],
   'bit-conditionals': ['bit-conditionals'],
   'bit-country-field': ['bit-country-field'],
