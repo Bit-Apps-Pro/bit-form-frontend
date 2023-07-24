@@ -3,7 +3,7 @@
 import BitSignatureField from 'bit-signature-field/src/bit-signature-field'
 import { useAtomValue } from 'jotai'
 import { useEffect, useRef } from 'react'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
@@ -11,6 +11,7 @@ import RenderStyle from '../style-new/RenderStyle'
 export default function SignatureField({ fieldKey, attr, formID, styleClasses }) {
   const signatureFldRef = useRef(null)
   const signatureElemnRef = useRef(null)
+  const bits = useAtomValue($bits)
 
   const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
@@ -53,6 +54,7 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
       backgroundColor,
       document: document.getElementById('bit-grid-layout')?.contentDocument,
       fieldKey,
+      assetsURL: `${bits.assetsURL}/../static/signature/`,
     }
     signatureFldRef.current = new BitSignatureField(fldElm, config)
   }, [fieldData])

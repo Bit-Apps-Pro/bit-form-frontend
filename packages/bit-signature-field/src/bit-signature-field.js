@@ -22,6 +22,8 @@ export default class BitSignatureField {
 
   #contentId = null
 
+  #assetsURL = null
+
   constructor(selector, config) {
     if (typeof selector === 'string') {
       this.#canvas = document.querySelector(selector)
@@ -42,6 +44,7 @@ export default class BitSignatureField {
     this.#signatureImgType = config.imgTyp || 'image/png'
 
     this.#contentId = config?.contentId
+    this.#assetsURL = config?.assetsURL
 
     this.init()
   }
@@ -50,6 +53,7 @@ export default class BitSignatureField {
     this.#clearButton = this.#document.querySelector(`.${this.#fieldKey}-clr-btn`)
     this.#undoButton = this.#document.querySelector(`.${this.#fieldKey}-undo-btn`)
     this.#signatureFld = this.#document?.querySelector(`.${this.#fieldKey}-signature-fld`)
+    this.#canvas.style.cursor = `url(${this.#assetsURL}pen.ico), crosshair`
 
     this.#signaturePad = new SignaturePad(this.#canvas, this.#options)
 
