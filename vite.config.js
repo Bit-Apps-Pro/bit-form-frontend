@@ -53,6 +53,11 @@ export default defineConfig(({ mode }) => ({
           arrowFunctions: true,
           // objectShorthand: true
         },
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'react-router-dom': ['react-router-dom'],
+          'fela-vendor': ['fela', 'react-fela', 'fela-plugin-custom-property'],
+        },
         chunkFileNames: () => `bf-${hash()}-${chunkCount++}.js`,
         assetFileNames: (fInfo) => {
           const pathArr = fInfo.name.split('/')
