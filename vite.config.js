@@ -109,12 +109,7 @@ function copyStatics(mode) {
 }
 
 function storeBuildHash() {
-  const globalConfigPath = absPath('../global-config.json')
-  const globalConfig = fs.existsSync(globalConfigPath)
-    ? JSON.parse(fs.readFileSync(globalConfigPath))
-    : {}
-  globalConfig.buildHash = newBuildHash
-  fs.writeFileSync(globalConfigPath, JSON.stringify(globalConfig))
+  fs.writeFileSync(absPath('../build-hash.txt'), String(newBuildHash))
 }
 
 function absPath(relativePath) {
