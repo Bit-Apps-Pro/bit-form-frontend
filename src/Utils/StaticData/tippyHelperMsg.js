@@ -15,6 +15,7 @@ const tippyHelperMsg = {
   pattern: __('Set a regular expression pattern that the input value should match for the field.'),
   required: __('This allows to make the field mandatory for users to fill out before submitting the form. You can toggle this option to use or disable the required.'),
   fieldHidden: __('The hide field feature allows you to hide the field from the user on the form. You can toggle this option to show or hide the field.'),
+  btnReverse: __('The reverse button feature allows to reverse the clear and undo button. You can toggle this option to reverse clear and undo button.'),
   readonly: __('Readonly feature allows you to set a field as read-only, meaning that users will not be able to edit the content of that field. You can toggle this option to enable or disable the setting.'),
   disabled: __('Disabling a field prevents users from interacting with it or entering data. You can toggle this option to enable or disable the field as needed.'),
   uniqueEntry: __('Enabling this option will check from the submitted entries whether its value is duplicate.'),

@@ -928,6 +928,8 @@ export const toolsList = [
       clrPreIcn: '',
       clrSufIcn: '',
 
+      btnDir: 'row',
+
       undoBtnHide: false,
       undoBtn: __('Undo'),
       undoPreIcn: '',

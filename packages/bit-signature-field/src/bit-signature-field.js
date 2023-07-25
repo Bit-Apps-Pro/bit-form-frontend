@@ -10,6 +10,8 @@ export default class BitSignatureField {
 
   #undoButton = null
 
+  // #redoButton = null
+
   #signaturePad = null
 
   #options = {}
@@ -23,6 +25,8 @@ export default class BitSignatureField {
   #contentId = null
 
   #assetsURL = null
+
+  #isBuilder = null
 
   constructor(selector, config) {
     if (typeof selector === 'string') {
@@ -43,6 +47,8 @@ export default class BitSignatureField {
 
     this.#signatureImgType = config.imgTyp || 'image/png'
 
+    this.#isBuilder = config?.isBuilder || false
+
     this.#contentId = config?.contentId
     this.#assetsURL = config?.assetsURL
 
@@ -52,6 +58,7 @@ export default class BitSignatureField {
   init() {
     this.#clearButton = this.#document.querySelector(`.${this.#fieldKey}-clr-btn`)
     this.#undoButton = this.#document.querySelector(`.${this.#fieldKey}-undo-btn`)
+    // this.#redoButton = this.#document.querySelector(`.${this.#fieldKey}-redo-btn`)
     this.#signatureFld = this.#document?.querySelector(`.${this.#fieldKey}-signature-fld`)
     this.#canvas.style.cursor = `url(${this.#assetsURL}pen.ico), crosshair`
 
@@ -62,10 +69,24 @@ export default class BitSignatureField {
     this.resizeCanvas()
     this.#clearCanvas()
     this.#undoCanvas()
+    // this.#redoCanvas()
 
     this.#signaturePad.addEventListener('endStroke', () => {
       this.putSignature()
     })
+
+    // add keyboard shortcut for undo ctrl + z and redo ctrl + y
+    // window.addEventListener('keydown', (e) => {
+    //   if (this.#isBuilder) return
+    //   if (e.ctrlKey && e.key === 'y') {
+    //     e.preventDefault()
+    //     this.#redoButton.click()
+    //   }
+    //   if (e.ctrlKey && e.key === 'z') {
+    //     e.preventDefault()
+    //     this.#undoButton.click()
+    //   }
+    // })
   }
 
   resizeCanvas() {
@@ -95,11 +116,31 @@ export default class BitSignatureField {
         data.pop() // remove the last dot or line
         this.#signaturePad.fromData(data)
         this.putSignature()
+        if (data.length === 0) {
+          this.#signatureFld.value = ''
+        }
       }
     })
   }
 
+  // #redoCanvas() {
+  //   if (!this.#redoButton) return
+  //   this.#redoButton.addEventListener('click', () => {
+  //     const data = this.#signaturePad.toData()
+  //     console.log(data)
+  //     if (data) {
+  //       data.push() // remove the last dot or line
+  //       this.#signaturePad.fromData(data)
+  //       this.putSignature()
+  //       if (data.length === 0) {
+  //         this.#signatureFld.value = ''
+  //       }
+  //     }
+  //   })
+  // }
+
   putSignature() {
+    if (this.#isBuilder) return
     if (this.#signaturePad.isEmpty()) return
     const data = this.#signaturePad.toDataURL(this.#signatureImgType)
     this.#signatureFld.value = data

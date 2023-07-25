@@ -55,6 +55,7 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
       document: document.getElementById('bit-grid-layout')?.contentDocument,
       fieldKey,
       assetsURL: `${bits.assetsURL}/../static/signature/`,
+      isBuilder: true,
     }
     signatureFldRef.current = new BitSignatureField(fldElm, config)
   }, [fieldData])
