@@ -3,17 +3,20 @@
 import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import fs from 'fs'
 import { defineConfig, normalizePath } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { packagesFileLists } from './packages/configs/package-helpers'
 
 let chunkCount = 0
+const newBuildHash = hash()
 
 export default defineConfig(({ mode }) => ({
 
   plugins: [
     react(),
     copyStatics(mode),
+    storeBuildHash(mode),
   ],
 
   optimizeDeps: {
@@ -46,17 +49,12 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       input: path.resolve(__dirname, 'src/main.jsx'),
       output: {
-        entryFileNames: 'main.js',
+        entryFileNames: `main-${newBuildHash}.js`,
         compact: true,
         validate: true,
         generatedCode: {
           arrowFunctions: true,
           // objectShorthand: true
-        },
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'react-router-dom': ['react-router-dom'],
-          'fela-vendor': ['fela', 'react-fela', 'fela-plugin-custom-property'],
         },
         chunkFileNames: () => `bf-${hash()}-${chunkCount++}.js`,
         assetFileNames: (fInfo) => {
@@ -64,7 +62,7 @@ export default defineConfig(({ mode }) => ({
           const fileName = pathArr[pathArr.length - 1]
 
           if (fileName === 'main.css') {
-            return 'main.css'
+            return `main-${newBuildHash}.css`
           }
           if (fileName === 'logo.svg') {
             return 'logo.svg'
@@ -108,6 +106,13 @@ function copyStatics(mode) {
   }, [])
 
   return viteStaticCopy({ targets })
+}
+
+function storeBuildHash(mode) {
+  if (mode === 'development') {
+    return null
+  }
+  fs.writeFileSync(absPath('../build-hash.txt'), String(newBuildHash))
 }
 
 function absPath(relativePath) {
