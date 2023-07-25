@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     copyStatics(mode),
-    storeBuildHash(),
+    storeBuildHash(mode),
   ],
 
   optimizeDeps: {
@@ -108,7 +108,10 @@ function copyStatics(mode) {
   return viteStaticCopy({ targets })
 }
 
-function storeBuildHash() {
+function storeBuildHash(mode) {
+  if (mode === 'development') {
+    return null
+  }
   fs.writeFileSync(absPath('../build-hash.txt'), String(newBuildHash))
 }
 
