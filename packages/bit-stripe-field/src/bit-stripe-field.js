@@ -7,6 +7,8 @@ export default class BitStripeField {
 
   #contentId = null
 
+  #entryId = null
+
   #config = {}
 
   #payIntegID = null
@@ -38,6 +40,8 @@ export default class BitStripeField {
   #layout = null
 
   #payBtnTxt = null
+
+  #allEventListeners = []
 
   constructor(selector, config) {
     if (typeof selector === 'string') {
@@ -78,7 +82,7 @@ export default class BitStripeField {
     const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
     this.#stripeBtnSpanner = this.#querySelector('.stripe-btn-spinner')
 
-    stripeBtn.addEventListener('click', () => {
+    this.#addEvent(stripeBtn, 'click', () => {
       this.#stripeBtnSpanner.classList.remove('d-none')
       this.#handleOnClick(this.#contentId)
         .then(response => {
@@ -89,6 +93,11 @@ export default class BitStripeField {
         })
         .finally(() => this.#stripeBtnSpanner.classList.add('d-none'))
     })
+  }
+
+  #addEvent(selector, eventType, cb) {
+    selector.addEventListener(eventType, cb)
+    this.#allEventListeners.push({ selector, eventType, cb })
   }
 
   #getDynamicValue(fldKey) {
@@ -145,7 +154,7 @@ export default class BitStripeField {
         currency: this.#currency,
         metadata: {
           formID: this.#formID,
-          entryID: this.#getEntryId(),
+          entryID: this.#entryId,
           fieldKey: this.#fieldKey,
         },
         payment_method_types: this.#options.payment_method_types,
@@ -209,16 +218,12 @@ export default class BitStripeField {
     }
   }
 
-  #getEntryId() {
-    return localStorage.getItem('bf-entry-id')
-  }
-
   #submitPayment() {
     const submitBtn = this.#querySelector('#pay-now-btn')
 
     const elements = this.#elements
 
-    submitBtn?.addEventListener('click', () => {
+    this.#addEvent(submitBtn, 'click', () => {
       const paySpinner = this.#querySelector('.pay-spinner')
       paySpinner.classList.remove('d-none')
       this.#stripInstance.confirmPayment({
@@ -237,70 +242,13 @@ export default class BitStripeField {
     })
   }
 
-  #bfSubmitFetch(ajaxURL, formData, update) {
-    const uri = new URL(ajaxURL)
-    uri.searchParams.append('action', update ? 'bitforms_entry_update' : 'bitforms_submit_form')
-    return fetch(uri, {
-      method: 'POST',
-      body: formData,
-    })
-  }
-
   async #handleOnClick(contentId) {
-    const form = bfSelect(this.#formSelector)
-    if (
-      typeof validateForm !== 'undefined'
-      && !validateForm({ form: contentId })
-    ) {
-      const validationEvent = new CustomEvent('bf-form-validation-error', {
-        detail: { formId: contentId, fieldId: '', error: '' },
-      })
-      form.dispatchEvent(validationEvent)
-      return false
-    }
-
-    let update = false
-    let formData = new FormData(form)
-    if (this.#getEntryId()) {
-      update = true
-      formData.append('entryID', this.#getEntryId())
-    }
-    const props = window.bf_globals[contentId]
-
-    if (typeof advancedFileHandle !== 'undefined') {
-      formData = advancedFileHandle(props, formData)
-    }
-    if (props.GCLID) {
-      formData.set('GCLID', props.GCLID)
-    }
-
-    const hidden = []
-    Object.entries(props?.fields || {}).forEach((fld) => {
-      if (fld[1]?.valid?.hide) {
-        hidden.push(fld[0])
-      }
-    })
-
-    if (hidden.length) {
-      formData.append('hidden_fields', hidden)
-    }
-    if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
-      const result = await new Promise(resolve => {
-        grecaptcha.ready(() => {
-          grecaptcha
-            .execute(props.gRecaptchaSiteKey, { action: 'submit' })
-            .then(async (token) => {
-              formData.append('g-recaptcha-response', token)
-              const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
-              resolve(await paymentSubmitResponse(this, submitResp, contentId, formData))
-            })
-        })
-      })
-      return result
-    }
-    const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
-    const result = await paymentSubmitResponse(this, submitResp, contentId, formData)
-    return result
+    try { await isFormValidatedWithoutError(contentId) } catch (_) { return Promise.reject() }
+    const progressData = await saveFormProgress(contentId)
+    const savedFormData = progressData?.[contentId]
+    if (!savedFormData?.success) return Promise.reject()
+    if (savedFormData.entry_id) this.#entryId = savedFormData.entry_id
+    return Promise.resolve(true)
   }
 
   #onApproveHandler(result) {
@@ -309,17 +257,33 @@ export default class BitStripeField {
     const form = document.getElementById(`form-${this.#contentId}`)
 
     if (typeof form !== 'undefined' && form !== null) {
+      const props = bf_globals[this.#contentId]
+      if (this.#entryId) props.entryId = this.#entryId
+      const paymentFld = bfSelect(`input[name="${this.#config.fieldKey}"]`, form)
+      if (paymentFld) {
+        paymentFld.value = result.id
+      } else {
+        setHiddenFld({ name: this.#config.fieldKey, value: result.id, type: 'text' }, form)
+      }
+      let submitBtn = bfSelect('button[type="submit"]', form)
+      if (!submitBtn) {
+        submitBtn = document.createElement('button')
+        submitBtn.setAttribute('type', 'submit')
+        submitBtn.style.display = 'none'
+        form.append(submitBtn)
+      }
+      submitBtn.click()
+
       const paymentParams = {
         formID: this.#formID,
         transactionID: result.id,
         payment_name: 'stripe',
         payment_type: 'order',
         payment_response: result,
-        entry_id: this.#getEntryId(),
+        entry_id: this.#entryId,
         fieldKey: this.#fieldKey,
       }
 
-      const props = bf_globals[this.#contentId]
       const uri = new URL(props?.ajaxURL)
       uri.searchParams.append('_ajax_nonce', props?.nonce)
       uri.searchParams.append('action', 'bitforms_payment_insert')
@@ -332,71 +296,15 @@ export default class BitStripeField {
       )
       submitResp.then(() => {
         formParent.classList.remove('pos-rel', 'form-loading')
-        setBFMsg({
-          contentId: this.#config.contentId,
-          msg: this.responseData.message || this.responseData,
-          type: 'success',
-          show: true,
-          error: false,
-        })
-        this.responseData?.hidden_fields?.map(hdnFld => {
-          setHiddenFld(hdnFld, form)
-        })
-        this.#responseRedirect()
-        bfReset(this.#contentId)
+        this.#entryId = null
       })
     }
   }
 
-  #responseRedirect() {
-    const responsedRedirectPage = this.responseData.redirectPage
-    let hitCron = null
-    let newNonce = ''
-    if (this.responseData.cron) {
-      hitCron = this.responseData.cron
-    }
-    if (this.responseData.cronNotOk) {
-      hitCron = this.responseData.cronNotOk
-    }
-    if (this.responseData.new_nonce) {
-      newNonce = this.responseData.new_nonce
-    }
-
-    this.#triggerIntegration(hitCron, newNonce, this.#contentId)
-    if (responsedRedirectPage) {
-      const timer = setTimeout(() => {
-        window.location = decodeURI(responsedRedirectPage)
-        if (timer) {
-          clearTimeout(timer)
-        }
-      }, 1000)
-    }
-  }
-
-  #triggerIntegration(hitCron, newNonce, contentId) {
-    const props = window.bf_globals[contentId]
-    if (hitCron) {
-      if (typeof hitCron === 'string') {
-        const uri = new URL(hitCron)
-        if (uri.protocol !== window.location.protocol) {
-          uri.protocol = window.location.protocol
-        }
-        fetch(uri)
-      } else {
-        const uri = new URL(props.ajaxURL)
-        uri.searchParams.append('action', 'bitforms_trigger_workflow')
-        const data = {
-          cronNotOk: hitCron,
-          token: newNonce || props.nonce,
-          id: props.appID,
-        }
-        fetch(uri, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-        }).then((response) => response.json())
-      }
-    }
+  #detachAllEvents() {
+    this.#allEventListeners.forEach(({ selector, eventType, cb }) => {
+      selector.removeEventListener(eventType, cb)
+    })
   }
 
   destroy() {
@@ -409,6 +317,7 @@ export default class BitStripeField {
     this.#stripeWrpSelector.innerHTML = ''
     if (stripeAuthWrpElm) stripeAuthWrpElm.innerHTML = ''
     if (stripeAddrWrpElm) stripeAddrWrpElm.innerHTML = ''
+    this.#detachAllEvents()
   }
 
   reset() {

@@ -124,6 +124,9 @@ function submitResponse(resp, contentId, formData) {
           })
         }
         localStorage.removeItem(`bitform-partial-form-${props.formId}`)
+        const entryIdElm = bfSelect('input[name="entryID"]', form)
+        if (entryIdElm) entryIdElm.remove()
+        delete props.entryId
       } else {
         const errorEvent = new CustomEvent('bf-form-submit-error', {
           detail: { formId: contentId, errors: result.data },
