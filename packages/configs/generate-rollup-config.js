@@ -6,28 +6,28 @@ import serve from 'rollup-plugin-serve'
 import livereload from 'rollup-plugin-livereload'
 import { getPackageFileList } from './package-helpers'
 
-const terserOptions = {
-  compress: {
-    passes: 10,
-    drop_console: false,
-  },
-  output: {
-    comments: false,
-  },
-  // mangle: {
-  //   properties: true,
-  //   reserved: [
-  //     'bit_country_field',
-  //   ]
-  // }
-}
-
 export default function generateRollupConfig() {
   const packageJson = require('./package.json') // eslint-disable-line global-require, import/no-unresolved
   const inputFileName = packageJson.name
   const fileNames = getPackageFileList(inputFileName)
 
   const isDev = process.env.NODE_ENV === 'dev'
+
+  const terserOptions = {
+    compress: {
+      passes: 10,
+      drop_console: false,
+    },
+    output: {
+      comments: false,
+    },
+    // mangle: {
+    //   properties: true,
+    //   reserved: [
+    //     'bit_country_field',
+    //   ]
+    // }
+  }
 
   const external = [
     'window',
