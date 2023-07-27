@@ -338,7 +338,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     if (status === 1) { return 'Unread' }
     if (status === 2) { return 'Unconfirmed' }
     if (status === 3) { return 'Confirmed' }
-    if (status === 9) { return 'Abandoned' }
+    if (status === 9) { return 'Draft' }
   }
 
   const editData = useCallback((row) => {
