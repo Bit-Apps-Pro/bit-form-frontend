@@ -10,9 +10,11 @@ export default class BitSignatureField {
 
   #undoButton = null
 
-  // #redoButton = null
+  #redoButton = null
 
   #signaturePad = null
+
+  #signatureFldWrp = null
 
   #options = {}
 
@@ -28,11 +30,14 @@ export default class BitSignatureField {
 
   #isBuilder = null
 
+  #undoedData = []
+
   constructor(selector, config) {
+    this.#document = config.document || document
     if (typeof selector === 'string') {
-      this.#canvas = document.querySelector(selector)
+      this.#signatureFldWrp = this.#document.querySelector(selector)
     } else {
-      this.#canvas = selector
+      this.#signatureFldWrp = selector
     }
 
     this.#options = {
@@ -40,8 +45,6 @@ export default class BitSignatureField {
       penColor: config.penColor || 'rgb(0, 0, 0)',
       backgroundColor: config.backgroundColor || 'rgb(255, 255, 255)',
     }
-
-    this.#document = config.document || document
 
     this.#fieldKey = config.fieldKey
 
@@ -56,10 +59,11 @@ export default class BitSignatureField {
   }
 
   init() {
-    this.#clearButton = this.#document.querySelector(`.${this.#fieldKey}-clr-btn`)
-    this.#undoButton = this.#document.querySelector(`.${this.#fieldKey}-undo-btn`)
-    // this.#redoButton = this.#document.querySelector(`.${this.#fieldKey}-redo-btn`)
-    this.#signatureFld = this.#document?.querySelector(`.${this.#fieldKey}-signature-fld`)
+    this.#canvas = this.#select(`.${this.#fieldKey}-signature-pad`)
+    this.#clearButton = this.#select(`.${this.#fieldKey}-clr-btn`)
+    this.#undoButton = this.#select(`.${this.#fieldKey}-undo-btn`)
+    this.#redoButton = this.#select(`.${this.#fieldKey}-redo-btn`)
+    this.#signatureFld = this.#select(`.${this.#fieldKey}-signature-fld`)
     this.#canvas.style.cursor = `url(${this.#assetsURL}pen.ico), crosshair`
 
     this.#signaturePad = new SignaturePad(this.#canvas, this.#options)
@@ -69,10 +73,18 @@ export default class BitSignatureField {
     this.resizeCanvas()
     this.#clearCanvas()
     this.#undoCanvas()
-    // this.#redoCanvas()
+    this.#redoCanvas()
+
+    this.#disableBtn(this.#undoButton)
+    this.#disableBtn(this.#redoButton)
+    this.#disableBtn(this.#clearButton)
 
     this.#signaturePad.addEventListener('endStroke', () => {
+      this.#undoedData = []
       this.putSignature()
+      this.#disableBtn(this.#clearButton, false)
+      this.#disableBtn(this.#undoButton, false)
+      this.#disableBtn(this.#redoButton)
     })
 
     // add keyboard shortcut for undo ctrl + z and redo ctrl + y
@@ -87,6 +99,10 @@ export default class BitSignatureField {
     //     this.#undoButton.click()
     //   }
     // })
+  }
+
+  #select(selector, parent = null) {
+    return (parent || this.#signatureFldWrp).querySelector(selector)
   }
 
   resizeCanvas() {
@@ -104,6 +120,9 @@ export default class BitSignatureField {
     this.#clearButton.addEventListener('click', () => {
       this.#signaturePad.clear()
       this.#signatureFld.value = ''
+      this.#disableBtn(this.#undoButton)
+      this.#disableBtn(this.#redoButton)
+      this.#disableBtn(this.#clearButton)
     })
   }
 
@@ -112,32 +131,46 @@ export default class BitSignatureField {
     this.#undoButton.addEventListener('click', () => {
       const data = this.#signaturePad.toData()
 
-      if (data) {
-        data.pop() // remove the last dot or line
+      if (data.length) {
+        const removed = data.pop() // remove the last dot or line
+        this.#undoedData.push(removed)
         this.#signaturePad.fromData(data)
         this.putSignature()
         if (data.length === 0) {
           this.#signatureFld.value = ''
         }
+        this.#disableBtn(this.#redoButton, false)
+        if (!data.length) this.#disableBtn(this.#undoButton)
+      } else {
+        this.#disableBtn(this.#undoButton)
       }
     })
   }
 
-  // #redoCanvas() {
-  //   if (!this.#redoButton) return
-  //   this.#redoButton.addEventListener('click', () => {
-  //     const data = this.#signaturePad.toData()
-  //     console.log(data)
-  //     if (data) {
-  //       data.push() // remove the last dot or line
-  //       this.#signaturePad.fromData(data)
-  //       this.putSignature()
-  //       if (data.length === 0) {
-  //         this.#signatureFld.value = ''
-  //       }
-  //     }
-  //   })
-  // }
+  #redoCanvas() {
+    if (!this.#redoButton) return
+    this.#redoButton.addEventListener('click', () => {
+      const data = this.#signaturePad.toData()
+      if (this.#undoedData.length) {
+        data.push(this.#undoedData.pop()) // add the last dot or line
+        this.#signaturePad.fromData(data)
+        this.putSignature()
+        this.#disableBtn(this.#undoButton, false)
+        if (!this.#undoedData.length) this.#disableBtn(this.#redoButton)
+      } else {
+        this.#disableBtn(this.#redoButton)
+      }
+    })
+  }
+
+  #disableBtn(btn, disable = true) {
+    if (!btn) return
+    if (disable) {
+      btn.setAttribute('disabled', 'disabled')
+    } else {
+      btn.removeAttribute('disabled')
+    }
+  }
 
   putSignature() {
     if (this.#isBuilder) return

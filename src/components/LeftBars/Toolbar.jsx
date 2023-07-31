@@ -914,6 +914,7 @@ export const toolsList = [
       lbl: __('Signature'),
       adminLblHide: true,
       valid: {},
+      err: {},
       customClasses: {},
       customAttributes: {},
       btnAlign: 'start',
@@ -928,12 +929,17 @@ export const toolsList = [
       clrPreIcn: '',
       clrSufIcn: '',
 
-      btnDir: 'row',
+      btnDir: false,
 
       undoBtnHide: false,
       undoBtn: __('Undo'),
       undoPreIcn: '',
       undoSufIcn: '',
+
+      redoBtnHide: false,
+      redoBtn: __('Redo'),
+      redoPreIcn: '',
+      redoSufIcn: '',
     },
   },
   /* {

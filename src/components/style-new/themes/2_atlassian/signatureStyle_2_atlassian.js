@@ -24,6 +24,12 @@ export default function signatureStyle_2_atlassian({
         [`.${fk}-undo-btn:active`]: {
           transform: '',
         },
+        [`.${fk}-redo-btn`]: {
+          transition: '',
+        },
+        [`.${fk}-redo-btn:active`]: {
+          transform: '',
+        },
       },
     )
   }

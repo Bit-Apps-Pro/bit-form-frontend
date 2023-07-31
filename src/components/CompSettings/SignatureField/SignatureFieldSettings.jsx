@@ -28,6 +28,7 @@ import SizeAndPosition from '../StyleCustomize/StyleComponents/SizeAndPosition'
 import ButtonReverse from './ButtonReverse'
 import ClearBtnSetting from './ClearBtnSetting'
 import ControlBtnPosition from './ControlBtnPosition'
+import RedoBtnSetting from './RedoBtnSetting'
 import SignaturePadSetting from './SignaturePadSetting'
 import UndoBtnSetting from './UndoBtnSetting'
 
@@ -83,6 +84,10 @@ function SignatureFieldSettings() {
         <FieldSettingsDivider />
 
         <UndoBtnSetting />
+
+        <FieldSettingsDivider />
+
+        <RedoBtnSetting />
 
         <FieldSettingsDivider />
 

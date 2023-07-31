@@ -381,12 +381,15 @@ export const styleClasses = {
   removeBtnSufIcn: ['rpt-rmv-btn-suf-i'],
   addToEndBtnPreIcn: ['add-to-end-btn-pre-i'],
   addToEndBtnSufIcn: ['add-to-end-btn-suf-i'],
-  undoSufIcn: ['undo-btn-suf-i'],
-  undoPreIcn: ['undo-btn-pre-i'],
   clrPreIcn: ['clr-btn-suf-i'],
   clrSufIcn: ['clr-btn-pre-i'],
-  undoBtn: ['undo-btn', 'undo-btn:hover', 'undo-btn:active', 'undo-btn:focus-visible', 'undo-btn:active:focus-visible', 'undo-btn:disabled'],
   clrBtn: ['clr-btn', 'clr-btn:hover', 'clr-btn:active', 'clr-btn:focus-visible', 'clr-btn:active:focus-visible', 'clr-btn:disabled'],
+  undoSufIcn: ['undo-btn-suf-i'],
+  undoPreIcn: ['undo-btn-pre-i'],
+  undoBtn: ['undo-btn', 'undo-btn:hover', 'undo-btn:active', 'undo-btn:focus-visible', 'undo-btn:active:focus-visible', 'undo-btn:disabled'],
+  redoSufIcn: ['redo-btn-suf-i'],
+  redoPreIcn: ['redo-btn-pre-i'],
+  redoBtn: ['redo-btn', 'redo-btn:hover', 'redo-btn:active', 'redo-btn:focus-visible', 'redo-btn:active:focus-visible', 'redo-btn:disabled'],
 }
 
 export const iconElementLabel = {

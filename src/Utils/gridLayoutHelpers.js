@@ -214,9 +214,10 @@ export const getInitHeightsForResizingTextarea = fldKey => {
   const fldData = fields[fldKey]
   if (!fldData) return {}
   const fldType = fldData.typ
-  if (fldType === 'textarea') {
+  const resizingFlds = ['textarea', 'signature']
+  if (resizingFlds.includes(fldType)) {
     const wrpElm = selectInGrid(`[data-key="${fldKey}"]`)
-    const textareaElm = selectInGrid(`textarea[data-dev-fld="${fldKey}"]`)
+    const textareaElm = selectInGrid(`[data-dev-fld="${fldKey}"]`)
     const wrpHeight = getAbsoluteElmHeight(wrpElm, 0)
     const fldHeight = getAbsoluteElmHeight(textareaElm, 0)
     return { fldHeight, wrpHeight }

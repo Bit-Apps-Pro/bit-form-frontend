@@ -44,6 +44,9 @@ const ut = {
   dnone: { dy: 'none' },
   dyb: { dy: 'inline-block' },
 
+  g5: { gp: 5 },
+  g10: { gp: 10 },
+
   flxi: { flxi: 1 },
   flxb: { flx: 'between' },
   flxcb: { flx: 'center-between' },

@@ -662,7 +662,7 @@ export default function ElementConfiguration({ fldKey }) {
               route="signature-pad"
               label="Signature Pad"
               offset="2.5"
-              highlightSelector={`[data-dev-signature-pad="${fldKey}"]`}
+              highlightSelector={`[data-dev-fld="${fldKey}"]`}
               styleOverride={isLabelOverrideStyles(styles, fldKey, 'signature-pad')}
             />
 
@@ -756,6 +756,53 @@ export default function ElementConfiguration({ fldKey }) {
                     offset="3.3"
                     highlightSelector={`[data-dev-undo-btn-suf-i="${fldKey}"]`}
                     styleOverride={isLabelOverrideStyles(styles, fldKey, 'undo-btn-suf-i')}
+                  />
+                )}
+              </LayerAccordion>
+            )}
+            {!(fieldObj.redoPreIcn || fieldObj.redoSufIcn) && (
+              <NavBtn
+                cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+                subRoute={fldKey}
+                route="redo-btn"
+                label="Redo Button"
+                offset="2.5"
+                highlightSelector={`[data-dev-redo-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn')}
+              />
+            )}
+            {(fieldObj.redoPreIcn || fieldObj.redoSufIcn) && (
+              <LayerAccordion
+                childrenAccodin
+                onClick={() => styleHandler('btn')}
+                offset="3.1"
+                title="redo Button"
+                fldData={fieldObj}
+                key={fldKey}
+                open={fldKey === selectedFieldKey && (fieldObj.redoPreIcn || fieldObj.redoSufIcn)}
+                highlightSelector={`[data-dev-redo-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn')}
+              >
+                {fieldObj.redoPreIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.redoPreIcn[0]}`}
+                    subRoute={fldKey}
+                    route="redo-btn-pre-i"
+                    label="Leading Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-redo-btn-pre-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn-pre-i')}
+                  />
+                )}
+                {fieldObj.redoSufIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.btnSufIcn[0]}`}
+                    subRoute={fldKey}
+                    route="redo-btn-suf-i"
+                    label="Trailing Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-redo-btn-suf-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn-suf-i')}
                   />
                 )}
               </LayerAccordion>

@@ -1,48 +1,54 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 import BitSignatureField from 'bit-signature-field/src/bit-signature-field'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useSetAtom } from 'jotai'
+import { create } from 'mutative'
 import { useEffect, useRef } from 'react'
-import { $bits, $fields } from '../../GlobalStates/GlobalStates'
+import { $bits, $fields, $resizingFld } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
+import { getAbsoluteElmHeight } from '../../Utils/FormBuilderHelper'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
+import { assignNestedObj } from '../style-new/styleHelpers'
 
 export default function SignatureField({ fieldKey, attr, formID, styleClasses }) {
   const signatureFldRef = useRef(null)
   const signatureElemnRef = useRef(null)
   const bits = useAtomValue($bits)
+  const resizingFld = useAtomValue($resizingFld)
+  const tempResize = useRef({ resize: false })
+  const setStyles = useSetAtom($styles)
+  const signatureWrpElmRef = useRef(null)
 
   const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
 
-  // if (resizingFld.fieldKey === fieldKey) {
-  //   tempResize.current.resize = true
-  //   const wrpElm = selectInGrid(`[data-key="${fieldKey}"]`)
-  //   const currentWrpHeight = getAbsoluteElmHeight(wrpElm)
+  if (resizingFld.fieldKey === fieldKey) {
+    tempResize.current.resize = true
+    const wrpElm = selectInGrid(`[data-key="${fieldKey}"]`)
+    const currentWrpHeight = getAbsoluteElmHeight(wrpElm)
+    if (resizingFld.wrpHeight >= resizingFld.fldHeight) {
+      const height = `${resizingFld.fldHeight + (currentWrpHeight - resizingFld.wrpHeight)}px`
+      signatureElemnRef.current.style.height = height
+    }
+  }
 
-  //   if (resizingFld.wrpHeight >= resizingFld.fldHeight) {
-  //     const height = `${resizingFld.fldHeight + (currentWrpHeight - resizingFld.wrpHeight)}px`
-  //     console.log('height', height)
-  //     signatureFldRef.current.style.height = height
-  //   }
-  // }
-
-  // if (tempResize.current.resize && !resizingFld.fieldKey) {
-  //   tempResize.current.resize = false
-  //   const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-signature->${cssProperty}`
-  //   setStyles(prvStyle => create(prvStyle, drftStyle => {
-  //     assignNestedObj(drftStyle, getPropertyPath('height'), signatureFldRef.current.style.height)
-  //   }))
-  // }
+  if (tempResize.current.resize && !resizingFld.fieldKey) {
+    tempResize.current.resize = false
+    const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
+    setStyles(prvStyle => create(prvStyle, drftStyle => {
+      assignNestedObj(drftStyle, getPropertyPath('height'), signatureElemnRef.current.style.height)
+    }))
+  }
 
   useEffect(() => {
     if (!signatureElemnRef.current) {
-      signatureElemnRef.current = selectInGrid(`.${fieldKey}-signature-pad`)
+      signatureWrpElmRef.current = selectInGrid(`.${fieldKey}-inp-fld-wrp`)
     }
 
     const fldConstructor = signatureFldRef.current
-    const fldElm = signatureElemnRef.current
+    const fldElm = signatureWrpElmRef.current
 
     if (fldConstructor && fldElm && 'destroy' in fldConstructor) {
       fldConstructor.destroy()
@@ -73,14 +79,15 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
           data-dev-inp-fld-wrp={fieldKey}
           className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
           {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
+          ref={signatureWrpElmRef}
         >
           <canvas
-            ref={signatureFldRef}
+            ref={signatureElemnRef}
             className={`${fieldKey}-signature-pad ${getCustomClsName(fieldKey, 'signature')}`}
             id="canvas"
             {...getCustomAttributes(fieldKey, 'signature-pad')}
             data-testid={`${fieldKey}-signature-pad`}
-            data-dev-signature-pad={fieldKey}
+            data-dev-fld={fieldKey}
           />
 
           <div className={`${fieldKey}-ctrl`}>
@@ -142,6 +149,37 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
                     src={fieldData.undoSufIcn}
                     alt=""
                     {...getCustomAttributes(fieldKey, 'undo-btn-suf-i')}
+                  />
+                )}
+              </button>
+            )}
+            {!fieldData?.redoBtnHide && (
+              <button
+                id="redo"
+                className={`${fieldKey}-redo-btn`}
+                type="button"
+                data-testid={`${fieldKey}-redo-btn`}
+                data-dev-redo-btn={fieldKey}
+              >
+                {fieldData?.redoPreIcn && (
+                  <img
+                    data-testid={`${fieldKey}-redo-btn-pre-i`}
+                    data-dev-redo-btn-pre-i={fieldKey}
+                    className={`${fieldKey}-redo-btn-pre-i ${getCustomClsName(fieldKey, 'redo-btn-pre-i')}`}
+                    src={fieldData.redoPreIcn}
+                    alt=""
+                    {...getCustomAttributes(fieldKey, 'redo-btn-pre-i')}
+                  />
+                )}
+                {fieldData.redoBtn}
+                {fieldData?.redoSufIcn && (
+                  <img
+                    data-testid={`${fieldKey}-redo-btn-suf-i`}
+                    data-dev-btn-suf-i={fieldKey}
+                    className={`${fieldKey}-redo-btn-suf-i ${getCustomClsName(fieldKey, 'redo-btn-suf-i')}`}
+                    src={fieldData.redoSufIcn}
+                    alt=""
+                    {...getCustomAttributes(fieldKey, 'redo-btn-suf-i')}
                   />
                 )}
               </button>
