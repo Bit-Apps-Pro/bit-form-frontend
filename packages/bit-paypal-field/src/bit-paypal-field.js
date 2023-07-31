@@ -18,10 +18,13 @@ export default class BitPayPalField {
     },
   }
 
+  #entryId = null
+
   constructor(selector, config) {
     Object.assign(this.#config, config)
 
-    this.#paypalWrpSelector = selector
+    if (typeof selector === 'string') this.#paypalWrpSelector = document.querySelector(selector)
+    else this.#paypalWrpSelector = selector
     this.#formSelector = `#form-${this.#getContentId()}`
 
     this.init()
@@ -42,7 +45,7 @@ export default class BitPayPalField {
     } else {
       btnProps.createOrder = (data, actions) => this.#createOrderHandler(data, actions)
     }
-    btnProps.onClick = () => this.#handleOnClick(this.#getContentId())
+    btnProps.onClick = (_, actions) => this.#handleOnClick(actions)
     btnProps.onApprove = (data, actions) => this.#onApproveHandler(data, actions)
 
     if (this.#config.onInit) {
@@ -63,77 +66,14 @@ export default class BitPayPalField {
     return action.subscription.create({ plan_id: this.#config.planId })
   }
 
-  async #handleOnClick(contentId) {
-    const form = bfSelect(this.#formSelector)
-    if (
-      typeof validateForm !== 'undefined'
-      && !validateForm({ form: contentId })
-    ) {
-      const validationEvent = new CustomEvent('bf-form-validation-error', {
-        detail: { formId: contentId, fieldId: '', error: '' },
-      })
-      form.dispatchEvent(validationEvent)
-      return false
-    }
-    let update = false
-    let formData = new FormData(form)
-    if (this.#getEntryId()) {
-      update = true
-      formData.append('entryID', this.#getEntryId())
-    }
-    const props = window.bf_globals[contentId]
-
-    if (typeof advancedFileHandle !== 'undefined') {
-      formData = advancedFileHandle(props, formData)
-    }
-    if (props.GCLID) {
-      formData.set('GCLID', props.GCLID)
-    }
-
-    const hidden = []
-    Object.entries(props?.fields || {}).forEach((fld) => {
-      if (fld[1]?.valid?.hide) {
-        hidden.push(fld[0])
-      }
-    })
-
-    if (hidden.length) {
-      formData.append('hidden_fields', hidden)
-    }
-    if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
-      const result = await new Promise(resolve => {
-        grecaptcha.ready(() => {
-          grecaptcha
-            .execute(props.gRecaptchaSiteKey, { action: 'submit' })
-            .then(async (token) => {
-              formData.append('g-recaptcha-response', token)
-              const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
-              resolve(await paymentSubmitResponse(this, submitResp, contentId, formData))
-            })
-        })
-      })
-      return result
-    }
-    const submitResp = this.#bfSubmitFetch(props?.ajaxURL, formData, update)
-    const result = await paymentSubmitResponse(this, submitResp, contentId, formData)
-    return result
-  }
-
-  #setEntryId(id) {
-    localStorage.setItem('bf-entry-id', id)
-  }
-
-  #getEntryId() {
-    return localStorage.getItem('bf-entry-id')
-  }
-
-  #bfSubmitFetch(ajaxURL, formData, update) {
-    const uri = new URL(ajaxURL)
-    uri.searchParams.append('action', update ? 'bitforms_entry_update' : 'bitforms_submit_form')
-    return fetch(uri, {
-      method: 'POST',
-      body: formData,
-    })
+  async #handleOnClick(actions) {
+    const contentId = this.#getContentId()
+    try { await isFormValidatedWithoutError(contentId) } catch (_) { return actions.reject() }
+    const progressData = await saveFormProgress(contentId)
+    const savedFormData = progressData?.[contentId]
+    if (!savedFormData?.success) return actions.reject()
+    if (savedFormData.entry_id) this.#entryId = savedFormData.entry_id
+    return actions.resolve()
   }
 
   #onApproveHandler(_, actions) {
@@ -141,19 +81,35 @@ export default class BitPayPalField {
     formParent.classList.add('pos-rel', 'form-loading')
     const order = this.#isSubscription() ? actions.subscription.get() : actions.order.capture()
     order.then(result => {
+      const props = bf_globals[this.#getContentId()]
       const form = document.getElementById(`form-${this.#getContentId()}`)
       const formID = this.#getContentId()?.split('_')[1]
       if (typeof form !== 'undefined' && form !== null) {
+        if (this.#entryId) props.entryId = this.#entryId
+        const paymentFld = bfSelect(`input[name="${this.#config.fieldKey}"]`, form)
+        if (paymentFld) {
+          paymentFld.value = result.id
+        } else {
+          setHiddenFld({ name: this.#config.fieldKey, value: result.id, type: 'text' }, form)
+        }
+        let submitBtn = bfSelect('button[type="submit"]', form)
+        if (!submitBtn) {
+          submitBtn = document.createElement('button')
+          submitBtn.setAttribute('type', 'submit')
+          submitBtn.style.display = 'none'
+          form.append(submitBtn)
+        }
+        submitBtn.click()
+
         const paymentParams = {
           formID,
           transactionID: result.id,
           payment_name: 'paypal',
           payment_type: this.#isSubscription() ? 'subscription' : 'order',
           payment_response: result,
-          entry_id: this.#getEntryId(),
+          entry_id: this.#entryId,
           fieldKey: this.#config.fieldKey,
         }
-        const props = bf_globals[this.#getContentId()]
         const uri = new URL(props?.ajaxURL)
         uri.searchParams.append('_ajax_nonce', props?.nonce)
         uri.searchParams.append('action', 'bitforms_payment_insert')
@@ -166,72 +122,10 @@ export default class BitPayPalField {
         )
         submitResp.then(() => {
           formParent.classList.remove('pos-rel', 'form-loading')
-          setBFMsg({
-            contentId: this.#config.contentId,
-            msg: this.responseData.message || this.responseData,
-            type: 'success',
-            show: true,
-            error: false,
-          })
-          this.responseData?.hidden_fields?.map(hdnFld => {
-            setHiddenFld(hdnFld, form)
-          })
-          this.#responseRedirect()
-          bfReset(this.#getContentId())
+          this.#entryId = null
         })
       }
     })
-  }
-
-  #responseRedirect() {
-    const responsedRedirectPage = this.responseData.redirectPage
-    let hitCron = null
-    let newNonce = ''
-    if (this.responseData.cron) {
-      hitCron = this.responseData.cron
-    }
-    if (this.responseData.cronNotOk) {
-      hitCron = this.responseData.cronNotOk
-    }
-    if (this.responseData.new_nonce) {
-      newNonce = this.responseData.new_nonce
-    }
-
-    this.#triggerIntegration(hitCron, newNonce, this.#getContentId())
-    if (responsedRedirectPage) {
-      const timer = setTimeout(() => {
-        window.location = decodeURI(responsedRedirectPage)
-        if (timer) {
-          clearTimeout(timer)
-        }
-      }, 1000)
-    }
-  }
-
-  #triggerIntegration(hitCron, newNonce, contentId) {
-    const props = window.bf_globals[contentId]
-    if (hitCron) {
-      if (typeof hitCron === 'string') {
-        const uri = new URL(hitCron)
-        if (uri.protocol !== window.location.protocol) {
-          uri.protocol = window.location.protocol
-        }
-        fetch(uri)
-      } else {
-        const uri = new URL(props.ajaxURL)
-        uri.searchParams.append('action', 'bitforms_trigger_workflow')
-        const data = {
-          cronNotOk: hitCron,
-          token: newNonce || props.nonce,
-          id: props.appID,
-        }
-        fetch(uri, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          headers: { 'Content-Type': 'application/json' },
-        }).then((response) => response.json())
-      }
-    }
   }
 
   #select(selector, elm) {
@@ -266,7 +160,7 @@ export default class BitPayPalField {
     return action.order.create({
       purchase_units: [{
         // description: this.#getDynamicValue(this.#config.descFld) || this.#config.description,
-        description: `form-id:${formID};entry-id:${this.#getEntryId()};field-key:${this.#config.fieldKey}`,
+        description: `form-id:${formID};entry-id:${this.#entryId};field-key:${this.#config.fieldKey}`,
         amount:
         {
           currency_code: currency,

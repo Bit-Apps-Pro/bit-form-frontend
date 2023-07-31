@@ -289,6 +289,7 @@ export default class BitCountryField {
       const optIndex = this.#findNotDisabledOptIndex(selectedCountryIndex, direction)
       if (optIndex > -1 && (optIndex < this.#initialOptions.length)) {
         this.value = this.#initialOptions[optIndex].val || this.#initialOptions[optIndex].lbl
+        this.#triggerEvent(this.#countryHiddenInputElm, 'blur')
       }
     }
 
@@ -336,9 +337,15 @@ export default class BitCountryField {
     if (!this.#isReset) this.#dropdownWrapperElm.focus()
     this.setMenu({ open: false })
     this.value = ''
+    this.#triggerEvent(this.#countryHiddenInputElm, 'blur')
     setTimeout(() => {
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', this.#placeholder)
     }, 100)
+  }
+
+  #triggerEvent(elm, eventType) {
+    const event = new Event(eventType)
+    elm.dispatchEvent(event)
   }
 
   setSelectedCountryItem(countryKey) {
@@ -359,6 +366,7 @@ export default class BitCountryField {
     }
     if (this.#onChange) this.#onChange(selectedItem.val || selectedItem.lbl)
     this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', `${selectedItem.lbl} selected`)
+    this.#triggerEvent(this.#countryHiddenInputElm, 'blur')
     setTimeout(() => {
       this.#setAttribute(this.#dropdownWrapperElm, 'aria-label', selectedItem.lbl)
     }, 100)

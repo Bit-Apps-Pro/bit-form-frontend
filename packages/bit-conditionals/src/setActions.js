@@ -144,6 +144,22 @@ const setActionHide = (actionDetail, props, val) => {
   }
 }
 
+const setTextContent = (actionDetail, props, fieldValues) => {
+  if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
+    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
+    const fldKey = actionDetail.field
+    const selector = select(props.contentId, `.${fldKey}-${actionDetail.action}`)
+    if (selector === null) return
+    selector.childNodes.forEach((node) => {
+      if (node.nodeType === 3 && (node.textContent.trim() !== '' || !node.length)) {
+        node.textContent = actionValue
+      }
+    })
+    if (actionDetail.action === 'ct') selector.textContent = actionValue
+    // selector.innerText = actionValue
+  }
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export const setActions = (actionDetail, fldKey, props, fieldValues, rowIndx) => {
   rowIndex = rowIndx
@@ -196,6 +212,15 @@ export const setActions = (actionDetail, fldKey, props, fieldValues, rowIndx) =>
       case 'save_draft':
         if (actionDetail.field === '_bf_form') {
           handleFormSaveDraft(actionDetail, props)
+        }
+        break
+      case 'lbl':
+      case 'ct':
+      case 'sub-titl':
+      case 'hlp-txt':
+      case 'title':
+        if (props.fields[actionDetail.field]) {
+          setTextContent(actionDetail, props, fieldValues)
         }
         break
       default:

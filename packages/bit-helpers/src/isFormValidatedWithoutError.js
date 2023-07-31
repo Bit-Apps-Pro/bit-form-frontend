@@ -1,4 +1,4 @@
-export default async function isFormValidatedWithoutError(formContentId, handleFormValidationErrorMessages) {
+export default async function isFormValidatedWithoutError(formContentId) {
   if (typeof validateForm !== 'undefined' && !validateForm({ form: formContentId })) {
     return new Promise((_, reject) => {
       reject(new Error('Form is not valid'))
@@ -6,15 +6,30 @@ export default async function isFormValidatedWithoutError(formContentId, handleF
   }
   const formParent = document.getElementById(formContentId)
   formParent.classList.add('pos-rel', 'form-loading')
-  const formData = new FormData(document.getElementById(`form-${formContentId}`))
+  let formData = new FormData(document.getElementById(`form-${formContentId}`))
 
-  const bitFormsFront = window.bf_globals[formContentId]
+  const props = window.bf_globals[formContentId]
   const { grecaptcha } = window
-  if (bitFormsFront?.gRecaptchaVersion === 'v3' && bitFormsFront?.gRecaptchaSiteKey) {
-    const token = await grecaptcha.execute(bitFormsFront?.gRecaptchaSiteKey, { action: 'submit' })
+  if (props?.gRecaptchaVersion === 'v3' && props?.gRecaptchaSiteKey) {
+    const token = await grecaptcha.execute(props?.gRecaptchaSiteKey, { action: 'submit' })
     formData.append('g-recaptcha-response', token)
   }
-  const uri = new URL(bitFormsFront.ajaxURL)
+  if (typeof advancedFileHandle !== 'undefined') {
+    formData = advancedFileHandle(props, formData)
+  }
+  if (props.GCLID) {
+    formData.set('GCLID', props.GCLID)
+  }
+  const hidden = []
+  Object.entries(props?.fields || {}).forEach((fld) => {
+    if (fld[1]?.valid?.hide) {
+      hidden.push(fld[0])
+    }
+  })
+  if (hidden.length) {
+    formData.append('hidden_fields', hidden)
+  }
+  const uri = new URL(props.ajaxURL)
   uri.searchParams.append('action', 'bitforms_before_submit_validate')
   const res = await fetch(
     uri,
@@ -28,7 +43,7 @@ export default async function isFormValidatedWithoutError(formContentId, handleF
   formParent.classList.remove('pos-rel', 'form-loading')
 
   if (!data.success) {
-    handleFormValidationErrorMessages(data, formContentId)
+    bfValidationErrMsg(data, formContentId)
     return new Promise((_, reject) => {
       reject(new Error('Form is not valid'))
     })

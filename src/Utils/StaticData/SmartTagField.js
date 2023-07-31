@@ -247,6 +247,14 @@ export const SmartTagField = [
     custom: true,
   },
   {
+    id: 45,
+    name: '_bf_math()',
+    label: 'Math(Repeater)',
+    type: 'number',
+    functionParam: true,
+    custom: true,
+  },
+  {
     id: 38,
     name: '_bf_query_param()',
     label: 'URL Query Parameter',
