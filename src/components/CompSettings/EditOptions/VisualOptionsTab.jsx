@@ -2,6 +2,7 @@ import { arrayMoveImmutable } from 'array-move'
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
+import { useAtomValue } from 'jotai'
 import CloseEyeIcn from '../../../Icons/CloseEyeIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
@@ -22,12 +23,14 @@ import Tip from '../../Utilities/Tip'
 import TipGroup from '../../Utilities/Tip/TipGroup'
 import IconsModal from '../IconsModal'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
+import { $bits } from '../../../GlobalStates/GlobalStates'
 
 const SortableElm = ({
-  value, optIndx, type, option, setOption, lblKey, valKey, setScrolIndex, optKey, checkByDefault, showUpload = false, hideNDisabledOptions,
+  value, optIndx, type, option, setOption, lblKey, valKey, imgKey, setScrolIndex, isRating, optKey, checkByDefault, showUpload = false, hideNDisabledOptions,
 }) => {
   const { css } = useFela()
   const [optionMdl, setOptionMdl] = useState(false)
+  const bits = useAtomValue($bits)
 
   const isGroupStart = 'type' in value && value.type.includes('group') && value.type.includes('start')
   const isGroupEnd = 'type' in value && value.type.includes('group') && value.type.includes('end')
@@ -52,7 +55,8 @@ const SortableElm = ({
     const newOption = create(option, draft => {
       const id = newOptKey(optKey)
       // eslint-disable-next-line no-param-reassign
-      draft.splice(optIndx + 1, 0, { id, [lblKey]: `Option ${id}` })
+      const newTempOption = isRating ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: `${bits.assetsURL}/../static/rating/star.svg` } : { id, [lblKey]: `Option ${id}` }
+      draft.splice(optIndx + 1, 0, newTempOption)
     })
 
     setOption(newOption)
@@ -166,7 +170,6 @@ const SortableElm = ({
 
   function setCheck(e, i) {
     const tmp = deepCopy([...option])
-
     if (type === 'radio') {
       const alreadyChecked = tmp.find(opt => opt.check)
       if (alreadyChecked) delete alreadyChecked.check
@@ -238,14 +241,14 @@ const SortableElm = ({
                 type="text"
                 value={value[valKey]}
                 onChange={e => setOpt(e, optIndx, valKey)}
-                placeholder={`${value[lblKey]}`}
+                placeholder={value[lblKey]}
                 width={140}
                 className={css(optionStyle.input)}
               />
             </>
           )}
 
-          <div className={`${css(ut.flxc)}`}>
+          <div className={css(ut.flxc)}>
             <TipGroup interactive={false}>
               {!isGroupStart && checkByDefault && (
                 <Tip msg="Check by Default">
@@ -265,7 +268,7 @@ const SortableElm = ({
                   />
                 </Tip>
               )}
-              {(type === 'check' || type === 'radio') && (
+              {(type === 'check' || type === 'radio') && !(type === 'rating') && (
                 <Tip msg="Disabled">
                   <CheckBox
                     checked={value.disabled !== undefined}
@@ -364,16 +367,19 @@ const SortableElm = ({
 }
 
 export default function VisualOptionsTab({
-  optKey, options, option, setOption, type, lblKey, valKey, checkByDefault, hasGroup, showUpload, hideNDisabledOptions,
+  optKey, options, option, setOption, type, isRating, lblKey, valKey, imgKey, checkByDefault, hasGroup, showUpload, hideNDisabledOptions,
 }) {
   const { css } = useFela()
   const [scrolIndex, setScrolIndex] = useState(0)
   useEffect(() => { setOption(flattenOptions(options, optKey)) }, [options])
 
+  const bits = useAtomValue($bits)
+
   const addOption = () => {
     const tmpOption = [...option]
     const id = newOptKey(optKey)
-    const newIndex = tmpOption.push({ id, [lblKey]: `Option ${id}` })
+    const newTempOption = isRating ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: `${bits.assetsURL}/../static/rating/star.svg` } : { id, [lblKey]: `Option ${id}` }
+    const newIndex = tmpOption.push(newTempOption)
     setScrolIndex(newIndex - 1)
     setOption(tmpOption)
   }
@@ -468,6 +474,8 @@ export default function VisualOptionsTab({
                 checkByDefault={checkByDefault}
                 showUpload={showUpload}
                 hideNDisabledOptions={hideNDisabledOptions}
+                imgKey={imgKey}
+                isRating={isRating}
               />
             </SortableItem>
           ))}

@@ -8,7 +8,7 @@ import TextOptionsTab from './TextOptionsTab'
 import VisualOptionsTab from './VisualOptionsTab'
 
 export default function EditOptions({
-  optionMdl, options, setOptions, type, lblKey, valKey, imgKey, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false,
+  optionMdl, options, setOptions, type, lblKey, valKey, imgKey, isRating, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false,
 }) {
   const optKey = useRef(1)
   const { css } = useFela()
@@ -51,6 +51,7 @@ export default function EditOptions({
           lblKey={lblKey}
           valKey={valKey}
           checkByDefault={checkByDefault}
+          isRating={isRating}
           hasGroup={hasGroup}
           showUpload={showUpload}
           hideNDisabledOptions={hideNDisabledOptions}
@@ -72,8 +73,10 @@ export default function EditOptions({
               type={type}
               lblKey={lblKey}
               valKey={valKey}
+              imgKey={imgKey}
               checkByDefault={checkByDefault}
               hasGroup={hasGroup}
+              isRating={isRating}
               showUpload={showUpload}
               hideNDisabledOptions={hideNDisabledOptions}
             />
