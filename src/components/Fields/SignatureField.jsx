@@ -64,7 +64,7 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
       isBuilder: true,
     }
     signatureFldRef.current = new BitSignatureField(fldElm, config)
-  }, [fieldData])
+  }, [fieldData, tempResize.current.resize])
 
   return (
     <>
