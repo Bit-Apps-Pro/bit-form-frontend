@@ -508,7 +508,6 @@ export default class BitDropdownField {
     if (this.#config.multipleSelect && this.#config.showChip) this.#generateSelectedOptChips(valueArr)
     if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, selectedItem.lbl)
     if (this.#config.closeOnSelect) this.setMenu({ open: false })
-    this.#setAttribute(this.#dropdownHiddenInputElm, 'value', values)
     if (this.#config.selectedOptClearable) {
       this.#setStyleProperty(this.#selectedOptClearBtnElm, 'display', 'grid')
       this.#addEvent(this.#selectedOptClearBtnElm, 'click', e => { this.#clearSelectedOption(e) })
@@ -987,6 +986,7 @@ export default class BitDropdownField {
 
   set value(val) {
     this.#dropdownHiddenInputElm.value = val
+    this.#setAttribute(this.#dropdownHiddenInputElm, 'value', val)
   }
 
   get value() {

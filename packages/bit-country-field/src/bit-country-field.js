@@ -787,6 +787,7 @@ export default class BitCountryField {
 
   set value(val) {
     this.#countryHiddenInputElm.value = val
+    this.#setAttribute(this.#countryHiddenInputElm, 'value', val)
   }
 
   get value() {
