@@ -1,5 +1,5 @@
-import { memo } from 'react'
 import { useAtomValue } from 'jotai'
+import { memo } from 'react'
 import { $styles } from '../GlobalStates/StylesState'
 import { isObjectEmpty } from '../Utils/Helpers'
 import '../resource/sass/components.scss'
@@ -19,16 +19,17 @@ import Image from './Fields/Image'
 import PaypalField from './Fields/PaypalField'
 import PhoneNumberField from './Fields/PhoneNumberField'
 import RadioBox from './Fields/RadioBox'
+import RatingField from './Fields/RatingField'
 import RazorpayField from './Fields/RazorpayField'
 import ReCaptchaV2 from './Fields/ReCaptchaV2'
 import RepeaterField from './Fields/RepeaterField'
 import SectionField from './Fields/SectionField'
+import SignatureField from './Fields/SignatureField'
+import StripeField from './Fields/StripeField'
 import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
 import TitleField from './Fields/TitleField'
-import StripeField from './Fields/StripeField'
-import RatingField from './Fields/RatingField'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -118,6 +119,8 @@ function MapComponents({
       return <RepeaterField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'rating':
       return <RatingField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+    case 'signature':
+      return <SignatureField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

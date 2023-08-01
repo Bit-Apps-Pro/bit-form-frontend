@@ -15,7 +15,7 @@ import dropdownStyle_1_BitformDefault from './dropdownStyle_1_bitformDefault'
 import fileUploadStyle_1_BitformDefault from './fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './htmlStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './imageStyle_1_bitformDefault'
-import paypalStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
+import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from './phoneNumberStyle_1_bitformDefault'
 import razorpayStyle_1_BitformDefault from './razorpayStyle_1_BitformDefault'
 import recaptchaStyle_1_bitformDefault from './recaptchaStyle_1_bitformDefault'
@@ -26,6 +26,7 @@ import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
 import stripeStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
 import ratingStyle_1_bitformDefault from './ratingStyle_1_bitformDefault'
+import signatureStyle_1_bitformDefault from './signatureStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -67,6 +68,10 @@ export default function bitformDefaultTheme({
     case 'textarea': {
       const { fldPrefix, fldSuffix } = textOptions
       return text({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix })
+    }
+    case 'signature': {
+      const { fldPrefix, fldSuffix } = textOptions
+      return signature({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix })
     }
     case 'decision-box':
       return decisionBox({ type, fk, direction, breakpoint, colorScheme })
@@ -560,6 +565,19 @@ const text = ({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme, fldPrefix, fldSuffix }),
+    }
+  }
+  return {}
+}
+
+const signature = ({ type, fk, breakpoint, colorScheme, fldPrefix, fldSuffix }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: signatureStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme, fldPrefix, fldSuffix }),
     }
   }
   return {}

@@ -2513,5 +2513,58 @@ const editorConfig = {
       },
     },
   },
+  signature: {
+    ...textFldCssProps,
+    'inp-fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'signature-pad': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'clr-btn': {
+      states: ['hover'],
+      properties: {
+        ...buttonCssProps,
+      },
+    },
+    'clr-btn-pre-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+    'clr-btn-suf-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+
+    'undo-btn': {
+      states: ['hover'],
+      properties: {
+        ...buttonCssProps,
+      },
+    },
+    'undo-btn-pre-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+    'undo-btn-suf-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+
+  },
 }
 export default editorConfig

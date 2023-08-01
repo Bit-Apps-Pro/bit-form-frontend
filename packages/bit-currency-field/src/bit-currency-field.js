@@ -163,6 +163,7 @@ export default class BitCurrencyField {
     this.#currencyInputElm.value = formattedValue
 
     this.value = this.#handleCurrencyFormat(numValue, valueFormatOptions)
+    this.#triggerEvent(this.#currencyHiddenInputElm, 'blur')
   }
 
   #handleCurrencyFormat(numValue, formatOptions) {
@@ -396,6 +397,8 @@ export default class BitCurrencyField {
     this.#setAttribute(this.#currencyInputElm, 'data-num-value', '')
     this.setSelectedCurrencyItem(this.#config.defaultCurrencyKey)
     this.#triggerEvent(this.#currencyInputElm, 'input')
+    this.value = ''
+    this.#triggerEvent(this.#currencyHiddenInputElm, 'blur')
   }
 
   #selectOptElmByIndex(index) {

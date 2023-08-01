@@ -15,11 +15,14 @@ const tippyHelperMsg = {
   pattern: __('Set a regular expression pattern that the input value should match for the field.'),
   required: __('This allows to make the field mandatory for users to fill out before submitting the form. You can toggle this option to use or disable the required.'),
   fieldHidden: __('The hide field feature allows you to hide the field from the user on the form. You can toggle this option to show or hide the field.'),
+  btnReverse: __('The reverse button feature allows to reverse the clear and undo button. You can toggle this option to reverse clear and undo button.'),
   readonly: __('Readonly feature allows you to set a field as read-only, meaning that users will not be able to edit the content of that field. You can toggle this option to enable or disable the setting.'),
   disabled: __('Disabling a field prevents users from interacting with it or entering data. You can toggle this option to enable or disable the field as needed.'),
   uniqueEntry: __('Enabling this option will check from the submitted entries whether its value is duplicate.'),
   userUnique: __('Enabling this option will check from your WordPress user database whether its value is duplicate.'),
   stripeTheme: __('Stripe provide a variety of themes for the payment form. You can choose the theme that best suits theme your payment form. <a target="_blank" href="https://stripe.com/docs/elements/appearance-api">Learn more</a>'),
   amountType: __("Stripe provide minimum or maximum amount for different payment method type and currency. <a target='_blank' href='https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts'>learn more</a>"),
+  undoBtn: __('You can add or remove Undo button form Signature Field. You can toggle this option to add or remove the Undo button.'),
+  clrBtn: __('You can add or remove Clear button form Signature Field. You can toggle this option to add or remove the Clear button.'),
 }
 export default tippyHelperMsg

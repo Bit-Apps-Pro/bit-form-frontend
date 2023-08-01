@@ -256,6 +256,7 @@ export default class BitPhoneNumberField {
     this.#phoneInputElm.value = ''
     this.setSelectedCountryItem('')
     this.#triggerEvent(this.#phoneInputElm, 'input')
+    this.#triggerEvent(this.#phoneHiddenInputElm, 'blur')
   }
 
   #selectOptElmByIndex(index) {
@@ -339,6 +340,7 @@ export default class BitPhoneNumberField {
 
   #handlePhoneInputBlur() {
     if (this.value.length > 3) this.#phoneInputElm.value = this.value
+    this.#triggerEvent(this.#phoneHiddenInputElm, 'blur')
   }
 
   #handlePhoneInput(e) {
