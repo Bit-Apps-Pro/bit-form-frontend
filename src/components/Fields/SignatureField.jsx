@@ -20,7 +20,7 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
   const tempResize = useRef({ resize: false })
   const setStyles = useSetAtom($styles)
   const signatureWrpElmRef = useRef(null)
-
+  const reInitFld = useRef(0)
   const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
 
@@ -39,6 +39,7 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
     const getPropertyPath = (cssProperty) => `fields->${fieldKey}->classes->.${fieldKey}-fld->${cssProperty}`
     setStyles(prvStyle => create(prvStyle, drftStyle => {
       assignNestedObj(drftStyle, getPropertyPath('height'), signatureElemnRef.current.style.height)
+      reInitFld.current += 1
     }))
   }
 
@@ -64,7 +65,7 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
       isBuilder: true,
     }
     signatureFldRef.current = new BitSignatureField(fldElm, config)
-  }, [fieldData, tempResize.current.resize])
+  }, [fieldData, reInitFld.current])
 
   return (
     <>
