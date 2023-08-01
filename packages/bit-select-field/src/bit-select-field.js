@@ -157,6 +157,11 @@ export default class BitDropdownField {
     this.#reRenderVirtualOptions()
   }
 
+  #triggerEvent(elm, eventType) {
+    const event = new Event(eventType)
+    elm.dispatchEvent(event)
+  }
+
   #handleInputValueChange(oldVal, newVal) {
     if (oldVal !== newVal) {
       this.setSelectedOption(newVal)
@@ -338,6 +343,7 @@ export default class BitDropdownField {
     if (!this.#config.showChip) this.#setTextContent(this.#selectedOptLblElm, this.#config.placeholder)
     if (this.#config.selectedOptClearable) this.#setStyleProperty(this.#selectedOptClearBtnElm, 'display', 'none')
     this.#disableOptOnMaxSelection()
+    this.#triggerEvent(this.#dropdownHiddenInputElm, 'blur')
   }
 
   #searchOptionObjByVal(val) {
@@ -508,6 +514,7 @@ export default class BitDropdownField {
       this.#addEvent(this.#selectedOptClearBtnElm, 'click', e => { this.#clearSelectedOption(e) })
     }
     if (this.#config.onChange) this.#config.onChange(values)
+    this.#triggerEvent(this.#dropdownHiddenInputElm, 'blur')
   }
 
   #getSelectedOptionIndex() {
