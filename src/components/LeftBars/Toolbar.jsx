@@ -32,6 +32,7 @@ import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import RepeatIcon from '../../Icons/RepeatIcon'
+import ReviewStarIcn from '../../Icons/ReviewStarIcn'
 import SearchIcon from '../../Icons/SearchIcon'
 import SectionIcon from '../../Icons/SectionIcon'
 import StripeIcn from '../../Icons/StripeIcn'
@@ -899,6 +900,27 @@ export const toolsList = [
       btnAlignment: 'center',
       btnView: 'row',
       repeatDirecton: 'column',
+    },
+  },
+  {
+    name: __('Rating'),
+    keywords: 'Check Box, Mark, Rating, Star, Review, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
+    icn: <ReviewStarIcn />,
+    pos: { h: 140, w: 60, i: 'shadow_block' },
+    elm: {
+      typ: 'rating',
+      lbl: __('Rating'),
+      opt: [
+        { lbl: __('Option 1'), val: '1', icn: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Option 2'), val: '2', icn: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Option 3'), val: '3', icn: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Option 4'), val: '4', icn: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Option 5'), val: '5', icn: `${bits.assetsURL}/../static/rating/star.svg` },
+      ],
+      valid: {},
+      err: {},
+      customClasses: {},
+      customAttributes: {},
     },
   },
   /* {

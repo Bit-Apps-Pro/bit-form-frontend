@@ -28,6 +28,7 @@ import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
 import TitleField from './Fields/TitleField'
 import StripeField from './Fields/StripeField'
+import RatingField from './Fields/RatingField'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -115,6 +116,8 @@ function MapComponents({
       return <SectionField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
     case 'repeater':
       return <RepeaterField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} />
+    case 'rating':
+      return <RatingField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:

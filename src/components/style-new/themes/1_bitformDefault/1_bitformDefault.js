@@ -25,6 +25,7 @@ import selectStyle_1_BitformDefault from './selectStyle_1_bitformDefault'
 import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
 import stripeStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
+import ratingStyle_1_bitformDefault from './ratingStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -112,6 +113,8 @@ export default function bitformDefaultTheme({
       return section({ type, fk, breakpoint, colorScheme })
     case 'repeater':
       return repeater({ type, fk, breakpoint, colorScheme })
+    case 'rating':
+      return rating({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -583,6 +586,19 @@ const repeater = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: repeaterStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const rating = ({ type, fk, direction, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: ratingStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
     }
   }
   return {}
