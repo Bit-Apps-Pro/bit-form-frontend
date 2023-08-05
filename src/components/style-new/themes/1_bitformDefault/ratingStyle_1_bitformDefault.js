@@ -12,9 +12,20 @@ export default function ratingStyle_1_bitformDefault({ fk, type, direction, brea
       ...inputWrapperClasses(fk),
 
       [`.${fk}-inp-fld-wrp`]: {
-        position: 'relative',
+        // position: 'relative',
         margin: 'var(--fld-m, 0)',
-        height: 'var(--fld-h, 50px)',
+        height: '50px',
+        display: 'flex',
+        'align-items': 'center',
+        'justify-content': 'start',
+        gap: '10px',
+      },
+
+      [`.${fk}-rating-msg`]: {
+        // text color
+        'font-size': 'var(--fld-fs) !important',
+        color: 'var(--global-font-color) !important',
+        'font-family': 'inherit',
       },
 
       [`.${fk}-rating-input`]: {
@@ -24,6 +35,7 @@ export default function ratingStyle_1_bitformDefault({ fk, type, direction, brea
       [`.${fk}-rating-wrp`]: {
         float: 'left',
       },
+
       [`.${fk}-rating-lbl`]: {
         float: 'right',
       },
@@ -35,6 +47,7 @@ export default function ratingStyle_1_bitformDefault({ fk, type, direction, brea
       },
 
       [rtnInpHoverClr]: {
+        transition: 'filter 0.3s ease-in-out',
         filter: 'invert(73%) sepia(30%) saturate(3712%) hue-rotate(3deg) brightness(108%) contrast(96%)',
       },
 

@@ -200,6 +200,8 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'stripe-btn': 'Stripe Button',
     'stripe-icn': 'Stripe Icon',
     'stripe-pay-btn': 'Stripe Pay Button',
+    'rating-img': 'Rating Image',
+    'rating-msg': 'Rating Message',
   }
 
   const fldTitle = getTitle[elementKey]
