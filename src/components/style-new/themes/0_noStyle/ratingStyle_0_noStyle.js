@@ -1,18 +1,16 @@
-/* eslint-disable object-curly-newline */
-import inputWrapperClasses from '../common/inputWrapperClasses'
+import inputWrapperClasses_0_noStyle from '../common/inputWrapperClasses_0_noStyle'
 
 /* eslint-disable camelcase */
-export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
+export default function ratingStyle_0_noStyle({ fk, type, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
     const rtnInpHoverClr = `.${fk}-rating-input:not(:checked) ~ .${fk}-rating-lbl:hover,.${fk}-rating-input:not(:checked) ~ .${fk}-rating-lbl:hover ~ .${fk}-rating-lbl .${fk}-rating-img`
 
     const selectedRtnClr = `.${fk}-rating-input:checked ~ .${fk}-rating-lbl .${fk}-rating-img`
 
     return {
-      ...inputWrapperClasses(fk),
+      ...inputWrapperClasses_0_noStyle(fk),
 
       [`.${fk}-inp-fld-wrp`]: {
-        // position: 'relative',
         margin: 'var(--fld-m, 0)',
         height: '50px',
         display: 'flex',
@@ -24,7 +22,7 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-rating-msg`]: {
         // text color
         'font-size': 'var(--fld-fs) !important',
-        color: 'var(--global-font-color) !important',
+        color: 'inherit !important',
         'font-family': 'inherit',
       },
 
