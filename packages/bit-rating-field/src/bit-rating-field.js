@@ -44,25 +44,28 @@ export default class BitRatingField {
     this.#start = this.#ratingWrp.querySelectorAll(`.${this.#fieldKey}-rating-lbl`)
     this.#msg = this.#select(`.${this.#fieldKey}-rating-msg`)
 
-    this.#start.forEach((item, i) => {
+    this.#start.forEach((item) => {
       if (this.#showMsgOnHover) {
         item.addEventListener('mouseover', () => {
           // eslint-disable-next-line radix
-          const val = parseInt(item.dataset.val)
+          const { val } = item.dataset
           const findRating = this.#findRating(val)
-          this.#msg.innerHTML = findRating.lbl
+          if (this.#msg) {
+            this.#msg.innerText = findRating.lbl
+          }
         })
         item.addEventListener('mouseout', () => {
-          const val = parseInt(item.dataset.val)
+          const { val } = item.dataset
+
           if (this.#isCheck.status && this.#isCheck.val === val) {
             const findRating = this.#findRating(val)
-            this.#msg.innerHTML = findRating.lbl
+            this.#msg.innerText = findRating.lbl
             return
           }
 
           if (this.#isCheck.status) {
             const rating = this.#findRating(this.#isCheck.val)
-            this.#msg.innerHTML = rating.lbl
+            this.#msg.innerText = rating.lbl
             return
           }
 
@@ -72,7 +75,7 @@ export default class BitRatingField {
 
       if (this.#showMsgOnSelect) {
         item.addEventListener('click', () => {
-          const val = parseInt(item.dataset.val)
+          const { val } = item.dataset
           this.#isCheck = { status: true, val }
           const rating = this.#findRating(val)
           this.#msg.innerHTML = rating.lbl

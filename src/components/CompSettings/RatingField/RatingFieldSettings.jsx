@@ -238,7 +238,8 @@ function RatingFieldSettings() {
             isRating={fieldData.typ === 'rating'}
             type="rating"
             showUpload
-          // hideNDisabledOptions
+            // hideNDisabledOptions
+            onlyVisualOptionsTab
           />
         </div>
       </Modal>

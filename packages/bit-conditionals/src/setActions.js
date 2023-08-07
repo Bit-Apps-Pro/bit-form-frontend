@@ -12,7 +12,7 @@ const getInitPropertyName = (fldKey, props) => {
 
 const setFieldValue = (contentId, fldData, val) => {
   const { fieldName, typ } = fldData
-  if (typ === 'radio') {
+  if (typ === 'radio' || typ === 'rating') {
     select(contentId, `input[name="${fieldName}"][value="${val}"]`).checked = true
     return
   }

@@ -2584,6 +2584,11 @@ const editorConfig = {
       states: ['hover', 'selected'],
       properties: { ...iconCssProps },
     },
+
+    'rating-input': {
+      states: ['hover', 'selected'],
+      properties: { ...iconCssProps },
+    },
     'rating-msg': {
       states: ['hover'],
       properties: { ...fieldWrpCssProps },

@@ -40,6 +40,11 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
         float: 'right',
       },
 
+      [`.${fk}-rating-input ~ .${fk}-rating-lbl > .${fk}-rating-img`]: {
+        width: '40px',
+        height: '40px',
+        filter: 'invert(95%) sepia(12%) saturate(155%) hue-rotate(6deg) brightness(85%) contrast(84%);',
+      },
       [`.${fk}-rating-img`]: {
         width: '40px',
         height: '40px',

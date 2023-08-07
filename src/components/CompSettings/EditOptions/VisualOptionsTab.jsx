@@ -170,7 +170,7 @@ const SortableElm = ({
 
   function setCheck(e, i) {
     const tmp = deepCopy([...option])
-    if (type === 'radio') {
+    if (type === 'radio' || type === 'rating') {
       const alreadyChecked = tmp.find(opt => opt.check)
       if (alreadyChecked) delete alreadyChecked.check
     }

@@ -36,6 +36,7 @@ import sectionStyle_1_bitformDefault from './themes/1_bitformDefault/sectionStyl
 import selectStyle_1_BitformDefault from './themes/1_bitformDefault/selectStyle_1_bitformDefault'
 import textStyle1BitformDefault from './themes/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './themes/1_bitformDefault/titleStyle_1_bitformDefault'
+import ratingStyle_1_bitformDefault from './themes/1_bitformDefault/ratingStyle_1_bitformDefault'
 
 export const assignNestedObj = (obj, keyPath, value) => {
   const paths = keyPath?.split('->') || []
@@ -697,17 +698,22 @@ export const addDefaultStyleClasses = (fk, element) => {
           addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: phoneNumberStyleBitformDefault })
           break
         case 'section':
-          const sectionStyleBiformDefault = sectionStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
-          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: sectionStyleBiformDefault })
+          const sectionStyleBitformDefault = sectionStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: sectionStyleBitformDefault })
           break
         case 'repeater':
-          const repeaterStyleBiformDefault = repeaterStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
-          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: repeaterStyleBiformDefault })
+          const repeaterStyleBitformDefault = repeaterStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: repeaterStyleBitformDefault })
           break
         case 'signature':
-          const signatureStyleBiformDefault = repeaterStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
-          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: signatureStyleBiformDefault })
+          const signatureStyleBitformDefault = repeaterStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: signatureStyleBitformDefault })
           break
+        case 'rating':
+          const ratingStyleBitformDefault = ratingStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: ratingStyleBitformDefault })
+          break
+
         default:
           break
       }
@@ -1061,6 +1067,7 @@ export const getActualElementKey = (elmKey, fldType = '') => {
     'chip-clear-btn': 'selected-opt-lbl .chip-clear-btn',
     'stripe-pay-btn': 'stripe-wrp .stripe-pay-btn',
     'signature-pad': 'signature-pad',
+    'rating-input': 'rating-img',
     // select: { [elmKey]: elmKey },
   }
   return obj[fldType]?.[elmKey] || obj[elmKey] || elmKey
