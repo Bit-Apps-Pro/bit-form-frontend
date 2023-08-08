@@ -136,12 +136,12 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
           state = ':focus-visible'
         }
         break
-      case 'rating-input':
+      case 'rating-img':
         if (state === 'hover') {
-          state = `:not(:checked) ~ .${fldKey}-rating-lbl:hover,.${fldKey}-rating-input:not(:checked) ~ .${fldKey}-rating-lbl:hover ~ .${fldKey}-rating-lbl .${fldKey}-rating-img`
+          state = `.${fldKey}-rating-hover`
         }
         if (state === 'selected') {
-          state = `:checked ~ .${fldKey}-rating-lbl .${fldKey}-rating-img`
+          state = `.${fldKey}-rating-selected`
         }
         break
 

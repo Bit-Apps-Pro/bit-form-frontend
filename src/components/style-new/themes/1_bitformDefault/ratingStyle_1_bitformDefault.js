@@ -4,10 +4,6 @@ import inputWrapperClasses from '../common/inputWrapperClasses'
 /* eslint-disable camelcase */
 export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorScheme }) {
   if (breakpoint === 'lg' && colorScheme === 'light') {
-    const rtnInpHoverClr = `.${fk}-rating-input:not(:checked) ~ .${fk}-rating-lbl:hover,.${fk}-rating-input:not(:checked) ~ .${fk}-rating-lbl:hover ~ .${fk}-rating-lbl .${fk}-rating-img`
-
-    const selectedRtnClr = `.${fk}-rating-input:checked ~ .${fk}-rating-lbl .${fk}-rating-img`
-
     return {
       ...inputWrapperClasses(fk),
 
@@ -33,32 +29,30 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
       },
 
       [`.${fk}-rating-wrp`]: {
-        float: 'left',
+        display: 'flex',
+        // 'flex-direction': 'row',
+        'align-items': 'center',
+        'justify-content': 'start',
       },
 
-      [`.${fk}-rating-lbl`]: {
-        float: 'right',
-      },
-
-      [`.${fk}-rating-input ~ .${fk}-rating-lbl > .${fk}-rating-img`]: {
-        width: '40px',
-        height: '40px',
-        filter: 'invert(95%) sepia(12%) saturate(155%) hue-rotate(6deg) brightness(85%) contrast(84%);',
-      },
       [`.${fk}-rating-img`]: {
         width: '40px',
         height: '40px',
         filter: 'invert(95%) sepia(12%) saturate(155%) hue-rotate(6deg) brightness(85%) contrast(84%);',
       },
 
-      [rtnInpHoverClr]: {
+      [`.${fk}-rating-img.${fk}-rating-hover`]: {
         transition: 'filter 0.3s ease-in-out',
         filter: 'invert(73%) sepia(30%) saturate(3712%) hue-rotate(3deg) brightness(108%) contrast(96%)',
       },
 
-      [selectedRtnClr]: {
+      [`.${fk}-rating-img.${fk}-rating-selected`]: {
         filter: 'invert(76%) sepia(40%) saturate(5950%) hue-rotate(12deg) brightness(96%) contrast(98%)',
       },
+
+      // [`.${fk}-rating-img.${fk}-rating-is-selected`]: {
+      //   filter: 'invert(76%) sepia(40%) saturate(5950%) hue-rotate(12deg) brightness(96%) contrast(98%)',
+      // },
     }
   }
   return {}

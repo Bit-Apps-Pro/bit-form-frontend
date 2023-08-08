@@ -36,11 +36,7 @@ export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
     }
     ratingFieldRef.current = new BitRatingField(fldElm, config)
   }, [fieldData])
-
-  const option = [...attr.opt].reverse()
-
-  const reverse = [...option].reverse()
-
+  console.log(attr.opt)
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -63,8 +59,16 @@ export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
             {...getCustomAttributes(fieldKey, 'rating-wrp')}
           >
             {
-              reverse.reverse().map((itm, i) => (
-                <>
+              attr.opt.map((itm, i) => (
+                <label
+                  key={itm.val}
+                  className={`${fieldKey}-rating-lbl ${getCustomClsName(fieldKey, 'rating-lbl')}`}
+                  data-testid={`${fieldKey}-rating-lbl`}
+                  data-dev-rating-lbl={fieldKey}
+                  htmlFor={`${fieldKey}-rating-${i}`}
+                  {...getCustomAttributes(fieldKey, 'rating-lbl')}
+                  data-indx={i}
+                >
                   <input
                     type="radio"
                     className={`${fieldKey}-rating-input`}
@@ -74,25 +78,16 @@ export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
                     id={`${fieldKey}-rating-${i}`}
                     {...itm.check && { checked: true }}
                   />
-                  <label
-                    className={`${fieldKey}-rating-lbl ${getCustomClsName(fieldKey, 'rating-lbl')}`}
-                    data-testid={`${fieldKey}-rating-lbl`}
-                    data-dev-rating-lbl={fieldKey}
-                    htmlFor={`${fieldKey}-rating-${i}`}
-                    {...getCustomAttributes(fieldKey, 'rating-lbl')}
-                    data-val={itm.val}
-                  >
-                    <img
-                      // className={`${fieldKey}-rating-img  ${getCustomClsName(fieldKey, 'rating-img')}`}
-                      src={itm.img}
-                      alt={itm?.lbl}
-                      aria-label={itm?.lbl}
-                      // {...getCustomAttributes(fieldKey, 'rating-img')}
-                      data-testid={`${fieldKey}-rating-input`}
-                      data-dev-rating-input={fieldKey}
-                    />
-                  </label>
-                </>
+                  <img
+                    className={`${fieldKey}-rating-img  ${getCustomClsName(fieldKey, 'rating-img')}`}
+                    src={itm.img}
+                    alt={itm?.lbl}
+                    aria-label={itm?.lbl}
+                    {...getCustomAttributes(fieldKey, 'rating-img')}
+                    data-testid={`${fieldKey}-rating-input`}
+                    data-dev-rating-img={fieldKey}
+                  />
+                </label>
               ))
             }
           </div>
