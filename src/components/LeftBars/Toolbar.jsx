@@ -724,7 +724,6 @@ export const toolsList = [
     icn: <StripeIcn size="23" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     pro: 'This field is available only in pro version',
-    new: true,
     elm: {
       typ: 'stripe',
       adminLbl: __('Stripe'),
@@ -907,6 +906,7 @@ export const toolsList = [
     keywords: 'Signature Editor, Signature Field, Signature, Signature Block, Canvas',
     icn: <SignaturePenIcn size="22" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
+    pro: 'This field is available only in pro version',
     new: true,
     elm: {
       typ: 'signature',

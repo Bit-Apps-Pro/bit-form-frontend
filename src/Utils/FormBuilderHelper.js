@@ -232,6 +232,7 @@ const FIELDS_EXTRA_ATTR = {
   recaptcha: { onlyOne: true },
   submit: { onlyOne: true },
   reset: { onlyOne: true },
+  signature: { pro: true },
 }
 
 const FIELD_FILTER = {
