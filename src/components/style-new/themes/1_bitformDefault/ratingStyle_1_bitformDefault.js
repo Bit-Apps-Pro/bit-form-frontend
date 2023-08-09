@@ -38,6 +38,7 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-rating-img`]: {
         width: '40px',
         height: '40px',
+        margin: '5px',
         filter: 'invert(95%) sepia(12%) saturate(155%) hue-rotate(6deg) brightness(85%) contrast(84%);',
       },
 

@@ -33,13 +33,13 @@ export default function FieldIconSettings({
           <button
             data-testid={`${styleRoute}-edt-btn`}
             type="button"
-            {... enableAction && { onClick: setIcon }}
+            {...enableAction && { onClick: setIcon }}
             className={css(ut.icnBtn)}
           >
             <EditIcn size={22} />
           </button>
         </Tip>
-        {iconSrc && (
+        {iconSrc && removeIcon && (
           <Tip msg="Remove">
             <button
               data-testid={`${styleRoute}-rmv-btn`}

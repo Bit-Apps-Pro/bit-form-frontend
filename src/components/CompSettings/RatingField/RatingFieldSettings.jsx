@@ -35,10 +35,13 @@ import FieldSettingTitle from '../StyleCustomize/FieldSettingTitle'
 import SizeAndPosition from '../StyleCustomize/StyleComponents/SizeAndPosition'
 import SimpleAccordion from '../StyleCustomize/ChildComp/SimpleAccordion'
 import { $styles } from '../../../GlobalStates/StylesState'
+import FieldIconSettings from '../StyleCustomize/ChildComp/FieldIconSettings'
+import Icons from '../Icons'
 
 function RatingFieldSettings() {
   const { fieldKey: fldKey } = useParams()
   const setStyles = useSetAtom($styles)
+  const [icnMdl, setIcnMdl] = useState(false)
 
   if (!fldKey) return <>No field exist with this field key</>
 
@@ -111,6 +114,11 @@ function RatingFieldSettings() {
 
     setStyles(prev => create(prev, draft => {
       draft.fields[fldKey].classes[`.${fldKey}-inp-fld-wrp`]['justify-content'] = value
+      if (value === 'end') {
+        draft.fields[fldKey].classes[`.${fldKey}-inp-fld-wrp`]['flex-direction'] = 'row-reverse'
+      } else {
+        delete draft.fields[fldKey].classes[`.${fldKey}-inp-fld-wrp`]['flex-direction']
+      }
     }))
     const req = value
     setFields(allFields)
@@ -140,6 +148,7 @@ function RatingFieldSettings() {
         <SizeAndPosition />
 
         <FieldSettingsDivider />
+
         <SimpleAccordion
           id="rating-algn"
           title={__('Rating Position')}
@@ -159,7 +168,22 @@ function RatingFieldSettings() {
             </select>
           </div>
         </SimpleAccordion>
+
         <FieldSettingsDivider />
+
+        <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption, { fw: 700 })}>
+          <FieldIconSettings
+            label="Rating Icon"
+            iconSrc={fieldData.opt[0].img}
+            styleRoute="rating-icn"
+            setIcon={() => setIcnMdl(true)}
+            isPro
+            proProperty="leadingIcon"
+          />
+        </div>
+
+        <FieldSettingsDivider />
+
         <div className={css(FieldStyle.fieldSection)}>
           <Btn
             dataTestId="edt-opt-stng"
@@ -242,6 +266,17 @@ function RatingFieldSettings() {
             onlyVisualOptionsTab
           />
         </div>
+      </Modal>
+      <Modal
+        md
+        autoHeight
+        show={icnMdl}
+        setModal={setIcnMdl}
+        className="o-v"
+        title={__('Icons')}
+      >
+        <div className="pos-rel" />
+        <Icons iconType="opt" setModal={setIcnMdl} />
       </Modal>
     </>
   )

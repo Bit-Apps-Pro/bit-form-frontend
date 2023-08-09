@@ -85,13 +85,15 @@ export default class BitRatingField {
     // for styling
     if (this.#isCheck.indx) {
       if (this.#labels?.[this.#isCheck.indx]) {
-        const selectedEle = this.#labels[this.#isCheck.indx].querySelector(` .${this.#fieldKey}-rating-img`)
         this.#labels.forEach((itm) => {
           const ele = itm.querySelector(`.${this.#fieldKey}-rating-img`)
           this.#removeClass(ele, `${this.#fieldKey}-rating-is-selected`)
           this.#removeClass(ele, `${this.#fieldKey}-rating-selected`)
         })
-        this.#addClass(selectedEle, `${this.#fieldKey}-rating-is-selected`)
+        for (let i = 0; i <= this.#isCheck.indx; i += 1) {
+          const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
+          this.#addClass(stats, `${this.#fieldKey}-rating-selected`)
+        }
       }
     }
 
@@ -189,3 +191,9 @@ export default class BitRatingField {
     this.#msg = null
   }
 }
+
+/**
+ * hover color bright
+ * selected color bright
+ * on hover selected color dark and hover color bright
+ */
