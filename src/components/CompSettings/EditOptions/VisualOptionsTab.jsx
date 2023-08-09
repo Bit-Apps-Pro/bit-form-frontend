@@ -450,7 +450,7 @@ export default function VisualOptionsTab({
           <span className={css(optionStyle.propLabel)}>Label</span>
           <span className={css(optionStyle.propLabel, { ml: 10 })}>Value</span>
           <div className={css({ flxi: 'align-center', ml: 5 })}>
-            {checkByDefault && <span className={css(optionStyle.checkLabel)}>Check</span>}
+            {checkByDefault && <span className={css(optionStyle.propLabel, { ml: 10 })}>Check</span>}
             {type === 'check' && <span className={css(optionStyle.checkLabel)}>Require</span>}
             {(type === 'check' || type === 'radio') && <span className={css(optionStyle.checkLabel)}>Disable</span>}
           </div>
