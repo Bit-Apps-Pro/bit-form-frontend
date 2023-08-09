@@ -4,14 +4,20 @@
 import { useAtomValue } from 'jotai'
 import { useEffect, useRef } from 'react'
 import BitRatingField from 'bit-rating-field/src/bit-rating-field'
-import { $fields } from '../../GlobalStates/GlobalStates'
+import { useParams } from 'react-router-dom'
+import { $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
 import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
   console.log({ attr })
-
+  const { '*': rightBarUrl } = useParams()
+  const flages = useAtomValue($flags)
+  const { styleMode } = flages
+  const [rightBar, element, urlFldKey] = rightBarUrl.split('/')
+  const showRatingMsg = styleMode && rightBar === 'field-theme-customize' && element === 'rating-msg'
+  console.log({ rightBar, element, urlFldKey })
   const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
 
@@ -36,7 +42,8 @@ export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
     }
     ratingFieldRef.current = new BitRatingField(fldElm, config)
   }, [fieldData])
-  console.log(attr.opt)
+  console.log(fieldData)
+  console.log({ showRatingMsg })
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -91,12 +98,15 @@ export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
               ))
             }
           </div>
+
           <span
             className={`${fieldKey}-rating-msg ${getCustomClsName(fieldKey, 'rating-msg')}`}
             data-testid={`${fieldKey}-rating-msg`}
             data-dev-rating-msg={fieldKey}
             {...getCustomAttributes(fieldKey, 'rating-msg')}
-          />
+          >
+            {showRatingMsg && (fieldData.showReviewLblOnSelect || fieldData.showReviewLblOnHover) && 'Rating Message'}
+          </span>
         </div>
       </InputWrapper>
     </>

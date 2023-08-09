@@ -203,7 +203,7 @@ function RatingFieldSettings() {
           <SingleToggle
             id="fld-rating-lbl-hover"
             tip={tippyHelperMsg.ratingLbl}
-            title={__('Show Rating Label On hover')}
+            title={__('Show Rating Message On hover')}
             action={setReviewLblOnHover}
             isChecked={isReviewLblShowOnHover}
             isPro
@@ -215,7 +215,7 @@ function RatingFieldSettings() {
           <SingleToggle
             id="fld-rating-lbl-select"
             tip={tippyHelperMsg.ratingLbl}
-            title={__('Show Rating Label On Select')}
+            title={__('Show Rating Message On Selected')}
             action={setReviewLblOnSelect}
             isChecked={isReviewLblShowOnSelect}
             isPro

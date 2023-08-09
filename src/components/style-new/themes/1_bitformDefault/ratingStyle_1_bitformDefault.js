@@ -44,16 +44,12 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
 
       [`.${fk}-rating-img.${fk}-rating-hover`]: {
         transition: 'filter 0.3s ease-in-out',
-        filter: 'invert(73%) sepia(30%) saturate(3712%) hue-rotate(3deg) brightness(108%) contrast(96%)',
+        filter: 'invert(73%) sepia(30%) saturate(3712%) hue-rotate(3deg) brightness(108%) contrast(96%) !important',
       },
 
       [`.${fk}-rating-img.${fk}-rating-selected`]: {
         filter: 'invert(76%) sepia(40%) saturate(5950%) hue-rotate(12deg) brightness(96%) contrast(98%)',
       },
-
-      // [`.${fk}-rating-img.${fk}-rating-is-selected`]: {
-      //   filter: 'invert(76%) sepia(40%) saturate(5950%) hue-rotate(12deg) brightness(96%) contrast(98%)',
-      // },
     }
   }
   return {}

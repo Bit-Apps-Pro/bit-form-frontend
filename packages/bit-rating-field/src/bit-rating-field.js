@@ -85,14 +85,21 @@ export default class BitRatingField {
     // for styling
     if (this.#isCheck.indx) {
       if (this.#labels?.[this.#isCheck.indx]) {
+        const len = this.#labels.length - 1
         this.#labels.forEach((itm) => {
           const ele = itm.querySelector(`.${this.#fieldKey}-rating-img`)
-          this.#removeClass(ele, `${this.#fieldKey}-rating-is-selected`)
           this.#removeClass(ele, `${this.#fieldKey}-rating-selected`)
         })
         for (let i = 0; i <= this.#isCheck.indx; i += 1) {
           const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
           this.#addClass(stats, `${this.#fieldKey}-rating-selected`)
+        }
+
+        if (this.#isCheck.indx === len) {
+          for (let i = 0; i <= this.#isCheck.indx; i += 1) {
+            const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
+            this.#removeClass(stats, `${this.#fieldKey}-rating-selected`)
+          }
         }
       }
     }
