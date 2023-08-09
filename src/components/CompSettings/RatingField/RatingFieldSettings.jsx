@@ -175,7 +175,7 @@ function RatingFieldSettings() {
           <FieldIconSettings
             label="Rating Icon"
             iconSrc={fieldData.opt[0].img}
-            styleRoute="rating-icn"
+            styleRoute="rating-img"
             setIcon={() => setIcnMdl(true)}
             isPro
             proProperty="leadingIcon"
