@@ -646,7 +646,6 @@ export const toolsList = [
     icn: <BtnIcn size="23" />,
     pos: { h: 60, w: 60, i: 'shadow_block' },
     pro: 'This field is available only in pro version',
-    new: true,
     elm: {
       typ: 'button',
       btnTyp: 'save-draft',
@@ -725,7 +724,6 @@ export const toolsList = [
     icn: <StripeIcn size="23" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     pro: 'This field is available only in pro version',
-    new: true,
     elm: {
       typ: 'stripe',
       adminLbl: __('Stripe'),
@@ -833,7 +831,6 @@ export const toolsList = [
     keywords: 'Section, Field Group, Group, Section Field',
     icn: <SectionIcon size="18" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'section',
       lbl: __('Section'),
@@ -852,7 +849,6 @@ export const toolsList = [
     keywords: 'Repeater, Field Group, Group, Repeater Field',
     icn: <RepeatIcon size="18" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'repeater',
       lbl: __('Repeater'),
@@ -908,7 +904,6 @@ export const toolsList = [
     keywords: 'Signature Editor, Signature Field, Signature, Signature Block, Canvas',
     icn: <SignaturePenIcn size="22" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'signature',
       adminLbl: __('Signature'),
@@ -948,6 +943,7 @@ export const toolsList = [
     keywords: 'Check Box, Mark, Rating, Star, Review, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
     icn: <ReviewStarIcn />,
     pos: { h: 140, w: 60, i: 'shadow_block' },
+    new: true,
     elm: {
       typ: 'rating',
       lbl: __('Rating'),
