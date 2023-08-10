@@ -153,7 +153,7 @@ function RatingFieldSettings() {
           id="rating-algn"
           title={__('Rating Position')}
           className={css(FieldStyle.fieldSection)}
-          open
+          isPro
         >
           <div className={css(FieldStyle.placeholder)}>
             <select
@@ -178,7 +178,7 @@ function RatingFieldSettings() {
             styleRoute="rating-img"
             setIcon={() => setIcnMdl(true)}
             isPro
-            proProperty="leadingIcon"
+            proProperty="ratingIcon"
           />
         </div>
 
@@ -207,7 +207,7 @@ function RatingFieldSettings() {
             action={setReviewLblOnHover}
             isChecked={isReviewLblShowOnHover}
             isPro
-            proProperty="hidden"
+            proProperty="ratingMsgOnHover"
           />
         </div>
         <FieldSettingsDivider />
@@ -219,7 +219,7 @@ function RatingFieldSettings() {
             action={setReviewLblOnSelect}
             isChecked={isReviewLblShowOnSelect}
             isPro
-            proProperty="hidden"
+            proProperty="ratingMsgOnSelect"
           />
         </div>
         <FieldSettingsDivider />

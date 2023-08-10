@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
+import { IS_PRO } from '../../../Utils/Helpers'
 import StyleSegmentControl from '../../Utilities/StyleSegmentControl'
-import { convertOptionsToText, convertTextToOptions, flattenOptions, formatOptions } from './editOptionsHelper'
+import ProOverlay from '../StyleCustomize/ChildComp/ProOverlay'
 import ImportOptionsTab from './ImportOptionsTab'
 import TextOptionsTab from './TextOptionsTab'
 import VisualOptionsTab from './VisualOptionsTab'
+import { convertOptionsToText, convertTextToOptions, flattenOptions, formatOptions } from './editOptionsHelper'
 
 export default function EditOptions({
   optionMdl, options, setOptions, type, lblKey, valKey, imgKey, isRating, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false,
@@ -41,6 +43,7 @@ export default function EditOptions({
 
   return (
     <div className={css(style.wrapper)}>
+      {!IS_PRO && <ProOverlay />}
       {onlyVisualOptionsTab ? (
         <VisualOptionsTab
           optKey={optKey}
