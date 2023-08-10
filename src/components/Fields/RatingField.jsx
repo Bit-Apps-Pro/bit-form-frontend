@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
 
+import BitRatingField from 'bit-rating-field/src/bit-rating-field'
 import { useAtomValue } from 'jotai'
 import { useEffect, useRef } from 'react'
-import BitRatingField from 'bit-rating-field/src/bit-rating-field'
 import { useParams } from 'react-router-dom'
 import { $fields, $flags } from '../../GlobalStates/GlobalStates'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
@@ -11,13 +11,11 @@ import InputWrapper from '../InputWrapper'
 import RenderStyle from '../style-new/RenderStyle'
 
 export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
-  console.log({ attr })
   const { '*': rightBarUrl } = useParams()
-  const flages = useAtomValue($flags)
-  const { styleMode } = flages
-  const [rightBar, element, urlFldKey] = rightBarUrl.split('/')
+  const flags = useAtomValue($flags)
+  const { styleMode } = flags
+  const [rightBar, element] = rightBarUrl.split('/')
   const showRatingMsg = styleMode && rightBar === 'field-theme-customize' && element === 'rating-msg'
-  console.log({ rightBar, element, urlFldKey })
   const fields = useAtomValue($fields)
   const fieldData = fields[fieldKey]
 
@@ -37,13 +35,13 @@ export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
       options: attr.opt,
       showReviewLblOnHover: attr.showReviewLblOnHover,
       showReviewLblOnSelect: attr.showReviewLblOnSelect,
+      selectedRating: attr.selectedRating,
       fieldKey,
       document: document.getElementById('bit-grid-layout')?.contentDocument,
     }
     ratingFieldRef.current = new BitRatingField(fldElm, config)
   }, [fieldData])
-  console.log(fieldData)
-  console.log({ showRatingMsg })
+
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />

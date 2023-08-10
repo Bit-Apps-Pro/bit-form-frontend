@@ -961,6 +961,7 @@ export const toolsList = [
       customAttributes: {},
       showReviewLblOnHover: false,
       showReviewLblOnSelect: false,
+      selectedRating: false,
     },
   },
   /* {

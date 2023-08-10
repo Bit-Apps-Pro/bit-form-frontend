@@ -16,9 +16,25 @@ export default class BitRatingField {
 
   #showMsgOnSelect = false
 
+  #selectedRating = false
+
   #ratingWrp = null
 
   #isCheck = {}
+
+  #ratingImg = null
+
+  #ratingLbl = null
+
+  #ratingInput = null
+
+  #ratingMsg = null
+
+  #ratingHover = null
+
+  #ratingScale = null
+
+  #ratingSelected = null
 
   constructor(selector, config) {
     this.#document = config?.document || document
@@ -35,13 +51,28 @@ export default class BitRatingField {
 
     this.#showMsgOnHover = config?.showReviewLblOnHover || false
     this.#showMsgOnSelect = config?.showReviewLblOnSelect || false
+    this.#selectedRating = config?.selectedRating || false
+
+    this.#selectorVariable()
 
     this.init()
   }
 
+  #selectorVariable() {
+    this.#ratingImg = `.${this.#fieldKey}-rating-img`
+    this.#ratingLbl = `.${this.#fieldKey}-rating-lbl`
+    this.#ratingInput = `.${this.#fieldKey}-rating-input`
+    this.#ratingMsg = `.${this.#fieldKey}-rating-msg`
+
+    // for add and remove class name so not using dot
+    this.#ratingHover = `${this.#fieldKey}-rating-hover`
+    this.#ratingScale = `${this.#fieldKey}-rating-scale`
+    this.#ratingSelected = `${this.#fieldKey}-rating-selected`
+  }
+
   init() {
-    this.#labels = this.#ratingWrp.querySelectorAll(`.${this.#fieldKey}-rating-lbl`)
-    this.#msg = this.#select(`.${this.#fieldKey}-rating-msg`)
+    this.#labels = this.#ratingWrp.querySelectorAll(this.#ratingLbl)
+    this.#msg = this.#select(this.#ratingMsg)
 
     this.#labels.forEach((item, index) => {
       item.addEventListener('mouseover', () => {
@@ -54,13 +85,14 @@ export default class BitRatingField {
         this.#onEnd(indx)
       })
 
-      item.addEventListener('click', () => {
-        // at first remove selected style
+      item.addEventListener('click', (e) => {
         const { indx } = item.dataset
+        e.preventDefault()
         this.#onClick(indx, index)
       })
 
-      item.addEventListener('touchstart', () => {
+      item.addEventListener('touchstart', (e) => {
+        e.preventDefault()
         const { indx } = item.dataset
         this.#onClick(indx, index)
       })
@@ -76,10 +108,7 @@ export default class BitRatingField {
 
   #hoverAction(indx) {
     if (this.#showMsgOnHover) {
-      const findRating = this.#findRating(indx)
-      if (this.#msg) {
-        this.#msg.innerText = findRating.lbl
-      }
+      this.#addMessage(indx)
     }
 
     // for styling
@@ -87,28 +116,30 @@ export default class BitRatingField {
       if (this.#labels?.[this.#isCheck.indx]) {
         const len = this.#labels.length - 1
         this.#labels.forEach((itm) => {
-          const ele = itm.querySelector(`.${this.#fieldKey}-rating-img`)
-          this.#removeClass(ele, `${this.#fieldKey}-rating-selected`)
+          const ele = itm.querySelector(this.#ratingImg)
+          this.#removeClass(ele, this.#ratingSelected)
         })
+
         for (let i = 0; i <= this.#isCheck.indx; i += 1) {
-          const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
-          this.#addClass(stats, `${this.#fieldKey}-rating-selected`)
+          const stats = this.#labels[i].querySelector(this.#ratingImg)
+          this.#removeClass(stats, this.#ratingSelected)
         }
 
         if (this.#isCheck.indx === len) {
           for (let i = 0; i <= this.#isCheck.indx; i += 1) {
-            const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
-            this.#removeClass(stats, `${this.#fieldKey}-rating-selected`)
+            const stats = this.#labels[i].querySelector(this.#ratingImg)
+            this.#removeClass(stats, this.#ratingSelected)
           }
         }
       }
     }
 
     for (let i = 0; i <= indx; i += 1) {
-      if (i <= indx) {
-        if (this.#labels?.[i]) {
-          const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
-          this.#addClass(stats, `${this.#fieldKey}-rating-hover`)
+      if (i <= indx && this.#labels?.[i]) {
+        const stats = this.#labels[i].querySelector(this.#ratingImg)
+        this.#addClass(stats, this.#ratingHover)
+        if (i === indx) {
+          this.#addClass(stats, this.#ratingScale)
         }
       }
     }
@@ -117,29 +148,26 @@ export default class BitRatingField {
   #onEnd(indx) {
     if (this.#showMsgOnHover) {
       if (this.#isCheck.status && this.#isCheck.indx === indx) {
-        const findRating = this.#findRating(indx)
-        this.#msg.innerText = findRating.lbl
+        this.#addMessage(indx)
       } else if (this.#isCheck.status) {
-        const rating = this.#findRating(this.#isCheck.indx)
-        this.#msg.innerText = rating.lbl
+        this.#addMessage(this.#isCheck.indx)
       } else if (this.#msg) { this.#msg.innerHTML = '' }
     }
 
     // for styling
     for (let i = 0; i <= indx; i += 1) {
       if (this.#labels?.[i]) {
-        const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
-        this.#removeClass(stats, `${this.#fieldKey}-rating-hover`)
+        const stats = this.#labels[i].querySelector(this.#ratingImg)
+        this.#removeClass(stats, this.#ratingHover)
+        this.#removeClass(stats, this.#ratingScale)
       }
     }
 
-    if (this.#isCheck.indx) {
+    if (this.#isCheck.status) {
       if (this.#labels?.[this.#isCheck.indx]) {
-        const selectedEle = this.#labels[this.#isCheck.indx].querySelector(`.${this.#fieldKey}-rating-img`)
-        this.#removeClass(selectedEle, `${this.#fieldKey}-rating-is-selected`)
         for (let i = 0; i <= this.#isCheck.indx; i += 1) {
-          const stats = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
-          this.#addClass(stats, `${this.#fieldKey}-rating-selected`)
+          const stats = this.#labels[i].querySelector(this.#ratingImg)
+          this.#addClass(stats, this.#ratingSelected)
         }
       }
     }
@@ -147,37 +175,61 @@ export default class BitRatingField {
 
   #onClick(indx, index) {
     if (this.#labels?.[this.#isCheck.indx]) {
-      const rmvSltCls = this.#labels[this.#isCheck.indx].querySelector(`.${this.#fieldKey}-rating-img`)
-      this.#removeClass(rmvSltCls, `${this.#fieldKey}-rating-selected`)
+      const rmvSltCls = this.#labels[this.#isCheck.indx].querySelector(this.#ratingImg)
+      this.#removeClass(rmvSltCls, this.#ratingSelected)
     }
 
-    this.#isCheck = { status: true, indx }
-
-    if (this.#showMsgOnHover) {
-      const rating = this.#findRating(indx)
-      this.#msg.innerHTML = rating.lbl
+    if (this.#showMsgOnSelect) {
+      this.#addMessage(indx)
     }
-    item.querySelector(`.${this.#fieldKey}-rating-input`).checked = true
+
+    const input = this.#labels?.[index].querySelector(this.#ratingInput)
+
+    if (this.#selectedRating) {
+      if (input?.checked) {
+        input.checked = false
+        this.#isCheck = { status: false, indx: null }
+      } else {
+        input.checked = true
+        this.#isCheck = { status: true, indx }
+      }
+    } else {
+      this.#isCheck = { status: true, indx }
+    }
 
     for (let i = 0; i <= index; i += 1) {
       if (this.#labels?.[i]) {
-        const isStar = this.#labels[i].querySelector(`.${this.#fieldKey}-rating-img`)
-        if (i <= index) {
-          this.#addClass(isStar, `${this.#fieldKey}-rating-selected`)
+        const isStar = this.#labels[i].querySelector(this.#ratingImg)
+        if (i <= index && this.#isCheck.status) {
+          this.#addClass(isStar, this.#ratingSelected)
         } else {
-          this.#removeClass(isStar, `${this.#fieldKey}-rating-selected`)
+          this.#removeClass(isStar, this.#ratingSelected)
         }
       }
     }
+
     // remove hover color when click star
     this.#labels?.forEach((itm) => {
-      const rmvHorCls = itm.querySelector(`.${this.#fieldKey}-rating-img`)
-      this.#removeClass(rmvHorCls, `${this.#fieldKey}-rating-hover`)
+      const rmvHorCls = itm.querySelector(this.#ratingImg)
+      this.#removeClass(rmvHorCls, this.#ratingHover)
     })
+
+    if (this.#showMsgOnSelect && this.#isCheck.status) {
+      this.#addMessage(indx)
+    } else {
+      this.#msg.innerHTML = ''
+    }
   }
 
   #findRating(indx) {
     return this.#ratingOptions[indx]
+  }
+
+  #addMessage(indx) {
+    const findRating = this.#findRating(indx)
+    if (this.#msg) {
+      this.#msg.innerText = findRating.lbl
+    }
   }
 
   #addClass(el, className) {
@@ -198,9 +250,3 @@ export default class BitRatingField {
     this.#msg = null
   }
 }
-
-/**
- * hover color bright
- * selected color bright
- * on hover selected color dark and hover color bright
- */

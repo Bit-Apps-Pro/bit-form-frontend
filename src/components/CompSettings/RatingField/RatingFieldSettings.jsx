@@ -54,6 +54,7 @@ function RatingFieldSettings() {
   const options = deepCopy(fields[fldKey].opt)
   const isReviewLblShowOnHover = fieldData?.showReviewLblOnHover || false
   const isReviewLblShowOnSelect = fieldData?.showReviewLblOnSelect || false
+  const selectedRating = fieldData?.selectedRating || false
   const adminLabel = fieldData.adminLbl || ''
   const ratingPos = fieldData?.ratingPos || 'start'
 
@@ -105,8 +106,23 @@ function RatingFieldSettings() {
     setFields(allFields)
     addToBuilderHistory({ event: `Review Label ${req}`, type: 'review_lbl_show_hovsr_hide', state: { fields: allFields, fldKey } })
   }
+  const setSelectRating = ({ target }) => {
+    const { checked } = target
+    const allFields = create(fields, draft => {
+      const fldData = draft[fldKey]
 
-  const setRatiogPos = ({ target }) => {
+      if (checked) {
+        fldData.selectedRating = true
+      } else {
+        fldData.selectedRating = false
+      }
+    })
+    const req = checked ? 'show' : 'hide'
+    setFields(allFields)
+    addToBuilderHistory({ event: `Review select ${req}`, type: 'review_select_show_hovsr_hide', state: { fields: allFields, fldKey } })
+  }
+
+  const setRatingPos = ({ target }) => {
     const { value } = target
     const allFields = create(fields, draft => {
       draft[fldKey].ratingPos = value
@@ -162,7 +178,7 @@ function RatingFieldSettings() {
               name=""
               id=""
               value={ratingPos}
-              onChange={setRatiogPos}
+              onChange={setRatingPos}
             >
               {pos.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
@@ -220,6 +236,18 @@ function RatingFieldSettings() {
             isChecked={isReviewLblShowOnSelect}
             isPro
             proProperty="ratingMsgOnSelect"
+          />
+        </div>
+        <FieldSettingsDivider />
+        <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip, FieldStyle.singleOption)}>
+          <SingleToggle
+            id="fld-rating-select"
+            tip={tippyHelperMsg.ratingLbl}
+            title={__('Selected Rating')}
+            action={setSelectRating}
+            isChecked={selectedRating}
+            isPro
+            proProperty="hidden"
           />
         </div>
         <FieldSettingsDivider />
