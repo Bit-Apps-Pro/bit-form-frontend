@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable object-curly-newline */
 import { mergeNestedObj } from '../../../../Utils/globalHelpers'
 import ratingStyle_1_bitformDefault from '../1_bitformDefault/ratingStyle_1_bitformDefault'
