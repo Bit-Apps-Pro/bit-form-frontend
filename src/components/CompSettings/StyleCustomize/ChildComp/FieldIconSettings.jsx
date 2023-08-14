@@ -21,38 +21,56 @@ export default function FieldIconSettings({
       </div>
       <div className={css(ut.flxcb)}>
         {iconSrc && (
-          <>
-            <img src={iconSrc} alt={alt || label} width="18" height="18" />
+          <img
+            src={iconSrc}
+            title="Icon"
+            alt={alt || label}
+            width="22"
+            height="22"
+          />
+        )}
+
+        <div className={css(s.flx)}>
+
+          <Tip msg="Change">
+            <button
+              data-testid={`${styleRoute}-edt-btn`}
+              type="button"
+              {...enableAction && { onClick: setIcon }}
+              className={css(ut.icnBtn)}
+            >
+              <EditIcn size={18} />
+            </button>
+          </Tip>
+          {iconSrc && (
             <Tip msg="Style">
               <IconStyleBtn route={styleRoute} />
             </Tip>
-          </>
-        )}
-
-        <Tip msg="Change">
-          <button
-            data-testid={`${styleRoute}-edt-btn`}
-            type="button"
-            {...enableAction && { onClick: setIcon }}
-            className={css(ut.icnBtn)}
-          >
-            <EditIcn size={22} />
-          </button>
-        </Tip>
-        {iconSrc && removeIcon && (
-          <Tip msg="Remove">
-            <button
-              data-testid={`${styleRoute}-rmv-btn`}
-              {...enableAction && { onClick: removeIcon }}
-              className={css(ut.icnBtn)}
-              type="button"
-            >
-              <CloseIcn size="13" />
-            </button>
-          </Tip>
-        )}
+          )}
+          {iconSrc && removeIcon && (
+            <Tip msg="Remove">
+              <button
+                data-testid={`${styleRoute}-rmv-btn`}
+                {...enableAction && { onClick: removeIcon }}
+                className={css(ut.icnBtn)}
+                type="button"
+              >
+                <CloseIcn size="13" />
+              </button>
+            </Tip>
+          )}
+        </div>
 
       </div>
     </div>
   )
+}
+
+const s = {
+  flx: {
+    dy: 'flex',
+    bc: '#f7f7f7',
+    brs: '5px',
+  },
+
 }
