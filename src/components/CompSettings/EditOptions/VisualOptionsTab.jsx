@@ -52,10 +52,11 @@ const SortableElm = ({
   }
 
   const addOption = () => {
+    const { img } = option[0]
     const newOption = create(option, draft => {
       const id = newOptKey(optKey)
       // eslint-disable-next-line no-param-reassign
-      const newTempOption = isRating ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: `${bits.assetsURL}/../static/rating/star.svg` } : { id, [lblKey]: `Option ${id}` }
+      const newTempOption = isRating ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: img } : { id, [lblKey]: `Option ${id}` }
       draft.splice(optIndx + 1, 0, newTempOption)
     })
 
@@ -376,9 +377,10 @@ export default function VisualOptionsTab({
   const bits = useAtomValue($bits)
 
   const addOption = () => {
+    const { img } = option[0]
     const tmpOption = [...option]
     const id = newOptKey(optKey)
-    const newTempOption = isRating ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: `${bits.assetsURL}/../static/rating/star.svg` } : { id, [lblKey]: `Option ${id}` }
+    const newTempOption = isRating ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: img } : { id, [lblKey]: `Option ${id}` }
     const newIndex = tmpOption.push(newTempOption)
     setScrolIndex(newIndex - 1)
     setOption(tmpOption)

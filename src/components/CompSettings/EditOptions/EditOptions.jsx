@@ -53,6 +53,7 @@ export default function EditOptions({
           type={type}
           lblKey={lblKey}
           valKey={valKey}
+          imgKey={imgKey}
           checkByDefault={checkByDefault}
           isRating={isRating}
           hasGroup={hasGroup}
