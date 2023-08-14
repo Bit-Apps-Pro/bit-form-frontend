@@ -25,7 +25,10 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
       },
 
       [`.${fk}-rating-input`]: {
-        display: 'none',
+        visibility: 'hidden',
+        opacity: 0,
+        height: 0,
+        width: 0,
       },
 
       [`.${fk}-rating-wrp`]: {
