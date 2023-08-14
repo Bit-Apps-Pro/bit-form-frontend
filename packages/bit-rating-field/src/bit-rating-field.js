@@ -254,16 +254,21 @@ export default class BitRatingField {
     el.classList.remove(className)
   }
 
-  destroy() {
+  #removeAllSelectedRating() {
     this.#labels.forEach((item) => {
       const ele = item.querySelector(this.#ratingImg)
       this.#removeClass(ele, this.#ratingSelected)
     })
+  }
+
+  destroy() {
+    this.#removeAllSelectedRating()
     this.#labels = null
     this.#msg = null
   }
 
   reset() {
+    this.#removeAllSelectedRating()
     this.#labels = null
     this.#msg = null
   }
