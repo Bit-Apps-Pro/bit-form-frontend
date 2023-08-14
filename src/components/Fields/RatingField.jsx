@@ -82,6 +82,7 @@ export default function RatingField({ attr, formID, fieldKey, styleClasses }) {
                     aria-label={`rating-input-${i}`}
                     id={`${fieldKey}-rating-${i}`}
                     {...itm.check && { checked: true }}
+                    defaultChecked={itm?.check}
                   />
                   <img
                     className={`${fieldKey}-rating-img  ${getCustomClsName(fieldKey, 'rating-img')}`}

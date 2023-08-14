@@ -55,6 +55,8 @@ export default class BitRatingField {
 
     this.#selectorVariable()
 
+    this.#checkDefaultRatingSelected()
+
     this.init()
   }
 
@@ -70,11 +72,23 @@ export default class BitRatingField {
     this.#ratingSelected = `${this.#fieldKey}-rating-selected`
   }
 
+  #checkDefaultRatingSelected() {
+    this.#ratingOptions.forEach((item, index) => {
+      if (item?.check) {
+        this.#isCheck = { status: true, indx: index }
+      }
+    })
+  }
+
   init() {
     this.#labels = this.#ratingWrp.querySelectorAll(this.#ratingLbl)
     this.#msg = this.#select(this.#ratingMsg)
 
     this.#labels.forEach((item, index) => {
+      if (this.#isCheck.status && index <= this.#isCheck.indx) {
+        const ele = item.querySelector(this.#ratingImg)
+        this.#addClass(ele, this.#ratingSelected)
+      }
       item.addEventListener('mouseover', () => {
         const indx = parseInt(item.dataset.indx)
         this.#hoverAction(indx)
@@ -185,17 +199,17 @@ export default class BitRatingField {
 
     const input = this.#labels?.[index].querySelector(this.#ratingInput)
 
-    if (this.#selectedRating) {
-      if (input?.checked) {
-        input.checked = false
-        this.#isCheck = { status: false, indx: null }
-      } else {
-        input.checked = true
-        this.#isCheck = { status: true, indx }
-      }
+    // if (this.#selectedRating) {
+    if (input?.checked) {
+      input.checked = false
+      this.#isCheck = { status: false, indx: null }
     } else {
+      input.checked = true
       this.#isCheck = { status: true, indx }
     }
+    // } else {
+    // this.#isCheck = { status: true, indx }
+    // }
 
     for (let i = 0; i <= index; i += 1) {
       if (this.#labels?.[i]) {
@@ -241,6 +255,10 @@ export default class BitRatingField {
   }
 
   destroy() {
+    this.#labels.forEach((item) => {
+      const ele = item.querySelector(this.#ratingImg)
+      this.#removeClass(ele, this.#ratingSelected)
+    })
     this.#labels = null
     this.#msg = null
   }
