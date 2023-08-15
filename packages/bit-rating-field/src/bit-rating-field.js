@@ -77,10 +77,11 @@ export default class BitRatingField {
     this.#ratingOptions.forEach((item, index) => {
       if (item?.check) {
         this.#isCheck = { status: true, indx: index }
-        // const ele = this.#labels[index].querySelector(this.#ratingInput)
-        // console.log(ele)
-        // ele.checked = true
-        // console.log('get selecred', ele.checked)
+        if (this.#showMsgOnSelect) {
+          this.#addMessage(index)
+        } else {
+          this.#removeMessage()
+        }
       }
     })
   }
@@ -194,7 +195,9 @@ export default class BitRatingField {
         this.#addMessage(indx)
       } else if (this.#isCheck.status) {
         this.#addMessage(this.#isCheck.indx)
-      } else if (this.#msg) { this.#msg.innerHTML = '' }
+      } else if (this.#msg) {
+        this.#removeMessage()
+      }
     }
 
     // for styling
@@ -214,6 +217,12 @@ export default class BitRatingField {
         }
       }
     }
+
+    if (this.#showMsgOnSelect) {
+      this.#addMessage(this.#isCheck.indx)
+    } else {
+      this.#removeMessage()
+    }
   }
 
   #onClick(indx, index) {
@@ -222,9 +231,11 @@ export default class BitRatingField {
       this.#removeClass(rmvSltCls, this.#ratingSelected)
     }
 
-    if (this.#showMsgOnSelect) {
-      this.#addMessage(indx)
-    }
+    // if (this.#showMsgOnSelect) {
+    //   this.#addMessage(indx)
+    // } else {
+    //   // this.#removeMessage()
+    // }
 
     const input = this.#labels?.[index].querySelector(this.#ratingInput)
 
@@ -262,7 +273,7 @@ export default class BitRatingField {
     if (this.#showMsgOnSelect && this.#isCheck.status) {
       this.#addMessage(indx)
     } else {
-      this.#msg && (this.#msg.innerHTML = '')
+      this.#removeMessage()
     }
   }
 
@@ -272,9 +283,13 @@ export default class BitRatingField {
 
   #addMessage(indx) {
     const findRating = this.#findRating(indx)
-    if (this.#msg) {
+    if (this.#msg && findRating) {
       this.#msg.innerText = findRating.lbl
     }
+  }
+
+  #removeMessage() {
+    this.#msg && (this.#msg.innerHTML = '')
   }
 
   #addClass(el, className) {
@@ -292,7 +307,7 @@ export default class BitRatingField {
     })
   }
 
-  #detachAllEvents() {
+  #dispatchAllEvent() {
     this.#allEventListeners.forEach(({ selector, eventType, cb }) => {
       selector.removeEventListener(eventType, cb)
     })
@@ -300,13 +315,14 @@ export default class BitRatingField {
 
   destroy() {
     this.#removeAllSelectedRating()
+    this.#dispatchAllEvent()
     this.#labels = null
     this.#msg = null
   }
 
   reset() {
     this.#removeAllSelectedRating()
-    this.#detachAllEvents()
+    this.#dispatchAllEvent()
     this.#isCheck = { status: false, indx: null }
     // this.#selectedRatingInput.checked = false
     this.#selectedRatingInput = null
