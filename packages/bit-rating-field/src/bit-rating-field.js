@@ -308,7 +308,7 @@ export default class BitRatingField {
     this.#removeAllSelectedRating()
     this.#detachAllEvents()
     this.#isCheck = { status: false, indx: null }
-    this.#selectedRatingInput.checked = false
+    // this.#selectedRatingInput.checked = false
     this.#selectedRatingInput = null
     this.init()
   }
