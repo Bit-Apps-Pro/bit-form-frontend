@@ -107,7 +107,7 @@ function AllFroms() {
       Header: 'Actions',
       accessor: 't_action',
       Cell: val => (
-        <OptionMenu title="Actions" w={150} h={315}>
+        <OptionMenu title="Actions" w={165} h={315}>
           <Link
             to={`/form/builder/edit/${val.row.original.formID}/fields-list`}
             type="button"
@@ -115,7 +115,7 @@ function AllFroms() {
             aria-label="actions"
           >
             <EditIcn size={18} />
-            Edit
+            {__('Edit Form')}
           </Link>
           <Link
             to={`/form/responses/edit/${val.row.original.formID}`}
@@ -124,7 +124,7 @@ function AllFroms() {
             aria-label="actions"
           >
             <FormResponseIcn size="18" />
-            Responses
+            {__('Responses')}
           </Link>
           <Link
             to={`/form/settings/edit/${val.row.original.formID}/form-settings`}
@@ -133,7 +133,7 @@ function AllFroms() {
             aria-label="form settings"
           >
             <Settings2 size={18} />
-            Settings
+            {__('Settings')}
           </Link>
           <Link
             to={`/form/settings/edit/${val.row.original.formID}/confirmations`}
@@ -142,7 +142,7 @@ function AllFroms() {
             aria-label="confirmations"
           >
             <InfoIcn size="18" stroke="3" />
-            Confirmations
+            {__('Confirmations')}
           </Link>
           <Link
             to={`/form/settings/edit/${val.row.original.formID}/workflow`}
@@ -151,7 +151,7 @@ function AllFroms() {
             aria-label="Conditional Logic"
           >
             <ConditionalIcn size="18" />
-            Conditions
+            {__('Conditional Logic')}
           </Link>
           <Link
             to={`/form/settings/edit/${val.row.original.formID}/integrations`}
@@ -160,19 +160,20 @@ function AllFroms() {
             aria-label="Integrations"
           >
             <CodeSnippetIcn size="18" />
-            Integrations
+            {__('Integrations')}
           </Link>
           <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
             <CopyIcn size={18} />
-            Duplicate
+            {__('Duplicate')}
           </button>
           <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
             <DownloadIcon size={18} />
-            Export
+            {__('Export')}
           </button>
           <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
             <TrashIcn size={16} />
-            &nbsp;Delete
+            &nbsp;
+            {__('Delete')}
           </button>
         </OptionMenu>
       ),
@@ -434,13 +435,15 @@ function AllFroms() {
       {allForms.length ? (
         <>
           <div className={css(app.af_header)}>
-            <h2>{__('Forms')}</h2>
+            {/* <h2>{__('Forms')}</h2> */}
             <button
               onClick={() => setModal(true)}
               type="button"
               data-testid="create-form-btn"
               className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}
             >
+              <FormResponseIcn size="20" />
+              &nbsp;
               {__('Create Form')}
             </button>
           </div>

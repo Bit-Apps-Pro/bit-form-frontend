@@ -69,7 +69,7 @@ export default function App() {
                     to="/"
                     className={({ isActive }) => (isActive ? 'app-link-active' : '')}
                   >
-                    {__('My Forms')}
+                    {__('Forms')}
                   </NavLink>
 
                   <NavLink
