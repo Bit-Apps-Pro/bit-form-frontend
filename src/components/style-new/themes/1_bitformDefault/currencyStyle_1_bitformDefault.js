@@ -349,6 +349,7 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
 
       [`.${fk}-option-list .selected-opt`]: {
         'font-weight': 500,
+        color: '#fff',
         'background-color': 'var(--global-accent-color)',
       },
       [`.${fk}-option-list .selected-opt .opt-suffix`]: {
