@@ -40,10 +40,14 @@ export default class BitRatingField {
 
   #allEventListeners = []
 
+  #defaultValue = null
+
   constructor(selector, config) {
     this.#document = config?.document || document
     this.#fieldKey = config?.fieldKey
     this.#isCheck = { status: false, indx: null }
+
+    console.log('config', config)
 
     if (typeof selector === 'string') {
       this.#ratingWrp = this.#document.querySelector(selector)
@@ -57,6 +61,7 @@ export default class BitRatingField {
     this.#showMsgOnHover = config?.showReviewLblOnHover || false
     this.#showMsgOnSelect = config?.showReviewLblOnSelect || false
     this.#selectedRating = config?.selectedRating || false
+    this.#defaultValue = config?.defaultValue || null
 
     this.init()
   }
@@ -75,7 +80,7 @@ export default class BitRatingField {
 
   #checkDefaultRatingSelected() {
     this.#ratingOptions.forEach((item, index) => {
-      if (item?.check) {
+      if (this.#defaultValue === item.val || item?.check) {
         this.#isCheck = { status: true, indx: index }
         if (this.#showMsgOnSelect) {
           this.#addMessage(index)
@@ -91,12 +96,71 @@ export default class BitRatingField {
     this.#allEventListeners.push({ selector, eventType, cb })
   }
 
+  // for add class keyboard event
+  #addNavigateHoverStyle(index) {
+    for (let i = 0; i <= index; i += 1) {
+      const stats = this.#labels[i].querySelector(this.#ratingImg)
+      this.#addClass(stats, this.#ratingHover)
+    }
+    // add message
+    if (this.#showMsgOnHover) {
+      this.#addMessage(index)
+    }
+  }
+
+  #removeNavigateHoverStyle(index) {
+    const star = this.#labels[index].querySelector(this.#ratingImg)
+    this.#removeClass(star, this.#ratingHover)
+    // previous item message show
+    if (this.#showMsgOnHover) {
+      this.#addMessage(index - 1)
+    }
+  }
+
+  #handleKeyboardNavigation() {
+    let activeIndex = -1
+    const selectIndex = this.#ratingOptions.findIndex((item) => item.check)
+    if (selectIndex) {
+      activeIndex = selectIndex
+    }
+
+    this.#addEvent(this.#ratingWrp, 'keydown', (e) => {
+      // this.#ratingWrp.addEventListener('keydown', (e) => {
+      const totalChildrenLen = e.target.children.length - 1
+      if (e.key === 'ArrowRight') {
+        if (activeIndex === totalChildrenLen) {
+          activeIndex = totalChildrenLen
+        } else {
+          activeIndex += 1
+        }
+
+        const childrenElement = e.target.children[activeIndex]
+        const val = parseInt(childrenElement.dataset.indx)
+        this.#addNavigateHoverStyle(val)
+      } else if (e.key === 'ArrowLeft') {
+        this.#removeNavigateHoverStyle(activeIndex)
+        if (activeIndex === 0) {
+          activeIndex = 0
+        } else {
+          activeIndex -= 1
+        }
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        this.#onClick(activeIndex)
+      }
+    })
+  }
+
   init() {
     this.#selectorVariable()
 
     this.#labels = this.#ratingWrp.querySelectorAll(this.#ratingLbl)
     this.#msg = this.#select(this.#ratingMsg)
+
     this.#checkDefaultRatingSelected()
+
+    this.#handleKeyboardNavigation()
 
     this.#labels.forEach((item, index) => {
       if (this.#isCheck.status && index <= this.#isCheck.indx) {
@@ -121,25 +185,14 @@ export default class BitRatingField {
       this.#addEvent(item, 'click', (e) => {
         const { indx } = item.dataset
         e.preventDefault()
-        this.#onClick(indx, index)
+        this.#onClick(indx)
       })
-
-      // item.addEventListener('touchstart', (e) => {
-      //   e.preventDefault()
-      //   const { indx } = item.dataset
-      //   this.#onClick(indx, index)
-      // })
 
       this.#addEvent(item, 'touchstart', (e) => {
         e.preventDefault()
         const { indx } = item.dataset
-        this.#onClick(indx, index)
+        this.#onClick(indx)
       })
-
-      // item.addEventListener('touchend', () => {
-      //   const { indx } = item.dataset
-      //   this.#onEnd(indx)
-      // })
 
       this.#addEvent(item, 'touchend', () => {
         const { indx } = item.dataset
@@ -225,7 +278,7 @@ export default class BitRatingField {
     }
   }
 
-  #onClick(indx, index) {
+  #onClick(indx) {
     if (this.#labels?.[this.#isCheck.indx]) {
       const rmvSltCls = this.#labels[this.#isCheck.indx].querySelector(this.#ratingImg)
       this.#removeClass(rmvSltCls, this.#ratingSelected)
@@ -237,7 +290,7 @@ export default class BitRatingField {
     //   // this.#removeMessage()
     // }
 
-    const input = this.#labels?.[index].querySelector(this.#ratingInput)
+    const input = this.#labels?.[indx].querySelector(this.#ratingInput)
 
     if (this.#selectedRatingInput) {
       if (input?.checked) {
@@ -253,10 +306,12 @@ export default class BitRatingField {
       this.#selectedRatingInput = input
     }
 
-    for (let i = 0; i <= index; i += 1) {
+    input.dispatchEvent(new Event('input'))
+
+    for (let i = 0; i <= indx; i += 1) {
       if (this.#labels?.[i]) {
         const isStar = this.#labels[i].querySelector(this.#ratingImg)
-        if (i <= index && this.#isCheck.status) {
+        if (i <= indx && this.#isCheck.status) {
           this.#addClass(isStar, this.#ratingSelected)
         } else {
           this.#removeClass(isStar, this.#ratingSelected)
@@ -298,6 +353,21 @@ export default class BitRatingField {
 
   #removeClass(el, className) {
     el.classList.remove(className)
+  }
+
+  set value(val) {
+    // find index of rating
+    console.log({ val })
+    const findRating = this.#ratingOptions.findIndex((itm) => itm.val === val)
+    if (findRating !== -1) {
+      this.#onClick(findRating)
+    }
+  }
+
+  get value() {
+    console.log(this.#ratingOptions, this.#isCheck.indx)
+    const selectedItem = this.#ratingOptions[this.#isCheck.indx]
+    return selectedItem.val || selectedItem.lbl
   }
 
   #removeAllSelectedRating() {

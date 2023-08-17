@@ -10,9 +10,12 @@ const getInitPropertyName = (fldKey, props) => {
   return initFldKey
 }
 
-const setFieldValue = (contentId, fldData, val) => {
+const setFieldValue = (props, field, val) => {
+  // setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
+  const { contentId } = props
+  const fldData = props.fields[field]
   const { fieldName, typ } = fldData
-  if (typ === 'radio' || typ === 'rating') {
+  if (typ === 'radio') {
     select(contentId, `input[name="${fieldName}"][value="${val}"]`).checked = true
     return
   }
@@ -29,6 +32,14 @@ const setFieldValue = (contentId, fldData, val) => {
     const fld = select(contentId, `input[name="${fieldName}"]`)
     if (fld) {
       fld.checked = val === fldData.msg.checked
+    }
+    return
+  }
+
+  if (typ === 'rating') {
+    const fldKey = getInitPropertyName(field, props)
+    if (props.inits && props.inits[fldKey]) {
+      props.inits[fldKey].value = val
     }
     return
   }
@@ -99,7 +110,9 @@ const setReadonly = (fldKey, props, val) => {
 const setActionValue = (actionDetail, props, fieldValues) => {
   if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
     const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
-    setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
+    // setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
+    const actionDetlsFld = actionDetail.field
+    setFieldValue(props, actionDetlsFld, actionValue)
   }
 }
 

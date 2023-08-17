@@ -38,6 +38,15 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
         'justify-content': 'start',
       },
 
+      [`.${fk}-rating-lbl`]: {
+        cursor: 'pointer',
+      },
+
+      [`.${fk}-rating-wrp:focus`]: {
+        outline: 'none',
+        'box-shadow': 'box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;',
+      },
+
       [`.${fk}-rating-img`]: {
         width: '30px',
         height: '30px',
