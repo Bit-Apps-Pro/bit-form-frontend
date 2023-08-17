@@ -2,14 +2,22 @@
 let contentId
 let fields
 let fieldKeysByName = {}
-export default function validateForm({ form, input }) {
+export default function validateForm({ form, input }, { step } = {}) {
   if (form) contentId = form
   else if (input?.form?.id) [, contentId] = input.form.id.split('form-')
   const props = window?.bf_globals?.[contentId]
   if (typeof props === 'undefined') return false
   let formEntries = {}
   const bfSeparator = props.configs.bf_separator
-  fields = props.fields
+  if (step) {
+    let layout = props.layout[step - 1]
+    if (!layout) return false
+    layout = layout?.layout || layout
+    const fldKeys = layout.lg.map(l => l.i)
+    fields = fldKeys.reduce((acc, key) => ({ ...acc, [key]: props.fields[key] }), {})
+  } else {
+    fields = props.fields
+  }
   const { modifiedFields } = props
   if (modifiedFields) Object.assign(fields, modifiedFields)
   if (form) {

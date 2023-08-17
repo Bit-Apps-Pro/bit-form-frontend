@@ -16,7 +16,7 @@ export default function generateRollupConfig() {
   const terserOptions = {
     compress: {
       passes: 10,
-      drop_console: true,
+      drop_console: false,
     },
     output: {
       comments: false,

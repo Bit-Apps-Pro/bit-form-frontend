@@ -1,7 +1,7 @@
+import { useAtom, useSetAtom } from 'jotai'
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
   $breakpoint,
   $builderHistory,
@@ -10,19 +10,17 @@ import {
   $fields,
   $layouts,
 } from '../GlobalStates/GlobalStates'
-import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors, $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars, $themeVars } from '../GlobalStates/ThemeVarsState'
-import EllipsisIcon from '../Icons/EllipsisIcon'
 import HistoryIcn from '../Icons/HistoryIcn'
 import RedoIcon from '../Icons/RedoIcon'
 import UndoIcon from '../Icons/UndoIcon'
-import ut from '../styles/2.utilities'
-import builderHistoryStyle from '../styles/builderHistory.style'
-import OptionToolBarStyle from '../styles/OptionToolbar.style'
 import { reCalculateFldHeights } from '../Utils/FormBuilderHelper'
 import { __ } from '../Utils/i18nwrap'
+import ut from '../styles/2.utilities'
+import OptionToolBarStyle from '../styles/OptionToolbar.style'
+import builderHistoryStyle from '../styles/builderHistory.style'
 import Downmenu from './Utilities/Downmenu'
 import Tip from './Utilities/Tip'
 import VirtualList from './Utilities/VirtualList'

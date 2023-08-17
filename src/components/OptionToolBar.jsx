@@ -1,9 +1,9 @@
 import loadable from '@loadable/component'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, startTransition } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { $breakpoint, $builderSettings, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
+import { $breakpoint, $builderHelperStates, $builderSettings, $colorScheme, $flags, $selectedFieldId } from '../GlobalStates/GlobalStates'
 import AddIcon from '../Icons/AddIcon'
 import BrushIcn from '../Icons/BrushIcn'
 import DarkIcn from '../Icons/DarkIcn'
@@ -30,6 +30,7 @@ import Modal from './Utilities/Modal'
 import StyleSegmentControl from './Utilities/StyleSegmentControl'
 import Tip from './Utilities/Tip'
 import TipGroup from './Utilities/Tip/TipGroup'
+import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 
 const CustomCodeEditor = loadable(() => import('./CompSettings/CustomCodeEditor'), { fallback: <CustomCodeEditorLoader /> })
 
@@ -50,6 +51,8 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
   const [defaultRightPanel, setDefaultRightPanel] = useState('fld-settings')
   const path = `/form/builder/${formType}/${formID}`
   const setBreakpoint = useSetAtom($breakpoint)
+  const builderHelperStates = useAtomValue($builderHelperStates)
+  const setIsDraggable = useSetAtom($isDraggable)
 
   useEffect(() => {
     if (rightBar.match(/fields-list|field-settings/)) {
@@ -116,6 +119,10 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
 
   const handleBreakpointChange = brkPoint => {
     setBreakpoint(brkPoint)
+    startTransition(() => {
+      if (builderHelperStates.respectLGLayoutOrder && brkPoint !== 'lg') setIsDraggable(false)
+      else setIsDraggable(true)
+    })
     addToBuilderHistory(generateHistoryData('', '', 'Breakpoint', brkPoint, { breakpoint: brkPoint }))
   }
 

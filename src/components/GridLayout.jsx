@@ -12,9 +12,9 @@ import {
   useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
-import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { $isDraggable } from '../GlobalStates/FormBuilderStates'
+import { $activeBuilderStep, $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
   $builderHookStates,
@@ -201,8 +201,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     setNewData(null)
   }
-
-  const onBreakpointChange = bp => setBreakpoint(bp)
 
   const removeFieldStyles = fldKeys => {
     setStyles(prevStyles => create(prevStyles, draftStyles => {
@@ -421,11 +419,13 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     addNewField(draggingField.fieldData, draggingField.fieldSize, dropPosition)
   }
 
-  const handleLayoutChange = (l, layoutsFromGrid) => {
-    if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
-      setLayouts(layoutsFromGrid)
+  const handleLayoutChange = (lay) => {
+    if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
+      setLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
       startTransition(() => {
-        setRootLayouts(layoutsFromGrid)
+        setRootLayouts(create(rootLayouts, draft => {
+          draft[breakpoint] = lay
+        }))
       })
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
@@ -638,7 +638,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
             <div className={`_frm-b${formID}`} data-dev-_frm={formID}>
 
               {!styleMode ? (
-                <ResponsiveReactGridLayout
+                <ReactGridLayout
                   width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
                   measureBeforeMount
                   compactType="vertical"
@@ -650,15 +650,14 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                   resizeHandles={['e']}
                   droppingItem={draggingField?.fieldSize}
                   onLayoutChange={handleLayoutChange}
-                  cols={cols}
+                  cols={cols[breakpoint]}
                   breakpoints={builderBreakpoints}
                   rowHeight={rowHeight}
                   isDraggable={isDraggable}
                   margin={gridContentMargin}
                   draggableCancel=".no-drg"
                   draggableHandle=".drag"
-                  layouts={layouts}
-                  onBreakpointChange={onBreakpointChange}
+                  layout={layouts[breakpoint]}
                   onDragStart={setResizingFldKey}
                   onDrag={setResizingWX}
                   onDragStop={setRegenarateLayFlag}
@@ -692,7 +691,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
                       </Suspense>
                     </div>
                   ))}
-                </ResponsiveReactGridLayout>
+                </ReactGridLayout>
               ) : (
                 <div className="_frm-g">
                   {layouts[breakpoint].map(layoutItem => (

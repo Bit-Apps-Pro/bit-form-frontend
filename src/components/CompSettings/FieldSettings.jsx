@@ -38,7 +38,7 @@ export default function FieldSettings() {
   const navigate = useNavigate()
   useEffect(() => {
     if (!fieldKey || !selectedFieldType || !styles?.fields?.[fieldKey]?.classes) {
-      return navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
+      // return navigate(`/form/builder/${formType}/${formID}/fields-list`, { replace: true })
     }
   }, [!fieldKey || !selectedFieldType || !styles?.fields?.[fieldKey]?.classes])
 

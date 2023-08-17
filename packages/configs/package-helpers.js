@@ -29,6 +29,7 @@ export const packagesFileLists = {
   'bit-validation': ['checkFldValidation', 'checkMinMaxOptions', 'customOptionValidation', 'dcsnbxFldValidation', 'emailFldValidation', 'fileupFldValidation', 'advanceFileUpFldValidation', 'generateBackslashPattern', 'nmbrFldValidation', 'requiredFldValidation', 'urlFldValidation', 'validateForm', 'regexPatternValidation', 'phoneNumberFldValidation'],
   'bit-virtualized-list': ['bit-virtualized-list'],
   'bit-signature-field': ['bit-signature-field'],
+  'bit-multi-step-form': ['bit-multi-step-form'],
 }
 
 export const getPackageFileList = (packageName) => packagesFileLists[packageName] || []

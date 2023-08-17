@@ -15,7 +15,7 @@ function SizeAndPosition() {
   const [layouts, setLayouts] = useAtom($layouts)
   const nestedLayouts = useAtomValue($nestedLayouts)
   const breakpoint = useAtomValue($breakpoint)
-  let fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey))
+  let fieldSize = layouts?.[breakpoint]?.find(fl => (fl.i === fldKey)) || {}
   const setBuilderHookStates = useSetAtom($builderHookStates)
   if (!fieldSize) {
     Object.values(nestedLayouts).forEach((lay) => {
@@ -26,7 +26,7 @@ function SizeAndPosition() {
     })
   }
 
-  const maxY = layouts[breakpoint].reduce((prv, curr) => (prv.y > curr.y ? prv.y : curr.y))
+  const maxY = layouts[breakpoint].reduce((prv, curr) => (prv.y > curr.y ? prv.y : curr.y), 0)
 
   const maxValue = {
     lg: { w: cols.lg, h: fieldSize.maxH || null, x: Math.abs(cols.lg - fieldSize.w), y: maxY },

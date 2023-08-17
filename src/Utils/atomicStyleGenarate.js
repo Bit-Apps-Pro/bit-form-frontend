@@ -181,10 +181,17 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   const smDarkCombinedSelectors = combineSelectors(smDarkAtomicStyles)
 
   // keep all fields in lay.lg and remove same layout fields from md and sm in order to keep only different fields in md and sm
+  const allSortedLayouts = Array.isArray(sortedLayout) ? sortedLayout.map(l => l.layout) : [sortedLayout]
+  let sortedLayouts = {}
+  if (allSortedLayouts.length > 1) {
+    sortedLayouts = mergeNestedObj(...allSortedLayouts, { arrays: 'concat' })
+  } else {
+    [sortedLayouts] = allSortedLayouts
+  }
   const simplyfiedLayout = {}
-  simplyfiedLayout.lg = sortedLayout.lg
-  simplyfiedLayout.md = getLayoutDiff(sortedLayout.lg, sortedLayout.md)
-  simplyfiedLayout.sm = getLayoutDiff(sortedLayout.md, sortedLayout.sm)
+  simplyfiedLayout.lg = sortedLayouts.lg
+  simplyfiedLayout.md = getLayoutDiff(sortedLayouts.lg, sortedLayouts.md)
+  simplyfiedLayout.sm = getLayoutDiff(sortedLayouts.md, sortedLayouts.sm)
   const { lgLayoutStyleText, mdLayoutStyleText, smLayoutStyleText } = generateLayoutStyle(simplyfiedLayout)
 
   // generate css text from objects and add dark mode prefix if need

@@ -11,7 +11,6 @@ export default function RenderThemeVarsAndFormCSS() {
   const styles = useAtomValue($styles)
   const themeVars = useAtomValue($themeVars)
   const themeColors = useAtomValue($themeColors)
-
   return (
     <>
       <link rel="stylesheet" href={styles?.font?.fontURL} />

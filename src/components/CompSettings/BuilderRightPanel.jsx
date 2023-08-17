@@ -13,6 +13,7 @@ import StyleCustomizeLoader from '../Loaders/StyleCustomizeLoader'
 import Modal from '../Utilities/Modal'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
+import MultiStepSettings from './MultiStepSettings'
 
 const DropdownStyleEditors = loadable(() => import('./StyleCustomize/DropdownStyleEditors'), { fallback: <StyleCustomizeLoader /> })
 const PaypalStyleEditor = loadable(() => import('./StyleCustomize/PaypalStyleEditor'), { fallback: <StyleCustomizeLoader /> })
@@ -53,24 +54,10 @@ function BuilderRightPanel({ style, styleDispatch }) {
             {/* <TransitionGroup> */}
             {/* <CSSTransition key={location.key} classNames="slide" timeout={5000}> */}
             <ErrorBoundary>
-
-              {/* <RouteByParams rightBar="fields-list" render={<FieldsList />} /> */}
-              {/* <RouteByParams rightBar="field-settings" fieldKey render={<FieldSettings />} /> */}
-              {/* <Routes path="/field-settings">
-                <Route path=":fieldKey" element={<FieldSettings />} />
-              </Routes>
-              <Routes path="/fields-list">
-                <Route index element={<FieldsList />} />
-              </Routes>
-              <Routes path="/field-theme-customize">
-                <Route path=":element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
-              </Routes>
-              <Routes path="/themes">
-                <Route index element={<ThemeGallary />} />
-              </Routes> */}
               <Routes>
                 <Route path="fields-list" element={<FieldsList />} />
                 <Route path="field-settings/:fieldKey" element={<FieldSettings />} />
+                <Route path="multi-step-settings" element={<MultiStepSettings />} />
                 <Route path="themes" element={<ThemeGallary />} />
                 <Route path="theme-customize/:element" element={<ThemeCustomize />} />
                 <Route path="field-theme-customize/:element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
@@ -163,7 +150,7 @@ function BuilderRightPanel({ style, styleDispatch }) {
                   path={`${pathname}/style/fl/btn`}
                   element={(
                     <StyleEditor
-                      title={`${__('Button Style')}`}
+                      title={__('Button Style')}
                       noBack
                       compStyle={style}
                       cls=".btcd-sub-btn"
