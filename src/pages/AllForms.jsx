@@ -314,7 +314,7 @@ function AllFroms() {
         const themeVars = JCOF.parse(data.themeVars)
         const style = JCOF.parse(data.style)
         const {
-          workFlows, reports, layout, form_name, form_id, formSettings, fields, breakpointSize, additional, builderSettings,
+          workFlows, reports, layout, nestedLayout, form_name, form_id, formSettings, fields, breakpointSize, additional, builderSettings,
         } = data
         const staticStyles = data.staticStyles || {}
 
@@ -326,6 +326,7 @@ function AllFroms() {
           workFlows,
           reports,
           layout,
+          nestedLayout,
           form_name,
           form_id,
           formSettings,
