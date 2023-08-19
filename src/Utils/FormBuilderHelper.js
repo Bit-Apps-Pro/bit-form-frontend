@@ -1014,7 +1014,7 @@ export const isValidJsonString = (str) => {
 export const getUploadedFilesArr = files => {
   try {
     if (Array.isArray(files)) return files
-    const parsedFiles = files ? JSON.parse(files) : []
+    const parsedFiles = isValidJsonString(files) ? JSON.parse(files) : [files]
     if (Array.isArray(parsedFiles)) {
       return parsedFiles
     }

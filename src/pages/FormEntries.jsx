@@ -219,13 +219,9 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
             && row.cell.value !== ''
           ) {
             if (val.type === 'file-up' || val.type === 'advanced-file-up' || val.type === 'signature') {
-              let cellValue = row.cell.value
-              if (cellValue.toString()) {
-                cellValue = [cellValue]
-              }
               return (
                 <>
-                  {getUploadedFilesArr(cellValue).map((itm, i) => (
+                  {getUploadedFilesArr(row.cell.value).map((itm, i) => (
                     <TableFileLink
                       key={`file-n-${row.cell.row.index + i}`}
                       fname={splitFileName(itm)}
