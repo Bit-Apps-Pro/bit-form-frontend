@@ -139,7 +139,9 @@ export default class BitRatingField {
     this.#addEvent(this.#ratingWrp, 'keydown', (e) => {
       // this.#ratingWrp.addEventListener('keydown', (e) => {
       const totalChildrenLen = e.target.children.length - 1
-      if (e.key === 'ArrowRight') {
+      e.stopPropagation()
+      e.preventDefault()
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         if (activeIndex === totalChildrenLen) {
           activeIndex = totalChildrenLen
         } else {
@@ -149,7 +151,7 @@ export default class BitRatingField {
         const childrenElement = e.target.children[activeIndex]
         const val = parseInt(childrenElement.dataset.indx)
         this.#addNavigateHoverStyle(val)
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         this.#removeNavigateHoverStyle(activeIndex)
         if (activeIndex === 0) {
           activeIndex = 0
