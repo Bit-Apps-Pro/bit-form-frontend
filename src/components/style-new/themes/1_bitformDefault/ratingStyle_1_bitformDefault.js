@@ -45,6 +45,7 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-rating-wrp:focus`]: {
         outline: 'none',
         'box-shadow': 'rgba(0, 0, 0, 0.05) 0px 1px 2px 0px',
+        'border-radius': '5px',
       },
 
       [`.${fk}-rating-img`]: {
