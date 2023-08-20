@@ -101,20 +101,32 @@ export default class BitRatingField {
     for (let i = 0; i <= index; i += 1) {
       const stats = this.#labels[i].querySelector(this.#ratingImg)
       this.#addClass(stats, this.#ratingHover)
+      this.#removeClass(stats, this.#ratingScale)
     }
     // add message
     if (this.#showMsgOnHover) {
       this.#addMessage(index)
     }
+    // add scale this index
+    const star = this.#labels[index].querySelector(this.#ratingImg)
+    this.#addClass(star, this.#ratingScale)
   }
 
   #removeNavigateHoverStyle(index) {
     const star = this.#labels[index].querySelector(this.#ratingImg)
     this.#removeClass(star, this.#ratingHover)
+    // remove scale
     // previous item message show
     if (this.#showMsgOnHover) {
       this.#addMessage(index - 1)
     }
+    // add scale back
+    const preIndex = index - 1
+    if (preIndex >= 0) {
+      const preStar = this.#labels[preIndex].querySelector(this.#ratingImg)
+      this.#addClass(preStar, this.#ratingScale)
+    }
+    // this.#removeClass(star, this.#ratingScale)
   }
 
   #handleKeyboardNavigation() {

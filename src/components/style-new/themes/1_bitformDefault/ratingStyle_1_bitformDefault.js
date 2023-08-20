@@ -29,6 +29,7 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
         opacity: 0,
         height: 0,
         width: 0,
+        margin: 0,
       },
 
       [`.${fk}-rating-wrp`]: {
@@ -51,7 +52,7 @@ export default function ratingStyle_1_bitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-rating-img`]: {
         width: '30px',
         height: '30px',
-        // margin: '5px',
+        margin: '0px 5px 0px 0px',
         filter: 'invert(95%) sepia(12%) saturate(155%) hue-rotate(6deg) brightness(85%) contrast(84%);',
       },
 
