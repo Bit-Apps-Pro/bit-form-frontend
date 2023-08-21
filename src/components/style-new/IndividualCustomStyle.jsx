@@ -54,7 +54,6 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const [stateController, setStateController] = useState('')
 
   const elementKey = getActualElementKey(elmKey, fieldObj?.typ)
-  console.log({ elementKey })
   const getPseudoPath = (state = '') => {
     state = state.toLowerCase()
     // don't remove this
@@ -137,6 +136,14 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
           state = ':focus-visible'
         }
         break
+      case 'rating-img':
+        if (state === 'hover') {
+          state = `.${fldKey}-rating-hover`
+        }
+        if (state === 'selected') {
+          state = `.${fldKey}-rating-selected`
+        }
+        break
 
       default:
         if (state) { return `:${state}` }
@@ -149,6 +156,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   console.log('elementKey', { elementKey })
   const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {})
   const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {}
+
   Object.entries(addableCssPropsObj(fieldType, elementKey) || {}).forEach(([prop, propObj]) => {
     if (typeof propObj === 'object' && !existCssProps?.includes(prop)) {
       if (Object.keys(propObj).find(propName => existCssProps.includes(propName))) existCssProps.push(prop)
@@ -200,6 +208,8 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
     'stripe-btn': 'Stripe Button',
     'stripe-icn': 'Stripe Icon',
     'stripe-pay-btn': 'Stripe Pay Button',
+    'rating-img': 'Rating Image',
+    'rating-msg': 'Rating Message',
   }
 
   const fldTitle = getTitle[elementKey]
@@ -373,7 +383,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <BackgroundControl
             title="Background"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={existCssPropsObj?.['background-image']?.replace(/\s?!important/g, '') || getValueFromStateVar(themeColors, existCssPropsObj?.background)}
             modalId="fld-cnr-bg-img"
             stateObjName="styles"
@@ -404,7 +414,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <BorderImageControl
             title="Border Image"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={existCssPropsObj['border-image']}
             modalId="fld-bdr-img"
             stateObjName="styles"
@@ -419,7 +429,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <SimpleColorPicker
             title="Background Color"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={getValueFromStateVar(themeColors, existCssPropsObj?.['background-color'])}
             modalId="fld-cnr-bg"
             stateObjName="styles"
@@ -435,7 +445,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <SimpleColorPicker
             title="Text Color"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={existCssPropsObj?.color}
             modalId="fld-crn-color"
             stateObjName="styles"
@@ -460,7 +470,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
             />
             <BorderControl
               allowImportant
-              subtitle={`${fldTitle}`}
+              subtitle={fldTitle}
               objectPaths={objPaths}
               id="fld-wrp-bdr"
             />
@@ -576,7 +586,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
               mainTitle="Margin"
               allowImportant
               action={{ type: 'spacing-control' }}
-              subtitle={`${fldTitle}`}
+              subtitle={fldTitle}
               objectPaths={objPaths}
               id="fld-mrgn-ctrl"
             />
@@ -592,7 +602,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
               mainTitle="Padding"
               allowImportant
               action={{ type: 'spacing-control' }}
-              subtitle={`${fldTitle}`}
+              subtitle={fldTitle}
               objectPaths={objPaths}
               id="fld-pddng-ctrl"
             />
@@ -836,7 +846,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
               id="txt-decor-line"
             />
             <TextDecorationControl
-              subtitle={`${fldTitle}`}
+              subtitle={fldTitle}
               value={existCssPropsObj?.['text-decoration-line']}
               objectPaths={objPaths}
               id="fld-txt-dcrtn"
@@ -866,7 +876,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <IndividualShadowControl
             title="Box-shadow"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={existCssPropsObj?.['box-shadow']}
             modalId="field-container-box-shadow"
             stateObjName="styles"
@@ -882,7 +892,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <TransitionControl
             title="Transition"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={existCssPropsObj?.transition}
             modalId="field-container-transition"
             stateObjName="styles"
@@ -907,7 +917,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
             <div className={css(ut.flxc, { cg: 3 })}>
               <FilterController
                 action={{ type: 'filter-control' }}
-                subtitle={`${fldTitle}`}
+                subtitle={fldTitle}
                 objectPaths={objPaths}
                 id="filter-control"
                 allowImportant
@@ -930,7 +940,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
             <div className={css(ut.flxc, { cg: 3 })}>
               <FilterController
                 action={{ type: 'filter-control' }}
-                subtitle={`${fldTitle}`}
+                subtitle={fldTitle}
                 objectPaths={objPaths}
                 id="backdrop-filter-control"
                 allowImportant
@@ -1114,7 +1124,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
                   className={css({ mr: 2 })}
                 />
               )}
-              <div className={`${css(sizeControlStyle.container)}`}>
+              <div className={css(sizeControlStyle.container)}>
                 <CustomInputControl
                   className={css(sizeControlStyle.input)}
                   label=""
@@ -1134,7 +1144,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <TransformControl
             title="Transform"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={existCssPropsObj?.transform}
             modalId="fld-cnr-trsfm"
             stateObjName="styles"
@@ -1149,7 +1159,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         return (
           <FilterColorPicker
             title="Color"
-            subtitle={`${fldTitle}`}
+            subtitle={fldTitle}
             value={existCssPropsObj?.['icon-color']}
             modalId="fld-cnr-clr-fltr"
             stateObjName="styles"

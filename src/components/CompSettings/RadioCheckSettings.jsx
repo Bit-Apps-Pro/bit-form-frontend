@@ -137,6 +137,7 @@ function RadioCheckSettings() {
   }
 
   const handleOptions = newOpts => {
+    console.log('newOpts', newOpts)
     const reqOpts = newOpts.filter(opt => opt.req)
     reqOpts.length && setRequired({ target: { checked: true } })
     const allFields = create(fields, draft => {
