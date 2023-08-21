@@ -42,12 +42,12 @@ export default class BitRatingField {
 
   #defaultValue = null
 
+  #isClickReal = false
+
   constructor(selector, config) {
     this.#document = config?.document || document
     this.#fieldKey = config?.fieldKey
     this.#isCheck = { status: false, indx: null }
-
-    console.log('config', config)
 
     if (typeof selector === 'string') {
       this.#ratingWrp = this.#document.querySelector(selector)
@@ -96,74 +96,48 @@ export default class BitRatingField {
     this.#allEventListeners.push({ selector, eventType, cb })
   }
 
+  #handleKeyboardNavigation() {
+    let activeIndex = -1
+    const selectIndex = this.#ratingOptions.findIndex((item) => item.check)
+    if (selectIndex !== -1) {
+      activeIndex = selectIndex
+    }
+
+    this.#addEvent(this.#ratingWrp, 'keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        if (this.#ratingOptions.length === activeIndex) return
+        activeIndex += 1
+        const childrenElement = e.target.children[activeIndex]
+        const val = parseInt(childrenElement.dataset.indx)
+        if (this.#isCheck.indx !== val) this.#onClick(val)
+        this.#addNavigateHoverStyle(val)
+        if (this.#ratingOptions.length === activeIndex + 1) return false
+      } else if (e.key === 'ArrowLeft') {
+        if (activeIndex === 0) return
+        if (activeIndex - 1 < 0) return
+        activeIndex -= 1
+        this.#onClick(activeIndex)
+        this.#addNavigateHoverStyle(activeIndex)
+      }
+    })
+    this.#addEvent(this.#ratingWrp, 'focusout', () => {
+      this.#removeNavigateHoverStyle()
+    })
+  }
+
   // for add class keyboard event
   #addNavigateHoverStyle(index) {
-    for (let i = 0; i <= index; i += 1) {
-      const stats = this.#labels[i].querySelector(this.#ratingImg)
-      this.#addClass(stats, this.#ratingHover)
-      this.#removeClass(stats, this.#ratingScale)
-    }
-    // add message
-    if (this.#showMsgOnHover) {
-      this.#addMessage(index)
-    }
+    this.#removeNavigateHoverStyle()
     // add scale this index
     const star = this.#labels[index].querySelector(this.#ratingImg)
     this.#addClass(star, this.#ratingScale)
   }
 
-  #removeNavigateHoverStyle(index) {
-    const star = this.#labels[index].querySelector(this.#ratingImg)
-    this.#removeClass(star, this.#ratingHover)
-    // remove scale
-    // previous item message show
-    if (this.#showMsgOnHover) {
-      this.#addMessage(index - 1)
+  #removeNavigateHoverStyle() {
+    for (let i = 0; i < this.#ratingOptions.length; i += 1) {
+      const stats = this.#labels[i].querySelector(this.#ratingImg)
+      this.#removeClass(stats, this.#ratingScale)
     }
-    // add scale back
-    const preIndex = index - 1
-    if (preIndex >= 0) {
-      const preStar = this.#labels[preIndex].querySelector(this.#ratingImg)
-      this.#addClass(preStar, this.#ratingScale)
-    }
-    // this.#removeClass(star, this.#ratingScale)
-  }
-
-  #handleKeyboardNavigation() {
-    let activeIndex = -1
-    const selectIndex = this.#ratingOptions.findIndex((item) => item.check)
-    if (selectIndex) {
-      activeIndex = selectIndex
-    }
-
-    this.#addEvent(this.#ratingWrp, 'keydown', (e) => {
-      // this.#ratingWrp.addEventListener('keydown', (e) => {
-      const totalChildrenLen = e.target.children.length - 1
-      e.stopPropagation()
-      e.preventDefault()
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        if (activeIndex === totalChildrenLen) {
-          activeIndex = totalChildrenLen
-        } else {
-          activeIndex += 1
-        }
-
-        const childrenElement = e.target.children[activeIndex]
-        const val = parseInt(childrenElement.dataset.indx)
-        this.#addNavigateHoverStyle(val)
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        this.#removeNavigateHoverStyle(activeIndex)
-        if (activeIndex === 0) {
-          activeIndex = 0
-        } else {
-          activeIndex -= 1
-        }
-      }
-      if (e.key === 'Enter') {
-        e.preventDefault()
-        this.#onClick(activeIndex)
-      }
-    })
   }
 
   init() {
@@ -199,12 +173,14 @@ export default class BitRatingField {
       this.#addEvent(item, 'click', (e) => {
         const { indx } = item.dataset
         e.preventDefault()
+        this.#isClickReal = true
         this.#onClick(indx)
       })
 
       this.#addEvent(item, 'touchstart', (e) => {
         e.preventDefault()
         const { indx } = item.dataset
+        this.#isClickReal = true
         this.#onClick(indx)
       })
 
@@ -306,7 +282,7 @@ export default class BitRatingField {
 
     const input = this.#labels?.[indx].querySelector(this.#ratingInput)
 
-    if (this.#selectedRatingInput) {
+    if (this.#selectedRatingInput && this.#isClickReal) {
       if (input?.checked) {
         input.checked = false
         this.#isCheck = { status: false, indx: null }
@@ -322,21 +298,19 @@ export default class BitRatingField {
 
     input.dispatchEvent(new Event('input'))
 
-    for (let i = 0; i <= indx; i += 1) {
-      if (this.#labels?.[i]) {
-        const isStar = this.#labels[i].querySelector(this.#ratingImg)
-        if (i <= indx && this.#isCheck.status) {
-          this.#addClass(isStar, this.#ratingSelected)
-        } else {
-          this.#removeClass(isStar, this.#ratingSelected)
-        }
-      }
-    }
-
     // remove hover color when click star
     this.#labels?.forEach((itm) => {
       const rmvHorCls = itm.querySelector(this.#ratingImg)
       this.#removeClass(rmvHorCls, this.#ratingHover)
+    })
+
+    this.#labels?.forEach((itm, lblIndx) => {
+      const isStar = itm.querySelector(this.#ratingImg)
+      if (lblIndx <= indx && this.#isCheck.status) {
+        this.#addClass(isStar, this.#ratingSelected)
+      } else {
+        this.#removeClass(isStar, this.#ratingSelected)
+      }
     })
 
     if (this.#showMsgOnSelect && this.#isCheck.status) {
@@ -344,6 +318,7 @@ export default class BitRatingField {
     } else {
       this.#removeMessage()
     }
+    this.#isClickReal = false
   }
 
   #findRating(indx) {
@@ -371,7 +346,6 @@ export default class BitRatingField {
 
   set value(val) {
     // find index of rating
-    console.log({ val })
     const findRating = this.#ratingOptions.findIndex((itm) => itm.val === val)
     if (findRating !== -1) {
       this.#onClick(findRating)
@@ -379,7 +353,6 @@ export default class BitRatingField {
   }
 
   get value() {
-    console.log(this.#ratingOptions, this.#isCheck.indx)
     const selectedItem = this.#ratingOptions[this.#isCheck.indx]
     return selectedItem.val || selectedItem.lbl
   }
