@@ -944,6 +944,7 @@ export const toolsList = [
     keywords: 'Signature Editor, Signature Field, Signature, Signature Block, Canvas',
     icn: <SignaturePenIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
+    pro: 'This field is available only in pro version',
     elm: {
       typ: 'signature',
       adminLbl: __('Signature'),

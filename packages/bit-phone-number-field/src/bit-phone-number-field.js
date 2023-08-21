@@ -876,6 +876,7 @@ export default class BitPhoneNumberField {
 
   set value(val) {
     this.#phoneHiddenInputElm.value = val || ''
+    this.#setAttribute(this.#phoneHiddenInputElm, 'value', val || '')
   }
 
   get value() {
