@@ -38,6 +38,7 @@
     "bit-phone-number-field": "workspace:*",
     "bit-signature-field": "workspace:*",
     "bit-razorpay-field": "workspace:*",
+    "bit-rating-field": "workspace:*",
     "bit-recaptcha-field": "workspace:*",
     "bit-repeater-field": "workspace:*",
     "bit-select-field": "workspace:*",

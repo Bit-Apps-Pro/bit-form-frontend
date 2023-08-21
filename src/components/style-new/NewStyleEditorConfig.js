@@ -2566,5 +2566,33 @@ const editorConfig = {
     },
 
   },
+  rating: {
+    ...textFldCssProps,
+    'inp-fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'rating-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'rating-img': {
+      states: ['hover', 'selected'],
+      properties: { ...iconCssProps },
+    },
+
+    'rating-input': {
+      states: ['hover', 'selected'],
+      properties: { ...iconCssProps },
+    },
+    'rating-msg': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
 }
 export default editorConfig

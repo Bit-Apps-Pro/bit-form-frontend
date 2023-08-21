@@ -30,6 +30,7 @@ export const packagesFileLists = {
   'bit-virtualized-list': ['bit-virtualized-list'],
   'bit-signature-field': ['bit-signature-field'],
   'bit-multi-step-form': ['bit-multi-step-form'],
+  'bit-rating-field': ['bit-rating-field'],
 }
 
 export const getPackageFileList = (packageName) => packagesFileLists[packageName] || []
