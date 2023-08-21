@@ -27,6 +27,7 @@ import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
 import stripeStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
 import ratingStyle_1_bitformDefault from './ratingStyle_1_bitformDefault'
 import signatureStyle_1_bitformDefault from './signatureStyle_1_bitformDefault'
+import imageSelectStyle_1_bitformDefault from './imageSelectStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -120,6 +121,8 @@ export default function bitformDefaultTheme({
       return repeater({ type, fk, breakpoint, colorScheme })
     case 'rating':
       return rating({ type, fk, breakpoint, colorScheme })
+    case 'image-select':
+      return imageSelect({ type, fk, direction, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -617,6 +620,18 @@ const rating = ({ type, fk, direction, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: ratingStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const imageSelect = ({ type, fk, direction, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: imageSelectStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
     }
   }
   return {}

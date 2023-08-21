@@ -30,6 +30,7 @@ import SubmitBtn from './Fields/SubmitBtn'
 import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
 import TitleField from './Fields/TitleField'
+import ImageSelectField from './Fields/ImageSelectField'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -121,6 +122,8 @@ function MapComponents({
       return <RatingField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'signature':
       return <SignatureField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+    case 'image-select':
+      return <ImageSelectField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:
