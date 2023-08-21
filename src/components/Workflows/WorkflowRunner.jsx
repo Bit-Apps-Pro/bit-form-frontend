@@ -117,28 +117,35 @@ export default function WorkflowRunner({ lgcGrpInd, lgcGrp }) {
             <CheckBox
               radio
               onChange={e => changeActionEffect(e.target.value)}
-              title={<small className="txt-dp">{__('On Form Load')}</small>}
+              title={<small className="txt-dp">{__('Always')}</small>}
+              checked={lgcGrp.action_type === 'always'}
+              value="always"
+            />
+            <CheckBox
+              radio
+              onChange={e => changeActionEffect(e.target.value)}
+              title={<small className="txt-dp">{__('Only on Form Load')}</small>}
               checked={lgcGrp.action_type === 'onload'}
               value="onload"
             />
             <CheckBox
               radio
               onChange={e => changeActionEffect(e.target.value)}
-              title={<small className="txt-dp">{__('On Field Input')}</small>}
+              title={<small className="txt-dp">{__('Only on Field Input')}</small>}
               checked={lgcGrp.action_type === 'oninput'}
               value="oninput"
             />
             <CheckBox
               radio
               onChange={e => changeActionEffect(e.target.value)}
-              title={<small className="txt-dp">{__('On Form Validate')}</small>}
+              title={<small className="txt-dp">{__('Only on Form Validate')}</small>}
               checked={lgcGrp.action_type === 'onvalidate'}
               value="onvalidate"
             />
             <CheckBox
               radio
               onChange={e => changeActionEffect(e.target.value)}
-              title={<small className="txt-dp">{__('On Form Submit')}</small>}
+              title={<small className="txt-dp">{__('Only on Form Submit')}</small>}
               checked={lgcGrp.action_type === 'onsubmit'}
               value="onsubmit"
             />
