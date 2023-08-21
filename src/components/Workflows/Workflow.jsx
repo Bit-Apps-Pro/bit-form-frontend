@@ -63,7 +63,7 @@ function Workflow() {
     const tmpWorkflows = create(workflows, draftWorkflows => {
       draftWorkflows.unshift({
         title: `Action ${workflows.length + 1}`,
-        action_type: 'onload',
+        action_type: 'always',
         action_run: 'create_edit',
         action_behaviour: 'cond',
         conditions: [{ ...defaultConds }],
@@ -165,7 +165,7 @@ function Workflow() {
             <div className="workflow-grp d-flx mt-2">
               <Accordions
                 customTitle={<DragHandle className="workflow-drg-handle mr-1 flx" />}
-                title={`${lgcGrp.title}`}
+                title={lgcGrp.title}
                 header={(
                   <small className="f-right txt-dp mr-4">
                     <span className="mr-2">
