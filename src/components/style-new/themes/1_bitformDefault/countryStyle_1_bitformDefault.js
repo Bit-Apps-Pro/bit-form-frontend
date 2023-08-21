@@ -292,6 +292,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
 
       [`.${fk}-option-list .selected-opt`]: {
         'font-weight': 500,
+        color: '#fff',
         'background-color': 'var(--global-accent-color)',
       },
 

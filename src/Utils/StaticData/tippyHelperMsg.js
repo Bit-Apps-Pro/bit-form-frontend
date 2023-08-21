@@ -24,5 +24,7 @@ const tippyHelperMsg = {
   amountType: __("Stripe provide minimum or maximum amount for different payment method type and currency. <a target='_blank' href='https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts'>learn more</a>"),
   undoBtn: __('You can add or remove Undo button form Signature Field. You can toggle this option to add or remove the Undo button.'),
   clrBtn: __('You can add or remove Clear button form Signature Field. You can toggle this option to add or remove the Clear button.'),
+  ratingLbl: __('This allows to show the rating message on hover. You can toggle this option to show or hide the rating message on hover.'),
+  ratingSelectTip: __('This allows to show the rating message on rating selected. You can toggle this option to show or hide the rating message on rating selected.'),
 }
 export default tippyHelperMsg

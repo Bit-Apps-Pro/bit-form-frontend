@@ -38,6 +38,7 @@ import WeekIcn from '../../Icons/WeekIcn'
 import { ucFirst } from '../../Utils/Helpers'
 import { selectInGrid } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
+import ReviewStarIcn from '../../Icons/ReviewStarIcn'
 import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
@@ -124,6 +125,7 @@ const FieldIcon = icon => {
     country: <FlagIcn size="14" />,
     section: <SectionIcon size="14" />,
     repeater: <RepeatIcon size="14" />,
+    rating: <ReviewStarIcn size="18" />,
     signature: <SignaturePenIcn size="18" />,
   }
   return icons[icon]
