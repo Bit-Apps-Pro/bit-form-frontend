@@ -1,11 +1,12 @@
 /* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useState } from 'react'
+import { lazy, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import SnackMsg from '../../Utilities/SnackMsg'
 import { saveIntegConfig } from '../IntegrationHelpers/IntegrationHelpers'
-import WebHooksLayouts from '../IntegrationHelpers/WebHooksIntegration'
 import WebHooksStepTwo from '../IntegrationHelpers/WebHooksStepTwo'
+
+const WebHooksIntegration = lazy(() => import('../IntegrationHelpers/WebHooksIntegration'))
 
 function EditSperseIO({ formFields, setIntegration, integrations, allIntegURL }) {
   const history = useNavigate()
@@ -19,7 +20,7 @@ function EditSperseIO({ formFields, setIntegration, integrations, allIntegURL })
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
 
       <div className="mt-3">
-        <WebHooksLayouts
+        <WebHooksIntegration
           formID={formID}
           formFields={formFields}
           webHooks={sperseIO}

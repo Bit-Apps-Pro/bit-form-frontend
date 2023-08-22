@@ -232,6 +232,7 @@ const FIELDS_EXTRA_ATTR = {
   recaptcha: { onlyOne: true },
   submit: { onlyOne: true },
   reset: { onlyOne: true },
+  signature: { pro: true },
 }
 
 const FIELD_FILTER = {
@@ -773,6 +774,7 @@ export const getResizableHandles = fieldType => {
     // case 'divider':
     case 'textarea':
     case 'image':
+    case 'signature':
       return ['se', 'e']
     default:
   }
@@ -1012,7 +1014,7 @@ export const isValidJsonString = (str) => {
 export const getUploadedFilesArr = files => {
   try {
     if (Array.isArray(files)) return files
-    const parsedFiles = files ? JSON.parse(files) : []
+    const parsedFiles = isValidJsonString(files) ? JSON.parse(files) : [files]
     if (Array.isArray(parsedFiles)) {
       return parsedFiles
     }

@@ -4,19 +4,25 @@
 import loadable from '@loadable/component'
 import { useAtom, useAtomValue } from 'jotai'
 import { useResetAtom } from 'jotai/utils'
-import { memo, useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
 import { $bits, $forms, $newFormId } from '../GlobalStates/GlobalStates'
+import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
+import ConditionalIcn from '../Icons/ConditionalIcn'
 import CopyIcn from '../Icons/CopyIcn'
 import DownloadIcon from '../Icons/DownloadIcon'
 import EditIcn from '../Icons/EditIcn'
+import FormResponseIcn from '../Icons/FormResponseIcn'
+import InfoIcn from '../Icons/InfoIcn'
+import Settings2 from '../Icons/Settings2'
 import TrashIcn from '../Icons/TrashIcn'
-import { dateTimeFormatter, generateAndSaveAtomicCss, generateUpdateFormData, getStatesToReset, replaceFormId, setFormReponseDataToStates, setStyleRelatedStates } from '../Utils/Helpers'
+import {
+  dateTimeFormatter,
+  getStatesToReset
+} from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
-import { JCOF } from '../Utils/globalHelpers'
 import { __ } from '../Utils/i18nwrap'
 import FormTemplates from '../components/FormTemplates'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
@@ -100,7 +106,7 @@ function AllFroms() {
       Header: 'Actions',
       accessor: 't_action',
       Cell: val => (
-        <OptionMenu title="Actions" w={150} h={165}>
+        <OptionMenu title="Actions" w={165} h={315}>
           <Link
             to={`/form/builder/edit/${val.row.original.formID}/fields-list`}
             type="button"
@@ -108,20 +114,106 @@ function AllFroms() {
             aria-label="actions"
           >
             <EditIcn size={18} />
-            &nbsp;
-            Edit
+            {__('Edit Form')}
+          </Link>
+          <Link
+            to={`/form/responses/edit/${val.row.original.formID}`}
+            type="button"
+            className="flx"
+            aria-label="actions"
+          >
+            <FormResponseIcn size="18" />
+            {__('Responses')}
+          </Link>
+          <Link
+            to={`/form/settings/edit/${val.row.original.formID}/form-settings`}
+            type="button"
+            className="flx"
+            aria-label="form settings"
+          >
+            <Settings2 size={18} />
+            {__('Settings')}
+          </Link>
+          <Link
+            to={`/form/settings/edit/${val.row.original.formID}/confirmations`}
+            type="button"
+            className="flx"
+            aria-label="confirmations"
+          >
+            <InfoIcn size="18" stroke="3" />
+            {__('Confirmations')}
+          </Link>
+          <Link
+            to={`/form/settings/edit/${val.row.original.formID}/workflow`}
+            type="button"
+            className="flx"
+            aria-label="Conditional Logic"
+          >
+            <ConditionalIcn size="18" />
+            {__('Conditional Logic')}
+          </Link>
+          <Link
+            to={`/form/settings/edit/${val.row.original.formID}/integrations`}
+            type="button"
+            className="flx"
+            aria-label="Integrations"
+          >
+            <CodeSnippetIcn size="18" />
+            {__('Integrations')}
           </Link>
           <button type="button" onClick={() => showDupMdl(val.row.original.formID)}>
             <CopyIcn size={18} />
-            &nbsp;Duplicate
+            {__('Duplicate')}
           </button>
           <button type="button" onClick={() => showExportMdl(val.row.original.formID)}>
             <DownloadIcon size={18} />
-            &nbsp;Export
+            {__('Export')}
           </button>
+          <Link
+            to={`/form/responses/edit/${val.row.original.formID}`}
+            type="button"
+            className="flx"
+            aria-label="actions"
+          >
+            <InfoIcn size={18} />
+            &nbsp;
+            Responses
+          </Link>
+          <Link
+            to={`/form/settings/edit/${val.row.original.formID}/form-settings`}
+            type="button"
+            className="flx"
+            aria-label="actions"
+          >
+            <Settings2 size={18} />
+            &nbsp;
+            Settings
+          </Link>
+          <Link
+            to={`/form/settings/edit/${val.row.original.formID}/workflow`}
+            type="button"
+            className="flx"
+            aria-label="actions"
+          >
+            <ConditionalIcn size="18" />
+            &nbsp;
+            Conditions
+          </Link>
+          <Link
+            to={`/form/settings/edit/${val.row.original.formID}/integrations`}
+            type="button"
+            className="flx"
+            aria-label="actions"
+          >
+            <CodeSnippetIcn size="18" />
+            &nbsp;
+            Integrations
+          </Link>
+
           <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
             <TrashIcn size={16} />
-            &nbsp;Delete
+            &nbsp;
+            {__('Delete')}
           </button>
         </OptionMenu>
       ),
@@ -266,7 +358,7 @@ function AllFroms() {
         const themeVars = JCOF.parse(data.themeVars)
         const style = JCOF.parse(data.style)
         const {
-          workFlows, reports, layout, form_name, form_id, formSettings, fields, breakpointSize, additional, builderSettings,
+          workFlows, reports, layout, nestedLayout, form_name, form_id, formSettings, fields, breakpointSize, additional, builderSettings,
         } = data
         const staticStyles = data.staticStyles || {}
 
@@ -278,6 +370,7 @@ function AllFroms() {
           workFlows,
           reports,
           layout,
+          nestedLayout,
           form_name,
           form_id,
           formSettings,
@@ -381,34 +474,31 @@ function AllFroms() {
         />
       </Modal>
       {allForms.length ? (
-        <>
-          <div className={css(app.af_header)}>
-            <h2>{__('Forms')}</h2>
-            <button
-              onClick={() => setModal(true)}
-              type="button"
-              data-testid="create-form-btn"
-              className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}
-            >
-              {__('Create Form')}
-            </button>
-          </div>
-          <div>
-            <Table
-              className="f-table btcd-all-frm"
-              height={525}
-              columns={cols}
-              data={allForms}
-              rowSeletable
-              newFormId={newFormId}
-              resizable
-              columnHidable
-              setBulkStatus={setBulkStatus}
-              setBulkDelete={setBulkDelete}
-              setTableCols={setTableCols}
-            />
-          </div>
-        </>
+        <div>
+          <Table
+            className="f-table btcd-all-frm"
+            height={525}
+            columns={cols}
+            data={allForms}
+            rowSeletable
+            newFormId={newFormId}
+            resizable
+            columnHidable
+            setBulkStatus={setBulkStatus}
+            setBulkDelete={setBulkDelete}
+            setTableCols={setTableCols}
+            rightHeader={(
+              <button
+                onClick={() => setModal(true)}
+                type="button"
+                data-testid="create-form-btn"
+                className={` round btcd-btn-lg blue blue-sh ${css(app.btn)}`}
+              >
+                {__('Create Form')}
+              </button>
+            )}
+          />
+        </div>
       ) : <Welcome setModal={setModal} />}
     </div>
   )

@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import loadable from '@loadable/component'
+import { useAtomValue } from 'jotai'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
 import SectionFieldSettings from './SectionFieldSettings'
-import RepeaterFieldSettings from './RepeaterFieldSettings'
 
 const AdvanceFileUpSettings = loadable(() => import('./AdvanceFileUpSettings'), { fallback: <FieldSettingsLoader /> })
 const ButtonSettings = loadable(() => import('./ButtonSettings'), { fallback: <FieldSettingsLoader /> })
@@ -28,6 +27,9 @@ const RazorpayFieldSettings = loadable(() => import('./RazorpayFieldSettings'), 
 const ReCaptchaSettings = loadable(() => import('./ReCaptchaSettings'), { fallback: <FieldSettingsLoader /> })
 const TextFieldSettings = loadable(() => import('./TextFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <FieldSettingsLoader /> })
+const RepeaterFieldSettings = loadable(() => import('./RepeaterFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const SignatureFieldSettings = loadable(() => import('./SignatureField/SignatureFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const RatingFieldSettings = loadable(() => import('./RatingField/RatingFieldSettings'), { fallback: <FieldSettingsLoader /> })
 
 export default function FieldSettings() {
   const { fieldKey, formType, formID } = useParams()
@@ -81,6 +83,8 @@ export default function FieldSettings() {
     case 'phone-number': return <PhoneNumberFieldSettings />
     case 'section': return <SectionFieldSettings />
     case 'repeater': return <RepeaterFieldSettings />
+    case 'signature': return <SignatureFieldSettings />
+    case 'rating': return <RatingFieldSettings />
 
     default: return <>No field found with this key.</>
   }

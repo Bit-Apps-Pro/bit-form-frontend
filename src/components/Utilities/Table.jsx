@@ -52,7 +52,7 @@ function GlobalFilter({ globalFilter, setGlobalFilter, setSearch }) {
   }
 
   return (
-    <div className="f-search mr-2">
+    <div className="f-search ml-2">
       <span><SearchIcn size="16" /></span>
       <input
         value={globalFilter || ''}
@@ -342,20 +342,20 @@ function Table(props) {
                   </small>
                 </>
               )}
+            <GlobalFilter
+              preGlobalFilteredRows={preGlobalFilteredRows}
+              globalFilter={state.globalFilter}
+              setGlobalFilter={setGlobalFilter}
+              setSearch={setSearch}
+              data={props.data}
+              cols={props.columns}
+              formID={props.formID}
+              report={report}
+              fetchData={fetchData}
+            />
           </div>
         </div>
         <div className="table-right-menu">
-          <GlobalFilter
-            preGlobalFilteredRows={preGlobalFilteredRows}
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-            setSearch={setSearch}
-            data={props.data}
-            cols={props.columns}
-            formID={props.formID}
-            report={report}
-            fetchData={fetchData}
-          />
           {rightHeader}
         </div>
       </div>

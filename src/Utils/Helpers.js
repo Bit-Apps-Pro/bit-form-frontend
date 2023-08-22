@@ -16,8 +16,8 @@ import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColors
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
-import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
-import atomicStyleGenarate from './atomicStyleGenarate'
+import { addToBuilderHistory, isValidJsonString, prepareLayout } from './FormBuilderHelper'
+import atomicStyleGenarate, { generateNestedLayoutCSSText } from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
 import { JCOF } from './globalHelpers'
 
@@ -623,6 +623,10 @@ export const setFormReponseDataToStates = (responseData) => {
     addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
   }
   if (!formsSessionDataFound) {
+    setAtom($nestedLayouts, responseData.form_content.nestedLayout)
+    addToBuilderHistory({ state: { nestedLayouts: responseData.form_content.nestedLayout } }, false, 0)
+  }
+  if (!formsSessionDataFound) {
     setAtom($fields, responseData.form_content.fields)
     addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
   }
@@ -683,7 +687,10 @@ export const generateAndSaveAtomicCss = currentFormId => {
   const builderHelperStates = getAtom($builderHelperStates)
   const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
   const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
-  if (isStyleNotLoaded) return { layouts: sortedLayout }
+  if (isStyleNotLoaded) {
+    const { sortedNestedLayouts } = generateNestedLayoutCSSText()
+    return { layouts: sortedLayout, nestedLayouts: sortedNestedLayouts }
+  }
 
   const generatedAtomicStyles = atomicStyleGenarate({ sortedLayout })
 
@@ -732,6 +739,7 @@ export const generateUpdateFormData = (savedFormId) => {
   const { formName } = formInfo
   const {
     layouts,
+    nestedLayouts,
     lightThemeColors,
     darkThemeColors,
     lgLightThemeVars,
@@ -781,6 +789,7 @@ export const generateUpdateFormData = (savedFormId) => {
     ...(!savedFormId && { form_id: newFormId }),
     ...(savedFormId && { currentReport }),
     layout: layouts,
+    nestedLayouts,
     fields,
     // saveStyle && style obj
     form_name: formName,

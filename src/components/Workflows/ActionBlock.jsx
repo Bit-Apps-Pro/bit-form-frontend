@@ -104,8 +104,10 @@ function ActionBlock({
   const fldType = fields[action.field]?.typ || ''
   const isNotFileUpField = fields[action.field]?.typ !== 'file-up' && fields[action.field]?.typ !== 'advanced-file-up'
   const isNotButtonField = fields[action.field]?.typ !== 'button'
+  const isTitleField = fields[action.field]?.typ === 'title'
   const isNotSubmitAction = actionType !== 'onsubmit'
   const isNotValidateAction = actionType !== 'onvalidate'
+  const isDecisionBox = fields[action.field]?.typ === 'decision-box'
   const isForm = action.field === '_bf_form'
 
   return (
@@ -164,11 +166,15 @@ function ActionBlock({
               {actionType === 'onvalidate' && <option value="required">{__('Required')}</option>}
               {actionType === 'onvalidate' && <option value="notrequired">{__('Not Required')}</option>}
               {fldType === 'select' && <option value="activelist">{__('Active List')}</option>}
+              {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value={isDecisionBox ? 'ct' : 'lbl'}>{__('Label')}</option>}
+              {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="sub-titl">{__('Sub Title')}</option>}
+              {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField && !isTitleField) && <option value="hlp-txt">{__('Helper Text')}</option>}
+              {isTitleField && <option value="title">{__('Title')}</option>}
             </>
           )}
       </MtSelect>
 
-      {(action.action === 'value' || action.action === 'activelist') && (
+      {(['value', 'activelist', 'lbl', 'ct', 'sub-titl', 'hlp-txt', 'title'].includes(action.action)) && (
         <>
           <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
             <div className={css({ w: '100%', bd: '#b9c5ff', h: '0.5px' })} />

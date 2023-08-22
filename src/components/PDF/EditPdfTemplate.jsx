@@ -256,7 +256,7 @@ export default function EditPdfTemplate() {
                 />
               </label>
             </div>
-            { pdfConf.setting.watermark?.active && (
+            {pdfConf.setting.watermark?.active && (
               <div className={css(cs.bdr)}>
                 {pdfConf.setting.watermark.active === 'txt' && (
                   <div className="mt-4">
@@ -277,11 +277,26 @@ export default function EditPdfTemplate() {
                 {pdfConf.setting.watermark.active === 'img' && (
                   <>
                     <div className="mt-4">
-                      <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
+                      <label
+                        htmlFor="watermarkImg"
+                        className={css({ flx: 'align-center' })}
+                      >
                         <b>{__('Watermark Image')}</b>
-                        <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
-
-                        <img className={css(cs.img)} src={pdfConf.setting.watermark?.img?.src} alt="" />
+                        <Btn
+                          className="ml-2"
+                          onClick={setWpMedia}
+                        >
+                          Upload
+                        </Btn>
+                        {
+                          pdfConf.setting.watermark?.img?.src && (
+                            <img
+                              className={css(cs.img)}
+                              src={pdfConf.setting.watermark?.img?.src}
+                              alt=""
+                            />
+                          )
+                        }
 
                       </label>
                     </div>

@@ -17,11 +17,13 @@ import htmlStyle_2_atlassian from './htmlStyle_2_atlassian'
 import imageStyle_2_atlassian from './imageStyle_2_atlassian'
 import paypalStyle_2_atlassian from './paypalStyle_2_atlassian'
 import phoneNumberStyle_2_atlassian from './phoneNumberStyle_2_atlassian'
+import ratingStyle_2_atlassian from './ratingStyle_2_atlassian'
 import razorpayStyle_2_atlassian from './razorpayStyle_2_atlassian'
 import recaptchaStyle_2_atlassian from './recaptchaStyle_2_atlassian'
 import repeaterStyle_2_atlassian from './repeaterStyle_2_atlassian'
 import sectionStyle_2_atlassian from './sectionStyle_2_atlassian'
 import selectStyle_2_atlassian from './selectStyle_2_atlassian'
+import signatureStyle_2_atlassian from './signatureStyle_2_atlassian'
 import stripeStyle_2_atlassian from './stripeStyle_2_atlassian'
 import textStyle_2_atlassian from './textStyle_2_atlassian'
 import titleStyle_2_atlassian from './titleStyle_2_atlassian'
@@ -112,6 +114,10 @@ export default function atlassianTheme({
       return section({ type, fk, breakpoint, colorScheme })
     case 'repeater':
       return repeater({ type, fk, breakpoint, colorScheme })
+    case 'signature':
+      return signature({ type, fk, breakpoint, colorScheme })
+    case 'rating':
+      return rating({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -253,6 +259,31 @@ const repeater = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: repeaterStyle_2_atlassian({ fk, type, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const signature = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'atlassian',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: signatureStyle_2_atlassian({ fk, type, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const rating = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'atlassian',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: ratingStyle_2_atlassian({ fk, type, breakpoint, colorScheme }),
     }
   }
   return {}

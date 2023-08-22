@@ -645,6 +645,198 @@ export default function ElementConfiguration({ fldKey }) {
           highlightSelector={`[data-dev-inp-fld-wrp="${fldKey}"]`}
         />
       )}
+      {fieldObj.typ === 'rating' && (
+        <>
+          <NavBtn
+            subRoute={fldKey}
+            route="inp-fld-wrp"
+            label="Field Wrapper"
+            offset="2.5"
+            highlightSelector={`[data-dev-inp-fld-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'inp-fld-wrp')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="rating-img"
+            label="Rating Image"
+            offset="2.5"
+            highlightSelector={`[data-dev-rating-img="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'rating-img')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="rating-msg"
+            label="Rating Message"
+            offset="2.5"
+            highlightSelector={`[data-dev-rating-msg="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'rating-msg')}
+          />
+        </>
+      )}
+
+      {fieldObj.typ === 'signature'
+        && (
+          <>
+            <NavBtn
+              subRoute={fldKey}
+              route="inp-fld-wrp"
+              label="Field Wrapper"
+              offset="2.5"
+              highlightSelector={`[data-dev-inp-fld-wrp="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'inp-fld-wrp')}
+            />
+            <NavBtn
+              subRoute={fldKey}
+              route="signature-pad"
+              label="Signature Pad"
+              offset="2.5"
+              highlightSelector={`[data-dev-fld="${fldKey}"]`}
+              styleOverride={isLabelOverrideStyles(styles, fldKey, 'signature-pad')}
+            />
+
+            {!(fieldObj.clrPreIcn || fieldObj.clrSufIcn) && (
+              <NavBtn
+                cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+                subRoute={fldKey}
+                route="clr-btn"
+                label="Clear Button"
+                offset="2.5"
+                highlightSelector={`[data-dev-clr-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'clr-btn')}
+              />
+            )}
+            {(fieldObj.clrPreIcn || fieldObj.clrSufIcn) && (
+              <LayerAccordion
+                childrenAccodin
+                onClick={() => styleHandler('btn')}
+                offset="3.1"
+                title="Clear Button"
+                fldData={fieldObj}
+                key={fldKey}
+                open={fldKey === selectedFieldKey && (fieldObj.clrPreIcn || fieldObj.clrSufIcn)}
+                highlightSelector={`[data-dev-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'btn')}
+              >
+                {fieldObj.clrPreIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.clrPreIcn[0]}`}
+                    subRoute={fldKey}
+                    route="clr-btn-pre-i"
+                    label="Leading Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-clr-btn-pre-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'clr-btn-pre-i')}
+                  />
+                )}
+                {fieldObj.clrSufIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.btnSufIcn[0]}`}
+                    subRoute={fldKey}
+                    route="clr-btn-suf-i"
+                    label="Trailing Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-clr-btn-suf-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'clr-btn-suf-i')}
+                  />
+                )}
+              </LayerAccordion>
+            )}
+            {!(fieldObj.undoPreIcn || fieldObj.undoSufIcn) && (
+              <NavBtn
+                cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+                subRoute={fldKey}
+                route="undo-btn"
+                label="Undo Button"
+                offset="2.5"
+                highlightSelector={`[data-dev-undo-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'undo-btn')}
+              />
+            )}
+            {(fieldObj.undoPreIcn || fieldObj.undoSufIcn) && (
+              <LayerAccordion
+                childrenAccodin
+                onClick={() => styleHandler('btn')}
+                offset="3.1"
+                title="Undo Button"
+                fldData={fieldObj}
+                key={fldKey}
+                open={fldKey === selectedFieldKey && (fieldObj.undoPreIcn || fieldObj.undoSufIcn)}
+                highlightSelector={`[data-dev-undo-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'undo-btn')}
+              >
+                {fieldObj.undoPreIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.undoPreIcn[0]}`}
+                    subRoute={fldKey}
+                    route="undo-btn-pre-i"
+                    label="Leading Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-undo-btn-pre-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'undo-btn-pre-i')}
+                  />
+                )}
+                {fieldObj.undoSufIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.btnSufIcn[0]}`}
+                    subRoute={fldKey}
+                    route="undo-btn-suf-i"
+                    label="Trailing Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-undo-btn-suf-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'undo-btn-suf-i')}
+                  />
+                )}
+              </LayerAccordion>
+            )}
+            {!(fieldObj.redoPreIcn || fieldObj.redoSufIcn) && (
+              <NavBtn
+                cssSelector={`.${fldKey}-${styleClasses.button[0]}`}
+                subRoute={fldKey}
+                route="redo-btn"
+                label="Redo Button"
+                offset="2.5"
+                highlightSelector={`[data-dev-redo-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn')}
+              />
+            )}
+            {(fieldObj.redoPreIcn || fieldObj.redoSufIcn) && (
+              <LayerAccordion
+                childrenAccodin
+                onClick={() => styleHandler('btn')}
+                offset="3.1"
+                title="redo Button"
+                fldData={fieldObj}
+                key={fldKey}
+                open={fldKey === selectedFieldKey && (fieldObj.redoPreIcn || fieldObj.redoSufIcn)}
+                highlightSelector={`[data-dev-redo-btn="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn')}
+              >
+                {fieldObj.redoPreIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.redoPreIcn[0]}`}
+                    subRoute={fldKey}
+                    route="redo-btn-pre-i"
+                    label="Leading Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-redo-btn-pre-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn-pre-i')}
+                  />
+                )}
+                {fieldObj.redoSufIcn && (
+                  <NavBtn
+                    cssSelector={`.${fldKey}-${styleClasses.btnSufIcn[0]}`}
+                    subRoute={fldKey}
+                    route="redo-btn-suf-i"
+                    label="Trailing Icon"
+                    offset="3.3"
+                    highlightSelector={`[data-dev-redo-btn-suf-i="${fldKey}"]`}
+                    styleOverride={isLabelOverrideStyles(styles, fldKey, 'redo-btn-suf-i')}
+                  />
+                )}
+              </LayerAccordion>
+            )}
+          </>
+        )}
       {fieldObj.typ === 'repeater' && (
         <>
           <NavBtn

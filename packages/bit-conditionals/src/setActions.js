@@ -10,7 +10,10 @@ const getInitPropertyName = (fldKey, props) => {
   return initFldKey
 }
 
-const setFieldValue = (contentId, fldData, val) => {
+const setFieldValue = (props, field, val) => {
+  // setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
+  const { contentId } = props
+  const fldData = props.fields[field]
   const { fieldName, typ } = fldData
   if (typ === 'radio') {
     select(contentId, `input[name="${fieldName}"][value="${val}"]`).checked = true
@@ -29,6 +32,14 @@ const setFieldValue = (contentId, fldData, val) => {
     const fld = select(contentId, `input[name="${fieldName}"]`)
     if (fld) {
       fld.checked = val === fldData.msg.checked
+    }
+    return
+  }
+
+  if (typ === 'rating') {
+    const fldKey = getInitPropertyName(field, props)
+    if (props.inits && props.inits[fldKey]) {
+      props.inits[fldKey].value = val
     }
     return
   }
@@ -99,7 +110,9 @@ const setReadonly = (fldKey, props, val) => {
 const setActionValue = (actionDetail, props, fieldValues) => {
   if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
     const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
-    setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
+    // setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
+    const actionDetlsFld = actionDetail.field
+    setFieldValue(props, actionDetlsFld, actionValue)
   }
 }
 
@@ -141,6 +154,22 @@ const setActionHide = (actionDetail, props, val) => {
     setTimeout(() => {
       selector.style.removeProperty('height')
     }, 300)
+  }
+}
+
+const setTextContent = (actionDetail, props, fieldValues) => {
+  if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
+    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
+    const fldKey = actionDetail.field
+    const selector = select(props.contentId, `.${fldKey}-${actionDetail.action}`)
+    if (selector === null) return
+    selector.childNodes.forEach((node) => {
+      if (node.nodeType === 3 && (node.textContent.trim() !== '' || !node.length)) {
+        node.textContent = actionValue
+      }
+    })
+    if (actionDetail.action === 'ct') selector.textContent = actionValue
+    // selector.innerText = actionValue
   }
 }
 
@@ -196,6 +225,15 @@ export const setActions = (actionDetail, fldKey, props, fieldValues, rowIndx) =>
       case 'save_draft':
         if (actionDetail.field === '_bf_form') {
           handleFormSaveDraft(actionDetail, props)
+        }
+        break
+      case 'lbl':
+      case 'ct':
+      case 'sub-titl':
+      case 'hlp-txt':
+      case 'title':
+        if (props.fields[actionDetail.field]) {
+          setTextContent(actionDetail, props, fieldValues)
         }
         break
       default:

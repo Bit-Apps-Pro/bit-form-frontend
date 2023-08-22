@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-undef */
+import { useAtom, useAtomValue } from 'jotai'
 import { create } from 'mutative'
 import { useEffect, useRef, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
@@ -7,23 +8,22 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
-import { useAtom, useAtomValue } from 'jotai'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
-import CloseIcn from '../../Icons/CloseIcn'
 import CPTIcn from '../../Icons/CPTIcn'
+import CloseIcn from '../../Icons/CloseIcn'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 import SearchIcon from '../../Icons/SearchIcon'
-import ut from '../../styles/2.utilities'
-import app from '../../styles/app.style'
-import bitsFetch from '../../Utils/bitsFetch'
 import { addToBuilderHistory, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
+import bitsFetch from '../../Utils/bitsFetch'
+import ut from '../../styles/2.utilities'
+import app from '../../styles/app.style'
 import LoaderSm from '../Loaders/LoaderSm'
-import { assignNestedObj, getValueByObjPath, iconElementLabel, paddingGenerator } from '../style-new/styleHelpers'
 import ConfirmModal from '../Utilities/ConfirmModal'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
+import { assignNestedObj, getValueByObjPath, iconElementLabel, paddingGenerator } from '../style-new/styleHelpers'
 import Grow from './StyleCustomize/ChildComp/Grow'
 
 function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '', unsplash = false }) {
@@ -133,7 +133,16 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
 
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
-        fieldData[iconType] = attachment.url
+        if (iconType === 'opt') {
+          const options = fieldData[iconType]
+          for (let i = 0; i < options.length; i += 1) {
+            options[i].img = attachment.url
+          }
+          fieldData[iconType] = options
+        } else {
+          fieldData[iconType] = attachment.url
+        }
+        // fieldData[iconType] = attachment.url
         setFields(allFields => create(allFields, draft => {
           draft[fldKey] = fieldData
         }))
@@ -177,7 +186,15 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     bitsFetch({ id: prefix.id, src: prefix.url }, 'bitforms_icn_save_setting')
       .then(res => {
         if (res !== undefined && res.success) {
-          fieldData[iconType] = res.data
+          if (iconType === 'opt') {
+            const options = fieldData[iconType]
+            for (let i = 0; i < options.length; i += 1) {
+              options[i].img = res.data
+            }
+            fieldData[iconType] = options
+          } else {
+            fieldData[iconType] = res.data
+          }
           let newFields = fields
           let newStyles = allStyles
           setFields(allFields => {
@@ -570,7 +587,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
                   onClick={() => handleImage(item)}
                 >
                   <img
-                    src={`${item.urls.thumb}`}
+                    src={item.urls.thumb}
                     onError={errHandle}
                     alt={item.id}
                     className={css(s.imgH)}
@@ -631,7 +648,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
               {!!files.length && files.map((file, index) => (
                 <div
                   key={`download-icn-${index * 2}`}
-                  className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`}
+                  className={css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}
                   data-file={file}
                   style={{ display: 'inline-block' }}
                 >

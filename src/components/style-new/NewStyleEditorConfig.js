@@ -2513,5 +2513,86 @@ const editorConfig = {
       },
     },
   },
+  signature: {
+    ...textFldCssProps,
+    'inp-fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'signature-pad': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'clr-btn': {
+      states: ['hover'],
+      properties: {
+        ...buttonCssProps,
+      },
+    },
+    'clr-btn-pre-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+    'clr-btn-suf-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+
+    'undo-btn': {
+      states: ['hover'],
+      properties: {
+        ...buttonCssProps,
+      },
+    },
+    'undo-btn-pre-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+    'undo-btn-suf-i': {
+      states: ['hover'],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+
+  },
+  rating: {
+    ...textFldCssProps,
+    'inp-fld-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'rating-wrp': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'rating-img': {
+      states: ['hover', 'selected'],
+      properties: { ...iconCssProps },
+    },
+
+    'rating-input': {
+      states: ['hover', 'selected'],
+      properties: { ...iconCssProps },
+    },
+    'rating-msg': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
 }
 export default editorConfig

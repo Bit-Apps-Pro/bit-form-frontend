@@ -12,7 +12,6 @@ import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
-import MapComponents_old from './MapComponents_old'
 
 export default function FieldBlockWrapper({
   layoutItem,
@@ -107,9 +106,5 @@ export default function FieldBlockWrapper({
 
 const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
   const componentProps = deepCopy(fields[layoutItem.i])
-  // TODO : handle old components in v1 compatible
-  if (0) {
-    return <MapComponents_old isBuilder formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
-  }
   return <MapComponents formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
 }

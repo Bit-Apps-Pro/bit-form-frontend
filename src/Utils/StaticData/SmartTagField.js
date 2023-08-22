@@ -239,9 +239,17 @@ export const SmartTagField = [
     custom: true,
   },
   {
-    id: 42,
+    id: 44,
     name: '_bf_calc()',
     label: 'Calculation',
+    type: 'number',
+    functionParam: true,
+    custom: true,
+  },
+  {
+    id: 45,
+    name: '_bf_math()',
+    label: 'Math(Repeater)',
     type: 'number',
     functionParam: true,
     custom: true,

@@ -301,7 +301,7 @@ export default function NewPdfTemplate() {
               />
             </label>
           </div>
-          { tem.setting.watermark?.active && (
+          {tem.setting.watermark?.active && (
             <div className={css(cs.bdr)}>
               {tem.setting.watermark.active === 'txt' && (
                 <div className="mt-4">
@@ -322,10 +322,26 @@ export default function NewPdfTemplate() {
               {tem.setting.watermark.active === 'img' && (
                 <>
                   <div className="mt-4">
-                    <label htmlFor="watermarkImg" className={css({ flx: 'align-center' })}>
-                      <b>{__('Watermark Text')}</b>
-                      <Btn className="ml-2" onClick={setWpMedia}>Upload</Btn>
-                      <img className={css(cs.img)} src={tem.setting.watermark?.img?.src} alt="" />
+                    <label
+                      htmlFor="watermarkImg"
+                      className={css({ flx: 'align-center' })}
+                    >
+                      <b>{__('Watermark Image')}</b>
+                      <Btn
+                        className="ml-2"
+                        onClick={setWpMedia}
+                      >
+                        Upload
+                      </Btn>
+                      {
+                        tem.setting.watermark?.img?.src && (
+                          <img
+                            className={css(cs.img)}
+                            src={tem.setting.watermark?.img?.src}
+                            alt=""
+                          />
+                        )
+                      }
                     </label>
                   </div>
                   <div className={css(cs.size)}>

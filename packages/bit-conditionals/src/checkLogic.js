@@ -255,7 +255,9 @@ const getFunctionValue = (funtionName, params, fieldValues, props, fldType) => {
     case '_bf_count':
       if (fldType.match(/check|radio|select/)) { return params.trim().split(',').length }
       return params.split(/\b\W+\b/g).length
-    case '_bf_calc': {
+    case '_bf_calc':
+      return evalMathExpression(params)
+    case '_bf_math': {
       const calcParams = params.split(',')
       const fieldKey = calcParams[0].substring(2, calcParams[0].length - 1)
       if (isRepeatedField(fieldKey, props)) {
@@ -341,10 +343,10 @@ export const checkLogic = (logics, fields, props, rowIndex) => {
 const mutateString = (dataString, fieldValues, props, rowIndex) => {
   let mutatedString = dataString
   // select calculation functions
-  const calculationMatch = dataString.match(/\${_bf_calc\([^)]+\)}/g) || []
-  calculationMatch.map(calculation => {
+  const mathFuncMatch = dataString.match(/\${_bf_math\([^)]+\)}/g) || []
+  mathFuncMatch.map(calculation => {
     const calculationParams = calculation.substring(11, calculation.length - 2)
-    const calculationValue = getFunctionValue('_bf_calc', calculationParams, fieldValues, props)
+    const calculationValue = getFunctionValue('_bf_math', calculationParams, fieldValues, props)
     mutatedString = mutatedString.replace(calculation, calculationValue)
   })
 
@@ -360,7 +362,7 @@ const mutateString = (dataString, fieldValues, props, rowIndex) => {
     let val2Rplc = ''
     if (fieldValues[fieldName]) {
       val2Rplc = fieldValues[fieldName].value
-      if (Array.isArray(fieldValues[fieldName].value) && !Number.isNaN(fieldValues[fieldName].value[0])) {
+      if (Array.isArray(fieldValues[fieldName].value) && !isNaN(fieldValues[fieldName].value[0])) {
         val2Rplc = 0
         fieldValues[fieldName].value.map(sV => {
           val2Rplc += Number(sV)

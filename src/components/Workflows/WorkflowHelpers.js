@@ -34,7 +34,7 @@ export const filterFormFields = condGrp => {
   const nestedLayouts = getAtom($nestedLayouts)
   const formFields = makeFieldsArrByLabel(fields, [])
   const logicFlds = flatAllLogics(condGrp.logics || [])
-  const actionFlds = condGrp.actions.fields
+  const actionFlds = condGrp?.actions?.fields || []
   const allSelectedFlds = [...logicFlds, ...actionFlds].map(fld => fld.field).filter(fld => fld)
   // get all fields that are repeater typ
   const repeaterFlds = formFields.filter(fld => fld.type === 'repeater').map(fld => fld.key)
