@@ -64,7 +64,6 @@ const changelogInfo = {
           'Active Campaign integration tag & list issue',
           'Form duplicate issue with the section & repeater field',
           'Response table issue with multiple uploaded files',
-          'Workflows priority issue on form load',
         ],
       },
     },
