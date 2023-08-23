@@ -34,6 +34,7 @@ import navbar from '../styles/navbar.style'
 const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 const FormSettings = loadable(() => import('./FormSettings'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
+const ReportView = loadable(() => import('./ReportView'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 function FormDetails() {
   let componentMounted = true
@@ -127,7 +128,8 @@ function FormDetails() {
   const onUnmount = () => {
     showWpMenu()
     setAppFullScreen(false)
-    atomResetters.forEach(resetAtom => resetAtom())
+    // TODO: temproray turn off if it causes any hot reload problem
+    // atomResetters.forEach(resetAtom => resetAtom())
     clearAllSWRCache()
   }
 
@@ -350,6 +352,7 @@ function FormDetails() {
         />
         <RouteByParams page="builder" formType formID render={<FormBuilder isLoading={isLoading} />} />
         <RouteByParams page="settings" formType formID render={<FormSettings />} />
+        <RouteByParams page="report-view" formType formID render={<ReportView />} />
       </div>
     </div>
   )

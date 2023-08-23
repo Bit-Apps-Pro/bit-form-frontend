@@ -1,7 +1,8 @@
 /* eslint-disable no-use-before-define */
 import { useAtomValue, useSetAtom } from 'jotai'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useFela } from 'react-fela'
 import {
   $bits, $fieldLabels, $forms, $nestedLayouts, $reportId,
   $reportSelector,
@@ -26,13 +27,16 @@ import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
 import noData from '../resource/img/nodata.svg'
+import app from '../styles/app.style'
+import ut from '../styles/2.utilities'
+import Btn from '../components/Utilities/Btn'
 
 function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const allLabels = useAtomValue($fieldLabels)
   const nestedLayouts = useAtomValue($nestedLayouts)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(isFetching)
-  const { formID } = useParams()
+  const { formType, formID } = useParams()
   const fetchIdRef = useRef(0)
   const [pageCount, setPageCount] = useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
@@ -52,6 +56,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const reports = useAtomValue($reports)
   const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
   const rowSl = useRef(0)
+  const navigate = useNavigate()
+  const { css } = useFela()
   const filterFieldType = ['divider', 'image', 'title', 'section']
 
   useEffect(() => {
@@ -625,6 +631,9 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
           )}
           rightHeader={(
             <>
+              <Btn className={css(ut.mr1)} size="sm" onClick={() => navigate(`/form/report-view/${formType}/${formID}`)}>
+                {__('Analytics Report')}
+              </Btn>
               <ExportImportMenu
                 data={allResp}
                 cols={entryLabels}

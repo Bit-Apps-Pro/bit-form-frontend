@@ -162,12 +162,26 @@ const ut = {
     ':hover': { bd: 'var(--white-0-95)' },
     ':active': { bd: 'var(--white-0-93)' },
     ':focus-visible': { focusShadow: 1 },
+    '&.active': {
+      bd: 'var(--b-79-96)',
+      cr: 'var(--b-50)',
+    },
   },
   divider: {
     my: 0,
     mx: 10,
     bb: '0.5px soild var(--white-0-83)',
     w: '100%',
+  },
+  title: {
+    m: '1rem 0',
+    fs: 18,
+    fw: 600,
+  },
+  sectionTitle: {
+    m: '.5rem 0',
+    fs: 16,
+    fw: 600,
   },
   cooltipLearnMoreLink: { color: 'var(--b-79-96)' },
 

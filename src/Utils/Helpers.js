@@ -16,7 +16,7 @@ import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColors
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
-import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
+import { addToBuilderHistory, isValidJsonString, prepareLayout } from './FormBuilderHelper'
 import atomicStyleGenarate, { generateNestedLayoutCSSText } from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
 import { JCOF } from './globalHelpers'
@@ -623,6 +623,10 @@ export const setFormReponseDataToStates = (responseData) => {
     addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
   }
   if (!formsSessionDataFound) {
+    setAtom($nestedLayouts, responseData.form_content.nestedLayout)
+    addToBuilderHistory({ state: { nestedLayouts: responseData.form_content.nestedLayout } }, false, 0)
+  }
+  if (!formsSessionDataFound) {
     setAtom($fields, responseData.form_content.fields)
     addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
   }
@@ -735,6 +739,7 @@ export const generateUpdateFormData = (savedFormId) => {
   const { formName } = formInfo
   const {
     layouts,
+    nestedLayouts,
     lightThemeColors,
     darkThemeColors,
     lgLightThemeVars,
@@ -784,6 +789,7 @@ export const generateUpdateFormData = (savedFormId) => {
     ...(!savedFormId && { form_id: newFormId }),
     ...(savedFormId && { currentReport }),
     layout: layouts,
+    nestedLayouts,
     fields,
     // saveStyle && style obj
     form_name: formName,
@@ -837,4 +843,89 @@ export const isVarEmpty = data => {
   if (Array.isArray(data) && data.length === 0) return true
   if (isObjectEmpty(data)) return true
   return false
+}
+
+export const generateReportData = (allResp, fields, filterOptions) => {
+  const { reportedFields, checkedStatus, fromDate, toDate } = filterOptions
+  const submissionStatsData = []
+
+  const fieldData = reportedFields.reduce((acc, fieldKey) => {
+    const title = fields[fieldKey].adminLbl || fields[fieldKey].lbl
+    const dataList = []
+    return {
+      ...acc,
+      [fieldKey]: {
+        title,
+        dataList,
+      },
+    }
+  }, {})
+
+  allResp.forEach((respObj) => {
+    const tempDate = new Date(respObj.__created_at)
+    const date = `${tempDate.getFullYear()}-${tempDate.getMonth() + 1}-${tempDate.getDate()}`
+    const isIndexExist = submissionStatsData.findIndex((obj) => obj.date === date)
+    if (isIndexExist !== -1) {
+      submissionStatsData[isIndexExist].value += 1
+    } else {
+      submissionStatsData.push({
+        date,
+        value: 1,
+      })
+    }
+    if (checkedStatus.includes(respObj.__entry_status)) {
+      reportedFields.forEach((fieldKey) => {
+        let entryData = respObj[fieldKey]
+        entryData = isValidJsonString(entryData) ? JSON.parse(entryData) : entryData
+        if (entryData) {
+          if (Array.isArray(entryData)) {
+            entryData.forEach((data) => {
+              if (data) {
+                existCheckOrPush(fieldData, fieldKey, data)
+              }
+            })
+          } else {
+            existCheckOrPush(fieldData, fieldKey, entryData)
+          }
+        }
+      })
+    }
+  })
+
+  return { fieldData, submissionStatsData }
+}
+
+function existCheckOrPush(fieldData, fieldKey, data) {
+  const isExist = fieldData[fieldKey].dataList.find((obj) => obj.label === data)
+  if (isExist) {
+    isExist.value += 1
+  } else {
+    fieldData[fieldKey].dataList.push({
+      label: data,
+      value: 1,
+    })
+  }
+}
+// get All Dates Label of last One month
+export const getAllDateLabel = (fromDate, toDate) => {
+  const dateLabel = []
+  const date1 = new Date(fromDate)
+  const date2 = new Date(toDate)
+  const diffTime = Math.abs(date2 - date1)
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  for (let i = 0; i <= diffDays; i++) {
+    const date = new Date(fromDate)
+    date.setDate(date.getDate() + i)
+    const dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    dateLabel.push(dateStr)
+  }
+  return dateLabel
+}
+
+// get lastNthDate
+export const getLastNthDate = (n) => {
+  const date = new Date()
+  date.setDate(date.getDate() - n)
+  // const dateStr = date.toISOString().split('T')[0]
+  return date
 }
