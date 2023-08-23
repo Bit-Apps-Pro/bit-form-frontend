@@ -25,7 +25,7 @@ import {
   getStatesToReset,
   replaceFormId,
   setFormReponseDataToStates,
-  setStyleRelatedStates,
+  setStyleRelatedStates
 } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
