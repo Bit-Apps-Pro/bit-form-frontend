@@ -54,6 +54,17 @@ export default function DateFilter({ fetchData, className }) {
 
   // eslint-disable-next-line no-restricted-globals
   const isFiniteDate = date => date && isFinite(date)
+  const setPredefinedDate = (days) => {
+    const startDate = getLastNthDate(days)
+    const endDate = new Date()
+    const item = {
+      startDate,
+      endDate,
+      key: 'date',
+    }
+    setData(item)
+    searchByDateBetween(item)
+  }
 
   return (
     <div className={className}>
@@ -89,10 +100,12 @@ export default function DateFilter({ fetchData, className }) {
         </div>
         <div style={{ minHeight: '200px !important' }} className={css(tableStyle.dataRange, style.calenderWrap)}>
           <div className={css(style.preDefDateWrap)}>
-            <span className={css(style.preDefDate)}>Last 1 Week</span>
-            <span className={css(style.preDefDate)}>Last 1 Month</span>
-            <span className={css(style.preDefDate)}>Last 6 Month</span>
-            <span className={css(style.preDefDate)}>Last 1 Year</span>
+            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(7)}>Last 1 Week</span>
+            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(14)}>Last 2 Week</span>
+            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(30)}>Last 1 Month</span>
+            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(60)}>Last 2 Month</span>
+            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(91)}>Last 3 Month</span>
+            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(182)}>Last 6 Month</span>
           </div>
           <DateRange
             onChange={item => dateChangeAction(item.date)}
