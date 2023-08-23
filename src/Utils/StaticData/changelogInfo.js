@@ -43,8 +43,8 @@ const changelogInfo = {
       },
     },
   },
-  '2.3.0': {
-    date: '01 August, 2023',
+  '2.4.0': {
+    date: '23 August, 2023',
     changes: {
       added: {
         label: 'Added',
@@ -53,16 +53,7 @@ const changelogInfo = {
             label: 'New Field',
             tag: 'new',
             list: [
-              'Signature Field - Collect signatures from your wp users to store in DB as PNG, JPG or SVG and use it in the Email or PDF templates.',
-            ],
-          },
-          {
-            label: 'Features',
-            list: [
-              {
-                label: 'Piping - Use the form field values as the Label, Sub title & Helper text of other form fields via our advanced conditional logics to make your form more dynamic.',
-                tag: 'new',
-              },
+              'Rating Field - Collect feedbacks in the form of star ratings from your wp users. Change any star rating icon to your own custom icon with easy to use form builder settings.',
             ],
           },
         ],
@@ -70,10 +61,10 @@ const changelogInfo = {
       fixed: {
         label: 'Fixed',
         list: [
-          'Phone number field validation message issue of validate on focus out option',
-          'Razorpay payment field triggers the form submit actions before the payment is completed',
-          'Form is not saving by giving the error of Form is empty when the form has only the section fields (rather it has fields inside the section field)',
-          'Dropdown field not selecting the options when user is not logged in because of the Comet Cache plugin',
+          'Active Campaign integration tag & list issue',
+          'Form duplicate issue with the section & repeater field',
+          'Response table issue with multiple uploaded files',
+          'Workflows priority issue on form load',
         ],
       },
     },

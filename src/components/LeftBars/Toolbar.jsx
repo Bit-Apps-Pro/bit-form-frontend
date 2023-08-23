@@ -903,7 +903,7 @@ export const toolsList = [
     name: 'Signature',
     keywords: 'Signature Editor, Signature Field, Signature, Signature Block, Canvas',
     icn: <SignaturePenIcn size="20" />,
-    pos: { h: 80, w: 60, i: 'shadow_block' },
+    pos: { h: 140, w: 60, i: 'shadow_block' },
     pro: 'This field is available only in pro version',
     elm: {
       typ: 'signature',
@@ -943,7 +943,7 @@ export const toolsList = [
     name: __('Rating'),
     keywords: 'Check Box, Mark, Rating, Star, Review, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
     icn: <ReviewStarIcn size="20" />,
-    pos: { h: 140, w: 60, i: 'shadow_block' },
+    pos: { h: 80, w: 60, i: 'shadow_block' },
     new: true,
     elm: {
       typ: 'rating',

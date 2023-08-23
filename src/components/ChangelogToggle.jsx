@@ -12,8 +12,8 @@ import Modal from './Utilities/Modal'
 export default function ChangelogToggle() {
   const [bits, setBits] = useAtom($bits)
   const [show, setShow] = useState(bits.changelogVersion !== bits.version)
-  const [currentVersion, setCurrentVersion] = useState(bits.version)
-  const currenChangelog = changelogInfo['2.3.0']
+  const currentChangelog = '2.4.0'
+  const currenChangelog = changelogInfo[currentChangelog]
   const { css } = useFela()
 
   const setChangeLogVersion = () => {
@@ -48,7 +48,7 @@ export default function ChangelogToggle() {
           <div>
             <h3 className={css({ m: 0 })}>
               <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
-                {'Version 2.3.0 '}
+                {`Version ${currentChangelog}`}
                 <ExternalLinkIcn size="14" />
               </a>
             </h3>
