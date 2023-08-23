@@ -1,6 +1,16 @@
-import ReactEcharts from 'echarts-for-react'
+// import ReactEcharts from 'echarts-for-react'
+import ReactEChartsCore from 'echarts-for-react/lib/core'
+import { BarChart } from 'echarts/charts'
+import * as echarts from 'echarts/core'
+import { GridComponent, TooltipComponent, TitleComponent, DatasetComponent } from 'echarts/components'
+import {
+  CanvasRenderer,
+} from 'echarts/renderers'
 
-export default function BarChart({ dataList, field, title, viewType }) {
+echarts.use(
+  [TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer],
+)
+export default function Barchart({ dataList, field, title, viewType }) {
   const data = dataList.map((item) => item.value)
   const labels = dataList.map((item) => item.label)
   const xAxis = {
@@ -41,5 +51,13 @@ export default function BarChart({ dataList, field, title, viewType }) {
       },
     ],
   }
-  return <ReactEcharts option={option} />
+  // return <ReactEcharts option={option} />
+  return (
+    <ReactEChartsCore
+      echarts={echarts}
+      option={option}
+      notMerge
+      lazyUpdate
+    />
+  )
 }

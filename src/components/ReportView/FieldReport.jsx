@@ -1,13 +1,12 @@
 import { useFela } from 'react-fela'
 import { useState } from 'react'
-import FieldChart from './FieldChart'
 import PieChartIcn from '../../Icons/PieChartIcn'
 import BarChartIcn from '../../Icons/BarChartIcn'
 import ut from '../../styles/2.utilities'
-import PieChart from './PieChart'
-import BarChart from './BarChart'
 import LineChartIcn from '../../Icons/LineChartIcn'
 import TableChart from './TableChart'
+import Barchart from './Barchart'
+import Piechart from './Piechart'
 
 export default function FieldReport({ key, title, data }) {
   const { css } = useFela()
@@ -56,8 +55,8 @@ export default function FieldReport({ key, title, data }) {
       </div>
       <div className={css(style.reportBody)}>
         <div className={css(style.chartBody)}>
-          {viewType === 'pie' && <PieChart dataList={dataList} title={label} />}
-          {viewType !== 'pie' && <BarChart viewType={viewType} dataList={dataList} title={label} />}
+          {viewType === 'pie' && <Piechart dataList={dataList} title={label} />}
+          {viewType !== 'pie' && <Barchart viewType={viewType} dataList={dataList} title={label} />}
         </div>
         <div className={css(style.tableBody)}>
           <TableChart dataList={dataList} />

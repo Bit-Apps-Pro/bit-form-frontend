@@ -1,6 +1,16 @@
-import ReactEcharts from 'echarts-for-react'
+// import ReactEcharts from 'echarts-for-react'
+import ReactEChartsCore from 'echarts-for-react/lib/core'
+import { PieChart } from 'echarts/charts'
+import * as echarts from 'echarts/core'
+import { GridComponent, TooltipComponent, TitleComponent, DatasetComponent } from 'echarts/components'
+import {
+  CanvasRenderer,
+} from 'echarts/renderers'
 
-export default function PieChart({ dataList, field, title, viewType }) {
+echarts.use(
+  [TitleComponent, TooltipComponent, GridComponent, PieChart, CanvasRenderer],
+)
+export default function Piechart({ dataList, field, title, viewType }) {
   const data = dataList.map((item) => ({ name: item.label, value: item.value }))
   const options = {
     tooltip: {
@@ -26,5 +36,13 @@ export default function PieChart({ dataList, field, title, viewType }) {
       },
     ],
   }
-  return <ReactEcharts option={options} />
+  // return <ReactEcharts option={options} />
+  return (
+    <ReactEChartsCore
+      echarts={echarts}
+      option={options}
+      notMerge
+      lazyUpdate
+    />
+  )
 }
