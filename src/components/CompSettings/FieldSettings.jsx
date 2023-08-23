@@ -30,6 +30,7 @@ const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <Fie
 const RepeaterFieldSettings = loadable(() => import('./RepeaterFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const SignatureFieldSettings = loadable(() => import('./SignatureField/SignatureFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const RatingFieldSettings = loadable(() => import('./RatingField/RatingFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const ImageSelectFieldSettings = loadable(() => import('./ImageSelectField/ImageSelectFieldSettings'), { fallback: <FieldSettingsLoader /> })
 
 export default function FieldSettings() {
   const { fieldKey, formType, formID } = useParams()
@@ -85,6 +86,7 @@ export default function FieldSettings() {
     case 'repeater': return <RepeaterFieldSettings />
     case 'signature': return <SignatureFieldSettings />
     case 'rating': return <RatingFieldSettings />
+    case 'image-select': return <ImageSelectFieldSettings />
 
     default: return <>No field found with this key.</>
   }

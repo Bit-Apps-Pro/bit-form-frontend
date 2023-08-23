@@ -10,8 +10,9 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-ic`]: {
         display: 'grid',
         'grid-template-columns': 'repeat(4, 1fr)',
-        'grid-gap': '2rem',
-        'margin-top': '10px',
+        'grid-auto-rows': '24.5vw',
+        'grid-gap': '0.6vw',
+        // 'margin-top': '10px',
         width: '100%',
         height: '230px',
       },
@@ -116,8 +117,8 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-check-img`]: {
-        width: '13px',
-        height: '11px',
+        width: '20px',
+        height: '20px',
         transition: '0.15s ease',
         filter: 'invert(91%) sepia(0%) saturate(7500%) hue-rotate(343deg) brightness(112%) contrast(101%)',
       },

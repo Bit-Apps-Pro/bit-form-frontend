@@ -387,7 +387,7 @@ function IconsModal({
   // }
 
   const handleImage = (image) => {
-    setPrefix({ id: image.id, url: item.urls.regular })
+    setPrefix({ id: image.id, url: image.urls.regular })
   }
 
   return (
@@ -558,7 +558,7 @@ function IconsModal({
                   onClick={() => handleImage(item)}
                 >
                   <img
-                    src={`${item.urls.thumb}`}
+                    src={item.urls.thumb}
                     onError={errHandle}
                     alt={item.id}
                     className={css(s.imgH)}
@@ -619,7 +619,7 @@ function IconsModal({
               {!!files.length && files.map((file, index) => (
                 <div
                   key={`download-icn-${index * 2}`}
-                  className={`${css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}`}
+                  className={css(ut.flxc, ut.mt2, s.downloadedBtnWrapper)}
                   data-file={file}
                   style={{ display: 'inline-block' }}
                 >

@@ -18,7 +18,7 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
     const { checked } = e.target
     if (checked && attr.inpType === 'checkbox') {
       checkBoxes.checked.push(optKey)
-      setvalue(e.target.value)
+      setvalue(null)
     } else {
       const getIndx = checkBoxes.checked.indexOf(optKey)
       checkBoxes.checked.splice(getIndx, 1)
@@ -26,13 +26,16 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
     }
     // for radio
     if (checked && attr.inpType === 'radio') {
+      checkBoxes.checked = []
       setvalue(e.target.value)
     } else {
       setvalue('')
     }
+    console.log(value, checkBoxes.checked)
     reCalculateFldHeights(fieldKey)
   }
-  console.log('ImageSelectField', attr)
+
+  // console.log(attr)
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -58,11 +61,11 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
               <input
                 className={`${fieldKey}-img-inp ${getCustomClsName(fieldKey, 'img-inp')}`}
                 type={attr.inpType}
-                aria-label="1st image"
+                aria-label={itm.lbl}
                 id={`${fieldKey}-img-wrp-${i}`}
                 name={fieldKey}
                 value={itm.val || itm.lbl}
-                checked={checkBoxes.checked.includes(i) || value || itm?.check}
+                checked={itm?.check || (value !== '') || checkBoxes.checked.includes(i)}
                 onChange={(e) => onChangeHandler(e, i)}
                 {...getCustomAttributes(fieldKey, 'img-inp')}
               />
@@ -104,21 +107,23 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
                     className={`${fieldKey}-select-img ${getCustomClsName(fieldKey, 'select-img')}`}
                     {...getCustomAttributes(fieldKey, 'select-img')}
                   />
-                  <div
-                    data-testid={`${fieldKey}-tc`}
-                    data-dev-tc={fieldKey}
-                    className={`${fieldKey}-tc ${getCustomClsName(fieldKey, 'tc')}`}
-                    {...getCustomAttributes(fieldKey, 'tc')}
-                  >
-                    <span
-                      data-testid={`${fieldKey}-img-title`}
-                      data-dev-img-title={fieldKey}
-                      className={`${fieldKey}-img-title ${getCustomClsName(fieldKey, 'img-title')}`}
-                      {...getCustomAttributes(fieldKey, 'img-title')}
+                  {!attr.optLblHide && (
+                    <div
+                      data-testid={`${fieldKey}-tc`}
+                      data-dev-tc={fieldKey}
+                      className={`${fieldKey}-tc ${getCustomClsName(fieldKey, 'tc')}`}
+                      {...getCustomAttributes(fieldKey, 'tc')}
                     >
-                      <RenderHtml html={itm.lbl} />
-                    </span>
-                  </div>
+                      <span
+                        data-testid={`${fieldKey}-img-title`}
+                        data-dev-img-title={fieldKey}
+                        className={`${fieldKey}-img-title ${getCustomClsName(fieldKey, 'img-title')}`}
+                        {...getCustomAttributes(fieldKey, 'img-title')}
+                      >
+                        <RenderHtml html={itm.lbl} />
+                      </span>
+                    </div>
+                  )}
                 </span>
               </label>
             </div>
