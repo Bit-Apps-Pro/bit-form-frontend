@@ -32,6 +32,7 @@ import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import RepeatIcon from '../../Icons/RepeatIcon'
+import ReviewStarIcn from '../../Icons/ReviewStarIcn'
 import SearchIcon from '../../Icons/SearchIcon'
 import SectionIcon from '../../Icons/SectionIcon'
 import StripeIcn from '../../Icons/StripeIcn'
@@ -60,7 +61,7 @@ export const toolsList = [
   {
     name: __('Text'),
     keywords: 'Text',
-    icn: <TextIcn size="23" />,
+    icn: <TextIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'text',
@@ -76,7 +77,7 @@ export const toolsList = [
   {
     name: __('Multiline Text'),
     keywords: 'Multiline Text, Textarea, Text Area',
-    icn: <TextareaIcn size="23" />,
+    icn: <TextareaIcn size="20" />,
     pos: { h: 100, w: 60, minW: 9, i: 'shadow_block' },
     elm: {
       typ: 'textarea',
@@ -92,7 +93,7 @@ export const toolsList = [
   {
     name: __('Email'),
     keywords: 'Email, Email Address',
-    icn: <MailIcn size="23" />,
+    icn: <MailIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'email',
@@ -120,7 +121,7 @@ export const toolsList = [
   {
     name: __('Number'),
     keywords: 'Number, Numeric, Numeric Field',
-    icn: <NumberIcn w="23" />,
+    icn: <NumberIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'number',
@@ -136,7 +137,7 @@ export const toolsList = [
   {
     name: __('Select'),
     keywords: 'Select, Dropdown, Drop Down',
-    icn: <ChevronDownIcn size="23" />,
+    icn: <ChevronDownIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     tip: 'Select',
     elm: {
@@ -159,7 +160,7 @@ export const toolsList = [
   {
     name: __('Radio Button'),
     keywords: 'Radio button, Choice, Single Choice, Radio Group',
-    icn: <RadioIcn size="23" />,
+    icn: <RadioIcn size="20" />,
     pos: { h: 140, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'radio',
@@ -180,7 +181,7 @@ export const toolsList = [
   {
     name: __('Checkbox'),
     keywords: 'Check Box, Mark, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
-    icn: <CheckBoxIcn w="23" />,
+    icn: <CheckBoxIcn w="20" />,
     pos: { h: 140, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'check',
@@ -200,7 +201,7 @@ export const toolsList = [
   {
     name: __('Dropdown'),
     keywords: 'Dropdown, Select, Drop Down, Multiple Select, Multiple Choice, Multiple Option',
-    icn: <DropDownIcn w="23" />,
+    icn: <DropDownIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'select',
@@ -252,7 +253,7 @@ export const toolsList = [
   {
     name: __('File Upload'),
     keywords: 'File Upload, Attachment',
-    icn: <FileUploadIcn w="23" />,
+    icn: <FileUploadIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     elm: {
       typ: 'file-up',
@@ -300,7 +301,7 @@ export const toolsList = [
   {
     name: __('Advance File Upload'),
     keywords: 'Advanced File Upload, Attachment, photo, image, video, audio, file, document, doc, pdf, excel, ppt',
-    icn: <AdvanceFileUpIcn w="23" />,
+    icn: <AdvanceFileUpIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     pro: 'This field is available only in pro version',
     elm: {
@@ -346,7 +347,7 @@ export const toolsList = [
   {
     name: __('Country'),
     keywords: 'Country, Country List, Country Dropdown, Country Select',
-    icn: <FlagIcn size="23" />,
+    icn: <FlagIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'country',
@@ -376,7 +377,7 @@ export const toolsList = [
   {
     name: __('Currency'),
     keywords: 'Currency, Currency Field, Amount',
-    icn: <CurrencyIcn size={20} />,
+    icn: <CurrencyIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'currency',
@@ -422,7 +423,7 @@ export const toolsList = [
   {
     name: __('Phone Number'),
     keywords: 'Phone number, Number',
-    icn: <PhoneNumberIcn size={20} />,
+    icn: <PhoneNumberIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'phone-number',
@@ -451,7 +452,7 @@ export const toolsList = [
   {
     name: __('Username'),
     keywords: 'User Name, text',
-    icn: <UserIcn size="22" />,
+    icn: <UserIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'username',
@@ -467,7 +468,7 @@ export const toolsList = [
   {
     name: __('Password'),
     keywords: 'Password',
-    icn: <PasswordIcn size="23" />,
+    icn: <PasswordIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'password',
@@ -483,7 +484,7 @@ export const toolsList = [
   {
     name: __('Date'),
     keywords: 'Date, Date Field, month',
-    icn: <DateIcn w="23" />,
+    icn: <DateIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'date',
@@ -497,7 +498,7 @@ export const toolsList = [
   {
     name: __('Time'),
     keywords: 'Time, Time Picker, Time Select, minutes, hours',
-    icn: <TimeIcn size="23" />,
+    icn: <TimeIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'time',
@@ -511,7 +512,7 @@ export const toolsList = [
   {
     name: __('Date-Time'),
     keywords: 'Date-Time, Date, Time, day, month, year',
-    icn: <DateTimeIcn w="23" />,
+    icn: <DateTimeIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'datetime-local',
@@ -525,7 +526,7 @@ export const toolsList = [
   {
     name: __('Week'),
     keywords: 'Week, Date, day',
-    icn: <WeekIcn size="23" />,
+    icn: <WeekIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'week',
@@ -539,7 +540,7 @@ export const toolsList = [
   {
     name: __('Month'),
     keywords: 'Month, Date',
-    icn: <MonthIcn w="23" />,
+    icn: <MonthIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'month',
@@ -553,7 +554,7 @@ export const toolsList = [
   {
     name: __('URL'),
     keywords: 'URL, Link, Website, Web Address, Web URL, Web Link, Web Site',
-    icn: <UrlIcn w="23" />,
+    icn: <UrlIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'url',
@@ -574,7 +575,7 @@ export const toolsList = [
   {
     name: __('Color Picker'),
     keywords: 'Color Picker, Color Select, Color Picker Field, Color Select Field',
-    icn: <ColorPickerIcn w="23" />,
+    icn: <ColorPickerIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'color',
@@ -588,7 +589,7 @@ export const toolsList = [
   {
     name: __('Decision Box'),
     keywords: 'Decision box, GDPR, Yes/No, Agree/Disagree',
-    icn: <DecisionBoxIcn size="23" />,
+    icn: <DecisionBoxIcn size="20" />,
     pos: { h: 40, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'decision-box',
@@ -608,7 +609,7 @@ export const toolsList = [
   {
     name: __('reCaptcha v2'),
     keywords: 'ReCaptcha v2, Google ReCaptcha v2, spam protection, bot protection',
-    icn: <ReCaptchaIcn size="23" />,
+    icn: <ReCaptchaIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     elm: {
       typ: 'recaptcha',
@@ -622,7 +623,7 @@ export const toolsList = [
   {
     name: 'Button',
     keywords: 'Button, Submit, Submit Button, Submit Form, click, click button',
-    icn: <BtnIcn size="23" />,
+    icn: <BtnIcn size="20" />,
     pos: { h: 60, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'button',
@@ -642,10 +643,9 @@ export const toolsList = [
   {
     name: 'Draft Button',
     keywords: 'Button, Submit, Save, Save Draft, Submit Button, Submit Form, Click, Click button',
-    icn: <BtnIcn size="23" />,
+    icn: <BtnIcn size="20" />,
     pos: { h: 60, w: 60, i: 'shadow_block' },
     pro: 'This field is available only in pro version',
-    new: true,
     elm: {
       typ: 'button',
       btnTyp: 'save-draft',
@@ -664,7 +664,7 @@ export const toolsList = [
   {
     name: __('Paypal'),
     keywords: 'Paypal, payment, credit card, credit card payment',
-    icn: <PaypalIcn w="23" />,
+    icn: <PaypalIcn w="20" />,
     pos: { h: 200, w: 60, i: 'shadow_block', minW: 20 },
     pro: 'This field is available only in pro version',
     elm: {
@@ -684,7 +684,7 @@ export const toolsList = [
   {
     name: __('Razorpay'),
     keywords: 'Razorpay, payment, credit card, credit card payment',
-    icn: <RazorPayIcn w="17" h="23" />,
+    icn: <RazorPayIcn w="20" h="23" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     pro: 'This field is available only in pro version',
     elm: {
@@ -721,10 +721,9 @@ export const toolsList = [
   {
     name: __('Stripe'),
     keywords: 'Stripe, payment, credit card, credit card payment',
-    icn: <StripeIcn size="23" />,
+    icn: <StripeIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     pro: 'This field is available only in pro version',
-    new: true,
     elm: {
       typ: 'stripe',
       adminLbl: __('Stripe'),
@@ -758,7 +757,7 @@ export const toolsList = [
   {
     name: __('Title'),
     keywords: 'title, heading, heading 1, heading 2, heading 3, heading 4, heading 5, heading 6',
-    icn: <TitleIcn w="23" />,
+    icn: <TitleIcn w="20" />,
     pos: { h: 48, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'title',
@@ -780,7 +779,7 @@ export const toolsList = [
   {
     name: __('Image'),
     keywords: 'image, picture, photo, logo, icon, avatar, profile picture, profile photo',
-    icn: <ImgFldIcn w="23" />,
+    icn: <ImgFldIcn w="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'image',
@@ -799,7 +798,7 @@ export const toolsList = [
   {
     name: __('Divider'),
     keywords: 'divider, line, horizontal line, horizontal divider',
-    icn: <DividerIcn w="23" />,
+    icn: <DividerIcn w="20" />,
     pos: { h: 40, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'divider',
@@ -815,7 +814,7 @@ export const toolsList = [
   {
     name: 'HTML',
     keywords: 'HTML, HTML Code, HTML Block, HTML Element, HTML Field, HTML Editor',
-    icn: <CodeSnippetIcn size="23" />,
+    icn: <CodeSnippetIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'html',
@@ -830,9 +829,8 @@ export const toolsList = [
   {
     name: __('Section'),
     keywords: 'Section, Field Group, Group, Section Field',
-    icn: <SectionIcon size="18" />,
+    icn: <SectionIcon size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'section',
       lbl: __('Section'),
@@ -849,9 +847,8 @@ export const toolsList = [
   {
     name: __('Repeater'),
     keywords: 'Repeater, Field Group, Group, Repeater Field',
-    icn: <RepeatIcon size="18" />,
+    icn: <RepeatIcon size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'repeater',
       lbl: __('Repeater'),
@@ -905,9 +902,9 @@ export const toolsList = [
   {
     name: 'Signature',
     keywords: 'Signature Editor, Signature Field, Signature, Signature Block, Canvas',
-    icn: <SignaturePenIcn size="22" />,
+    icn: <SignaturePenIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
-    new: true,
+    pro: 'This field is available only in pro version',
     elm: {
       typ: 'signature',
       adminLbl: __('Signature'),
@@ -940,6 +937,32 @@ export const toolsList = [
       redoBtn: __('Redo'),
       redoPreIcn: '',
       redoSufIcn: '',
+    },
+  },
+  {
+    name: __('Rating'),
+    keywords: 'Check Box, Mark, Rating, Star, Review, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
+    icn: <ReviewStarIcn size="20" />,
+    pos: { h: 140, w: 60, i: 'shadow_block' },
+    new: true,
+    elm: {
+      typ: 'rating',
+      lbl: __('Rating'),
+      opt: [
+        { lbl: __('Terrible'), val: '1', img: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Bad'), val: '2', img: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Satisfied'), val: '3', img: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Good'), val: '4', img: `${bits.assetsURL}/../static/rating/star.svg` },
+        { lbl: __('Excellent'), val: '5', img: `${bits.assetsURL}/../static/rating/star.svg` },
+      ],
+      ratingPos: 'start',
+      valid: {},
+      err: {},
+      customClasses: {},
+      customAttributes: {},
+      showReviewLblOnHover: false,
+      showReviewLblOnSelect: false,
+      selectedRating: false,
     },
   },
   /* {

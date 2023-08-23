@@ -645,6 +645,34 @@ export default function ElementConfiguration({ fldKey }) {
           highlightSelector={`[data-dev-inp-fld-wrp="${fldKey}"]`}
         />
       )}
+      {fieldObj.typ === 'rating' && (
+        <>
+          <NavBtn
+            subRoute={fldKey}
+            route="inp-fld-wrp"
+            label="Field Wrapper"
+            offset="2.5"
+            highlightSelector={`[data-dev-inp-fld-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'inp-fld-wrp')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="rating-img"
+            label="Rating Image"
+            offset="2.5"
+            highlightSelector={`[data-dev-rating-img="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'rating-img')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="rating-msg"
+            label="Rating Message"
+            offset="2.5"
+            highlightSelector={`[data-dev-rating-msg="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'rating-msg')}
+          />
+        </>
+      )}
 
       {fieldObj.typ === 'signature'
         && (

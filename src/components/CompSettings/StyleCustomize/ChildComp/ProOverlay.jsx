@@ -5,9 +5,8 @@ export default function ProOverlay({ style }) {
   return (
     <div className="pro-blur flx" style={defaulStyle}>
       <div className="pro">
-        <a href="https://www.bitapps.pro/bit-form" target="_blank" rel="noreferrer">
+        <a href="https://www.bitapps.pro/bit-form#pricing" target="_blank" rel="noreferrer">
           <span className="txt-pro">
-              &nbsp;
             {__('Available On Pro')}
           </span>
         </a>

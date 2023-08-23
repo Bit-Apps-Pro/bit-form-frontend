@@ -13,7 +13,7 @@ export default function IconStyleBtn({ route }) {
   }
   return (
     <button data-testid={`${route}-styl-btn`} type="button" onClick={styleHandler} className={css(ut.icnBtn)}>
-      <BrushIcn height="30" />
+      <BrushIcn height="18" width="12" />
     </button>
   )
 }

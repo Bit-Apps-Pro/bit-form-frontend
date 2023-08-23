@@ -56,6 +56,9 @@ const proHelperData = {
   honeypot: { heading: __('Honeypot trap'), featureText: __('Honeypot trap') },
   snackbar_msg: { heading: __('Snackbar Message'), featureText: __('Snackbar Message') },
   modal_msg: { heading: __('Modal Message'), featureText: __('Modal Message') },
+  ratingIcon: { heading: __('Rating Icon'), featureText: __('Rating Icon') },
+  ratingMsgOnHover: { heading: __('Rating Message on Hover'), featureText: __('Rating Message on Hover') },
+  ratingMsgOnSelect: { heading: __('Rating Message on Select'), featureText: __('Rating Message on Select') },
 }
 
 export default proHelperData

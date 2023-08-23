@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import loadable from '@loadable/component'
+import { useAtomValue } from 'jotai'
 import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtomValue } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import FieldSettingsLoader from '../Loaders/FieldSettingsLoader'
@@ -29,6 +29,7 @@ const TextFieldSettings = loadable(() => import('./TextFieldSettings'), { fallba
 const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <FieldSettingsLoader /> })
 const RepeaterFieldSettings = loadable(() => import('./RepeaterFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const SignatureFieldSettings = loadable(() => import('./SignatureField/SignatureFieldSettings'), { fallback: <FieldSettingsLoader /> })
+const RatingFieldSettings = loadable(() => import('./RatingField/RatingFieldSettings'), { fallback: <FieldSettingsLoader /> })
 
 export default function FieldSettings() {
   const { fieldKey, formType, formID } = useParams()
@@ -83,6 +84,7 @@ export default function FieldSettings() {
     case 'section': return <SectionFieldSettings />
     case 'repeater': return <RepeaterFieldSettings />
     case 'signature': return <SignatureFieldSettings />
+    case 'rating': return <RatingFieldSettings />
 
     default: return <>No field found with this key.</>
   }
