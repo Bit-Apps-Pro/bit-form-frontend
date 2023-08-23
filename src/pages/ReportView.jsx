@@ -126,10 +126,10 @@ export default function ReportView() {
           <div className="filter-option">
             <span className={css(ut.title)}>Filter Options</span>
             <hr />
-            <FldEntriesByCondition
+            {/* <FldEntriesByCondition
               fetchData={fetchData}
               setRefreshResp={setRefreshResp}
-            />
+            /> */}
             <DateFilter fetchData={fetchData} className={css({ mt: 10 })} />
             <div className={css(style.checkWrp)}>
               <span className={css(ut.sectionTitle)}>Entry Status</span>
