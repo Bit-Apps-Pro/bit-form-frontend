@@ -2594,5 +2594,54 @@ const editorConfig = {
       properties: { ...fieldWrpCssProps },
     },
   },
+  'image-select': {
+    ...textFldCssProps,
+    ci: {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+
+    'inp-opt': {
+      states: ['hover'],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+
+    },
+    'img-inp': {
+      states: ['hover', 'checked', 'focus'],
+      properties: {
+        ...fieldWrpCssProps,
+        outline: '',
+      },
+    },
+    'img-wrp': {
+      states: [],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'check-box': {
+      states: [],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+    'check-img': {
+      states: [],
+      properties: {
+        ...iconCssProps,
+      },
+    },
+    'select-img': {
+      states: [],
+      properties: {
+        ...fieldWrpCssProps,
+      },
+    },
+
+  },
 }
 export default editorConfig

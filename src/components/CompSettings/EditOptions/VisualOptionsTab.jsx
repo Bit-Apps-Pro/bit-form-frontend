@@ -23,7 +23,7 @@ import Tip from '../../Utilities/Tip'
 import TipGroup from '../../Utilities/Tip/TipGroup'
 import IconsModal from '../IconsModal'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
-import { $bits } from '../../../GlobalStates/GlobalStates'
+import { $bits, $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 
 const SortableElm = ({
   value, optIndx, type, option, setOption, lblKey, valKey, imgKey, setScrolIndex, isRating, optKey, checkByDefault, showUpload = false, hideNDisabledOptions,
@@ -31,6 +31,9 @@ const SortableElm = ({
   const { css } = useFela()
   const [optionMdl, setOptionMdl] = useState(false)
   const bits = useAtomValue($bits)
+  const fields = useAtomValue($fields)
+  const selectedFieldId = useAtomValue($selectedFieldId)
+  const isSingleSelect = fields[selectedFieldId]?.inpType === 'radio'
 
   const isGroupStart = 'type' in value && value.type.includes('group') && value.type.includes('start')
   const isGroupEnd = 'type' in value && value.type.includes('group') && value.type.includes('end')
@@ -171,7 +174,7 @@ const SortableElm = ({
 
   function setCheck(e, i) {
     const tmp = deepCopy([...option])
-    if (type === 'radio' || type === 'rating') {
+    if (type === 'radio' || type === 'rating' || isSingleSelect) {
       const alreadyChecked = tmp.find(opt => opt.check)
       if (alreadyChecked) delete alreadyChecked.check
     }

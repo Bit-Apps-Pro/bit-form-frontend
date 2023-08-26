@@ -273,7 +273,7 @@ function ImageSelectFieldSettings() {
         setModal={closeOptionModal}
         className="o-v"
         title={__('Options')}
-        width="755px"
+        width="800px"
       >
         <EditOptions
           optionMdl={optionMdl}

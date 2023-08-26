@@ -39,7 +39,7 @@ export default function AllowMultipleImage({ cls }) {
       <SingleToggle
         id="allow-multiple-stng"
         tip={tippyHelperMsg.imageMultipleImage}
-        title={__('Allow multiple image')}
+        title={__('Allow Multiple Image')}
         action={setMultipleImage}
         isChecked={isMultiple}
         isPro

@@ -9,12 +9,17 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
 
       [`.${fk}-ic`]: {
         display: 'grid',
-        'grid-template-columns': 'repeat(4, 1fr)',
-        'grid-auto-rows': '24.5vw',
-        'grid-gap': '0.6vw',
+        // 'grid-template-columns': 'repeat(4, 1fr)',
+        // 'grid-auto-rows': '27vw',
+        // 'grid-gap': '2vw',
+        // 'grid-row-gap': '10px',
+        // 'column-gap': '10px',
         // 'margin-top': '10px',
         width: '100%',
-        height: '230px',
+        'min-height': '230px',
+        'grid-template-columns': 'repeat(4, minmax(200px, 1fr))',
+        'grid-gap': '20px',
+        'align-items': 'stretch',
       },
 
       [`.${fk}-img-inp`]: {
@@ -45,6 +50,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         height: '100%',
         'object-fit': 'cover',
         transition: '0.3s',
+        'max-width': '100%',
       },
 
       [`.${fk}-tc`]: {
@@ -59,10 +65,14 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-check-box`]: {
-        background: 'hsla(209, 100%, 50%, 100%)',
-        'border-color': 'hsla(0, 0%, 100%, 100%)',
-        'border-style': 'solid',
-        'border-width': '2px',
+        background: 'var(--global-accent-color)',
+        // 'border-color': 'hsla(0, 0%, 100%, 100%)',
+        // 'border-style': 'solid',
+        // 'border-width': '2px',
+        'border-style': 'var(--global-fld-bdr) !important',
+        'border-color': 'var(--global-fld-bdr-clr) !important',
+        // 'border-radius': 'var(--g-bdr-rad) !important',
+        'border-width': 'var(--g-bdr-width) !important',
         position: 'absolute',
         top: '10px',
         left: '10px',
@@ -105,8 +115,8 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         width: '30px',
         height: '30px',
         'border-radius': '50%',
-        opacity: 0,
-        transition: 'transform 0.15s, opacity calc(0.15s * 1.2) linear, -webkit-transform 0.15s ease',
+        opacity: '0%',
+        transition: 'transform 0.15s, opacity calc(0.15s * 1.2) linear',
       },
 
       [`.${fk}-img-inp:hover~.${fk}-img-wrp`]: {
@@ -117,14 +127,14 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-check-img`]: {
-        width: '20px',
-        height: '20px',
+        width: '15px',
+        height: '15px',
         transition: '0.15s ease',
-        filter: 'invert(91%) sepia(0%) saturate(7500%) hue-rotate(343deg) brightness(112%) contrast(101%)',
+        filter: 'sepia(0%) saturate(7500%) hue-rotate(343deg) brightness(112%) contrast(101%)',
       },
 
       [`.${fk}-img-inp:checked~.${fk}-img-wrp .${fk}-check-box`]: {
-        opacity: 1,
+        opacity: '100%',
       },
 
       [`.${fk}-img-inp:checked~.${fk}-img-wrp`]: {

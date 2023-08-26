@@ -68,10 +68,11 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
                 checked={itm?.check || (value !== '') || checkBoxes.checked.includes(i)}
                 onChange={(e) => onChangeHandler(e, i)}
                 {...getCustomAttributes(fieldKey, 'img-inp')}
+                data-dev-img-inp={fieldKey}
               />
               <label
                 data-testid={`${fieldKey}-img-wrp`}
-                data-dev-img={fieldKey}
+                data-dev-img-wrp={fieldKey}
                 htmlFor={`${fieldKey}-img-wrp-${i}`}
                 className={`${fieldKey}-img-wrp ${getCustomClsName(fieldKey, 'img-wrp')}`}
                 {...getCustomAttributes(fieldKey, 'img-wrp')}

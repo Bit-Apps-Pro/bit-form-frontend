@@ -10,6 +10,7 @@ import { IS_PRO } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import SingleToggle from '../../Utilities/SingleToggle'
+import { addDefaultStyleClasses } from '../../style-new/styleHelpers'
 
 export default function OptionLableShowHide({ cls }) {
   const { fieldKey: fldKey } = useParams()
@@ -27,6 +28,7 @@ export default function OptionLableShowHide({ cls }) {
         fldData.optLblHide = true
       } else {
         fldData.optLblHide = false
+        addDefaultStyleClasses(fldKey, 'imageSelectOptLbl')
       }
     })
     const req = checked ? 'on' : 'off'
