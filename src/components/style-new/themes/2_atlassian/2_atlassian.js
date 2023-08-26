@@ -14,6 +14,7 @@ import dividerStyle_2_atlassian from './dividerStyle_2_atlassian'
 import dropdownStyle_2_atlassian from './dropdownStyle_2_atlassian'
 import fileUploadStyle_2_atlassian from './fileUpload_2_atlassian'
 import htmlStyle_2_atlassian from './htmlStyle_2_atlassian'
+import imageSelectStyle_2_atlassian from './imageSelectStyle_2_atlassian'
 import imageStyle_2_atlassian from './imageStyle_2_atlassian'
 import paypalStyle_2_atlassian from './paypalStyle_2_atlassian'
 import phoneNumberStyle_2_atlassian from './phoneNumberStyle_2_atlassian'
@@ -118,6 +119,8 @@ export default function atlassianTheme({
       return signature({ type, fk, breakpoint, colorScheme })
     case 'rating':
       return rating({ type, fk, breakpoint, colorScheme })
+    case 'image-select':
+      return imageSelect({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -284,6 +287,19 @@ const rating = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: ratingStyle_2_atlassian({ fk, type, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+
+const imageSelect = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'atlassian',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: imageSelectStyle_2_atlassian({ fk, type, breakpoint, colorScheme }),
     }
   }
   return {}

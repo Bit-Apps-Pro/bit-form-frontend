@@ -27,6 +27,7 @@ import titleStyle_0_noStyle from './titleStyle_0_noStyle'
 import stripeStyle_0_noStyle from './stripeStyle_0_noStyle'
 import signature_0_noStyle from './signature_0_noStyle'
 import ratingStyle_0_noStyle from './ratingStyle_0_noStyle'
+import imageSelectStyle_0_noStyle from './imageSelectStyle_0_noStyle'
 
 export default function noStyleTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
@@ -112,6 +113,8 @@ export default function noStyleTheme({
       return signature({ type, fk, breakpoint, colorScheme })
     case 'rating':
       return rating({ type, fk, breakpoint, colorScheme })
+    case 'image-select':
+      return imageSelect({ type, fk, breakpoint, colorScheme })
     default:
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = noStyleTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light' })
@@ -678,6 +681,17 @@ const rating = ({ type, fk, direction, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: ratingStyle_0_noStyle({ fk, direction, breakpoint, colorScheme }),
+    }
+  }
+}
+const imageSelect = ({ type, fk, direction, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'noStyle',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: imageSelectStyle_0_noStyle({ fk, direction, breakpoint, colorScheme }),
     }
   }
 }

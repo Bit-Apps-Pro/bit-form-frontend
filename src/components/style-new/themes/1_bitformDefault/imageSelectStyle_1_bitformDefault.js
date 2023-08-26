@@ -29,7 +29,9 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
 
       [`.${fk}-img-wrp`]: {
         position: 'absolute',
-        border: '1px solid hsla(0, 0%, 87%, 100%)',
+        'border-color': 'hsla(0, 0%, 87%, 100%)',
+        'border-style': 'solid',
+        'border-width': '1px',
         'border-radius': '5px',
         overflow: 'hidden',
         'box-shadow': '0 0 10px rgba(0, 0, 0, 0.2)',
