@@ -15,12 +15,14 @@ const setFieldValue = (props, field, val) => {
   const { contentId } = props
   const fldData = props.fields[field]
   const { fieldName, typ } = fldData
-  if (typ === 'radio') {
+  const inpType = fldData.inpType || ''
+
+  if (typ === 'radio' || inpType === 'radio') {
     select(contentId, `input[name="${fieldName}"][value="${val}"]`).checked = true
     return
   }
 
-  if (typ === 'check') {
+  if (typ === 'check' || inpType === 'checkbox') {
     const vals = val.split(',')
     selectAll(contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
       el.checked = vals.includes(el.value)
