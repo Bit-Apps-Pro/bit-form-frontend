@@ -43,6 +43,31 @@ const changelogInfo = {
       },
     },
   },
+  '2.4.0': {
+    date: '23 August, 2023',
+    changes: {
+      added: {
+        label: 'Added',
+        list: [
+          {
+            label: 'New Field',
+            tag: 'new',
+            list: [
+              'Rating Field - Collect feedbacks in the form of star ratings from your wp users. Change any star rating icon to your own custom icon with easy to use form builder settings.',
+            ],
+          },
+        ],
+      },
+      fixed: {
+        label: 'Fixed',
+        list: [
+          'Active Campaign integration tag & list issue',
+          'Form duplicate issue with the section & repeater field',
+          'Response table issue with multiple uploaded files',
+        ],
+      },
+    },
+  },
 }
 
 export default changelogInfo

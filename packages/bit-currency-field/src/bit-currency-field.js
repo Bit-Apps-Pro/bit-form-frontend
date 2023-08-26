@@ -878,6 +878,7 @@ export default class BitCurrencyField {
 
   set value(val) {
     this.#currencyHiddenInputElm.value = val || ''
+    this.#setAttribute(this.#currencyHiddenInputElm, 'value', val || '')
   }
 
   get value() {

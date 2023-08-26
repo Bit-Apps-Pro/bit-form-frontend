@@ -95,7 +95,7 @@ export default function SendinBlueAuthorization({ sendinBlueConf, setSendinBlueC
             target="_blank"
             rel="noreferrer"
           >
-            {__('Sendinblue API Console')}
+            {__('Brevo(SendinBlue) API Console')}
           </a>
         </small>
         {isLoading === 'auth' && (

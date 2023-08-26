@@ -12,8 +12,8 @@ import Modal from './Utilities/Modal'
 export default function ChangelogToggle() {
   const [bits, setBits] = useAtom($bits)
   const [show, setShow] = useState(bits.changelogVersion !== bits.version)
-  const [currentVersion, setCurrentVersion] = useState(bits.version)
-  const currenChangelog = changelogInfo['2.2.0']
+  const currentChangelog = '2.4.0'
+  const currenChangelog = changelogInfo[currentChangelog]
   const { css } = useFela()
 
   const setChangeLogVersion = () => {
@@ -48,7 +48,7 @@ export default function ChangelogToggle() {
           <div>
             <h3 className={css({ m: 0 })}>
               <a href="https://bitapps.pro/docs/bit-form/changelog/" target="_blank" rel="noreferrer">
-                {'Version 2.2.0 '}
+                {`Version ${currentChangelog}`}
                 <ExternalLinkIcn size="14" />
               </a>
             </h3>
@@ -60,7 +60,7 @@ export default function ChangelogToggle() {
                 <span className={css(styles.bdg, styles[titile])}>{obj.label}</span>
                 {obj.tag && <span className={css(styles.tag)}>{obj.tag}</span>}
                 <ul className={css(styles.ul, { mt: 5 })}>
-                  {obj.list.map(tempObj => getChangesList(tempObj, css))}
+                  {obj.list.map((tempObj, index) => getChangesList(tempObj, css, `${titile}-${index}`))}
                 </ul>
               </div>
             ))}
@@ -78,13 +78,13 @@ export default function ChangelogToggle() {
   )
 }
 
-function getChangesList(listObj, css) {
-  if (typeof listObj === 'string') return <li>{listObj}</li>
-  if (Array.isArray(listObj)) return listObj.map(tempObj => getChangesList(tempObj, css))
+function getChangesList(listObj, css, parentKey = '') {
+  if (typeof listObj === 'string') return <li key={parentKey}>{listObj}</li>
+  if (Array.isArray(listObj)) return listObj.map((tempObj, index) => getChangesList(tempObj, css, `${parentKey}-${index}`))
   if (typeof listObj === 'object') {
     const { label, tag, list } = listObj
     return (
-      <Fragment key={label}>
+      <Fragment key={parentKey}>
         <li>
           {label}
           {tag && <span className={css(styles.tag)}>{tag}</span>}
@@ -92,7 +92,7 @@ function getChangesList(listObj, css) {
         {
           list && (
             <ul className={css(styles.ul)}>
-              {list.map(tempObj => getChangesList(tempObj, css))}
+              {list.map((tempObj, index) => getChangesList(tempObj, css, `${parentKey}-${index}`))}
             </ul>
           )
         }
