@@ -1,5 +1,8 @@
 export default function multiStepStyles({ formId, breakpoint }) {
   return {
+    [`._frm-b${formId}-step-container`]: {
+      'grid-column': '1 / -1',
+    },
     [`._frm-b${formId}-step-wrapper`]: {
       display: 'grid',
       'border-style': 'dotted',
