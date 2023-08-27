@@ -188,8 +188,8 @@ function triggerIntegration(hitCron, newNonce, contentId) {
 
 function disabledSubmitButton(contentId, disabled) {
   bfSelect('button[type="submit"]', bfSelect(`#form-${contentId}`)).disabled = disabled
-  const spanner = bfSelect('button[type="submit"] span', bfSelect(`#form-${contentId}`))
-  if (spanner) spanner.classList.toggle('d-none')
+  const spinner = bfSelect('button[type="submit"] span', bfSelect(`#form-${contentId}`))
+  if (spinner) spinner.classList.toggle('d-none')
 }
 
 export default function addSubmitEventToForms(formContentId = null) {
