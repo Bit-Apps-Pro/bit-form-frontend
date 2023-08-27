@@ -17,7 +17,7 @@ export const packagesFileLists = {
   'bit-filepond-plugin-media-preview': ['bit-filepond-plugin-media-preview'],
   'bit-form-abandonment': ['bit-form-abandonment', 'saveFormProgress', 'setFieldValues', 'autoSavePartial'],
   'bit-frontend': ['hidden-token-field', 'bitsFetchFront', 'submit-form', 'customFieldsReset', 'advancedFileHandle', 'decisionFldHandle', 'validate-focus', 'bitform-init', 'bitform-elementor'],
-  'bit-helpers': ['observeElm', 'bfSelect', 'bfReset', 'setBFMsg', 'bfValidationErrMsg', 'setHiddenFld', 'paymentSubmitResponse', 'isFormValidatedWithoutError', 'setStyleProperty', 'scrollToFld'],
+  'bit-helpers': ['observeElm', 'bfSelect', 'bfReset', 'setBFMsg', 'bfValidationErrMsg', 'setHiddenFld', 'paymentSubmitResponse', 'isFormValidatedWithoutError', 'setStyleProperty', 'scrollToFld', 'moveStepToFirstErrFld'],
   'bit-page-lifecycle': ['bit-page-lifecycle'],
   'bit-paypal-field': ['bit-paypal-field'],
   'bit-phone-number-field': ['bit-phone-number-field'],

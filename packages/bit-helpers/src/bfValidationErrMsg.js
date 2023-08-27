@@ -1,5 +1,6 @@
 function dispatchFieldError(fldErrors, contentId) {
-  Object.keys(fldErrors).forEach((fk) => {
+  const fldKeys = Object.keys(fldErrors)
+  fldKeys.forEach((fk) => {
     const rowIndex = fk.match(/\[(\d+)\]/)?.[1]
     const rptIndexClass = rowIndex ? ` .rpt-index-${rowIndex}` : ''
     const errWrp = bfSelect(`#form-${contentId}${rptIndexClass} .${fk}-err-wrp`)
@@ -9,6 +10,7 @@ function dispatchFieldError(fldErrors, contentId) {
     setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
     setStyleProperty(errWrp, 'opacity', 1)
   })
+  if (typeof moveStepToFirstErrFld !== 'undefined') moveStepToFirstErrFld(window?.bf_globals?.[contentId], fldKeys)
 }
 
 export default function bfValidationErrMsg(result, contentId) {

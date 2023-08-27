@@ -2,12 +2,14 @@
 let contentId
 let fields
 let fieldKeysByName = {}
+let errors = []
 export default function validateForm({ form, input }, { step } = {}) {
   if (form) contentId = form
   else if (input?.form?.id) [, contentId] = input.form.id.split('form-')
   const props = window?.bf_globals?.[contentId]
   if (typeof props === 'undefined') return false
   let formEntries = {}
+  errors = []
   const bfSeparator = props.configs.bf_separator
   if (step) {
     let layout = props.layout[step - 1]
@@ -83,6 +85,7 @@ export default function validateForm({ form, input }, { step } = {}) {
       if (errKey) formCanBeSubmitted = false
     }
   }
+  if (typeof moveStepToFirstErrFld !== 'undefined') moveStepToFirstErrFld(props, errors)
   return formCanBeSubmitted
 }
 
@@ -133,6 +136,7 @@ const generateErrMsg = (errKey, fldKey, fldData, selector = '') => {
       setStyleProperty(errWrp, 'opacity', 1)
       const fld = bfSelect(`#form-${contentId} ${selector} .btcd-fld-itm.${fldKey}`)
       scrollToFld(fld)
+      errors.push(fldKey)
     } else {
       errTxt.innerHTML = ''
       setStyleProperty(errMsg, 'display', 'none')
