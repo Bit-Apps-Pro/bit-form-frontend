@@ -3,6 +3,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useNavigate, useParams } from 'react-router-dom'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
+import { hideAll } from 'tippy.js'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import { $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $newFormId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -14,6 +15,7 @@ import { __ } from '../../Utils/i18nwrap'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
 import paymentFields from '../../Utils/StaticData/paymentFields'
+import Downmenu from '../Utilities/Downmenu'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -67,6 +69,7 @@ export default function BuilderStepTabs() {
       const payFields = fields ? Object.values(fields).filter(field => paymentFields.includes(field.typ)) : []
       if (!payFields.length) {
         setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
+        hideAll()
         return false
       }
     }
@@ -117,19 +120,27 @@ export default function BuilderStepTabs() {
               <SortableItem key={`grid-${indx * 2}`} index={indx} itemId={`grid-${indx * 2}`}>
                 <div className="flx step-container" style={{ backgroundColor: activeBuilderStep === indx ? 'red' : '' }}>
                   <DragHandle />
-                  <span type="button" className="btcd-s-tab-link" onClick={onStepChange(indx)}>
+                  <span type="button" className="btcd-s-tab-link" onClick={onStepChange(indx)} onKeyDown={onStepChange(indx)} role="button" tabIndex={0}>
                     {__('Step #')}
                     {indx + 1}
                   </span>
                   {isMultiStep && (
-                    <button
-                      onClick={() => removeFormStep(indx)}
-                      className="icn-btn"
-                      aria-label="delete-relatedlist"
-                      type="button"
-                    >
-                      <CloseIcn size="14" />
-                    </button>
+                    <Downmenu>
+                      <button
+                        className="icn-btn"
+                        aria-label="delete-relatedlist"
+                        type="button"
+                      >
+                        <CloseIcn size="14" />
+                      </button>
+                      <div className="wdt-200">
+                        <div className="mb-2 mt-1"><b>Are you sure to delete the step?</b></div>
+                        <div className="flx flx-c">
+                          <button onClick={() => hideAll()} className="tip-btn mr-2" type="button">Cancel</button>
+                          <button onClick={() => removeFormStep(indx)} className="tip-btn red-btn" type="button">Delete</button>
+                        </div>
+                      </div>
+                    </Downmenu>
                   )}
                 </div>
               </SortableItem>
