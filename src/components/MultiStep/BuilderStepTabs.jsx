@@ -4,13 +4,16 @@ import { create } from 'mutative'
 import { useNavigate, useParams } from 'react-router-dom'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import { $allLayouts, $builderHookStates, $contextMenu, $newFormId } from '../../GlobalStates/GlobalStates'
+import { $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $newFormId } from '../../GlobalStates/GlobalStates'
+import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
+import { deepCopy } from '../../Utils/Helpers'
+import { mergeNestedObj } from '../../Utils/globalHelpers'
+import { removeLayoutItem } from '../../Utils/gridLayoutHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
-import { $styles } from '../../GlobalStates/StylesState'
-import { mergeNestedObj } from '../../Utils/globalHelpers'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
+import paymentFields from '../../Utils/StaticData/paymentFields'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -26,8 +29,9 @@ export default function BuilderStepTabs() {
   const formLayouts = Array.isArray(allLayouts) ? allLayouts : [allLayouts]
   const path = `/form/builder/${formType}/${formID}`
   const isMultiStep = formLayouts.length > 1
-  const [styles, setStyles] = useAtom($styles)
-  console.log({ styles })
+  const setStyles = useSetAtom($styles)
+  const fields = useAtomValue($fields)
+  const setAlertMdl = useSetAtom($alertModal)
 
   const addFormStep = () => {
     setAllLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
@@ -53,11 +57,24 @@ export default function BuilderStepTabs() {
 
   const removeFormStep = stepIndex => {
     const lastStepIndex = allLayouts.length - 1
+    const removedLayout = deepCopy(allLayouts[stepIndex].layout)
+    const removedFldKeys = removedLayout.lg.map(l => l.i)
+    const hasSubmitBtn = removedFldKeys.some(fKey => {
+      const fldData = fields[fKey]
+      return fldData?.typ === 'button' && fldData?.btnTyp === 'submit'
+    })
+    if (hasSubmitBtn) {
+      const payFields = fields ? Object.values(fields).filter(field => paymentFields.includes(field.typ)) : []
+      if (!payFields.length) {
+        setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
+        return false
+      }
+    }
     const newLayouts = create(allLayouts, draftLayouts => {
       draftLayouts.splice(stepIndex, 1)
-      if (draftLayouts.length === 1) {
-        draftLayouts[0] = draftLayouts[0].layout
-      }
+    })
+    removedFldKeys.forEach(key => {
+      removeLayoutItem(key, removedLayout)
     })
     setAllLayouts(newLayouts)
     if (stepIndex === activeBuilderStep && stepIndex === lastStepIndex) {
