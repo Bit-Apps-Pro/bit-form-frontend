@@ -153,12 +153,13 @@ export default class BitMultiStepForm {
   }
 
   set step(step) {
-    const newStepWrapper = this.#getCurrentStepWrapper(step)
+    const changedStep = Number(step)
+    const newStepWrapper = this.#getCurrentStepWrapper(changedStep)
     if (!newStepWrapper) return
-    if (this.#maintainStepHistory) {
+    if (this.#maintainStepHistory && this.#currentStep < changedStep) {
       this.#history.push(this.#currentStep)
     }
-    this.#currentStep = step
+    this.#currentStep = changedStep
     this.#showStep(this.#currentStep)
   }
 
