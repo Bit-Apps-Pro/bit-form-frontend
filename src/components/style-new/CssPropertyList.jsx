@@ -21,7 +21,7 @@ export default function CssPropertyList({ properties, setProperty, classNames, i
         </button>
         <ul className={css(s.con)}>
           {properties?.sort()?.map((prop, indx) => (
-            <li key={`css-property- list-${indx * 2}`} className={css(s.item)}>
+            <li key={`css-property-list-${indx * 2}`} className={css(s.item)}>
               <button
                 type="button"
                 className={css(s.itemBtn)}

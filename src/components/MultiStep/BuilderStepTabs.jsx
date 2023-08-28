@@ -4,6 +4,7 @@ import { create } from 'mutative'
 import { useNavigate, useParams } from 'react-router-dom'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { hideAll } from 'tippy.js'
+import { useFela } from 'react-fela'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import { $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $newFormId } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
@@ -16,6 +17,9 @@ import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
 import paymentFields from '../../Utils/StaticData/paymentFields'
 import Downmenu from '../Utilities/Downmenu'
+import EllipsisIcon from '../../Icons/EllipsisIcon'
+import CopyIcn from '../../Icons/CopyIcn'
+import TrashIcn from '../../Icons/TrashIcn'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -34,6 +38,7 @@ export default function BuilderStepTabs() {
   const setStyles = useSetAtom($styles)
   const fields = useAtomValue($fields)
   const setAlertMdl = useSetAtom($alertModal)
+  const { css } = useFela()
 
   const addFormStep = () => {
     setAllLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
@@ -98,6 +103,9 @@ export default function BuilderStepTabs() {
     else navigate(`${path}/fields-list`, { replace: true })
   }
 
+  const cloneStep = stepIndex => {
+  }
+
   const onSortEnd = ({ oldIndex, newIndex }) => {
     if (!Array.isArray(allLayouts)) return
     setAllLayouts((items) => arrayMoveImmutable(items, oldIndex, newIndex))
@@ -112,34 +120,56 @@ export default function BuilderStepTabs() {
   }
 
   return (
-    <div>
-      <div ref={scrollContainerRef} onScroll={handleScroll} style={{ overflowX: 'auto' }}>
+    <div className={css(s.wrp)}>
+      <div ref={scrollContainerRef} onScroll={handleScroll}>
         <SortableList useDragHandle axis="x" onSortEnd={onSortEnd}>
           <div className="flx step-wrapper">
             {formLayouts.map((_, indx) => (
               <SortableItem key={`grid-${indx * 2}`} index={indx} itemId={`grid-${indx * 2}`}>
-                <div className="flx step-container" style={{ backgroundColor: activeBuilderStep === indx ? 'red' : '' }}>
+                <div className={`btcd-s-tab-link ${css(s.stepTab)} ${activeBuilderStep === indx && 'active'}`}>
                   <DragHandle />
-                  <span type="button" className="btcd-s-tab-link" onClick={onStepChange(indx)} onKeyDown={onStepChange(indx)} role="button" tabIndex={0}>
+                  <span type="button" className="" onClick={onStepChange(indx)} onKeyDown={onStepChange(indx)} role="button" tabIndex={0}>
                     {__('Step #')}
                     {indx + 1}
                   </span>
                   {isMultiStep && (
                     <Downmenu>
                       <button
-                        className="icn-btn"
-                        aria-label="delete-relatedlist"
+                        className={css(s.ellipsBtn)}
+                        aria-label="Step Options"
                         type="button"
                       >
-                        <CloseIcn size="14" />
+                        {/* <CloseIcn size="14" /> */}
+                        <EllipsisIcon size="20" className={css({ tm: 'rotate(90deg)' })} />
                       </button>
-                      <div className="wdt-200">
-                        <div className="mb-2 mt-1"><b>Are you sure to delete the step?</b></div>
-                        <div className="flx flx-c">
-                          <button onClick={() => hideAll()} className="tip-btn mr-2" type="button">Cancel</button>
-                          <button onClick={() => removeFormStep(indx)} className="tip-btn red-btn" type="button">Delete</button>
-                        </div>
-                      </div>
+                      <ul className={css(s.optionWrap)}>
+                        <li className={css(s.option)}>
+                          <button
+                            type="button"
+                            className={css(s.optionBtn)}
+                            onClick={() => cloneStep(indx)}
+                          >
+                            <CopyIcn size={18} />
+                            &nbsp;Clone Step
+                          </button>
+                        </li>
+                        <li className={css(s.option)}>
+                          <Downmenu width={250}>
+                            <button type="button" className={css(s.optionBtn)}>
+                              <TrashIcn size={18} />
+                              &nbsp;Delete Step
+                            </button>
+                            <dvi className={css(s.confirmModal)}>
+                              <div className="mb-2 mt-1"><b>Are you sure to delete the step?</b></div>
+                              <p className={css({ fs: 12, fw: 400 })}>Note: After delete this Step. you will lose all responses of included fields.</p>
+                              <div className="flx flx-c">
+                                <button onClick={() => hideAll()} className="tip-btn mr-2" type="button">Cancel</button>
+                                <button onClick={() => removeFormStep(indx)} className="tip-btn red-btn" type="button">Delete</button>
+                              </div>
+                            </dvi>
+                          </Downmenu>
+                        </li>
+                      </ul>
                     </Downmenu>
                   )}
                 </div>
@@ -150,12 +180,88 @@ export default function BuilderStepTabs() {
       </div>
       <button
         onClick={addFormStep}
-        className="icn-btn sh-sm ml-2 mr-2 tooltip"
+        className={css(s.addBtn)}
         style={{ '--tooltip-txt': `'${__('Add More Related List')}'` }}
         type="button"
       >
-        +
+        <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
       </button>
     </div>
   )
+}
+
+const s = {
+  wrp: {
+    dy: 'flex',
+    ai: 'center',
+    bb: '1px solid #edf3fd',
+  },
+  addBtn: {
+    se: 25,
+    b: 'none',
+    brs: '20%',
+    p: 0,
+    flxi: 'center',
+    bd: 'var(--white-0-95)',
+    curp: 1,
+    tn: 'transform 0.2s',
+    ':hover': { tm: 'scale(1.1)', cr: 'var(--b-50)' },
+    ':active': { tm: 'scale(0.95)' },
+  },
+  ellipsBtn: {
+    bd: 'transparent',
+    cr: 'var(--dp-blue)',
+    pn: 'relative',
+    cur: 'pointer',
+    fs: '20px',
+    b: '0',
+    p: '0',
+    w: '20px',
+    h: '22px',
+    brs: '8px',
+    oe: 'none',
+    '&:hover': {
+      bd: 'var(--white-0-95)',
+    },
+    '&:active': {
+      b: '1px solid var(--white-0-83)',
+    },
+    '&:focus': {
+      b: '1px solid var(--white-0-83)',
+    },
+  },
+  stepTab: {
+    flxi: 'center',
+    mr: 5,
+    cg: 4,
+    h: 30,
+    ws: 'nowrap',
+    fs: 12,
+    fw: 500,
+    b: 'none',
+    '&.active': {
+      bd: 'var(--b-79-96)',
+    },
+  },
+  optionWrap: { m: 0, w: 125 },
+  option: { dy: 'block', m: 0 },
+  optionBtn: {
+    m: 0,
+    brs: 6,
+    curp: 1,
+    tn: 'background .3s',
+    py: 3,
+    px: 10,
+    fw: 500,
+    b: 'none',
+    w: '100%',
+    bd: 'none',
+    ta: 'left',
+    ':hover': { bd: 'var(--white-0-95)' },
+  },
+  confirmModal: {
+    m: 0,
+    p: 0,
+    w: 200,
+  },
 }
