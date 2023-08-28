@@ -105,12 +105,13 @@ export default class BitMultiStepForm {
     if (!currentStep) return
     const nextBtn = this.#select('.next-step-btn', currentStep)
     if (!nextBtn) return
+    const spinner = this.#select('.bf-spinner', nextBtn)
     if (status) {
       nextBtn.disabled = true
-      nextBtn.classList.add('bf-spinner')
+      spinner.classList.remove('d-none')
     } else {
       nextBtn.removeAttribute('disabled')
-      nextBtn.classList.remove('bf-spinner')
+      spinner.classList.add('d-none')
     }
   }
 
