@@ -985,7 +985,7 @@ export const toolsList = [
       valid: {},
       err: {},
       tickImgSrc: `${bits.assetsURL}/../static/image-select/tick.svg`,
-      optionCol: 4,
+      itemSize: 200,
       layout: 'default',
       tickPosition: 'top-left',
       optLblHide: false,

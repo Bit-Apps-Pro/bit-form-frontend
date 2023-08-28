@@ -6,20 +6,12 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
   if (breakpoint === 'lg' && colorScheme === 'light') {
     return {
       ...inputWrapperClasses(fk),
+      [`.${fk}-inp-fld-wrp`]: { position: 'relative', margin: 'var(--fld-m, 0)' },
 
       [`.${fk}-ic`]: {
         display: 'grid',
-        // 'grid-template-columns': 'repeat(4, 1fr)',
-        // 'grid-auto-rows': '27vw',
-        // 'grid-gap': '2vw',
-        // 'grid-row-gap': '10px',
-        // 'column-gap': '10px',
-        // 'margin-top': '10px',
-        width: '100%',
-        'min-height': '230px',
-        'grid-template-columns': 'repeat(4, minmax(200px, 1fr))',
-        'grid-gap': '20px',
-        'align-items': 'stretch',
+        'grid-template-columns': 'repeat(auto-fit, minmax(100px, 1fr))',
+        'grid-gap': '1rem',
       },
 
       [`.${fk}-img-inp`]: {
@@ -28,15 +20,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-img-wrp`]: {
-        position: 'absolute',
-        'border-color': 'hsla(0, 0%, 87%, 100%)',
-        'border-style': 'solid',
-        'border-width': '1px',
-        'border-radius': '5px',
-        overflow: 'hidden',
-        'box-shadow': '0 0 10px rgba(0, 0, 0, 0.2)',
-        cursor: 'pointer',
-        transition: '0.2s',
+
       },
 
       [`.${fk}-img-card-wrp`]: {
@@ -45,6 +29,14 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         'align-items': 'center',
         'justify-content': 'center',
         padding: '10px',
+        'border-color': 'hsla(0, 0%, 87%, 100%)',
+        'border-style': 'solid',
+        'border-width': '1px',
+        'border-radius': '5px',
+        overflow: 'hidden',
+        'box-shadow': '0 0 10px rgba(0, 0, 0, 0.2)',
+        cursor: 'pointer',
+        transition: '0.2s',
       },
 
       [`.${fk}-select-img`]: {
@@ -60,7 +52,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
       },
 
       [`.${fk}-img-title`]: {
-        'font-size': '1.5rem',
+        'font-size': '1em',
         'font-weight': 500,
         margin: '0.5rem 0',
         color: 'var(--global-font-color)',
@@ -68,12 +60,8 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
 
       [`.${fk}-check-box`]: {
         background: 'var(--global-accent-color)',
-        // 'border-color': 'hsla(0, 0%, 100%, 100%)',
-        // 'border-style': 'solid',
-        // 'border-width': '2px',
         'border-style': 'var(--global-fld-bdr) !important',
         'border-color': 'var(--global-fld-bdr-clr) !important',
-        // 'border-radius': 'var(--g-bdr-rad) !important',
         'border-width': 'var(--g-bdr-width) !important',
         position: 'absolute',
         top: '10px',
@@ -121,7 +109,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         transition: 'transform 0.15s, opacity calc(0.15s * 1.2) linear',
       },
 
-      [`.${fk}-img-inp:hover~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:hover~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         outline: 'none',
         'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
         transition: 'all 0.2s',
@@ -139,12 +127,12 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         opacity: '100%',
       },
 
-      [`.${fk}-img-inp:checked~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:checked~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 51%)',
         'border-color': 'var(--global-accent-color)',
       },
 
-      [`.${fk}-img-inp:focus~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         // outline: 'none',
         'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
         outline: '2px solid var(--global-accent-color)',
@@ -152,7 +140,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         transition: 'outline-offset 0.2s ease',
       },
 
-      [`.${fk}-img-inp:checked:focus~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:checked:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         outline: 'none',
         'box-shadow': '0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px hsla(223, 92%, 85%, 100%)',
       },

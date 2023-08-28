@@ -81,7 +81,7 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
         // transition: 'transform 0.15s, opacity calc(0.15s * 1.2) linear',
       },
 
-      [`.${fk}-img-inp:hover~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:hover~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         // outline: 'none',
         // 'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
         // transition: 'all 0.2s',
@@ -99,12 +99,12 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
         // opacity: '100%',
       },
 
-      [`.${fk}-img-inp:checked~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:checked~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         // 'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 51%)',
         // 'border-color': 'var(--global-accent-color)',
       },
 
-      [`.${fk}-img-inp:focus~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         // outline: 'none',
         // 'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
         // outline: '2px solid var(--global-accent-color)',
@@ -112,7 +112,7 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
         // transition: 'outline-offset 0.2s ease',
       },
 
-      [`.${fk}-img-inp:checked:focus~.${fk}-img-wrp`]: {
+      [`.${fk}-img-inp:checked:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         // outline: 'none',
         // 'box-shadow': '0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px hsla(223, 92%, 85%, 100%)',
       },

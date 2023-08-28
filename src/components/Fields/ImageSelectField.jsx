@@ -45,90 +45,97 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
         fieldData={attr}
       >
         <div
-          data-testid={`${fieldKey}-ic`}
-          data-dev-ic={fieldKey}
-          className={`${fieldKey}-ic ${getCustomClsName(fieldKey, 'ic')}`}
-          {...getCustomAttributes(fieldKey, 'ic')}
+          data-testid={`${fieldKey}-inp-fld-wrp`}
+          data-dev-inp-fld-wrp={fieldKey}
+          className={`${fieldKey}-inp-fld-wrp ${getCustomClsName(fieldKey, 'inp-fld-wrp')}`}
+          {...getCustomAttributes(fieldKey, 'inp-fld-wrp')}
         >
-          {attr.opt.map((itm, i) => (
-            <div
-              data-testid={`${fieldKey}-inp-opt`}
-              data-dev-inp-opt={fieldKey}
-              key={`opr-${i + 22}`}
-              className={`${fieldKey}-inp-opt ${getCustomClsName(fieldKey, 'inp-opt')}`}
-              {...getCustomAttributes(fieldKey, 'inp-opt')}
-            >
-              <input
-                className={`${fieldKey}-img-inp ${getCustomClsName(fieldKey, 'img-inp')}`}
-                type={attr.inpType}
-                aria-label={itm.lbl}
-                id={`${fieldKey}-img-wrp-${i}`}
-                name={fieldKey}
-                value={itm.val || itm.lbl}
-                checked={itm?.check || (value !== '') || checkBoxes.checked.includes(i)}
-                onChange={(e) => onChangeHandler(e, i)}
-                {...getCustomAttributes(fieldKey, 'img-inp')}
-                data-dev-img-inp={fieldKey}
-              />
-              <label
-                data-testid={`${fieldKey}-img-wrp`}
-                data-dev-img-wrp={fieldKey}
-                htmlFor={`${fieldKey}-img-wrp-${i}`}
-                className={`${fieldKey}-img-wrp ${getCustomClsName(fieldKey, 'img-wrp')}`}
-                {...getCustomAttributes(fieldKey, 'img-wrp')}
+          <div
+            data-testid={`${fieldKey}-ic`}
+            data-dev-ic={fieldKey}
+            className={`${fieldKey}-ic ${getCustomClsName(fieldKey, 'ic')}`}
+            {...getCustomAttributes(fieldKey, 'ic')}
+          >
+            {attr.opt.map((itm, i) => (
+              <div
+                data-testid={`${fieldKey}-inp-opt`}
+                data-dev-inp-opt={fieldKey}
+                key={`opr-${i + 22}`}
+                className={`${fieldKey}-inp-opt ${getCustomClsName(fieldKey, 'inp-opt')}`}
+                {...getCustomAttributes(fieldKey, 'inp-opt')}
               >
-                <span
-                  data-testid={`${fieldKey}-check-box`}
-                  data-dev-check-box={fieldKey}
-                  className={`${fieldKey}-check-box ${getCustomClsName(fieldKey, 'check-box')}`}
-                  {...getCustomAttributes(fieldKey, 'check-box')}
+                <input
+                  className={`${fieldKey}-img-inp ${getCustomClsName(fieldKey, 'img-inp')}`}
+                  type={attr.inpType}
+                  aria-label={itm.lbl}
+                  id={`${fieldKey}-img-wrp-${i}`}
+                  name={fieldKey}
+                  value={itm.val || itm.lbl}
+                  checked={itm?.check || (value !== '') || checkBoxes.checked.includes(i)}
+                  onChange={(e) => onChangeHandler(e, i)}
+                  {...getCustomAttributes(fieldKey, 'img-inp')}
+                  data-dev-img-inp={fieldKey}
+                />
+                <label
+                  data-testid={`${fieldKey}-img-wrp`}
+                  data-dev-img-wrp={fieldKey}
+                  htmlFor={`${fieldKey}-img-wrp-${i}`}
+                  className={`${fieldKey}-img-wrp ${getCustomClsName(fieldKey, 'img-wrp')}`}
+                  {...getCustomAttributes(fieldKey, 'img-wrp')}
                 >
-                  <img
-                    src={attr.tickImgSrc}
-                    alt=""
-                    data-testid={`${fieldKey}-check-img`}
-                    data-dev-check-img={fieldKey}
-                    className={`${fieldKey}-check-img ${getCustomClsName(fieldKey, 'check-img')}`}
-                    {...getCustomAttributes(fieldKey, 'check-img')}
-                  />
-                </span>
+                  <span
+                    data-testid={`${fieldKey}-check-box`}
+                    data-dev-check-box={fieldKey}
+                    className={`${fieldKey}-check-box ${getCustomClsName(fieldKey, 'check-box')}`}
+                    {...getCustomAttributes(fieldKey, 'check-box')}
+                  >
+                    <img
+                      src={attr.tickImgSrc}
+                      alt=""
+                      data-testid={`${fieldKey}-check-img`}
+                      data-dev-check-img={fieldKey}
+                      className={`${fieldKey}-check-img ${getCustomClsName(fieldKey, 'check-img')}`}
+                      {...getCustomAttributes(fieldKey, 'check-img')}
+                    />
+                  </span>
 
-                <span
-                  data-testid={`${fieldKey}-img-card-wrp`}
-                  data-dev-img-card-wrp={fieldKey}
-                  className={`${fieldKey}-img-card-wrp ${getCustomClsName(fieldKey, 'img-card-wrp')}`}
-                  {...getCustomAttributes(fieldKey, 'img-card-wrp')}
-                >
-                  <img
-                    src={itm.img}
-                    alt={itm.lbl}
-                    aria-label={itm.lbl}
-                    data-testid={`${fieldKey}-select-img`}
-                    data-dev-select-img={fieldKey}
-                    className={`${fieldKey}-select-img ${getCustomClsName(fieldKey, 'select-img')}`}
-                    {...getCustomAttributes(fieldKey, 'select-img')}
-                  />
-                  {!attr.optLblHide && (
-                    <div
-                      data-testid={`${fieldKey}-tc`}
-                      data-dev-tc={fieldKey}
-                      className={`${fieldKey}-tc ${getCustomClsName(fieldKey, 'tc')}`}
-                      {...getCustomAttributes(fieldKey, 'tc')}
-                    >
-                      <span
-                        data-testid={`${fieldKey}-img-title`}
-                        data-dev-img-title={fieldKey}
-                        className={`${fieldKey}-img-title ${getCustomClsName(fieldKey, 'img-title')}`}
-                        {...getCustomAttributes(fieldKey, 'img-title')}
+                  <span
+                    data-testid={`${fieldKey}-img-card-wrp`}
+                    data-dev-img-card-wrp={fieldKey}
+                    className={`${fieldKey}-img-card-wrp ${getCustomClsName(fieldKey, 'img-card-wrp')}`}
+                    {...getCustomAttributes(fieldKey, 'img-card-wrp')}
+                  >
+                    <img
+                      src={itm.img}
+                      alt={itm.lbl}
+                      aria-label={itm.lbl}
+                      data-testid={`${fieldKey}-select-img`}
+                      data-dev-select-img={fieldKey}
+                      className={`${fieldKey}-select-img ${getCustomClsName(fieldKey, 'select-img')}`}
+                      {...getCustomAttributes(fieldKey, 'select-img')}
+                    />
+                    {!attr.optLblHide && (
+                      <div
+                        data-testid={`${fieldKey}-tc`}
+                        data-dev-tc={fieldKey}
+                        className={`${fieldKey}-tc ${getCustomClsName(fieldKey, 'tc')}`}
+                        {...getCustomAttributes(fieldKey, 'tc')}
                       >
-                        <RenderHtml html={itm.lbl} />
-                      </span>
-                    </div>
-                  )}
-                </span>
-              </label>
-            </div>
-          ))}
+                        <span
+                          data-testid={`${fieldKey}-img-title`}
+                          data-dev-img-title={fieldKey}
+                          className={`${fieldKey}-img-title ${getCustomClsName(fieldKey, 'img-title')}`}
+                          {...getCustomAttributes(fieldKey, 'img-title')}
+                        >
+                          <RenderHtml html={itm.lbl} />
+                        </span>
+                      </div>
+                    )}
+                  </span>
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
       </InputWrapper>
     </>

@@ -47,20 +47,11 @@ function ImageSelectFieldSettings() {
   const fieldData = deepCopy(fields[fldKey])
   const options = deepCopy(fields[fldKey].opt)
   const adminLabel = fieldData.adminLbl || ''
-  const optionCol = fieldData?.optionCol === undefined ? '' : fieldData?.optionCol
+  const { itemSize } = fieldData
 
-  const dataSrc = fieldData?.customType?.type || 'fileupload'
   const [styles, setStyles] = useAtom($styles)
 
-  let fieldObject = null
-  let disabled = false
-  if (fieldData?.customType?.type) {
-    disabled = true
-    fieldObject = fieldData?.customType
-  }
-  const [importOpts, setImportOpts] = useState({})
   const [optionMdl, setOptionMdl] = useState(false)
-  useEffect(() => setImportOpts({ dataSrc, fieldObject, disabled }), [fldKey])
 
   const openOptionModal = () => {
     setOptionMdl(true)
@@ -89,16 +80,16 @@ function ImageSelectFieldSettings() {
     reCalculateFldHeights(fldKey)
   }
 
-  function setColumn({ target: { value } }) {
+  function setItemSize({ target: { value } }) {
     if (value === '') {
-      delete fieldData.optionCol
+      delete fieldData.itemSize
     } else {
-      fieldData.optionCol = value
+      fieldData.itemSize = value
     }
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
 
     const newStyles = create(styles, drft => {
-      const repeat = `repeat(${value}, 1fr)`
+      const repeat = `repeat(auto-fit, minmax(${value}px, 1fr))`
 
       drft.fields[fldKey].classes[`.${fldKey}-ic`]['grid-template-columns'] = repeat
     })
@@ -185,21 +176,23 @@ function ImageSelectFieldSettings() {
 
       <SimpleAccordion
         id="opt-clm-stng"
-        title={__('Options Column')}
+        title={__('Item Size')}
         className={css(FieldStyle.fieldSection)}
         isPro
         proProperty="optionColumn"
-        tip={__('Specify the number of columns to display the options in. Leave blank to display the options as needed space.')}
+        tip={__('Specify your item size.')}
       >
         <div className={css(FieldStyle.placeholder)}>
           <input
             data-testid="opt-clm-stng-inp"
-            aria-label="Option Column"
+            aria-label="Item size"
             className={css(FieldStyle.input)}
-            min="1"
+            min="50"
+            max="500"
+            step="50"
             type="number"
-            value={optionCol}
-            onChange={setColumn}
+            value={itemSize}
+            onChange={setItemSize}
           />
         </div>
       </SimpleAccordion>

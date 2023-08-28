@@ -146,13 +146,13 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         break
       case 'image-select':
         if (state === 'hover') {
-          state = `:hover~.${fldKey}-img-wrp`
+          state = `:hover~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
         }
         if (state === 'checked') {
-          state = `:checked~.${fldKey}-img-wrp`
+          state = `:checked~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
         }
         if (state === 'focus') {
-          state = `:focus~.${fldKey}-img-wrp`
+          state = `:focus~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
         }
         break
 

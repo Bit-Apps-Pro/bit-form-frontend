@@ -29,14 +29,14 @@ export default function imageSelectStyle_2_atlassian({ fk, type, direction, brea
           transition: 'transform 0.15s, opacity calc(0.15s * 1.2) linear',
         },
 
-        [`.${fk}-img-inp:hover~.${fk}-img-wrp`]: {
+        [`.${fk}-img-inp:hover~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
           outline: 'none',
           'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
           transition: 'all 0.2s',
           'border-color': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)',
         },
 
-        [`.${fk}-img-inp:focus~.${fk}-img-wrp`]: {
+        [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
           'box-shadow': '',
           outline: '2px solid var(--global-accent-color)',
           'outline-offset': '2px',

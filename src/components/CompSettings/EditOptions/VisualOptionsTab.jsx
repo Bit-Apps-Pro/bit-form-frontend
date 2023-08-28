@@ -378,12 +378,12 @@ export default function VisualOptionsTab({
   useEffect(() => { setOption(flattenOptions(options, optKey)) }, [options])
 
   const bits = useAtomValue($bits)
-
+  console.log({ type })
   const addOption = () => {
     const { img } = option[0]
     const tmpOption = [...option]
     const id = newOptKey(optKey)
-    const newTempOption = isRating ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: img } : { id, [lblKey]: `Option ${id}` }
+    const newTempOption = (isRating || type === 'image-select') ? { id, [lblKey]: `Option ${id}`, [valKey]: id, [imgKey]: img } : { id, [lblKey]: `Option ${id}` }
     const newIndex = tmpOption.push(newTempOption)
     setScrolIndex(newIndex - 1)
     setOption(tmpOption)
