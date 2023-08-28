@@ -2,20 +2,22 @@ import { arrayMoveImmutable } from 'array-move'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useNavigate, useParams } from 'react-router-dom'
-import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { hideAll } from 'tippy.js'
+import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import { $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $newFormId } from '../../GlobalStates/GlobalStates'
+import {
+  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $nestedLayouts, $newFormId,
+} from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import { deepCopy } from '../../Utils/Helpers'
+import paymentFields from '../../Utils/StaticData/paymentFields'
 import { mergeNestedObj } from '../../Utils/globalHelpers'
 import { removeLayoutItem } from '../../Utils/gridLayoutHelpers'
 import { __ } from '../../Utils/i18nwrap'
+import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
-import paymentFields from '../../Utils/StaticData/paymentFields'
-import Downmenu from '../Utilities/Downmenu'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -34,6 +36,7 @@ export default function BuilderStepTabs() {
   const setStyles = useSetAtom($styles)
   const fields = useAtomValue($fields)
   const setAlertMdl = useSetAtom($alertModal)
+  const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
 
   const addFormStep = () => {
     setAllLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
@@ -73,11 +76,21 @@ export default function BuilderStepTabs() {
         return false
       }
     }
+    removedFldKeys.forEach(key => {
+      if (nestedLayouts[key]) {
+        const nestedLay = deepCopy(nestedLayouts[key])
+        const flds = nestedLay.lg.map(l => l.i)
+        flds.forEach(fldKey => {
+          removeLayoutItem(fldKey, nestedLay)
+        })
+        setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draftNestedLayouts => {
+          delete draftNestedLayouts[key]
+        }))
+      }
+      removeLayoutItem(key, removedLayout)
+    })
     const newLayouts = create(allLayouts, draftLayouts => {
       draftLayouts.splice(stepIndex, 1)
-    })
-    removedFldKeys.forEach(key => {
-      removeLayoutItem(key, removedLayout)
     })
     setAllLayouts(newLayouts)
     if (stepIndex === activeBuilderStep && stepIndex === lastStepIndex) {
