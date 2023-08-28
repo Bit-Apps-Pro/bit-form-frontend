@@ -14,10 +14,10 @@ import CloseIcn from '../../Icons/CloseIcn'
 import CopyIcn from '../../Icons/CopyIcn'
 import EllipsisIcon from '../../Icons/EllipsisIcon'
 import TrashIcn from '../../Icons/TrashIcn'
+import { builderBreakpoints, handleFieldExtraAttr } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
-import paymentFields from '../../Utils/StaticData/paymentFields'
 import { mergeNestedObj } from '../../Utils/globalHelpers'
-import { removeLayoutItem } from '../../Utils/gridLayoutHelpers'
+import { cloneLayoutItem, removeLayoutItem } from '../../Utils/gridLayoutHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
@@ -69,18 +69,12 @@ export default function BuilderStepTabs() {
     const lastStepIndex = allLayouts.length - 1
     const removedLayout = deepCopy(allLayouts[stepIndex].layout)
     const removedFldKeys = removedLayout.lg.map(l => l.i)
-    const hasSubmitBtn = removedFldKeys.some(fKey => {
+    const cannotRemove = removedFldKeys.some(fKey => {
       const fldData = fields[fKey]
-      return fldData?.typ === 'button' && fldData?.btnTyp === 'submit'
+      return !handleFieldExtraAttr(fldData)
     })
-    if (hasSubmitBtn) {
-      const payFields = fields ? Object.values(fields).filter(field => paymentFields.includes(field.typ)) : []
-      if (!payFields.length) {
-        setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
-        hideAll()
-        return false
-      }
-    }
+    hideAll()
+    if (cannotRemove) return
     removedFldKeys.forEach(key => {
       if (nestedLayouts[key]) {
         const nestedLay = deepCopy(nestedLayouts[key])
@@ -116,7 +110,57 @@ export default function BuilderStepTabs() {
     else navigate(`${path}/fields-list`, { replace: true })
   }
 
-  const cloneStep = stepIndex => {
+  const cloneFormStep = stepIndex => {
+    const cloningStep = allLayouts[stepIndex]
+    const cloningLayout = cloningStep.layout
+    const cloningFldKeys = cloningLayout.lg.map(l => l.i)
+    const cannotClone = cloningFldKeys.some(fKey => {
+      const fldData = fields[fKey]
+      return !handleFieldExtraAttr(fldData)
+    })
+    hideAll()
+    if (cannotClone) return
+    const newStepIndex = stepIndex + 1
+    const clonedStep = deepCopy(cloningStep)
+    clonedStep.settings.title = `Step ${allLayouts.length + 1}`
+    let draftAllLayouts = create(allLayouts, draftLayouts => {
+      draftLayouts.splice(newStepIndex, 0, clonedStep)
+    })
+    let draftNestedLayouts = create(nestedLayouts, () => { })
+    cloningFldKeys.forEach(key => {
+      const newClonedLayout = draftAllLayouts[newStepIndex].layout
+      const { newBlk: newFldKey, newLayouts: clonedLayouts } = cloneLayoutItem(key, newClonedLayout)
+      // remove the old layout from the new layout after clone
+      const newClonedLayouts = create(clonedLayouts, draftClonedLayouts => {
+        Object.keys(builderBreakpoints).forEach(bp => {
+          const indx = draftClonedLayouts[bp].findIndex(l => l.i === key)
+          draftClonedLayouts[bp].splice(indx, 1)
+        })
+      })
+      draftAllLayouts = create(draftAllLayouts, draftLayouts => {
+        draftLayouts[newStepIndex].layout = newClonedLayouts
+      })
+      if (nestedLayouts[key]) {
+        draftNestedLayouts = create(draftNestedLayouts, draftLayouts => {
+          draftLayouts[newFldKey] = deepCopy(nestedLayouts[key])
+          const nestedLay = nestedLayouts[key]
+          const flds = nestedLay.lg.map(l => l.i)
+          flds.forEach(fldKey => {
+            const { newLayouts: clonedNestedLayouts } = cloneLayoutItem(fldKey, draftLayouts[newFldKey])
+            draftLayouts[newFldKey] = clonedNestedLayouts
+            Object.keys(builderBreakpoints).forEach(bp => {
+              const indx = clonedNestedLayouts[bp].findIndex(l => l.i === fldKey)
+              clonedNestedLayouts[bp].splice(indx, 1)
+            })
+          })
+        })
+      }
+    })
+    setNestedLayouts(draftNestedLayouts)
+    setAllLayouts(draftAllLayouts)
+    setActiveBuilderStep(newStepIndex)
+    setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+    navigate(`${path}/multi-step-settings`, { replace: true })
   }
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
@@ -160,7 +204,7 @@ export default function BuilderStepTabs() {
                           <button
                             type="button"
                             className={css(s.optionBtn)}
-                            onClick={() => cloneStep(indx)}
+                            onClick={() => cloneFormStep(indx)}
                           >
                             <CopyIcn size={18} />
                             &nbsp;Clone Step
