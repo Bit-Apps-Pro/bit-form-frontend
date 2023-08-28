@@ -356,6 +356,7 @@ const FormBuilder = ({ isLoading }) => {
           minSize={320}
           defaultSize={BUILDER_WIDTH}
         >
+          <BuilderStepTabs />
           <StrictMode>
             {!isLoading && !styleLoading ? (
               <RenderPortal
@@ -364,7 +365,7 @@ const FormBuilder = ({ isLoading }) => {
               >
                 <RenderThemeVarsAndFormCSS />
                 <RenderCssInPortal />
-                <BuilderStepTabs />
+
                 <BuilderSteps />
                 <GridLayout
                   style={styleProvider()}
