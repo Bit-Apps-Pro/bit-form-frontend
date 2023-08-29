@@ -8,6 +8,7 @@ import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useAsyncDebounce } from 'react-table'
+import { set } from 'date-fns'
 import { $fields, $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import { $allStyles } from '../../GlobalStates/StylesState'
 import CPTIcn from '../../Icons/CPTIcn'
@@ -26,7 +27,9 @@ import StyleSegmentControl from '../Utilities/StyleSegmentControl'
 import { assignNestedObj, getValueByObjPath, iconElementLabel, paddingGenerator } from '../style-new/styleHelpers'
 import Grow from './StyleCustomize/ChildComp/Grow'
 
-function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '', unsplash = false }) {
+function Icons({
+  addPaddingOnSelect = true, iconType, setModal, selected = '', uploadLbl = '', unsplash = false, setIconAction, removeIconAction,
+}) {
   const { fieldKey: fldKey } = useParams()
   const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
@@ -133,6 +136,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
 
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
+        if (setIconAction) {
+          setIconAction(attachment.url)
+          return
+        }
         if (iconType === 'opt') {
           const options = fieldData[iconType]
           for (let i = 0; i < options.length; i += 1) {
@@ -186,6 +193,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
     bitsFetch({ id: prefix.id, src: prefix.url }, 'bitforms_icn_save_setting')
       .then(res => {
         if (res !== undefined && res.success) {
+          if (setIconAction) {
+            setIconAction(res.data)
+            return
+          }
           if (iconType === 'opt') {
             const options = fieldData[iconType]
             for (let i = 0; i < options.length; i += 1) {
@@ -242,6 +253,7 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
       })
     toast.success('Icon Removed Successfully')
     setShowWarning(false)
+    if (removeIconAction) removeIconAction(file)
   }
 
   const errHandle = (e) => {
@@ -292,6 +304,10 @@ function Icons({ addPaddingOnSelect = true, iconType, setModal, selected = '', u
   }
 
   const selectedSaveIcon = () => {
+    if (setIconAction) {
+      setIconAction(prefix.url)
+      return
+    }
     fieldData[iconType] = prefix.url
     const newFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(newFields)

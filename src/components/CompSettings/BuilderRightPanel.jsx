@@ -13,7 +13,6 @@ import StyleCustomizeLoader from '../Loaders/StyleCustomizeLoader'
 import Modal from '../Utilities/Modal'
 import styleEditorConfig from './StyleCustomize/StyleEditorConfig'
 import UnsplashImageViewer from './StyleCustomize/UnsplashImageViewer'
-import MultiStepSettings from './MultiStepSettings'
 
 const DropdownStyleEditors = loadable(() => import('./StyleCustomize/DropdownStyleEditors'), { fallback: <StyleCustomizeLoader /> })
 const PaypalStyleEditor = loadable(() => import('./StyleCustomize/PaypalStyleEditor'), { fallback: <StyleCustomizeLoader /> })
@@ -21,6 +20,7 @@ const StyleEditor = loadable(() => import('./StyleCustomize/StyleEditor'), { fal
 const FieldStyleCustomizeHOC = loadable(() => import('../style-new/FieldStyleCustomize'), { fallback: <StyleCustomizeLoader /> })
 const ThemeCustomize = loadable(() => import('../style-new/ThemeCustomize'), { fallback: <StyleCustomizeLoader /> })
 const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <FieldSettingsLoader /> })
+const MultiStepSettings = loadable(() => import('./MultiStepSettings'), { fallback: <FieldSettingsLoader /> })
 const FieldsList = loadable(() => import('./FieldsList'), { fallback: <FieldSettingsLoader /> })
 const ThemeGallary = loadable(() => import('../style-new/ThemeGallary'), { fallback: <FieldSettingsLoader /> })
 

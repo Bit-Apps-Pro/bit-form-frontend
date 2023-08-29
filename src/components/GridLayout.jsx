@@ -61,6 +61,7 @@ import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
+import StepContainer from './MultiStep/StepContainer'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -636,90 +637,91 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
         <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, margin: '23px 13px 400px 0', border: '1px solid lightblue' }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-b${formID}`} data-dev-_frm-bg={formID}>
             <div className={`_frm-b${formID}`} data-dev-_frm={formID}>
-
-              {!styleMode ? (
-                <ReactGridLayout
-                  width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
-                  measureBeforeMount
-                  compactType="vertical"
-                  useCSSTransforms
-                  isDroppable={draggingField !== null && breakpoint === 'lg'}
-                  className="layout"
-                  style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
-                  onDrop={onDrop}
-                  resizeHandles={['e']}
-                  droppingItem={draggingField?.fieldSize}
-                  onLayoutChange={handleLayoutChange}
-                  cols={cols[breakpoint]}
-                  breakpoints={builderBreakpoints}
-                  rowHeight={rowHeight}
-                  isDraggable={isDraggable}
-                  margin={gridContentMargin}
-                  draggableCancel=".no-drg"
-                  draggableHandle=".drag"
-                  layout={layouts[breakpoint]}
-                  onDragStart={setResizingFldKey}
-                  onDrag={setResizingWX}
-                  onDragStop={setRegenarateLayFlag}
-                  onResizeStart={setResizingFldKey}
-                  onResize={setResizingWX}
-                  onResizeStop={setRegenarateLayFlag}
-                >
-                  {layouts[breakpoint].map(layoutItem => (
-                    <div
-                      key={layoutItem.i}
-                      data-key={layoutItem.i}
-                      className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
-                      onClick={() => handleFldBlockEvent(layoutItem.i)}
-                      onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
-                      role="button"
-                      tabIndex={0}
-                      onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-                      data-testid={`${layoutItem.i}-fld-blk`}
-                    >
-                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
-                        <FieldBlockWrapper
-                          {...{
-                            layoutItem,
-                            removeLayoutItem,
-                            cloneLayoutItem,
-                            navigateToFieldSettings,
-                            navigateToStyle,
-                            handleContextMenu,
-                          }}
-                        />
-                      </Suspense>
-                    </div>
-                  ))}
-                </ReactGridLayout>
-              ) : (
-                <div className="_frm-g">
-                  {layouts[breakpoint].map(layoutItem => (
-                    <div
-                      key={layoutItem.i}
-                      data-key={layoutItem.i}
-                      className={layoutItem.i}
-                      onClick={() => handleFldBlockEvent(layoutItem.i)}
-                      onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
-                      role="button"
-                      tabIndex={0}
-                      onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-                    >
-                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
-                        <FieldBlockWrapper
-                          {...{
-                            layoutItem,
-                            removeLayoutItem,
-                            cloneLayoutItem,
-                            navigateToFieldSettings,
-                            navigateToStyle,
-                          }}
-                        />
-                      </Suspense>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <StepContainer className={`step-continer-${formID}`}>
+                {!styleMode ? (
+                  <ReactGridLayout
+                    width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
+                    measureBeforeMount
+                    compactType="vertical"
+                    useCSSTransforms
+                    isDroppable={draggingField !== null && breakpoint === 'lg'}
+                    className="layout"
+                    style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
+                    onDrop={onDrop}
+                    resizeHandles={['e']}
+                    droppingItem={draggingField?.fieldSize}
+                    onLayoutChange={handleLayoutChange}
+                    cols={cols[breakpoint]}
+                    breakpoints={builderBreakpoints}
+                    rowHeight={rowHeight}
+                    isDraggable={isDraggable}
+                    margin={gridContentMargin}
+                    draggableCancel=".no-drg"
+                    draggableHandle=".drag"
+                    layout={layouts[breakpoint]}
+                    onDragStart={setResizingFldKey}
+                    onDrag={setResizingWX}
+                    onDragStop={setRegenarateLayFlag}
+                    onResizeStart={setResizingFldKey}
+                    onResize={setResizingWX}
+                    onResizeStop={setRegenarateLayFlag}
+                  >
+                    {layouts[breakpoint].map(layoutItem => (
+                      <div
+                        key={layoutItem.i}
+                        data-key={layoutItem.i}
+                        className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
+                        onClick={() => handleFldBlockEvent(layoutItem.i)}
+                        onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
+                        role="button"
+                        tabIndex={0}
+                        onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                        data-testid={`${layoutItem.i}-fld-blk`}
+                      >
+                        <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                          <FieldBlockWrapper
+                            {...{
+                              layoutItem,
+                              removeLayoutItem,
+                              cloneLayoutItem,
+                              navigateToFieldSettings,
+                              navigateToStyle,
+                              handleContextMenu,
+                            }}
+                          />
+                        </Suspense>
+                      </div>
+                    ))}
+                  </ReactGridLayout>
+                ) : (
+                  <div className="_frm-g">
+                    {layouts[breakpoint].map(layoutItem => (
+                      <div
+                        key={layoutItem.i}
+                        data-key={layoutItem.i}
+                        className={layoutItem.i}
+                        onClick={() => handleFldBlockEvent(layoutItem.i)}
+                        onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
+                        role="button"
+                        tabIndex={0}
+                        onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                      >
+                        <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                          <FieldBlockWrapper
+                            {...{
+                              layoutItem,
+                              removeLayoutItem,
+                              cloneLayoutItem,
+                              navigateToFieldSettings,
+                              navigateToStyle,
+                            }}
+                          />
+                        </Suspense>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </StepContainer>
             </div>
           </div>
         </div>

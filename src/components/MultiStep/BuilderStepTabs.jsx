@@ -7,7 +7,7 @@ import { hideAll } from 'tippy.js'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import {
-  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $nestedLayouts, $newFormId,
+  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $formInfo, $nestedLayouts, $newFormId,
 } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -22,10 +22,12 @@ import { __ } from '../../Utils/i18nwrap'
 import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
+import defaultMultstepSettings from '../../Utils/StaticData/form-templates/defaultMultstepSettings'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
   const [activeBuilderStep, setActiveBuilderStep] = useAtom($activeBuilderStep)
+  const [formInfo, setFormInfo] = useAtom($formInfo)
   const setBuilderHookStates = useSetAtom($builderHookStates)
   const setContextMenu = useSetAtom($contextMenu)
   const navigate = useNavigate()
@@ -43,6 +45,7 @@ export default function BuilderStepTabs() {
   const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
   const { css } = useFela()
 
+  console.log('formInfo', formInfo)
   const addFormStep = () => {
     setAllLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
       const nextStep = !Array.isArray(draftLayouts) ? 1 : draftLayouts.length + 1
@@ -57,6 +60,12 @@ export default function BuilderStepTabs() {
       }
       draftLayouts.push(stepData)
       setActiveBuilderStep(draftLayouts.length - 1)
+    }))
+    setFormInfo(prevFormInfo => create(prevFormInfo, draftFormInfo => {
+      if (!draftFormInfo.multiStepSettings) {
+        draftFormInfo.multiStepSettings = defaultMultstepSettings
+      }
+      draftFormInfo.isMultiStepForm = true
     }))
     setStyles(prevStyles => create(prevStyles, draftStyles => {
       draftStyles.form = mergeNestedObj(draftStyles.form, multiStepStyles({ formId: formID }))
@@ -103,6 +112,9 @@ export default function BuilderStepTabs() {
         Object.keys(stepStyles).forEach(key => {
           delete draftStyles.form[key]
         })
+      }))
+      setFormInfo(prevFormInfo => create(prevFormInfo, draftFormInfo => {
+        draftFormInfo.isMultiStepForm = false
       }))
     }
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
@@ -185,7 +197,7 @@ export default function BuilderStepTabs() {
               <SortableItem key={`grid-${indx * 2}`} index={indx} itemId={`grid-${indx * 2}`}>
                 <div className={`btcd-s-tab-link ${css(s.stepTab)} ${activeBuilderStep === indx && 'active'}`}>
                   <DragHandle />
-                  <span type="button" className="" onClick={onStepChange(indx)} onKeyDown={onStepChange(indx)} role="button" tabIndex={0}>
+                  <span type="button" className={css(s.stepTitle)} onClick={onStepChange(indx)} onKeyDown={onStepChange(indx)} role="button" tabIndex={0}>
                     {__('Step #')}
                     {indx + 1}
                   </span>
@@ -296,9 +308,14 @@ const s = {
     fs: 12,
     fw: 500,
     b: 'none',
+    p: '0 10px',
     '&.active': {
       bd: 'var(--b-79-96)',
     },
+  },
+  stepTitle: {
+    cur: 'pointer',
+    p: '8px 0px',
   },
   optionWrap: { m: 0, w: 125 },
   option: { dy: 'block', m: 0 },
@@ -314,6 +331,7 @@ const s = {
     w: '100%',
     bd: 'none',
     ta: 'left',
+    dy: 'flex',
     ':hover': { bd: 'var(--white-0-95)' },
   },
   confirmModal: {
