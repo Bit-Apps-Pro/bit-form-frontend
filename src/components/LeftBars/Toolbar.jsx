@@ -35,6 +35,7 @@ import RepeatIcon from '../../Icons/RepeatIcon'
 import ReviewStarIcn from '../../Icons/ReviewStarIcn'
 import SearchIcon from '../../Icons/SearchIcon'
 import SectionIcon from '../../Icons/SectionIcon'
+import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 import StripeIcn from '../../Icons/StripeIcn'
 import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
@@ -55,7 +56,6 @@ import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
-import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 
 export const toolsList = [
   {

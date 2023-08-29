@@ -1,9 +1,12 @@
 /* eslint-disable camelcase */
 
-import { cleanObj } from '../../../../Utils/globalHelpers'
+import { getAtom } from '../../../../GlobalStates/BitStore'
+import { $allLayouts } from '../../../../GlobalStates/GlobalStates'
+import { cleanObj, mergeNestedObj } from '../../../../Utils/globalHelpers'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
 import { defaultDarkThemeColors, defaultFont, defaultLgLightform, defaultLgLightThemeVars, defaultLightThemeColors } from '../1_bitformDefault/1_bitformDefault'
+import multiStepStyles from '../multiStepStyles'
 import advancedFileUp_2_atlassian from './advancedFileUp_2_atlassian'
 import buttonStyle_2_atlassian from './buttonStyle_2_atlassian'
 import checkboxNradioStyle_2_atlassian from './checkboxNradioStyle_2_atlassian'
@@ -118,7 +121,7 @@ export default function atlassianTheme({
       return signature({ type, fk, breakpoint, colorScheme })
     case 'rating':
       return rating({ type, fk, breakpoint, colorScheme })
-    default:
+    default: {
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
         lgDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -128,12 +131,16 @@ export default function atlassianTheme({
         smDarkFieldStyles[fieldKey] = atlassianTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
       })
 
+      const allLayouts = getAtom($allLayouts)
+      const isMultiStep = Array.isArray(allLayouts) && allLayouts.length > 1
+      const multiStepStyle = isMultiStep ? multiStepStyles({ formId, breakpoint }) : {}
+
       return {
         lgLightStyles: {
           theme: 'atlassian',
           fieldsSize: 'medium',
           font,
-          form: lgLightform({ formId }),
+          form: mergeNestedObj(lgLightform({ formId }), multiStepStyle),
           fields: lgLightFieldStyles,
           confirmations: lgLightConfMsg,
         },
@@ -143,6 +150,7 @@ export default function atlassianTheme({
         smLightStyles: cleanObj({ form: {}, fields: smLightFieldStyles, confirmations: {} }),
         smDarkStyles: cleanObj({ form: {}, fields: smDarkFieldStyles, confirmations: {} }),
       }
+    }
   }
 }
 

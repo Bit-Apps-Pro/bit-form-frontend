@@ -34,12 +34,12 @@ export default class BitMultiStepForm {
     this.#nextBtns = Array.from(this.#selectAll('.next-step-btn'))
     this.#prevBtns = Array.from(this.#selectAll('.prev-step-btn'))
 
-    this.#disableInitialSwitchBtns()
+    this.#disableInitialStepBtns()
     this.#addNextBtnEvent()
     this.#addPrevBtnEvent()
   }
 
-  #disableInitialSwitchBtns() {
+  #disableInitialStepBtns() {
     const firstStep = this.#getCurrentStepWrapper(1)
     const prevBtn = this.#select('.prev-step-btn', firstStep)
     if (prevBtn) {
@@ -128,7 +128,7 @@ export default class BitMultiStepForm {
   }
 
   #onStepChange() {
-    if (this.#saveProgress) saveFormProgress(this.#contentId)
+    if (this.#saveProgress && typeof saveFormProgress !== 'undefined') saveFormProgress(this.#contentId)
   }
 
   #addNextBtnEvent() {
