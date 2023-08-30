@@ -151,9 +151,6 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
         if (state === 'checked') {
           state = `:checked~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
         }
-        if (state === 'focus') {
-          state = `:focus~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
-        }
         break
 
       default:

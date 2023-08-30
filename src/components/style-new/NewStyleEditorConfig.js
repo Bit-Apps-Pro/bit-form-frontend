@@ -2611,7 +2611,7 @@ const editorConfig = {
 
     },
     'img-inp': {
-      states: ['hover', 'checked', 'focus'],
+      states: ['hover', 'checked'],
       properties: {
         ...fieldWrpCssProps,
         outline: '',

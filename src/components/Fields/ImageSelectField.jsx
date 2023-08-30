@@ -31,11 +31,9 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
     } else {
       setvalue('')
     }
-    console.log(value, checkBoxes.checked)
     reCalculateFldHeights(fieldKey)
   }
 
-  // console.log(attr)
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
@@ -71,7 +69,7 @@ export default function ImageSelectField({ attr, onBlurHandler, resetFieldValue,
                   id={`${fieldKey}-img-wrp-${i}`}
                   name={fieldKey}
                   value={itm.val || itm.lbl}
-                  checked={itm?.check || (value !== '') || checkBoxes.checked.includes(i)}
+                  checked={(value === itm.val) || checkBoxes.checked.includes(i) || itm?.check}
                   onChange={(e) => onChangeHandler(e, i)}
                   {...getCustomAttributes(fieldKey, 'img-inp')}
                   data-dev-img-inp={fieldKey}

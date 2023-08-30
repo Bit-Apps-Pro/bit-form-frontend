@@ -9,12 +9,8 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
 
       [`.${fk}-ic`]: {
         display: 'grid',
-
-        width: '100%',
-        'min-height': '230px',
-        'grid-template-columns': 'repeat(4, minmax(200px, 1fr))',
-        'grid-gap': '20px',
-        'align-items': 'stretch',
+        'grid-template-columns': 'repeat(auto-fit, minmax(100px, 1fr))',
+        'grid-gap': '1rem',
       },
 
       [`.${fk}-img-inp`]: {
@@ -23,14 +19,14 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
       },
 
       [`.${fk}-img-wrp`]: {
-        position: 'absolute',
+        // position: 'absolute',
         // 'border-color': 'hsla(0, 0%, 87%, 100%)',
         // 'border-style': 'solid',
         // 'border-width': '1px',
         // 'border-radius': '5px',
-        overflow: 'hidden',
+        // overflow: 'hidden',
         // 'box-shadow': '0 0 10px rgba(0, 0, 0, 0.2)',
-        cursor: 'pointer',
+        // cursor: 'pointer',
         // transition: '0.2s',
       },
 
@@ -40,6 +36,8 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
         'align-items': 'center',
         'justify-content': 'center',
         // padding: '10px',
+        overflow: 'hidden',
+        cursor: 'pointer',
       },
 
       [`.${fk}-select-img`]: {
@@ -51,7 +49,7 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
       },
 
       [`.${fk}-tc`]: {
-        // padding: '10px',
+        padding: '10px',
       },
 
       [`.${fk}-img-title`]: {
@@ -74,10 +72,10 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
         'justify-content': 'center',
         'align-items': 'center',
         'z-index': 1,
-        // width: '30px',
-        // height: '30px',
-        // 'border-radius': '50%',
-        // opacity: '0%',
+        width: '30px',
+        height: '30px',
+        'border-radius': '50%',
+        opacity: '0%',
         // transition: 'transform 0.15s, opacity calc(0.15s * 1.2) linear',
       },
 
@@ -92,30 +90,32 @@ export default function imageSelectStyle_0_noStyle({ fk, type, direction, breakp
         // width: '15px',
         // height: '15px',
         // transition: '0.15s ease',
-        // filter: 'sepia(0%) saturate(7500%) hue-rotate(343deg) brightness(112%) contrast(101%)',
+        filter: 'invert(100%) sepia(0%) saturate(7500%) hue-rotate(343deg) brightness(112%) contrast(101%)',
       },
 
       [`.${fk}-img-inp:checked~.${fk}-img-wrp .${fk}-check-box`]: {
-        // opacity: '100%',
+        opacity: '100%',
       },
 
       [`.${fk}-img-inp:checked~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         // 'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 51%)',
-        // 'border-color': 'var(--global-accent-color)',
+        'border-color': 'hsla(0, 0%, 0%, 100%)',
+        'border-style': 'solid',
+        'border-width': '1px',
       },
 
-      [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
-        // outline: 'none',
-        // 'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
-        // outline: '2px solid var(--global-accent-color)',
-        // 'outline-offset': '2px',
-        // transition: 'outline-offset 0.2s ease',
-      },
+      // [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
+      //   // outline: 'none',
+      //   // 'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
+      //   // outline: '2px solid var(--global-accent-color)',
+      //   // 'outline-offset': '2px',
+      //   // transition: 'outline-offset 0.2s ease',
+      // },
 
-      [`.${fk}-img-inp:checked:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
-        // outline: 'none',
-        // 'box-shadow': '0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px hsla(223, 92%, 85%, 100%)',
-      },
+      // [`.${fk}-img-inp:checked:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
+      //   // outline: 'none',
+      //   // 'box-shadow': '0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px hsla(223, 92%, 85%, 100%)',
+      // },
 
       [`.${fk}-inp-opt`]: {
         position: 'relative',
