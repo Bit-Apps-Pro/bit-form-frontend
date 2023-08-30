@@ -134,7 +134,7 @@ export default function bitformDefaultTheme({
 
       const allLayouts = getAtom($allLayouts)
       const isMultiStep = Array.isArray(allLayouts) && allLayouts.length > 1
-      const multiStepStyle = isMultiStep ? multiStepStyles({ formId, breakpoint }) : {}
+      const multiStepStyle = isMultiStep ? multiStepStyles({ formId, breakpoint, direction }) : {}
 
       return {
         lgLightStyles: {

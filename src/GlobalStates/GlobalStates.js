@@ -80,3 +80,17 @@ export const $layouts = atom(
     draftLayouts[activeBuilderStep].layout = newLayouts
   })),
 )
+
+export const $activeStepSettings = atom(
+  (get) => {
+    const allLayouts = get($allLayouts)
+    const activeBuilderStep = get($activeBuilderStep)
+    return Array.isArray(allLayouts) ? allLayouts[activeBuilderStep].settings : allLayouts
+  },
+  (get, set, newSettings) => set($allLayouts, create(get($allLayouts), draftLayouts => {
+    const activeBuilderStep = get($activeBuilderStep)
+    const allLayouts = get($allLayouts)
+    if (!Array.isArray(allLayouts)) return newSettings
+    draftLayouts[activeBuilderStep].settings = newSettings
+  })),
+)

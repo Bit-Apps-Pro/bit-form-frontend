@@ -23,6 +23,7 @@ import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
 import defaultMultstepSettings from '../../Utils/StaticData/form-templates/defaultMultstepSettings'
+import defaultStepSettings from '../../Utils/StaticData/form-templates/defaultStepSettings'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -48,18 +49,19 @@ export default function BuilderStepTabs() {
   console.log('formInfo', formInfo)
   const addFormStep = () => {
     setAllLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
-      const nextStep = !Array.isArray(draftLayouts) ? 1 : draftLayouts.length + 1
-      const stepData = { layout: { lg: [], md: [], sm: [] }, settings: { title: `Step ${nextStep}`, description: '' } }
+      const nextStep = !Array.isArray(draftLayouts) ? 1 : draftLayouts.length
+      const stepData = { layout: { lg: [], md: [], sm: [] }, settings: defaultStepSettings(nextStep) }
       if (!Array.isArray(draftLayouts)) {
         setActiveBuilderStep(1)
         const newSteps = [
-          { layout: draftLayouts, settings: { title: 'Step 1', description: '' } },
+          { layout: draftLayouts, settings: defaultStepSettings(0) },
           stepData,
         ]
         return newSteps
       }
       draftLayouts.push(stepData)
       setActiveBuilderStep(draftLayouts.length - 1)
+      navigate(`${path}/step-settings`, { replace: true })
     }))
     setFormInfo(prevFormInfo => create(prevFormInfo, draftFormInfo => {
       if (!draftFormInfo.multiStepSettings) {
@@ -71,7 +73,6 @@ export default function BuilderStepTabs() {
       draftStyles.form = mergeNestedObj(draftStyles.form, multiStepStyles({ formId: formID }))
     }))
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    navigate(`${path}/multi-step-settings`, { replace: true })
   }
 
   const removeFormStep = stepIndex => {
@@ -118,7 +119,7 @@ export default function BuilderStepTabs() {
       }))
     }
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    if (newLayouts.length > 1) navigate(`${path}/multi-step-settings`, { replace: true })
+    if (newLayouts.length > 1) navigate(`${path}/step-settings/`, { replace: true })
     else navigate(`${path}/fields-list`, { replace: true })
   }
 
@@ -172,7 +173,7 @@ export default function BuilderStepTabs() {
     setAllLayouts(draftAllLayouts)
     setActiveBuilderStep(newStepIndex)
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    navigate(`${path}/multi-step-settings`, { replace: true })
+    navigate(`${path}/step-settings`, { replace: true })
   }
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
@@ -185,7 +186,7 @@ export default function BuilderStepTabs() {
     setActiveBuilderStep(stepIndex)
     setContextMenu({})
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
-    if (formLayouts.length !== 1) navigate(`${path}/multi-step-settings`, { replace: true })
+    if (formLayouts.length !== 1) navigate(`${path}/step-settings`, { replace: true })
   }
 
   return (

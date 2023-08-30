@@ -66,7 +66,6 @@ export default function MultistepButtonSettings({ btnType, btnName, switching, h
   }
 
   const setIconAction = (icon) => {
-    console.log('setIconAction', icon, btnType)
     setFormInfo(oldInfo => create(oldInfo, draft => {
       draft.multiStepSettings.btnSettings[btnType][icnType] = icon
     }))
@@ -108,19 +107,19 @@ export default function MultistepButtonSettings({ btnType, btnName, switching, h
 
         <FieldIconSettings
           label="Leading Icon"
-          iconSrc={btnSettings?.[btnType]?.[`${btnType}PreIcn`]}
+          iconSrc={btnSettings?.[btnType]?.preIcn}
           styleRoute={`${styleRoute[btnType]}-pre-i`}
-          setIcon={() => setIconModel(`${btnType}PreIcn`)}
-          removeIcon={() => removeIcon(`${btnType}PreIcn`)}
+          setIcon={() => setIconModel('preIcn')}
+          removeIcon={() => removeIcon('preIcn')}
           proProperty="leadingIcon"
         />
 
         <FieldIconSettings
           label="Trailing Icon"
-          iconSrc={btnSettings?.[btnType]?.[`${btnType}SufIcn`]}
+          iconSrc={btnSettings?.[btnType]?.sufIcn}
           styleRoute={`${styleRoute[btnType]}-suf-i`}
-          setIcon={() => setIconModel(`${btnType}SufIcn`)}
-          removeIcon={() => removeIcon(`${btnType}SufIcn`)}
+          setIcon={() => setIconModel('sufIcn')}
+          removeIcon={() => removeIcon('sufIcn')}
           proProperty="trailingIcon"
         />
 

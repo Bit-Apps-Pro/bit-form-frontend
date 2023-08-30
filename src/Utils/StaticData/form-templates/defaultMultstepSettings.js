@@ -3,6 +3,8 @@ import { __ } from '../../i18nwrap'
 const defaultMultstepSettings = {
   themeStyle: 'style-0',
   showStepHeader: true,
+  showLbl: true,
+  showSubtitle: true,
   headerIcon: {
     show: true,
     iconType: 'number',
@@ -10,14 +12,14 @@ const defaultMultstepSettings = {
   btnSettings: {
     show: true,
     prevBtn: {
-      key: '_bf_prev_step_btn',
+      key: 'bf-prev-btn',
       typ: 'button',
       btnType: 'prevBtn',
       btnSiz: 'md',
       txt: __('Previous'),
     },
     nextBtn: {
-      key: '_bf_next_step_btn',
+      key: 'bf-next-btn',
       typ: 'button',
       btnType: 'nextBtn',
       btnSiz: 'md',

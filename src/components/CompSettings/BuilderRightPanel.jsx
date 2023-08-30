@@ -21,6 +21,7 @@ const FieldStyleCustomizeHOC = loadable(() => import('../style-new/FieldStyleCus
 const ThemeCustomize = loadable(() => import('../style-new/ThemeCustomize'), { fallback: <StyleCustomizeLoader /> })
 const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <FieldSettingsLoader /> })
 const MultiStepSettings = loadable(() => import('./MultiStepSettings'), { fallback: <FieldSettingsLoader /> })
+const StepSettings = loadable(() => import('./StepSettings'), { fallback: <FieldSettingsLoader /> })
 const FieldsList = loadable(() => import('./FieldsList'), { fallback: <FieldSettingsLoader /> })
 const ThemeGallary = loadable(() => import('../style-new/ThemeGallary'), { fallback: <FieldSettingsLoader /> })
 
@@ -58,6 +59,7 @@ function BuilderRightPanel({ style, styleDispatch }) {
                 <Route path="fields-list" element={<FieldsList />} />
                 <Route path="field-settings/:fieldKey" element={<FieldSettings />} />
                 <Route path="multi-step-settings" element={<MultiStepSettings />} />
+                <Route path="step-settings" element={<StepSettings />} />
                 <Route path="themes" element={<ThemeGallary />} />
                 <Route path="theme-customize/:element" element={<ThemeCustomize />} />
                 <Route path="field-theme-customize/:element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
