@@ -44,7 +44,6 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
-import StepsHeaderContainer from '../components/MultiStep/StepsHeaderContainer'
 
 const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
 const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })

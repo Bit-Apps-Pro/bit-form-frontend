@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai'
 import { useNavigate, useParams } from 'react-router-dom'
-import { $allLayouts, $newFormId } from '../../GlobalStates/GlobalStates'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
+import { $allLayouts } from '../../GlobalStates/GlobalStates'
 import StepHeader from './StepHeader'
 
 export default function StepsHeaderContainer() {
@@ -21,16 +21,17 @@ export default function StepsHeaderContainer() {
   }
 
   return (
-    <div className="steps-header-container" onClick={handleStepHeaderClick} onKeyDown={handleStepHeaderClick} role="button" tabIndex={0}>
-      <div className="step-header-content" />
-      {formLayouts.map((step, index) => (
-        <StepHeader
-          key={`index-${index + 1}`}
-          settings={step.settings}
-          stepNumber={index + 1}
-          formID={formID}
-        />
-      ))}
+    <div className={`_frm_b${formID}-stp-hdr-cntnr`} onClick={handleStepHeaderClick} onKeyDown={handleStepHeaderClick} role="button" tabIndex={0}>
+      <div className={`_frm_b${formID}-stp-hdr-wrpr`}>
+        {formLayouts.map((step, index) => (
+          <StepHeader
+            key={`index-${index + 1}`}
+            settings={step.settings}
+            stepNumber={index + 1}
+            formID={formID}
+          />
+        ))}
+      </div>
     </div>
   )
 }

@@ -7,6 +7,11 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
   return {
     [`._frm-b${formId}-stp-cntnr`]: {
     },
+    [`._frm-b${formId}-stp-hdr-wrpr`]: {
+      display: 'flex',
+      'justify-content': 'space-between',
+      'align-items': 'center',
+    },
     [`._frm-b${formId}-stp-wrpr`]: {
       display: 'grid',
       'border-style': 'dotted',
@@ -15,7 +20,25 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       'border-width': '1px',
       padding: '3px',
     },
-    [`_frm-b${formId}-stp-btn-cntnt`]: {
+    [`._frm_b${formId}-stp-hdr`]: {
+      border: 'none',
+      'border-radius': '0px',
+      'border-bottom': '1px solid var(--global-fld-bdr-clr)',
+    },
+    [`._frm_b${formId}-stp-hdr-cntnt`]: {
+      display: 'flex',
+      'flex-direction': 'column',
+    },
+    [`._frm_b${formId}-stp-hdr-titl-wrpr`]: {
+      display: 'flex',
+      'flex-direction': 'column',
+    },
+    [`._frm_b${formId}-stp-hdr-icn`]: {
+      width: '20px',
+      height: '20px',
+      margin: '0px 5px 0px 0px',
+    },
+    [`._frm-b${formId}-stp-btn-cntnt`]: {
       display: 'flex',
       'justify-content': 'space-between',
       'align-items': 'center',

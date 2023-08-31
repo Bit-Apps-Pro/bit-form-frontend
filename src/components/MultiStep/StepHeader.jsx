@@ -1,13 +1,12 @@
-import { useAtom, useAtomValue } from 'jotai'
-import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
+import { useAtomValue } from 'jotai'
 import { $formInfo } from '../../GlobalStates/GlobalStates'
 
-export default function StepHeader({ className, settings, stepNumber, formID }) {
+export default function StepHeader({ settings, stepNumber, formID }) {
   const formInfo = useAtomValue($formInfo)
   const multiStepSettings = formInfo?.multiStepSettings || {}
 
   return (
-    <div className={`_frm_b${formID}-stp-hdr ${className} `}>
+    <div className={`_frm_b${formID}-stp-hdr`}>
       <div className={`_frm_b${formID}-stp-hdr-cntnt`}>
         {multiStepSettings.headerIcon?.show && (
           <div className={`_frm_b${formID}-stp-hdr-icn`}>
