@@ -448,19 +448,17 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
 
   const drawerEntryMap = (entry) => {
     if (entry.fieldType === 'file-up' || entry.fieldType === 'advanced-file-up' || entry.fieldType === 'signature') {
-      let cellVal = allResp[rowDtl.idx]?.[entry.accessor]
-      if (cellVal.toString()) {
-        cellVal = [cellVal]
-      }
       return (
-        getUploadedFilesArr(cellVal)?.map((it, i) => (
-          <TableFileLink
-            key={`file-n-${i + 1.1}`}
-            fname={splitFileName(it)}
-            width="100"
-            link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${splitFileLink(it)}`}
-          />
-        ))
+        getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => {
+          return (
+            <TableFileLink
+              key={`file-n-${i + 1.1}`}
+              fname={splitFileName(it)}
+              width="100"
+              link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${splitFileLink(it)}`}
+            />
+          )
+        })
       )
     }
     if (entry.fieldType === 'repeater') {
