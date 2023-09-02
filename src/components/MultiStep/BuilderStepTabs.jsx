@@ -16,14 +16,14 @@ import EllipsisIcon from '../../Icons/EllipsisIcon'
 import TrashIcn from '../../Icons/TrashIcn'
 import { builderBreakpoints, handleFieldExtraAttr } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
+import defaultMultstepSettings from '../../Utils/StaticData/form-templates/defaultMultstepSettings'
+import defaultStepSettings from '../../Utils/StaticData/form-templates/defaultStepSettings'
 import { mergeNestedObj } from '../../Utils/globalHelpers'
 import { cloneLayoutItem, removeLayoutItem } from '../../Utils/gridLayoutHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
-import defaultMultstepSettings from '../../Utils/StaticData/form-templates/defaultMultstepSettings'
-import defaultStepSettings from '../../Utils/StaticData/form-templates/defaultStepSettings'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -193,7 +193,7 @@ export default function BuilderStepTabs() {
     <div className={css(s.wrp)}>
       <div ref={scrollContainerRef} onScroll={handleScroll}>
         <SortableList useDragHandle axis="x" onSortEnd={onSortEnd}>
-          <div className="flx step-wrapper">
+          <div className={css(s.tabWrpr)}>
             {formLayouts.map((_, indx) => (
               <SortableItem key={`grid-${indx * 2}`} index={indx} itemId={`grid-${indx * 2}`}>
                 <div className={`btcd-s-tab-link ${css(s.stepTab)} ${activeBuilderStep === indx && 'active'}`}>
@@ -299,6 +299,10 @@ const s = {
     '&:focus': {
       b: '1px solid var(--white-0-83)',
     },
+  },
+  tabWrpr: {
+    dy: 'flex',
+    flxp: 1,
   },
   stepTab: {
     flxi: 'center',

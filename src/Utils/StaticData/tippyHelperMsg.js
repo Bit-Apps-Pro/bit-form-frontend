@@ -28,5 +28,7 @@ const tippyHelperMsg = {
   ratingSelectTip: __('This allows to show the rating message on rating selected. You can toggle this option to show or hide the rating message on rating selected.'),
   showHeaderIcon: __('This allows to show the header icon. You can toggle this option to show or hide the header icon.'),
   stemBtnSettings: __('This allows to show the stem button settings. You can toggle this option to show or hide the stem button settings.'),
+  stepLbl: __('This allows to show the step label. You can toggle this option to show or hide the step label.'),
+  stepSubtitle: __('This allows to show the step subtitle. You can toggle this option to show or hide the step subtitle.'),
 }
 export default tippyHelperMsg

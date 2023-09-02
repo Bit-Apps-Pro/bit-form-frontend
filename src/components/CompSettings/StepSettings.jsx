@@ -1,28 +1,23 @@
 import { useAtom, useAtomValue } from 'jotai'
-import { useFela } from 'react-fela'
 import { create } from 'mutative'
 import { useState } from 'react'
-import { $activeStepSettings, $allLayouts, $builderRightPanelScroll, $formInfo, $layouts } from '../../GlobalStates/GlobalStates'
+import { useFela } from 'react-fela'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import ut from '../../styles/2.utilities'
-import ThemeStyleReset from '../style-new/ThemeStyleReset'
-import { $styles } from '../../GlobalStates/StylesState'
-import sc from '../../styles/commonStyleEditorStyle'
-import Back2FldBtn from './Back2FldBtn'
-import style from '../../styles/FieldSettingTitle.style'
-import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
-import { __ } from '../../Utils/i18nwrap'
-import CoolCopy from '../Utilities/CoolCopy'
+import { $activeStepSettings, $allLayouts, $builderRightPanelScroll, $formInfo } from '../../GlobalStates/GlobalStates'
 import { ucFirst } from '../../Utils/Helpers'
-import FieldStyle from '../../styles/FieldStyle.style'
-import SingleToggle from '../Utilities/SingleToggle'
-import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
-import MultistepButtonSettings from './CompSettingsUtils/MultistepButtonSettings'
-import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
-import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
-import Icons from './Icons'
+import { __ } from '../../Utils/i18nwrap'
+import ut from '../../styles/2.utilities'
+import style from '../../styles/FieldSettingTitle.style'
+import FieldStyle from '../../styles/FieldStyle.style'
+import CoolCopy from '../Utilities/CoolCopy'
 import Modal from '../Utilities/Modal'
+import Back2FldBtn from './Back2FldBtn'
+import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
+import Icons from './Icons'
+import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function StepSettings() {
   const allLayouts = useAtomValue($allLayouts)
@@ -31,31 +26,14 @@ export default function StepSettings() {
   const [formInfo, setFormInfo] = useAtom($formInfo)
   const [activeStepSettings, setActiveStepSettings] = useAtom($activeStepSettings)
   const { css } = useFela()
-  console.log('activeStepSettings', activeStepSettings)
   const stepData = activeStepSettings || {}
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
 
-  const { showStepHeader, headerIcon, themeStyle, btnSettings } = formInfo.multiStepSettings || {}
-  const { lbl, showLbl, subtitle, showSubtitle, lblPreIcn, lblSufIcn } = stepData || {}
+  const {
+    lbl, showLbl, subtitle, showSubtitle, lblPreIcn, lblSufIcn, subTlePreIcn, subTleSufIcn,
+  } = stepData || {}
 
-  const setMultistepSettings = (propName, value) => {
-    setFormInfo(oldInfo => create(oldInfo, draft => {
-      draft.multiStepSettings[propName] = value
-    }))
-  }
-
-  const setHeaderIcon = (propName, value) => {
-    setFormInfo(oldInfo => create(oldInfo, draft => {
-      draft.multiStepSettings.headerIcon[propName] = value
-    }))
-  }
-
-  const setButtonSettings = (propName, value) => {
-    setFormInfo(oldInfo => create(oldInfo, draft => {
-      draft.multiStepSettings.btnSettings[propName] = value
-    }))
-  }
 
   const setIconModel = (iconType) => {
     // if (!isStyleExist(styles, fldKey, styleClasses[iconType])) addDefaultStyleClasses(selectedFieldId, iconType)
@@ -65,16 +43,31 @@ export default function StepSettings() {
   }
 
   const removeIcon = (iconType) => {
-    if (stepData[iconType]) {
-      delete stepData[iconType]
-    }
+    setActiveStepSettings(create(activeStepSettings, draft => {
+      delete draft[iconType]
+    }))
   }
 
-  const setStepLabel = (e) => {
-    const { value } = e.target
-    setActiveStepSettings(oldSettings => create(oldSettings, draft => {
-      draft.lbl = value.replace(/\\\\/g, '$_bf_$')
+  const setStepSettings = (propName, value) => {
+    console.log(propName, value)
+    setActiveStepSettings(create(activeStepSettings, draft => {
+      draft[propName] = value
     }))
+  }
+
+  const setIconAction = (icon) => {
+    setActiveStepSettings(create(activeStepSettings, draft => {
+      draft[icnType] = icon
+    }))
+    setIcnMdl(false)
+  }
+
+  const removeIconAction = (file) => {
+    if (activeStepSettings[icnType] === file) {
+      setActiveStepSettings(create(activeStepSettings, draft => {
+        delete draft[icnType]
+      }))
+    }
   }
 
   return (
@@ -99,12 +92,12 @@ export default function StepSettings() {
           title={__('Step Label')}
           className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
           switching
-          tip={tippyHelperMsg.lbl}
+          tip={tippyHelperMsg.stepLbl}
           tipProps={{ width: 250, icnSize: 17 }}
-          toggleAction={showLbl}
-          toggleChecked={!stepData.valid.hideLbl}
-          open={!stepData.valid.hideLbl}
-          disable={stepData.valid.hideLbl}
+          toggleAction={(e) => setStepSettings('showLbl', e.target.checked)}
+          toggleChecked={showLbl}
+          open={showLbl}
+          disable={!showLbl}
           proTip="Use this feature? please buy pro version."
         >
           <div>
@@ -112,7 +105,7 @@ export default function StepSettings() {
               <AutoResizeInput
                 id="fld-lbl-stng"
                 ariaLabel="Label input"
-                changeAction={setStepLabel}
+                changeAction={(e) => setStepSettings('lbl', e.target.value?.replace(/\\\\/g, '$_bf_$'))}
                 value={lbl.replace(/\$_bf_\$/g, '\\')}
               />
             </div>
@@ -120,7 +113,7 @@ export default function StepSettings() {
             <div className={css(ut.mt1)}>
               <FieldIconSettings
                 label="Leading Icon"
-                iconSrc={stepData?.lblPreIcn}
+                iconSrc={lblPreIcn}
                 styleRoute="lbl-pre-i"
                 setIcon={() => setIconModel('lblPreIcn')}
                 removeIcon={() => removeIcon('lblPreIcn')}
@@ -130,10 +123,58 @@ export default function StepSettings() {
 
               <FieldIconSettings
                 label="Trailing Icon"
-                iconSrc={stepData?.lblSufIcn}
+                iconSrc={lblSufIcn}
                 styleRoute="lbl-suf-i"
                 setIcon={() => setIconModel('lblSufIcn')}
                 removeIcon={() => removeIcon('lblSufIcn')}
+                isPro
+                proProperty="trailingIcon"
+              />
+            </div>
+          </div>
+        </SimpleAccordion>
+        <FieldSettingsDivider />
+
+        <SimpleAccordion
+          id="fld-sub-titl-stng"
+          title={__('Step Subtitle')}
+          className={`${css(FieldStyle.fieldSection)} ${css(FieldStyle.hover_tip)}`}
+          switching
+          tip={tippyHelperMsg.stepSubtitle}
+          tipProps={{ width: 250, icnSize: 17 }}
+          toggleAction={(e) => setStepSettings('showSubtitle', e.target.checked)}
+          toggleChecked={showSubtitle}
+          open={showSubtitle}
+          disable={!showSubtitle}
+          proTip="Use this feature? please buy pro version."
+        >
+          <div>
+            <div className={css({ w: '97%', mx: 5 })}>
+              <AutoResizeInput
+                id="fld-lbl-stng"
+                ariaLabel="Label input"
+                changeAction={(e) => setStepSettings('subtitle', e.target.value?.replace(/\\\\/g, '$_bf_$'))}
+                value={subtitle.replace(/\$_bf_\$/g, '\\')}
+              />
+            </div>
+
+            <div className={css(ut.mt1)}>
+              <FieldIconSettings
+                label="Leading Icon"
+                iconSrc={subTlePreIcn}
+                styleRoute="lbl-pre-i"
+                setIcon={() => setIconModel('subTlePreIcn')}
+                removeIcon={() => removeIcon('subTlePreIcn')}
+                isPro
+                proProperty="leadingIcon"
+              />
+
+              <FieldIconSettings
+                label="Trailing Icon"
+                iconSrc={subTleSufIcn}
+                styleRoute="lbl-suf-i"
+                setIcon={() => setIconModel('subTleSufIcn')}
+                removeIcon={() => removeIcon('subTleSufIcn')}
                 isPro
                 proProperty="trailingIcon"
               />
@@ -147,7 +188,7 @@ export default function StepSettings() {
             label="Step Icon"
             iconSrc={stepData.icon}
             styleRoute="step-icn"
-            setIcon={() => setIcnMdl(true)}
+            setIcon={() => setIconModel('icon')}
             isPro
             proProperty="stepIcon"
           />
@@ -164,7 +205,7 @@ export default function StepSettings() {
         title={__('Icons')}
       >
         <div className="pos-rel" />
-        <Icons iconType="opt" setModal={setIcnMdl} />
+        <Icons iconType="opt" setModal={setIcnMdl} setIconAction={setIconAction} removeIconAction={removeIconAction} />
       </Modal>
     </>
   )

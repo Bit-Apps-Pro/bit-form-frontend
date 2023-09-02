@@ -9,8 +9,9 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
     },
     [`._frm-b${formId}-stp-hdr-wrpr`]: {
       display: 'flex',
-      'justify-content': 'space-between',
+      'justify-content': 'space-around',
       'align-items': 'center',
+      background: 'yellow',
     },
     [`._frm-b${formId}-stp-wrpr`]: {
       display: 'grid',

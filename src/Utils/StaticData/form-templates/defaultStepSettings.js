@@ -7,7 +7,6 @@ export default function defaultStepSettings(stepIndex) {
     iconType: 'number',
     showLbl: true,
     showSubtitle: true,
-    valid: {},
     customClasses: {},
     customAttributes: {},
   }

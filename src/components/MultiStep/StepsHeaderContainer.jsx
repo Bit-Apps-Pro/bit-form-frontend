@@ -21,8 +21,8 @@ export default function StepsHeaderContainer() {
   }
 
   return (
-    <div className={`_frm_b${formID}-stp-hdr-cntnr`} onClick={handleStepHeaderClick} onKeyDown={handleStepHeaderClick} role="button" tabIndex={0}>
-      <div className={`_frm_b${formID}-stp-hdr-wrpr`}>
+    <div className={`_frm-b${formID}-stp-hdr-cntnr`} onClick={handleStepHeaderClick} onKeyDown={handleStepHeaderClick} role="button" tabIndex={0}>
+      <div className={`_frm-b${formID}-stp-hdr-wrpr`}>
         {formLayouts.map((step, index) => (
           <StepHeader
             key={`index-${index + 1}`}
