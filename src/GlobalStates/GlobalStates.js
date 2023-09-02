@@ -3,7 +3,12 @@ import { atomWithReset } from 'jotai/utils'
 import { create } from 'mutative'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 import blankTemplate from '../Utils/StaticData/form-templates/blankTemplate'
+
 import { $activeBuilderStep } from './FormBuilderStates'
+
+
+import { $activeBuilderStep } from './FormBuilderStates'
+import defaultStepSettings from '../Utils/StaticData/form-templates/defaultStepSettings'
 
 // atoms
 export const $additionalSettings = atomWithReset(blankTemplate.additionalSettings)
@@ -67,6 +72,7 @@ export const $reportSelector = atom(
     draft[rportIndx] = newReport
   })),
 )
+
 export const $layouts = atom(
   (get) => {
     const allLayouts = get($allLayouts)
@@ -85,7 +91,7 @@ export const $activeStepSettings = atom(
   (get) => {
     const allLayouts = get($allLayouts)
     const activeBuilderStep = get($activeBuilderStep)
-    return Array.isArray(allLayouts) ? allLayouts[activeBuilderStep].settings : {}
+    return Array.isArray(allLayouts) ? allLayouts[activeBuilderStep].settings : defaultStepSettings(0)
   },
   (get, set, newSettings) => set($allLayouts, create(get($allLayouts), draftLayouts => {
     const activeBuilderStep = get($activeBuilderStep)
@@ -94,3 +100,4 @@ export const $activeStepSettings = atom(
     draftLayouts[activeBuilderStep].settings = newSettings
   })),
 )
+

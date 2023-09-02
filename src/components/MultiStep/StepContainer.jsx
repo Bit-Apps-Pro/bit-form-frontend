@@ -25,7 +25,7 @@ export default function StepContainer({ children, className }) {
       )}
       <div className={`_frm-b${formID}-stp-wrpr`}>
         {progressSettings?.show && (
-          <StepProgress />
+          <StepProgress formID={formID} />
         )}
         <div className={`_frm-b${formID}-stp-cntnt-wrpr`}>
           <div className={`_frm-b${formID}-stp-cntnt`}>

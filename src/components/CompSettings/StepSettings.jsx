@@ -34,7 +34,6 @@ export default function StepSettings() {
     lbl, showLbl, subtitle, showSubtitle, lblPreIcn, lblSufIcn, subTlePreIcn, subTleSufIcn,
   } = stepData || {}
 
-
   const setIconModel = (iconType) => {
     // if (!isStyleExist(styles, fldKey, styleClasses[iconType])) addDefaultStyleClasses(selectedFieldId, iconType)
     // setIconFilterValue(iconType, fldKey)
@@ -77,7 +76,7 @@ export default function StepSettings() {
           <Back2FldBtn size="16" className={css(style.btn, ut.fontBody)} />
           <div>
             <div className={css(style.mainTitle)}>{__('Step Settings')}</div>
-            <span className={css(style.subtitle, ut.fontBody)}>{__(ucFirst(`${activeBuilderStep}`))}</span>
+            {/* <span className={css(style.subtitle, ut.fontBody)}>{__(ucFirst(`${activeBuilderStep}`))}</span> */}
           </div>
         </div>
         <FieldSettingsDivider />

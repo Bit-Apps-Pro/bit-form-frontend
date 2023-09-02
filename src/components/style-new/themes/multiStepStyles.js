@@ -11,7 +11,6 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       display: 'flex',
       'justify-content': 'space-around',
       'align-items': 'center',
-      background: 'yellow',
     },
     [`._frm-b${formId}-stp-wrpr`]: {
       display: 'grid',
@@ -21,23 +20,48 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       'border-width': '1px',
       padding: '3px',
     },
-    [`._frm_b${formId}-stp-hdr`]: {
+    [`._frm-b${formId}-stp-hdr`]: {
       border: 'none',
       'border-radius': '0px',
-      'border-bottom': '1px solid var(--global-fld-bdr-clr)',
+      flex: '1 1',
+      padding: '10px',
+      margin: 0,
+      'text- align': 'center',
+      color: '#999',
+      position: 'relative',
+      'line- height': '1.5',
     },
-    [`._frm_b${formId}-stp-hdr-cntnt`]: {
+    [`._frm-b${formId}-stp-hdr-cntnt`]: {
       display: 'flex',
       'flex-direction': 'column',
     },
-    [`._frm_b${formId}-stp-hdr-titl-wrpr`]: {
+    [`._frm-b${formId}-stp-hdr-titl-wrpr`]: {
       display: 'flex',
       'flex-direction': 'column',
     },
-    [`._frm_b${formId}-stp-hdr-icn`]: {
+    [`._frm-b${formId}-stp-hdr-icn`]: {
       width: '20px',
       height: '20px',
       margin: '0px 5px 0px 0px',
+    },
+    [`._frm-b${formId}-progress-bar`]: {
+      display: 'flex',
+      height: '1rem',
+      overflow: 'hidden',
+      'font-size': '.75rem',
+      'background-color': '#e9ecef',
+      'border-radius': '.25rem',
+    },
+    [`._frm-b${formId}-progress-fill`]: {
+      width: '50%',
+      display: 'flex',
+      color: '#fff',
+      'flex-direction': 'column',
+      'justify-content': 'center',
+      'text-align': 'center',
+      'white-space': 'nowrap',
+      'background-color': '#673AB7',
+      transition: 'width .6s ease',
     },
     [`._frm-b${formId}-stp-btn-cntnt`]: {
       display: 'flex',

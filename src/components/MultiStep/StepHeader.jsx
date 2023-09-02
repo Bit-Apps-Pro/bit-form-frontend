@@ -6,10 +6,10 @@ export default function StepHeader({ settings, stepNumber, formID }) {
   const multiStepSettings = formInfo?.multiStepSettings || {}
 
   return (
-    <div className={`_frm_b${formID}-stp-hdr`}>
-      <div className={`_frm_b${formID}-stp-hdr-cntnt`}>
+    <div className={`_frm-b${formID}-stp-hdr`}>
+      <div className={`_frm-b${formID}-stp-hdr-cntnt`}>
         {multiStepSettings.headerIcon?.show && (
-          <div className={`_frm_b${formID}-stp-hdr-icn`}>
+          <div className={`_frm-b${formID}-stp-hdr-icn`}>
             {multiStepSettings.headerIcon?.iconType === 'icon' && (
               <div className="step-header-icon-icon">
                 <img src="https://via.placeholder.com/50" alt="Step Icon" />
@@ -23,12 +23,12 @@ export default function StepHeader({ settings, stepNumber, formID }) {
           </div>
         )}
 
-        <div className={`_frm_b${formID}-stp-hdr-titl-wrpr`}>
+        <div className={`_frm-b${formID}-stp-hdr-titl-wrpr`}>
           {multiStepSettings.showLbl && settings.showLbl && (
-            <span className={`_frm_b${formID}-stp-hdr-titl`}>{settings.lbl}</span>
+            <span className={`_frm-b${formID}-stp-hdr-titl`}>{settings.lbl}</span>
           )}
           {multiStepSettings.showSubtitle && settings.showSubtitle && (
-            <span className={`_frm_b${formID}-stp-hdr-sub-titl`}>{settings.subtitle}</span>
+            <span className={`_frm-b${formID}-stp-hdr-sub-titl`}>{settings.subtitle}</span>
           )}
         </div>
       </div>
