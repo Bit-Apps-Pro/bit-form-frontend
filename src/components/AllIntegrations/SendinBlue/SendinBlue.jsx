@@ -24,8 +24,8 @@ function SendinBlue({ formFields, setIntegration, integrations, allIntegURL }) {
   const [snack, setSnackbar] = useState({ show: false })
   const [error, setError] = useState({ templateId: '', RedirectionUrl: '' })
   const [sendinBlueConf, setSendinBlueConf] = useState({
-    name: 'SendinBlue API',
-    type: 'SendinBlue',
+    name: 'Brevo(SendinBlue) API',
+    type: 'Brevo(SendinBlue)',
     lists: [],
     api_key: process.env.NODE_ENV === 'development' ? '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' : '',
     field_map: [

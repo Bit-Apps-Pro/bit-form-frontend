@@ -176,46 +176,6 @@ function AllFroms() {
             <DownloadIcon size={18} />
             {__('Export')}
           </button>
-          <Link
-            to={`/form/responses/edit/${val.row.original.formID}`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <InfoIcn size={18} />
-            &nbsp;
-            Responses
-          </Link>
-          <Link
-            to={`/form/settings/edit/${val.row.original.formID}/form-settings`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <Settings2 size={18} />
-            &nbsp;
-            Settings
-          </Link>
-          <Link
-            to={`/form/settings/edit/${val.row.original.formID}/workflow`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <ConditionalIcn size="18" />
-            &nbsp;
-            Conditions
-          </Link>
-          <Link
-            to={`/form/settings/edit/${val.row.original.formID}/integrations`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <CodeSnippetIcn size="18" />
-            &nbsp;
-            Integrations
-          </Link>
 
           <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
             <TrashIcn size={16} />

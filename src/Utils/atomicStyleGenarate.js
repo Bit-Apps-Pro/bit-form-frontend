@@ -272,7 +272,7 @@ export function generateNestedLayoutCSSText() {
   const nestedLayouts = getAtom($nestedLayouts)
   const builderHelperStates = getAtom($builderHelperStates)
   const nestedLayoutStyleText = { lg: '', md: '', sm: '' }
-  const nestedLayoutsArr = Object.entries(nestedLayouts)
+  const nestedLayoutsArr = Object.entries(nestedLayouts || {})
   const sortedNestedLayouts = {}
   nestedLayoutsArr.forEach(([fldKey, lay]) => {
     const simplyfiedLayout = {}
