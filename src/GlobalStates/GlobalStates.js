@@ -4,11 +4,8 @@ import { create } from 'mutative'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 import blankTemplate from '../Utils/StaticData/form-templates/blankTemplate'
 
-import { $activeBuilderStep } from './FormBuilderStates'
-
-
-import { $activeBuilderStep } from './FormBuilderStates'
 import defaultStepSettings from '../Utils/StaticData/form-templates/defaultStepSettings'
+import { $activeBuilderStep } from './FormBuilderStates'
 
 // atoms
 export const $additionalSettings = atomWithReset(blankTemplate.additionalSettings)
@@ -100,4 +97,3 @@ export const $activeStepSettings = atom(
     draftLayouts[activeBuilderStep].settings = newSettings
   })),
 )
-

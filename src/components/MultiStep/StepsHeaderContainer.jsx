@@ -27,8 +27,10 @@ export default function StepsHeaderContainer() {
           <StepHeader
             key={`index-${index + 1}`}
             settings={step.settings}
+            stepKey={index}
             stepNumber={index + 1}
             formID={formID}
+            isActive={activeBuilderStep === index}
           />
         ))}
       </div>
