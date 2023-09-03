@@ -23,7 +23,8 @@ const setFieldValue = (props, field, val) => {
   }
 
   if (typ === 'check' || inpType === 'checkbox') {
-    const vals = val.split(',')
+    const regex = new RegExp(`,|${props.configs.bf_separator}`, 'g')
+    const vals = val.split(regex)
     selectAll(contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
       el.checked = vals.includes(el.value)
     })
