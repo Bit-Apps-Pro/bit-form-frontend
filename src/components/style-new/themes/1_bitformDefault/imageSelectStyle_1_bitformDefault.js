@@ -135,13 +135,13 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         'border-color': 'var(--global-accent-color)',
       },
 
-      // [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
-      //   // outline: 'none',
-      //   'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
-      //   outline: '2px solid var(--global-accent-color)',
-      //   'outline-offset': '2px',
-      //   transition: 'outline-offset 0.2s ease',
-      // },
+      [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
+        // outline: 'none',
+        'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
+        outline: '2px solid var(--global-accent-color)',
+        'outline-offset': '2px',
+        transition: 'outline-offset 0.2s ease',
+      },
 
       // [`.${fk}-img-inp:checked:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
       //   outline: 'none',

@@ -36,12 +36,12 @@ export default function imageSelectStyle_2_atlassian({ fk, type, direction, brea
           'border-color': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.4)',
         },
 
-        // [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
-        //   'box-shadow': '',
-        //   outline: '2px solid var(--global-accent-color)',
-        //   'outline-offset': '2px',
-        //   transition: 'outline-offset 0.2s ease',
-        // },
+        [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
+          // 'box-shadow': '',
+          outline: '2px solid var(--global-accent-color)',
+          'outline-offset': '2px',
+          transition: 'outline-offset 0.2s ease',
+        },
         [`.${fk}-img-card-wrp`]: {
           'border-radius': '3px',
         },
