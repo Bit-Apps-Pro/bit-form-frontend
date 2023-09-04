@@ -222,7 +222,7 @@ function FormDetails() {
               addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
             }
             if (!formsSessionDataFound) {
-              setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+              setFormInfo(oldInfo => ({ ...oldInfo, ...responseData.form_content.formInfo }))
             }
             setworkFlows(responseData.workFlows)
             setAdditional(responseData.additional)

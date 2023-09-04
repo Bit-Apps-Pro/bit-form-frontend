@@ -58,7 +58,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
   const fields = useAtomValue($fields)
   const formInfo = useAtomValue($formInfo)
-  const { formName } = formInfo
+  const { formName, multiStepSettings } = formInfo
   const newFormId = useAtomValue($newFormId)
   const setAllForms = useSetAtom($forms)
   const setBuilderHookStates = useSetAtom($builderHookStates)
@@ -275,6 +275,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       ...(savedFormId && { currentReport }),
       layout: layouts,
       nestedLayouts,
+      formInfo,
       fields,
       // saveStyle && style obj
       form_name: formName,
