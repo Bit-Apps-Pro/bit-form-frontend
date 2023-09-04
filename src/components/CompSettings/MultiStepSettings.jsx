@@ -1,23 +1,21 @@
 import { useAtom, useAtomValue } from 'jotai'
-import { useFela } from 'react-fela'
 import { create } from 'mutative'
-import { $allLayouts, $builderRightPanelScroll, $formInfo } from '../../GlobalStates/GlobalStates'
+import { useFela } from 'react-fela'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import ut from '../../styles/2.utilities'
-import ThemeStyleReset from '../style-new/ThemeStyleReset'
+import { $allLayouts, $builderRightPanelScroll, $formInfo } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
-import sc from '../../styles/commonStyleEditorStyle'
-import Back2FldBtn from './Back2FldBtn'
-import style from '../../styles/FieldSettingTitle.style'
-import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
-import { __ } from '../../Utils/i18nwrap'
-import CoolCopy from '../Utilities/CoolCopy'
-import { ucFirst } from '../../Utils/Helpers'
-import FieldStyle from '../../styles/FieldStyle.style'
-import SingleToggle from '../Utilities/SingleToggle'
-import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
+import { __ } from '../../Utils/i18nwrap'
+import ut from '../../styles/2.utilities'
+import style from '../../styles/FieldSettingTitle.style'
+import FieldStyle from '../../styles/FieldStyle.style'
+import sc from '../../styles/commonStyleEditorStyle'
+import SingleToggle from '../Utilities/SingleToggle'
+import ThemeStyleReset from '../style-new/ThemeStyleReset'
+import Back2FldBtn from './Back2FldBtn'
+import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import MultistepButtonSettings from './CompSettingsUtils/MultistepButtonSettings'
+import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function MultiStepSettings() {
   const allLayouts = useAtomValue($allLayouts)
@@ -180,7 +178,7 @@ export default function MultiStepSettings() {
               className={css(FieldStyle.input, FieldStyle.w140)}
               name=""
               id=""
-              value={btnSettings.position}
+              value={btnSettings?.position}
               onChange={(e) => setButtonSettings('position', e.target.value)}
             >
               {btnPositionList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
@@ -193,7 +191,7 @@ export default function MultiStepSettings() {
               className={css(FieldStyle.input, FieldStyle.w140)}
               name=""
               id=""
-              value={btnSettings.alignment}
+              value={btnSettings?.alignment}
               onChange={(e) => setButtonSettings('alignment', e.target.value)}
             >
               {btnAlignmentList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
@@ -206,7 +204,7 @@ export default function MultiStepSettings() {
               className={css(FieldStyle.input, FieldStyle.w140)}
               name=""
               id=""
-              value={btnSettings.orientation}
+              value={btnSettings?.orientation}
               onChange={(e) => setButtonSettings('orientation', e.target.value)}
             >
               {btnOrientationList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
@@ -252,7 +250,7 @@ export default function MultiStepSettings() {
               className={css(FieldStyle.input, FieldStyle.w140)}
               name=""
               id=""
-              value={progressSettings.position}
+              value={progressSettings?.position}
               onChange={(e) => setProgressSettings('position', e.target.value)}
             >
               {btnPositionList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
@@ -263,7 +261,7 @@ export default function MultiStepSettings() {
             // tip="By disabling this option, the Progress Percentage will be hidden."
             title={__('Show Percentage')}
             action={e => setProgressSettings('showPercentage', e.target.checked)}
-            isChecked={progressSettings.showPercentage || ''}
+            isChecked={progressSettings?.showPercentage || ''}
           />
         </div>
 
