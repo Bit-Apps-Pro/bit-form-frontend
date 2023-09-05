@@ -37,6 +37,7 @@ export default class BitMultiStepForm {
     this.#disableInitialStepBtns()
     this.#addNextBtnEvent()
     this.#addPrevBtnEvent()
+    this.#addStepHeaderEvents()
   }
 
   #disableInitialStepBtns() {
@@ -46,13 +47,38 @@ export default class BitMultiStepForm {
       prevBtn.disabled = true
       this.#prevBtns = this.#prevBtns.filter((btn) => btn.isEqualNode(prevBtn) === false)
     }
-
-    const lastStep = this.#getCurrentStepWrapper(this.#selectAll('[data-step]').length)
+    const formId = this.#getFormId()
+    const totalSteps = this.#selectAll(`._frm-b${formId}-stp-cntnt[data-step]`).length
+    const lastStep = this.#getCurrentStepWrapper(totalSteps)
     const nextBtn = this.#select('.next-step-btn', lastStep)
     if (nextBtn) {
       nextBtn.disabled = true
       this.#nextBtns = this.#nextBtns.filter((btn) => btn.isEqualNode(nextBtn) === false)
     }
+  }
+
+  #handleStepHeaderEvent(e) {
+    e.preventDefault()
+    const formId = this.#getFormId()
+    const stepHdrWrp = e.target.closest(`._frm-b${formId}-stp-hdr`)
+    const isDisabled = stepHdrWrp.classList.contains('disabled')
+    if (isDisabled) return
+    const stepNum = Number(stepHdrWrp.getAttribute('data-step'))
+    if (this.#currentStep === stepNum) return
+    this.#currentStep = stepNum
+    this.#showStep(stepNum)
+  }
+
+  #addStepHeaderEvents() {
+    const formId = this.#getFormId()
+    const allStepHeaders = this.#selectAll(`._frm-b${formId}-stp-hdr`)
+    if (!allStepHeaders) return
+    allStepHeaders.forEach(stepHdr => {
+      const iconWrp = this.#select(`._frm-b${formId}-stp-icn-cntn`, stepHdr)
+      if (iconWrp) this.#addEvent(iconWrp, 'click', e => this.#handleStepHeaderEvent(e))
+      const lblWrp = this.#select(`._frm-b${formId}-stp-hdr-lbl`, stepHdr)
+      if (lblWrp) this.#addEvent(lblWrp, 'click', e => this.#handleStepHeaderEvent(e))
+    })
   }
 
   #setConfigsToVars(config) {
@@ -77,7 +103,8 @@ export default class BitMultiStepForm {
   }
 
   #getCurrentStepWrapper(step = this.#currentStep) {
-    return this.#select(`[data-step="${step}"]`)
+    const formId = this.#getFormId()
+    return this.#select(`._frm-b${formId}-stp-cntnt[data-step="${step}"]`)
   }
 
   #canGoNext() {
@@ -90,14 +117,34 @@ export default class BitMultiStepForm {
     if (!stepWrapper) return false
   }
 
+  #getFormId() {
+    return Number(this.#contentId.split('_')[1])
+  }
+
   #showStep(step) {
-    const stepWrapper = this.#select(`[data-step="${step}"]`)
+    const formId = this.#getFormId()
+    const stepWrapper = this.#select(`._frm-b${formId}-stp-cntnt[data-step="${step}"]`)
     if (!stepWrapper) return
     stepWrapper.classList.remove('d-none')
-    const otherSteps = this.#selectAll(`[data-step]:not([data-step="${step}"])`)
+    const otherSteps = this.#selectAll(`._frm-b${formId}-stp-cntnt:not([data-step="${step}"])`)
     otherSteps.forEach((stepElm) => {
       stepElm.classList.add('d-none')
     })
+    // step headers
+    const allStepHeaders = this.#selectAll(`._frm-b${formId}-stp-hdr`)
+    allStepHeaders.forEach(stepHdr => {
+      const classes = ['completed', 'active']
+      stepHdr.classList.remove(...classes)
+      const stepNum = Number(stepHdr.getAttribute('data-step'))
+      if (stepNum < step) stepHdr.classList.add('completed')
+      else if (stepNum === step) stepHdr.classList.add('active')
+    })
+    // progress bar
+    const progressFillElm = this.#select(`._frm-b${formId}-progress-fill`)
+    const totalSteps = otherSteps.length + 1
+    const progress = Math.round(((step - 1) / totalSteps) * 100)
+    progressFillElm.textContent = `${progress}%`
+    progressFillElm.style.width = `${progress}%`
   }
 
   #setIsLoading(status) {
@@ -143,6 +190,10 @@ export default class BitMultiStepForm {
           this.#history.push(this.#currentStep)
         }
         this.#currentStep += 1
+        // remove step header disabled class
+        const formId = this.#getFormId()
+        const stepHdr = this.#select(`._frm-b${formId}-stp-hdr[data-step="${this.#currentStep}"]`)
+        if (stepHdr) stepHdr.classList.remove('disabled')
         this.#showStep(this.#currentStep)
         this.#onStepChange()
       })
