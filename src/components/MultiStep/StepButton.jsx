@@ -15,7 +15,7 @@ export default function StepButton({
 
       <button
         data-testid={fieldKey}
-        data-dev-btn={fieldKey}
+        data-dev-stp-btn={formID}
         className={`_frm-b${formID}-${fieldKey} ${getCustomClsName(fieldKey, 'btn')}`}
         {...getCustomAttributes(fieldKey, 'btn')}
         // eslint-disable-next-line react/button-has-type

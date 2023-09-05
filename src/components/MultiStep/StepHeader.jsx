@@ -8,11 +8,17 @@ export default function StepHeader({ settings, stepKey, stepNumber, formID, isAc
   const multiStepSettings = formInfo?.multiStepSettings || {}
 
   return (
-    <div className={`_frm-b${formID}-stp-hdr ${isActive ? 'active' : ''}`}>
+    <div
+      className={`_frm-b${formID}-stp-hdr ${isActive ? 'active' : ''}`}
+      data-dev-stp-hdr={formID}
+    >
       <div className={`_frm-b${formID}-stp-hdr-cntnt`}>
         {multiStepSettings.headerIcon?.show && (
           <div className={`_frm-b${formID}-stp-hdr-icn-wrp`}>
-            <span className={`_frm-b${formID}-stp-icn-cntn`}>
+            <span
+              className={`_frm-b${formID}-stp-icn-cntn`}
+              data-dev-stp-icn-cntn={formID}
+            >
               {multiStepSettings.headerIcon?.iconType === 'icon' && (
                 <img src={settings.icon} className={`_frm-b${formID}-stp-icn`} alt="Step Icon" />
               )}
@@ -25,7 +31,10 @@ export default function StepHeader({ settings, stepKey, stepNumber, formID, isAc
 
         <div className={`_frm-b${formID}-stp-hdr-titl-wrpr`}>
           {multiStepSettings.showLbl && settings.showLbl && (
-            <span className={`_frm-b${formID}-stp-hdr-lbl`}>
+            <span
+              className={`_frm-b${formID}-stp-hdr-lbl`}
+              data-dev-stp-hdr-lbl={formID}
+            >
               {settings.lblPreIcn && (
                 <img
                   data-testid={`_frm-b${formID}-stp-lbl-pre-i`}
@@ -51,7 +60,10 @@ export default function StepHeader({ settings, stepKey, stepNumber, formID, isAc
             </span>
           )}
           {multiStepSettings.showSubtitle && settings.showSubtitle && (
-            <span className={`_frm-b${formID}-stp-hdr-sub-titl`}>
+            <span
+              className={`_frm-b${formID}-stp-hdr-sub-titl`}
+              data-dev-stp-hdr-sub-titl={formID}
+            >
               {settings.subTlePreIcn && (
                 <img
                   data-testid={`_frm-b${formID}-stp-sub-titl-pre-i`}

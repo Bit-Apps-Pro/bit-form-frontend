@@ -7,7 +7,7 @@ import { hideAll } from 'tippy.js'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import {
-  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $formInfo, $nestedLayouts, $newFormId,
+  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $nestedLayouts, $newFormId,
 } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -31,6 +31,7 @@ export default function BuilderStepTabs() {
   const [formInfo, setFormInfo] = useAtom($formInfo)
   const setBuilderHookStates = useSetAtom($builderHookStates)
   const setContextMenu = useSetAtom($contextMenu)
+  const flags = useAtomValue($flags)
   const navigate = useNavigate()
   const { formType, formID: pramsFormId } = useParams()
   const newFormId = useAtomValue($newFormId)
@@ -44,9 +45,9 @@ export default function BuilderStepTabs() {
   const fields = useAtomValue($fields)
   const setAlertMdl = useSetAtom($alertModal)
   const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
+  const { styleMode } = flags
   const { css } = useFela()
 
-  console.log('formInfo', formInfo)
   const addFormStep = () => {
     setAllLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
       const nextStep = !Array.isArray(draftLayouts) ? 1 : draftLayouts.length
@@ -199,7 +200,7 @@ export default function BuilderStepTabs() {
                 <div className={`btcd-s-tab-link ${css(s.stepTab)} ${activeBuilderStep === indx && 'active'}`}>
                   <DragHandle />
                   <span type="button" className={css(s.stepTitle)} onClick={onStepChange(indx)} onKeyDown={onStepChange(indx)} role="button" tabIndex={0}>
-                    {__('Step #')}
+                    {__('Step-')}
                     {indx + 1}
                   </span>
                   {isMultiStep && (
@@ -313,7 +314,7 @@ const s = {
     fs: 12,
     fw: 500,
     b: 'none',
-    p: '0 10px',
+    p: '0 5px',
     '&.active': {
       bd: 'var(--b-79-96)',
     },

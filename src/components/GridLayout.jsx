@@ -14,7 +14,7 @@ import {
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { $activeBuilderStep, $isDraggable } from '../GlobalStates/FormBuilderStates'
+import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $breakpoint,
   $builderHookStates,
@@ -59,9 +59,9 @@ import '../resource/css/grid-layout.css'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
+import StepContainer from './MultiStep/StepContainer'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
-import StepContainer from './MultiStep/StepContainer'
 
 const FieldBlockWrapper = lazy(() => import('./FieldBlockWrapper'))
 
@@ -572,6 +572,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
           let styleUrl
           if (styleUrlPart.startsWith('_frm-')) {
             styleUrl = `/form/builder/${formType}/${formID}/theme-customize/${styleUrlPart}`
+          } else if (styleUrlPart.startsWith('stp')) {
+            styleUrl = `/form/builder/${formType}/${formID}/theme-customize/multi-step/${styleUrlPart}`
           } else {
             styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
           }
