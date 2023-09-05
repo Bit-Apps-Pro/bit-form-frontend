@@ -7,7 +7,7 @@ export default function initMultiStepForm(formContentId = null) {
     if (props.multiStepForm) {
       const { formId } = props
       const form = bfSelect(`#form-${contentId}`)
-      const container = bfSelect(`._frm-b${formId}-step-container`, form)
+      const container = bfSelect(`._frm-b${formId}-stp-cntnr`, form)
       props.inits.multi_step_form = new BitMultiStepForm(container, { contentId })
     }
   })
