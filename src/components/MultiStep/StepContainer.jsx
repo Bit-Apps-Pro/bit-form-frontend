@@ -1,10 +1,10 @@
 import { useAtomValue } from 'jotai'
 import { useParams } from 'react-router-dom'
-import StepsHeaderContainer from './StepsHeaderContainer'
-import { $allLayouts, $formInfo } from '../../GlobalStates/GlobalStates'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import StepProgress from './StepProgress'
+import { $allLayouts, $formInfo } from '../../GlobalStates/GlobalStates'
 import StepButton from './StepButton'
+import StepProgress from './StepProgress'
+import StepsHeaderContainer from './StepsHeaderContainer'
 
 export default function StepContainer({ children, className }) {
   const allLayouts = useAtomValue($allLayouts)
@@ -30,15 +30,15 @@ export default function StepContainer({ children, className }) {
         <div className={`_frm-b${formID}-stp-cntnt-wrpr`}>
           <div className={`_frm-b${formID}-stp-cntnt`}>
             {children}
-          </div>
-          {btnSettings?.show && (
-            <div className={`_frm-b${formID}-stp-btn-wrpr`}>
-              <div className={`_frm-b${formID}-stp-btn-cntnt`}>
-                <StepButton btnInfo={btnSettings?.prevBtn} formID={formID} />
-                <StepButton btnInfo={btnSettings?.nextBtn} formID={formID} />
+            {btnSettings?.show && (
+              <div className={`_frm-b${formID}-stp-btn-wrpr`}>
+                <div className={`_frm-b${formID}-stp-btn-cntnt`}>
+                  <StepButton btnInfo={btnSettings?.prevBtn} formID={formID} />
+                  <StepButton btnInfo={btnSettings?.nextBtn} formID={formID} />
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
