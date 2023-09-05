@@ -6,6 +6,7 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
   const bdrWdth = 'var(--btn-bdr-width)'
   return {
     [`._frm-b${formId}-stp-cntnr`]: {
+      'grid-column': '1 / -1',
     },
     [`._frm-b${formId}-stp-hdr-wrpr`]: {
       display: 'flex',
