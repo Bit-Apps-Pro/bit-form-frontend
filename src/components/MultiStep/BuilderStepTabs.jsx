@@ -24,6 +24,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyles from '../style-new/themes/multiStepStyles'
+import SettingsIcn from '../../Icons/SettingsIcn'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -190,6 +191,13 @@ export default function BuilderStepTabs() {
     if (formLayouts.length !== 1) navigate(`${path}/step-settings`, { replace: true })
   }
 
+  const goToStepSettings = stepIndex => () => {
+    setActiveBuilderStep(stepIndex)
+    setContextMenu({})
+    hideAll()
+    navigate(`${path}/step-settings`, { replace: true })
+  }
+
   return (
     <div className={css(s.wrp)}>
       <div ref={scrollContainerRef} onScroll={handleScroll}>
@@ -210,7 +218,6 @@ export default function BuilderStepTabs() {
                         aria-label="Step Options"
                         type="button"
                       >
-                        {/* <CloseIcn size="14" /> */}
                         <EllipsisIcon size="20" className={css({ tm: 'rotate(90deg)' })} />
                       </button>
                       <ul className={css(s.optionWrap)}>
@@ -218,26 +225,36 @@ export default function BuilderStepTabs() {
                           <button
                             type="button"
                             className={css(s.optionBtn)}
+                            onClick={goToStepSettings(indx)}
+                          >
+                            <SettingsIcn size={18} />
+                            <span>Settings</span>
+                          </button>
+                        </li>
+                        <li className={css(s.option)}>
+                          <button
+                            type="button"
+                            className={css(s.optionBtn)}
                             onClick={() => cloneFormStep(indx)}
                           >
                             <CopyIcn size={18} />
-                            &nbsp;Clone Step
+                            <span>Clone Step</span>
                           </button>
                         </li>
                         <li className={css(s.option)}>
                           <Downmenu width={250}>
                             <button type="button" className={css(s.optionBtn)}>
                               <TrashIcn size={18} />
-                              &nbsp;Delete Step
+                              <span>Delete Step</span>
                             </button>
-                            <dvi className={css(s.confirmModal)}>
+                            <div className={css(s.confirmModal)}>
                               <div className="mb-2 mt-1"><b>Are you sure to delete the step?</b></div>
                               <p className={css({ fs: 12, fw: 400 })}>Note: After delete this Step. you will lose all responses of included fields.</p>
                               <div className="flx flx-c">
                                 <button onClick={() => hideAll()} className="tip-btn mr-2" type="button">Cancel</button>
                                 <button onClick={() => removeFormStep(indx)} className="tip-btn red-btn" type="button">Delete</button>
                               </div>
-                            </dvi>
+                            </div>
                           </Downmenu>
                         </li>
                       </ul>
@@ -267,6 +284,11 @@ const s = {
     ai: 'center',
     bb: '1px solid #edf3fd',
   },
+  sortableWrp: {
+    w: '100%',
+    mxw: 'max-content',
+    owx: 'auto',
+  },
   addBtn: {
     se: 25,
     b: 'none',
@@ -284,15 +306,15 @@ const s = {
     cr: 'var(--dp-blue)',
     pn: 'relative',
     cur: 'pointer',
-    fs: '20px',
-    b: '0',
+    fs: 20,
+    b: '1px solid transparent',
     p: '0',
-    w: '20px',
-    h: '22px',
+    w: 22,
+    h: 22,
     brs: '8px',
     oe: 'none',
     '&:hover': {
-      bd: 'var(--white-0-95)',
+      b: '1px solid var(--white-0-83)',
     },
     '&:active': {
       b: '1px solid var(--white-0-83)',
@@ -330,14 +352,15 @@ const s = {
     brs: 6,
     curp: 1,
     tn: 'background .3s',
-    py: 3,
+    py: 5,
     px: 10,
     fw: 500,
     b: 'none',
     w: '100%',
     bd: 'none',
     ta: 'left',
-    dy: 'flex',
+    flx: 'align-center',
+    gp: 5,
     ':hover': { bd: 'var(--white-0-95)' },
   },
   confirmModal: {

@@ -1,11 +1,12 @@
 import { useAtomValue } from 'jotai'
+import { useDeferredValue } from 'react'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import { $allLayouts } from '../../GlobalStates/GlobalStates'
 
 export default function StepProgress({ formID }) {
   const allLayouts = useAtomValue($allLayouts)
   const activeBuilderStep = useAtomValue($activeBuilderStep)
-  const progressPercentage = Math.round(((activeBuilderStep) / allLayouts.length) * 100)
+  const progressPercentage = useDeferredValue(Math.round(((activeBuilderStep) / allLayouts.length) * 100))
 
   return (
     <div
