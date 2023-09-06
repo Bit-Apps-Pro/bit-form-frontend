@@ -17,7 +17,11 @@ export default class BitMultiStepForm {
 
   #saveProgress = true
 
+  #stepHeaderSwitchable = true
+
   #contentId = ''
+
+  #formId = 0
 
   #history = []
 
@@ -47,8 +51,7 @@ export default class BitMultiStepForm {
       prevBtn.disabled = true
       this.#prevBtns = this.#prevBtns.filter((btn) => btn.isEqualNode(prevBtn) === false)
     }
-    const formId = this.#getFormId()
-    const totalSteps = this.#selectAll(`._frm-b${formId}-stp-cntnt[data-step]`).length
+    const totalSteps = this.#selectAll(`._frm-b${this.#formId}-stp-cntnt[data-step]`).length
     const lastStep = this.#getCurrentStepWrapper(totalSteps)
     const nextBtn = this.#select('.next-step-btn', lastStep)
     if (nextBtn) {
@@ -59,25 +62,27 @@ export default class BitMultiStepForm {
 
   #handleStepHeaderEvent(e) {
     e.preventDefault()
-    const formId = this.#getFormId()
-    const stepHdrWrp = e.target.closest(`._frm-b${formId}-stp-hdr`)
+    const stepHdrWrp = e.target.closest(`._frm-b${this.#formId}-stp-hdr`)
     const isDisabled = stepHdrWrp.classList.contains('disabled')
     if (isDisabled) return
     const stepNum = Number(stepHdrWrp.getAttribute('data-step'))
     if (this.#currentStep === stepNum) return
+    if (this.#maintainStepHistory && stepNum > this.#currentStep) {
+      this.#history.push(this.#currentStep)
+    }
     this.#currentStep = stepNum
     this.#showStep(stepNum)
   }
 
   #addStepHeaderEvents() {
-    const formId = this.#getFormId()
-    const allStepHeaders = this.#selectAll(`._frm-b${formId}-stp-hdr`)
+    if (!this.#stepHeaderSwitchable) return
+    const allStepHeaders = this.#selectAll(`._frm-b${this.#formId}-stp-hdr`)
     if (!allStepHeaders) return
     allStepHeaders.forEach(stepHdr => {
-      const iconWrp = this.#select(`._frm-b${formId}-stp-icn-cntn`, stepHdr)
-      if (iconWrp) this.#addEvent(iconWrp, 'click', e => this.#handleStepHeaderEvent(e))
-      const lblWrp = this.#select(`._frm-b${formId}-stp-hdr-lbl`, stepHdr)
-      if (lblWrp) this.#addEvent(lblWrp, 'click', e => this.#handleStepHeaderEvent(e))
+      const iconWrp = this.#select(`._frm-b${this.#formId}-stp-icn-cntn`, stepHdr)
+      if (iconWrp) this.#addEvent(iconWrp, 'click', e => { this.#handleStepHeaderEvent(e) })
+      const lblWrp = this.#select(`._frm-b${this.#formId}-stp-hdr-lbl`, stepHdr)
+      if (lblWrp) this.#addEvent(lblWrp, 'click', e => { this.#handleStepHeaderEvent(e) })
     })
   }
 
@@ -86,7 +91,9 @@ export default class BitMultiStepForm {
     if ('validateOnStepChange' in config) this.#validateOnStepChange = config.validateOnStepChange
     if ('maintainStepHistory' in config) this.#maintainStepHistory = config.maintainStepHistory
     if ('saveProgress' in config) this.#saveProgress = config.saveProgress
+    if ('stepHeaderSwitchable' in config) this.#stepHeaderSwitchable = config.stepHeaderSwitchable
     this.#contentId = config.contentId
+    this.#formId = this.#getFormId()
   }
 
   #select(selector, elm) {
@@ -103,8 +110,7 @@ export default class BitMultiStepForm {
   }
 
   #getCurrentStepWrapper(step = this.#currentStep) {
-    const formId = this.#getFormId()
-    return this.#select(`._frm-b${formId}-stp-cntnt[data-step="${step}"]`)
+    return this.#select(`._frm-b${this.#formId}-stp-cntnt[data-step="${step}"]`)
   }
 
   #canGoNext() {
@@ -122,16 +128,15 @@ export default class BitMultiStepForm {
   }
 
   #showStep(step) {
-    const formId = this.#getFormId()
-    const stepWrapper = this.#select(`._frm-b${formId}-stp-cntnt[data-step="${step}"]`)
+    const stepWrapper = this.#select(`._frm-b${this.#formId}-stp-cntnt[data-step="${step}"]`)
     if (!stepWrapper) return
     stepWrapper.classList.remove('d-none')
-    const otherSteps = this.#selectAll(`._frm-b${formId}-stp-cntnt:not([data-step="${step}"])`)
+    const otherSteps = this.#selectAll(`._frm-b${this.#formId}-stp-cntnt:not([data-step="${step}"])`)
     otherSteps.forEach((stepElm) => {
       stepElm.classList.add('d-none')
     })
     // step headers
-    const allStepHeaders = this.#selectAll(`._frm-b${formId}-stp-hdr`)
+    const allStepHeaders = this.#selectAll(`._frm-b${this.#formId}-stp-hdr`)
     allStepHeaders.forEach(stepHdr => {
       const classes = ['completed', 'active']
       stepHdr.classList.remove(...classes)
@@ -140,7 +145,7 @@ export default class BitMultiStepForm {
       else if (stepNum === step) stepHdr.classList.add('active')
     })
     // progress bar
-    const progressFillElm = this.#select(`._frm-b${formId}-progress-fill`)
+    const progressFillElm = this.#select(`._frm-b${this.#formId}-progress-fill`)
     const totalSteps = otherSteps.length + 1
     const progress = Math.round(((step - 1) / totalSteps) * 100)
     progressFillElm.textContent = `${progress}%`
@@ -191,8 +196,7 @@ export default class BitMultiStepForm {
         }
         this.#currentStep += 1
         // remove step header disabled class
-        const formId = this.#getFormId()
-        const stepHdr = this.#select(`._frm-b${formId}-stp-hdr[data-step="${this.#currentStep}"]`)
+        const stepHdr = this.#select(`._frm-b${this.#formId}-stp-hdr[data-step="${this.#currentStep}"]`)
         if (stepHdr) stepHdr.classList.remove('disabled')
         this.#showStep(this.#currentStep)
         this.#onStepChange()
