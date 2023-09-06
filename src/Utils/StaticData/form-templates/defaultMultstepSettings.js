@@ -5,6 +5,9 @@ const defaultMultstepSettings = {
   showStepHeader: true,
   showLbl: true,
   showSubtitle: true,
+  validateOnStepChange: true,
+  maintainStepHistory: true,
+  saveProgress: true,
   headerIcon: {
     show: true,
     iconType: 'number',

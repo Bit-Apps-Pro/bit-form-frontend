@@ -27,7 +27,7 @@ export default function MultiStepSettings() {
   const stepLayout = allLayouts[activeBuilderStep]
 
   const {
-    showStepHeader, headerIcon, themeStyle, btnSettings, showLbl, showSubtitle, progressSettings,
+    showStepHeader, headerIcon, themeStyle, btnSettings, showLbl, showSubtitle, validateOnStepChange, maintainStepHistory, saveProgress, progressSettings,
   } = formInfo.multiStepSettings || {}
 
   const setMultistepSettings = (propName, value) => {
@@ -266,6 +266,39 @@ export default function MultiStepSettings() {
         </div>
 
       </SimpleAccordion>
+      <FieldSettingsDivider />
+
+      <div className={css(FieldStyle.fieldSection)}>
+        <SingleToggle
+          id="validate-step-change"
+          tip="Validate Field Input on step change"
+          title={__('Validate on Step Change')}
+          action={e => setMultistepSettings('validateOnStepChange', e.target.checked)}
+          isChecked={validateOnStepChange || ''}
+        />
+      </div>
+      <FieldSettingsDivider />
+
+      <div className={css(FieldStyle.fieldSection)}>
+        <SingleToggle
+          id="maintain-step-history"
+          tip="Step Flow History will be maintained when click on previous button"
+          title={__('Maintain Step History')}
+          action={e => setMultistepSettings('maintainStepHistory', e.target.checked)}
+          isChecked={maintainStepHistory || ''}
+        />
+      </div>
+      <FieldSettingsDivider />
+
+      <div className={css(FieldStyle.fieldSection)}>
+        <SingleToggle
+          id="save-progress"
+          tip="User Input will be saved as draft when click on next button"
+          title={__('Save Step Progress')}
+          action={e => setMultistepSettings('saveProgress', e.target.checked)}
+          isChecked={saveProgress || ''}
+        />
+      </div>
       <FieldSettingsDivider />
     </div>
   )

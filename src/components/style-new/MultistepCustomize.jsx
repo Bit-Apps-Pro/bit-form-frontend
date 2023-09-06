@@ -27,7 +27,7 @@ import LabelCustomizer from './LabelCustomizer'
 import SubTitleCustomizer from './SubTitleCustomizer'
 import ThemeQuickTweaksCustomizer from './ThemeQuickTweaksCustomizer'
 
-export default function ThemeCustomize() {
+export default function MultiStepCustomize() {
   const { css } = useFela()
   const { formType, formID, element } = useParams()
   const setFlags = useSetAtom($flags)
@@ -40,30 +40,19 @@ export default function ThemeCustomize() {
 
   const genarateTitle = () => {
     const title = {
-      'quick-tweaks': 'Theme Quick Tweaks',
-      '_frm-bg': 'Form Wrapper',
-      _frm: 'Form Container',
-      'field-containers': 'Field Container(s)',
-      'label-containers': 'Label & Subtitle Container(s)',
-      lbl: 'Label(s)',
-      'lbl-pre-i': 'Label Leading Icon(s)',
-      'lbl-suf-i': 'Label Trailing Icon(s)',
-      'sub-titl': 'Subtitle(s)',
-      'sub-titl-pre-i': 'Subtitle Leading Icon(s)',
-      'sub-titl-suf-i': 'Subtitle Trailing Icon(s)',
-      fld: 'Input(s)',
-      'pre-i': 'Input Leading Icon(s)',
-      'suf-i': 'Input Trailing Icons',
-      'hlp-txt': 'Helper Text(s)',
-      'hlp-txt-pre-i': 'Helper Text Leading Icon(s)',
-      'hlp-txt-suf-i': 'Helper Text Trailing Icon(s)',
-      'err-msg': 'Error Message(s)',
-      'err-txt-pre-i': 'Error Text Leading Icon(s)',
-      'err-txt-suf-i': 'Error Text Trailing Icon(s)',
-      btn: 'Button(s)',
-      'btn-pre-i': 'Button Leading Icon(s)',
-      'btn-suf-i': 'Button Trailing Icon(s)',
-      'req-smbl': 'Asterisk Symbol',
+      'quick-tweaks': 'Multi Step Quick Tweaks',
+      'stp-cntnr': 'Step Container',
+      'stp-hdr-wrpr': 'Step Header Wrapper',
+      'stp-hdr': 'Step Header',
+      'stp-icn-cntn': 'Step Icon',
+      'stp-hdr-lbl': 'Step Header Label',
+      'stp-hdr-sub-titl': 'Step Header Subtitle',
+      'stp-wrpr': 'Step Wrapper',
+      'stp-progress-wrpr': 'Step Progress Wrapper',
+      'stp-progress-bar': 'Step Progress Bar',
+      'stp-cntn': 'Step Content',
+      'stp-btn-wrpr': 'Step Button Wrapper',
+      'stp-btn': 'Step Button',
     }
     return title[element] || 'Theme Customization'
   }
@@ -81,7 +70,7 @@ export default function ThemeCustomize() {
             Themes /
             {' '}
           </Link>
-          <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Theme Customize</span>
+          <span className={css([cls.breadcumbLink, ut.fontBody, cls.l2])}>Multi Step Customize</span>
         </span>
         <h4 className={css(cls.title)}>
           {genarateTitle()}

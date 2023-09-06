@@ -15,23 +15,34 @@ export default function StepContainer({ children, className }) {
   const formInfo = useAtomValue($formInfo)
   const { btnSettings, progressSettings, showStepHeader } = formInfo?.multiStepSettings || {}
   const { formID } = useParams()
-  console.log('isMultiStep', isMultiStep)
 
   if (!isMultiStep) return children
   return (
-    <div className={`_frm-b${formID}-stp-cntnr ${className}`}>
+    <div
+      className={`_frm-b${formID}-stp-cntnr ${className}`}
+      data-dev-stp-cntnr={formID}
+    >
       {showStepHeader && (
         <StepsHeaderContainer />
       )}
-      <div className={`_frm-b${formID}-stp-wrpr`}>
+      <div
+        className={`_frm-b${formID}-stp-wrpr`}
+        data-dev-stp-wrpr={formID}
+      >
         {progressSettings?.show && (
           <StepProgress formID={formID} />
         )}
         <div className={`_frm-b${formID}-stp-cntnt-wrpr`}>
-          <div className={`_frm-b${formID}-stp-cntnt`}>
+          <div
+            className={`_frm-b${formID}-stp-cntnt`}
+            data-dev-stp-cntnt={formID}
+          >
             {children}
             {btnSettings?.show && (
-              <div className={`_frm-b${formID}-stp-btn-wrpr`}>
+              <div
+                className={`_frm-b${formID}-stp-btn-wrpr`}
+                data-dev-stp-btn-wrpr={formID}
+              >
                 <div className={`_frm-b${formID}-stp-btn-cntnt`}>
                   <StepButton btnInfo={btnSettings?.prevBtn} formID={formID} />
                   <StepButton btnInfo={btnSettings?.nextBtn} formID={formID} />

@@ -8,9 +8,15 @@ export default function StepProgress({ formID }) {
   const progressPercentage = Math.round(((activeBuilderStep) / allLayouts.length) * 100)
 
   return (
-    <div className={`_frm-b${formID}-stp-progress-wrpr`}>
+    <div
+      className={`_frm-b${formID}-stp-progress-wrpr`}
+      data-dev-stp-progress-wrpr={formID}
+    >
       <div className={`_frm-b${formID}-stp-progress`}>
-        <div className={`_frm-b${formID}-progress-bar`}>
+        <div
+          className={`_frm-b${formID}-stp-progress-bar`}
+          data-dev-stp-progress-bar={formID}
+        >
           <div className={`_frm-b${formID}-progress-fill`} style={{ width: `${progressPercentage}%` }}>
             {progressPercentage}
             %

@@ -1,9 +1,9 @@
 import loadable from '@loadable/component'
+import { useAtom, useSetAtom } from 'jotai'
 import { useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { useAtom, useSetAtom } from 'jotai'
 import { $breakpoint, $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -19,6 +19,7 @@ const PaypalStyleEditor = loadable(() => import('./StyleCustomize/PaypalStyleEdi
 const StyleEditor = loadable(() => import('./StyleCustomize/StyleEditor'), { fallback: <StyleCustomizeLoader /> })
 const FieldStyleCustomizeHOC = loadable(() => import('../style-new/FieldStyleCustomize'), { fallback: <StyleCustomizeLoader /> })
 const ThemeCustomize = loadable(() => import('../style-new/ThemeCustomize'), { fallback: <StyleCustomizeLoader /> })
+const MultiStepCustomize = loadable(() => import('../style-new/MultistepCustomize'), { fallback: <StyleCustomizeLoader /> })
 const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <FieldSettingsLoader /> })
 const MultiStepSettings = loadable(() => import('./MultiStepSettings'), { fallback: <FieldSettingsLoader /> })
 const StepSettings = loadable(() => import('./StepSettings'), { fallback: <FieldSettingsLoader /> })
@@ -62,6 +63,7 @@ function BuilderRightPanel({ style, styleDispatch }) {
                 <Route path="step-settings" element={<StepSettings />} />
                 <Route path="themes" element={<ThemeGallary />} />
                 <Route path="theme-customize/:element" element={<ThemeCustomize />} />
+                <Route path="theme-customize/multi-step/:element" element={<MultiStepCustomize />} />
                 <Route path="field-theme-customize/:element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
 
                 {/* <Route exact path={`${pathname}/style`}>

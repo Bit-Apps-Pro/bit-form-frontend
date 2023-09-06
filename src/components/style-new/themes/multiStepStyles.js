@@ -140,7 +140,7 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
     [`._frm-b${formId}-stp-progress-wrpr`]: {
       'margin-bottom': '10px',
     },
-    [`._frm-b${formId}-progress-bar`]: {
+    [`._frm-b${formId}-stp-progress-bar`]: {
       display: 'flex',
       height: '1rem',
       overflow: 'hidden',
@@ -164,7 +164,7 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       'align-items': 'center',
       margin: '10px 0px 0px',
     },
-    [`._frm-b${formId}-bf-next-btn`]: {
+    [`._frm-b${formId}-next-step-btn`]: {
       'font-size': 'var(--btn-fs)!important',
       padding: 'var(--btn-p)!important',
       // 'background-color': 'var(--btn-bgc)',
@@ -187,32 +187,32 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       'align-items': 'center',
       transition: 'background-color 0.2s, transform 0.2s',
     },
-    [`._frm-b${formId}-bf-next-btn:hover`]: {
+    [`._frm-b${formId}-next-step-btn:hover`]: {
       'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
     },
-    [`._frm-b${formId}-bf-next-btn:active`]: {
+    [`._frm-b${formId}-next-step-btn:active`]: {
       transform: 'scale(0.95)',
     },
-    [`._frm-b${formId}-bf-next-btn:focus-visible`]: {
+    [`._frm-b${formId}-next-step-btn:focus-visible`]: {
       outline: '2px solid var(--global-accent-color)',
       'outline-offset': '2px',
       transition: 'outline-offset 0.2s ease',
     },
-    [`._frm-b${formId}-bf-next-btn:active:focus-visible`]: {
+    [`._frm-b${formId}-next-step-btn:active:focus-visible`]: {
       'outline-offset': 0,
     },
-    [`._frm-b${formId}-bf-next-btn:disabled`]: {
+    [`._frm-b${formId}-next-step-btn:disabled`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       opacity: '0.5',
     },
-    [`._frm-b${formId}-bf-next-btn-pre-i`]: {
+    [`._frm-b${formId}-next-step-btn-pre-i`]: {
       width: '20px',
       height: '20px',
       ...direction !== 'rtl' && { margin: '0px 5px 0px 0px' },
       ...direction === 'rtl' && { margin: '0px 0px 0px 5px' },
     },
-    [`._frm-b${formId}-bf-next-btn-suf-i`]: {
+    [`._frm-b${formId}-next-step-btn-suf-i`]: {
       width: '20px',
       height: '20px',
       ...direction !== 'rtl' && { margin: '0px 0px 0px 5px' },
@@ -220,7 +220,7 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
     },
 
     // Previous Button
-    [`._frm-b${formId}-bf-prev-btn`]: {
+    [`._frm-b${formId}-prev-step-btn`]: {
       'font-size': 'var(--btn-fs)!important',
       padding: 'var(--btn-p)!important',
       // 'background-color': 'var(--btn-bgc)',
@@ -243,32 +243,32 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       'align-items': 'center',
       transition: 'background-color 0.2s, transform 0.2s',
     },
-    [`._frm-b${formId}-bf-prev-btn:hover`]: {
+    [`._frm-b${formId}-prev-step-btn:hover`]: {
       'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
     },
-    [`._frm-b${formId}-bf-prev-btn:active`]: {
+    [`._frm-b${formId}-prev-step-btn:active`]: {
       transform: 'scale(0.95)',
     },
-    [`._frm-b${formId}-bf-prev-btn:focus-visible`]: {
+    [`._frm-b${formId}-prev-step-btn:focus-visible`]: {
       outline: '2px solid var(--global-accent-color)',
       'outline-offset': '2px',
       transition: 'outline-offset 0.2s ease',
     },
-    [`._frm-b${formId}-bf-prev-btn:active:focus-visible`]: {
+    [`._frm-b${formId}-prev-step-btn:active:focus-visible`]: {
       'outline-offset': 0,
     },
-    [`._frm-b${formId}-bf-prev-btn:disabled`]: {
+    [`._frm-b${formId}-prev-step-btn:disabled`]: {
       cursor: 'not-allowed',
       'pointer-events': 'none',
       opacity: '0.5',
     },
-    [`._frm-b${formId}-bf-prev-btn-pre-i`]: {
+    [`._frm-b${formId}-prev-step-btn-pre-i`]: {
       width: '20px',
       height: '20px',
       ...direction !== 'rtl' && { margin: '0px 5px 0px 0px' },
       ...direction === 'rtl' && { margin: '0px 0px 0px 5px' },
     },
-    [`._frm-b${formId}-bf-prev-btn-suf-i`]: {
+    [`._frm-b${formId}-prev-step-btn-suf-i`]: {
       width: '20px',
       height: '20px',
       ...direction !== 'rtl' && { margin: '0px 0px 0px 5px' },

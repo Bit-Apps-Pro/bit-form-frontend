@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import { $activeStepSettings, $allLayouts, $builderRightPanelScroll, $formInfo } from '../../GlobalStates/GlobalStates'
-import { ucFirst } from '../../Utils/Helpers'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
@@ -48,7 +47,6 @@ export default function StepSettings() {
   }
 
   const setStepSettings = (propName, value) => {
-    console.log(propName, value)
     setActiveStepSettings(create(activeStepSettings, draft => {
       draft[propName] = value
     }))
@@ -82,10 +80,20 @@ export default function StepSettings() {
         <FieldSettingsDivider />
         <div className={css(style.section, { mx: 15 })}>
           <span className={css(style.title)}>Step key</span>
-          <CoolCopy id="fld-stng-key" value={activeBuilderStep} />
+          <CoolCopy id="fld-stng-key" value={activeBuilderStep + 1} />
         </div>
         <FieldSettingsDivider />
-
+        <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}>
+          <FieldIconSettings
+            label="Step Icon"
+            iconSrc={stepData.icon}
+            styleRoute="step-icn"
+            setIcon={() => setIconModel('icon')}
+            isPro
+            proProperty="stepIcon"
+          />
+        </div>
+        <FieldSettingsDivider />
         <SimpleAccordion
           id="fld-lbl-stng"
           title={__('Step Label')}
@@ -180,18 +188,6 @@ export default function StepSettings() {
             </div>
           </div>
         </SimpleAccordion>
-        <FieldSettingsDivider />
-
-        <div className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}>
-          <FieldIconSettings
-            label="Step Icon"
-            iconSrc={stepData.icon}
-            styleRoute="step-icn"
-            setIcon={() => setIconModel('icon')}
-            isPro
-            proProperty="stepIcon"
-          />
-        </div>
         <FieldSettingsDivider />
 
       </div>
