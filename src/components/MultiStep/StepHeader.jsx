@@ -1,15 +1,17 @@
 import { useAtomValue } from 'jotai'
+import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import { $formInfo } from '../../GlobalStates/GlobalStates'
 import { getCustomClsName } from '../../Utils/globalHelpers'
 import RenderHtml from '../Utilities/RenderHtml'
 
 export default function StepHeader({ settings, stepKey, stepNumber, formID, isActive }) {
   const formInfo = useAtomValue($formInfo)
+  const activeBuilderStep = useAtomValue($activeBuilderStep)
   const multiStepSettings = formInfo?.multiStepSettings || {}
 
   return (
     <div
-      className={`_frm-b${formID}-stp-hdr ${isActive ? 'active' : ''}`}
+      className={`_frm-b${formID}-stp-hdr ${isActive ? 'active' : ''} ${activeBuilderStep > stepKey ? 'completed' : ''}`}
       data-dev-stp-hdr={formID}
     >
       <div className={`_frm-b${formID}-stp-hdr-cntnt`}>
