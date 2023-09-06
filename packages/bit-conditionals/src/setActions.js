@@ -109,11 +109,13 @@ const setReadonly = (fldKey, props, val) => {
 }
 
 const setActionValue = (actionDetail, props, fieldValues) => {
+  const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
   if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
-    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
     // setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
     const actionDetlsFld = actionDetail.field
     setFieldValue(props, actionDetlsFld, actionValue)
+  } else if (actionDetail.val !== undefined && actionDetail.field === '_bf_step_no') {
+    if (props?.inits?.multi_step_form) props.inits.multi_step_form.step = actionValue
   }
 }
 
