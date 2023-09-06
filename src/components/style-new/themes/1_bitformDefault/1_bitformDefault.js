@@ -1,11 +1,10 @@
 /* eslint-disable camelcase */
 
 import { getAtom } from '../../../../GlobalStates/BitStore'
-import { $allLayouts } from '../../../../GlobalStates/GlobalStates'
+import { $allLayouts, $formInfo } from '../../../../GlobalStates/GlobalStates'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import { cleanObj, mergeNestedObj } from '../../../../Utils/globalHelpers'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
-import multiStepStyles from '../multiStepStyles'
 import advancedFileUp_1_bitformDefault from './advancedFileUp_1_bitformDefault'
 import buttonStyle_1_bitformDefault from './buttonStyle_1_bitformDefault'
 import checkboxNradioStyle_1_bitformDefault from './checkboxNradioStyle_1_bitformDefault'
@@ -17,6 +16,7 @@ import dropdownStyle_1_BitformDefault from './dropdownStyle_1_bitformDefault'
 import fileUploadStyle_1_BitformDefault from './fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './htmlStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './imageStyle_1_bitformDefault'
+import multiStepStyle_1_bitformDefault from './multiStepStyle_1_bitformDefaullt'
 import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from './phoneNumberStyle_1_bitformDefault'
 import ratingStyle_1_bitformDefault from './ratingStyle_1_bitformDefault'
@@ -134,7 +134,7 @@ export default function bitformDefaultTheme({
 
       const allLayouts = getAtom($allLayouts)
       const isMultiStep = Array.isArray(allLayouts) && allLayouts.length > 1
-      const multiStepStyle = isMultiStep ? multiStepStyles({ formId, breakpoint, direction }) : {}
+      const multiStepStyle = isMultiStep ? multiStepStyle_1_bitformDefault({ formId, breakpoint, direction, colorScheme }) : {}
 
       return {
         lgLightStyles: {

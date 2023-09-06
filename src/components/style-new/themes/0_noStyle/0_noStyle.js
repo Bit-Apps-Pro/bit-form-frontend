@@ -6,7 +6,7 @@ import { $allLayouts } from '../../../../GlobalStates/GlobalStates'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import { cleanObj, mergeNestedObj } from '../../../../Utils/globalHelpers'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
-import multiStepStyles from '../multiStepStyles'
+import { defaultLgLightThemeVars } from '../1_bitformDefault/1_bitformDefault'
 import advancedFileUp_0_noStyle from './advancedFileUp_0_noStyle'
 import checkboxNradioStyle_0_noStyle from './checkboxNradioStyle_0_noStyle'
 import countryStyle_0_noStyle from './countryStyle_0_noStyle'
@@ -17,6 +17,7 @@ import dropdownStyle_0_noStyle from './dropdownStyle_0_noStyle'
 import fileUploadStyle_0_noStyle from './fileUpload_0_noStyle'
 import htmlStyle_0_noStyle from './htmlStyle_0_noStyle'
 import imageStyle_0_noStyle from './imageStyle_0_noStyle'
+import multiStepStyle_0_noStyle from './multiStepStyle_0_noStyle'
 import paypalStyle_0_noStyle from './paypalStyle_0_noStyle'
 import phoneNumberStyle_0_noStyle from './phoneNumberStyle_0_noStyle'
 import ratingStyle_0_noStyle from './ratingStyle_0_noStyle'
@@ -46,7 +47,7 @@ export default function noStyleTheme({
       darkThemeColors,
     }
     case 'themeVars': return {
-      lgLightThemeVars,
+      lgLightThemeVars: defaultLgLightThemeVars,
       lgDarkThemeVars: {},
       mdLightThemeVars: {},
       mdDarkThemeVars: {},
@@ -126,7 +127,7 @@ export default function noStyleTheme({
 
       const allLayouts = getAtom($allLayouts)
       const isMultiStep = Array.isArray(allLayouts) && allLayouts.length > 1
-      const multiStepStyle = isMultiStep ? multiStepStyles({ formId, breakpoint }) : {}
+      const multiStepStyle = isMultiStep ? multiStepStyle_0_noStyle({ formId, breakpoint, direction, colorScheme }) : {}
 
       return {
         lgLightStyles: {

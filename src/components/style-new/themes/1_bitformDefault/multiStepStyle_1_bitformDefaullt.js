@@ -1,4 +1,12 @@
-export default function multiStepStyles({ formId, breakpoint, direction }) {
+import { getAtom } from '../../../../GlobalStates/BitStore'
+import { $formInfo } from '../../../../GlobalStates/GlobalStates'
+
+// eslint-disable-next-line camelcase
+export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, direction, colorScheme }) {
+  const formInfo = getAtom($formInfo)
+  const { multiStepSettings } = formInfo
+  const { themeStyle } = multiStepSettings || {}
+
   const bgClr = 'var(--btn-bg)'
   const clr = 'var(--btn-c)'
   const bdrClr = 'var(--btn-bdr-clr)'
@@ -40,7 +48,11 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       'z-index': '-1',
     },
     [`._frm-b${formId}-stp-hdr.active`]: {
-      color: '#333',
+      color: 'var(--fld-lbl-c, inherit)',
+      'font-weight': '700',
+    },
+    [`._frm-b${formId}-stp-hdr.completed`]: {
+      color: 'var(--fld-lbl-c, inherit)',
     },
     [`._frm-b${formId}-stp-hdr-cntnt`]: {
       display: 'flex',
@@ -49,6 +61,7 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
     [`._frm-b${formId}-stp-hdr-titl-wrpr`]: {
       display: 'flex',
       'flex-direction': 'column',
+      margin: '5px 0px 0px',
     },
     [`._frm-b${formId}-stp-hdr-icn-wrp`]: {
       display: 'flex',
@@ -62,12 +75,28 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       padding: '5px',
       'justify-content': 'center',
       'align-items': 'center',
-      'border-radius': '50%',
       'text-align': 'center',
       'line-height': '24px',
       'font-size': '14px',
       'font-weight': 'bold',
-      background: '#EEE',
+      'background-color': 'var(--bg-5)',
+      cursor: 'pointer',
+      'border-radius': '50%',
+      'border-style': 'var(--global-fld-bdr) !important',
+      'border-color': 'var(--global-fld-bdr-clr) !important',
+      'border-width': 'var(--g-bdr-width) !important',
+    },
+    [`._frm-b${formId}-stp-hdr.active ._frm-b${formId}-stp-icn-cntn`]: {
+      'box-shadow': '0 0 0 3px hsla(var(--gah), var(--gas), var(--gal), 0.30) !important',
+      'border-color': 'var(--global-accent-color) !important',
+      'background-color': 'hsla(var(--gah), var(--gas), var(--gal), 0.10) !important',
+    },
+    [`._frm-b${formId}-stp-hdr.completed ._frm-b${formId}-stp-icn-cntn`]: {
+      'border-color': 'var(--global-accent-color) !important',
+      'background-color': 'hsla(var(--gah), var(--gas), var(--gal), 0.10) !important',
+    },
+    [`._frm-b${formId}-stp-hdr.disabled ._frm-b${formId}-stp-icn-cntn`]: {
+      'background-color': 'var(--bg-5)',
     },
     [`._frm-b${formId}-stp-icn`]: {
       width: '20px',
@@ -77,6 +106,8 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       display: 'flex',
       'align-self': 'center',
       'align-items': 'center',
+      'font-size': '1rem',
+      cursor: 'pointer',
     },
     [`._frm-b${formId}-stp-lbl-pre-i`]: {
       width: 'var(--lbl-pre-i-w)',
@@ -107,6 +138,7 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       display: 'flex',
       'align-self': 'center',
       'align-items': 'center',
+      'font-size': '12px',
     },
     [`._frm-b${formId}-stp-sub-titl-pre-i`]: {
       width: 'var(--sub-titl-pre-i-w)',
@@ -138,15 +170,15 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       color: '#FFF',
     },
     [`._frm-b${formId}-stp-progress-wrpr`]: {
-      'margin-bottom': '10px',
+      padding: 'var(--fld-wrp-p, 0)',
     },
     [`._frm-b${formId}-stp-progress-bar`]: {
       display: 'flex',
-      height: '1rem',
+      height: '1.2rem',
       overflow: 'hidden',
       'font-size': '.75rem',
-      'background-color': '#e9ecef',
-      'border-radius': '.25rem',
+      'background-color': 'var(--bg-5)',
+      'border-radius': '.4rem',
     },
     [`._frm-b${formId}-progress-fill`]: {
       display: 'flex',
@@ -155,14 +187,16 @@ export default function multiStepStyles({ formId, breakpoint, direction }) {
       'justify-content': 'center',
       'text-align': 'center',
       'white-space': 'nowrap',
-      'background-color': '#673AB7',
+      'background-color': 'var(--global-accent-color)',
       transition: 'width .6s ease',
+    },
+    [`._frm-b${formId}-stp-btn-wrpr`]: {
+      padding: 'var(--fld-wrp-p, 0)',
     },
     [`._frm-b${formId}-stp-btn-cntnt`]: {
       display: 'flex',
       'justify-content': 'space-between',
       'align-items': 'center',
-      margin: '10px 0px 0px',
     },
     [`._frm-b${formId}-next-step-btn`]: {
       'font-size': 'var(--btn-fs)!important',

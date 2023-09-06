@@ -6,7 +6,6 @@ import { cleanObj, mergeNestedObj } from '../../../../Utils/globalHelpers'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
 import { defaultDarkThemeColors, defaultFont, defaultLgLightform, defaultLgLightThemeVars, defaultLightThemeColors } from '../1_bitformDefault/1_bitformDefault'
-import multiStepStyles from '../multiStepStyles'
 import advancedFileUp_2_atlassian from './advancedFileUp_2_atlassian'
 import buttonStyle_2_atlassian from './buttonStyle_2_atlassian'
 import checkboxNradioStyle_2_atlassian from './checkboxNradioStyle_2_atlassian'
@@ -18,6 +17,7 @@ import dropdownStyle_2_atlassian from './dropdownStyle_2_atlassian'
 import fileUploadStyle_2_atlassian from './fileUpload_2_atlassian'
 import htmlStyle_2_atlassian from './htmlStyle_2_atlassian'
 import imageStyle_2_atlassian from './imageStyle_2_atlassian'
+import multiStepeStyle_2_atlassian from './multiStepStyle_2_atlassian'
 import paypalStyle_2_atlassian from './paypalStyle_2_atlassian'
 import phoneNumberStyle_2_atlassian from './phoneNumberStyle_2_atlassian'
 import ratingStyle_2_atlassian from './ratingStyle_2_atlassian'
@@ -133,8 +133,7 @@ export default function atlassianTheme({
 
       const allLayouts = getAtom($allLayouts)
       const isMultiStep = Array.isArray(allLayouts) && allLayouts.length > 1
-      const multiStepStyle = isMultiStep ? multiStepStyles({ formId, breakpoint }) : {}
-
+      const multiStepStyle = isMultiStep ? multiStepeStyle_2_atlassian({ formId, breakpoint, direction, colorScheme }) : {}
       return {
         lgLightStyles: {
           theme: 'atlassian',

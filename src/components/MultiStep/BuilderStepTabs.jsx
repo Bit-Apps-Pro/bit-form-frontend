@@ -13,6 +13,7 @@ import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
 import CopyIcn from '../../Icons/CopyIcn'
 import EllipsisIcon from '../../Icons/EllipsisIcon'
+import SettingsIcn from '../../Icons/SettingsIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import { builderBreakpoints, handleFieldExtraAttr } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
@@ -23,8 +24,7 @@ import { cloneLayoutItem, removeLayoutItem } from '../../Utils/gridLayoutHelpers
 import { __ } from '../../Utils/i18nwrap'
 import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
-import multiStepStyles from '../style-new/themes/multiStepStyles'
-import SettingsIcn from '../../Icons/SettingsIcn'
+import multiStepStyle_1_bitformDefault from '../style-new/themes/1_bitformDefault/multiStepStyle_1_bitformDefaullt'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -72,7 +72,7 @@ export default function BuilderStepTabs() {
       draftFormInfo.isMultiStepForm = true
     }))
     setStyles(prevStyles => create(prevStyles, draftStyles => {
-      draftStyles.form = mergeNestedObj(draftStyles.form, multiStepStyles({ formId: formID }))
+      draftStyles.form = mergeNestedObj(draftStyles.form, multiStepStyle_1_bitformDefault({ formId: formID }))
     }))
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
   }
@@ -111,7 +111,7 @@ export default function BuilderStepTabs() {
     }
     if (newLayouts.length === 1) {
       setStyles(prevStyles => create(prevStyles, draftStyles => {
-        const stepStyles = multiStepStyles({ formId: formID })
+        const stepStyles = multiStepStyle_1_bitformDefault({ formId: formID })
         Object.keys(stepStyles).forEach(key => {
           delete draftStyles.form[key]
         })
