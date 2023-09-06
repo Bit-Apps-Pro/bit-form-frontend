@@ -13,16 +13,12 @@ import { $builderRightPanelScroll, $flags } from '../../GlobalStates/GlobalState
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
-import AsteriskCustomizer from './AsteriskCustomizer'
 import ButtonCustomizer from './ButtonCustomizer'
-import ErrorMessagesCustomizer from './ErrorMessagesCustomizer'
 import FieldContainerCustomizer from './FieldContainerCustomizer'
 import FormContainerCustomizer from './FormContainerCustomizer'
 import FormWrapperCustomizer from './FormWrapperCustomizer'
-import HelperTextCustomizer from './HelperTextCustomizer'
 import IcnCustomizer from './IcnCustomizer'
 import InputCustomizer from './InputCustomizer'
-import LabelContainerCustomizer from './LabelContainerCustomizer'
 import LabelCustomizer from './LabelCustomizer'
 import SubTitleCustomizer from './SubTitleCustomizer'
 import ThemeQuickTweaksCustomizer from './ThemeQuickTweaksCustomizer'
@@ -83,16 +79,13 @@ export default function MultiStepCustomize() {
         {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
         {element === '_frm-bg' && <FormWrapperCustomizer element={element} />}
         {element === '_frm' && <FormContainerCustomizer element={element} />}
-        {element === 'field-containers' && <FieldContainerCustomizer />}
-        {element === 'label-containers' && <LabelContainerCustomizer />}
-        {element === 'lbl' && <LabelCustomizer />}
-        {element === 'sub-titl' && <SubTitleCustomizer />}
+        {element === 'stp-cntnr' && <FieldContainerCustomizer />}
+        {element === 'stp-hdr' && <FieldContainerCustomizer />}
+        {element === 'stp-hdr-lbl' && <LabelCustomizer />}
+        {element === 'stp-hdr-sub-titl' && <SubTitleCustomizer />}
         {element === 'fld' && <InputCustomizer />}
-        {element === 'hlp-txt' && <HelperTextCustomizer />}
-        {element === 'err-msg' && <ErrorMessagesCustomizer />}
-        {element === 'btn' && <ButtonCustomizer />}
+        {element === 'stp-btn' && <ButtonCustomizer />}
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
-        {element === 'req-smbl' && <AsteriskCustomizer />}
         {element === 'multi-step' && <FormContainerCustomizer element={element} />}
 
         {/* {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)} */}
