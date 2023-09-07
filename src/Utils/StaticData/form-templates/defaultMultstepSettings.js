@@ -8,6 +8,7 @@ const defaultMultstepSettings = {
   validateOnStepChange: true,
   maintainStepHistory: true,
   saveProgress: true,
+  stepHeaderSwitchable: false,
   headerIcon: {
     show: true,
     iconType: 'number',

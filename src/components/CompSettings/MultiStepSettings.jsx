@@ -27,7 +27,7 @@ export default function MultiStepSettings() {
   const stepLayout = allLayouts[activeBuilderStep]
 
   const {
-    showStepHeader, headerIcon, themeStyle, btnSettings, showLbl, showSubtitle, validateOnStepChange, maintainStepHistory, saveProgress, progressSettings,
+    showStepHeader, headerIcon, themeStyle, btnSettings, showLbl, showSubtitle, validateOnStepChange, stepHeaderSwitchable, maintainStepHistory, saveProgress, progressSettings,
   } = formInfo.multiStepSettings || {}
 
   const setMultistepSettings = (propName, value) => {
@@ -267,7 +267,6 @@ export default function MultiStepSettings() {
 
       </SimpleAccordion>
       <FieldSettingsDivider />
-
       <div className={css(FieldStyle.fieldSection)}>
         <SingleToggle
           id="validate-step-change"
@@ -275,6 +274,16 @@ export default function MultiStepSettings() {
           title={__('Validate on Step Change')}
           action={e => setMultistepSettings('validateOnStepChange', e.target.checked)}
           isChecked={validateOnStepChange || ''}
+        />
+      </div>
+      <FieldSettingsDivider />
+      <div className={css(FieldStyle.fieldSection)}>
+        <SingleToggle
+          id="step-header-switchable"
+          tip="Switch steps by clicking on step header icon & title"
+          title={__('Step Header Switchable')}
+          action={e => setMultistepSettings('stepHeaderSwitchable', e.target.checked)}
+          isChecked={stepHeaderSwitchable || ''}
         />
       </div>
       <FieldSettingsDivider />
