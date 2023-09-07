@@ -29,7 +29,7 @@ export default function MultistepButtonSettings({ btnType, btnName, switching, h
 
   const { btnSettings } = formInfo.multiStepSettings || {}
 
-  const tipMessage = `This ${btnName} Button is use to go in ${btnName} Step. you can show or hide this ${btnName} Button by toggling this option.`
+  const tipMessage = `This ${btnName} Button is use to go in ${btnName} Step.`
 
   const handleToggleAction = ({ target: { checked } }) => {
     // addDefaultStyleClasses(selectedFieldId, 'subTitl')
