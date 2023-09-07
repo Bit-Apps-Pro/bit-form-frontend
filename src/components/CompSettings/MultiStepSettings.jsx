@@ -90,7 +90,7 @@ export default function MultiStepSettings() {
         <SingleToggle
           id="show-stp-header"
           tip="By disabling this option, the Step Header will be hidden."
-          title={__('Show step Header')}
+          title={__('Show Step Header')}
           action={e => setMultistepSettings('showStepHeader', e.target.checked)}
           isChecked={showStepHeader || ''}
         />
