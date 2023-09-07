@@ -1,8 +1,8 @@
-import { useAtom, useAtomValue } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import { $allLayouts, $builderRightPanelScroll, $formInfo } from '../../GlobalStates/GlobalStates'
+import { $allLayouts, $builderRightPanelScroll, $formInfo, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { __ } from '../../Utils/i18nwrap'
@@ -25,6 +25,7 @@ export default function MultiStepSettings() {
   const [styles, setStyles] = useAtom($styles)
   const { css } = useFela()
   const stepLayout = allLayouts[activeBuilderStep]
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const {
     showStepHeader, headerIcon, themeStyle, btnSettings, showLbl, showSubtitle, validateOnStepChange, stepHeaderSwitchable, maintainStepHistory, saveProgress, progressSettings,
@@ -34,24 +35,28 @@ export default function MultiStepSettings() {
     setFormInfo(oldInfo => create(oldInfo, draft => {
       draft.multiStepSettings[propName] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setHeaderIcon = (propName, value) => {
     setFormInfo(oldInfo => create(oldInfo, draft => {
       draft.multiStepSettings.headerIcon[propName] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setButtonSettings = (propName, value) => {
     setFormInfo(oldInfo => create(oldInfo, draft => {
       draft.multiStepSettings.btnSettings[propName] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const setProgressSettings = (propName, value) => {
     setFormInfo(oldInfo => create(oldInfo, draft => {
       draft.multiStepSettings.progressSettings[propName] = value
     }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   return (
@@ -93,6 +98,7 @@ export default function MultiStepSettings() {
           title={__('Show Step Header')}
           action={e => setMultistepSettings('showStepHeader', e.target.checked)}
           isChecked={showStepHeader || ''}
+          isPro
         />
       </div>
 
@@ -108,6 +114,7 @@ export default function MultiStepSettings() {
         toggleChecked={headerIcon?.show}
         open={headerIcon?.show}
         disable={!headerIcon?.show}
+        isPro
       >
         <div className={css(FieldStyle.placeholder)}>
           <div className={css(FieldStyle.fieldNumber)}>
@@ -141,6 +148,7 @@ export default function MultiStepSettings() {
           title={__('Show Header Label')}
           action={e => setMultistepSettings('showLbl', e.target.checked)}
           isChecked={showLbl || ''}
+          isPro
         />
       </div>
 
@@ -153,6 +161,7 @@ export default function MultiStepSettings() {
           title={__('Show Header Subtitle')}
           action={e => setMultistepSettings('showSubtitle', e.target.checked)}
           isChecked={showSubtitle || ''}
+          isPro
         />
       </div>
 
@@ -274,6 +283,7 @@ export default function MultiStepSettings() {
           title={__('Validate on Step Change')}
           action={e => setMultistepSettings('validateOnStepChange', e.target.checked)}
           isChecked={validateOnStepChange || ''}
+          isPro
         />
       </div>
       <FieldSettingsDivider />
@@ -284,6 +294,7 @@ export default function MultiStepSettings() {
           title={__('Step Header Switchable')}
           action={e => setMultistepSettings('stepHeaderSwitchable', e.target.checked)}
           isChecked={stepHeaderSwitchable || ''}
+          isPro
         />
       </div>
       <FieldSettingsDivider />
@@ -295,6 +306,7 @@ export default function MultiStepSettings() {
           title={__('Maintain Step History')}
           action={e => setMultistepSettings('maintainStepHistory', e.target.checked)}
           isChecked={maintainStepHistory || ''}
+          isPro
         />
       </div>
       <FieldSettingsDivider />
@@ -306,6 +318,7 @@ export default function MultiStepSettings() {
           title={__('Save Step Progress')}
           action={e => setMultistepSettings('saveProgress', e.target.checked)}
           isChecked={saveProgress || ''}
+          isPro
         />
       </div>
       <FieldSettingsDivider />
@@ -315,9 +328,9 @@ export default function MultiStepSettings() {
 
 const themeStyles = {
   'style-0': 'Default',
-  'style-1': 'Style 1',
-  'style-2': 'Style 2',
-  'style-3': 'Style 3',
+  // 'style-1': 'Style 1',
+  // 'style-2': 'Style 2',
+  // 'style-3': 'Style 3',
 }
 const iconTypes = {
   icon: 'Icon',

@@ -7,7 +7,7 @@ import { CSSTransition } from 'react-transition-group'
 import { hideAll } from 'tippy.js'
 import { $activeBuilderStep } from '../GlobalStates/FormBuilderStates'
 import {
-  $allLayouts, $builderHookStates, $contextMenu, $fields, $layouts, $nestedLayouts, $proModal, $selectedFieldId,
+  $allLayouts, $builderHookStates, $contextMenu, $fields, $layouts, $nestedLayouts, $proModal, $selectedFieldId, $updateBtn,
 } from '../GlobalStates/GlobalStates'
 import BrushIcn from '../Icons/BrushIcn'
 import CheckMarkIcn from '../Icons/CheckMarkIcn'
@@ -16,6 +16,7 @@ import CopyIcn from '../Icons/CopyIcn'
 import DeSelectIcn from '../Icons/DeSelectIcn'
 import EditIcn from '../Icons/EditIcn'
 import EyeOffIcon from '../Icons/EyeOffIcon'
+import MoveIcn from '../Icons/MoveIcn'
 import { addToBuilderHistory, builderBreakpoints } from '../Utils/FormBuilderHelper'
 import { IS_PRO } from '../Utils/Helpers'
 import proHelperData from '../Utils/StaticData/proHelperData'
@@ -23,7 +24,6 @@ import { __ } from '../Utils/i18nwrap'
 import FieldDeleteButton from './FieldDeleteButton'
 import Downmenu from './Utilities/Downmenu'
 import ProBadge from './Utilities/ProBadge'
-import MoveIcn from '../Icons/MoveIcn'
 
 const MenuItemWrapper = ({ isContextMenu, children }) => {
   function handleItemClick(event) {
@@ -66,6 +66,7 @@ export default function FieldContextMenu({
   const setBuilderHookStates = useSetAtom($builderHookStates)
   const setContextMenu = useSetAtom($contextMenu)
   const nestedLayouts = useAtomValue($nestedLayouts)
+  const setUpdateBtn = useSetAtom($updateBtn)
 
   const subMenuParent = parentName => activeSubMenus.includes(parentName)
   const toggleSubMenu = parentName => {
@@ -143,6 +144,7 @@ export default function FieldContextMenu({
     })
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setContextMenu({})
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const nestedLays = Object.values(nestedLayouts)

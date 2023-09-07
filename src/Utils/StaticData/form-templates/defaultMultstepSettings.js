@@ -1,14 +1,15 @@
+import { IS_PRO } from '../../Helpers'
 import { __ } from '../../i18nwrap'
 
 const defaultMultstepSettings = {
   themeStyle: 'style-0',
-  showStepHeader: true,
+  showStepHeader: IS_PRO,
   showLbl: true,
   showSubtitle: true,
-  validateOnStepChange: true,
-  maintainStepHistory: true,
-  saveProgress: true,
-  stepHeaderSwitchable: false,
+  validateOnStepChange: IS_PRO,
+  maintainStepHistory: IS_PRO,
+  saveProgress: IS_PRO,
+  stepHeaderSwitchable: IS_PRO,
   headerIcon: {
     show: true,
     iconType: 'number',

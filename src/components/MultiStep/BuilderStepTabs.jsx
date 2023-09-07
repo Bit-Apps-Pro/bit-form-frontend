@@ -7,7 +7,7 @@ import { hideAll } from 'tippy.js'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import {
-  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $nestedLayouts, $newFormId,
+  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $nestedLayouts, $newFormId, $updateBtn
 } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -46,6 +46,7 @@ export default function BuilderStepTabs() {
   const fields = useAtomValue($fields)
   const setAlertMdl = useSetAtom($alertModal)
   const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const { styleMode } = flags
   const { css } = useFela()
 
@@ -63,7 +64,6 @@ export default function BuilderStepTabs() {
       }
       draftLayouts.push(stepData)
       setActiveBuilderStep(draftLayouts.length - 1)
-      navigate(`${path}/step-settings`, { replace: true })
     }))
     setFormInfo(prevFormInfo => create(prevFormInfo, draftFormInfo => {
       if (!draftFormInfo.multiStepSettings) {
@@ -75,6 +75,8 @@ export default function BuilderStepTabs() {
       draftStyles.form = mergeNestedObj(draftStyles.form, multiStepStyle_1_bitformDefault({ formId: formID }))
     }))
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+    navigate(`${path}/step-settings`, { replace: true })
   }
 
   const removeFormStep = stepIndex => {
@@ -121,6 +123,7 @@ export default function BuilderStepTabs() {
       }))
     }
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     if (newLayouts.length > 1) navigate(`${path}/step-settings/`, { replace: true })
     else navigate(`${path}/fields-list`, { replace: true })
   }
@@ -175,6 +178,7 @@ export default function BuilderStepTabs() {
     setAllLayouts(draftAllLayouts)
     setActiveBuilderStep(newStepIndex)
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
     navigate(`${path}/step-settings`, { replace: true })
   }
 
@@ -182,6 +186,7 @@ export default function BuilderStepTabs() {
     if (!Array.isArray(allLayouts)) return
     setAllLayouts((items) => arrayMoveImmutable(items, oldIndex, newIndex))
     if (oldIndex === activeBuilderStep) setActiveBuilderStep(newIndex)
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const onStepChange = stepIndex => () => {
