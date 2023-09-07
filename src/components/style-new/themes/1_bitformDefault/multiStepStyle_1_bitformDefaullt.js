@@ -97,6 +97,7 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, di
     },
     [`._frm-b${formId}-stp-hdr.disabled ._frm-b${formId}-stp-icn-cntn`]: {
       'background-color': 'var(--bg-5)',
+      cursor: 'default',
     },
     [`._frm-b${formId}-stp-icn`]: {
       width: '20px',
@@ -108,6 +109,9 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, di
       'align-items': 'center',
       'font-size': '1rem',
       cursor: 'pointer',
+    },
+    [`._frm-b${formId}-stp-hdr.disabled ._frm-b${formId}-stp-hdr-lbl`]: {
+      cursor: 'default',
     },
     [`._frm-b${formId}-stp-lbl-pre-i`]: {
       width: 'var(--lbl-pre-i-w)',
