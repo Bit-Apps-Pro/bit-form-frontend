@@ -243,9 +243,14 @@ export default class BitMultiStepForm {
   }
 
   reset() {
-    console.log('reset')
     this.step = this.#defaultStep || 1
     this.#removeAllEventListeners()
+    if (this.#validateOnStepChange) {
+      const stepHdrs = this.#selectAll(`._frm-b${this.#formId}-stp-hdr:not([data-step="1"])`)
+      if (stepHdrs) {
+        stepHdrs.forEach(stepHdr => stepHdr.classList.add('disabled'))
+      }
+    }
     this.init()
   }
 }
