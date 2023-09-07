@@ -7,8 +7,10 @@ function dispatchFieldError(fldErrors, contentId) {
     const errTxt = bfSelect(`.${fk}-err-txt`, errWrp)
     bfSelect(`.${fk}-err-msg`, errWrp).style.removeProperty('display')
     errTxt.innerHTML = fldErrors[fk]
-    setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
-    setStyleProperty(errWrp, 'opacity', 1)
+    setTimeout(() => {
+      setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
+      setStyleProperty(errWrp, 'opacity', 1)
+    })
   })
   if (typeof moveStepToFirstErrFld !== 'undefined') moveStepToFirstErrFld(window?.bf_globals?.[contentId], fldKeys)
 }
