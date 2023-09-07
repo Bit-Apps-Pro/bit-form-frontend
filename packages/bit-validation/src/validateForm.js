@@ -132,8 +132,10 @@ const generateErrMsg = (errKey, fldKey, fldData, selector = '') => {
     if (errKey && fldData?.err?.[errKey]?.show) {
       errMsg.style.removeProperty('display')
       errTxt.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
-      setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
-      setStyleProperty(errWrp, 'opacity', 1)
+      setTimeout(() => {
+        setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
+        setStyleProperty(errWrp, 'opacity', 1)
+      }, 0)
       const fld = bfSelect(`#form-${contentId} ${selector} .btcd-fld-itm.${fldKey}`)
       scrollToFld(fld)
       errors.push(fldKey)
