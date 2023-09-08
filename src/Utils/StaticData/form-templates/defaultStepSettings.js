@@ -1,3 +1,5 @@
+import { IS_PRO } from '../../Helpers'
+
 export default function defaultStepSettings(stepIndex) {
   return {
     lbl: `Step ${stepIndex + 1}`,
@@ -5,8 +7,8 @@ export default function defaultStepSettings(stepIndex) {
     icon: '',
     showIcon: true,
     iconType: 'number',
-    showLbl: true,
-    showSubtitle: true,
+    showLbl: IS_PRO,
+    showSubtitle: IS_PRO,
     customClasses: {},
     customAttributes: {},
   }

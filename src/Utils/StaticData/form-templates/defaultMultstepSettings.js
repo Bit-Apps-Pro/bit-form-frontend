@@ -4,14 +4,14 @@ import { __ } from '../../i18nwrap'
 const defaultMultstepSettings = {
   themeStyle: 'style-0',
   showStepHeader: IS_PRO,
-  showLbl: true,
-  showSubtitle: true,
+  showLbl: IS_PRO,
+  showSubtitle: IS_PRO,
   validateOnStepChange: IS_PRO,
   maintainStepHistory: IS_PRO,
   saveProgress: IS_PRO,
   stepHeaderSwitchable: IS_PRO,
   headerIcon: {
-    show: true,
+    show: IS_PRO,
     iconType: 'number',
   },
   btnSettings: {
