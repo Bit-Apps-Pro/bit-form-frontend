@@ -1,9 +1,11 @@
-import { useAtom, useAtomValue } from 'jotai'
+/* eslint-disable react/jsx-props-no-spreading */
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import { $activeStepSettings, $allLayouts, $builderRightPanelScroll, $formInfo } from '../../GlobalStates/GlobalStates'
+import { $activeStepSettings, $builderRightPanelScroll, $formInfo, $updateBtn } from '../../GlobalStates/GlobalStates'
+import { IS_PRO } from '../../Utils/Helpers'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
@@ -11,6 +13,7 @@ import style from '../../styles/FieldSettingTitle.style'
 import FieldStyle from '../../styles/FieldStyle.style'
 import CoolCopy from '../Utilities/CoolCopy'
 import Modal from '../Utilities/Modal'
+import SingleToggle from '../Utilities/SingleToggle'
 import Back2FldBtn from './Back2FldBtn'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
@@ -19,19 +22,27 @@ import FieldIconSettings from './StyleCustomize/ChildComp/FieldIconSettings'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function StepSettings() {
-  const allLayouts = useAtomValue($allLayouts)
   const activeBuilderStep = useAtomValue($activeBuilderStep)
   const scrollTo = useAtomValue($builderRightPanelScroll)
   const [formInfo, setFormInfo] = useAtom($formInfo)
+  const setUpdateBtn = useSetAtom($updateBtn)
   const [activeStepSettings, setActiveStepSettings] = useAtom($activeStepSettings)
   const { css } = useFela()
   const stepData = activeStepSettings || {}
   const [icnMdl, setIcnMdl] = useState(false)
   const [icnType, setIcnType] = useState('')
+  const { showStepHeader } = formInfo.multiStepSettings || {}
 
   const {
     lbl, showLbl, subtitle, showSubtitle, lblPreIcn, lblSufIcn, subTlePreIcn, subTleSufIcn,
   } = stepData || {}
+
+  const setMultistepSettings = (propName, value) => {
+    setFormInfo(oldInfo => create(oldInfo, draft => {
+      draft.multiStepSettings[propName] = value
+    }))
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
+  }
 
   const setIconModel = (iconType) => {
     // if (!isStyleExist(styles, fldKey, styleClasses[iconType])) addDefaultStyleClasses(selectedFieldId, iconType)
@@ -94,6 +105,18 @@ export default function StepSettings() {
           />
         </div>
         <FieldSettingsDivider />
+        <div className={css(FieldStyle.fieldSection)}>
+          <SingleToggle
+            id="show-stp-header"
+            tip="By disabling this option, the Step Header will be hidden."
+            title={__('Show Step Header')}
+            action={e => setMultistepSettings('showStepHeader', e.target.checked)}
+            isChecked={showStepHeader || ''}
+            isPro
+          />
+        </div>
+
+        <FieldSettingsDivider />
         <SimpleAccordion
           id="fld-lbl-stng"
           title={__('Step Label')}
@@ -104,7 +127,8 @@ export default function StepSettings() {
           toggleAction={(e) => setStepSettings('showLbl', e.target.checked)}
           toggleChecked={showLbl}
           open={showLbl}
-          disable={!showLbl}
+          {...IS_PRO && { disable: !showLbl }}
+          isPro
           proTip="Use this feature? please buy pro version."
         >
           <div>
@@ -152,7 +176,8 @@ export default function StepSettings() {
           toggleAction={(e) => setStepSettings('showSubtitle', e.target.checked)}
           toggleChecked={showSubtitle}
           open={showSubtitle}
-          disable={!showSubtitle}
+          {...IS_PRO && { disable: !showSubtitle }}
+          isPro
           proTip="Use this feature? please buy pro version."
         >
           <div>

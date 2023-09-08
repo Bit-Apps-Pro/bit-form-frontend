@@ -1,39 +1,27 @@
 /* eslint-disable react/no-unknown-property */
 import { useAtomValue } from 'jotai'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import { $allLayouts, $flags } from '../../GlobalStates/GlobalStates'
 import StepHeader from './StepHeader'
 
-export default function StepsHeaderContainer() {
-  const { formType, formID } = useParams()
+export default function StepsHeaderContainer({ navigateToSettings }) {
+  const { formID } = useParams()
   const allLayouts = useAtomValue($allLayouts)
+  const flags = useAtomValue($flags)
+  const { styleMode } = flags
   const formLayouts = Array.isArray(allLayouts) ? allLayouts : [allLayouts]
   const isMultiStep = formLayouts.length > 1
   const activeBuilderStep = useAtomValue($activeBuilderStep)
-  const flags = useAtomValue($flags)
-  const navigate = useNavigate()
-  const stepLayout = allLayouts[activeBuilderStep]
-  const { styleMode, inspectMode } = flags
-  const path = `/form/builder/${formType}/${formID}`
 
   if (!isMultiStep) return null
 
-  const handleStepHeaderClick = () => {
-    if (inspectMode) return
-    if (styleMode) {
-      navigate(`${path}/theme-customize/multi-step/quick-tweaks`, { replace: true })
-      return
-    }
-    navigate(`${path}/multi-step-settings`, { replace: true })
-  }
-
   return (
     <div
-      className={`_frm-b${formID}-stp-hdr-cntnr`}
+      className={`_frm-b${formID}-stp-hdr-cntnr ${styleMode ? '' : 'drag'}`}
       style={{ cursor: 'pointer' }}
-      onClick={handleStepHeaderClick}
-      onKeyDown={handleStepHeaderClick}
+      onClick={navigateToSettings}
+      onKeyDown={navigateToSettings}
       role="button"
       tabIndex={0}
     >

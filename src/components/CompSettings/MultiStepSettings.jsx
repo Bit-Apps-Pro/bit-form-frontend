@@ -166,6 +166,43 @@ export default function MultiStepSettings() {
       </div>
 
       <FieldSettingsDivider />
+      <SimpleAccordion
+        id="show-progress"
+        title={__('Show Progress Bar')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        switching
+        tip="By disabling this option, the Progress bar will be hidden."
+        tipProps={{ width: 250, icnSize: 17 }}
+        toggleAction={(e) => setProgressSettings('show', e.target.checked)}
+        toggleChecked={progressSettings?.show}
+        open={progressSettings?.show}
+        disable={!progressSettings?.show}
+      >
+        <div className={css({ m: 5 })}>
+          {/* <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+            <span>{__('Bar Position:')}</span>
+            <select
+              data-testid="btn-posn-slct"
+              className={css(FieldStyle.input, FieldStyle.w140)}
+              name=""
+              id=""
+              value={progressSettings?.position}
+              onChange={(e) => setProgressSettings('position', e.target.value)}
+            >
+              {btnPositionList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
+            </select>
+          </div> */}
+          <SingleToggle
+            id="show-pecentage"
+            // tip="By disabling this option, the Progress Percentage will be hidden."
+            title={__('Show Percentage')}
+            action={e => setProgressSettings('showPercentage', e.target.checked)}
+            isChecked={progressSettings?.showPercentage || ''}
+          />
+        </div>
+
+      </SimpleAccordion>
+      <FieldSettingsDivider />
 
       <SimpleAccordion
         id="show-step-btn"
@@ -193,7 +230,7 @@ export default function MultiStepSettings() {
               {btnPositionList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
           </div>
-          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
+          {/* <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
             <span>{__('Button Alignment:')}</span>
             <select
               data-testid="btn-algn-slct"
@@ -218,7 +255,7 @@ export default function MultiStepSettings() {
             >
               {btnOrientationList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
             </select>
-          </div>
+          </div> */}
         </div>
       </SimpleAccordion>
       <FieldSettingsDivider />
@@ -239,43 +276,6 @@ export default function MultiStepSettings() {
           <FieldSettingsDivider />
         </>
       )}
-      <SimpleAccordion
-        id="show-progress"
-        title={__('Show Progress Bar')}
-        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
-        switching
-        tip="By disabling this option, the Progress bar will be hidden."
-        tipProps={{ width: 250, icnSize: 17 }}
-        toggleAction={(e) => setProgressSettings('show', e.target.checked)}
-        toggleChecked={progressSettings?.show}
-        open={progressSettings?.show}
-        disable={!progressSettings?.show}
-      >
-        <div className={css({ mx: 5 })}>
-          <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
-            <span>{__('Bar Position:')}</span>
-            <select
-              data-testid="btn-posn-slct"
-              className={css(FieldStyle.input, FieldStyle.w140)}
-              name=""
-              id=""
-              value={progressSettings?.position}
-              onChange={(e) => setProgressSettings('position', e.target.value)}
-            >
-              {btnPositionList.map(itm => <option key={`btcd-k-${itm.name}`} value={itm.value}>{itm.name}</option>)}
-            </select>
-          </div>
-          <SingleToggle
-            id="show-pecentage"
-            // tip="By disabling this option, the Progress Percentage will be hidden."
-            title={__('Show Percentage')}
-            action={e => setProgressSettings('showPercentage', e.target.checked)}
-            isChecked={progressSettings?.showPercentage || ''}
-          />
-        </div>
-
-      </SimpleAccordion>
-      <FieldSettingsDivider />
       <div className={css(FieldStyle.fieldSection)}>
         <SingleToggle
           id="validate-step-change"
@@ -337,21 +337,6 @@ const iconTypes = {
   number: 'Number',
 }
 const btnPositionList = [
-  { name: 'Top', value: 'column-reverse' },
-  { name: 'Bottom', value: 'column' },
-  { name: 'Left', value: 'row-reverse' },
-  { name: 'Right', value: 'row' },
-]
-
-const btnAlignmentList = [
-  { name: 'Start', value: 'start' },
-  { name: 'Center', value: 'center' },
-  { name: 'End', value: 'end' },
-]
-
-const btnOrientationList = [
-  { name: 'Vertical', value: 'column' },
-  { name: 'Vertical-reverse', value: 'column-reverse' },
-  { name: 'Horizontal', value: 'row' },
-  { name: 'Horizontal-Reverse', value: 'row-reverse' },
+  { name: 'Top', value: 'column' },
+  { name: 'Bottom', value: 'column-reverse' },
 ]
