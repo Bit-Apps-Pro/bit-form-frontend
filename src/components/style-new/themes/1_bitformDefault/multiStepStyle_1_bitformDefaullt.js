@@ -22,7 +22,6 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, di
       'align-items': 'center',
     },
     [`._frm-b${formId}-stp-wrpr`]: {
-      display: 'grid',
       'border-radius': '4px',
       padding: '3px',
     },
@@ -194,6 +193,23 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, di
       'background-color': 'var(--global-accent-color)',
       transition: 'width .6s ease',
     },
+    [`._frm-b${formId}-stp-cntnt-wrpr`]: {
+      display: 'flex',
+      'flex-direction': 'row',
+    },
+    [`._frm-b${formId}-stp-cntnt`]: {
+      width: '100%',
+      opacity: '100%',
+      display: 'flex',
+      'flex-direction': 'column',
+      'align-self': 'flex-start',
+      transition: 'width .4s ease, opacity 0.3s ease',
+    },
+    [`._frm-b${formId}-stp-cntnt.deactive`]: {
+      width: '0px',
+      opacity: '0%',
+      overflow: 'hidden',
+    },
     [`._frm-b${formId}-stp-btn-wrpr`]: {
       padding: 'var(--fld-wrp-p, 0)',
     },
@@ -201,6 +217,7 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, di
       display: 'flex',
       'justify-content': 'space-between',
       'align-items': 'center',
+      'flex-direction': 'row',
     },
     [`._frm-b${formId}-next-step-btn`]: {
       'font-size': 'var(--btn-fs)!important',
