@@ -130,10 +130,10 @@ export default class BitMultiStepForm {
   #showStep(step) {
     const stepWrapper = this.#select(`._frm-b${this.#formId}-stp-cntnt[data-step="${step}"]`)
     if (!stepWrapper) return
-    stepWrapper.classList.remove('d-none')
+    stepWrapper.classList.remove('deactive')
     const otherSteps = this.#selectAll(`._frm-b${this.#formId}-stp-cntnt:not([data-step="${step}"])`)
     otherSteps.forEach((stepElm) => {
-      stepElm.classList.add('d-none')
+      stepElm.classList.add('deactive')
     })
     // step headers
     const allStepHeaders = this.#selectAll(`._frm-b${this.#formId}-stp-hdr`)
