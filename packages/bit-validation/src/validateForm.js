@@ -127,23 +127,42 @@ const generateErrMsg = (errKey, fldKey, fldData, selector = '') => {
   const errWrp = bfSelect(`#form-${contentId} ${selector} .${fldKey}-err-wrp`)
   const errTxt = bfSelect(`.${fldKey}-err-txt`, errWrp)
   const errMsg = bfSelect(`.${fldKey}-err-msg`, errWrp)
+  let isErrWrpGrid = false
+  try {
+    isErrWrpGrid = getComputedStyle(errWrp).display === 'grid'
+    if (isErrWrpGrid) {
+      errWrp.style.removeProperty('opacity')
+      errWrp.style.removeProperty('height')
+      errMsg.style.removeProperty('display')
+    }
+  } catch (_) {
+    isErrWrpGrid = false
+  }
 
   if (errTxt && 'err' in (fldData || {})) {
     if (errKey && fldData?.err?.[errKey]?.show) {
-      errMsg.style.removeProperty('display')
       errTxt.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
-      setTimeout(() => {
-        setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
-        setStyleProperty(errWrp, 'opacity', 1)
-      }, 100)
+      if (!isErrWrpGrid) {
+        setTimeout(() => {
+          errMsg.style.removeProperty('display')
+          setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
+          setStyleProperty(errWrp, 'opacity', 1)
+        }, 100)
+      } else {
+        setStyleProperty(errWrp, 'grid-template-rows', '1fr')
+      }
       const fld = bfSelect(`#form-${contentId} ${selector} .btcd-fld-itm.${fldKey}`)
       scrollToFld(fld)
       errors.push(fldKey)
     } else {
       errTxt.innerHTML = ''
-      setStyleProperty(errMsg, 'display', 'none')
-      setStyleProperty(errWrp, 'height', 0)
-      setStyleProperty(errWrp, 'opacity', 0)
+      if (!isErrWrpGrid) {
+        setStyleProperty(errWrp, 'height', 0)
+        setStyleProperty(errWrp, 'opacity', 0)
+        setStyleProperty(errMsg, 'display', 'none')
+      } else {
+        setStyleProperty(errWrp, 'grid-template-rows', '0fr')
+      }
     }
   }
 }
