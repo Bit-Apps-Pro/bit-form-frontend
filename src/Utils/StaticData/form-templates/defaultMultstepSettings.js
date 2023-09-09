@@ -19,14 +19,14 @@ const defaultMultstepSettings = {
     prevBtn: {
       key: 'prev-step-btn',
       typ: 'button',
-      btnType: 'prevBtn',
+      btnTyp: 'previous-step',
       btnSiz: 'md',
       txt: __('Previous'),
     },
     nextBtn: {
       key: 'next-step-btn',
       typ: 'button',
-      btnType: 'nextBtn',
+      btnTyp: 'next-step',
       btnSiz: 'md',
       txt: __('Next'),
     },

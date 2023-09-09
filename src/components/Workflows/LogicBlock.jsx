@@ -94,7 +94,8 @@ function LogicBlock({
     if (!dataProps) return false
     const [propsPath, propValue] = dataProps.split(':')
     const nestedProps = propsPath.split('.')
-    const nestedPropsValue = nestedProps.reduce((acc, nestedItm) => acc[nestedItm], fields[fieldKey])
+    const fldData = formFields.find(fld => fld.key === fieldKey) || {}
+    const nestedPropsValue = nestedProps.reduce((acc, nestedItm) => acc[nestedItm], fldData)
     return nestedPropsValue === propValue
   })
 
