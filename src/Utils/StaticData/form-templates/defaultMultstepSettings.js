@@ -30,7 +30,7 @@ const defaultMultstepSettings = {
       btnSiz: 'md',
       txt: __('Next'),
     },
-    position: 'bottom',
+    position: 'column',
     orientation: 'horizontal',
     alignment: 'right',
   },

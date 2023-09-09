@@ -1,9 +1,12 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
+import { useParams } from 'react-router-dom'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import { $allLayouts, $builderRightPanelScroll, $formInfo, $updateBtn } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
+import { IS_PRO } from '../../Utils/Helpers'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
@@ -18,6 +21,7 @@ import MultistepButtonSettings from './CompSettingsUtils/MultistepButtonSettings
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 
 export default function MultiStepSettings() {
+  const { formID } = useParams()
   const allLayouts = useAtomValue($allLayouts)
   const activeBuilderStep = useAtomValue($activeBuilderStep)
   const scrollTo = useAtomValue($builderRightPanelScroll)
@@ -48,6 +52,9 @@ export default function MultiStepSettings() {
   const setButtonSettings = (propName, value) => {
     setFormInfo(oldInfo => create(oldInfo, draft => {
       draft.multiStepSettings.btnSettings[propName] = value
+    }))
+    setStyles(preStyle => create(preStyle, drftStyle => {
+      drftStyle.form[`._frm-b${formID}-stp-cntnt`]['flex-direction'] = value
     }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
@@ -91,16 +98,40 @@ export default function MultiStepSettings() {
       </div>
 
       <FieldSettingsDivider />
-      <div className={css(FieldStyle.fieldSection)}>
-        <SingleToggle
-          id="show-stp-header"
-          tip="By disabling this option, the Step Header will be hidden."
-          title={__('Show Step Header')}
-          action={e => setMultistepSettings('showStepHeader', e.target.checked)}
-          isChecked={showStepHeader || ''}
-          isPro
-        />
-      </div>
+      <SimpleAccordion
+        id="show-stp-header"
+        title={__('Show Step Header')}
+        className={css(FieldStyle.fieldSection, FieldStyle.hover_tip)}
+        switching
+        tip="By disabling this option, the Step Header will be hidden."
+        tipProps={{ width: 250, icnSize: 17 }}
+        toggleAction={(e) => setMultistepSettings('showStepHeader', e.target.checked)}
+        toggleChecked={showStepHeader}
+        open={showStepHeader}
+        {...IS_PRO && { disable: !showStepHeader }}
+        isPro
+      >
+        <div className={css(FieldStyle.fieldSection)}>
+          <SingleToggle
+            id="show-header-lbl"
+            // tip="By disabling this option, the Step Header Label will be hidden."
+            title={__('Show Header Label')}
+            action={e => setMultistepSettings('showLbl', e.target.checked)}
+            isChecked={showLbl || ''}
+            isPro
+          />
+        </div>
+        <div className={css(FieldStyle.fieldSection)}>
+          <SingleToggle
+            id="show-header-subtitle"
+            // tip="By disabling this option, the Step Header Subtitle will be hidden."
+            title={__('Show Header Subtitle')}
+            action={e => setMultistepSettings('showSubtitle', e.target.checked)}
+            isChecked={showSubtitle || ''}
+            isPro
+          />
+        </div>
+      </SimpleAccordion>
 
       <FieldSettingsDivider />
       <SimpleAccordion
@@ -113,7 +144,7 @@ export default function MultiStepSettings() {
         toggleAction={(e) => setHeaderIcon('show', e.target.checked)}
         toggleChecked={headerIcon?.show}
         open={headerIcon?.show}
-        disable={!headerIcon?.show}
+        {...IS_PRO && { disable: !headerIcon?.show }}
         isPro
       >
         <div className={css(FieldStyle.placeholder)}>
@@ -141,31 +172,6 @@ export default function MultiStepSettings() {
 
       <FieldSettingsDivider />
 
-      <div className={css(FieldStyle.fieldSection)}>
-        <SingleToggle
-          id="show-header-lbl"
-          tip="By disabling this option, the Step Header Label will be hidden."
-          title={__('Show Header Label')}
-          action={e => setMultistepSettings('showLbl', e.target.checked)}
-          isChecked={showLbl || ''}
-          isPro
-        />
-      </div>
-
-      <FieldSettingsDivider />
-
-      <div className={css(FieldStyle.fieldSection)}>
-        <SingleToggle
-          id="show-header-subtitle"
-          tip="By disabling this option, the Step Header Subtitle will be hidden."
-          title={__('Show Header Subtitle')}
-          action={e => setMultistepSettings('showSubtitle', e.target.checked)}
-          isChecked={showSubtitle || ''}
-          isPro
-        />
-      </div>
-
-      <FieldSettingsDivider />
       <SimpleAccordion
         id="show-progress"
         title={__('Show Progress Bar')}
@@ -178,7 +184,7 @@ export default function MultiStepSettings() {
         open={progressSettings?.show}
         disable={!progressSettings?.show}
       >
-        <div className={css({ m: 5 })}>
+        <div className={css(FieldStyle.fieldSection)}>
           {/* <div className={css(FieldStyle.fieldNumber, { py: '0px !important' })}>
             <span>{__('Bar Position:')}</span>
             <select
@@ -260,22 +266,24 @@ export default function MultiStepSettings() {
       </SimpleAccordion>
       <FieldSettingsDivider />
 
-      {btnSettings?.show && (
-        <>
-          <MultistepButtonSettings
-            btnType="prevBtn"
-            btnName="Previous"
-            styleRoute="prev-btn"
-          />
-          <FieldSettingsDivider />
-          <MultistepButtonSettings
-            btnType="nextBtn"
-            btnName="Next"
-            styleRoute="next-btn"
-          />
-          <FieldSettingsDivider />
-        </>
-      )}
+      {
+        btnSettings?.show && (
+          <>
+            <MultistepButtonSettings
+              btnType="prevBtn"
+              btnName="Previous"
+              styleRoute="prev-btn"
+            />
+            <FieldSettingsDivider />
+            <MultistepButtonSettings
+              btnType="nextBtn"
+              btnName="Next"
+              styleRoute="next-btn"
+            />
+            <FieldSettingsDivider />
+          </>
+        )
+      }
       <div className={css(FieldStyle.fieldSection)}>
         <SingleToggle
           id="validate-step-change"
@@ -337,6 +345,6 @@ const iconTypes = {
   number: 'Number',
 }
 const btnPositionList = [
-  { name: 'Top', value: 'column' },
-  { name: 'Bottom', value: 'column-reverse' },
+  { name: 'Top', value: 'column-reverse' },
+  { name: 'Bottom', value: 'column' },
 ]
