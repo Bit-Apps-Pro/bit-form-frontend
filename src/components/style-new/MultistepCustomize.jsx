@@ -76,7 +76,8 @@ export default function MultiStepCustomize() {
         {/* <div className={css(cls.divider)} /> */}
       </div>
       <div className={css(cls.wrp)}>
-        {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
+        <span>Multi step style edior is not availabe. this feature will comming soon.</span>
+        {/* {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
         {element === '_frm-bg' && <FormWrapperCustomizer element={element} />}
         {element === '_frm' && <FormContainerCustomizer element={element} />}
         {element === 'stp-cntnr' && <FieldContainerCustomizer />}
@@ -86,7 +87,7 @@ export default function MultiStepCustomize() {
         {element === 'fld' && <InputCustomizer />}
         {element === 'stp-btn' && <ButtonCustomizer />}
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
-        {element === 'multi-step' && <FormContainerCustomizer element={element} />}
+        {element === 'multi-step' && <FormContainerCustomizer element={element} />} */}
 
         {/* {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)} */}
       </div>
