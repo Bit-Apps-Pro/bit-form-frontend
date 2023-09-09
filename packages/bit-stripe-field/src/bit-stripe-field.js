@@ -247,7 +247,7 @@ export default class BitStripeField {
     const progressData = await saveFormProgress(contentId)
     const savedFormData = progressData?.[contentId]
     if (!savedFormData?.success) return Promise.reject()
-    if (savedFormData.entry_id) this.#entryId = savedFormData.entry_id
+    if (savedFormData.success) this.#entryId = savedFormData.data.entry_id
     return Promise.resolve(true)
   }
 
