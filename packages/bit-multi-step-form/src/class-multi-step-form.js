@@ -19,6 +19,8 @@ export default class BitMultiStepForm {
 
   #stepHeaderSwitchable = true
 
+  #showPercentage = true
+
   #contentId = ''
 
   #formId = 0
@@ -92,6 +94,7 @@ export default class BitMultiStepForm {
     if ('maintainStepHistory' in config) this.#maintainStepHistory = config.maintainStepHistory
     if ('saveProgress' in config) this.#saveProgress = config.saveProgress
     if ('stepHeaderSwitchable' in config) this.#stepHeaderSwitchable = config.stepHeaderSwitchable
+    if ('showPercentage' in config) this.#showPercentage = config.showPercentage
     this.#contentId = config.contentId
     this.#formId = this.#getFormId()
   }
@@ -148,7 +151,7 @@ export default class BitMultiStepForm {
     const progressFillElm = this.#select(`._frm-b${this.#formId}-progress-fill`)
     const totalSteps = otherSteps.length + 1
     const progress = Math.round(((step - 1) / totalSteps) * 100)
-    progressFillElm.textContent = `${progress}%`
+    if (this.#showPercentage) progressFillElm.textContent = `${progress}%`
     progressFillElm.style.width = `${progress}%`
   }
 
