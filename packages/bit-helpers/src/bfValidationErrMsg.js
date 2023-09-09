@@ -10,7 +10,7 @@ function dispatchFieldError(fldErrors, contentId) {
     setTimeout(() => {
       setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
       setStyleProperty(errWrp, 'opacity', 1)
-    })
+    }, 100)
   })
   if (typeof moveStepToFirstErrFld !== 'undefined') moveStepToFirstErrFld(window?.bf_globals?.[contentId], fldKeys)
 }

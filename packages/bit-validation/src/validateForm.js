@@ -135,7 +135,7 @@ const generateErrMsg = (errKey, fldKey, fldData, selector = '') => {
       setTimeout(() => {
         setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
         setStyleProperty(errWrp, 'opacity', 1)
-      })
+      }, 100)
       const fld = bfSelect(`#form-${contentId} ${selector} .btcd-fld-itm.${fldKey}`)
       scrollToFld(fld)
       errors.push(fldKey)
