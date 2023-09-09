@@ -2,7 +2,7 @@ import { getAtom } from '../../../../GlobalStates/BitStore'
 import { $formInfo } from '../../../../GlobalStates/GlobalStates'
 
 // eslint-disable-next-line camelcase
-export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, direction, colorScheme }) {
+export default function multiStepStyle_1_bitformDefault({ formId, breakpoint = 'lg', direction, colorScheme = 'light' }) {
   const formInfo = getAtom($formInfo)
   const { multiStepSettings } = formInfo
   const { themeStyle } = multiStepSettings || {}
@@ -201,7 +201,7 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint, di
       width: '100%',
       opacity: '100%',
       display: 'flex',
-      'flex-direction': 'column',
+      'flex-direction': multiStepSettings?.btnSettings?.position || 'column',
       'align-self': 'flex-start',
       transition: 'width .4s ease, opacity 0.3s ease',
     },

@@ -7,7 +7,8 @@ import { hideAll } from 'tippy.js'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import {
-  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $layouts, $nestedLayouts, $newFormId, $updateBtn,
+  $alertModal, $allLayouts,
+  $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $nestedLayouts, $newFormId, $updateBtn,
 } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -19,13 +20,15 @@ import { builderBreakpoints, handleFieldExtraAttr } from '../../Utils/FormBuilde
 import { deepCopy } from '../../Utils/Helpers'
 import defaultMultstepSettings from '../../Utils/StaticData/form-templates/defaultMultstepSettings'
 import defaultStepSettings from '../../Utils/StaticData/form-templates/defaultStepSettings'
+import paymentFields from '../../Utils/StaticData/paymentFields'
 import { mergeNestedObj } from '../../Utils/globalHelpers'
 import { cloneLayoutItem, removeLayoutItem } from '../../Utils/gridLayoutHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
+import multiStepStyle_0_noStyle from '../style-new/themes/0_noStyle/multiStepStyle_0_noStyle'
 import multiStepStyle_1_bitformDefault from '../style-new/themes/1_bitformDefault/multiStepStyle_1_bitformDefaullt'
-import paymentFields from '../../Utils/StaticData/paymentFields'
+import multiStepeStyle_2_atlassian from '../style-new/themes/2_atlassian/multiStepStyle_2_atlassian'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -43,13 +46,22 @@ export default function BuilderStepTabs() {
   const formLayouts = Array.isArray(allLayouts) ? allLayouts : [allLayouts]
   const path = `/form/builder/${formType}/${formID}`
   const isMultiStep = formLayouts.length > 1
-  const setStyles = useSetAtom($styles)
+  const [styles, setStyles] = useAtom($styles)
   const fields = useAtomValue($fields)
   const setAlertMdl = useSetAtom($alertModal)
   const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
   const setUpdateBtn = useSetAtom($updateBtn)
   const { styleMode } = flags
   const { css } = useFela()
+
+  console.log('styles ', styles)
+
+  const getMultiStepStyle = () => {
+    if (styles.theme === 'noStyle') return multiStepStyle_0_noStyle({ formId: formID })
+    if (styles.theme === 'bitformDefault') return multiStepStyle_1_bitformDefault({ formId: formID })
+    if (styles.theme === 'atlassian') return multiStepeStyle_2_atlassian({ formId: formID })
+    return multiStepStyle_1_bitformDefault({ formId: formID })
+  }
 
   const addFormStep = () => {
     setAllLayouts(prevLayouts => create(prevLayouts, draftLayouts => {
@@ -73,7 +85,19 @@ export default function BuilderStepTabs() {
       draftFormInfo.isMultiStepForm = true
     }))
     setStyles(prevStyles => create(prevStyles, draftStyles => {
-      draftStyles.form = mergeNestedObj(draftStyles.form, multiStepStyle_1_bitformDefault({ formId: formID }))
+      Object.keys(fields || {}).forEach(fldKey => {
+        draftStyles.fields[fldKey].classes[`.${fldKey}-err-wrp`] = {
+          transition: 'all .3s',
+          display: 'grid',
+          'grid-template-rows': '0fr',
+        }
+        draftStyles.fields[fldKey].classes[`.${fldKey}-err-inner`] = {
+          overflow: 'hidden',
+        }
+      })
+      if (!draftStyles.form[`._frm-b${formID}-stp-cntnr`]) {
+        draftStyles.form = mergeNestedObj(draftStyles.form, getMultiStepStyle())
+      }
     }))
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
