@@ -200,6 +200,7 @@ export default function MultiStepSettings() {
           </div> */}
           <SingleToggle
             id="show-pecentage"
+            className={css(ut.mt2)}
             // tip="By disabling this option, the Progress Percentage will be hidden."
             title={__('Show Percentage')}
             action={e => setProgressSettings('showPercentage', e.target.checked)}

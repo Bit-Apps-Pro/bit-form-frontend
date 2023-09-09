@@ -110,7 +110,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
     const fieldsCount = Object.keys(fields).length
-    const layoutLgFieldsCount = getLayoutItemCount()
+    const layoutLgFieldsCount = getLayoutItemCount(layouts)
     if (fieldsCount === layoutLgFieldsCount) {
       startTransition(() => {
         setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draft => {

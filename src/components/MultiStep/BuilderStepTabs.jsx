@@ -7,7 +7,7 @@ import { hideAll } from 'tippy.js'
 import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import {
-  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $nestedLayouts, $newFormId, $updateBtn
+  $alertModal, $allLayouts, $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $layouts, $nestedLayouts, $newFormId, $updateBtn,
 } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -25,6 +25,7 @@ import { __ } from '../../Utils/i18nwrap'
 import Downmenu from '../Utilities/Downmenu'
 import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyle_1_bitformDefault from '../style-new/themes/1_bitformDefault/multiStepStyle_1_bitformDefaullt'
+import paymentFields from '../../Utils/StaticData/paymentFields'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -85,7 +86,13 @@ export default function BuilderStepTabs() {
     const removedFldKeys = removedLayout.lg.map(l => l.i)
     const cannotRemove = removedFldKeys.some(fKey => {
       const fldData = fields[fKey]
-      return !handleFieldExtraAttr(fldData)
+      if (fldData?.typ === 'button' && fldData?.btnTyp === 'submit') {
+        const payFields = fields ? Object.values(fields).filter(field => paymentFields.includes(field.typ)) : []
+        if (!payFields.length) {
+          setAlertMdl({ show: true, msg: __('Submit button cannot be removed'), cancelBtn: false })
+          return true
+        }
+      }
     })
     hideAll()
     if (cannotRemove) return
@@ -200,6 +207,7 @@ export default function BuilderStepTabs() {
     setActiveBuilderStep(stepIndex)
     setContextMenu({})
     hideAll()
+    setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     navigate(`${path}/step-settings`, { replace: true })
   }
 
