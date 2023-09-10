@@ -18,7 +18,7 @@ import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColors
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
-import { addToBuilderHistory, isValidJsonString, prepareLayout } from './FormBuilderHelper'
+import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
 import atomicStyleGenarate, { generateNestedLayoutCSSText } from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
 import { JCOF } from './globalHelpers'
@@ -634,7 +634,7 @@ export const setFormReponseDataToStates = (responseData) => {
     addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
   }
   if (!formsSessionDataFound) {
-    setAtom($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+    setAtom($formInfo, oldInfo => ({ ...oldInfo, ...responseData.form_content.formInfo, formName: responseData.form_content.form_name }))
   }
   setAtom($workflows, responseData.workFlows)
   setAtom($additionalSettings, responseData.additional)
@@ -803,6 +803,7 @@ export const generateUpdateFormData = (savedFormId) => {
     ...(savedFormId && { currentReport }),
     layout: layouts,
     nestedLayouts,
+    formInfo,
     fields,
     // saveStyle && style obj
     form_name: formName,

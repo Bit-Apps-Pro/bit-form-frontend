@@ -215,7 +215,7 @@ export function sortLayoutItems(
  * @return {Array}        Array of static layout items..
  */
 export function getStatics(layout) {
-  return layout.filter(l => l.static)
+  return layout?.filter(l => l.static)
 }
 
 /**
