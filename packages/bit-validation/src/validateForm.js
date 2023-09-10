@@ -16,6 +16,13 @@ export default function validateForm({ form, input }, { step } = {}) {
     if (!layout) return false
     layout = layout?.layout || layout
     const fldKeys = layout.lg.map(l => l.i)
+    const nestedLayout = props.nestedLayout || {}
+    Object.entries(nestedLayout).forEach(([key, lay]) => {
+      if (fldKeys.includes(key)) {
+        const flds = lay.lg.map(l => l.i)
+        fldKeys.push(...flds)
+      }
+    })
     fields = fldKeys.reduce((acc, key) => ({ ...acc, [key]: props.fields[key] }), {})
   } else {
     fields = props.fields
