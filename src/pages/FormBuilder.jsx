@@ -23,12 +23,12 @@ import {
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
-import { $allStyles } from '../GlobalStates/StylesState'
+import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
-import { bitCipher, multiAssign } from '../Utils/Helpers'
+import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
 import css2json from '../Utils/css2json'
 import { JCOF, select } from '../Utils/globalHelpers'
 import j2c from '../Utils/j2c.es6'
@@ -107,12 +107,14 @@ const FormBuilder = ({ isLoading }) => {
   const setAllStyles = useSetAtom($allStyles)
   const setSavedStylesAndVars = useSetAtom($savedStylesAndVars)
   const setBuilderSettings = useSetAtom($builderSettings)
-
+  const styles = useAtomValue($styles)
   const { forceBuilderWidthToLG } = builderHookStates
 
   useSWROnce(['bitforms_form_helpers_state', formID], { formID }, {
     fetchCondition: !isNewForm,
     onSuccess: data => {
+      setStyleLoading(false)
+      if (!isObjectEmpty(styles)) return
       handleStyleStates(data)
     },
   })
@@ -136,7 +138,6 @@ const FormBuilder = ({ isLoading }) => {
     setBreakpointSize(oldStyles.breakpointSize)
     setBuilderSettings(oldStyles.builderSettings)
     addToBuilderHistory({ state: { allThemeVars, allThemeColors, allStyles } }, false, 0)
-    setStyleLoading(false)
     setIsNewThemeStyleLoaded(true)
   }
 
