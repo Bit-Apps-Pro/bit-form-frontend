@@ -76,9 +76,10 @@ export const $layouts = atom(
     const activeBuilderStep = get($activeBuilderStep)
     return Array.isArray(allLayouts) ? allLayouts[activeBuilderStep].layout : allLayouts
   },
-  (get, set, newLayouts) => set($allLayouts, create(get($allLayouts), draftLayouts => {
+  (get, set, newVal) => set($allLayouts, create(get($allLayouts), draftLayouts => {
     const activeBuilderStep = get($activeBuilderStep)
     const allLayouts = get($allLayouts)
+    const newLayouts = typeof newVal === 'function' ? newVal(get($layouts)) : newVal
     if (!Array.isArray(allLayouts)) return newLayouts
     draftLayouts[activeBuilderStep].layout = newLayouts
   })),
