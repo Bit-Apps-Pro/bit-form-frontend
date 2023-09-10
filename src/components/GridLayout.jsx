@@ -105,7 +105,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const insptectModeTurnedOnRef = useRef(false)
   const location = useLocation()
 
-  useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setLayouts(deepCopy(rootLayouts)) }, [reRenderGridLayoutByRootLay])
   useEffect(() => { setContextMenuRef({ ref, isComponentVisible, setIsComponentVisible }) }, [ref])
   // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
@@ -424,9 +424,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
       setLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
       startTransition(() => {
-        setRootLayouts(create(rootLayouts, draft => {
-          draft[breakpoint] = lay
-        }))
+        setRootLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
       })
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
