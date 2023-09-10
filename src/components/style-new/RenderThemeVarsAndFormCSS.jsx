@@ -1,19 +1,14 @@
 /* eslint-disable no-underscore-dangle */
-import { useParams } from 'react-router-dom'
 import { useAtomValue } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
 import { json2CssStr } from './styleHelpers'
-import { $formInfo } from '../../GlobalStates/GlobalStates'
 
 export default function RenderThemeVarsAndFormCSS() {
-  const { formID } = useParams()
   const styles = useAtomValue($styles)
   const themeVars = useAtomValue($themeVars)
   const themeColors = useAtomValue($themeColors)
-  const formInfo = useAtomValue($formInfo)
-  console.log('style', styles)
   return (
     <>
       <link rel="stylesheet" href={styles?.font?.fontURL} />
