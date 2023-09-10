@@ -1,14 +1,8 @@
 import { useEffect } from 'react'
 import type { SWRConfiguration } from 'swr'
-import useSWR from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import { isVarEmpty } from '../Utils/Helpers'
 import bitsFetch from '../Utils/bitsFetch'
-
-const defaultOpts = {
-  revalidateIfStale: false,
-  revalidateOnFocus: false,
-  revalidateOnReconnect: false,
-}
 
 const checkData = (data: DataResponseType) => data?.success && !data?.data?.errors && !isVarEmpty(data.data)
 
@@ -16,7 +10,7 @@ const useSWROnce = (key: string | string[], urlData: object, options: IOptionsTy
   const shouldFetch = ('fetchCondition' in options) ? options.fetchCondition : true
   const swrKey = shouldFetch ? key : null
 
-  const swrData = useSWR(
+  const swrData = useSWRImmutable(
     swrKey,
     (url: string | string[]) => {
       const resp = bitsFetch(urlData, Array.isArray(url) ? url[0] : url)
@@ -26,7 +20,6 @@ const useSWROnce = (key: string | string[], urlData: object, options: IOptionsTy
       return resp
     },
     {
-      ...defaultOpts,
       ...options,
       onSuccess: data => options.onSuccess && checkData(data) && options.onSuccess(data.data),
     },
