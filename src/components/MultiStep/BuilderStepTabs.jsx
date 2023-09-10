@@ -54,8 +54,6 @@ export default function BuilderStepTabs() {
   const { styleMode } = flags
   const { css } = useFela()
 
-  console.log('styles ', styles)
-
   const getMultiStepStyle = () => {
     if (styles.theme === 'noStyle') return multiStepStyle_0_noStyle({ formId: formID })
     if (styles.theme === 'bitformDefault') return multiStepStyle_1_bitformDefault({ formId: formID })
