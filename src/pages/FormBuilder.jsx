@@ -8,7 +8,8 @@ import {
   useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState,
+  useReducer,
+  useState,
 } from 'react'
 
 import { useParams } from 'react-router-dom'
@@ -22,13 +23,12 @@ import {
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
-import { $allStyles, $styles } from '../GlobalStates/StylesState'
+import { $allStyles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
 import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
-import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
-import bitsFetch from '../Utils/bitsFetch'
+import { bitCipher, multiAssign } from '../Utils/Helpers'
 import css2json from '../Utils/css2json'
 import { JCOF, select } from '../Utils/globalHelpers'
 import j2c from '../Utils/j2c.es6'
@@ -44,6 +44,7 @@ import RenderCssInPortal from '../components/RenderCssInPortal'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
+import useSWROnce from '../hooks/useSWROnce'
 
 const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
 const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })
@@ -94,7 +95,7 @@ const FormBuilder = ({ isLoading }) => {
   const builderHookStates = useAtomValue($builderHookStates)
   const { styleMode } = useAtomValue($flags)
   const [v1Style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
-  const [styleLoading, setStyleLoading] = useState(true)
+  const [styleLoading, setStyleLoading] = useState(!isNewForm)
   const bits = useAtomValue($bits)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
@@ -104,57 +105,43 @@ const FormBuilder = ({ isLoading }) => {
   const setAllThemeColors = useSetAtom($allThemeColors)
   const setAllThemeVars = useSetAtom($allThemeVars)
   const setAllStyles = useSetAtom($allStyles)
-  const styles = useAtomValue($styles)
   const setSavedStylesAndVars = useSetAtom($savedStylesAndVars)
   const setBuilderSettings = useSetAtom($builderSettings)
-  const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
-  const isV2Form = useRef(true)
 
   const { forceBuilderWidthToLG } = builderHookStates
 
+  useSWROnce(['bitforms_form_helpers_state', formID], { formID }, {
+    fetchCondition: !isNewForm,
+    onSuccess: data => {
+      handleStyleStates(data)
+    },
+  })
+
+  const handleStyleStates = data => {
+    const fetchedBuilderHelperStates = data?.[0]?.builder_helper_state
+    const oldStyles = fetchedBuilderHelperStates || {}
+    const { themeVars: allThemeVarsStr, themeColors: allThemeColorsStr, style: allStylesStr, staticStyles: staticStylesStr } = oldStyles
+    const allThemeVars = JCOF.parse(allThemeVarsStr)
+    const allThemeColors = JCOF.parse(allThemeColorsStr)
+    const allStyles = JCOF.parse(allStylesStr)
+    if (staticStylesStr) {
+      const staticStyles = JCOF.parse(staticStylesStr)
+      setStaticStylesState(staticStyles)
+    }
+
+    setAllThemeVars(allThemeVars)
+    setAllThemeColors(allThemeColors)
+    setAllStyles(allStyles)
+    setSavedStylesAndVars({ allThemeVars, allThemeColors, allStyles })
+    setBreakpointSize(oldStyles.breakpointSize)
+    setBuilderSettings(oldStyles.builderSettings)
+    addToBuilderHistory({ state: { allThemeVars, allThemeColors, allStyles } }, false, 0)
+    setStyleLoading(false)
+    setIsNewThemeStyleLoaded(true)
+  }
+
   useEffect(() => {
-    if (isNewForm) setStyleLoading(false)
-
-    if (!isNewForm && !isNewThemeStyleLoaded) {
-      bitsFetch({ formID }, 'bitforms_form_helpers_state')
-        .then(({ data }) => {
-          setIsFetchingV2Styles(false)
-          const fetchedBuilderHelperStates = data?.[0]?.builder_helper_state
-          const oldStyles = fetchedBuilderHelperStates || {}
-          if (!isNewForm && (!fetchedBuilderHelperStates || isObjectEmpty(oldStyles))) {
-            isV2Form.current = false
-          }
-          if (isV2Form.current && !isNewForm && isObjectEmpty(styles)) {
-            const { themeVars: allThemeVarsStr, themeColors: allThemeColorsStr, style: allStylesStr, staticStyles: staticStylesStr } = oldStyles
-            const allThemeVars = JCOF.parse(allThemeVarsStr)
-            const allThemeColors = JCOF.parse(allThemeColorsStr)
-            const allStyles = JCOF.parse(allStylesStr)
-            if (staticStylesStr) {
-              const staticStyles = JCOF.parse(staticStylesStr)
-              setStaticStylesState(staticStyles)
-            }
-
-            setAllThemeVars(allThemeVars)
-            setAllThemeColors(allThemeColors)
-            setAllStyles(allStyles)
-            setSavedStylesAndVars({ allThemeVars, allThemeColors, allStyles })
-            setBreakpointSize(oldStyles.breakpointSize)
-            setBuilderSettings(oldStyles.builderSettings)
-            addToBuilderHistory({ state: { allThemeVars, allThemeColors, allStyles } }, false, 0)
-            setStyleLoading(false)
-            setIsNewThemeStyleLoaded(true)
-          } else if (!isFetchingV2Styles && !isNewForm) {
-            // declare new theme exist , no need old theme functions
-            setOldExistingStyle()
-          }
-        })
-    }
-
-    if (!isObjectEmpty(styles)) {
-      setStyleLoading(false)
-    }
-
-    if (isV2Form.current && isNewForm && !isObjectEmpty(styles)) {
+    if (isNewForm) {
       setTimeout(() => {
         select('#update-btn').click()
       }, 100)
@@ -330,7 +317,7 @@ const FormBuilder = ({ isLoading }) => {
       <OptionToolBar
         setShowToolbar={setShowToolbar}
         showToolBar={showToolBar}
-        isV2Form={isV2Form.current}
+        isV2Form
       />
       <DraggableModal setBuilderPointerEventNone={setBuilderPointerEventNone} />
       <Container
