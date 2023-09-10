@@ -85,6 +85,7 @@ function submitResponse(resp, contentId, formData) {
       let responsedRedirectPage = null
       let hitCron = null
       let newNonce = ''
+      let redirectDelay = 1000
       const props = window.bf_globals[contentId]
       if (result !== undefined && result.success) {
         const form = bfSelect(`#form-${contentId}`)
@@ -114,6 +115,7 @@ function submitResponse(resp, contentId, formData) {
             type: 'success',
             error: false,
           })
+          redirectDelay = Number(result.data.msg_duration || 1000)
         } else {
           setBFMsg({
             contentId,
@@ -142,7 +144,7 @@ function submitResponse(resp, contentId, formData) {
           if (timer) {
             clearTimeout(timer)
           }
-        }, 1000)
+        }, redirectDelay)
       }
 
       disabledSubmitButton(contentId, false)
