@@ -3,6 +3,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useResetAtom } from 'jotai/utils'
 import bitIcn from '../../logo.svg'
 import {
   $additionalSettings, $allLayouts, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded,
@@ -19,7 +20,7 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import BackIcn from '../Icons/BackIcn'
 import CloseIcn from '../Icons/CloseIcn'
 import { addToBuilderHistory, getSessionStorageStates } from '../Utils/FormBuilderHelper'
-import { clearAllSWRCache, hideWpMenu, showWpMenu } from '../Utils/Helpers'
+import { clearAllSWRCache, getStatesToReset, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
 import bitsFetch from '../Utils/bitsFetch'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
@@ -75,6 +76,7 @@ function FormDetails() {
   const [customCodes, setCustomCodes] = useAtom($customCodes)
   const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
   const [breakpointSize, setBreakpointSize] = useAtom($breakpointSize)
+  const atomResetters = getStatesToReset().map(stateAtom => useResetAtom(stateAtom))
 
   const activePath = () => {
     const loaciton = useLocation()
@@ -127,6 +129,7 @@ function FormDetails() {
     showWpMenu()
     setAppFullScreen(false)
     clearAllSWRCache()
+    atomResetters.forEach(resetAtom => resetAtom())
   }
 
   useEffect(() => {
