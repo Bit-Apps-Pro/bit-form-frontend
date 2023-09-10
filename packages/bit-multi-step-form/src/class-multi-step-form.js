@@ -51,6 +51,7 @@ export default class BitMultiStepForm {
     const prevBtn = this.#select('.prev-step-btn', firstStep)
     if (prevBtn) {
       prevBtn.disabled = true
+      prevBtn.classList.add('d-none')
       this.#prevBtns = this.#prevBtns.filter((btn) => btn.isEqualNode(prevBtn) === false)
     }
     const totalSteps = this.#selectAll(`._frm-b${this.#formId}-stp-cntnt[data-step]`).length
@@ -58,6 +59,7 @@ export default class BitMultiStepForm {
     const nextBtn = this.#select('.next-step-btn', lastStep)
     if (nextBtn) {
       nextBtn.disabled = true
+      nextBtn.classList.add('d-none')
       this.#nextBtns = this.#nextBtns.filter((btn) => btn.isEqualNode(nextBtn) === false)
     }
   }
