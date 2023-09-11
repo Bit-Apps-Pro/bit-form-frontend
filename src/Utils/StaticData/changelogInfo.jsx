@@ -43,27 +43,31 @@ const changelogInfo = {
       },
     },
   },
-  '2.4.0': {
-    date: '23 August, 2023',
+  '2.5.0': {
+    date: '11 September, 2023',
     changes: {
       added: {
         label: 'Added',
         list: [
           {
-            label: 'New Field',
+            label: (<b>Multi Step Form</b>),
             tag: 'new',
             list: [
-              'Rating Field - Collect feedbacks in the form of star ratings from your wp users. Change any star rating icon to your own custom icon with easy to use form builder settings.',
+              'Introducing the "Multi Step Form", convert your long boring forms into smaller steps to enhance your user\'s form experience, save progress on each step & show progress bar for a dynamic & easy to use contact form submission experience.',
             ],
           },
+        ],
+      },
+      imporovement: {
+        label: 'Improvement',
+        list: [
+          'Redirect page will now respect the delay of confirmation message duration.',
         ],
       },
       fixed: {
         label: 'Fixed',
         list: [
-          'Active Campaign integration tag & list issue',
-          'Form duplicate issue with the section & repeater field',
-          'Response table issue with multiple uploaded files',
+          'Stripe payment transaction response not saving.',
         ],
       },
     },
