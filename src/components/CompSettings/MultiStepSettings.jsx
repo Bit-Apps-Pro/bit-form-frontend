@@ -53,9 +53,11 @@ export default function MultiStepSettings() {
     setFormInfo(oldInfo => create(oldInfo, draft => {
       draft.multiStepSettings.btnSettings[propName] = value
     }))
-    setStyles(preStyle => create(preStyle, drftStyle => {
-      drftStyle.form[`._frm-b${formID}-stp-cntnt`]['flex-direction'] = value
-    }))
+    if (propName === 'position') {
+      setStyles(preStyle => create(preStyle, drftStyle => {
+        drftStyle.form[`._frm-b${formID}-stp-cntnt`]['flex-direction'] = value
+      }))
+    }
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
