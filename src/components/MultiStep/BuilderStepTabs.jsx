@@ -8,7 +8,7 @@ import useSmoothHorizontalScroll from 'use-smooth-horizontal-scroll'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
 import {
   $alertModal, $allLayouts,
-  $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $nestedLayouts, $newFormId, $updateBtn,
+  $builderHookStates, $contextMenu, $fields, $flags, $formInfo, $nestedLayouts, $newFormId, $selectedFieldId, $updateBtn,
 } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
@@ -29,6 +29,7 @@ import { DragHandle, SortableItem, SortableList } from '../Utilities/Sortable'
 import multiStepStyle_0_noStyle from '../style-new/themes/0_noStyle/multiStepStyle_0_noStyle'
 import multiStepStyle_1_bitformDefault from '../style-new/themes/1_bitformDefault/multiStepStyle_1_bitformDefaullt'
 import multiStepeStyle_2_atlassian from '../style-new/themes/2_atlassian/multiStepStyle_2_atlassian'
+import Tip from '../Utilities/Tip'
 
 export default function BuilderStepTabs() {
   const [allLayouts, setAllLayouts] = useAtom($allLayouts)
@@ -51,6 +52,7 @@ export default function BuilderStepTabs() {
   const setAlertMdl = useSetAtom($alertModal)
   const [nestedLayouts, setNestedLayouts] = useAtom($nestedLayouts)
   const setUpdateBtn = useSetAtom($updateBtn)
+  const setSelectedFieldId = useSetAtom($selectedFieldId)
   const { styleMode } = flags
   const { css } = useFela()
 
@@ -233,6 +235,13 @@ export default function BuilderStepTabs() {
     navigate(`${path}/step-settings`, { replace: true })
   }
 
+  const goToMultiStepSettings = () => {
+    setContextMenu({})
+    hideAll()
+    setSelectedFieldId(null)
+    navigate(`${path}/multi-step-settings`, { replace: true })
+  }
+
   return (
     <div className={css(s.wrp)}>
       <div ref={scrollContainerRef} onScroll={handleScroll}>
@@ -302,23 +311,25 @@ export default function BuilderStepTabs() {
         </SortableList>
       </div>
       <div className={css(s.addBtnWrp)}>
-        <button
-          onClick={addFormStep}
-          className={css(s.addBtn)}
-          title={__('Add More Related List')}
-          type="button"
-        >
-          <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
-        </button>
-        {isMultiStep && (
+        <Tip msg={__('Add New Step')}>
           <button
-            onClick={() => navigate(`${path}/multi-step-settings`, { replace: true })}
+            onClick={addFormStep}
             className={css(s.addBtn)}
-            title={__('Multi step settings')}
             type="button"
           >
-            <SettingsIcn size={20} />
+            <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
           </button>
+        </Tip>
+        {isMultiStep && (
+          <Tip msg={__('Multi step settings')}>
+            <button
+              onClick={goToMultiStepSettings}
+              className={css(s.addBtn)}
+              type="button"
+            >
+              <SettingsIcn size={20} />
+            </button>
+          </Tip>
         )}
       </div>
     </div>
