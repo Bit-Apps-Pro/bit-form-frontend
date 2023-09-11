@@ -634,7 +634,7 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       {styleMode && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
-        <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, margin: '15px 13px 400px 0', border: '1px solid lightblue' }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
+        <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, margin: '19px 13px 400px 0', border: '1px solid lightblue' }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-b${formID}`} data-dev-_frm-bg={formID}>
             <div className={`_frm-b${formID}`} data-dev-_frm={formID}>
               <StepContainer className={`step-continer-${formID}`}>
