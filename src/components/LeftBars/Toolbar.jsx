@@ -984,7 +984,6 @@ export const toolsList = [
     keywords: 'Check Box, Mark, Rating, Star, Review, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
     icn: <ReviewStarIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'rating',
       lbl: __('Rating'),
