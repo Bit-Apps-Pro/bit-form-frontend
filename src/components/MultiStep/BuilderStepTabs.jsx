@@ -85,6 +85,9 @@ export default function BuilderStepTabs() {
       draftFormInfo.isMultiStepForm = true
     }))
     setStyles(prevStyles => create(prevStyles, draftStyles => {
+      if (!draftStyles.form[`._frm-b${formID}-stp-cntnr`]) {
+        draftStyles.form = mergeNestedObj(draftStyles.form, getMultiStepStyle())
+      }
       Object.keys(fields || {}).forEach(fldKey => {
         draftStyles.fields[fldKey].classes[`.${fldKey}-err-wrp`] = {
           transition: 'all .3s',
@@ -95,9 +98,6 @@ export default function BuilderStepTabs() {
           overflow: 'hidden',
         }
       })
-      if (!draftStyles.form[`._frm-b${formID}-stp-cntnr`]) {
-        draftStyles.form = mergeNestedObj(draftStyles.form, getMultiStepStyle())
-      }
     }))
     setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
