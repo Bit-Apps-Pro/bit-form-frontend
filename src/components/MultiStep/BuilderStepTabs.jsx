@@ -301,14 +301,26 @@ export default function BuilderStepTabs() {
           </div>
         </SortableList>
       </div>
-      <button
-        onClick={addFormStep}
-        className={css(s.addBtn)}
-        style={{ '--tooltip-txt': `'${__('Add More Related List')}'` }}
-        type="button"
-      >
-        <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
-      </button>
+      <div className={css(s.addBtnWrp)}>
+        <button
+          onClick={addFormStep}
+          className={css(s.addBtn)}
+          title={__('Add More Related List')}
+          type="button"
+        >
+          <CloseIcn size="12" className={css({ tm: 'rotate(45deg)' })} />
+        </button>
+        {isMultiStep && (
+          <button
+            onClick={() => navigate(`${path}/multi-step-settings`, { replace: true })}
+            className={css(s.addBtn)}
+            title={__('Multi step settings')}
+            type="button"
+          >
+            <SettingsIcn size={20} />
+          </button>
+        )}
+      </div>
     </div>
   )
 }
@@ -323,6 +335,12 @@ const s = {
     w: '100%',
     mxw: 'max-content',
     owx: 'auto',
+  },
+  addBtnWrp: {
+    mnw: 25,
+    dy: 'flex',
+    flxp: 'wrap',
+    gp: 5,
   },
   addBtn: {
     se: 25,
