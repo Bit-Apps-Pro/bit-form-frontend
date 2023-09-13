@@ -203,10 +203,11 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint = '
       display: 'flex',
       'flex-direction': multiStepSettings?.btnSettings?.position || 'column',
       'align-self': 'flex-start',
-      transition: 'width .4s ease, opacity 0.3s ease',
+      transition: 'width .4s ease, opacity 0.3s ease, height 0.3s ease',
     },
     [`._frm-b${formId}-stp-cntnt.deactive`]: {
       width: '0px',
+      height: '0px',
       opacity: '0%',
       overflow: 'hidden',
     },
