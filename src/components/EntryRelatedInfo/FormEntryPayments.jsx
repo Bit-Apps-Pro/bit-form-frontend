@@ -22,7 +22,9 @@ export default function FormEntryPayments({ formID, rowDtl }) {
   useEffect(() => {
     if (isPro) {
       setIsLoading(true)
-      const transactionID = rowDtl?.[payFld?.key]
+      const tnId = rowDtl?.[payFld?.key]
+      const transactionID = tnId?.split(',')?.[0]
+
       bitsFetch({ formID, transactionID }, 'bitforms_payment_details')
         .then(result => {
           if (result.success && result.data.length === 1) {
