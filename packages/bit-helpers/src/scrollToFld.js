@@ -19,8 +19,8 @@ function isInViewport(element, parent) {
   return (
     rect.top >= 0
     && rect.left >= 0
-    && rect.bottom <= (parent.clientHeight)
-    && rect.right <= (parent.clientWidth)
+    && rect.bottom <= (parent.innnrHeight || parent.clientHeight)
+    && rect.right <= (parent.innnrWidth || parent.clientWidth)
   )
 }
 
