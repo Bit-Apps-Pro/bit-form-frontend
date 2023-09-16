@@ -1,52 +1,53 @@
 export default function scrollToFld(elm) {
-  const ancestor = findScrollableAncestor(elm)
-  const scrollWindow = ancestor || window
-  const scrollBody = ancestor || document.body
-  const elmRect = elm.getBoundingClientRect()
-  const scrollElementRect = scrollBody.getBoundingClientRect()
-  const scrollTop = scrollElementRect.top
-  const elmTop = elmRect.top + (ancestor ? scrollBody.scrollTop : 0)
-  const offsetTop = elmTop - scrollTop
-  if (isInViewport(elm, scrollBody)) return
-  scrollWindow.scrollTo({
-    top: offsetTop,
-    behavior: 'smooth',
-  })
-}
+  // Check if the element is inside a modal or scrollable div
+  let parent = elm.parentElement
 
-function isInViewport(element, parent) {
-  const rect = element.getBoundingClientRect()
-  return (
-    rect.top >= 0
-    && rect.left >= 0
-    && rect.bottom <= (parent.innnrHeight || parent.clientHeight)
-    && rect.right <= (parent.innnrWidth || parent.clientWidth)
-  )
-}
+  while (parent) {
+    const computedStyle = getComputedStyle(parent)
 
-function hasScrollBar(el) {
-  const dir = 'scrollTop'
-  const elm = el
-  let result = !!elm[dir]
+    // Check if the parent is an absolute positioned modal or a scrollable container
+    if (
+      computedStyle.position === 'absolute'
+      || computedStyle.overflow === 'auto'
+      || computedStyle.overflow === 'scroll'
+    ) {
+      if (!isElementInViewport(elm, parent)) {
+        // Calculate the relative position of elm with respect to parent
+        const rectElm = elm.getBoundingClientRect()
+        const rectParent = parent.getBoundingClientRect()
 
-  if (!result) {
-    elm[dir] = 1
-    result = !!elm[dir]
-    elm[dir] = 0
-  }
-  return result
-}
+        // Calculate the scroll offsets
+        const scrollLeft = rectElm.left - rectParent.left + parent.scrollLeft
+        const scrollTop = rectElm.top - rectParent.top + parent.scrollTop
 
-function findScrollableAncestor(elm) {
-  let parent = elm.parentNode
-
-  while (parent !== null && parent !== document.body) {
-    if (hasScrollBar(parent)) {
-      return parent
+        // Scroll to the element's position within the parent
+        parent.scrollTo({
+          top: scrollTop,
+          left: scrollLeft,
+          behavior: 'smooth',
+        })
+      }
     }
 
-    parent = parent.parentNode
+    parent = parent.parentElement
   }
 
-  return null
+  // If no special parent found or the element is not already in the viewport, scroll the window to the element
+  if (!isElementInViewport(elm, document.documentElement)) {
+    elm.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+  }
+}
+
+function isElementInViewport(element, container) {
+  const elementRect = element.getBoundingClientRect()
+  const containerRect = container === document.documentElement
+    ? { top: 0, left: 0, bottom: window.innerHeight, right: window.innerWidth }
+    : container.getBoundingClientRect()
+
+  return (
+    elementRect.top >= containerRect.top
+    && elementRect.left >= containerRect.left
+    && elementRect.bottom <= containerRect.bottom
+    && elementRect.right <= containerRect.right
+  )
 }
