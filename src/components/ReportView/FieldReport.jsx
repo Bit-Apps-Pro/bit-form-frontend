@@ -1,12 +1,13 @@
-import { useFela } from 'react-fela'
 import { useState } from 'react'
-import PieChartIcn from '../../Icons/PieChartIcn'
+import { useFela } from 'react-fela'
 import BarChartIcn from '../../Icons/BarChartIcn'
-import ut from '../../styles/2.utilities'
 import LineChartIcn from '../../Icons/LineChartIcn'
+import PieChartIcn from '../../Icons/PieChartIcn'
+import ut from '../../styles/2.utilities'
+
 import TableChart from './TableChart'
-import Barchart from './Barchart'
-import Piechart from './Piechart'
+import Piechart from './PieChart'
+import Barchart from './BarChart'
 
 export default function FieldReport({ key, title, data }) {
   const { css } = useFela()
