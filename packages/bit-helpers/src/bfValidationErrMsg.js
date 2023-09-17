@@ -1,11 +1,11 @@
 function dispatchFieldError(fldErrors, contentId) {
   const fldKeys = Object.keys(fldErrors)
   fldKeys.forEach((fk) => {
-    const rowIndex = fk.match(/\[(\d+)\]/)?.[1]
-    const rptIndexClass = rowIndex ? ` .rpt-index-${rowIndex}` : ''
-    const errWrp = bfSelect(`#form-${contentId}${rptIndexClass} .${fk}-err-wrp`)
-    const errTxt = bfSelect(`.${fk}-err-txt`, errWrp)
-    const errMsg = bfSelect(`.${fk}-err-msg`, errWrp)
+    const [fldKey, rowIndex] = getFldKeyAndRowIndx(fk)
+    const rptIndexClass = rowIndex ? `.rpt-index-${rowIndex}` : ''
+    const errWrp = bfSelect(`#form-${contentId} ${rptIndexClass} .${fldKey}-err-wrp`)
+    const errTxt = bfSelect(`.${fldKey}-err-txt`, errWrp)
+    const errMsg = bfSelect(`.${fldKey}-err-msg`, errWrp)
     let isErrWrpGrid = false
     try {
       isErrWrpGrid = getComputedStyle(errWrp).display === 'grid'
@@ -23,7 +23,7 @@ function dispatchFieldError(fldErrors, contentId) {
       setStyleProperty(errWrp, 'grid-template-rows', '1fr')
     }
   })
-  if (typeof moveStepToFirstErrFld !== 'undefined') moveStepToFirstErrFld(window?.bf_globals?.[contentId], fldKeys)
+  moveToFirstErrFld(window?.bf_globals?.[contentId], fldKeys)
 }
 
 export default function bfValidationErrMsg(result, contentId) {

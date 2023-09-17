@@ -56,7 +56,7 @@ export default function validateForm({ form, input }, { step } = {}) {
       const fldType = fldData.typ
       const fldValue = typeof formEntries[fldName] === 'string' ? formEntries[fldName].trim() : formEntries[fldName]
 
-      const fldDiv = bfSelect(`#form-${contentId}${selector} .${fldKey}.fld-hide`)
+      const fldDiv = bfSelect(`#form-${contentId} ${selector} .${fldKey}.fld-hide`)
       if (fldDiv) {
         generateErrMsg('', fldKey, fldData, selector)
         continue
@@ -92,7 +92,7 @@ export default function validateForm({ form, input }, { step } = {}) {
       if (errKey) formCanBeSubmitted = false
     }
   }
-  if (typeof moveStepToFirstErrFld !== 'undefined') moveStepToFirstErrFld(props, errors)
+  moveToFirstErrFld(props, errors)
   return formCanBeSubmitted
 }
 
@@ -158,8 +158,6 @@ const generateErrMsg = (errKey, fldKey, fldData, selector = '') => {
       } else {
         setStyleProperty(errWrp, 'grid-template-rows', '1fr')
       }
-      const fld = bfSelect(`#form-${contentId} ${selector} .btcd-fld-itm.${fldKey}`)
-      scrollToFld(fld)
       errors.push(fldKey)
     } else {
       errTxt.innerHTML = ''

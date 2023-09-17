@@ -132,15 +132,16 @@ export default class BitMultiStepForm {
     return Number(this.#contentId.split('_')[1])
   }
 
-  #showStep(step) {
-    const stepWrapper = this.#select(`._frm-b${this.#formId}-stp-cntnt[data-step="${step}"]`)
-    if (!stepWrapper) return
-    stepWrapper.classList.remove('deactive')
-    const otherSteps = this.#selectAll(`._frm-b${this.#formId}-stp-cntnt:not([data-step="${step}"])`)
-    otherSteps.forEach((stepElm) => {
-      stepElm.classList.add('deactive')
-    })
-    scrollToFld(stepWrapper)
+  #scrollToFirstLayFld(step) {
+    const props = window.bf_globals[this.#contentId]
+    const stepLayout = props.layout[step - 1]
+    if (!stepLayout) return
+    const firstFldKey = stepLayout.layout.lg[0].i
+    const fldElm = this.#select(`.btcd-fld-itm.${firstFldKey}`)
+    if (fldElm) scrollToElm(fldElm)
+  }
+
+  #handleStepHeaderChanges(step) {
     // step headers
     const allStepHeaders = this.#selectAll(`._frm-b${this.#formId}-stp-hdr`)
     allStepHeaders.forEach(stepHdr => {
@@ -150,12 +151,33 @@ export default class BitMultiStepForm {
       if (stepNum < step) stepHdr.classList.add('completed')
       else if (stepNum === step) stepHdr.classList.add('active')
     })
+  }
+
+  #handleProgressBarChanges(step) {
     // progress bar
+    const otherSteps = this.#selectAll(`._frm-b${this.#formId}-stp-cntnt:not([data-step="${step}"])`)
     const progressFillElm = this.#select(`._frm-b${this.#formId}-progress-fill`)
     const totalSteps = otherSteps.length + 1
     const progress = Math.round(((step - 1) / totalSteps) * 100)
     if (this.#showPercentage) progressFillElm.textContent = `${progress}%`
     progressFillElm.style.width = `${progress}%`
+  }
+
+  #showOrHideStepWrapper(step) {
+    const stepWrapper = this.#select(`._frm-b${this.#formId}-stp-cntnt[data-step="${step}"]`)
+    if (!stepWrapper) return
+    stepWrapper.classList.remove('deactive')
+    const otherSteps = this.#selectAll(`._frm-b${this.#formId}-stp-cntnt:not([data-step="${step}"])`)
+    otherSteps.forEach((stepElm) => {
+      stepElm.classList.add('deactive')
+    })
+  }
+
+  #showStep(step) {
+    this.#showOrHideStepWrapper(step)
+    this.#scrollToFirstLayFld(step)
+    this.#handleStepHeaderChanges(step)
+    this.#handleProgressBarChanges(step)
   }
 
   #setIsLoading(status) {
