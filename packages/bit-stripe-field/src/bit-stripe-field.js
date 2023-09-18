@@ -125,7 +125,7 @@ export default class BitStripeField {
       setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
       setStyleProperty(errWrp, 'opacity', 1)
       const fld = this.#querySelector(`${this.#formSelector} .btcd-fld-itm.${this.#fieldKey}`)
-      scrollToFld(fld)
+      scrollToElm(fld)
     } else {
       errTxt.innerHTML = ''
       setStyleProperty(errMsg, 'display', 'none')

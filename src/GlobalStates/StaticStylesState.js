@@ -9,6 +9,7 @@ export const $staticStylesState = atomWithReset({
   },
   staticStyles: {
     '.d-none': { display: 'none !important' },
+    '.v-hide': { visibility: 'hidden !important' },
     '.bf-form-msg': {
       background: '#ffe8c3',
       'border-radius': '6px',
