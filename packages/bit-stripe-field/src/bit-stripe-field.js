@@ -231,6 +231,7 @@ export default class BitStripeField {
         confirmParams: {},
         redirect: 'if_required',
       }).then(res => {
+        console.log({ res })
         if (res?.paymentIntent?.status === 'succeeded') {
           paySpinner.classList.add('d-none')
           this.#onApproveHandler(res.paymentIntent)
