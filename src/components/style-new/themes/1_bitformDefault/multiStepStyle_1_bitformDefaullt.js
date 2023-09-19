@@ -26,11 +26,11 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint = '
       padding: '3px',
     },
     [`._frm-b${formId}-stp-hdr`]: {
-      border: 'none',
+      'border-style': 'none',
       'border-radius': '0px',
       flex: '1 1',
       padding: '10px',
-      margin: 0,
+      margin: '0',
       'text-align': 'center',
       color: '#999',
       position: 'relative',
@@ -167,7 +167,7 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint = '
       'border-radius': 'var(--sub-titl-suf-i-bdr-rad, 0)',
       filter: 'var(--sub-titl-suf-i-fltr)',
     },
-    [`.active ._frm-b${formId}-stp-hdr-icn`]: {
+    [`._frm-b${formId}-stp-hdr.active ._frm-b${formId}-stp-hdr-icn`]: {
       background: '#007bff',
       'border-color': '#007bff',
       color: '#FFF',
@@ -255,7 +255,7 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint = '
       transition: 'outline-offset 0.2s ease',
     },
     [`._frm-b${formId}-next-step-btn:active:focus-visible`]: {
-      'outline-offset': 0,
+      'outline-offset': '0',
     },
     [`._frm-b${formId}-next-step-btn:disabled`]: {
       cursor: 'not-allowed',
@@ -311,7 +311,7 @@ export default function multiStepStyle_1_bitformDefault({ formId, breakpoint = '
       transition: 'outline-offset 0.2s ease',
     },
     [`._frm-b${formId}-prev-step-btn:active:focus-visible`]: {
-      'outline-offset': 0,
+      'outline-offset': '0',
     },
     [`._frm-b${formId}-prev-step-btn:disabled`]: {
       cursor: 'not-allowed',

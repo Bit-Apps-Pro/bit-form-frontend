@@ -131,10 +131,16 @@ function StyleLayers() {
                 highlightSelector="[data-dev-stp-btn-wrpr]"
               />
               <NavBtn
-                route="multi-step/stp-btn"
-                label="Step Button"
+                route="multi-step/prev-step-btn"
+                label="Prevous Button"
                 offset="3.5"
-                highlightSelector="[data-dev-stp-btn]"
+                highlightSelector="[data-dev-prev-step-btn]"
+              />
+              <NavBtn
+                route="multi-step/next-step-btn"
+                label="Next Button"
+                offset="3.5"
+                highlightSelector="[data-dev-next-step-btn]"
               />
             </LayerAccordion>
           )}
