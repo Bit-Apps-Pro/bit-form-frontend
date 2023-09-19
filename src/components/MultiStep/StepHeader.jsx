@@ -1,13 +1,32 @@
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useNavigate, useParams } from 'react-router-dom'
 import { $activeBuilderStep } from '../../GlobalStates/FormBuilderStates'
-import { $formInfo } from '../../GlobalStates/GlobalStates'
+import { $builderHookStates, $contextMenu, $flags, $formInfo } from '../../GlobalStates/GlobalStates'
 import { getCustomClsName } from '../../Utils/globalHelpers'
 import RenderHtml from '../Utilities/RenderHtml'
 
 export default function StepHeader({ settings, stepKey, stepNumber, formID, isActive }) {
+  const { formType } = useParams()
   const formInfo = useAtomValue($formInfo)
-  const activeBuilderStep = useAtomValue($activeBuilderStep)
+  const setContextMenu = useSetAtom($contextMenu)
+  const setBuilderHookStates = useSetAtom($builderHookStates)
+  const [activeBuilderStep, setActiveBuilderStep] = useAtom($activeBuilderStep)
+  const flags = useAtomValue($flags)
+  const navigate = useNavigate()
+  const { styleMode, inspectMode } = flags
   const multiStepSettings = formInfo?.multiStepSettings || {}
+  const path = `/form/builder/${formType}/${formID}`
+  const navigateToStepSettings = (e) => {
+    e.stopPropagation()
+    setActiveBuilderStep(stepNumber - 1)
+    setContextMenu({})
+    setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
+    if (styleMode) {
+      navigate(`${path}/theme-customize/multi-step/quick-tweaks`, { replace: true })
+      return
+    }
+    navigate(`${path}/step-settings`, { replace: true })
+  }
 
   return (
     <div
@@ -20,6 +39,10 @@ export default function StepHeader({ settings, stepKey, stepNumber, formID, isAc
             <span
               className={`_frm-b${formID}-stp-icn-cntn`}
               data-dev-stp-icn-cntn={formID}
+              onClick={(e) => navigateToStepSettings(e)}
+              onKeyDown={(e) => navigateToStepSettings(e)}
+              role="button"
+              tabIndex={0}
             >
               {multiStepSettings.headerIcon?.iconType === 'icon' && (
                 <img src={settings.icon} className={`_frm-b${formID}-stp-icn`} alt="Step Icon" />
@@ -36,6 +59,10 @@ export default function StepHeader({ settings, stepKey, stepNumber, formID, isAc
             <span
               className={`_frm-b${formID}-stp-hdr-lbl`}
               data-dev-stp-hdr-lbl={formID}
+              onClick={(e) => navigateToStepSettings(e)}
+              onKeyDown={(e) => navigateToStepSettings(e)}
+              role="button"
+              tabIndex={0}
             >
               {settings.lblPreIcn && (
                 <img
