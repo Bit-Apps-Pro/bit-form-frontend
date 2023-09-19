@@ -13,15 +13,7 @@ import { $builderRightPanelScroll, $flags } from '../../GlobalStates/GlobalState
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
 import style from '../../styles/FieldSettingTitle.style'
-import ButtonCustomizer from './ButtonCustomizer'
-import FieldContainerCustomizer from './FieldContainerCustomizer'
-import FormContainerCustomizer from './FormContainerCustomizer'
-import FormWrapperCustomizer from './FormWrapperCustomizer'
-import IcnCustomizer from './IcnCustomizer'
-import InputCustomizer from './InputCustomizer'
-import LabelCustomizer from './LabelCustomizer'
-import SubTitleCustomizer from './SubTitleCustomizer'
-import ThemeQuickTweaksCustomizer from './ThemeQuickTweaksCustomizer'
+import MultiStepCommonStyle from './MultiStepCommonStyle'
 
 export default function MultiStepCustomize() {
   const { css } = useFela()
@@ -73,23 +65,10 @@ export default function MultiStepCustomize() {
           {' '}
           (Global)
         </h4>
-        {/* <div className={css(cls.divider)} /> */}
       </div>
       <div className={css(cls.wrp)}>
-        <span>Multi step style edior is not availabe. this feature will comming soon.</span>
-        {/* {element === 'quick-tweaks' && <ThemeQuickTweaksCustomizer />}
-        {element === '_frm-bg' && <FormWrapperCustomizer element={element} />}
-        {element === '_frm' && <FormContainerCustomizer element={element} />}
-        {element === 'stp-cntnr' && <FieldContainerCustomizer />}
-        {element === 'stp-hdr' && <FieldContainerCustomizer />}
-        {element === 'stp-hdr-lbl' && <LabelCustomizer />}
-        {element === 'stp-hdr-sub-titl' && <SubTitleCustomizer />}
-        {element === 'fld' && <InputCustomizer />}
-        {element === 'stp-btn' && <ButtonCustomizer />}
-        {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
-        {element === 'multi-step' && <FormContainerCustomizer element={element} />} */}
-
-        {/* {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)} */}
+        {element === 'quick-tweaks' && <span>Multi step quick tweaks is not availabe. this feature will comming soon.</span>}
+        {element !== 'quick-tweaks' && <MultiStepCommonStyle element={element} isMultistep />}
       </div>
     </div>
   )
@@ -103,17 +82,7 @@ const cls = {
   wrp: { ml: 5, mr: 8, mt: 10, fs: 12 },
   mainWrapper: { bd: 'var(--white-100)', w: '97%' },
   subTitle: { mt: 10, mb: 5, fs: 15, cr: 'var(--white-0-31)' },
-  // subTitle2: { fs: 14, fw: 500, mt: 10 },
   divider: { bb: '1px solid var(--white-0-83)', mx: 3, my: 10 },
-  // container: { ml: 12, mr: 10 },
-  // btn: {
-  //   b: 'none',
-  //   oe: 'none',
-  //   brs: 8,
-  //   bc: 'var(--white-0-95)',
-  //   cur: 'pointer',
-  // },
-  // pnt: { cur: 'not-allowed' },
   thmBtn: {
     flxi: 'center',
     cg: 4,
@@ -134,10 +103,4 @@ const cls = {
     bd: 'var(--b-50)',
     cr: 'var(--white-100)',
   },
-  // accordion: {
-  //   py: 10,
-  //   bb: '0.5px solid var(--white-0-83)',
-  //   w: '95%',
-  //   '& .title, .toggle-icn': { curp: 1 },
-  // },
 }
