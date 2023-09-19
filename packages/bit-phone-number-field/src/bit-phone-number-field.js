@@ -77,7 +77,8 @@ export default class BitPhoneNumberField {
     if (typeof this.#config.options === 'string') {
       this.#config.options = this.#getOptionsFromGlobalPath(this.#config.options)
     }
-    this.#options = this.#config.options.filter(p => !p.hide)
+    this.#config.options = this.#config.options.filter(p => !p.hide)
+    this.#options = [...this.#config.options]
     this.#callingCodes = this.#generateCountryCodesFromOptions()
     this.fieldKey = this.#config.fieldKey
 
