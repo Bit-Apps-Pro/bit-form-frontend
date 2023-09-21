@@ -43,6 +43,8 @@ export default class BitStripeField {
 
   #allEventListeners = []
 
+  #description = null
+
   constructor(selector, config) {
     if (typeof selector === 'string') {
       this.#stripeWrpSelector = document.querySelector(selector)
@@ -65,6 +67,7 @@ export default class BitStripeField {
     this.#theme = this.#config.theme.style
     this.#layout = this.#config.layout
     this.#payBtnTxt = this.#config.payBtnTxt
+    this.#description = this.#config.options?.description
     this.init()
   }
 
@@ -148,7 +151,7 @@ export default class BitStripeField {
     if (Stripe) {
       this.#stripInstance = Stripe(this.#publishableKey)
 
-      const data = {
+      const confData = {
         payIntegID: this.#payIntegID,
         amount,
         currency: this.#currency,
@@ -158,10 +161,13 @@ export default class BitStripeField {
           fieldKey: this.#fieldKey,
         },
         payment_method_types: this.#options.payment_method_types,
+        description: this.#description,
       }
-      bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
+
+      bitsFetchFront(this.#contentId, confData, 'bitforms_get_stripe_secret_key')
         .then(res => {
           const { success, data } = res
+
           if (!success) {
             this.#displayErrorMsg(data.error.message)
             return
@@ -237,6 +243,12 @@ export default class BitStripeField {
           this.#onApproveHandler(res.paymentIntent)
           this.#paymentElement.clear()
         } else {
+          const result = {
+            data: {
+              [this.#fieldKey]: res.error.message,
+            },
+          }
+          bfValidationErrMsg(result, this.#contentId)
           paySpinner.classList.add('d-none')
         }
       })

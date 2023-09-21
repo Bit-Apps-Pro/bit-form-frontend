@@ -121,7 +121,7 @@ export default function StripeField({ fieldKey, formID, attr, isBuilder, styleCl
         fieldData={attr}
         fieldKey={fieldKey}
         noLabel
-        noErrMsg
+        // noErrMsg
         isBuilder={isBuilder}
       >
         {(loaded && publishableKey && !isLoading) && (
