@@ -17,7 +17,7 @@ export const packagesFileLists = {
   'bit-filepond-plugin-media-preview': ['bit-filepond-plugin-media-preview'],
   'bit-form-abandonment': ['bit-form-abandonment', 'saveFormProgress', 'setFieldValues', 'autoSavePartial'],
   'bit-frontend': ['hidden-token-field', 'bitsFetchFront', 'submit-form', 'customFieldsReset', 'advancedFileHandle', 'decisionFldHandle', 'validate-focus', 'bitform-init', 'bitform-elementor'],
-  'bit-helpers': ['observeElm', 'bfSelect', 'bfReset', 'setBFMsg', 'bfValidationErrMsg', 'setHiddenFld', 'paymentSubmitResponse', 'isFormValidatedWithoutError', 'setStyleProperty', 'scrollToFld'],
+  'bit-helpers': ['observeElm', 'bfSelect', 'bfReset', 'setBFMsg', 'bfValidationErrMsg', 'setHiddenFld', 'paymentSubmitResponse', 'isFormValidatedWithoutError', 'setStyleProperty', 'scrollToElm', 'moveToFirstErrFld', 'getFldKeyAndRowIndx'],
   'bit-page-lifecycle': ['bit-page-lifecycle'],
   'bit-paypal-field': ['bit-paypal-field'],
   'bit-phone-number-field': ['bit-phone-number-field'],
@@ -29,6 +29,7 @@ export const packagesFileLists = {
   'bit-validation': ['checkFldValidation', 'checkMinMaxOptions', 'customOptionValidation', 'dcsnbxFldValidation', 'emailFldValidation', 'fileupFldValidation', 'advanceFileUpFldValidation', 'generateBackslashPattern', 'nmbrFldValidation', 'requiredFldValidation', 'urlFldValidation', 'validateForm', 'regexPatternValidation', 'phoneNumberFldValidation'],
   'bit-virtualized-list': ['bit-virtualized-list'],
   'bit-signature-field': ['bit-signature-field'],
+  'bit-multi-step-form': ['bit-multi-step-form'],
   'bit-rating-field': ['bit-rating-field'],
 }
 

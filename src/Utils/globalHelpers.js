@@ -192,17 +192,23 @@ export function getOneLvlObjDiff(currentObj, targetObj) {
   merge multiple nested object
 */
 export function mergeNestedObj(...args) {
+  let opts = {}
+  const lastArg = args[args.length - 1]
+  if (typeof lastArg === 'object' && 'arrays' in lastArg && lastArg.arrays === 'concat') {
+    opts = lastArg
+    args.pop()
+  }
   if (
     args.length === 2
     && typeof args[0] === 'object'
     && typeof args[1] === 'object'
   ) {
-    return merge(...args)
+    return merge(args[0], args[1], opts)
   }
   let mergedObj = {}
   for (let i = 0; i < args.length - 1; i += 1) {
     if (typeof args[i] === 'object') {
-      mergedObj = merge(mergedObj, merge(args[i], args[i + 1]))
+      mergedObj = merge(mergedObj, merge(args[i], args[i + 1], opts), opts)
     }
   }
   return mergedObj

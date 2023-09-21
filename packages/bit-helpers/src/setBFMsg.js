@@ -14,7 +14,7 @@ export default function setBFMsg(msgObj) {
     msgWrpr.classList.replace('active', 'deactive')
   }
   if (msgWrpr.classList.contains('scroll')) {
-    scrollToFld(msgWrpr)
+    scrollToElm(msgWrpr)
   }
   if (!msgWrpr) { return }
   setTimeout(() => {

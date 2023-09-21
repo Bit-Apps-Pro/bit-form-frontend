@@ -15,7 +15,7 @@ import {
   $resizingFld,
   $selectedFieldId,
 } from '../../GlobalStates/GlobalStates'
-import { fitSpecificLayoutItem, getNestedLayoutHeight, handleFieldExtraAttr, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
+import { cols, fitSpecificLayoutItem, getNestedLayoutHeight, handleFieldExtraAttr, reCalculateFldHeights } from '../../Utils/FormBuilderHelper'
 import { IS_PRO, deepCopy, isObjectEmpty } from '../../Utils/Helpers'
 import proHelperData from '../../Utils/StaticData/proHelperData'
 import { getCustomAttributes, getCustomClsName, selectInGrid } from '../../Utils/globalHelpers'
@@ -266,7 +266,7 @@ function SectionField({
                 resizeHandles={['e']}
                 droppingItem={draggingField?.fieldSize}
                 onLayoutChange={handleLayoutChange}
-                cols={60}
+                cols={cols[breakpoint]}
                 rowHeight={1}
                 margin={[0, 0]}
                 draggableCancel=".no-drg"

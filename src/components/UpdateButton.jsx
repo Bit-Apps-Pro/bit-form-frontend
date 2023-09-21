@@ -11,7 +11,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   $additionalSettings,
   $breakpointSize,
-  $builderHelperStates,
   $builderHookStates,
   $builderSettings,
   $confirmations,
@@ -24,7 +23,6 @@ import {
   $formInfo,
   $forms,
   $integrations,
-  $layouts,
   $mailTemplates,
   $newFormId,
   $pdfTemplates,
@@ -56,19 +54,17 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
   const { css } = useFela()
   const [buttonText, setButtonText] = useState(formType === 'edit' ? 'Update' : 'Save')
   const [savedFormId, setSavedFormId] = useState(formType === 'edit' ? formID : 0)
-  const [lay, setLay] = useAtom($layouts)
   const [buttonDisabled, setbuttonDisabled] = useState(false)
   const [deletedFldKey, setDeletedFldKey] = useAtom($deletedFldKey)
   const fields = useAtomValue($fields)
   const formInfo = useAtomValue($formInfo)
-  const { formName } = formInfo
+  const { formName, multiStepSettings } = formInfo
   const newFormId = useAtomValue($newFormId)
   const setAllForms = useSetAtom($forms)
-  const builderHelperStates = useAtomValue($builderHelperStates)
   const setBuilderHookStates = useSetAtom($builderHookStates)
   const setFieldLabels = useSetAtom($fieldLabels)
   const resetUpdateBtn = useResetAtom($updateBtn)
-  const [reports, setReports] = useAtom($reports)
+  const setReports = useSetAtom($reports)
   const currentReport = useAtomValue($reportSelector)
   const [reportId, setReportId] = useAtom($reportId)
   const [mailTem, setMailTem] = useAtom($mailTemplates)
@@ -223,17 +219,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       setbuttonDisabled(false)
       return
     }
-    if (!lay.md.length || typeof lay === 'undefined') {
-      const mdl = { ...modal }
-      mdl.show = true
-      mdl.title = __('Sorry')
-      mdl.btnTxt = __('Close')
-      mdl.msg = __('You can not save a blank form')
-      mdl.cancelBtn = false
-      setModal(mdl)
-      setbuttonDisabled(false)
-      return
-    }
 
     // setUpdateBtn(oldUpdateBtn => ({ ...oldUpdateBtn, disabled: true, loading: true }))
 
@@ -290,6 +275,7 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
       ...(savedFormId && { currentReport }),
       layout: layouts,
       nestedLayouts,
+      formInfo,
       fields,
       // saveStyle && style obj
       form_name: formName,
@@ -328,7 +314,6 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         if (response?.success && componentMounted) {
           let { data } = response
           if (typeof data !== 'object') { data = JSON.parse(data) }
-          setLay(layouts)
           setBuilderHookStates(prv => ({ ...prv, reRenderGridLayoutByRootLay: prv.reRenderGridLayoutByRootLay + 1 }))
           data?.formSettings?.confirmation && setConfirmations(data.formSettings.confirmation)
           data?.workFlows && setworkFlows(data.workFlows)

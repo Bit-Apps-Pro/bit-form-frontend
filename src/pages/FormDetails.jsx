@@ -1,12 +1,13 @@
 import loadable from '@loadable/component'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
-import { useResetAtom } from 'jotai/utils'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useResetAtom } from 'jotai/utils'
 import bitIcn from '../../logo.svg'
 import {
-  $additionalSettings, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates,
+  $additionalSettings, $allLayouts, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded,
+  $mailTemplates,
   $nestedLayouts, $newFormId,
   $pdfTemplates,
   $reportId, $reports, $updateBtn, $workflows,
@@ -57,7 +58,7 @@ function FormDetails() {
   const [integrations, setIntegration] = useAtom($integrations)
   const setConfirmations = useSetAtom($confirmations)
   const setReportId = useSetAtom($reportId)
-  const setLayouts = useSetAtom($layouts)
+  const setAllLayouts = useSetAtom($allLayouts)
   const setNestedLayouts = useSetAtom($nestedLayouts)
   const setAllThemeColors = useSetAtom($allThemeColors)
   const setAllThemeVars = useSetAtom($allThemeVars)
@@ -98,7 +99,7 @@ function FormDetails() {
 
     setFormInfo({ formName: name })
     setFields(fields)
-    setLayouts(layouts)
+    setAllLayouts(layouts)
     setConfirmations(confirmations)
     setworkFlows(conditions)
     setAllThemeColors(allThemeColors)
@@ -127,8 +128,8 @@ function FormDetails() {
   const onUnmount = () => {
     showWpMenu()
     setAppFullScreen(false)
-    atomResetters.forEach(resetAtom => resetAtom())
     clearAllSWRCache()
+    atomResetters.forEach(resetAtom => resetAtom())
   }
 
   useEffect(() => {
@@ -178,7 +179,7 @@ function FormDetails() {
     const sessionFormInfo = getSessionStorageStates(`btcd-formInfo-bf-${formID}`, { strType: 'json' }) ?? formInfo
 
     if (sessionDataNotFound === 0) {
-      setLayouts(sessionLayouts)
+      setAllLayouts(sessionLayouts)
       setNestedLayouts(sessionNestedLayouts)
       setFields(sessionFields)
       addToBuilderHistory({ state: { layouts: sessionLayouts, fields: sessionFields } }, false, 0)
@@ -212,7 +213,7 @@ function FormDetails() {
             const defaultReport = responseData?.reports?.find(report => report.isDefault.toString() === '1')
             const formsSessionDataFound = handleSessionStorageStates()
             if (!formsSessionDataFound) {
-              setLayouts(responseData.form_content.layout)
+              setAllLayouts(responseData.form_content.layout)
               addToBuilderHistory({ state: { layouts: responseData.form_content.layout } }, false, 0)
             }
             if (!formsSessionDataFound) {
@@ -224,7 +225,7 @@ function FormDetails() {
               addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
             }
             if (!formsSessionDataFound) {
-              setFormInfo(oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+              setFormInfo(oldInfo => ({ ...oldInfo, ...responseData.form_content.formInfo }))
             }
             setworkFlows(responseData.workFlows)
             setAdditional(responseData.additional)

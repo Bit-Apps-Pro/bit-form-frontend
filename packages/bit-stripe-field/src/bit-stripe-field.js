@@ -125,7 +125,7 @@ export default class BitStripeField {
       setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
       setStyleProperty(errWrp, 'opacity', 1)
       const fld = this.#querySelector(`${this.#formSelector} .btcd-fld-itm.${this.#fieldKey}`)
-      scrollToFld(fld)
+      scrollToElm(fld)
     } else {
       errTxt.innerHTML = ''
       setStyleProperty(errMsg, 'display', 'none')
@@ -247,7 +247,7 @@ export default class BitStripeField {
     const progressData = await saveFormProgress(contentId)
     const savedFormData = progressData?.[contentId]
     if (!savedFormData?.success) return Promise.reject()
-    if (savedFormData.entry_id) this.#entryId = savedFormData.entry_id
+    if (savedFormData.success) this.#entryId = savedFormData.data.entry_id
     return Promise.resolve(true)
   }
 

@@ -208,6 +208,10 @@ const buttonCssProps = {
     'border-width': true,
     'border-radius': true,
   },
+  outline: {
+    outline: true,
+    'outline-offset': true,
+  },
   margin: '5px',
   padding: '5px',
   opacity: '100%',
@@ -285,6 +289,54 @@ const editorConfig = {
   _frm: {
     states: ['hover'],
     properties: { ...formCommonCssProps },
+  },
+  'stp-hdr-wrpr': {
+    states: ['hover'],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-hdr': {
+    states: ['hover', 'active', 'disabled', 'complete'],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-icn-cntn': {
+    states: ['hover', 'active', 'disabled', 'complete'],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-hdr-lbl': {
+    states: ['hover', 'active', 'disabled', 'complete'],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-hdr-sub-titl': {
+    states: ['hover', 'active', 'disabled', 'complete'],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-wrpr': {
+    states: ['hover'],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-progress-wrpr': {
+    states: [],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-progress-bar': {
+    states: [],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-cntn': {
+    states: ['hover'],
+    properties: { ...formCommonCssProps },
+  },
+  'stp-btn-wrpr': {
+    states: ['hover'],
+    properties: { ...formCommonCssProps },
+  },
+  'prev-step-btn': {
+    states: ['hover', 'focus', 'active', 'disabled'],
+    properties: { ...buttonCssProps },
+  },
+  'next-step-btn': {
+    states: ['hover', 'focus', 'active', 'disabled'],
+    properties: { ...buttonCssProps },
   },
   // TODO: quick-tweaks
   'quick-tweaks': {

@@ -1,19 +1,19 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-console */
+import { useAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'jotai'
 import { $styles } from '../../../../GlobalStates/StylesState'
 import { $themeColors } from '../../../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../../../GlobalStates/ThemeVarsState'
-import ut from '../../../../styles/2.utilities'
 import { addToBuilderHistory, generateHistoryData, getLatestState } from '../../../../Utils/FormBuilderHelper'
+import ut from '../../../../styles/2.utilities'
+import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import editorConfig from '../../../style-new/NewStyleEditorConfig'
 import SimpleColorPickerTooltip from '../../../style-new/SimpleColorPickerTooltip'
 import { getActualElementKey, getObjByKey, getValueByObjPath, getValueFromStateVar, setStyleStateObj } from '../../../style-new/styleHelpers'
-import SimpleDropdown from '../../../Utilities/SimpleDropdown'
 import SpaceControl from './SpaceControl'
 
 /**
@@ -41,7 +41,8 @@ export default function BorderControlMenu({ objectPaths, hslaPaths, id }) {
   const [rightBar, element, fieldKey] = rightBarUrl.split('/')
 
   const fldStyleObj = styles?.fields?.[fieldKey]
-  const elementKey = getActualElementKey(element)
+  const newElement = element === 'multi-step' ? fieldKey : element
+  const elementKey = getActualElementKey(newElement, fieldKey)
   let borderPropObj
 
   try {

@@ -1,14 +1,29 @@
 function dispatchFieldError(fldErrors, contentId) {
-  Object.keys(fldErrors).forEach((fk) => {
-    const rowIndex = fk.match(/\[(\d+)\]/)?.[1]
-    const rptIndexClass = rowIndex ? ` .rpt-index-${rowIndex}` : ''
-    const errWrp = bfSelect(`#form-${contentId}${rptIndexClass} .${fk}-err-wrp`)
-    const errTxt = bfSelect(`.${fk}-err-txt`, errWrp)
-    bfSelect(`.${fk}-err-msg`, errWrp).style.removeProperty('display')
+  const fldKeys = Object.keys(fldErrors)
+  fldKeys.forEach((fk) => {
+    const [fldKey, rowIndex] = getFldKeyAndRowIndx(fk)
+    const rptIndexClass = rowIndex ? `.rpt-index-${rowIndex}` : ''
+    const errWrp = bfSelect(`#form-${contentId} ${rptIndexClass} .${fldKey}-err-wrp`)
+    const errTxt = bfSelect(`.${fldKey}-err-txt`, errWrp)
+    const errMsg = bfSelect(`.${fldKey}-err-msg`, errWrp)
+    let isErrWrpGrid = false
+    try {
+      isErrWrpGrid = getComputedStyle(errWrp).display === 'grid'
+    } catch (_) {
+      isErrWrpGrid = false
+    }
     errTxt.innerHTML = fldErrors[fk]
-    setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
-    setStyleProperty(errWrp, 'opacity', 1)
+    if (!isErrWrpGrid) {
+      setTimeout(() => {
+        errMsg.style.removeProperty('display')
+        setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
+        setStyleProperty(errWrp, 'opacity', 1)
+      }, 100)
+    } else {
+      setStyleProperty(errWrp, 'grid-template-rows', '1fr')
+    }
   })
+  moveToFirstErrFld(window?.bf_globals?.[contentId], fldKeys)
 }
 
 export default function bfValidationErrMsg(result, contentId) {

@@ -63,7 +63,7 @@ const conditionalLogicsList = {
   },
   on_click: {
     label: __('On Click'),
-    fields: ['button.btnTyp:button'],
+    fields: ['button.btnTyp:button', 'button.btnTyp:next-step', 'button.btnTyp:previuos-step'],
   },
 }
 

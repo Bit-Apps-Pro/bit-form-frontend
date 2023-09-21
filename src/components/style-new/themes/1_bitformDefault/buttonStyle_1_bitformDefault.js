@@ -58,7 +58,7 @@ export default function buttonStyle_1_bitformDefault({
       },
       [`.${fk}-btn:hover`]: {
         'background-color': 'hsl(var(--gah), var(--gas), calc(var(--gal) - 5%)) !important',
-        ...btnTyp === 'save-draft' && { color:  'var(--btn-c)'},
+        ...btnTyp === 'save-draft' && { color: 'var(--btn-c)' },
       },
       [`.${fk}-btn:active`]: {
         transform: 'scale(0.95)',
@@ -87,18 +87,6 @@ export default function buttonStyle_1_bitformDefault({
         height: '20px',
         ...direction !== 'rtl' && { margin: '0px 0px 0px 5px' },
         ...direction === 'rtl' && { margin: '0px 5px 0px 0px' },
-      },
-      ...btnTyp === 'submit' && {
-        [`.${fk}-spanner`]: {
-          'margin-left': '5px',
-          width: '15px',
-          height: '15px',
-          'border-radius': '50%',
-          // display: 'inline-block',
-          'border-top': '2px solid',
-          'border-right': '2px solid transparent',
-          animation: 'bf-rotation 1s linear infinite',
-        },
       },
     }
   }

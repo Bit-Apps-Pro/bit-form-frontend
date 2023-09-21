@@ -164,7 +164,6 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const fldStyleObj = styles?.fields?.[fldKey]
   if (!fldStyleObj) { console.error('😅 no style object found according to this field'); return <></> }
   const { classes, fieldType } = fldStyleObj
-  console.log('elementKey', { elementKey })
   const existCssProps = Object.keys(classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {})
   const existCssPropsObj = classes?.[`.${fldKey}-${elementKey}${stateController && getPseudoPath(stateController).toLowerCase()}`] || {}
 
@@ -176,7 +175,6 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   const availableCssProp = addableCssPropsByField(fieldType, elementKey)?.filter(x => !existCssProps?.includes(x))
   const fontweightVariants = styles.font?.fontWeightVariants.length !== 0 ? arrayToObject(styles.font?.fontWeightVariants) : staticFontweightVariants
   const fontStyleVariants = styles.font?.fontStyle.length !== 0 ? arrayToObject(styles.font?.fontStyle) : staticFontStyleVariants
-  console.log({ availableCssProp, existCssProps, existCssPropsObj })
   const txtAlignValue = classes?.[`.${fldKey}-${elementKey}`]?.['text-align']
   const getPropertyPath = (cssProperty, state = '', selector = '') => `fields->${fldKey}->classes->.${fldKey}-${elementKey}${state && `${state}`}${selector}->${cssProperty}`
 
@@ -224,7 +222,7 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
   }
 
   const fldTitle = getTitle[elementKey]
-  console.log('fldTitle', fldTitle)
+
   const getStyleValueAndUnit = (prop) => {
     const getVlu = classes[`.${fldKey}-${elementKey}`]?.[prop]
     const themeVal = getValueFromStateVar(themeVars, getVlu?.replace('!important', ''))

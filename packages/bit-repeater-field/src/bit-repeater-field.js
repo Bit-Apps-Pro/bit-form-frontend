@@ -253,7 +253,7 @@ export default class BitRepeaterField {
     this.#setHeight(replacedElement, true)
     this.#initializeCustomFields(this.#rowNumber)
     this.#handleButtonEnableDisable()
-    if (!this.#isReset) scrollToFld(replacedElement)
+    if (!this.#isReset) scrollToElm(replacedElement)
     this.#rowNumber += 1
   }
 
@@ -267,7 +267,7 @@ export default class BitRepeaterField {
     this.#removeRowIndex(rowNumber)
     this.#removeCustomFieldInstances(rowNumber)
     this.#handleButtonEnableDisable()
-    if (parent.previousElementSibling && !this.#isReset) scrollToFld(parent.previousElementSibling)
+    if (parent.previousElementSibling && !this.#isReset) scrollToElm(parent.previousElementSibling)
   }
 
   #handleAddToEnd(e) {
