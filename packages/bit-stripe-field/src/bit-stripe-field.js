@@ -45,7 +45,10 @@ export default class BitStripeField {
 
   #description = null
 
+  #address = null
+
   constructor(selector, config) {
+    console.log({ config })
     if (typeof selector === 'string') {
       this.#stripeWrpSelector = document.querySelector(selector)
     } else {
@@ -68,6 +71,7 @@ export default class BitStripeField {
     this.#layout = this.#config.layout
     this.#payBtnTxt = this.#config.payBtnTxt
     this.#description = this.#config.options?.description
+    this.#address = this.#config?.address
     this.init()
   }
 
@@ -90,6 +94,7 @@ export default class BitStripeField {
       this.#handleOnClick(this.#contentId)
         .then(response => {
           if (response) {
+            console.log({ response })
             this.#stripeComponent()
             // stripeBtnSpanner.classList.add('d-none')
           }
@@ -101,6 +106,18 @@ export default class BitStripeField {
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
     this.#allEventListeners.push({ selector, eventType, cb })
+  }
+
+  #getAddressValue() {
+    if (this.#address) {
+      const address = this.#address.defaultValues.address
+      const addressObj = {}
+      Object.keys(address).map(addressFldKey => {
+        addressObj[addressFldKey] = this.#getDynamicValue(address[addressFldKey])
+      })
+      console.log({ addressObj })
+      return addressObj
+    }
   }
 
   #getDynamicValue(fldKey) {
@@ -162,17 +179,27 @@ export default class BitStripeField {
         },
         payment_method_types: this.#options.payment_method_types,
         description: this.#description,
-        shipping: {
-          name: 'Mohammad Kaioum',
-          address: {
-            line1: '',
-            postal_code: '4202',
-            city: 'Chattogram',
-            state: 'Khulshi',
-            country: 'Bangladesh',
-          },
-        },
       }
+
+      if (this.#address?.mode === 'shipping') {
+        if (!('shipping' in confData)) {
+          confData['shipping'] = {}
+        }
+        if (this.#address.display.name === 'full') {
+          confData['shipping']['name'] = this.#getDynamicValue(this.#address.defaultValues.name)
+        } else {
+          const fName = this.#getDynamicValue(this.#address.defaultValues.firstName)
+          const lName = this.#getDynamicValue(this.#address.defaultValues.lastName)
+          const fullName = fName + " " + lName
+          confData['shipping']['name'] = fullName
+        }
+        if (this.#address.defaultValues.phone) {
+          confData['shipping']['phone'] = this.#getDynamicValue(this.#address.defaultValues.phone)
+        }
+        confData['shipping']['address'] = this.#getAddressValue()
+      }
+
+      console.log(confData)
 
       bitsFetchFront(this.#contentId, confData, 'bitforms_get_stripe_secret_key')
         .then(res => {

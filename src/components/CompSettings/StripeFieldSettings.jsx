@@ -38,6 +38,14 @@ export default function StripeFieldSettings() {
   console.log({ fieldData })
   const handleInput = (name, value) => {
     console.log({ value })
+    console.log(name)
+    if (value === 'split') {
+      deleteNestedObj(fieldData, 'config->address->defaultValues->name')
+    }
+    if (value === 'full') {
+      deleteNestedObj(fieldData, 'config->address->defaultValues->firstName')
+      deleteNestedObj(fieldData, 'config->address->defaultValues->lastName')
+    }
     if (value) {
       assignNestedObj(fieldData, name, value)
     } else {
