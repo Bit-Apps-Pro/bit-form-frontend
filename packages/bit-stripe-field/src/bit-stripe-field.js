@@ -162,6 +162,16 @@ export default class BitStripeField {
         },
         payment_method_types: this.#options.payment_method_types,
         description: this.#description,
+        shipping: {
+          name: 'Mohammad Kaioum',
+          address: {
+            line1: '',
+            postal_code: '4202',
+            city: 'Chattogram',
+            state: 'Khulshi',
+            country: 'Bangladesh',
+          },
+        },
       }
 
       bitsFetchFront(this.#contentId, confData, 'bitforms_get_stripe_secret_key')
