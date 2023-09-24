@@ -71,7 +71,7 @@ export default class BitStripeField {
     this.#layout = this.#config.layout
     this.#payBtnTxt = this.#config.payBtnTxt
     this.#description = this.#config.options?.description
-    this.#address = this.#config?.address
+    this.#address = this.#config?.address || {}
     this.init()
   }
 
@@ -110,7 +110,7 @@ export default class BitStripeField {
 
   #getAddressValue() {
     if (this.#address) {
-      const address = this.#address.defaultValues.address
+      const { address } = this.#address.defaultValues
       const addressObj = {}
       Object.keys(address).map(addressFldKey => {
         addressObj[addressFldKey] = this.#getDynamicValue(address[addressFldKey])
@@ -183,20 +183,20 @@ export default class BitStripeField {
 
       if (this.#address?.mode === 'shipping') {
         if (!('shipping' in confData)) {
-          confData['shipping'] = {}
+          confData.shipping = {}
         }
         if (this.#address.display.name === 'full') {
-          confData['shipping']['name'] = this.#getDynamicValue(this.#address.defaultValues.name)
+          confData.shipping.name = this.#getDynamicValue(this.#address.defaultValues.name)
         } else {
           const fName = this.#getDynamicValue(this.#address.defaultValues.firstName)
           const lName = this.#getDynamicValue(this.#address.defaultValues.lastName)
-          const fullName = fName + " " + lName
-          confData['shipping']['name'] = fullName
+          const fullName = `${fName} ${lName}`
+          confData.shipping.name = fullName
         }
         if (this.#address.defaultValues.phone) {
-          confData['shipping']['phone'] = this.#getDynamicValue(this.#address.defaultValues.phone)
+          confData.shipping.phone = this.#getDynamicValue(this.#address.defaultValues.phone)
         }
-        confData['shipping']['address'] = this.#getAddressValue()
+        confData.shipping.address = this.#getAddressValue()
       }
 
       console.log(confData)
@@ -227,7 +227,7 @@ export default class BitStripeField {
             const stripeAuthWrp = this.#querySelector(`${this.#formSelector} .${this.#fieldKey}-stripe-auth-wrp`)
             linkAuthenticationElm.mount(stripeAuthWrp)
           }
-          if (this.#config?.address?.active) {
+          if (this.#address.active && this.#address.mode === 'billing') {
             const { address } = this.#config
             const addressElm = this.#elements.create('address', address)
             const stripeAddrWrp = this.#querySelector(`${this.#formSelector} .${this.#fieldKey}-stripe-addr-wrp`)
