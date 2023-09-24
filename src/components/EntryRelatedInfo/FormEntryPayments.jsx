@@ -27,7 +27,7 @@ export default function FormEntryPayments({ formID, rowDtl }) {
 
       bitsFetch({ formID, transactionID }, 'bitforms_payment_details')
         .then(result => {
-          if (result.success && result.data.length === 1) {
+          if (result.success && result.data.length) {
             setPaymentInfo(result.data[0])
             payInfoFound.current = 1
           } else {
