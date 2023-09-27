@@ -1,35 +1,30 @@
+import { MouseEvent } from 'react'
 import { useFela } from 'react-fela'
 import CloseIcn from '../../../Icons/CloseIcn'
 import ut from '../../../styles/2.utilities'
 import Downmenu from '../../Utilities/Downmenu'
 import ColorPreview from '../ColorPreview'
-import Important from '../Important'
-import { MouseEvent } from 'react'
+import ColorPickerControllerUtil from './ColorPickerControllerUtil'
+import ImportantUtil from './ImportantUtil'
+import { colorPickerProps } from './color-picker'
 
-type colorPickerProps = {
-  id: string,
-  value: string,
-  onChangeHandler: (value: string) => void,
-  clearHandler: (value: MouseEvent<HTMLButtonElement>) => void,
-  allowImportant: boolean,
-}
 
-export default function ColorPicker({ id, value, onChangeHandler , clearHandler, allowImportant }: colorPickerProps) {
+
+export default function ColorPickerUtil({ id, valueObj, onChangeHandler , clearHandler, allowImportant, allowSolid=true, allowImage=true, allowGradient=true, allowVariable=true }: colorPickerProps) {
   const { css } = useFela()
   return (
     <div data-testid={`${id}-hover`} className={css(ut.flxcb, ut.mt2, style.containerHover)}>
       <div className={css(ut.flxc)}>
-        {allowImportant && value && (
-          <Important
+        {allowImportant && valueObj.value && (
+          <ImportantUtil
             className={css({ mr: 3 })}
-            stateObjName={stateObjName}
-            propertyPath={propertyPath}
-            id={id}
+            value={valueObj.value}
+            addOrRemoveImportant={(changedValue) => onChangeHandler(changedValue)}
           />
         )}
         <div
           className={css(style.preview_wrp)}
-          title={value}
+          title={valueObj.value}
         >
           <Downmenu
             onShow={() => {}}
@@ -40,12 +35,22 @@ export default function ColorPicker({ id, value, onChangeHandler , clearHandler,
               className={css(style.pickrBtn)}
               data-testid={`${id}-modal-btn`}
             >
-              <ColorPreview bg={value} h={24} w={24} className={css(ut.mr2)} />
-              <span className={css(style.clrVal)}>{value || 'Pick Color'}</span>
+              <ColorPreview bg={valueObj.value} h={24} w={24} className={css(ut.mr2)} />
+              <span className={css(style.clrVal)}>{valueObj.value || 'Pick Color'}</span>
             </button>
+            <ColorPickerControllerUtil 
+              id={id}
+              valueObj={valueObj}
+              onChangeHandler={onChangeHandler}
+              clearHandler={clearHandler}
+              allowSolid={allowSolid}
+              allowGradient={allowGradient}
+              allowImage={allowImage}
+              allowVariable={allowVariable}
+            />
           </Downmenu>
 
-          {value && (
+          {valueObj.value && (
             <button
               title="Clear Value"
               onClick={clearHandler}

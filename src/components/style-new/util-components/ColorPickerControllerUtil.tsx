@@ -1,30 +1,34 @@
-import { useState } from 'react'
+import ColorPicker from '@atomik-color/component'
+import { useAtom, useSetAtom } from 'jotai'
+import { create } from 'mutative'
+import { ChangeEvent, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
+import { $unsplashImgUrl, $unsplashMdl } from '../../../GlobalStates/GlobalStates'
+import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
+import { __ } from '../../../Utils/i18nwrap'
 import ut from '../../../styles/2.utilities'
 import bgImgControlStyle from '../../../styles/backgroundControl.style'
+import sc from '../../../styles/commonStyleEditorStyle'
 import Grow from '../../CompSettings/StyleCustomize/ChildComp/Grow'
 import ImageUploadInput from '../../CompSettings/StyleCustomize/ChildComp/ImageUploadInput'
 import SizeAspectRatioControl from '../../CompSettings/StyleCustomize/ChildComp/SizeAspectRatioControl'
+import SingleToggle from '../../Utilities/SingleToggle'
 import StyleSegmentControl from '../../Utilities/StyleSegmentControl'
-import ColorPicker from './ColorPickerUtil'
+import Tip from '../../Utilities/Tip'
 import ColorPreview from '../ColorPreview'
-import { useAtom } from 'jotai'
-import { $themeColors } from '../../../GlobalStates/ThemeColorsState'
+import SimpleGradientColorPicker from '../SimpleGradientColorPicker'
 import { hsla2hsva, hsva2hsla } from '../colorHelpers'
+import { styleToGradientObj } from '../styleHelpers'
+import { colorObj, colorPickerProps, valueObject } from './color-picker'
 
-export default function ColorPickerController({ value, onChangeHandler, canSetVariable = true }) {
+
+export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler, allowSolid=true, allowGradient=true, allowImage=true, allowVariable }: colorPickerProps) {
   const [controller, setController] = useState({ parent: 'Solid', child: 'Solid', color: 'Custom' })
-  const [valueObject, setValueObject] = useState(() => {
-    if (typeof value === 'object') {
-      return value
-    }
-    return {
-      value,
-    }
-  })
-  const [color, setColor] = useState()
+  const [valueObject, setValueObject] = useState<valueObject>(valueObj)
+  const [color, setColor] = useState<colorObj>({})
   const [bgImage, setBgImage] = useState()
+  const [bgRepeat, setBgRepeat] = useState('initial')
   const [bgSize, setBgSize] = useState({
     type: 'auto',
     w: '0px',
@@ -36,20 +40,24 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
     y: '0px',
     value: 'center',
   })
+  const setUnsplashMdl = useSetAtom($unsplashMdl)
   const [themeColors, setThemeColors] = useAtom($themeColors)
+  const [unsplashImgUrl, setUnsplashImgUrl] = useAtom($unsplashImgUrl)
+  const { css } = useFela()
+
   const { '--global-bg-color': themeBgColor,
     '--global-fld-bdr-clr': themeFldBdrClr,
     '--global-fld-bg-color': themeFldBgColor,
     '--global-font-color': themeFontColor,
     '--global-accent-color': themePrimaryColor } = themeColors
 
-  const onTabChangeHandler = (lbl, type) => {
+  const onTabChangeHandler = (lbl:string, type:string) => {
     if (type === 'parent') setController({ parent: lbl, child: 'Upload', color: 'Custom' })
     else if (type === 'child') setController(old => ({ ...old, child: lbl }))
     else if (type === 'color') setController(old => ({ ...old, color: lbl }))
   }
 
-  const setColorState = (colorObj) => {
+  const setColorState = (colorObj:colorObj|string) => {
     if (typeof colorObj === 'object') {
       setColor(colorObj)
       handleColor(colorObj.h, colorObj.s, colorObj.v, colorObj.a)
@@ -65,6 +73,15 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
         handleColor('', '', '', '', str)
       }
     }
+  }
+
+  const positionChangeHandler = (value) => {
+    // setBgPositionValue(value)
+    setBgPosition(prevBgPos => ({ ...prevBgPos, value }))
+    setValueObject(prevValue => create(prevValue, draft => {
+      draft.backgroundPosition = value
+      onChangeHandler(draft)
+      }))
   }
 
   const transparantColor = (e) => {
@@ -85,64 +102,138 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
 
   const handleColor = (_h, _s, _v, _a, str = '') => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
+    let hslaColor = hslaStr
+    const checkExistImportant = valueObj.value?.match(/(!important)/gi)?.[0]
+    if (checkExistImportant) hslaColor = `${hslaColor} !important`
+    const clr = str ? `${str}${checkExistImportant ? ' !important' : ''}` : hslaColor
+    onChangeHandler(clr)
+  }
 
-    switch (stateObjName) {
-      case 'themeColors':
-        // eslint-disable-next-line no-case-declarations
-        setThemeColors(prevState => create(prevState, drftThmClr => {
-          drftThmClr[propertyPath] = hslaStr
+  const gradientChangeHandler = (e) => {
+
+    setValueObject(prevValue => create(prevValue, draft => {
+      draft.backgroundImage = e.style
+      onChangeHandler(draft)
+      }))
+    setBgImage(e.style)
+  }
+
+  const fldBgPositionHandler = (value, unit, inputId) => {
+    if (inputId === 0) {
+      setBgPosition(prevBgPos => ({ ...prevBgPos, x: `${value}${unit}` }))
+      setValueObject(prevValue => create(prevValue, draft => {
+        draft.backgroundPosition = `${value}${unit} ${bgPosition.y}`
+        onChangeHandler(draft)
         }))
-        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeColors: getLatestState('themeColors') }))
-        break
-
-      case 'themeVars':
-        setThemeVars(prvState => create(prvState, drftThmVar => {
-          drftThmVar[propertyPath] = hslaStr
+    } else {
+      setBgPosition(prevBgPos => ({ ...prevBgPos, y: `${value}${unit}` }))
+      setValueObject(prevValue => create(prevValue, draft => {
+        draft.backgroundPosition = `${bgPosition.x} ${value}${unit}`
+        onChangeHandler(draft)
         }))
-        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, hslaStr, { themeVars: getLatestState('themeVars') }))
-        break
-
-      case 'styles':
-        setStyles(prvState => create(prvState, drftStyles => {
-          let hslaColor = hslaStr
-          const propertyPathArr = Array.isArray(paths) ? paths[0] : propertyPath
-          const value = getValueByObjPath(drftStyles, propertyPathArr)
-          const checkExistImportant = value?.match(/(!important)/gi)?.[0]
-          if (checkExistImportant) hslaColor = `${hslaColor} !important`
-          const clr = str ? `${str}${checkExistImportant ? ' !important' : ''}` : hslaColor
-          if (Array.isArray(paths)) {
-            paths.forEach(path => {
-              assignNestedObj(drftStyles, path, clr)
-            })
-          } else {
-            if (checkExistImportant) assignNestedObj(drftStyles, paths['background-image'], ' !important')
-            else assignNestedObj(drftStyles, paths['background-image'], '')
-            assignNestedObj(drftStyles, paths.background, clr)
-          }
-        }))
-        addToBuilderHistory(generateHistoryData(element, fieldKey, propertyPath, str || hslaStr, { styles: getLatestState('styles') }))
-        break
-
-      default:
-        break
     }
+  }
+
+  const fldBgSizeHandler = (value, unit, inputId) => {
+    if (inputId === 0) {
+      setBgSize(prevBgSize => ({ ...prevBgSize, w: `${value}${unit}` }))
+      setValueObject(prevValue => create(prevValue, draft => {
+        draft.backgroundSize = `${value}${unit} ${bgSize.h}`
+        onChangeHandler(draft)
+        }))
+    } else {
+      setBgSize(prevBgSize => ({ ...prevBgSize, h: `${value}${unit}` }))
+      setValueObject(prevValue => create(prevValue, draft => {
+        draft.backgroundSize = `${bgSize.w} ${value}${unit}`
+        onChangeHandler(draft)
+        }))
+    }
+  }
+
+  const urlChangeHandler = e => {
+    setBgImage(`url(${e.target.value})`)
+    setValueObject(prevValue => create(prevValue, draft => {
+      draft.backgroundImage = `url(${e.target.value})`
+      onChangeHandler(draft)
+      }))
+  }
+  const positionSelectHandler = ({ target: { value } }) => {
+    setBgPosition(prevBgPos => ({ ...prevBgPos, type: value }))
+    if (value !== 'size' && value !== 'positions') {
+      setValueObject(prevValue => create(prevValue, draft => {
+        draft.backgroundPosition = value
+        onChangeHandler(draft)
+      }))
+    }
+  }
+
+  const sizeSelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
+    setBgSize(prevBgSize => ({ ...prevBgSize, type: e.target.value }))
+    setValueObject(prevValue => create(prevValue, draft => {
+      draft.backgroundSize = e.target.value
+      onChangeHandler(draft)
+    }))
+  }
+
+  const bgRepeatSelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
+    setBgRepeat(e.target.value)
+    setValueObject(prevValue => create(prevValue, draft => {
+      draft.backgroundRepeat = e.target.value
+      onChangeHandler(draft)
+    }))
   }
 
   const clearBgImage = (e) => {
     e.stopPropagation()
     setBgImage('')
-    onValueChange(paths['background-image'], '')
+    setValueObject(prevValue => create(prevValue, draft => {
+      draft.backgroundImage = ''
+      onChangeHandler(draft)
+      }))
     setUnsplashImgUrl('')
   }
 
   const options = [
+    {... allowSolid && { label: 'Solid' }},
+    {... allowGradient && { label: 'Gradient' }},
+    {... allowImage && { label: 'Image' }},
+  ]
+  const solidOptions = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
   ]
-  const { css } = useFela()
+
+  
+  const setWpMedia = () => {
+    if (typeof wp !== 'undefined' && wp.media) {
+      const wpMediaMdl = wp.media({
+        title: 'Media',
+        button: { text: 'Select picture' },
+        library: { type: 'image' },
+        multiple: false,
+      })
+
+      wpMediaMdl.on('select', () => {
+        const attachment = wpMediaMdl.state().get('selection').first().toJSON()
+        setValueObject(prevValue => create(prevValue, draft => {
+          draft.backgroundImage = `url(${attachment.url})`
+          onChangeHandler(draft)
+        }))
+
+        setBgImage(`url(${attachment.url})`)
+      })
+      wpMediaMdl.open()
+    }
+  }
+  
   return (
     <div className={css(bgImgControlStyle.container)}>
-      <StyleSegmentControl options={[{ label: 'Solid' }, { label: 'Gradient' }, { label: 'Image' }]} onChange={lbl => onTabChangeHandler(lbl, 'parent')} defaultActive={controller.parent} wideTab />
+      <StyleSegmentControl 
+        options={options} 
+        onChange={(lbl:string) => onTabChangeHandler(lbl, 'parent')} 
+        defaultActive={controller.parent} 
+        wideTab
+      />
       <Scrollbars
         autoHide
         autoHeight
@@ -151,19 +242,18 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
       >
         <div className={css(ut.mt1)}>
           <Grow open={controller.parent === 'Solid'}>
-            {canSetVariable ? (
+            {allowVariable ? (
               <>
                 <div className={css(c.mb)}>
                   <StyleSegmentControl
-                    square
                     noShadow
                     defaultActive="Custom"
-                    options={options}
+                    options={solidOptions}
                     size={60}
-                    component="button"
-                    onChange={lbl => onTabChangeHandler(lbl, 'color')}
+                    
+                    onChange={(lbl:string) => onTabChangeHandler(lbl, 'color')}
                     show={['icn']}
-                    variant="lightgray"
+                    
                     width="100%"
                     wideTab
                   />
@@ -172,7 +262,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                 <Grow open={controller.color === 'Var'}>
                   <div className={css(c.varClr)}>
                     <button
-                      className={`${css(c.clrItem)} ${css(valueObject.value === '--global-bg-color' && c.active)}`}
+                      className={`${css(c.clrItem)} ${css(valueObject.value === '--global-bg-color' ? c.active : {})}`}
                       type="button"
                       onClick={() => setColorState('--global-bg-color')}
                       data-testid={`${id}-g-bg-c`}
@@ -182,7 +272,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                     </button>
 
                     <button
-                      className={css(c.clrItem, color === '--global-accent-color' && c.active)}
+                      className={css(c.clrItem, color === '--global-accent-color' ? c.active : {})}
                       type="button"
                       onClick={() => setColorState('--global-accent-color')}
                       data-testid={`${id}-g-a-c`}
@@ -192,7 +282,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                     </button>
 
                     <button
-                      className={css(c.clrItem, color === '--global-font-color' && c.active)}
+                      className={css(c.clrItem, color === '--global-font-color' ? c.active : {})}
                       type="button"
                       onClick={() => setColorState('--global-font-color')}
                       data-testid={`${id}-g-f-c`}
@@ -202,7 +292,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                     </button>
 
                     <button
-                      className={css(c.clrItem, color === '--global-fld-bdr-clr' && c.active)}
+                      className={css(c.clrItem, color === '--global-fld-bdr-clr' ? c.active: {})}
                       type="button"
                       onClick={() => setColorState('--global-fld-bdr-clr')}
                       data-testid={`${id}-g-f-b`}
@@ -212,7 +302,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                     </button>
 
                     <button
-                      className={css(c.clrItem, color === '--global-fld-bg-color' && c.active)}
+                      className={css(c.clrItem, color === '--global-fld-bg-color' ? c.active: {})}
                       type="button"
                       onClick={() => setColorState('--global-fld-bg-color')}
                       data-testid={`${id}-g-f-bg-c`}
@@ -228,7 +318,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                     <div className={css(c.subContainer)}>
                       <SingleToggle
                         title={__('Transparant')}
-                        action={transparantColor}
+                        action={(e:any) => transparantColor(e)}
                         isChecked={checkTransparant()}
                         id="color-transparant"
                       />
@@ -247,7 +337,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                 <div className={css(c.subContainer)}>
                   <SingleToggle
                     title={__('Transparant')}
-                    action={transparantColor}
+                    action={(e:any) => transparantColor(e)}
                     isChecked={checkTransparant()}
                     id="color-transparant"
                   />
@@ -276,7 +366,11 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
 
           <Grow open={controller.parent === 'Image'}>
             <>
-              <StyleSegmentControl options={[{ label: 'Upload' }, { label: 'Link' }]} onChange={lbl => onTabChangeHandler(lbl, 'child')} defaultActive={controller.child} wideTab />
+              <StyleSegmentControl 
+                options={[{ label: 'Upload' }, { label: 'Link' }]} 
+                onChange={(lbl:string) => onTabChangeHandler(lbl, 'child')} 
+                defaultActive={controller.child} wideTab 
+              />
               <div className={css(ut.mt2, { p: '0px 2px' })}>
 
                 {controller.child === 'Upload' && (
@@ -386,7 +480,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem)}>
                         <Tip msg="Top Left">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top left' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top left' ? bgImgControlStyle.positionDotActive :{})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('top left')}
                             onClick={() => positionChangeHandler('top left')}
@@ -399,7 +493,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
                         <Tip msg="Top Center">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top center' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top center' ? bgImgControlStyle.positionDotActive : {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('top center')}
                             onClick={() => positionChangeHandler('top center')}
@@ -412,7 +506,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
                         <Tip msg="Top Right">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top right' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'top right' ? bgImgControlStyle.positionDotActive: {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('top right')}
                             onClick={() => positionChangeHandler('top right')}
@@ -425,7 +519,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem)}>
                         <Tip msg="Center Left">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center left' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center left' ? bgImgControlStyle.positionDotActive: {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('center left')}
                             onClick={() => positionChangeHandler('center left')}
@@ -438,7 +532,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
                         <Tip msg="Center">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center' ? bgImgControlStyle.positionDotActive : {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('center')}
                             onClick={() => positionChangeHandler('center')}
@@ -451,7 +545,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
                         <Tip msg="Center Right">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center right' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'center right' ? bgImgControlStyle.positionDotActive: {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('center right')}
                             onClick={() => positionChangeHandler('center right')}
@@ -464,7 +558,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem)}>
                         <Tip msg="Bottom Left">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom left' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom left' ? bgImgControlStyle.positionDotActive : {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('bottom left')}
                             onClick={() => positionChangeHandler('bottom left')}
@@ -477,7 +571,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem, ut.txCenter)}>
                         <Tip msg="Bottom Center">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom center' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom center' ? bgImgControlStyle.positionDotActive: {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('bottom center')}
                             onClick={() => positionChangeHandler('bottom center')}
@@ -490,7 +584,7 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
                       <div className={css(bgImgControlStyle.positionitem, ut.txRight)}>
                         <Tip msg="Bottom Right">
                           <span
-                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom right' && bgImgControlStyle.positionDotActive)}
+                            className={css(bgImgControlStyle.positiondot, bgPosition.value === 'bottom right' ? bgImgControlStyle.positionDotActive: {})}
                             role="button"
                             onKeyDown={() => positionChangeHandler('bottom right')}
                             onClick={() => positionChangeHandler('bottom right')}
@@ -542,6 +636,28 @@ export default function ColorPickerController({ value, onChangeHandler, canSetVa
       </Modal> */}
     </div>
   )
+}
+
+const style = {
+  preview_wrp: {
+    '& div[role="group"]': { p: 4, b: 0 },
+    '& input': {
+      brs: 8,
+      b: '1px solid lightgray',
+      p: '3px 8px',
+      mnh: '10px !important',
+      fs: 12,
+      mb: 3,
+      bs: 'none',
+      ':focus': { focusShadow: 1, b: '1px solid var(--b-50)' },
+    },
+    '& .styles-module_container__2LiHz': { w: '100%' },
+    '& .common-module_transBackground__2AOKu': {
+      brs: 8,
+      ow: 'hidden',
+    },
+  },
+  container: { '& > .ui-color-picker': { w: '100%' } },
 }
 
 const c = {

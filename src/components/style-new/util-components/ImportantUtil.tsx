@@ -1,27 +1,40 @@
-import { useAtom } from 'jotai'
 import { useFela } from 'react-fela'
-import { $styles } from '../../GlobalStates/StylesState'
 import StarIcn from '../../Icons/StarIcn'
 import Tip from '../Utilities/Tip'
 
-export default function ImportantUtil({ value, className, addOrRemoveImportant }) {
-  const [styles, setStyles] = useAtom($styles)
+type importantProps = {
+  value: string
+  className?: string
+  addOrRemoveImportant: (newStyle:string) => void
+}
+
+export default function ImportantUtil({ value, className, addOrRemoveImportant }: importantProps) {
   const { css } = useFela()
-  const isAlreadyImportant = () => {
+  const isAlreadyImportant = ():boolean => {
     if (value?.match(/(!important)/gi)?.[0]) return true
     return false
   }
-  const isStyleValueEmptyOrCssVar = () => (styleValue === '' || styleValue?.match(/(var)/gi)) ?? false
-  const props = Object.keys(paths)
+  const isStyleValueEmptyOrCssVar = () => (value === '' || value?.match(/(var)/gi)) ?? false
 
-  return (x
+  const addImportantChangeHandler = () => {
+    let newStyleValue: string
+
+    if (isAlreadyImportant()) {
+      newStyleValue = value?.replace(/!important/gi, '')
+    } else {
+      newStyleValue = `${value} !important`
+    }
+    addOrRemoveImportant(newStyleValue)
+  }
+
+
+  return (
     <Tip msg="Set style as !important">
       <button
         style={{ visibility: isStyleValueEmptyOrCssVar() ? 'visible' : 'visible' }}
-        className={`${css(cls.btn, isAlreadyImportant() && cls.active)} ${className}`}
+        className={`${css(cls.btn, isAlreadyImportant() ? cls.active: {})} ${className}`}
         type="button"
-        onClick={addOrRemoveImportant}
-        data-testid={`${id}-important`}
+        onClick={addImportantChangeHandler}
       >
         <StarIcn size="12" />
       </button>
