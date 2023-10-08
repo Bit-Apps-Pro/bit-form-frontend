@@ -8,7 +8,6 @@ import ChevronDownIcn from '../Icons/ChevronDownIcn'
 import CopyIcn from '../Icons/CopyIcn'
 import EditIcn from '../Icons/EditIcn'
 import MoveIcn from '../Icons/MoveIcn'
-import { deepCopy } from '../Utils/Helpers'
 import { __ } from '../Utils/i18nwrap'
 import FieldDeleteButton from './FieldDeleteButton'
 import MapComponents from './MapComponents'
@@ -105,6 +104,6 @@ export default function FieldBlockWrapper({
 }
 
 const ComponentsByTheme = ({ layoutItem, formID, fields }) => {
-  const componentProps = deepCopy(fields[layoutItem.i])
+  const componentProps = fields[layoutItem.i]
   return <MapComponents formID={formID} atts={componentProps} fieldKey={layoutItem.i} />
 }

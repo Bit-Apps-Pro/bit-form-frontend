@@ -4,6 +4,9 @@ import { create } from 'mutative'
 import { getFormsFromPhpVariable, getNewFormId, getNewId, makeFieldsArrByLabel } from '../Utils/Helpers'
 import blankTemplate from '../Utils/StaticData/form-templates/blankTemplate'
 
+import defaultStepSettings from '../Utils/StaticData/form-templates/defaultStepSettings'
+import { $activeBuilderStep } from './FormBuilderStates'
+
 // atoms
 export const $additionalSettings = atomWithReset(blankTemplate.additionalSettings)
 export const $bits = atom(typeof window.bits !== 'undefined' ? window.bits : {})
@@ -35,7 +38,7 @@ export const $fields = atomWithReset({})
 export const $flags = atomWithReset({ saveStyle: true, styleMode: false, inspectMode: false })
 export const $integrations = atomWithReset([])
 export const $isNewThemeStyleLoaded = atomWithReset(false)
-export const $layouts = atomWithReset({ lg: [], md: [], sm: [] })
+export const $allLayouts = atomWithReset({ lg: [], md: [], sm: [] })
 export const $mailTemplates = atomWithReset([])
 export const $pdfTemplates = atomWithReset([])
 export const $reports = atomWithReset([])
@@ -52,16 +55,46 @@ export const $proModal = atomWithReset({ show: false })
 export const $alertModal = atomWithReset({ show: false, msg: '' })
 export const $nestedLayouts = atomWithReset({})
 export const $formAbandonment = atomWithReset({})
+export const $formSteps = atomWithReset({})
 
 // selectors
 export const $fieldsArr = atom((get) => makeFieldsArrByLabel(get($fields), get($fieldLabels), []))
 export const $newFormId = atom((get) => getNewFormId(get($forms)))
 export const $uniqueFieldId = atom((get) => getNewId(get($fields)))
 export const $reportSelector = atom(
-  (get) => get($reports)?.find(r => r.id === get($reportId)?.id?.toString()),
+  (get) => get($reports)?.find(r => r.id === get($reportId)?.id?.toString()) || {},
   (get, set, newReport) => set($reports, oldReports => create(oldReports, draft => {
     const reprtId = get($reportId)?.id?.toString()
     const rportIndx = oldReports.findIndex(r => r?.id && r.id.toString() === reprtId)
     draft[rportIndx] = newReport
+  })),
+)
+
+export const $layouts = atom(
+  (get) => {
+    const allLayouts = get($allLayouts)
+    const activeBuilderStep = get($activeBuilderStep)
+    return Array.isArray(allLayouts) ? allLayouts[activeBuilderStep].layout : allLayouts
+  },
+  (get, set, newVal) => set($allLayouts, create(get($allLayouts), draftLayouts => {
+    const activeBuilderStep = get($activeBuilderStep)
+    const allLayouts = get($allLayouts)
+    const newLayouts = typeof newVal === 'function' ? newVal(get($layouts)) : newVal
+    if (!Array.isArray(allLayouts)) return newLayouts
+    draftLayouts[activeBuilderStep].layout = newLayouts
+  })),
+)
+
+export const $activeStepSettings = atom(
+  (get) => {
+    const allLayouts = get($allLayouts)
+    const activeBuilderStep = get($activeBuilderStep)
+    return Array.isArray(allLayouts) ? allLayouts[activeBuilderStep].settings : defaultStepSettings(0)
+  },
+  (get, set, newSettings) => set($allLayouts, create(get($allLayouts), draftLayouts => {
+    const activeBuilderStep = get($activeBuilderStep)
+    const allLayouts = get($allLayouts)
+    if (!Array.isArray(allLayouts)) return newSettings
+    draftLayouts[activeBuilderStep].settings = newSettings
   })),
 )

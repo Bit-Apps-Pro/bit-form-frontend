@@ -1,14 +1,8 @@
 import { useEffect } from 'react'
-import toast from 'react-hot-toast'
-import useSWR from 'swr'
+import type { SWRConfiguration } from 'swr'
+import useSWRImmutable from 'swr/immutable'
 import { isVarEmpty } from '../Utils/Helpers'
 import bitsFetch from '../Utils/bitsFetch'
-
-const defaultOpts = {
-  revalidateIfStale: false,
-  revalidateOnFocus: false,
-  revalidateOnReconnect: false,
-}
 
 const checkData = (data: DataResponseType) => data?.success && !data?.data?.errors && !isVarEmpty(data.data)
 
@@ -16,21 +10,16 @@ const useSWROnce = (key: string | string[], urlData: object, options: IOptionsTy
   const shouldFetch = ('fetchCondition' in options) ? options.fetchCondition : true
   const swrKey = shouldFetch ? key : null
 
-  const swrData = useSWR(
+  const swrData = useSWRImmutable(
     swrKey,
     (url: string | string[]) => {
       const resp = bitsFetch(urlData, Array.isArray(url) ? url[0] : url)
-      if (swrData.isLoading) {
-        toast.promise(resp, {
-          loading: 'Loading...',
-          success: 'Data loaded!',
-          error: 'Error loading data',
-        })
+      if (options.onLoading && swrData.isLoading) {
+        options.onLoading()
       }
       return resp
     },
     {
-      ...defaultOpts,
       ...options,
       onSuccess: data => options.onSuccess && checkData(data) && options.onSuccess(data.data),
     },
@@ -52,15 +41,16 @@ const useSWROnce = (key: string | string[], urlData: object, options: IOptionsTy
 
 export default useSWROnce
 
-interface DataResponseType {
+type DataResponseType = {
   success: boolean
   data: {
     errors?: object
   } | any
 }
 
-interface IOptionsType {
+type IOptionsType = SWRConfiguration & {
   fetchCondition?: boolean
+  onLoading?: () => void
   onSuccess?: (data: any) => void
   onMount?: (data: any) => void
 }

@@ -20,7 +20,7 @@ const getAllFieldsValueFromForm = (form, props) => {
       formEntries[entriesKey].push(value)
     } else formEntries[entriesKey] = value
   })
-  Object.keys(fields).filter(key => fields[key].btnTyp === 'button').forEach(fldKey => { formEntries[fldKey] = '' })
+  Object.keys(fields).filter(key => fields[key].typ === 'button').forEach(fldKey => { formEntries[fldKey] = '' })
 
   return Object.entries(formEntries).reduce((acc, [key, value]) => ({ ...acc, [key]: { value, type: fields[key.replace(/\[\d*\]/g, '')].typ, multiple: Array.isArray(value) } }), {})
 }
@@ -124,4 +124,6 @@ export default function onBlurHandler(event) {
       })
     })
   })
+
+  return Object.keys(alreadySetActions).length
 }

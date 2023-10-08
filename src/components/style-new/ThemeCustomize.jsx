@@ -5,10 +5,10 @@
 /* eslint-disable no-loop-func */
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-param-reassign */
+import { useAtomValue, useSetAtom } from 'jotai'
 import { useEffect } from 'react'
 import { useFela } from 'react-fela'
 import { Link, useParams } from 'react-router-dom'
-import { useAtomValue, useSetAtom } from 'jotai'
 import { $builderRightPanelScroll, $flags } from '../../GlobalStates/GlobalStates'
 import ChevronLeft from '../../Icons/ChevronLeft'
 import ut from '../../styles/2.utilities'
@@ -104,6 +104,7 @@ export default function ThemeCustomize() {
         {element === 'btn' && <ButtonCustomizer />}
         {element.match(/(pre-i|suf-i)/gi)?.[0] && <IcnCustomizer elementKey={element} />}
         {element === 'req-smbl' && <AsteriskCustomizer />}
+        {element === 'multi-step' && <FormContainerCustomizer element={element} />}
 
         {/* {[...Array(5).keys()].map((i) => <br key={`${i}-asd`} />)} */}
       </div>

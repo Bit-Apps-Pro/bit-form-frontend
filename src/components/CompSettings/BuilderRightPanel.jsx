@@ -1,9 +1,9 @@
 import loadable from '@loadable/component'
+import { useAtom, useSetAtom } from 'jotai'
 import { useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { useAtom, useSetAtom } from 'jotai'
 import { $breakpoint, $builderRightPanelScroll, $unsplashMdl } from '../../GlobalStates/GlobalStates'
 import { select } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
@@ -19,7 +19,10 @@ const PaypalStyleEditor = loadable(() => import('./StyleCustomize/PaypalStyleEdi
 const StyleEditor = loadable(() => import('./StyleCustomize/StyleEditor'), { fallback: <StyleCustomizeLoader /> })
 const FieldStyleCustomizeHOC = loadable(() => import('../style-new/FieldStyleCustomize'), { fallback: <StyleCustomizeLoader /> })
 const ThemeCustomize = loadable(() => import('../style-new/ThemeCustomize'), { fallback: <StyleCustomizeLoader /> })
+const MultiStepCustomize = loadable(() => import('../style-new/MultistepCustomize'), { fallback: <StyleCustomizeLoader /> })
 const FieldSettings = loadable(() => import('./FieldSettings'), { fallback: <FieldSettingsLoader /> })
+const MultiStepSettings = loadable(() => import('./MultiStepSettings'), { fallback: <FieldSettingsLoader /> })
+const StepSettings = loadable(() => import('./StepSettings'), { fallback: <FieldSettingsLoader /> })
 const FieldsList = loadable(() => import('./FieldsList'), { fallback: <FieldSettingsLoader /> })
 const ThemeGallary = loadable(() => import('../style-new/ThemeGallary'), { fallback: <FieldSettingsLoader /> })
 
@@ -53,26 +56,14 @@ function BuilderRightPanel({ style, styleDispatch }) {
             {/* <TransitionGroup> */}
             {/* <CSSTransition key={location.key} classNames="slide" timeout={5000}> */}
             <ErrorBoundary>
-
-              {/* <RouteByParams rightBar="fields-list" render={<FieldsList />} /> */}
-              {/* <RouteByParams rightBar="field-settings" fieldKey render={<FieldSettings />} /> */}
-              {/* <Routes path="/field-settings">
-                <Route path=":fieldKey" element={<FieldSettings />} />
-              </Routes>
-              <Routes path="/fields-list">
-                <Route index element={<FieldsList />} />
-              </Routes>
-              <Routes path="/field-theme-customize">
-                <Route path=":element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
-              </Routes>
-              <Routes path="/themes">
-                <Route index element={<ThemeGallary />} />
-              </Routes> */}
               <Routes>
                 <Route path="fields-list" element={<FieldsList />} />
                 <Route path="field-settings/:fieldKey" element={<FieldSettings />} />
+                <Route path="multi-step-settings" element={<MultiStepSettings />} />
+                <Route path="step-settings" element={<StepSettings />} />
                 <Route path="themes" element={<ThemeGallary />} />
                 <Route path="theme-customize/:element" element={<ThemeCustomize />} />
+                <Route path="theme-customize/multi-step/:element" element={<MultiStepCustomize />} />
                 <Route path="field-theme-customize/:element/:fieldKey" element={<FieldStyleCustomizeHOC />} />
 
                 {/* <Route exact path={`${pathname}/style`}>
@@ -163,7 +154,7 @@ function BuilderRightPanel({ style, styleDispatch }) {
                   path={`${pathname}/style/fl/btn`}
                   element={(
                     <StyleEditor
-                      title={`${__('Button Style')}`}
+                      title={__('Button Style')}
                       noBack
                       compStyle={style}
                       cls=".btcd-sub-btn"

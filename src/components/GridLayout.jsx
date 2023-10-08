@@ -12,7 +12,7 @@ import {
   useEffect, useRef, useState,
 } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
-import { Responsive as ResponsiveReactGridLayout } from 'react-grid-layout'
+import { default as ReactGridLayout } from 'react-grid-layout'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
@@ -59,6 +59,7 @@ import '../resource/css/grid-layout.css'
 import useComponentVisible from './CompSettings/StyleCustomize/ChildComp/useComponentVisible'
 import FieldContextMenu from './FieldContextMenu'
 import FieldBlockWrapperLoader from './Loaders/FieldBlockWrapperLoader'
+import StepContainer from './MultiStep/StepContainer'
 import RenderGridLayoutStyle from './RenderGridLayoutStyle'
 import { highlightElm, removeHighlight } from './style-new/styleHelpers'
 
@@ -104,12 +105,12 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
   const insptectModeTurnedOnRef = useRef(false)
   const location = useLocation()
 
-  useEffect(() => { setLayouts(rootLayouts) }, [reRenderGridLayoutByRootLay])
+  useEffect(() => { setLayouts(deepCopy(rootLayouts)) }, [reRenderGridLayoutByRootLay])
   useEffect(() => { setContextMenuRef({ ref, isComponentVisible, setIsComponentVisible }) }, [ref])
   // calculate fieldheight every time layout and field changes && stop layout transition when stylemode changes
   useEffect(() => {
     const fieldsCount = Object.keys(fields).length
-    const layoutLgFieldsCount = getLayoutItemCount()
+    const layoutLgFieldsCount = getLayoutItemCount(layouts)
     if (fieldsCount === layoutLgFieldsCount) {
       startTransition(() => {
         setNestedLayouts(prevNestedLayouts => create(prevNestedLayouts, draft => {
@@ -201,8 +202,6 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     addNewField(newData.fieldData, newData.fieldSize, { x: 0, y: Infinity })
     setNewData(null)
   }
-
-  const onBreakpointChange = bp => setBreakpoint(bp)
 
   const removeFieldStyles = fldKeys => {
     setStyles(prevStyles => create(prevStyles, draftStyles => {
@@ -421,11 +420,11 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
     addNewField(draggingField.fieldData, draggingField.fieldSize, dropPosition)
   }
 
-  const handleLayoutChange = (l, layoutsFromGrid) => {
-    if (layoutsFromGrid.lg.findIndex(itm => itm.i === 'shadow_block') < 0) {
-      setLayouts(layoutsFromGrid)
+  const handleLayoutChange = (lay) => {
+    if (lay.findIndex(itm => itm.i === 'shadow_block') < 0) {
+      setLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
       startTransition(() => {
-        setRootLayouts(layoutsFromGrid)
+        setRootLayouts(prevLayouts => ({ ...prevLayouts, [breakpoint]: lay }))
       })
       // addToBuilderHistory(setBuilderHistory, { event: `Layout changed`, state: { layouts: layoutsFromGrid, fldKey: layoutsFromGrid.lg[0].i } }, setUpdateBtn)
     }
@@ -571,6 +570,8 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
           let styleUrl
           if (styleUrlPart.startsWith('_frm-')) {
             styleUrl = `/form/builder/${formType}/${formID}/theme-customize/${styleUrlPart}`
+          } else if (styleUrlPart.startsWith('stp')) {
+            styleUrl = `/form/builder/${formType}/${formID}/theme-customize/multi-step/${styleUrlPart}`
           } else {
             styleUrl = `/form/builder/${formType}/${formID}/field-theme-customize/${styleUrlPart}/${attrVal}`
           }
@@ -633,94 +634,94 @@ function GridLayout({ newData, setNewData, style: v1Styles, gridWidth, setAlertM
       {styleMode && <RenderGridLayoutStyle />}
 
       <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
-        <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, margin: '23px 13px 400px 0', border: '1px solid lightblue' }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
+        <div id={`f-${formID}`} style={{ padding: BUILDER_PADDING.all, margin: '19px 13px 400px 0', border: '1px solid lightblue' }} className={draggingField && breakpoint === 'lg' ? 'isDragging' : ''}>
           <div className={`_frm-bg-b${formID}`} data-dev-_frm-bg={formID}>
             <div className={`_frm-b${formID}`} data-dev-_frm={formID}>
-
-              {!styleMode ? (
-                <ResponsiveReactGridLayout
-                  width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
-                  measureBeforeMount
-                  compactType="vertical"
-                  useCSSTransforms
-                  isDroppable={draggingField !== null && breakpoint === 'lg'}
-                  className="layout"
-                  style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
-                  onDrop={onDrop}
-                  resizeHandles={['e']}
-                  droppingItem={draggingField?.fieldSize}
-                  onLayoutChange={handleLayoutChange}
-                  cols={cols}
-                  breakpoints={builderBreakpoints}
-                  rowHeight={rowHeight}
-                  isDraggable={isDraggable}
-                  margin={gridContentMargin}
-                  draggableCancel=".no-drg"
-                  draggableHandle=".drag"
-                  layouts={layouts}
-                  onBreakpointChange={onBreakpointChange}
-                  onDragStart={setResizingFldKey}
-                  onDrag={setResizingWX}
-                  onDragStop={setRegenarateLayFlag}
-                  onResizeStart={setResizingFldKey}
-                  onResize={setResizingWX}
-                  onResizeStop={setRegenarateLayFlag}
-                >
-                  {layouts[breakpoint].map(layoutItem => (
-                    <div
-                      key={layoutItem.i}
-                      data-key={layoutItem.i}
-                      className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
-                      onClick={() => handleFldBlockEvent(layoutItem.i)}
-                      onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
-                      role="button"
-                      tabIndex={0}
-                      onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-                      data-testid={`${layoutItem.i}-fld-blk`}
-                    >
-                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
-                        <FieldBlockWrapper
-                          {...{
-                            layoutItem,
-                            removeLayoutItem,
-                            cloneLayoutItem,
-                            navigateToFieldSettings,
-                            navigateToStyle,
-                            handleContextMenu,
-                          }}
-                        />
-                      </Suspense>
-                    </div>
-                  ))}
-                </ResponsiveReactGridLayout>
-              ) : (
-                <div className="_frm-g">
-                  {layouts[breakpoint].map(layoutItem => (
-                    <div
-                      key={layoutItem.i}
-                      data-key={layoutItem.i}
-                      className={layoutItem.i}
-                      onClick={() => handleFldBlockEvent(layoutItem.i)}
-                      onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
-                      role="button"
-                      tabIndex={0}
-                      onContextMenu={e => handleContextMenu(e, layoutItem.i)}
-                    >
-                      <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
-                        <FieldBlockWrapper
-                          {...{
-                            layoutItem,
-                            removeLayoutItem,
-                            cloneLayoutItem,
-                            navigateToFieldSettings,
-                            navigateToStyle,
-                          }}
-                        />
-                      </Suspense>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <StepContainer className={`step-continer-${formID}`}>
+                {!styleMode ? (
+                  <ReactGridLayout
+                    width={gridWidth - (formGutter + BUILDER_PADDING.all + CUSTOM_SCROLLBAR_GUTTER)}
+                    measureBeforeMount
+                    compactType="vertical"
+                    useCSSTransforms
+                    isDroppable={draggingField !== null && breakpoint === 'lg'}
+                    className="layout"
+                    style={{ minHeight: draggingField ? getTotalLayoutHeight() + 40 : null }}
+                    onDrop={onDrop}
+                    resizeHandles={['e']}
+                    droppingItem={draggingField?.fieldSize}
+                    onLayoutChange={handleLayoutChange}
+                    cols={cols[breakpoint]}
+                    breakpoints={builderBreakpoints}
+                    rowHeight={rowHeight}
+                    isDraggable={isDraggable}
+                    margin={gridContentMargin}
+                    draggableCancel=".no-drg"
+                    draggableHandle=".drag"
+                    layout={layouts[breakpoint]}
+                    onDragStart={setResizingFldKey}
+                    onDrag={setResizingWX}
+                    onDragStop={setRegenarateLayFlag}
+                    onResizeStart={setResizingFldKey}
+                    onResize={setResizingWX}
+                    onResizeStop={setRegenarateLayFlag}
+                  >
+                    {layouts[breakpoint].map(layoutItem => (
+                      <div
+                        key={layoutItem.i}
+                        data-key={layoutItem.i}
+                        className={`blk ${layoutItem.i === selectedFieldId && 'itm-focus'}`}
+                        onClick={() => handleFldBlockEvent(layoutItem.i)}
+                        onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
+                        role="button"
+                        tabIndex={0}
+                        onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                        data-testid={`${layoutItem.i}-fld-blk`}
+                      >
+                        <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                          <FieldBlockWrapper
+                            {...{
+                              layoutItem,
+                              removeLayoutItem,
+                              cloneLayoutItem,
+                              navigateToFieldSettings,
+                              navigateToStyle,
+                              handleContextMenu,
+                            }}
+                          />
+                        </Suspense>
+                      </div>
+                    ))}
+                  </ReactGridLayout>
+                ) : (
+                  <div className="_frm-g">
+                    {layouts[breakpoint].map(layoutItem => (
+                      <div
+                        key={layoutItem.i}
+                        data-key={layoutItem.i}
+                        className={layoutItem.i}
+                        onClick={() => handleFldBlockEvent(layoutItem.i)}
+                        onKeyDown={() => handleFldBlockEvent(layoutItem.i)}
+                        role="button"
+                        tabIndex={0}
+                        onContextMenu={e => handleContextMenu(e, layoutItem.i)}
+                      >
+                        <Suspense fallback={<FieldBlockWrapperLoader layout={layoutItem} />}>
+                          <FieldBlockWrapper
+                            {...{
+                              layoutItem,
+                              removeLayoutItem,
+                              cloneLayoutItem,
+                              navigateToFieldSettings,
+                              navigateToStyle,
+                            }}
+                          />
+                        </Suspense>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </StepContainer>
             </div>
           </div>
         </div>

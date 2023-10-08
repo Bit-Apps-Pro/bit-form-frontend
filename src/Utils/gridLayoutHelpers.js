@@ -262,13 +262,12 @@ export const removeFieldStyles = fldKey => {
 export const cloneLayoutItem = (fldKey, layouts) => {
   const fields = getAtom($fields)
   const styles = getAtom($styles)
-  const proModal = getAtom($proModal)
   const uniqueFieldId = getAtom($uniqueFieldId)
   const formID = getAtom($formId)
   const breakpoint = getAtom($breakpoint)
 
   if (!IS_PRO) {
-    setAtom(proModal, { show: true, ...proHelperData.fieldClone })
+    setAtom($proModal, { show: true, ...proHelperData.fieldClone })
     return
   }
   const fldData = fields[fldKey]

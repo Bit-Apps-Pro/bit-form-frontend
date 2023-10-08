@@ -9,6 +9,7 @@ export const $staticStylesState = atomWithReset({
   },
   staticStyles: {
     '.d-none': { display: 'none !important' },
+    '.v-hide': { visibility: 'hidden !important' },
     '.bf-form-msg': {
       background: '#ffe8c3',
       'border-radius': '6px',
@@ -49,6 +50,16 @@ export const $staticStylesState = atomWithReset({
       '100%': {
         transform: 'rotate(360deg)',
       },
+    },
+    '.bf-spinner': {
+      'margin-left': '5px',
+      width: '15px',
+      height: '15px',
+      'border-radius': '50%',
+      // display: 'inline-block',
+      'border-top': '2px solid',
+      'border-right': '2px solid transparent',
+      animation: 'bf-rotation 1s linear infinite',
     },
   },
 })

@@ -7,6 +7,7 @@ export default function bitformInit(contentId = null) {
   if (typeof submit_form !== 'undefined') submit_form(contentId)
   if (typeof bit_form_abandonment !== 'undefined') bit_form_abandonment(contentId)
   if (typeof setFieldValues !== 'undefined') setFieldValues(contentId)
+  if (typeof bit_multi_step_form !== 'undefined') bit_multi_step_form(contentId)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
