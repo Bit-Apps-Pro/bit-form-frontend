@@ -22,6 +22,7 @@ import { __ } from '../Utils/i18nwrap'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
 import IntegLoader from '../components/Loaders/IntegLoader'
 import ProModal from '../components/Utilities/ProModal'
+import useSWROnce from '../hooks/useSWROnce'
 
 const EmailTemplate = lazy(() => import('../components/EmailTemplate'))
 const PdfTemplate = lazy(() => import('../components/PDF/PdfTemplate'))
@@ -32,6 +33,7 @@ const ConfType = lazy(() => import('../components/ConfType'))
 const SingleFormSettings = lazy(() => import('../components/SingleFormSettings'))
 const DoubleOptin = lazy(() => import('../components/CompSettings/doubleOptin/DoubleOptin'))
 const FormAbandonment = lazy(() => import('../components/FormSettings/FormAbandonment'))
+const StandaloneForm = lazy(() => import('../components/FormSettings/StandaloneForm'))
 
 function FormSettings() {
   // const { path } = useMatch()
@@ -42,27 +44,25 @@ function FormSettings() {
   const setAllStyles = useSetAtom($allStyles)
   const setSavedStylesAndVars = useSetAtom($savedStylesAndVars)
 
-  useEffect(() => {
-    if (!isNewThemeStyleLoaded) {
-      bitsFetch({ formID }, 'bitforms_form_helpers_state')
-        .then(res => {
-          const fetchedBuilderHelperStates = res.data?.[0]?.builder_helper_state || {}
-          if (!isObjectEmpty(fetchedBuilderHelperStates)) {
-            const { themeVars, themeColors, style: oldAllStyles } = fetchedBuilderHelperStates
-            setAllThemeColors(JCOF.parse(themeColors))
-            setAllThemeVars(JCOF.parse(themeVars))
-            setAllStyles(JCOF.parse(oldAllStyles))
+  useSWROnce(['bitforms_form_helpers_state', formID], { formID }, {
+    fetchCondition: !isNewThemeStyleLoaded,
+    onSuccess: data => {
+      const fetchedBuilderHelperStates = data?.[0]?.builder_helper_state || {}
+      if (!isObjectEmpty(fetchedBuilderHelperStates)) {
+        const { themeVars, themeColors, style: oldAllStyles } = fetchedBuilderHelperStates
+        setAllThemeColors(JCOF.parse(themeColors))
+        setAllThemeVars(JCOF.parse(themeVars))
+        setAllStyles(JCOF.parse(oldAllStyles))
 
-            setSavedStylesAndVars({
-              allThemeColors: themeColors,
-              allThemeVars: themeVars,
-              allStyles: oldAllStyles,
-            })
-            setIsNewThemeStyleLoaded(true)
-          }
+        setSavedStylesAndVars({
+          allThemeColors: themeColors,
+          allThemeVars: themeVars,
+          allStyles: oldAllStyles,
         })
-    }
-  }, [])
+        setIsNewThemeStyleLoaded(true)
+      }
+    },
+  })
 
   return (
     <div className="btcd-f-settings">
@@ -134,6 +134,13 @@ function FormSettings() {
           <span className="mr-1"><UserIcn size="18" /></span>
           {__('Form Abandonment')}
         </NavLink>
+        <NavLink
+          to={`/form/settings/${formType}/${formID}/standalone-form`}
+          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+        >
+          <span className="mr-1"><UserIcn size="18" /></span>
+          {__('Standalone Form')}
+        </NavLink>
       </aside>
 
       <div id="btcd-settings-wrp" className="btcd-s-wrp">
@@ -148,6 +155,7 @@ function FormSettings() {
             <Route path="workflow" element={<Workflow />} />
             <Route path="integrations/*" element={<Integrations />} />
             <Route path="form-abandonment" element={<FormAbandonment />} />
+            <Route path="standalone-form" element={<StandaloneForm />} />
           </Routes>
         </Suspense>
         {/* <Routes>

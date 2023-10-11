@@ -5,6 +5,7 @@ import { getAtom, setAtom } from '../GlobalStates/BitStore'
 import { $activeBuilderStep } from '../GlobalStates/FormBuilderStates'
 import {
   $additionalSettings, $allLayouts,
+  $bits,
   $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formAbandonment, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId,
   $reportSelector,
   $reports,
