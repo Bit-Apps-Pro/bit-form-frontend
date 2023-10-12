@@ -9,6 +9,11 @@ function dispatchFieldError(fldErrors, contentId) {
     let isErrWrpGrid = false
     try {
       isErrWrpGrid = getComputedStyle(errWrp).display === 'grid'
+      if (isErrWrpGrid) {
+        errWrp.style.removeProperty('opacity')
+        errWrp.style.removeProperty('height')
+        errMsg.style.removeProperty('display')
+      }
     } catch (_) {
       isErrWrpGrid = false
     }
