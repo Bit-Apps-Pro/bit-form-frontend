@@ -1,6 +1,6 @@
 import ColorPicker from '@atomik-color/component'
 import { useAtom, useSetAtom } from 'jotai'
-import { create } from 'mutative'
+import { create, current } from 'mutative'
 import { ChangeEvent, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
@@ -26,7 +26,7 @@ import { colorObj, colorPickerProps, valueObject } from './color-picker'
 export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler, allowSolid=true, allowGradient=true, allowImage=true, allowVariable }: colorPickerProps) {
   const [controller, setController] = useState({ parent: 'Solid', child: 'Solid', color: 'Custom' })
   const [valueObject, setValueObject] = useState<valueObject>(valueObj)
-  const [color, setColor] = useState<colorObj>({})
+  const [color, setColor] = useState()
   const [bgImage, setBgImage] = useState()
   const [bgRepeat, setBgRepeat] = useState('initial')
   const [bgSize, setBgSize] = useState({
@@ -80,7 +80,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     setBgPosition(prevBgPos => ({ ...prevBgPos, value }))
     setValueObject(prevValue => create(prevValue, draft => {
       draft.backgroundPosition = value
-      onChangeHandler(draft)
+      onChangeHandler(current(draft))
       }))
   }
 
@@ -113,7 +113,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
 
     setValueObject(prevValue => create(prevValue, draft => {
       draft.backgroundImage = e.style
-      onChangeHandler(draft)
+      onChangeHandler(current(draft))
       }))
     setBgImage(e.style)
   }
@@ -123,13 +123,13 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
       setBgPosition(prevBgPos => ({ ...prevBgPos, x: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
         draft.backgroundPosition = `${value}${unit} ${bgPosition.y}`
-        onChangeHandler(draft)
+        onChangeHandler(current(draft))
         }))
     } else {
       setBgPosition(prevBgPos => ({ ...prevBgPos, y: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
         draft.backgroundPosition = `${bgPosition.x} ${value}${unit}`
-        onChangeHandler(draft)
+        onChangeHandler(current(draft))
         }))
     }
   }
@@ -139,13 +139,13 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
       setBgSize(prevBgSize => ({ ...prevBgSize, w: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
         draft.backgroundSize = `${value}${unit} ${bgSize.h}`
-        onChangeHandler(draft)
+        onChangeHandler(current(draft))
         }))
     } else {
       setBgSize(prevBgSize => ({ ...prevBgSize, h: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
         draft.backgroundSize = `${bgSize.w} ${value}${unit}`
-        onChangeHandler(draft)
+        onChangeHandler(current(draft))
         }))
     }
   }
@@ -154,7 +154,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     setBgImage(`url(${e.target.value})`)
     setValueObject(prevValue => create(prevValue, draft => {
       draft.backgroundImage = `url(${e.target.value})`
-      onChangeHandler(draft)
+      onChangeHandler(current(draft))
       }))
   }
   const positionSelectHandler = ({ target: { value } }) => {
@@ -162,7 +162,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     if (value !== 'size' && value !== 'positions') {
       setValueObject(prevValue => create(prevValue, draft => {
         draft.backgroundPosition = value
-        onChangeHandler(draft)
+        onChangeHandler(current(draft))
       }))
     }
   }
@@ -171,7 +171,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     setBgSize(prevBgSize => ({ ...prevBgSize, type: e.target.value }))
     setValueObject(prevValue => create(prevValue, draft => {
       draft.backgroundSize = e.target.value
-      onChangeHandler(draft)
+      onChangeHandler(current(draft))
     }))
   }
 
@@ -179,7 +179,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     setBgRepeat(e.target.value)
     setValueObject(prevValue => create(prevValue, draft => {
       draft.backgroundRepeat = e.target.value
-      onChangeHandler(draft)
+      onChangeHandler(current(draft))
     }))
   }
 
@@ -188,7 +188,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     setBgImage('')
     setValueObject(prevValue => create(prevValue, draft => {
       draft.backgroundImage = ''
-      onChangeHandler(draft)
+      onChangeHandler(current(draft))
       }))
     setUnsplashImgUrl('')
   }
@@ -217,7 +217,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         setValueObject(prevValue => create(prevValue, draft => {
           draft.backgroundImage = `url(${attachment.url})`
-          onChangeHandler(draft)
+          onChangeHandler(current(draft))
         }))
 
         setBgImage(`url(${attachment.url})`)
