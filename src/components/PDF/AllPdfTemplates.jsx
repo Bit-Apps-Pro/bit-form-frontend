@@ -12,6 +12,7 @@ import LayoutIcn from '../../Icons/LayoutIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import { deepCopy } from '../../Utils/Helpers'
+import tutorialLinks from '../../Utils/StaticData/tutorialLinks'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
@@ -132,13 +133,15 @@ export default function AllPdfTemplates({ formID }) {
         action={confMdl.action}
       />
       <h2>{__('PDF Templates')}</h2>
-      {/* <h5>
-        How to setup Email Templates & Send Email Notification:
-        &nbsp;
-        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" style={{ color: 'red' }}>
+      <h5 className="mt-3">
+        How to setup PDF Templates:
+        <a href={tutorialLinks.pdfTemplate.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
           YouTube
         </a>
-      </h5> */}
+        <a href={tutorialLinks.pdfTemplateDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
+          Documentation
+        </a>
+      </h5>
       <div className="">
         <Link
           to={`${url}/new`}

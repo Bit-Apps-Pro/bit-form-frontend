@@ -12,6 +12,7 @@ import EditIcn from '../Icons/EditIcn'
 import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import { compareBetweenVersions, deepCopy, sortArrOfObj } from '../Utils/Helpers'
+import tutorialLinks from '../Utils/StaticData/tutorialLinks'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import acf from '../resource/img/integ/ACF.svg'
@@ -202,7 +203,6 @@ function Integrations() {
     return str.slice(startIndex + 1, endIndex)
   }
 
-
   const setNewInteg = inte => {
     if (inte.pro && !proInfo?.installedVersion && !isPro) {
       toast.error('This integration is only available in Bit Form Pro.')
@@ -284,6 +284,16 @@ function Integrations() {
           element={(
             <>
               <h2>{__('Integrations')}</h2>
+              <h5>
+                How to setup Integrations:
+                &nbsp;
+                <a href={tutorialLinks.integrations.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
+                  YouTube
+                </a>
+                <a href={tutorialLinks.integrations.link} target="_blank" rel="noreferrer" className="doc-txt">
+                  Documentation
+                </a>
+              </h5>
               <div className={css(style.integWrp)}>
                 <Modal
                   title={__('Available Integrations')}

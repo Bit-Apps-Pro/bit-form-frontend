@@ -19,6 +19,7 @@ import { __ } from '../Utils/i18nwrap'
 import Button from './Utilities/Button'
 import ConfirmModal from './Utilities/ConfirmModal'
 import Table from './Utilities/Table'
+import tutorialLinks from '../Utils/StaticData/tutorialLinks'
 
 export default function AllEmailTemplates({ formID }) {
   const [mailTem, setMailTem] = useAtom($mailTemplates)
@@ -123,8 +124,11 @@ export default function AllEmailTemplates({ formID }) {
       <h5>
         How to setup Email Templates & Send Email Notification:
         &nbsp;
-        <a href="https://youtu.be/HpMUF5EO-Gg" target="_blank" rel="noreferrer" style={{ color: 'red' }}>
+        <a href={tutorialLinks.emailTemplates.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
           YouTube
+        </a>
+        <a href={tutorialLinks.emailTemplatesDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
+          Documentation
         </a>
       </h5>
       <div className="">
