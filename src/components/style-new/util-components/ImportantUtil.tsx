@@ -1,6 +1,6 @@
 import { useFela } from 'react-fela'
-import StarIcn from '../../Icons/StarIcn'
-import Tip from '../Utilities/Tip'
+import StarIcn from '../../../Icons/StarIcn'
+import Tip from '../../Utilities/Tip'
 
 type importantProps = {
   value: string
@@ -29,7 +29,7 @@ export default function ImportantUtil({ value, className, addOrRemoveImportant }
 
 
   return (
-    <Tip msg="Set style as !important">
+    <Tip msg="Set style as !important" className={""}>
       <button
         style={{ visibility: isStyleValueEmptyOrCssVar() ? 'visible' : 'visible' }}
         className={`${css(cls.btn, isAlreadyImportant() ? cls.active: {})} ${className}`}

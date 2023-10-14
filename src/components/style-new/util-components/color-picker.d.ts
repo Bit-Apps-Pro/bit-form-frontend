@@ -1,7 +1,7 @@
 export type colorPickerProps = {
   id: string,
   valueObj: valueObject,
-  onChangeHandler: (value: string|object) => void,
+  onChangeHandler: (value: string|valueObject) => void,
   clearHandler: (value: MouseEvent<HTMLButtonElement>) => void,
   allowImportant?: boolean,
   allowSolid?: boolean,
