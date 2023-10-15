@@ -3,27 +3,28 @@ import Downmenu from "../../Utilities/Downmenu"
 import SimpleDropdown from "../../Utilities/SimpleDropdown"
 import SimpleColorPickerTooltip from "../SimpleColorPickerTooltip"
 import BoxSizingUtil from "./BoxSizingUtil"
-
+import ut from "../../../styles/2.utilities"
+import SelectUtil from "./selectutil"
 
 export default function BorderControlUtil({ value, id, onChangeHandler }: BorderControlType) {
   const { css } = useFela()
 
   const values = () => {
     let val = ''
-    if (value?.['border-style']) val += `Border : ${value['border-style']} `
-    if (value?.['border-color']) val += `Color: ${value['border-color']} `
-    if (value?.['border-width']) val += `Width: ${value['border-width']} `
-    if (value?.['border-radius']) val += `Radius: ${value['border-radius']} `
+    if (value?.['border-width']) val += `${value['border-width']} `
+    if (value?.['border-style']) val += `${value['border-style']} `
+    if (value?.['border-color']) val += `${value['border-color']} `
+    if (value?.['border-radius']) val += `| Radius: ${value['border-radius']} `
     return val
   }
 
-  const borderPropObj = {
-    'border-style': value?.['border-style'] || '',
-    'border-color': value?.['border-color'] || '',
-    'border-width': value?.['border-width'] || '',
-    'border-radius': value?.['border-radius'] || '',
-  }
-  const onValueChange = (prop: keyof typeof borderPropObj, val: string) => {
+  const onValueChange = (prop: keyof BorderValueType, val: string) => {
+    const borderPropObj = {
+      'border-style': value?.['border-style'] || '',
+      'border-color': value?.['border-color'] || '',
+      'border-width': value?.['border-width'] || '',
+      'border-radius': value?.['border-radius'] || '',
+    }
     borderPropObj[prop] = val
     onChangeHandler(borderPropObj)
   }
@@ -45,10 +46,10 @@ export default function BorderControlUtil({ value, id, onChangeHandler }: Border
           <div className={css(c.tipWrp)}>
             <div className={css(c.stlWrp)}>
               <span>Style</span>
-              <SimpleDropdown
+              <SelectUtil
                 options={options}
                 value={value?.['border-style']?.replace('!important', '').trim()}
-                onChange={(val:string) => onValueChange('border-style', val)}
+                onChange={(val: string) => onValueChange('border-style', val)}
                 w={130}
                 h={30}
                 id={`${id}-style`}
@@ -84,12 +85,19 @@ export default function BorderControlUtil({ value, id, onChangeHandler }: Border
   )
 }
 
+type BorderValueType = {
+  'border-style': string,
+  'border-color': string
+  'border-width': string
+  'border-radius': string
+}
 
 type BorderControlType = {
-  value: any,
+  value: BorderValueType
   id: string,
-  onChangeHandler: (val: any) => void,
+  onChangeHandler: (val: BorderValueType) => void,
 }
+
 const options = [
   { label: 'Solid', value: 'solid' },
   { label: 'Dashed', value: 'dashed' },
