@@ -5,7 +5,7 @@ import SimpleColorPickerTooltip from "../SimpleColorPickerTooltip"
 import BoxSizingUtil from "./BoxSizingUtil"
 
 
-export default function BorderControl({ value, id, onChangeHandler }: BorderControlType) {
+export default function BorderControlUtil({ value, id, onChangeHandler }: BorderControlType) {
   const { css } = useFela()
 
   const values = () => {
