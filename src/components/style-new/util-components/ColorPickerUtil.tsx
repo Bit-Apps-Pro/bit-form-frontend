@@ -14,7 +14,7 @@ export default function ColorPickerUtil({ id, value, onChangeHandler, allowImpor
   const valueObj = typeof value === 'string' ? { color: value } : value
   const clearHandler = () => {
     if(typeof value === 'string') {
-      onChangeHandler('')
+      onChangeHandler({color:''})
       return
     }
     const newObject: {[key: string]: string} = {}

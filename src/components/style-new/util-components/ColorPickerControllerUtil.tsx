@@ -109,7 +109,7 @@ export default function ColorPickerControllerUtil({id, value, onChangeHandler, a
     const checkExistImportant = value.color?.match(/(!important)/gi)?.[0]
     if (checkExistImportant) hslaColor = `${hslaColor} !important`
     const clr = str ? `${str}${checkExistImportant ? ' !important' : ''}` : hslaColor
-    onChangeHandler(clr)
+    onChangeHandler({...value, color: clr})
   }
 
   const gradientChangeHandler = (e) => {
