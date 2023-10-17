@@ -113,10 +113,10 @@
     "build-pkg": "turbo run build",
     "hot": "vite --force",
     "build": "vite build && pnpm gettext-parser && pnpm i18n:php",
-    "build-bit-signature": "cd ./packages/bit-signature-field && pnpm run build && cp -r ./dist/* ../../../assets",
-    "build-bit-validation": "cd ./packages/bit-validation && pnpm run build && cp -r ./dist/* ../../../assets",
-    "build-bit-frontend": "cd ./packages/bit-frontend && pnpm run build && cp -r ./dist/* ../../../assets",
-    "build-bit-multi-step": "cd ./packages/bit-multi-step-form && pnpm run build && cp -r ./dist/* ../../../assets"
+    "build-bit-pkg": "node build-bit-pkg.js"
+  },
+  "scripts-comments": {
+    "build-bit-pkg": "Usage: pnpm build-bit-pkg package-name | Ex: pnpm build-bit-pkg bit-helpers"
   },
   "husky": {
     "hooks": {

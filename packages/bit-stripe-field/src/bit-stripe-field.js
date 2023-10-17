@@ -43,7 +43,12 @@ export default class BitStripeField {
 
   #allEventListeners = []
 
+  #description = null
+
+  #address = null
+
   constructor(selector, config) {
+    console.log({ config })
     if (typeof selector === 'string') {
       this.#stripeWrpSelector = document.querySelector(selector)
     } else {
@@ -65,6 +70,8 @@ export default class BitStripeField {
     this.#theme = this.#config.theme.style
     this.#layout = this.#config.layout
     this.#payBtnTxt = this.#config.payBtnTxt
+    this.#description = this.#config.options?.description
+    this.#address = this.#config?.address || {}
     this.init()
   }
 
@@ -87,6 +94,7 @@ export default class BitStripeField {
       this.#handleOnClick(this.#contentId)
         .then(response => {
           if (response) {
+            console.log({ response })
             this.#stripeComponent()
             // stripeBtnSpanner.classList.add('d-none')
           }
@@ -98,6 +106,18 @@ export default class BitStripeField {
   #addEvent(selector, eventType, cb) {
     selector.addEventListener(eventType, cb)
     this.#allEventListeners.push({ selector, eventType, cb })
+  }
+
+  #getAddressValue() {
+    if (this.#address) {
+      const { address } = this.#address.defaultValues
+      const addressObj = {}
+      Object.keys(address).map(addressFldKey => {
+        addressObj[addressFldKey] = this.#getDynamicValue(address[addressFldKey])
+      })
+      console.log({ addressObj })
+      return addressObj
+    }
   }
 
   #getDynamicValue(fldKey) {
@@ -148,7 +168,7 @@ export default class BitStripeField {
     if (Stripe) {
       this.#stripInstance = Stripe(this.#publishableKey)
 
-      const data = {
+      const confData = {
         payIntegID: this.#payIntegID,
         amount,
         currency: this.#currency,
@@ -158,10 +178,33 @@ export default class BitStripeField {
           fieldKey: this.#fieldKey,
         },
         payment_method_types: this.#options.payment_method_types,
+        description: this.#description,
       }
-      bitsFetchFront(this.#contentId, data, 'bitforms_get_stripe_secret_key')
+
+      if (this.#address?.mode === 'shipping') {
+        if (!('shipping' in confData)) {
+          confData.shipping = {}
+        }
+        if (this.#address.display.name === 'full') {
+          confData.shipping.name = this.#getDynamicValue(this.#address.defaultValues.name)
+        } else {
+          const fName = this.#getDynamicValue(this.#address.defaultValues.firstName)
+          const lName = this.#getDynamicValue(this.#address.defaultValues.lastName)
+          const fullName = `${fName} ${lName}`
+          confData.shipping.name = fullName
+        }
+        if (this.#address.defaultValues.phone) {
+          confData.shipping.phone = this.#getDynamicValue(this.#address.defaultValues.phone)
+        }
+        confData.shipping.address = this.#getAddressValue()
+      }
+
+      console.log(confData)
+
+      bitsFetchFront(this.#contentId, confData, 'bitforms_get_stripe_secret_key')
         .then(res => {
           const { success, data } = res
+
           if (!success) {
             this.#displayErrorMsg(data.error.message)
             return
@@ -184,7 +227,7 @@ export default class BitStripeField {
             const stripeAuthWrp = this.#querySelector(`${this.#formSelector} .${this.#fieldKey}-stripe-auth-wrp`)
             linkAuthenticationElm.mount(stripeAuthWrp)
           }
-          if (this.#config?.address?.active) {
+          if (this.#address.active && this.#address.mode === 'billing') {
             const { address } = this.#config
             const addressElm = this.#elements.create('address', address)
             const stripeAddrWrp = this.#querySelector(`${this.#formSelector} .${this.#fieldKey}-stripe-addr-wrp`)
@@ -231,11 +274,18 @@ export default class BitStripeField {
         confirmParams: {},
         redirect: 'if_required',
       }).then(res => {
+        console.log({ res })
         if (res?.paymentIntent?.status === 'succeeded') {
           paySpinner.classList.add('d-none')
           this.#onApproveHandler(res.paymentIntent)
           this.#paymentElement.clear()
         } else {
+          const result = {
+            data: {
+              [this.#fieldKey]: res.error.message,
+            },
+          }
+          bfValidationErrMsg(result, this.#contentId)
           paySpinner.classList.add('d-none')
         }
       })
