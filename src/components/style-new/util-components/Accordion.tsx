@@ -92,7 +92,7 @@ function Accordion({
   )
 }
 
-export default Accordions
+export default Accordion
 
 const accordion = {
   main: {
