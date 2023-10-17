@@ -196,11 +196,11 @@ export default function ColorPickerControllerUtil({id, value, onChangeHandler, a
     setUnsplashImgUrl('')
   }
 
-  const options = [
-    {... allowSolid && { label: 'Solid' }},
-    {... allowGradient && { label: 'Gradient' }},
-    {... allowImage && { label: 'Image' }},
-  ]
+  const options = []
+  if(allowSolid) options.push({ label: 'Solid' })
+  if(allowGradient) options.push({ label: 'Gradient' })
+  if(allowImage) options.push({ label: 'Image' })
+
   const solidOptions = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -231,17 +231,22 @@ export default function ColorPickerControllerUtil({id, value, onChangeHandler, a
   
   return (
     <div className={css(bgImgControlStyle.container)}>
-      <StyleSegmentControl 
-        options={options} 
-        onChange={(lbl:string) => onTabChangeHandler(lbl, 'parent')} 
-        defaultActive={controller.parent} 
-        wideTab
-      />
+      {
+        options.length > 1 && (
+          <StyleSegmentControl 
+            options={options} 
+            onChange={(lbl:string) => onTabChangeHandler(lbl, 'parent')} 
+            defaultActive={controller.parent} 
+            wideTab
+          />
+          )
+      }
+      
       <Scrollbars
         autoHide
         autoHeight
         autoHeightMin={200}
-        autoHeightMax={365}
+        autoHeightMax={385}
       >
         <div className={css(ut.mt1)}>
           <Grow open={controller.parent === 'Solid'}>
@@ -253,10 +258,8 @@ export default function ColorPickerControllerUtil({id, value, onChangeHandler, a
                     defaultActive="Custom"
                     options={solidOptions}
                     size={60}
-                    
                     onChange={(lbl:string) => onTabChangeHandler(lbl, 'color')}
                     show={['icn']}
-                    
                     width="100%"
                     wideTab
                   />
