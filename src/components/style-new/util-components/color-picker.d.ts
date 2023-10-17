@@ -7,11 +7,13 @@ export type colorPickerProps = {
   allowGradient?: boolean,
   allowImage?: boolean,
   allowVariable?: boolean,
+  modifyColorProp?: boolean,
 }
 
 
 export type valueObject = {
-  color: string,
+  color?: string,
+  'background-color'?: string,
   'background-position'?: string,
   'background-size'?: string,
   'background-image'?: string,
