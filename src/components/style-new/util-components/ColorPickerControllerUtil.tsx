@@ -22,13 +22,16 @@ import { hsla2hsva, hsva2hsla } from '../colorHelpers'
 import { styleToGradientObj } from '../styleHelpers'
 import { colorObj, colorPickerProps, valueObject } from './color-picker'
 
+type ControllerUtilType = Omit<colorPickerProps, 'value'> & {
+  value: valueObject
+}
 
-export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler, allowSolid=true, allowGradient=true, allowImage=true, allowVariable }: colorPickerProps) {
+export default function ColorPickerControllerUtil({id, value, onChangeHandler, allowSolid=true, allowGradient=true, allowImage=true, allowVariable }:ControllerUtilType) {
   const [controller, setController] = useState({ parent: 'Solid', child: 'Solid', color: 'Custom' })
-  const [valueObject, setValueObject] = useState<valueObject>(valueObj)
-  const [color, setColor] = useState()
-  const [bgImage, setBgImage] = useState()
-  const [bgRepeat, setBgRepeat] = useState('initial')
+  const [valueObject, setValueObject] = useState<valueObject>(value)
+  const [color, setColor] = useState(value.color)
+  const [bgImage, setBgImage] = useState(value['background-image'])
+  const [bgRepeat, setBgRepeat] = useState(value['background-repeat'])
   const [bgSize, setBgSize] = useState({
     type: 'auto',
     w: '0px',
@@ -103,7 +106,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const handleColor = (_h, _s, _v, _a, str = '') => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
     let hslaColor = hslaStr
-    const checkExistImportant = valueObj.value?.match(/(!important)/gi)?.[0]
+    const checkExistImportant = value.color?.match(/(!important)/gi)?.[0]
     if (checkExistImportant) hslaColor = `${hslaColor} !important`
     const clr = str ? `${str}${checkExistImportant ? ' !important' : ''}` : hslaColor
     onChangeHandler(clr)
@@ -112,7 +115,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const gradientChangeHandler = (e) => {
 
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundImage = e.style
+      draft['background-image'] = e.style
       onChangeHandler(current(draft))
       }))
     setBgImage(e.style)
@@ -122,13 +125,13 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     if (inputId === 0) {
       setBgPosition(prevBgPos => ({ ...prevBgPos, x: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundPosition = `${value}${unit} ${bgPosition.y}`
+        draft['background-position'] = `${value}${unit} ${bgPosition.y}`
         onChangeHandler(current(draft))
         }))
     } else {
       setBgPosition(prevBgPos => ({ ...prevBgPos, y: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundPosition = `${bgPosition.x} ${value}${unit}`
+        draft['background-position'] = `${bgPosition.x} ${value}${unit}`
         onChangeHandler(current(draft))
         }))
     }
@@ -138,13 +141,13 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     if (inputId === 0) {
       setBgSize(prevBgSize => ({ ...prevBgSize, w: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundSize = `${value}${unit} ${bgSize.h}`
+        draft['background-size'] = `${value}${unit} ${bgSize.h}`
         onChangeHandler(current(draft))
         }))
     } else {
       setBgSize(prevBgSize => ({ ...prevBgSize, h: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundSize = `${bgSize.w} ${value}${unit}`
+        draft['background-size'] = `${bgSize.w} ${value}${unit}`
         onChangeHandler(current(draft))
         }))
     }
@@ -153,7 +156,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const urlChangeHandler = e => {
     setBgImage(`url(${e.target.value})`)
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundImage = `url(${e.target.value})`
+      draft['background-image'] = `url(${e.target.value})`
       onChangeHandler(current(draft))
       }))
   }
@@ -161,7 +164,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     setBgPosition(prevBgPos => ({ ...prevBgPos, type: value }))
     if (value !== 'size' && value !== 'positions') {
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundPosition = value
+        draft['background-position'] = value
         onChangeHandler(current(draft))
       }))
     }
@@ -170,7 +173,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const sizeSelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
     setBgSize(prevBgSize => ({ ...prevBgSize, type: e.target.value }))
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundSize = e.target.value
+      draft['background-size'] = e.target.value
       onChangeHandler(current(draft))
     }))
   }
@@ -178,7 +181,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const bgRepeatSelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
     setBgRepeat(e.target.value)
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundRepeat = e.target.value
+      draft['background-repeat'] = e.target.value
       onChangeHandler(current(draft))
     }))
   }
@@ -187,7 +190,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     e.stopPropagation()
     setBgImage('')
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundImage = ''
+      draft['background-image'] = ''
       onChangeHandler(current(draft))
       }))
     setUnsplashImgUrl('')
@@ -216,7 +219,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         setValueObject(prevValue => create(prevValue, draft => {
-          draft.backgroundImage = `url(${attachment.url})`
+          draft['background-image'] = `url(${attachment.url})`
           onChangeHandler(current(draft))
         }))
 
@@ -262,7 +265,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
                 <Grow open={controller.color === 'Var'}>
                   <div className={css(c.varClr)}>
                     <button
-                      className={`${css(c.clrItem)} ${css(valueObject.value === '--global-bg-color' ? c.active : {})}`}
+                      className={`${css(c.clrItem)} ${css(valueObject.color === '--global-bg-color' ? c.active : {})}`}
                       type="button"
                       onClick={() => setColorState('--global-bg-color')}
                       data-testid={`${id}-g-bg-c`}

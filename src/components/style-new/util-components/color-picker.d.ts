@@ -1,7 +1,7 @@
 export type colorPickerProps = {
   id: string,
-  valueObj: valueObject,
-  onChangeHandler: (value: string|valueObject) => void,
+  value: string|valueObject,
+  onChangeHandler: (value: string|valueObject|object) => void,
   clearHandler: (value: MouseEvent<HTMLButtonElement>) => void,
   allowImportant?: boolean,
   allowSolid?: boolean,
@@ -12,11 +12,11 @@ export type colorPickerProps = {
 
 
 export type valueObject = {
-  value: string,
-  backgroundPosition?: string,
-  backgroundSize?: string,
-  backgroundImage?: string,
-  backgroundRepeat?: string,
+  color: string,
+  'background-position'?: string,
+  'background-size'?: string,
+  'background-image'?: string,
+  'background-repeat'?: string,
 }
 
 
