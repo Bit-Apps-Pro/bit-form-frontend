@@ -5,24 +5,36 @@ import Downmenu from '../../Utilities/Downmenu'
 import ColorPreview from '../ColorPreview'
 import ColorPickerControllerUtil from './ColorPickerControllerUtil'
 import ImportantUtil from './ImportantUtil'
-import { colorPickerProps } from './color-picker'
+import { colorPickerProps, valueObject } from './color-picker'
 
 
 
-export default function ColorPickerUtil({ id, value, onChangeHandler, allowImportant, allowSolid=true, allowImage=true, allowGradient=true, allowVariable=true }: colorPickerProps) {
+export default function ColorPickerUtil({ id, value, onChangeHandler, allowImportant, allowSolid=true, allowImage=true, allowGradient=true, allowVariable=true, modifyColorProp }: colorPickerProps) {
   const { css } = useFela()
   const valueObj = typeof value === 'string' ? { color: value } : value
+  if(modifyColorProp) {
+    valueObj.color = valueObj['background-color']
+  }
   const clearHandler = () => {
     if(typeof value === 'string') {
-      onChangeHandler({color:''})
+      changeHandler({color:''})
       return
     }
     const newObject: {[key: string]: string} = {}
     Object.keys(value).forEach(key => {
       newObject[key] = ''
     })
-    onChangeHandler(newObject)
+    changeHandler(newObject)
   }
+
+  const changeHandler = (newValue: valueObject) => {
+    if(modifyColorProp) {
+      newValue['background-color'] = newValue.color
+      delete newValue.color
+    }
+    onChangeHandler(newValue)
+  }
+
   const colorValue = valueObj['background-image'] || valueObj.color
   return (
     <div data-testid={`${id}-hover`} className={css(ut.flxcb, style.containerHover)}>
@@ -31,7 +43,7 @@ export default function ColorPickerUtil({ id, value, onChangeHandler, allowImpor
           <ImportantUtil
             className={css({ mr: 3 })}
             value={valueObj}
-            changeAction={(newValue) => onChangeHandler(newValue)}
+            changeAction={(newValue) => changeHandler(newValue)}
           />
         )}
         <div
@@ -54,7 +66,7 @@ export default function ColorPickerUtil({ id, value, onChangeHandler, allowImpor
             <ColorPickerControllerUtil 
               id={id}
               value={valueObj}
-              onChangeHandler={onChangeHandler}
+              onChangeHandler={changeHandler}
               allowSolid={allowSolid}
               allowGradient={allowGradient}
               allowImage={allowImage}
@@ -62,7 +74,7 @@ export default function ColorPickerUtil({ id, value, onChangeHandler, allowImpor
             />
           </Downmenu>
 
-          {valueObj.color && (
+          {colorValue && (
             <button
               title="Clear Value"
               onClick={clearHandler}
