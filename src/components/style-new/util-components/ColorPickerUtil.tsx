@@ -7,29 +7,27 @@ import ColorPickerControllerUtil from './ColorPickerControllerUtil'
 import ImportantUtil from './ImportantUtil'
 import { colorPickerProps, valueObject } from './color-picker'
 
-
-
-export default function ColorPickerUtil({ id, value, onChangeHandler, allowImportant, allowSolid=true, allowImage=true, allowGradient=true, allowVariable=true, modifyColorProp }: colorPickerProps) {
+export default function ColorPickerUtil({ id, value, onChangeHandler, allowImportant, allowSolid = true, allowImage = true, allowGradient = true, allowVariable = true, colorProp = 'color' }: colorPickerProps) {
   const { css } = useFela()
-  const valueObj = typeof value === 'string' ? { color: value } : value
-  if(modifyColorProp) {
-    valueObj.color = valueObj['background-color']
+  const valueObj: valueObject = typeof value === 'string' ? { color: value } : value
+  if (colorProp) {
+    valueObj.color = valueObj[colorProp]
   }
   const clearHandler = () => {
-    if(typeof value === 'string') {
-      changeHandler({color:''})
+    if (typeof value === 'string') {
+      changeHandler({ color: '' })
       return
     }
-    const newObject: {[key: string]: string} = {}
-    Object.keys(value).forEach(key => {
+    const newObject: { [key: string]: string } = {}
+    Object.keys(valueObj).forEach(key => {
       newObject[key] = ''
     })
     changeHandler(newObject)
   }
 
   const changeHandler = (newValue: valueObject) => {
-    if(modifyColorProp) {
-      newValue['background-color'] = newValue.color
+    if (colorProp) {
+      newValue[colorProp] = newValue.color
       delete newValue.color
     }
     onChangeHandler(newValue)
@@ -51,9 +49,9 @@ export default function ColorPickerUtil({ id, value, onChangeHandler, allowImpor
           title={colorValue || 'Pick Color'}
         >
           <Downmenu
-            onShow={() => {}}
-            onHide={() => {}}
-            hideOnClick={'toggle'}
+            onShow={() => { }}
+            onHide={() => { }}
+            hideOnClick='toggle'
           >
             <button
               type="button"
@@ -63,7 +61,7 @@ export default function ColorPickerUtil({ id, value, onChangeHandler, allowImpor
               <ColorPreview bg={colorValue} h={24} w={24} className={css(ut.mr2)} />
               <span className={css(style.clrVal)}>{colorValue || 'Pick Color'}</span>
             </button>
-            <ColorPickerControllerUtil 
+            <ColorPickerControllerUtil
               id={id}
               value={valueObj}
               onChangeHandler={changeHandler}
