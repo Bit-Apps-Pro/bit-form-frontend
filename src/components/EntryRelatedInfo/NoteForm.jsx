@@ -1,9 +1,11 @@
+import { useAtomValue } from 'jotai'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import app from '../../styles/app.style'
+import { $fieldsArr } from '../../GlobalStates/GlobalStates'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
+import app from '../../styles/app.style'
 import LoaderSm from '../Loaders/LoaderSm'
 import TinyMCE from '../Utilities/TinyMCE'
 
@@ -15,6 +17,7 @@ export default function NoteForm({
   const [isLoading, setIsLoading] = useState(false)
   const [noteTitle, setNoteTitle] = useState(data.title)
   const [noteContent, setNoteContent] = useState(data.content)
+  const fieldsArr = useAtomValue($fieldsArr)
 
   const handleNoteTitle = val => {
     setNoteTitle(val)
@@ -84,6 +87,7 @@ export default function NoteForm({
           id="body-content"
           value={noteContent}
           onChangeHandler={handleNoteContent}
+          formFields={fieldsArr}
         />
         {editMode && (
           <button type="button" className={`${css(app.btn)} btn-md mr-2`} onClick={cancelEditMode}>
