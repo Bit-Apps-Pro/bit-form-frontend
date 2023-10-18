@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { CssFunction, useFela } from 'react-fela'
+import { useFela } from 'react-fela'
 import BorderFullIcn from '../../../Icons/BorderFullIcn'
 import BorderLeftTopIcn from '../../../Icons/BorderLeftTopIcn'
 import BoxFullIcon from '../../../Icons/BoxFullIcon'
@@ -64,25 +64,31 @@ export default function BoxSizingUtil({
     values = [values[0], values[1], values[2], values[1]]
   }
 
+  const getValueString = (values: string[], parent = controller) => {
+    let v
+    if (parent === 'All') {
+      v = `${values[0]}`
+    } else {
+      v = `${values[0]} ${values[1]} ${values[2]} ${values[3]}`
+    }
+    return v
+  }
+
   const handleValues = ({ value: val, unit, id }: { value: string, unit: string, id: number }) => {
     const unt = unit === 'var' ? 'px' : unit
     const preUnit = getStrFromStr(values[id])
     const convertvalue = unitConverter(unt, val, preUnit)
 
     values[id] = convertvalue + unt
-    let v
-    if (controller === 'All') {
-      v = `${values[0]}`
-    } else {
-      v = `${values[0]} ${values[1]} ${values[2]} ${values[3]}`
-    }
-    onChangeHandler(v)
+
+    onChangeHandler(getValueString(values))
   }
 
   const changeHandler = (val: ControllerType) => {
     if (val === 'All') values = [values[0]]
     else values = Array(4).fill(values[0])
     setController(val)
+    onChangeHandler(getValueString(values, val))
   }
 
   return (
