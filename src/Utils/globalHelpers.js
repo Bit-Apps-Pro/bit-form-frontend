@@ -1,9 +1,11 @@
 import { diff } from 'deep-object-diff'
 import merge from 'deepmerge-alt'
 import { parse, stringify } from 'jcof'
+import toast from 'react-hot-toast'
 import { getAtom } from '../GlobalStates/BitStore'
 import { $fields } from '../GlobalStates/GlobalStates'
 import { deepCopy } from './Helpers'
+import { __ } from './i18nwrap'
 
 export function observeElement(element, property, callback, delay = 0) {
   const elementPrototype = Object.getPrototypeOf(element)
@@ -265,4 +267,23 @@ export function getObjectDiff(...args) {
 export const JCOF = {
   stringify,
   parse,
+}
+
+const toastCopyResp = prom => prom.then(() => toast.success(__('Copied on clipboard.')))
+  .catch(() => toast.error(__('Failed to Copy, Try Again.')))
+
+export const copyToClipboard = ({ value, ref: copyInput }) => {
+  if (!copyInput?.current) return
+  copyInput.current.focus()
+  copyInput.current.select()
+  if (navigator.clipboard && window.isSecureContext) {
+    const val = value || document.getSelection()
+    const resp = navigator.clipboard.writeText(val)
+    return toastCopyResp(resp)
+  }
+  const resp = new Promise((res, rej) => {
+    if (document.execCommand('copy')) res()
+    else rej()
+  })
+  return toastCopyResp(resp)
 }
