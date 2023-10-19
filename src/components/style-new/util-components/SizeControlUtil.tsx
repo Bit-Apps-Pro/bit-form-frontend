@@ -15,7 +15,7 @@ export default function SizeControlUtil({
   name,
   min = 1,
   max = 100,
-  step = 1,
+  step,
   dataTestId,
   sliderWidth,
 }: SizeControlProps) {
@@ -41,7 +41,7 @@ export default function SizeControlUtil({
         value={vlu}
         min={min}
         max={max}
-        step={step}
+        step={step ? step : unt === 'px' ? 0.1 : 1}
         width={`${width - 20}px`}
         onChange={v => inputHandler({ v, u: unt })}
         dataTestId={dataTestId}
