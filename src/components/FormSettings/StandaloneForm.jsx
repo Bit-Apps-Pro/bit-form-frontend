@@ -11,11 +11,11 @@ import ut from '../../styles/2.utilities'
 import CopyText from '../Utilities/CopyText'
 import SingleToggle2 from '../Utilities/SingleToggle2'
 import { assignNestedObj } from '../style-new/styleHelpers'
+import Accordion from '../style-new/util-components/Accordion'
 import BorderControlUtil from '../style-new/util-components/BorderControlUtil'
 import BoxSizingUtil from '../style-new/util-components/BoxSizingUtil'
 import ColorPickerUtil from '../style-new/util-components/ColorPickerUtil'
 import SizeControlUtil from '../style-new/util-components/SizeControlUtil'
-import Accordion from '../style-new/util-components/Accordion'
 
 export default function StandaloneForm() {
   const textareaRef = useRef(null)
@@ -49,6 +49,8 @@ export default function StandaloneForm() {
         assignNestedObj(draftConf, statePath, val)
       }
     }))
+
+    setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }
 
   const wrpStyle = {}
@@ -96,7 +98,7 @@ export default function StandaloneForm() {
       )}
       <div className="w-10">
         <div style={wrpStyle} className="mt-4">
-          <div className={`flx ${standaloneSettings.showWarningMsg ? 'mt-2' : 'mt-3'}`}>
+          {/* <div className={`flx ${standaloneSettings.showWarningMsg ? 'mt-2' : 'mt-3'}`}>
             <SingleToggle2
               name="disable_loggin_user"
               action={(e) => handleChanges('onlyLoggedInUsers', e.target.checked)}
@@ -106,27 +108,29 @@ export default function StandaloneForm() {
             <label htmlFor="disable_loggin_user">
               {__('Visible only for logged in users')}
             </label>
-          </div>
-          <div className="w-5">
-            <div>
-              <h4>Share via Direct URL</h4>
-              <CopyText
-                value={standaloneUrl}
-                className="field-key-cpy w-12 ml-0"
-                readOnly
-              />
+          </div> */}
+          <div className={css(ut.w10, ut.flxi, { gp: 20 })}>
+            <div className={css(ut.w4)}>
+              <div>
+                <h4 className={css(ut.mb2)}>Share via Direct URL</h4>
+                <CopyText
+                  value={standaloneUrl}
+                  className="field-key-cpy w-12 ml-0"
+                  readOnly
+                />
+              </div>
+              <div>
+                <h4 className={css(ut.mb2)}>Embed via HTML Code</h4>
+                <textarea ref={textareaRef} rows={5} readOnly className={css(ut.w10, st.embed)} onClick={() => copyToClipboard({ ref: textareaRef })}>
+                  {`<iframe id="bit-form" width="100%" height="500px" style="min-height: 500px; width: 100%" frameborder="0" src="${standaloneUrl}&embedded=1"></iframe>`}
+                </textarea>
+              </div>
             </div>
-            <div>
-              <h4>Embed via HTML Code</h4>
-              <textarea ref={textareaRef} rows={5} readOnly className={css(ut.w10, st.embed)} onClick={() => copyToClipboard({ ref: textareaRef })}>
-                {`<iframe id="bit-form" width="100%" height="500px" style="min-height: 500px; width: 100%" frameborder="0" src="${standaloneUrl}&embedded=1"></iframe>`}
-              </textarea>
-            </div>
-            <div className={css(ut.w6)}>
-              <h4>Styling</h4>
-              <Accordion title="Body">
+            <div className={css(ut.w3, ut.pl4)}>
+              <h4 className={css(ut.mb2)}>Styling</h4>
+              <Accordion title="Body" open>
                 <div className={css(st.prop)}>
-                  <p>Background</p>
+                  <p className={css(ut.m0)}>Background</p>
                   <ColorPickerUtil
                     value={generateStyleObj('.standalone-form-container', ['background-color', 'background-image', 'background-position', 'background-repeat'])}
                     onChangeHandler={val => handleStyles('styles->.standalone-form-container', val)}
@@ -134,7 +138,7 @@ export default function StandaloneForm() {
                   />
                 </div>
               </Accordion>
-              <Accordion title="Wrapper">
+              <Accordion title="Wrapper" open>
                 <div className={css(st.prop)}>
                   <p>Width</p>
                   <SizeControlUtil
@@ -188,5 +192,6 @@ const st = {
   },
   prop: {
     flx: 'between',
+    px: 20,
   },
 }
