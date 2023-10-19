@@ -8,13 +8,14 @@ import tutorialLinks from '../../Utils/StaticData/tutorialLinks'
 import { copyToClipboard } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
-import SizeControl from '../CompSettings/StyleCustomize/ChildComp/SizeControl'
 import CopyText from '../Utilities/CopyText'
 import SingleToggle2 from '../Utilities/SingleToggle2'
-import { assignNestedObj, jsObjtoCssStr } from '../style-new/styleHelpers'
+import { assignNestedObj } from '../style-new/styleHelpers'
 import BorderControlUtil from '../style-new/util-components/BorderControlUtil'
 import BoxSizingUtil from '../style-new/util-components/BoxSizingUtil'
 import ColorPickerUtil from '../style-new/util-components/ColorPickerUtil'
+import SizeControlUtil from '../style-new/util-components/SizeControlUtil'
+import Accordion from '../style-new/util-components/Accordion'
 
 export default function StandaloneForm() {
   const textareaRef = useRef(null)
@@ -44,15 +45,11 @@ export default function StandaloneForm() {
         Object.keys(val).forEach(k => {
           assignNestedObj(draftConf, `${statePath}->${k}`, val[k])
         })
-      } else assignNestedObj(draftConf, statePath, val)
-      if (draftConf.standaloneSettings?.styles) {
-        const stylescss = jsObjtoCssStr(draftConf.standaloneSettings.styles)
-        console.log({ stylescss })
+      } else {
+        assignNestedObj(draftConf, statePath, val)
       }
     }))
   }
-
-  console.log({ formInfo })
 
   const wrpStyle = {}
   if (standaloneSettings.active) {
@@ -66,6 +63,8 @@ export default function StandaloneForm() {
   }
 
   const standaloneUrl = `${bits.siteURL}/?bit-form=${formId}`
+
+  const generateStyleObj = (path, styleProps = []) => styleProps.reduce((acc, prop) => ({ ...acc, [prop]: standaloneSettings.styles?.[path]?.[prop] || '' }), {})
 
   return (
     <div className="pos-rel">
@@ -123,59 +122,58 @@ export default function StandaloneForm() {
                 {`<iframe id="bit-form" width="100%" height="500px" style="min-height: 500px; width: 100%" frameborder="0" src="${standaloneUrl}&embedded=1"></iframe>`}
               </textarea>
             </div>
-            <div className={css(ut.w5)}>
+            <div className={css(ut.w6)}>
               <h4>Styling</h4>
-              <div>
-                <h5>Body</h5>
+              <Accordion title="Body">
                 <div className={css(st.prop)}>
                   <p>Background</p>
-                  <ColorPickerUtil value={standaloneSettings?.styles?.['.standalone-form-container'] || ''} onChangeHandler={val => handleStyles('styles->.standalone-form-container', val)} colorProp="background-color" />
-                </div>
-              </div>
-              <div className={css(ut.flxClm)}>
-                <h5>Wrapper</h5>
-                <div className={css(st.prop)}>
-                  <p>Height</p>
-                  <SizeControl
-                    // className={css(style.select)}
-                    width={150}
-                    max={1000}
-                    // inputHandler={handleFormWidth}
-                    // sizeHandler={({ unitKey, unitValue }) => handleFormWidth({ value: unitValue, unit: unitKey })}
-                    // value={(formWidth && getNumFromStr(formWidth)) || ''}
-                    // unit={(formWidth && getStrFromStr(formWidth)) || 'px'}
-                    sliderWidth="40%"
-                    actualValue="auto"
+                  <ColorPickerUtil
+                    value={generateStyleObj('.standalone-form-container', ['background-color', 'background-image', 'background-position', 'background-repeat'])}
+                    onChangeHandler={val => handleStyles('styles->.standalone-form-container', val)}
+                    colorProp="background-color"
                   />
-                  {/* <ColorPickerUtil value={standaloneSettings?.styles?.wrapper?.background || ''} onChangeHandler={val => handleChanges('styles->wrapper->background', val)} /> */}
                 </div>
+              </Accordion>
+              <Accordion title="Wrapper">
                 <div className={css(st.prop)}>
                   <p>Width</p>
-                  <SizeControl
-                    // className={css(style.select)}
-                    width={150}
-                    max={1000}
-                    // inputHandler={handleFormWidth}
-                    // sizeHandler={({ unitKey, unitValue }) => handleFormWidth({ value: unitValue, unit: unitKey })}
-                    // value={(formWidth && getNumFromStr(formWidth)) || ''}
-                    // unit={(formWidth && getStrFromStr(formWidth)) || 'px'}
-                    sliderWidth="40%"
-                    actualValue="auto"
+                  <SizeControlUtil
+                    value={standaloneSettings?.styles?.['.standalone-form-wrapper']?.width || '60%'}
+                    onChangeHandler={val => handleChanges('styles->.standalone-form-wrapper->width', val)}
+                    width={130}
+                  />
+                </div>
+                <div className={css(st.prop)}>
+                  <p>Height</p>
+                  <SizeControlUtil
+                    value={standaloneSettings?.styles?.['.standalone-form-wrapper']?.height || '100%'}
+                    onChangeHandler={val => handleChanges('styles->.standalone-form-wrapper->height', val)}
+                    width={130}
                   />
                 </div>
                 <div className={css(st.prop)}>
                   <p>Background</p>
-                  <ColorPickerUtil value={standaloneSettings?.styles?.['.standalone-form-wrapper'] || ''} onChangeHandler={val => handleStyles('styles->.standalone-form-wrapper', val)} colorProp="background-color" />
+                  <ColorPickerUtil
+                    value={generateStyleObj('.standalone-form-wrapper', ['background-color', 'background-image', 'background-position', 'background-repeat'])}
+                    onChangeHandler={val => handleStyles('styles->.standalone-form-wrapper', val)}
+                    colorProp="background-color"
+                  />
                 </div>
                 <div className={css(st.prop)}>
                   <p>Border</p>
-                  <BorderControlUtil value={standaloneSettings?.styles?.['.standalone-form-wrapper']?.border} onChangeHandler={val => handleChanges('styles->.standalone-form-wrapper->border', val)} />
+                  <BorderControlUtil
+                    value={generateStyleObj('.standalone-form-wrapper', ['border-color', 'border-width', 'border-style', 'border-radius'])}
+                    onChangeHandler={val => handleStyles('styles->.standalone-form-wrapper', val)}
+                  />
                 </div>
                 <div className={css(st.prop)}>
                   <p>Padding</p>
-                  <BoxSizingUtil value={standaloneSettings?.styles?.['.standalone-form-wrapper']?.padding} onChangeHandler={val => handleChanges('styles->.standalone-form-wrapper->padding', val)} />
+                  <BoxSizingUtil
+                    value={standaloneSettings?.styles?.['.standalone-form-wrapper']?.padding}
+                    onChangeHandler={val => handleStyles('styles->.standalone-form-wrapper->padding', val)}
+                  />
                 </div>
-              </div>
+              </Accordion>
             </div>
           </div>
         </div>
