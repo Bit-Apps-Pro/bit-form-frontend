@@ -17,12 +17,13 @@ export default function SizeControlUtil({
   max = 100,
   step,
   dataTestId,
-  sliderWidth,
+  sliderWidth = 200,
 }: SizeControlProps) {
 
   const { css } = useFela()
 
-  const [vlu, unt] = [getNumFromStr(value), getStrFromStr(value)]
+  const val = typeof value === 'number' ? value.toString() : value
+  const [vlu, unt] = [getNumFromStr(val), getStrFromStr(val)]
 
   const inputHandler = ({ v, u }: onChangeType) => {
     const convertvalue = unitConverter(u, v, unt)
@@ -43,7 +44,7 @@ export default function SizeControlUtil({
         max={max}
         step={step ? step : unt === 'px' ? 0.1 : 1}
         width={`${width - 20}px`}
-        onChange={v => inputHandler({ v, u: unt })}
+        onChange={(v: number) => inputHandler({ v, u: unt })}
         dataTestId={dataTestId}
         sliderWidth={sliderWidth}
       />
@@ -52,7 +53,7 @@ export default function SizeControlUtil({
         value={unt}
         className={css(sizeControlStyle.selectt, ut.fontBody, { fs: '12px !important' })}
         name={name}
-        onChange={({ target: { value: valu } }) => inputHandler({ v: vlu, u: valu })}
+        onChange={({ target: { value: unit } }) => inputHandler({ v: vlu, u: unit })}
         data-testid={`${dataTestId}-unit-select`}
       >
         {options.length === 0 && (
@@ -77,7 +78,7 @@ type SizeControlProps = {
   width?: number | string,
   customStyle?: object,
   options?: string[],
-  onChangeHandler?: Function,
+  onChangeHandler: (val: string) => void,
   value: number | string,
   name: string,
   min?: number,
