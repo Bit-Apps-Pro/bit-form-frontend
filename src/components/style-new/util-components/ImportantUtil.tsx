@@ -1,16 +1,17 @@
 import { useFela } from 'react-fela'
-import StarIcn from '../../Icons/StarIcn'
-import Tip from '../Utilities/Tip'
+import StarIcn from '../../../Icons/StarIcn'
+import Tip from '../../Utilities/Tip'
+
 
 type importantProps = {
   value: string
   className?: string
-  addOrRemoveImportant: (newStyle:string) => void
+  addOrRemoveImportant: (newStyle: string) => void
 }
 
 export default function ImportantUtil({ value, className, addOrRemoveImportant }: importantProps) {
   const { css } = useFela()
-  const isAlreadyImportant = ():boolean => {
+  const isAlreadyImportant = (): boolean => {
     if (value?.match(/(!important)/gi)?.[0]) return true
     return false
   }
@@ -32,7 +33,7 @@ export default function ImportantUtil({ value, className, addOrRemoveImportant }
     <Tip msg="Set style as !important">
       <button
         style={{ visibility: isStyleValueEmptyOrCssVar() ? 'visible' : 'visible' }}
-        className={`${css(cls.btn, isAlreadyImportant() ? cls.active: {})} ${className}`}
+        className={`${css(cls.btn, isAlreadyImportant() ? cls.active : {})} ${className}`}
         type="button"
         onClick={addImportantChangeHandler}
       >

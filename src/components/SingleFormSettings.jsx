@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-param-reassign */
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
@@ -13,6 +14,7 @@ import 'react-day-picker/dist/style.css'
  * https://reactjsexample.com/google-keep-app-inspired-time-picker-for-react/
  */
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useFela } from 'react-fela'
 import { Link } from 'react-router-dom'
 import Timekeeper from 'react-timekeeper'
 import { hideAll } from 'tippy.js'
@@ -37,14 +39,15 @@ import TrashIcn from '../Icons/TrashIcn'
 import { deleteNestedObj } from '../Utils/FormBuilderHelper'
 import { IS_PRO, dateTimeFormatter, deepCopy } from '../Utils/Helpers'
 import proHelperData from '../Utils/StaticData/proHelperData'
+import tutorialLinks from '../Utils/StaticData/tutorialLinks'
 import { __ } from '../Utils/i18nwrap'
 import Accordions from './Utilities/Accordions'
 import CheckBox from './Utilities/CheckBox'
 import ConfirmModal from './Utilities/ConfirmModal'
-import Cooltip from './Utilities/Cooltip'
 import Downmenu from './Utilities/Downmenu'
 import ProBadge from './Utilities/ProBadge'
 import SingleToggle2 from './Utilities/SingleToggle2'
+import LearnmoreTip from './Utilities/Tip/LearnmoreTip'
 import { assignNestedObj } from './style-new/styleHelpers'
 
 export default function SingleFormSettings() {
@@ -59,6 +62,7 @@ export default function SingleFormSettings() {
   const setProModal = useSetAtom($proModal)
   // const [proModal, setProModal] = useState({ show: false, msg: '' })
   const setStyles = useSetAtom($styles)
+  const { css } = useFela()
 
   const clsAlertMdl = () => {
     const tmpAlert = { ...alertMdl }
@@ -665,6 +669,7 @@ export default function SingleFormSettings() {
               <IpBlockIcn size="22" />
             </span>
             <b>{__('Allow single entry for each IP address')}</b>
+            <LearnmoreTip {...tutorialLinks.singleEntry} />
             {!IS_PRO && <ProBadge proProperty="singleEntry" />}
           </div>
           <SingleToggle2
@@ -676,10 +681,13 @@ export default function SingleFormSettings() {
       </div>
       <Accordions
         customTitle={(
-          <b>
-            <span className="mr-2"><LoginIcn size={20} /></span>
-            {__('Require user to be logged in for submit form')}
-          </b>
+          <span className={css({ dy: 'flex' })}>
+            <b>
+              <span className="mr-2"><LoginIcn size={20} /></span>
+              {__('Require user to be logged in for submit form')}
+            </b>
+            <LearnmoreTip {...tutorialLinks.requiredLoggedInUser} />
+          </span>
         )}
         toggle
         action={(e) => setAccordingEnable(e, 'is_login', 'User Require Login')}
@@ -704,12 +712,15 @@ export default function SingleFormSettings() {
       </Accordions>
       <Accordions
         customTitle={(
-          <b>
-            <span className="mr-2">
-              <EmptyIcn size="20" />
-            </span>
-            {__('Prevent empty form submission')}
-          </b>
+          <span className={css({ dy: 'flex' })}>
+            <b>
+              <span className="mr-2">
+                <EmptyIcn size="20" />
+              </span>
+              {__('Prevent empty form submission')}
+            </b>
+            <LearnmoreTip {...tutorialLinks.emptySubmission} />
+          </span>
         )}
         cls="w-6 mt-3"
         toggle
@@ -735,6 +746,7 @@ export default function SingleFormSettings() {
             <b>
               {__('Validate form input on focus lost')}
             </b>
+            <LearnmoreTip {...tutorialLinks.validateFocusLost} />
           </div>
           <SingleToggle2 action={setValidateFocusLost} checked={'validateFocusLost' in additionalSetting.enabled} className="flx" />
         </div>
@@ -748,20 +760,24 @@ export default function SingleFormSettings() {
             </span>
             <b>
               {__('Disable entry storing in WordPress database')}
-              {!IS_PRO && <ProBadge proProperty="submission" />}
             </b>
+            <LearnmoreTip {...tutorialLinks.disableEntryStoring} />
+            {!IS_PRO && <ProBadge proProperty="submission" />}
           </div>
           <SingleToggle2 action={storeSubmission} checked={'submission' in additionalSetting.enabled} className="flx" />
         </div>
       </div>
       <Accordions
         customTitle={(
-          <b>
-            <span className="mr-2">
-              <ReCaptchaIcn size="20" />
-            </span>
-            {__('Enable ReCaptcha V3')}
-          </b>
+          <span className={css({ dy: 'flex' })}>
+            <b>
+              <span className="mr-2">
+                <ReCaptchaIcn size="20" />
+              </span>
+              {__('Enable ReCaptcha V3')}
+            </b>
+            <LearnmoreTip {...tutorialLinks.recaptchaV3} />
+          </span>
         )}
         cls="w-6 mt-3"
       >
@@ -819,14 +835,7 @@ export default function SingleFormSettings() {
               <HoneypotIcn w="20" h="19" />
               <span className="flx ml-2">
                 <b>{__('Honeypot trap for bot')}</b>
-                <Cooltip width={250} icnSize={17} className="ml-2 d-non">
-                  <div className="txt-body">
-                    Honeypot protection provides security mechanisms to protect your
-                    site from form submission by spam bots. If spam bot activity is detected, form submission is blocked.
-                    <br />
-                    <a className="mt-1 cooltip-link" target="_blank" href="https://en.wikipedia.org/wiki/Honeypot_(computing)" rel="noreferrer">Learn More</a>
-                  </div>
-                </Cooltip>
+                <LearnmoreTip {...tutorialLinks.honeypot} />
                 {!IS_PRO && (<ProBadge proProperty="honeypot" />)}
               </span>
             </div>
@@ -839,11 +848,12 @@ export default function SingleFormSettings() {
 
       <div className="w-6 mt-3">
         <div className="flx flx-between sh-sm br-10 btcd-setting-opt">
-          <div className="">
+          <div className={css({ dy: 'flex' })}>
             <b>
               <span className="mr-2"><NoneIcn size="15" /></span>
               {__('Disable this form after limited entry')}
             </b>
+            <LearnmoreTip {...tutorialLinks.limitEntry} />
             {!IS_PRO && (<ProBadge proProperty="entryLimit" />)}
           </div>
           <div className="flx">
@@ -855,12 +865,15 @@ export default function SingleFormSettings() {
       {/* // temproray block for Date/Time library issue */}
       <Accordions
         customTitle={(
-          <b>
-            <span className="mr-2">
-              <DateIcn w="15" />
-            </span>
-            {__('Limit Form Submission Period')}
-          </b>
+          <span className={css({ dy: 'flex' })}>
+            <b>
+              <span className="mr-2">
+                <DateIcn w="15" />
+              </span>
+              {__('Limit Form Submission Period')}
+            </b>
+            <LearnmoreTip {...tutorialLinks.limitPeriod} />
+          </span>
         )}
         cls="w-6 mt-3"
         isPro
@@ -1023,12 +1036,15 @@ export default function SingleFormSettings() {
 
       <Accordions
         customTitle={(
-          <b>
-            <span className="mr-2">
-              <BlockIcn size="20" />
-            </span>
-            {__('Blocked IP list')}
-          </b>
+          <span className={css({ dy: 'flex' })}>
+            <b>
+              <span className="mr-2">
+                <BlockIcn size="20" />
+              </span>
+              {__('Blocked IP list')}
+            </b>
+            <LearnmoreTip {...tutorialLinks.blockedIp} />
+          </span>
         )}
         cls="w-6 mt-3"
         isPro
@@ -1059,12 +1075,15 @@ export default function SingleFormSettings() {
 
       <Accordions
         customTitle={(
-          <b>
-            <span className="mr-2">
-              <LockIcn size="18" />
-            </span>
-            {__('Allowed IP')}
-          </b>
+          <span className={css({ dy: 'flex' })}>
+            <b>
+              <span className="mr-2">
+                <LockIcn size="18" />
+              </span>
+              {__('Allowed IP')}
+            </b>
+            <LearnmoreTip {...tutorialLinks.allowedIp} />
+          </span>
         )}
         cls="w-6 mt-3"
         isPro
@@ -1103,6 +1122,7 @@ export default function SingleFormSettings() {
           <div className="flx">
             <GoogleAdIcn size={18} />
             <b className="ml-2">{__('Capture Google Ads (Click ID)')}</b>
+            <LearnmoreTip {...tutorialLinks.googleAdds} />
             {!IS_PRO && (<ProBadge proProperty="captureGCLID" />)}
           </div>
           <SingleToggle2 action={toggleCaptureGCLID} checked={'captureGCLID' in additionalSetting.enabled} className="flx" />
