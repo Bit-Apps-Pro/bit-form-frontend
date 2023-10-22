@@ -4,7 +4,7 @@ import { parse, stringify } from 'jcof'
 import toast from 'react-hot-toast'
 import { getAtom } from '../GlobalStates/BitStore'
 import { $fields } from '../GlobalStates/GlobalStates'
-import { deepCopy } from './Helpers'
+import { deepCopy, isObject, isObjectEmpty } from './Helpers'
 import { __ } from './i18nwrap'
 
 export function observeElement(element, property, callback, delay = 0) {
@@ -286,4 +286,17 @@ export const copyToClipboard = ({ value, ref: copyInput }) => {
     else rej()
   })
   return toastCopyResp(resp)
+}
+
+export const removeEmptyObjectValues = (stylesObj = {}) => {
+  const newStyles = {}
+  Object.keys(stylesObj).forEach(st => {
+    if (isObjectEmpty(stylesObj[st])) return
+    if (isObject(stylesObj[st])) {
+      newStyles[st] = removeEmptyObjectValues(stylesObj[st])
+    } else if (stylesObj[st]) {
+      newStyles[st] = stylesObj[st]
+    }
+  })
+  return newStyles
 }
