@@ -26,7 +26,7 @@ export default function ColorPickerUtil({ id, value, onChangeHandler, allowImpor
   }
 
   const changeHandler = (newValue: valueObject) => {
-    if (colorProp) {
+    if (colorProp !== 'color' && newValue.color) {
       newValue[colorProp] = newValue.color
       delete newValue.color
     }
