@@ -79,10 +79,10 @@ export default function StandaloneForm() {
       <h5 className="mt-3">
         {__('How to setup Standalone Form')}
         :
-        <a href={tutorialLinks.doubleOptIn.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
+        <a href="#" target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
           {__('YouTube')}
         </a>
-        <a href={tutorialLinks.doubleOptInDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
+        <a href="#" target="_blank" rel="noreferrer" className="doc-txt">
           {__('Documentation')}
         </a>
       </h5>
@@ -118,12 +118,16 @@ export default function StandaloneForm() {
                 <input
                   aria-label="Error messages"
                   type="text"
-                  placeholder="Custom URL"
+                  placeholder={`?bit-form=${formId}`}
                   name="message"
                   className="btcd-paper-inp"
                   onChange={(e) => handleChanges('customUrl', e.target.value)}
                   value={standaloneSettings.customUrl}
                 />
+                <p className={css(ut.mt1)}>
+                  <strong>Note: </strong>
+                  Please try to avoid any duplicate custom url, as it will conflict with the page and Bit Form.
+                </p>
               </div>
               <div>
                 <h4 className={css({ my: 10 })}>Share via Direct URL</h4>
