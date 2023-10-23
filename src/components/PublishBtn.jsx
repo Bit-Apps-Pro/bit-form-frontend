@@ -37,7 +37,6 @@ const style = {
     fs: 12,
     fw: 400,
     tn: 'background 0.2s',
-    mx: 10,
     my: 5,
     brs: 8,
     curp: 1,

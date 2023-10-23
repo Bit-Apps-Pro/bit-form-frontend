@@ -19,14 +19,15 @@ type AccordionsPropsType = {
   checked?: boolean,
   isPro?: boolean,
   proProperty?: string,
+  open?: boolean
 }
 
 
 function Accordion({
-  title, subtitle, children, cls, onExpand, onCollapse, toggle, action, checked, isPro, proProperty,
+  title, subtitle, children, cls, onExpand, onCollapse, toggle, action, checked, isPro, proProperty, open,
 }: AccordionsPropsType) {
-  const [tgl, setTgl] = useState(false)
-  const [H, setH] = useState(0)
+  const [tgl, setTgl] = useState(open)
+  const [H, setH] = useState(open ? 'auto' : 0)
   const nodeRef = useRef(null)
   const { css } = useFela()
 
@@ -83,7 +84,7 @@ function Accordion({
           onExit={onAccordionCollapse}
           unmountOnExit
         >
-          <div className="p-2" ref={nodeRef}>
+          <div className={css({ py: 10 })} ref={nodeRef}>
             {children}
           </div>
         </CSSTransition>
@@ -97,7 +98,6 @@ export default Accordion
 const accordion = {
   main: {
     brs: 'unset',
-    mx: 10,
     '&:hover': {
       bd: 'rgb(245, 250, 255)',
     },

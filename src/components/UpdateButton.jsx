@@ -46,7 +46,7 @@ import { JCOF, select, selectInGrid } from '../Utils/globalHelpers'
 import { __ } from '../Utils/i18nwrap'
 import navbar from '../styles/navbar.style'
 import LoaderSm from './Loaders/LoaderSm'
-import { removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
+import { jsObjtoCssStr, removeUnuseStylesAndUpdateState, updateGoogleFontUrl } from './style-new/styleHelpers'
 
 export default function UpdateButton({ componentMounted, modal, setModal }) {
   const navigate = useNavigate()
@@ -390,6 +390,13 @@ export default function UpdateButton({ componentMounted, modal, setModal }) {
         },
       })
     }
+    saveStandaloneCss()
+  }
+
+  const saveStandaloneCss = () => {
+    if (!formInfo.standaloneSettings?.styles) return
+    const stylesCss = jsObjtoCssStr(formInfo.standaloneSettings.styles)
+    bitsFetch({ css: stylesCss, formID }, 'bitforms_save_standalone_css')
   }
 
   return (

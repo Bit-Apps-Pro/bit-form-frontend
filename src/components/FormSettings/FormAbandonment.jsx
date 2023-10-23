@@ -23,11 +23,8 @@ const FormAbandonment = () => {
     ['bitforms_get_form_abandonment_config', formID],
     { formID },
     {
-      fetchCondition: IS_PRO,
+      fetchCondition: IS_PRO && isObjectEmpty(abandonmentConf),
       onSuccess: data => setAbandonmentConf(data),
-      onMount: data => {
-        if (isObjectEmpty(abandonmentConf)) setAbandonmentConf(data)
-      },
     },
   )
 

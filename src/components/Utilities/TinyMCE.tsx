@@ -5,40 +5,11 @@ import { useEffect, useState } from 'react'
 import '../../resource/css/tinymce.css'
 import { loadScript } from '../../Utils/globalHelpers'
 
-interface TinyMCEProps {
-  id: string
-  value: string
-  onChangeHandler: (e: any) => void
-  toolbarMnu?: string
-  menubar?: string
-  height?: string | number
-  width?: string | number
-  disabled?: boolean
-  plugins?: string
-  init?: any
-  get?: any
-  remove?: any
-}
-
-declare global {
-  interface Window {
-    tinymce: {
-      init: ({ }) => void
-      baseURI: {
-        source: string
-      }
-      get: (id: string) => {
-        remove: () => void
-      }
-    }
-  }
-}
-
-const CDN_SOURCE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11'
-
 export default function TinyMCE({
   id,
   value,
+  formFields,
+  SmartTagField,
   onChangeHandler,
   toolbarMnu,
   menubar,
@@ -48,6 +19,7 @@ export default function TinyMCE({
   plugins
 }: TinyMCEProps) {
   const editorId = `${id}-settings`
+  const CDN_SOURCE_URL = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11'
   const [isLoaded, setIsLoaded] = useState(typeof window.tinymce !== 'undefined')
   const editorLoadedFromCDN = isLoaded && window.tinymce.baseURI.source === CDN_SOURCE_URL
   const loadTinyMceScript = async () => {
@@ -76,6 +48,13 @@ export default function TinyMCE({
     }
   }, [isLoaded])
 
+  const insertFieldKey = (fld: FieldType) => {
+    if (fld.type === 'signature') {
+      return `<img width="250" src="\${${fld.key}}" alt="${fld.key}" />`
+    }
+    return `\${${fld.key}}`
+  }
+
   const timyMceInit = () => {
     if (window && window.tinymce) {
       window.tinymce.init({
@@ -93,12 +72,26 @@ export default function TinyMCE({
           }`,
         toolbar:
           toolbarMnu ||
-          'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code',
+          'formatselect | fontsizeselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat toogleCode wp_code | addFormField | addSmartField',
         image_advtab: true,
         default_link_target: '_blank',
         setup(editor: any) {
           editor.on('Paste Change input Undo Redo', () => {
             onChangeHandler(editor.getContent())
+          })
+          formFields && editor.addButton('addFormField', {
+            text: 'Form Fields ',
+            tooltip: 'Add Form Field Value in Message',
+            type: 'menubutton',
+            icon: false,
+            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/) && ({ text: i.name, onClick() { editor.insertContent(insertFieldKey(i)) } })),
+          })
+          SmartTagField && editor.addButton('addSmartField', {
+            text: 'Smart Tag Fields',
+            tooltip: 'Add Smart Tag Field Value in Message',
+            type: 'menubutton',
+            icon: false,
+            menu: SmartTagField?.map(i => ({ text: i.label, onClick() { editor.insertContent(`\${${i.name}}`) } })),
           })
           editor.addButton('toogleCode', {
             text: '</>',
@@ -138,4 +131,38 @@ export default function TinyMCE({
       disabled={disabled}
     />
   )
+}
+
+type FieldType = { key: string, type: string, name: string }
+type SmartTagType = { label: string, name: string }
+
+type TinyMCEProps = {
+  id: string
+  value: string
+  formFields?: FieldType[]
+  SmartTagField?: SmartTagType[]
+  onChangeHandler: (e: any) => void
+  toolbarMnu?: string
+  menubar?: string
+  height?: string | number
+  width?: string | number
+  disabled?: boolean
+  plugins?: string
+  init?: any
+  get?: any
+  remove?: any
+}
+
+declare global {
+  interface Window {
+    tinymce: {
+      init: ({ }) => void
+      baseURI: {
+        source: string
+      }
+      get: (id: string) => {
+        remove: () => void
+      }
+    }
+  }
 }
