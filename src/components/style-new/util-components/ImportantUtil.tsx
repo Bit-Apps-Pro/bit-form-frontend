@@ -1,41 +1,45 @@
+import { useState } from 'react'
 import { useFela } from 'react-fela'
 import StarIcn from '../../../Icons/StarIcn'
 import Tip from '../../Utilities/Tip'
 
-
 type importantProps = {
-  value: string
-  className?: string
-  addOrRemoveImportant: (newStyle: string) => void
+  value: string | object;
+  className?: string;
+  changeAction: (newValue: string | object) => void;
 }
 
-export default function ImportantUtil({ value, className, addOrRemoveImportant }: importantProps) {
-  const { css } = useFela()
-  const isAlreadyImportant = (): boolean => {
-    if (value?.match(/(!important)/gi)?.[0]) return true
+export default function ImportantUtil({ value, className, changeAction }: importantProps) {
+  const [isImportant, setIsImportant] = useState<boolean>(() => {
+    const cssValue = typeof value === 'string' ? value : Object.values(value)[0]
+    if (cssValue?.match(/(!important)/gi)?.[0]) return true
     return false
-  }
-  const isStyleValueEmptyOrCssVar = () => (value === '' || value?.match(/(var)/gi)) ?? false
+  })
 
-  const addImportantChangeHandler = () => {
-    let newStyleValue: string
+  const { css } = useFela()
 
-    if (isAlreadyImportant()) {
-      newStyleValue = value?.replace(/!important/gi, '')
-    } else {
-      newStyleValue = `${value} !important`
+  const importantClickHandler = () => {
+    setIsImportant(prevState => !prevState)
+    if (typeof value === 'string') {
+      const newValue = isImportant ? value.replace(/(!important)/gi, '') : `${value} !important`
+      changeAction(newValue)
+      return
     }
-    addOrRemoveImportant(newStyleValue)
+    const newObject: { [key: string]: string } = {}
+    Object.keys(value).forEach(key => {
+      const newValue = isImportant ? value[key].replace(/(!important)/gi, '') : `${value[key]} !important`
+      newObject[key] = newValue
+    })
+    changeAction(newObject)
   }
 
 
   return (
-    <Tip msg="Set style as !important">
+    <Tip msg="Set style as !important" className={""}>
       <button
-        style={{ visibility: isStyleValueEmptyOrCssVar() ? 'visible' : 'visible' }}
-        className={`${css(cls.btn, isAlreadyImportant() ? cls.active : {})} ${className}`}
+        className={`${css(cls.btn, isImportant ? cls.active : {})} ${className}`}
         type="button"
-        onClick={addImportantChangeHandler}
+        onClick={importantClickHandler}
       >
         <StarIcn size="12" />
       </button>

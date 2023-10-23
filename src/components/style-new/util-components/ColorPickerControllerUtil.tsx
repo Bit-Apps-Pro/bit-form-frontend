@@ -1,7 +1,8 @@
 import ColorPicker from '@atomik-color/component'
 import { useAtom, useSetAtom } from 'jotai'
-import { create } from 'mutative'
-import { ChangeEvent, useState } from 'react'
+import { useResetAtom } from 'jotai/utils'
+import { create, current } from 'mutative'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { $unsplashImgUrl, $unsplashMdl } from '../../../GlobalStates/GlobalStates'
@@ -22,13 +23,15 @@ import { hsla2hsva, hsva2hsla } from '../colorHelpers'
 import { styleToGradientObj } from '../styleHelpers'
 import { colorObj, colorPickerProps, valueObject } from './color-picker'
 
+type ControllerUtilType = Omit<colorPickerProps, 'value'> & {
+  value: valueObject
+}
 
-export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler, allowSolid=true, allowGradient=true, allowImage=true, allowVariable }: colorPickerProps) {
+export default function ColorPickerControllerUtil({id, value, onChangeHandler, allowSolid=true, allowGradient=true, allowImage=true, allowVariable }:ControllerUtilType) {
   const [controller, setController] = useState({ parent: 'Solid', child: 'Solid', color: 'Custom' })
-  const [valueObject, setValueObject] = useState<valueObject>(valueObj)
-  const [color, setColor] = useState<colorObj>({})
-  const [bgImage, setBgImage] = useState()
-  const [bgRepeat, setBgRepeat] = useState('initial')
+  const [valueObject, setValueObject] = useState<valueObject>(value)
+  const [color, setColor] = useState(value.color)
+  const [bgRepeat, setBgRepeat] = useState(value['background-repeat'])
   const [bgSize, setBgSize] = useState({
     type: 'auto',
     w: '0px',
@@ -43,7 +46,9 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const setUnsplashMdl = useSetAtom($unsplashMdl)
   const [themeColors, setThemeColors] = useAtom($themeColors)
   const [unsplashImgUrl, setUnsplashImgUrl] = useAtom($unsplashImgUrl)
+  const resetUnsplashImgUrl = useResetAtom($unsplashImgUrl)
   const { css } = useFela()
+  const bgImage = valueObject['background-image']
 
   const { '--global-bg-color': themeBgColor,
     '--global-fld-bdr-clr': themeFldBdrClr,
@@ -80,7 +85,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     setBgPosition(prevBgPos => ({ ...prevBgPos, value }))
     setValueObject(prevValue => create(prevValue, draft => {
       draft.backgroundPosition = value
-      onChangeHandler(draft)
+      onChangeHandler(current(draft))
       }))
   }
 
@@ -103,33 +108,32 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const handleColor = (_h, _s, _v, _a, str = '') => {
     const [h, s, l, a, hslaStr] = hsva2hsla(_h, _s, _v, _a)
     let hslaColor = hslaStr
-    const checkExistImportant = valueObj.value?.match(/(!important)/gi)?.[0]
+    const checkExistImportant = value.color?.match(/(!important)/gi)?.[0]
     if (checkExistImportant) hslaColor = `${hslaColor} !important`
     const clr = str ? `${str}${checkExistImportant ? ' !important' : ''}` : hslaColor
-    onChangeHandler(clr)
+    onChangeHandler({...value, color: clr})
   }
 
   const gradientChangeHandler = (e) => {
 
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundImage = e.style
-      onChangeHandler(draft)
+      draft['background-image'] = e.style
+      onChangeHandler(current(draft))
       }))
-    setBgImage(e.style)
   }
 
   const fldBgPositionHandler = (value, unit, inputId) => {
     if (inputId === 0) {
       setBgPosition(prevBgPos => ({ ...prevBgPos, x: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundPosition = `${value}${unit} ${bgPosition.y}`
-        onChangeHandler(draft)
+        draft['background-position'] = `${value}${unit} ${bgPosition.y}`
+        onChangeHandler(current(draft))
         }))
     } else {
       setBgPosition(prevBgPos => ({ ...prevBgPos, y: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundPosition = `${bgPosition.x} ${value}${unit}`
-        onChangeHandler(draft)
+        draft['background-position'] = `${bgPosition.x} ${value}${unit}`
+        onChangeHandler(current(draft))
         }))
     }
   }
@@ -138,31 +142,30 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
     if (inputId === 0) {
       setBgSize(prevBgSize => ({ ...prevBgSize, w: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundSize = `${value}${unit} ${bgSize.h}`
-        onChangeHandler(draft)
+        draft['background-size'] = `${value}${unit} ${bgSize.h}`
+        onChangeHandler(current(draft))
         }))
     } else {
       setBgSize(prevBgSize => ({ ...prevBgSize, h: `${value}${unit}` }))
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundSize = `${bgSize.w} ${value}${unit}`
-        onChangeHandler(draft)
+        draft['background-size'] = `${bgSize.w} ${value}${unit}`
+        onChangeHandler(current(draft))
         }))
     }
   }
 
   const urlChangeHandler = e => {
-    setBgImage(`url(${e.target.value})`)
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundImage = `url(${e.target.value})`
-      onChangeHandler(draft)
+      draft['background-image'] = `url(${e.target.value})`
+      onChangeHandler(current(draft))
       }))
   }
   const positionSelectHandler = ({ target: { value } }) => {
     setBgPosition(prevBgPos => ({ ...prevBgPos, type: value }))
     if (value !== 'size' && value !== 'positions') {
       setValueObject(prevValue => create(prevValue, draft => {
-        draft.backgroundPosition = value
-        onChangeHandler(draft)
+        draft['background-position'] = value
+        onChangeHandler(current(draft))
       }))
     }
   }
@@ -170,34 +173,45 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   const sizeSelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
     setBgSize(prevBgSize => ({ ...prevBgSize, type: e.target.value }))
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundSize = e.target.value
-      onChangeHandler(draft)
+      draft['background-size'] = e.target.value
+      onChangeHandler(current(draft))
     }))
   }
 
   const bgRepeatSelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
     setBgRepeat(e.target.value)
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundRepeat = e.target.value
-      onChangeHandler(draft)
+      draft['background-repeat'] = e.target.value
+      onChangeHandler(current(draft))
     }))
   }
 
   const clearBgImage = (e) => {
     e.stopPropagation()
-    setBgImage('')
     setValueObject(prevValue => create(prevValue, draft => {
-      draft.backgroundImage = ''
-      onChangeHandler(draft)
+      draft['background-image'] = ''
+      onChangeHandler(current(draft))
       }))
     setUnsplashImgUrl('')
   }
 
-  const options = [
-    {... allowSolid && { label: 'Solid' }},
-    {... allowGradient && { label: 'Gradient' }},
-    {... allowImage && { label: 'Image' }},
-  ]
+  useEffect(() => {
+    if (unsplashImgUrl) {
+      setValueObject(prevValue => create(prevValue, draft => {
+        draft['background-image'] = `url(${unsplashImgUrl})`
+        onChangeHandler(current(draft))
+      }))
+    }
+    return () => {
+      resetUnsplashImgUrl()
+    }
+  }, [unsplashImgUrl])
+
+  const options = []
+  if(allowSolid) options.push({ label: 'Solid' })
+  if(allowGradient) options.push({ label: 'Gradient' })
+  if(allowImage) options.push({ label: 'Image' })
+
   const solidOptions = [
     { label: 'Custom', icn: 'Custom color', show: ['icn'], tip: 'Custom color' },
     { label: 'Var', icn: 'Variables', show: ['icn'], tip: 'Variable color' },
@@ -216,11 +230,9 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
       wpMediaMdl.on('select', () => {
         const attachment = wpMediaMdl.state().get('selection').first().toJSON()
         setValueObject(prevValue => create(prevValue, draft => {
-          draft.backgroundImage = `url(${attachment.url})`
-          onChangeHandler(draft)
+          draft['background-image'] = `url(${attachment.url})`
+          onChangeHandler(current(draft))
         }))
-
-        setBgImage(`url(${attachment.url})`)
       })
       wpMediaMdl.open()
     }
@@ -228,17 +240,22 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
   
   return (
     <div className={css(bgImgControlStyle.container)}>
-      <StyleSegmentControl 
-        options={options} 
-        onChange={(lbl:string) => onTabChangeHandler(lbl, 'parent')} 
-        defaultActive={controller.parent} 
-        wideTab
-      />
+      {
+        options.length > 1 && (
+          <StyleSegmentControl 
+            options={options} 
+            onChange={(lbl:string) => onTabChangeHandler(lbl, 'parent')} 
+            defaultActive={controller.parent} 
+            wideTab
+          />
+          )
+      }
+      
       <Scrollbars
         autoHide
         autoHeight
         autoHeightMin={200}
-        autoHeightMax={365}
+        autoHeightMax={385}
       >
         <div className={css(ut.mt1)}>
           <Grow open={controller.parent === 'Solid'}>
@@ -250,10 +267,8 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
                     defaultActive="Custom"
                     options={solidOptions}
                     size={60}
-                    
                     onChange={(lbl:string) => onTabChangeHandler(lbl, 'color')}
                     show={['icn']}
-                    
                     width="100%"
                     wideTab
                   />
@@ -262,7 +277,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
                 <Grow open={controller.color === 'Var'}>
                   <div className={css(c.varClr)}>
                     <button
-                      className={`${css(c.clrItem)} ${css(valueObject.value === '--global-bg-color' ? c.active : {})}`}
+                      className={`${css(c.clrItem)} ${css(valueObject.color === '--global-bg-color' ? c.active : {})}`}
                       type="button"
                       onClick={() => setColorState('--global-bg-color')}
                       data-testid={`${id}-g-bg-c`}
@@ -402,7 +417,7 @@ export default function ColorPickerControllerUtil({id, valueObj, onChangeHandler
                       <input
                         type="url"
                         className={css(bgImgControlStyle.urlinput, { pr: '30px !important' })}
-                        value={bgImage?.match(/(^url\(.+\)$)/) ? bgImage?.replace(/(url\(|\))/gi, '') : ''}
+                        value={valueObject['background-image']?.match(/(^url\(.+\)$)/) ? valueObject['background-image']?.replace(/(url\(|\))/gi, '') : ''}
                         onChange={urlChangeHandler}
                         placeholder="ex: https://www.example.com"
                       />

@@ -10,7 +10,7 @@ import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light-border.css'
 
 export default function Downmenu({
-  children, instance = null, width = 'auto', place = 'bottom', onShow, onHide, arrow = true, trigger = 'click', offset = [0, 10],
+  children, instance = null, width = 'auto', place = 'bottom', onShow, onHide, arrow = true, trigger = 'click', offset = [0, 10], hideOnClick = true,
 }) {
   return (
     <Tippy
@@ -29,6 +29,7 @@ export default function Downmenu({
       offset={offset}
       arrow={arrow && roundArrow}
       content={children[1]}
+      hideOnClick={hideOnClick}
     >
       <span>{children[0]}</span>
     </Tippy>

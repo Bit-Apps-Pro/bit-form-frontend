@@ -31,7 +31,7 @@ export function observeElement(element, property, callback, delay = 0) {
   }
 }
 
-export const loadScript = ({ src, integrity, id, scriptInGrid = false, attr, callback = null }) => new Promise((resolve) => {
+export const loadScript = ({ src, integrity, id, scriptInGrid = false, attr = {}, callback = null }) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
   if (integrity) {

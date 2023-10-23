@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react'
 import { useFela } from 'react-fela'
 import CloseIcn from '../../../Icons/CloseIcn'
 import ut from '../../../styles/2.utilities'
@@ -6,43 +5,66 @@ import Downmenu from '../../Utilities/Downmenu'
 import ColorPreview from '../ColorPreview'
 import ColorPickerControllerUtil from './ColorPickerControllerUtil'
 import ImportantUtil from './ImportantUtil'
-import { colorPickerProps } from './color-picker'
+import { colorPickerProps, valueObject } from './color-picker'
 
-
-
-export default function ColorPickerUtil({ id, valueObj, onChangeHandler , clearHandler, allowImportant, allowSolid=true, allowImage=true, allowGradient=true, allowVariable=true }: colorPickerProps) {
+export default function ColorPickerUtil({ id, value, onChangeHandler, allowImportant, allowSolid = true, allowImage = true, allowGradient = true, allowVariable = true, colorProp = 'color' }: colorPickerProps) {
   const { css } = useFela()
+  const valueObj: valueObject = typeof value === 'string' ? { color: value } : value
+  if (colorProp) {
+    valueObj.color = valueObj[colorProp]
+  }
+  const clearHandler = () => {
+    if (typeof value === 'string') {
+      changeHandler({ color: '' })
+      return
+    }
+    const newObject: { [key: string]: string } = {}
+    Object.keys(valueObj).forEach(key => {
+      newObject[key] = ''
+    })
+    changeHandler(newObject)
+  }
+
+  const changeHandler = (newValue: valueObject) => {
+    if (colorProp !== 'color' && newValue.color) {
+      newValue[colorProp] = newValue.color
+      delete newValue.color
+    }
+    onChangeHandler(newValue)
+  }
+
+  const colorValue = valueObj['background-image'] || valueObj.color
   return (
-    <div data-testid={`${id}-hover`} className={css(ut.flxcb, ut.mt2, style.containerHover)}>
+    <div data-testid={`${id}-hover`} className={css(ut.flxcb, style.containerHover)}>
       <div className={css(ut.flxc)}>
-        {allowImportant && valueObj.value && (
+        {allowImportant && colorValue && (
           <ImportantUtil
             className={css({ mr: 3 })}
-            value={valueObj.value}
-            addOrRemoveImportant={(changedValue) => onChangeHandler(changedValue)}
+            value={valueObj}
+            changeAction={(newValue) => changeHandler(newValue)}
           />
         )}
         <div
           className={css(style.preview_wrp)}
-          title={valueObj.value}
+          title={colorValue || 'Pick Color'}
         >
           <Downmenu
-            onShow={() => {}}
-            onHide={() => {}}
+            onShow={() => { }}
+            onHide={() => { }}
+            hideOnClick='toggle'
           >
             <button
               type="button"
               className={css(style.pickrBtn)}
               data-testid={`${id}-modal-btn`}
             >
-              <ColorPreview bg={valueObj.value} h={24} w={24} className={css(ut.mr2)} />
-              <span className={css(style.clrVal)}>{valueObj.value || 'Pick Color'}</span>
+              <ColorPreview bg={colorValue} h={24} w={24} className={css(ut.mr2)} />
+              <span className={css(style.clrVal)}>{colorValue || 'Pick Color'}</span>
             </button>
-            <ColorPickerControllerUtil 
+            <ColorPickerControllerUtil
               id={id}
-              valueObj={valueObj}
-              onChangeHandler={onChangeHandler}
-              clearHandler={clearHandler}
+              value={valueObj}
+              onChangeHandler={changeHandler}
               allowSolid={allowSolid}
               allowGradient={allowGradient}
               allowImage={allowImage}
@@ -50,7 +72,7 @@ export default function ColorPickerUtil({ id, valueObj, onChangeHandler , clearH
             />
           </Downmenu>
 
-          {valueObj.value && (
+          {colorValue && (
             <button
               title="Clear Value"
               onClick={clearHandler}
