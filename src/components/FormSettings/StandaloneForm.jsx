@@ -73,11 +73,11 @@ export default function StandaloneForm() {
   return (
     <div className="pos-rel">
       <div className="flx mt-4">
-        <h2 className="m-0">{__('Standalone Form')}</h2>
+        <h2 className="m-0">{__('Landing Page')}</h2>
         <SingleToggle2 name="status" action={e => handleChanges('active', e.target.checked)} checked={standaloneSettings.active || false} className="ml-2 flx" />
       </div>
       <h5 className="mt-3">
-        {__('How to setup Standalone Form')}
+        {__('How to setup Landinge Page')}
         :
         <a href="#" target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
           {__('YouTube')}
@@ -116,18 +116,30 @@ export default function StandaloneForm() {
               <div>
                 <h4 className={css({ my: 10 })}>Custom URL</h4>
                 <input
-                  aria-label="Error messages"
+                  aria-label="Custom URL"
                   type="text"
                   placeholder={`?bit-form=${formId}`}
                   name="message"
                   className="btcd-paper-inp"
                   onChange={(e) => handleChanges('customUrl', e.target.value)}
-                  value={standaloneSettings.customUrl}
+                  value={standaloneSettings.customUrl || ''}
                 />
                 <p className={css(ut.mt1)}>
                   <strong>Note: </strong>
                   Please try to avoid any duplicate custom url, as it will conflict with the page and Bit Form.
                 </p>
+              </div>
+              <div>
+                <h4 className={css({ my: 10 })}>Page Title</h4>
+                <input
+                  aria-label="Page Title"
+                  type="text"
+                  placeholder="Bit Form"
+                  name="message"
+                  className="btcd-paper-inp"
+                  onChange={(e) => handleChanges('pageTitle', e.target.value)}
+                  value={standaloneSettings.pageTitle || ''}
+                />
               </div>
               <div>
                 <h4 className={css({ my: 10 })}>Share via Direct URL</h4>
