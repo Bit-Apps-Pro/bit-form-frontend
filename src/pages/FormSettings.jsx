@@ -1,6 +1,7 @@
 import loadable from '@loadable/component'
 import { useAtom, useSetAtom } from 'jotai'
 import { Suspense, lazy, memo, useEffect } from 'react'
+import Scrollbars from 'react-custom-scrollbars-2'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
 import { $isNewThemeStyleLoaded } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
@@ -67,80 +68,82 @@ function FormSettings() {
   return (
     <div className="btcd-f-settings">
       <aside className="btcd-f-sidebar">
-        <br />
-        <br />
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/form-settings`}
-          className={({ isActive }) => ((isActive ? 'btcd-f-a' : ''))}
-        >
-          <span className="mr-1"><Settings2 size={21} /></span>
-          {__('Form Settings')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/confirmations`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span><InfoIcn size="20" stroke="3" /></span>
-          {__('Confirmations')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/workflow`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span><ConditionalIcn size="20" /></span>
-          {__('Conditional Logics')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/email-templates`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1"><MailOpenIcn size="21" /></span>
-          {__('Email Templates')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/pdf-templates`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1">
-            <PdfIcn size="19" />
-          </span>
-          {__('PDF Templates')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/double-optin`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1"><EmailInbox size="21" /></span>
-          {__('Double Opt-In')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/integrations`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1"><CodeSnippetIcn size="19" /></span>
-          {__('Integrations')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/auth-settings`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1"><UserIcn size="18" /></span>
-          {__('WP Auth')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/form-abandonment`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1"><UserIcn size="18" /></span>
-          {__('Form Abandonment')}
-        </NavLink>
-        <NavLink
-          to={`/form/settings/${formType}/${formID}/standalone-form`}
-          className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
-        >
-          <span className="mr-1"><UserIcn size="18" /></span>
-          {__('Standalone Form')}
-        </NavLink>
+        <Scrollbars autoHide style={{ overflowX: 'hidden' }}>
+          <br />
+          <br />
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/form-settings`}
+            className={({ isActive }) => ((isActive ? 'btcd-f-a' : ''))}
+          >
+            <span className="mr-1"><Settings2 size={21} /></span>
+            {__('Form Settings')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/confirmations`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span><InfoIcn size="20" stroke="3" /></span>
+            {__('Confirmations')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/workflow`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span><ConditionalIcn size="20" /></span>
+            {__('Conditional Logics')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/email-templates`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span className="mr-1"><MailOpenIcn size="21" /></span>
+            {__('Email Templates')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/pdf-templates`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span className="mr-1">
+              <PdfIcn size="19" />
+            </span>
+            {__('PDF Templates')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/double-optin`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span className="mr-1"><EmailInbox size="21" /></span>
+            {__('Double Opt-In')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/integrations`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span className="mr-1"><CodeSnippetIcn size="19" /></span>
+            {__('Integrations')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/auth-settings`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span className="mr-1"><UserIcn size="18" /></span>
+            {__('WP Auth')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/form-abandonment`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span className="mr-1"><UserIcn size="18" /></span>
+            {__('Form Abandonment')}
+          </NavLink>
+          <NavLink
+            to={`/form/settings/${formType}/${formID}/standalone-form`}
+            className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
+          >
+            <span className="mr-1"><UserIcn size="18" /></span>
+            {__('Standalone Form')}
+          </NavLink>
+        </Scrollbars>
       </aside>
 
       <div id="btcd-settings-wrp" className="btcd-s-wrp">
