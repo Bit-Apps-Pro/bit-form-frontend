@@ -141,7 +141,7 @@ function FormSettings() {
             className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
           >
             <span className="mr-1"><UserIcn size="18" /></span>
-            {__('Standalone Form')}
+            {__('Landing Page')}
           </NavLink>
         </Scrollbars>
       </aside>
