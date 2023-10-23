@@ -110,7 +110,7 @@ const IntegInfoComponents = ({ integ, location, setSnackbar }) => {
       return <ZohoProjectsAuthorization projectsConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
     case 'Google Sheet':
       return <GoogleSheetAuthorization sheetConf={integ} step={1} redirectLocation={bits.googleRedirectURL} setSnackbar={setSnackbar} isInfo />
-    case 'Sendinblue':
+    case 'Sendinblue': case 'Brevo(SendinBlue)':
       return <SendinBlueAuthorization sendinBlueConf={integ} step={1} redirectLocation={location} setSnackbar={setSnackbar} isInfo />
     case 'ActiveCampaign':
       return <ActiveCampaignAuthorization activeCampaingConf={integ} step={1} setSnackbar={setSnackbar} isInfo />
