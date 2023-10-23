@@ -158,7 +158,7 @@ export default function StandaloneForm() {
                 <div className={css(st.prop)}>
                   <p>Width</p>
                   <SizeControlUtil
-                    value={standaloneSettings?.styles?.['.standalone-form-wrapper']?.width || '60%'}
+                    value={standaloneSettings?.styles?.['.standalone-form-wrapper']?.width || '40%'}
                     onChangeHandler={val => handleChanges('styles->.standalone-form-wrapper->width', val)}
                     width={130}
                   />
