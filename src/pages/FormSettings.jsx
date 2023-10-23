@@ -1,6 +1,6 @@
 import loadable from '@loadable/component'
 import { useAtom, useSetAtom } from 'jotai'
-import { Suspense, lazy, memo, useEffect } from 'react'
+import { Suspense, lazy, memo } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { NavLink, Route, Routes, useParams } from 'react-router-dom'
 import { $isNewThemeStyleLoaded } from '../GlobalStates/GlobalStates'
@@ -11,13 +11,14 @@ import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import CodeSnippetIcn from '../Icons/CodeSnippetIcn'
 import ConditionalIcn from '../Icons/ConditionalIcn'
 import EmailInbox from '../Icons/EmailInbox'
+import FormDraftIcn from '../Icons/FormDraftIcn'
 import InfoIcn from '../Icons/InfoIcn'
 import MailOpenIcn from '../Icons/MailOpenIcn'
+import PageLinkIcn from '../Icons/PageLinkIcn'
 import PdfIcn from '../Icons/PdfIcn'
 import Settings2 from '../Icons/Settings2'
 import UserIcn from '../Icons/UserIcn'
 import { isObjectEmpty } from '../Utils/Helpers'
-import bitsFetch from '../Utils/bitsFetch'
 import { JCOF } from '../Utils/globalHelpers'
 import { __ } from '../Utils/i18nwrap'
 import FSettingsLoader from '../components/Loaders/FSettingsLoader'
@@ -133,14 +134,14 @@ function FormSettings() {
             to={`/form/settings/${formType}/${formID}/form-abandonment`}
             className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
           >
-            <span className="mr-1"><UserIcn size="18" /></span>
+            <span className="mr-1"><FormDraftIcn size="20" /></span>
             {__('Form Abandonment')}
           </NavLink>
           <NavLink
             to={`/form/settings/${formType}/${formID}/standalone-form`}
             className={({ isActive }) => (isActive ? 'btcd-f-a' : '')}
           >
-            <span className="mr-1"><UserIcn size="18" /></span>
+            <span className="mr-1"><PageLinkIcn size="20" /></span>
             {__('Landing Page')}
           </NavLink>
         </Scrollbars>
