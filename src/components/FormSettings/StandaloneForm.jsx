@@ -126,7 +126,7 @@ export default function StandaloneForm() {
                 />
                 <p className={css(ut.mt1)}>
                   <strong>Note: </strong>
-                  Please try to avoid any duplicate custom url, as it will conflict with the page and Bit Form.
+                  Please try to avoid any duplicate custom url, as it will conflict between the page and Bit Form.
                 </p>
               </div>
               <div>
