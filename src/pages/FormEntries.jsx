@@ -224,8 +224,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
                   {getUploadedFilesArr(row.cell.value).map((itm, i) => (
                     <TableFileLink
                       key={`file-n-${row.cell.row.index + i}`}
-                      fname={splitFileName(itm)}
-                      link={`${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${splitFileLink(itm)}`}
+                      fname={itm}
+                      link={`${bits.baseDLURL}formID=${formID}&entryID=${row.cell.row.original.entry_id}&fileID=${itm}`}
                     />
                   ))}
                 </>
@@ -449,16 +449,14 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const drawerEntryMap = (entry) => {
     if (entry.fieldType === 'file-up' || entry.fieldType === 'advanced-file-up' || entry.fieldType === 'signature') {
       return (
-        getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => {
-          return (
-            <TableFileLink
-              key={`file-n-${i + 1.1}`}
-              fname={splitFileName(it)}
-              width="100"
-              link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${splitFileLink(it)}`}
-            />
-          )
-        })
+        getUploadedFilesArr(allResp[rowDtl.idx]?.[entry.accessor])?.map((it, i) => (
+          <TableFileLink
+            key={`file-n-${i + 1.1}`}
+            fname={it}
+            width="100"
+            link={`${bits.baseDLURL}formID=${formID}&entryID=${allResp[rowDtl.idx].entry_id}&fileID=${it}`}
+          />
+        ))
       )
     }
     if (entry.fieldType === 'repeater') {
