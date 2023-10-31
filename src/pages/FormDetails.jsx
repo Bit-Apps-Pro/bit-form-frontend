@@ -31,6 +31,7 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import navbar from '../styles/navbar.style'
+import FormPreviewBtn from '../components/FormPreviewBtn'
 
 const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
@@ -327,6 +328,7 @@ function FormDetails() {
         </div>
         <div className={css(navbar.btcd_bld_btn)}>
           {/* <FeedbackBtn /> */}
+          <FormPreviewBtn />
           {formType === 'edit' && <PublishBtn />}
           <UpdateButton componentMounted={componentMounted} modal={modal} setModal={setModal} />
           <NavLink to="/" className={css(navbar.cls_btn)} onClick={updateBtn.unsaved ? showUnsavedWarning : null}>

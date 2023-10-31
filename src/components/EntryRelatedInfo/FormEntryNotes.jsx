@@ -1,15 +1,15 @@
+import { useAtomValue } from 'jotai'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../../GlobalStates/GlobalStates'
 import DocIcn from '../../Icons/DocIcn'
 import TrashIcn from '../../Icons/TrashIcn'
+import { dateTimeFormatter } from '../../Utils/Helpers'
+import bitsFetch from '../../Utils/bitsFetch'
+import { __ } from '../../Utils/i18nwrap'
 import noData from '../../resource/img/nodata.svg'
 import app from '../../styles/app.style'
-import bitsFetch from '../../Utils/bitsFetch'
-import { dateTimeFormatter } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
 import Loader from '../Loaders/Loader'
 import LoaderSm from '../Loaders/LoaderSm'
 import ConfirmModal from '../Utilities/ConfirmModal'
@@ -93,10 +93,9 @@ export default function FormEntryNotes({ formID, entryID, allLabels, rowDtl }) {
     const keys = str?.match?.(pattern) || ''
     const uniqueKeys = keys?.filter?.((key, index) => keys.indexOf(key) === index) || []
     let replacedStr = str
-
     for (let i = 0; i < uniqueKeys.length; i += 1) {
       const uniqueKey = uniqueKeys[i].slice(2, -1)
-      replacedStr = replacedStr.replace(new RegExp(uniqueKeys[i], 'gi'), uniqueKey in rowDtl ? rowDtl[uniqueKey] : '[Field Deleted]')
+      replacedStr = replacedStr.replace(new RegExp(`\\${uniqueKeys[i]}`, 'gi'), uniqueKey in rowDtl ? rowDtl[uniqueKey] : '[Field Deleted]')
     }
     return replacedStr
   }

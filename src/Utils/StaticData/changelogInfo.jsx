@@ -43,31 +43,34 @@ const changelogInfo = {
       },
     },
   },
-  '2.5.0': {
-    date: '11 September, 2023',
+  '2.6.0': {
+    date: '23 October, 2023',
     changes: {
       added: {
         label: 'Added',
         list: [
           {
-            label: (<b>Multi Step Form</b>),
+            label: (<b>Landing Page</b>),
             tag: 'new',
             list: [
-              'Introducing the "Multi Step Form", convert your long boring forms into smaller steps to enhance your user\'s form experience, save progress on each step & show progress bar for a dynamic & easy to use contact form submission experience.',
+              'Share the form with a distraction free page link, commonly named as: Standalone Form / Form Pages / Direct Share.',
             ],
           },
-        ],
-      },
-      imporovement: {
-        label: 'Improvement',
-        list: [
-          'Redirect page will now respect the delay of confirmation message duration.',
+          {
+            label: (<b>Form Preview</b>),
+            tag: 'new',
+            list: [
+              'Preview your form changes from the builder without any short code or embedding into page.',
+            ],
+          },
         ],
       },
       fixed: {
         label: 'Fixed',
         list: [
-          'Stripe payment transaction response not saving.',
+          'Currency field options hide not working issue.',
+          'ACF integration not working in Bit Form FREE version.',
+          'Number field validation error if the value is 0.',
         ],
       },
     },

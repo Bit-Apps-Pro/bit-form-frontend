@@ -5,6 +5,7 @@ import { getAtom, setAtom } from '../GlobalStates/BitStore'
 import { $activeBuilderStep } from '../GlobalStates/FormBuilderStates'
 import {
   $additionalSettings, $allLayouts,
+  $bits,
   $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formAbandonment, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId,
   $reportSelector,
   $reports,
@@ -36,8 +37,10 @@ export const hideWpMenu = () => {
 }
 
 export const isObjectEmpty = (obj) => obj
-  && Object.keys(obj).length === 0
   && Object.getPrototypeOf(obj) === Object.prototype
+  && Object.keys(obj).length === 0
+
+export const isObject = obj => Object.getPrototypeOf(obj) === Object.prototype
 
 export const showWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'auto'
