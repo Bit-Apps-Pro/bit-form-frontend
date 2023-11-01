@@ -159,8 +159,10 @@ export default class BitMultiStepForm {
     const progressFillElm = this.#select(`._frm-b${this.#formId}-progress-fill`)
     const totalSteps = otherSteps.length + 1
     const progress = Math.round(((step - 1) / totalSteps) * 100)
-    if (this.#showPercentage) progressFillElm.textContent = `${progress}%`
-    progressFillElm.style.width = `${progress}%`
+    if (this.#showPercentage && progressFillElm) {
+      progressFillElm.textContent = `${progress}%`
+      progressFillElm.style.width = `${progress}%`
+    }
   }
 
   #showOrHideStepWrapper(step) {
