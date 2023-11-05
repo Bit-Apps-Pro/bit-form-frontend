@@ -1,5 +1,5 @@
-import { useNavigate, useParams } from 'react-router-dom'
 import { useSetAtom } from 'jotai'
+import { useNavigate, useParams } from 'react-router-dom'
 import { $selectedFieldId } from '../../GlobalStates/GlobalStates'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
@@ -16,6 +16,7 @@ import DropDownIcn from '../../Icons/DropDownIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 import FlagIcn from '../../Icons/FlagIcn'
 import ImageIcn from '../../Icons/ImageIcn'
+import ImageSelectIcn from '../../Icons/ImageSelectIcn'
 import MailIcn from '../../Icons/MailIcn'
 import MonthIcn from '../../Icons/MonthIcn'
 import NumberIcn from '../../Icons/NumberIcn'
@@ -26,7 +27,9 @@ import RadioIcn from '../../Icons/RadioIcn'
 import RazorPayIcn from '../../Icons/RazorPayIcn'
 import ReCaptchaIcn from '../../Icons/ReCaptchaIcn'
 import RepeatIcon from '../../Icons/RepeatIcon'
+import ReviewStarIcn from '../../Icons/ReviewStarIcn'
 import SectionIcon from '../../Icons/SectionIcon'
+import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 import StripeIcn from '../../Icons/StripeIcn'
 import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
@@ -38,8 +41,6 @@ import WeekIcn from '../../Icons/WeekIcn'
 import { ucFirst } from '../../Utils/Helpers'
 import { selectInGrid } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
-import ReviewStarIcn from '../../Icons/ReviewStarIcn'
-import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
   const { formType, formID } = useParams()
@@ -127,6 +128,7 @@ const FieldIcon = icon => {
     repeater: <RepeatIcon size="14" />,
     rating: <ReviewStarIcn size="18" />,
     signature: <SignaturePenIcn size="18" />,
+    'image-select': <ImageSelectIcn size="16" />,
   }
   return icons[icon]
 }

@@ -288,7 +288,7 @@ function RatingFieldSettings() {
             lblKey="lbl"
             valKey="val"
             imgKey="img"
-            isRating={fieldData.typ === 'rating'}
+            isRating={fieldData.typ}
             type="rating"
             showUpload
             // hideNDisabledOptions

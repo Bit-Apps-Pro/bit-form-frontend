@@ -37,6 +37,7 @@ import selectStyle_1_BitformDefault from './themes/1_bitformDefault/selectStyle_
 import textStyle1BitformDefault from './themes/1_bitformDefault/textStyle_1_bitformDefault'
 import titleStyle1BitformDefault from './themes/1_bitformDefault/titleStyle_1_bitformDefault'
 import ratingStyle_1_bitformDefault from './themes/1_bitformDefault/ratingStyle_1_bitformDefault'
+import imageSelectStyle_1_bitformDefault from './themes/1_bitformDefault/imageSelectStyle_1_bitformDefault'
 
 export const assignNestedObj = (obj, keyPath, value) => {
   const paths = keyPath?.split('->') || []
@@ -162,6 +163,7 @@ export const unitConverter = (unit, value, prvUnit) => {
 }
 
 export const getNumFromStr = (str = '') => {
+  if (typeof str === 'number') return str
   const num = str ? str?.match(/[-]?([0-9]*[.])?[0-9]+/gi) : 0
   return num ? num[0] : ''
 }
@@ -391,6 +393,7 @@ export const styleClasses = {
   redoSufIcn: ['redo-btn-suf-i'],
   redoPreIcn: ['redo-btn-pre-i'],
   redoBtn: ['redo-btn', 'redo-btn:hover', 'redo-btn:active', 'redo-btn:focus-visible', 'redo-btn:active:focus-visible', 'redo-btn:disabled'],
+  imageSelectOptLbl: ['tc', 'img-title'],
 }
 
 export const iconElementLabel = {
@@ -484,6 +487,10 @@ const filterUnusedStyles = (styles) => {
         case 'radio':
         case 'check':
           if (!fld.addOtherOpt) deleteStyles(draftStyle, styleClasses.otherOptions, fldkey)
+          break
+
+        case 'image-select':
+          if (fld.optLblHide) deleteStyles(draftStyle, styleClasses.imageSelectOptLbl, fldkey)
           break
 
         default:
@@ -712,6 +719,10 @@ export const addDefaultStyleClasses = (fk, element) => {
         case 'rating':
           const ratingStyleBitformDefault = ratingStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
           addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: ratingStyleBitformDefault })
+          break
+        case 'image-select':
+          const imageSelectStyleBitformDefault = imageSelectStyle_1_bitformDefault({ fk, ...breakpointAndColorScheme[brkPntColorSchema] })
+          addStyleInState({ element, brkPntColorSchema, fk, drftAllStyles, fieldStyle: imageSelectStyleBitformDefault })
           break
 
         default:

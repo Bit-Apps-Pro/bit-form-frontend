@@ -11,6 +11,7 @@ import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ChevronDownIcn from '../../Icons/ChevronDownIcn'
+import TrunstileIcn from '../../Icons/CloudflareIcn'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import CurrencyIcn from '../../Icons/CurrencyIcn'
@@ -22,6 +23,7 @@ import DropDownIcn from '../../Icons/DropDownIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 import FlagIcn from '../../Icons/FlagIcn'
 import HCaptchaIcn from '../../Icons/HCaptchaIcn'
+import ImageSelectIcn from '../../Icons/ImageSelectIcn'
 import ImgFldIcn from '../../Icons/ImgFldIcn'
 import MailIcn from '../../Icons/MailIcn'
 import MathOperatorsIcn from '../../Icons/MathOperatorsIcn'
@@ -43,7 +45,6 @@ import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import TitleIcn from '../../Icons/TitleIcn'
-import TrunstileIcn from '../../Icons/CloudflareIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
@@ -1047,6 +1048,34 @@ export const toolsList = [
       showReviewLblOnHover: false,
       showReviewLblOnSelect: false,
       selectedRating: false,
+    },
+  },
+  {
+    name: __('Image Select'),
+    keywords: 'Image, Image select, Radio button, Choice, Single Choice, Radio Group, Check Box, Mark, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
+    icn: <ImageSelectIcn size="20" />,
+    pos: { h: 140, w: 60, i: 'shadow_block' },
+    new: true,
+    pro: 'This field is available only in pro version',
+    elm: {
+      typ: 'image-select',
+      lbl: __('Image Select'),
+      opt: [
+        { lbl: __('Option 1'), val: '1', img: `${bits.assetsURL}/../static/image-select/placeholder-image.jpg` },
+        { lbl: __('Option 2'), val: '2', img: `${bits.assetsURL}/../static/image-select/placeholder-image.jpg` },
+        { lbl: __('Option 3'), val: '3', img: `${bits.assetsURL}/../static/image-select/placeholder-image.jpg` },
+        { lbl: __('Option 4'), val: '4', img: `${bits.assetsURL}/../static/image-select/placeholder-image.jpg` },
+      ],
+      valid: {},
+      err: {},
+      tickImgSrc: `${bits.assetsURL}/../static/image-select/tick.svg`,
+      itemSize: 200,
+      layout: 'default',
+      tickPosition: 'top-left',
+      optLblHide: false,
+      inpType: 'radio',
+      customClasses: {},
+      customAttributes: {},
     },
   },
   /* {

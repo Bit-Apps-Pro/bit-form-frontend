@@ -38,13 +38,13 @@ export default async function saveFormProgress(formContentId) {
       const data = await formSaveResponse.json()
       responseData[contentId] = data
       if (data?.success) {
-        if ('user_id' in data?.data && !data?.data?.user_id) {
+        if ('user_id' in (data?.data || {}) && !data?.data?.user_id) {
           // set local storage for partial form data by form id
           const partialFormData = data.data.fields
           partialFormData.entryId = data.data.entry_id
           localStorage.setItem(`bitform-partial-form-${props.formId}`, JSON.stringify(partialFormData))
         }
-        if (data.data.entry_id) {
+        if (data?.data?.entry_id) {
           setHiddenFld({ name: 'entryID', value: data.data.entry_id, type: 'number' }, form)
           bf_globals[contentId].entryId = data.data.entry_id
         }

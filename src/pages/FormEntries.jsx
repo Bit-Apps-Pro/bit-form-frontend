@@ -216,7 +216,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
       fieldType: val.type,
       minWidth: 50,
       ...('type' in val
-        && val.type.match(/^(file-up|advanced-file-up|signature|check|select|sys|repeater)$/) && {
+        && val.type.match(/^(file-up|advanced-file-up|signature|check|select|sys|repeater|image-select)$/) && {
         // eslint-disable-next-line react/no-unstable-nested-components
         Cell: (row) => {
           if (
@@ -256,7 +256,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
                 </a>
               )
             }
-            if (val.type === 'check' || val.type === 'select') {
+            if (val.type === 'check' || val.type === 'select' || val.type === 'image-select') {
               try {
                 const vals = typeof row.cell.value === 'string'
                   && row.cell.value.length > 0
@@ -500,7 +500,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
         </div>
       )
     }
-    if (entry.fieldType === 'check' || entry.fieldType === 'select') {
+    if (entry.fieldType === 'check' || entry.fieldType === 'select' || entry.fieldType === 'image-select') {
       return (
         allResp[rowDtl.idx]?.[entry.accessor]
         && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
