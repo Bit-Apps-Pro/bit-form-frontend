@@ -11,10 +11,16 @@ export default function Important({ paths = {}, propertyPath, className, id }) {
   const { css } = useFela()
   const styleValue = styles?.fields && getValueByObjPath(styles, propertyPath)
   const isAlreadyImportant = () => {
+    if (typeof styleValue === 'number') return false
     if (styleValue?.match(/(!important)/gi)?.[0]) return true
     return false
   }
-  const isStyleValueEmptyOrCssVar = () => (styleValue === '' || styleValue?.match(/(var)/gi)) ?? false
+
+  const isStyleValueEmptyOrCssVar = () => {
+    if (typeof styleValue === 'number') return true
+    if (styleValue === '' || styleValue === null || styleValue?.match(/(var)/gi)?.[0]) return true
+    return false
+  }
   const props = Object.keys(paths)
   const addOrRemoveImportant = () => {
     let newStyleValue

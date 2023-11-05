@@ -674,6 +674,96 @@ export default function ElementConfiguration({ fldKey }) {
         </>
       )}
 
+      {fieldObj.typ === 'image-select' && (
+        <>
+          <NavBtn
+            subRoute={fldKey}
+            route="ic"
+            label="Field Wrapper"
+            offset="2.5"
+            highlightSelector={`[data-dev-ic="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'ic')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="inp-opt"
+            label="Image Option"
+            offset="2.5"
+            highlightSelector={`[data-dev-inp-opt="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'inp-opt')}
+          />
+
+          <NavBtn
+            subRoute={fldKey}
+            route="img-inp"
+            label="Input"
+            offset="2.5"
+            highlightSelector={`[data-dev-img-inp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'img-inp')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="img-wrp"
+            label="Image Wrapper"
+            offset="2.5"
+            highlightSelector={`[data-dev-img-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'img-wrp')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="check-box"
+            label="Check Box"
+            offset="2.5"
+            highlightSelector={`[data-dev-check-box="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-box')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="check-img"
+            label="Check Box Image"
+            offset="2.5"
+            highlightSelector={`[data-dev-check-img="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'check-img')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="img-card-wrp"
+            label="Image Container"
+            offset="2.5"
+            highlightSelector={`[data-dev-img-card-wrp="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'img-card-wrp')}
+          />
+          <NavBtn
+            subRoute={fldKey}
+            route="select-img"
+            label="Image"
+            offset="2.5"
+            highlightSelector={`[data-dev-select-img="${fldKey}"]`}
+            styleOverride={isLabelOverrideStyles(styles, fldKey, 'select-img')}
+          />
+          {!fieldObj.optLblHide && (
+            <>
+              <NavBtn
+                subRoute={fldKey}
+                route="tc"
+                label="Image Label Container"
+                offset="2.5"
+                highlightSelector={`[data-dev-tc="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'tc')}
+              />
+              <NavBtn
+                subRoute={fldKey}
+                route="img-title"
+                label="Image Label"
+                offset="2.5"
+                highlightSelector={`[data-dev-img-title="${fldKey}"]`}
+                styleOverride={isLabelOverrideStyles(styles, fldKey, 'img-title')}
+              />
+            </>
+          )}
+        </>
+      )}
+
       {fieldObj.typ === 'signature'
         && (
           <>

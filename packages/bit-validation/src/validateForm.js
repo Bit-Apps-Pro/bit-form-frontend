@@ -81,7 +81,7 @@ export default function validateForm({ form, input }, { step } = {}) {
       else if (fldType === 'email' && typeof emailFldValidation !== 'undefined') errKey = emailFldValidation(fldValue, fldData)
       else if (fldType === 'url' && typeof urlFldValidation !== 'undefined') errKey = urlFldValidation(fldValue, fldData)
       else if (fldType === 'decision-box' && typeof dcsnbxFldValidation !== 'undefined') errKey = dcsnbxFldValidation(fldValue, fldData)
-      else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData, bfSeparator)
+      else if ((fldType === 'check' || fldType === 'select' || fldType === 'image-select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData, bfSeparator)
       else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
       else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
       else if (fldType === 'phone-number' && typeof phoneNumberFldValidation !== 'undefined') errKey = phoneNumberFldValidation(getFieldInstance(fldKey), fldData)

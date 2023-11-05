@@ -19,6 +19,7 @@ export default function StyleSegmentControl({
   noShadow,
   defaultItmWidth,
   wideTab,
+  h,
 }) {
   const { css } = useFela()
   const baseSize = Number(size)
@@ -151,7 +152,7 @@ export default function StyleSegmentControl({
 
   return (
     <div className={`${css(style.wrapper)} ${className}`}>
-      <div ref={tabsRef} className={`${css(style.tabs)} tabs`}>
+      <div ref={tabsRef} className={`${css(style.tabs)} tabs`} style={{ height: h }}>
         <div ref={selectorRef} className={`selector ${css(style.selector)}`} style={{ width: defaultItmWidth }} />
         <TipGroup>
           {options?.map((item, i) => {

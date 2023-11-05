@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
 import { getAtom } from '../../../../GlobalStates/BitStore'
-import { $allLayouts, $formInfo } from '../../../../GlobalStates/GlobalStates'
+import { $allLayouts } from '../../../../GlobalStates/GlobalStates'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
 import { cleanObj, mergeNestedObj } from '../../../../Utils/globalHelpers'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
@@ -15,6 +15,7 @@ import dividerStyle_1_bitformDefault from './dividerStyle_1_bitformDefault'
 import dropdownStyle_1_BitformDefault from './dropdownStyle_1_bitformDefault'
 import fileUploadStyle_1_BitformDefault from './fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './htmlStyle_1_bitformDefault'
+import imageSelectStyle_1_bitformDefault from './imageSelectStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './imageStyle_1_bitformDefault'
 import multiStepStyle_1_bitformDefault from './multiStepStyle_1_bitformDefaullt'
 import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
@@ -122,6 +123,8 @@ export default function bitformDefaultTheme({
       return repeater({ type, fk, breakpoint, colorScheme })
     case 'rating':
       return rating({ type, fk, breakpoint, colorScheme })
+    case 'image-select':
+      return imageSelect({ type, fk, direction, breakpoint, colorScheme })
     default: {
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -624,6 +627,18 @@ const rating = ({ type, fk, direction, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: ratingStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const imageSelect = ({ type, fk, direction, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: imageSelectStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
     }
   }
   return {}

@@ -144,6 +144,17 @@ export default function IndividualCustomStyle({ elementKey: elmKey, fldKey }) {
           state = `.${fldKey}-rating-selected`
         }
         break
+      case 'image-select':
+        if (state === 'hover') {
+          state = `:hover~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
+        }
+        if (state === 'checked') {
+          state = `:checked~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
+        }
+        if (state === 'focus') {
+          state = `:focus~.${fldKey}-img-wrp .${fldKey}-img-card-wrp`
+        }
+        break
 
       default:
         if (state) { return `:${state}` }
