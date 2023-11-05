@@ -20,7 +20,7 @@ function pushFileToFormData(formData, fld, files) {
 export default function advancedFileHandle(props, formData) {
   const inits = props.inits || {}
   const fileFields = Object.keys(inits).filter(
-    (fldKey) => props.fields[fldKey].typ === 'advanced-file-up',
+    (fldKey) => props.fields?.[fldKey]?.typ === 'advanced-file-up',
   )
   for (let i = 0; i < fileFields?.length; i += 1) {
     const fldName = props.fields[fileFields[i]].fieldName

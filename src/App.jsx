@@ -1,17 +1,19 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import loadable from '@loadable/component'
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import { useEffect } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
-import { $bits } from './GlobalStates/GlobalStates'
+import { $bits, $unsplashMdl } from './GlobalStates/GlobalStates'
 import { __ } from './Utils/i18nwrap'
 import ChangelogToggle from './components/ChangelogToggle'
+import UnsplashImageViewer from './components/CompSettings/StyleCustomize/UnsplashImageViewer'
 import BuilderLoader from './components/Loaders/BuilderLoader'
 import Loader from './components/Loaders/Loader'
 import MigrationModal from './components/MigrationModal'
 import RollbackButton from './components/RollbackButton'
+import Modal from './components/Utilities/Modal'
 import AllForms from './pages/AllForms'
 import DocNSupport from './pages/DocNSupport'
 
@@ -24,6 +26,7 @@ const { backgroundColor } = window.getComputedStyle(document.querySelector('#wpa
 
 export default function App() {
   const bits = useAtomValue($bits)
+  const [unsplashMdl, setUnsplashMdl] = useAtom($unsplashMdl)
   useEffect(removeUnwantedCSS, [])
 
   const isAppSettingsActive = () => {
@@ -115,6 +118,17 @@ export default function App() {
           </Routes>
         </div>
       </div>
+      <Modal
+        md
+        autoHeight
+        show={unsplashMdl}
+        setModal={setUnsplashMdl}
+        className="o-v"
+        title={__('Unsplash Images')}
+      >
+        <div className="pos-rel" />
+        <UnsplashImageViewer setModal={setUnsplashMdl} />
+      </Modal>
     </>
   )
 }

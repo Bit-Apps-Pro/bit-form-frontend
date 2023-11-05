@@ -35,6 +35,7 @@ import RepeatIcon from '../../Icons/RepeatIcon'
 import ReviewStarIcn from '../../Icons/ReviewStarIcn'
 import SearchIcon from '../../Icons/SearchIcon'
 import SectionIcon from '../../Icons/SectionIcon'
+import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 import StripeIcn from '../../Icons/StripeIcn'
 import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
@@ -55,7 +56,6 @@ import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
-import SignaturePenIcn from '../../Icons/SignaturePenIcn'
 
 export const toolsList = [
   {
@@ -662,6 +662,46 @@ export const toolsList = [
     },
   },
   {
+    name: 'Next Step',
+    keywords: 'Button, Next, Next Step, Next Button',
+    icn: <BtnIcn size="23" />,
+    pos: { h: 60, w: 60, i: 'shadow_block' },
+    elm: {
+      typ: 'button',
+      btnTyp: 'next-step',
+      btnSiz: 'md',
+      txt: __('Next'),
+      align: 'start',
+      icn: {
+        pos: '',
+        url: '',
+      },
+      valid: {},
+      customClasses: {},
+      customAttributes: {},
+    },
+  },
+  {
+    name: 'Previous Step',
+    keywords: 'Button, Previous, Previous Step, Previous Button',
+    icn: <BtnIcn size="23" />,
+    pos: { h: 60, w: 60, i: 'shadow_block' },
+    elm: {
+      typ: 'button',
+      btnTyp: 'previous-step',
+      btnSiz: 'md',
+      txt: __('Previous'),
+      align: 'start',
+      icn: {
+        pos: '',
+        url: '',
+      },
+      valid: {},
+      customClasses: {},
+      customAttributes: {},
+    },
+  },
+  {
     name: __('Paypal'),
     keywords: 'Paypal, payment, credit card, credit card payment',
     icn: <PaypalIcn w="20" />,
@@ -903,7 +943,7 @@ export const toolsList = [
     name: 'Signature',
     keywords: 'Signature Editor, Signature Field, Signature, Signature Block, Canvas',
     icn: <SignaturePenIcn size="20" />,
-    pos: { h: 80, w: 60, i: 'shadow_block' },
+    pos: { h: 140, w: 60, i: 'shadow_block' },
     pro: 'This field is available only in pro version',
     elm: {
       typ: 'signature',
@@ -943,8 +983,7 @@ export const toolsList = [
     name: __('Rating'),
     keywords: 'Check Box, Mark, Rating, Star, Review, Tick, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
     icn: <ReviewStarIcn size="20" />,
-    pos: { h: 140, w: 60, i: 'shadow_block' },
-    new: true,
+    pos: { h: 80, w: 60, i: 'shadow_block' },
     elm: {
       typ: 'rating',
       lbl: __('Rating'),

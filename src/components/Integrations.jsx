@@ -12,6 +12,7 @@ import EditIcn from '../Icons/EditIcn'
 import PlusIcn from '../Icons/PlusIcn'
 import TrashIcn from '../Icons/TrashIcn'
 import { compareBetweenVersions, deepCopy, sortArrOfObj } from '../Utils/Helpers'
+import tutorialLinks from '../Utils/StaticData/tutorialLinks'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import acf from '../resource/img/integ/ACF.svg'
@@ -105,7 +106,7 @@ function Integrations() {
     { type: 'MetaBox', logo: metabox },
     { type: 'Pods', logo: pods },
     { type: 'Mail Poet', logo: mailPoet },
-    { type: 'SendinBlue', logo: sendinblue },
+    { type: 'Brevo(SendinBlue)', logo: sendinblue, title: 'Brevo(SendinBlue)' },
     { type: 'WooCommerce', logo: wooCommerce },
     { type: 'ActiveCampaign', logo: activeCampaign },
     { type: 'Telegram', logo: telegram },
@@ -196,6 +197,12 @@ function Integrations() {
     return null
   }
 
+  const getStrInsideParenthesis = (str) => {
+    const startIndex = str.indexOf('(')
+    const endIndex = str.indexOf(')')
+    return str.slice(startIndex + 1, endIndex)
+  }
+
   const setNewInteg = inte => {
     if (inte.pro && !proInfo?.installedVersion && !isPro) {
       toast.error('This integration is only available in Bit Form Pro.')
@@ -206,8 +213,10 @@ function Integrations() {
       return false
     }
     const { type } = inte
+
+    const action = type.includes('(') || type.includes(')') ? getStrInsideParenthesis(type) : type
     closeIntegModal()
-    navigate(`${allIntegURL}/new/${type}`)
+    navigate(`${allIntegURL}/new/${action}`)
   }
 
   const closeIntegModal = () => {
@@ -222,7 +231,10 @@ function Integrations() {
 
   const searchInteg = e => {
     const { value } = e.target
-    const filtered = integs.filter(integ => integ.type.toLowerCase().includes(value.toLowerCase()))
+    const filtered = integs.filter(integ => {
+      const integName = (integ.title || integ.type).toLowerCase()
+      return integName.includes(value.toLowerCase())
+    })
     setAvailableIntegs(sortArrOfObj(filtered, 'type'))
   }
 
@@ -272,6 +284,16 @@ function Integrations() {
           element={(
             <>
               <h2>{__('Integrations')}</h2>
+              <h5>
+                How to setup Integrations:
+                &nbsp;
+                <a href={tutorialLinks.integrations.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
+                  YouTube
+                </a>
+                <a href={tutorialLinks.integrations.link} target="_blank" rel="noreferrer" className="doc-txt">
+                  Documentation
+                </a>
+              </h5>
               <div className={css(style.integWrp)}>
                 <Modal
                   title={__('Available Integrations')}
@@ -309,7 +331,7 @@ function Integrations() {
                           )} */}
                           <img className={css(style.thumbImg)} loading="lazy" src={inte.logo} alt="" />
                           <div className={css(style.thumbTitle)}>
-                            {inte.type}
+                            {inte.title || inte.type}
                           </div>
                         </div>
                       ))}

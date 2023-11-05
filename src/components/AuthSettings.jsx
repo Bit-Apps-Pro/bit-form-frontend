@@ -21,6 +21,7 @@ import Login from './WPAuth/Login'
 import Register from './WPAuth/Registration/Registration'
 import { checkMappedUserFields } from './WPAuth/Registration/UserHelperFunction'
 import ResetPassword from './WPAuth/ResetPassword'
+import tutorialLinks from '../Utils/StaticData/tutorialLinks'
 
 export default function AuthSettings() {
   const [isLoading, setIsLoading] = useState(false)
@@ -202,6 +203,16 @@ export default function AuthSettings() {
     <div className="pos-rel">
       <SnackMsg snack={snack} setSnackbar={setSnackbar} />
       <h2 className="">{__('WP Authentication')}</h2>
+      <h5>
+        How to setup WP Authentication:
+        &nbsp;
+        <a href={tutorialLinks.authSettings.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
+          YouTube
+        </a>
+        <a href={tutorialLinks.authSettingsDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
+          Documentation
+        </a>
+      </h5>
       {!IS_PRO && (
         <div className="pro-blur flx" style={{ height: '111%', left: -53, width: '104%' }}>
           <div className="pro">

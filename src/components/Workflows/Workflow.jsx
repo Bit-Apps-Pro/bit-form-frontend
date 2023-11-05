@@ -13,6 +13,7 @@ import CloseIcn from '../../Icons/CloseIcn'
 import StackIcn from '../../Icons/StackIcn'
 import TrashIcn from '../../Icons/TrashIcn'
 import { defaultConds } from '../../Utils/StaticData/form-templates/templateProvider'
+import tutorialLinks from '../../Utils/StaticData/tutorialLinks'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
@@ -63,7 +64,7 @@ function Workflow() {
     const tmpWorkflows = create(workflows, draftWorkflows => {
       draftWorkflows.unshift({
         title: `Action ${workflows.length + 1}`,
-        action_type: 'onload',
+        action_type: 'always',
         action_run: 'create_edit',
         action_behaviour: 'cond',
         conditions: [{ ...defaultConds }],
@@ -141,6 +142,16 @@ function Workflow() {
         action={confMdl.action}
       />
       <h2>{__('Conditional Logics')}</h2>
+      <h5>
+        How to configure conditional logics:
+        &nbsp;
+        <a href={tutorialLinks.conditionalLogic.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
+          YouTube
+        </a>
+        <a href={tutorialLinks.conditionalLogicDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
+          Documentation
+        </a>
+      </h5>
 
       {((!isPro && !workflows.length) || isPro) && (
         <Button className="blue" onClick={addLogicGrp}>
@@ -165,7 +176,7 @@ function Workflow() {
             <div className="workflow-grp d-flx mt-2">
               <Accordions
                 customTitle={<DragHandle className="workflow-drg-handle mr-1 flx" />}
-                title={`${lgcGrp.title}`}
+                title={lgcGrp.title}
                 header={(
                   <small className="f-right txt-dp mr-4">
                     <span className="mr-2">

@@ -12,8 +12,14 @@ const addEventsToValidateFocusAndWorkflows = (formContentId = null) => {
             elm.addEventListener(onaction, e => validateForm({ input: e.target }))
           }
           if (props.onfieldCondition) {
+            if (fldData.typ === 'button') {
+              return elm.addEventListener('click', e => {
+                if (bit_conditionals(e)) {
+                  e.stopImmediatePropagation()
+                }
+              })
+            }
             elm.addEventListener('input', e => bit_conditionals(e))
-            if (fldData.typ === 'button') elm.addEventListener('click', e => bit_conditionals(e))
             observeElm(elm, 'value', (oldValue, newValue) => {
               if (oldValue !== newValue) {
                 bit_conditionals({ target: elm })

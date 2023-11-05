@@ -215,7 +215,7 @@ export function sortLayoutItems(
  * @return {Array}        Array of static layout items..
  */
 export function getStatics(layout) {
-  return layout.filter(l => l.static)
+  return layout?.filter(l => l.static)
 }
 
 /**
@@ -274,8 +274,8 @@ export function compactResponsiveLayouts(layouts, cols) {
   return lays
 }
 
-export function getLayoutItemCount() {
-  const layout = getAtom($layouts)
+export function getLayoutItemCount(layouts) {
+  const layout = layouts || getAtom($layouts)
   const nestedLayouts = getAtom($nestedLayouts)
   const layoutItem = layout.lg.length
   const nestedLayoutItem = Object.values(nestedLayouts).reduce(
