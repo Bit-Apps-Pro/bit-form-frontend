@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import { useAtom } from 'jotai'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import FieldStyle from '../../../styles/FieldStyle.style'
-import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
+import { addToBuilderHistory, reCalculateFldHeights } from '../../../Utils/FormBuilderHelper'
 import { IS_PRO } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
@@ -27,6 +27,8 @@ export default function AllowMultipleImage({ cls }) {
         fldData.inpType = 'checkbox'
       } else {
         fldData.inpType = 'radio'
+        delete fldData.mn
+        delete fldData.mx
       }
     })
     const req = checked ? 'on' : 'off'
@@ -39,7 +41,7 @@ export default function AllowMultipleImage({ cls }) {
       <SingleToggle
         id="allow-multiple-stng"
         tip={tippyHelperMsg.imageMultipleImage}
-        title={__('Allow Multiple Image')}
+        title={__('Allow Multiple')}
         action={setMultipleImage}
         isChecked={isMultiple}
         isPro
