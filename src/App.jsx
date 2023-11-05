@@ -16,6 +16,7 @@ import RollbackButton from './components/RollbackButton'
 import Modal from './components/Utilities/Modal'
 import AllForms from './pages/AllForms'
 import DocNSupport from './pages/DocNSupport'
+import CashbackToggle from './components/CashbackToggle'
 
 const loaderStyle = { height: '90vh' }
 const AppSettings = loadable(() => import('./pages/AppSettings'), { fallback: <Loader className="g-c" style={loaderStyle} /> })
@@ -100,6 +101,7 @@ export default function App() {
               </nav>
             </div>
             <div className="flx flx-center">
+              <CashbackToggle />
               <ChangelogToggle />
               {bits.canRollbackToV1 && (
                 <RollbackButton />
