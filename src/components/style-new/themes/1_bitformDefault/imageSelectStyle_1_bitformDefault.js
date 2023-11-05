@@ -43,7 +43,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
       [`.${fk}-select-img`]: {
         width: '100%',
         height: '100%',
-        'object-fit': 'cover',
+        'object-fit': 'fill',
         // transition: '0.3s all ease',
         'max-width': '100%',
         'border-radius': '6px',
@@ -119,6 +119,12 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         'border-color': 'var(--global-accent-color)',
       },
 
+      [`.${fk}-img-inp:disabled ~ .${fk}-img-wrp `]: {
+        opacity: 0.6,
+        'pointer-events': 'none',
+        cursor: 'not-allowed',
+      },
+
       [`.${fk}-check-img`]: {
         width: '13px',
         height: '13px',
@@ -135,7 +141,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
         'border-color': 'var(--global-accent-color)',
       },
 
-      [`.${fk}-img-inp:focus~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
+      [`.${fk}-img-inp:focus-visible~.${fk}-img-wrp .${fk}-img-card-wrp`]: {
         // outline: 'none',
         'box-shadow': '0 0 0 2px hsla(209, 100%, 50%, 100%)',
         outline: '2px solid var(--global-accent-color)',
