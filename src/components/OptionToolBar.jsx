@@ -141,7 +141,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
                 <AddIcon size="22" />
               </button>
             </Tip>
-            <Tip msg="Elements & Layers">
+            <Tip msg="Styling">
               <button
                 data-testid="style-mode"
                 onClick={styleModeButtonHandler}
