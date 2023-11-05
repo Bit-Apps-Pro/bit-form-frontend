@@ -1,7 +1,7 @@
+import { useAtom, useAtomValue } from 'jotai'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
-import { useAtom, useAtomValue } from 'jotai'
 import { $reCaptchaV2, $reCaptchaV3 } from '../GlobalStates/AppSettingsStates'
 import { $bits } from '../GlobalStates/GlobalStates'
 import { deepCopy } from '../Utils/Helpers'
@@ -67,6 +67,12 @@ export default function Captcha() {
               <b>{__(`reCaptcha ${ver}`)}</b>
             </Tab>
           ))}
+          <Tab className="btcd-s-tab-link">
+            <b>{__('hCaptch')}</b>
+          </Tab>
+          <Tab className="btcd-s-tab-link">
+            <b>{__('Turnstile')}</b>
+          </Tab>
         </TabList>
         <div className="btcd-hr" />
         {['v3', 'v2'].map(ver => (

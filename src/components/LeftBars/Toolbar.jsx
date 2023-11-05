@@ -21,8 +21,10 @@ import DividerIcn from '../../Icons/DividerIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 import FlagIcn from '../../Icons/FlagIcn'
+import HCaptchaIcn from '../../Icons/HCaptchaIcn'
 import ImgFldIcn from '../../Icons/ImgFldIcn'
 import MailIcn from '../../Icons/MailIcn'
+import MathOperatorsIcn from '../../Icons/MathOperatorsIcn'
 import MonthIcn from '../../Icons/MonthIcn'
 import NumberIcn from '../../Icons/NumberIcn'
 import PasswordIcn from '../../Icons/PasswordIcn'
@@ -41,6 +43,7 @@ import TextIcn from '../../Icons/TextIcn'
 import TextareaIcn from '../../Icons/TextareaIcn'
 import TimeIcn from '../../Icons/TimeIcn'
 import TitleIcn from '../../Icons/TitleIcn'
+import TrunstileIcn from '../../Icons/CloudflareIcn'
 import UrlIcn from '../../Icons/UrlIcn'
 import UserIcn from '../../Icons/UserIcn'
 import WeekIcn from '../../Icons/WeekIcn'
@@ -613,6 +616,48 @@ export const toolsList = [
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     elm: {
       typ: 'recaptcha',
+      valid: {},
+      config: {
+        theme: 'light',
+        size: 'normal',
+      },
+    },
+  },
+  {
+    name: __('Math Captcha'),
+    keywords: 'ReCaptcha, Math, MathCaptcha, spam protection, bot protection',
+    icn: <MathOperatorsIcn size="22" stroke={1} />,
+    pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+    elm: {
+      typ: 'math-captcha',
+      valid: {},
+      config: {
+        theme: 'light',
+        size: 'normal',
+      },
+    },
+  },
+  {
+    name: __('hCaptcha'),
+    keywords: 'ReCaptcha, hCaptcha, Captcha, spam protection, bot protection',
+    icn: <HCaptchaIcn size="23" stroke={1} />,
+    pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+    elm: {
+      typ: 'hcaptcha',
+      valid: {},
+      config: {
+        theme: 'light',
+        size: 'normal',
+      },
+    },
+  },
+  {
+    name: __('Turnstile'),
+    keywords: 'ReCaptcha, hCaptcha, Captcha, Turnstile, clowdflare, spam protection, bot protection',
+    icn: <TrunstileIcn size="23" stroke={1} />,
+    pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+    elm: {
+      typ: 'turnstile',
       valid: {},
       config: {
         theme: 'light',
