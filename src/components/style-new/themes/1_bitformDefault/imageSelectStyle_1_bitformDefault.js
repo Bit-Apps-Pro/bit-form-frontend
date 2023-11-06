@@ -42,7 +42,7 @@ export default function imageSelectStyle_1_bitformDefault({ fk, breakpoint, colo
 
       [`.${fk}-select-img`]: {
         width: '100%',
-        height: '100%',
+        height: '100px',
         'object-fit': 'fill',
         // transition: '0.3s all ease',
         'max-width': '100%',

@@ -107,7 +107,9 @@ function ImageSelectFieldSettings() {
       type: 'image_columns_update',
       state: { fields: allFields, styles: newStyles, fldKey },
     })
-    reCalculateFldHeights(fldKey)
+    setTimeout(() => {
+      reCalculateFldHeights(fldKey)
+    }, 100)
   }
   if (isDev) {
     window.selectedFieldData = fieldData
