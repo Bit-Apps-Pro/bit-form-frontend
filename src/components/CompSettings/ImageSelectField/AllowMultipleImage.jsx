@@ -18,7 +18,6 @@ export default function AllowMultipleImage({ cls }) {
   const { css } = useFela()
 
   const setMultipleImage = ({ target }) => {
-    if (!IS_PRO) return
     const { checked } = target
     const allFields = create(fields, draft => {
       const fldData = draft[fldKey]
@@ -44,7 +43,6 @@ export default function AllowMultipleImage({ cls }) {
         title={__('Allow Multiple')}
         action={setMultipleImage}
         isChecked={isMultiple}
-        isPro
         proProperty="hidden"
       />
     </div>
