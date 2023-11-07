@@ -1,131 +1,64 @@
 import { useState } from 'react'
-import { useFela } from 'react-fela'
+import ExternalLinkIcn from '../Icons/ExternalLinkIcn'
 import { __ } from '../Utils/i18nwrap'
+import '../resource/css/cashback-modal.css'
 import Modal from './Utilities/Modal'
+import { IS_PRO } from '../Utils/Helpers'
+
+const PRODUCT_NAME = 'Bit Form'
+const REVIEW_URL = 'https://wordpress.org/support/plugin/bit-form/reviews/#new-post'
 
 export default function CashbackModal() {
   const [show, setShow] = useState(false)
-  const { css } = useFela()
+
+  if (!IS_PRO) return
 
   return (
-    <div className="changelog-toggle">
+    <div className="cashback-modal">
       <button
-        title={__('What\'s New')}
+        title={__('Get $10 Cashback')}
         type="button"
-        className={css(styles.button)}
+        className="cashback-btn"
         onClick={() => setShow(true)}
       >
-        Get $10
+        Get $10 Cashback
       </button>
-      <Modal sm show={show} onCloseMdl={() => setShow(false)} className={css(styles.modal)}>
+      <Modal sm show={show} onCloseMdl={() => setShow(false)} className="modal">
         <div>
-          <div className={css(styles.titleWrapper)}>
-            <h3 className={css(styles.title)}>
+          <div className="title-wrapper">
+            <h3 className="title">
               Get $10 Cashback
             </h3>
-            <b>Thank you for using Bit Form.</b>
+            <b>
+              Thank you for using
+              &nbsp;
+              {PRODUCT_NAME}
+            </b>
           </div>
-          <div className={css(styles.detailsWrapper)}>
-
-            <p className={css({ m: '0px 5px 5px' })}>
-              To get
-              {' '}
+          <div className="details-wrapper">
+            <p className="details">
+              Give us a review on WordPress by clicking the
+              &nbsp;
+              <a href={REVIEW_URL} target="_blank" rel="noreferrer">Review us</a>
+              &nbsp;
+              button and send an email with the review link to
+              &nbsp;
+              <a href="mailto:support@bitapps.pro" target="_blank" rel="noreferrer">support@bitapps.pro</a>
+              . We will honour you with
+              &nbsp;
               <strong>$10 cashback</strong>
-              : give us a review on
-              <a href="https://wordpress.org/support/plugin/bit-form/reviews/" target="_blank" rel="noreferrer">
-                {__('Wordprss ')}
-              </a>
-              {' '}
-              by clicking the
-              {' '}
-              <a href="https://wordpress.org/support/plugin/bit-form/reviews/" target="_blank" rel="noreferrer">
-                {__('Review us')}
-              </a>
-              {' '}
-              button and send an email with the review link to &quot;support@bitapps.pro&quot;.
+              &nbsp;
+              for your time & effort.
             </p>
           </div>
         </div>
-        <div className={css(styles.footer)}>
-          <a className={css(styles.footerBtn)} href="https://wordpress.org/support/plugin/bit-form/reviews/" target="_blank" rel="noreferrer">
+        <div className="footer-wrapper">
+          <a className="footer-btn blue" href={REVIEW_URL} target="_blank" rel="noreferrer">
             {__('Review us')}
+            <ExternalLinkIcn size={16} className="" />
           </a>
         </div>
       </Modal>
     </div>
   )
-}
-
-const styles = {
-  modal: {
-    '&>div.btcd-modal-content': {
-      p: '0px !important',
-    },
-  },
-  button: {
-    b: 'none',
-    cr: 'var(--dp-blue)',
-    brs: '10px',
-    curp: 'pointer',
-    flx: 'center',
-    p: '0px 15px',
-    h: '40px',
-    bd: 'rgb(78 255 191)',
-    fs: '15px',
-    fw: '700',
-    mr: '10px',
-    '&:hover': {
-      bd: '#90ffd7',
-    },
-  },
-  titleWrapper: {
-    flx: 'center',
-    fd: 'column',
-    jc: 'center',
-    ai: 'center',
-    h: '20vh',
-    mb: 10,
-    ff: '"Outfit", sans-serif !important',
-    bd: '#3582c4',
-    cr: '#ffffff',
-  },
-  title: {
-    m: 0,
-    fs: 35,
-    fw: 700,
-    cr: '#ffffff',
-  },
-  detailsWrapper: {
-    flx: 'center',
-    fd: 'column',
-    jc: 'center',
-    ai: 'center',
-    p: 20,
-
-  },
-  footer: {
-    p: 10,
-    dy: 'flex',
-    jc: 'center',
-    ai: 'center',
-  },
-  footerBtn: {
-    b: 'none',
-    brs: '5px',
-    dy: 'inline-block',
-    fw: '500',
-    lh: '1.4',
-    p: '2px 13px',
-    pn: 'relative',
-    fs: '1rem',
-    bd: '#006a9d',
-    cr: '#ffffff',
-    '&:focus': {
-      cr: '#ffffff',
-    },
-    '&:hover': {
-      bd: '#3582c4',
-      cr: '#ffffff',
-    },
-  },
 }
