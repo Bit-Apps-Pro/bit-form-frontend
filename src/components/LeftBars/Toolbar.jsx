@@ -1011,7 +1011,6 @@ export const toolsList = [
     icn: <ImageSelectIcn size="20" />,
     pos: { h: 140, w: 60, i: 'shadow_block' },
     new: true,
-    pro: 'This field is available only in pro version',
     elm: {
       typ: 'image-select',
       lbl: __('Image Select'),
