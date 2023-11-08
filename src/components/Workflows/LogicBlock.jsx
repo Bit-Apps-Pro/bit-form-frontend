@@ -38,7 +38,7 @@ function LogicBlock({
   let fieldKey = ''
   formFields?.find?.(itm => {
     if (itm.key === fieldVal) {
-      if (itm.type.match(/^(check|radio|select|html-select)$/)) {
+      if (itm.type.match(/^(check|radio|select|html-select|image-select)$/)) {
         type = 'text'
       } else {
         type = itm.type
@@ -94,7 +94,8 @@ function LogicBlock({
     if (!dataProps) return false
     const [propsPath, propValue] = dataProps.split(':')
     const nestedProps = propsPath.split('.')
-    const nestedPropsValue = nestedProps.reduce((acc, nestedItm) => acc[nestedItm], fields[fieldKey])
+    const fldData = formFields.find(fld => fld.key === fieldKey) || {}
+    const nestedPropsValue = nestedProps.reduce((acc, nestedItm) => acc[nestedItm], fldData)
     return nestedPropsValue === propValue
   })
 

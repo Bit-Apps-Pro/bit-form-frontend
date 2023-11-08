@@ -83,7 +83,7 @@ function AllFroms() {
 
   const [cols, setCols] = useState([
     { width: 70, minWidth: 60, Header: __('Status'), accessor: 'status', Cell: value => <SingleToggle2 className="flx" action={(e) => handleStatus(e, value.row.original.formID)} checked={value.row.original.status} /> },
-    { width: 250, minWidth: 80, Header: __('Form Name'), accessor: 'formName', Cell: v => <Link to={`/form/responses/edit/${v.row.original.formID}/`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
+    { width: 250, minWidth: 80, Header: __('Form Name'), accessor: 'formName', Cell: v => <Link to={`/form/builder/edit/${v.row.original.formID}/fields-list`} className="btcd-tabl-lnk">{v.row.values.formName}</Link> },
     { width: 220, minWidth: 200, Header: __('Short Code'), accessor: 'shortcode', Cell: val => <CopyText value={`[${val.row.values.shortcode}]`} className="cpyTxt" /> },
     { width: 80, minWidth: 60, Header: __('Views'), accessor: 'views' },
     { width: 170, minWidth: 130, Header: __('Completion Rate'), accessor: 'conversion', Cell: val => <Progressbar value={calculateProgress(val.row.values.entries, val.row.values.views)} /> },
@@ -176,46 +176,6 @@ function AllFroms() {
             <DownloadIcon size={18} />
             {__('Export')}
           </button>
-          <Link
-            to={`/form/responses/edit/${val.row.original.formID}`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <InfoIcn size={18} />
-            &nbsp;
-            Responses
-          </Link>
-          <Link
-            to={`/form/settings/edit/${val.row.original.formID}/form-settings`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <Settings2 size={18} />
-            &nbsp;
-            Settings
-          </Link>
-          <Link
-            to={`/form/settings/edit/${val.row.original.formID}/workflow`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <ConditionalIcn size="18" />
-            &nbsp;
-            Conditions
-          </Link>
-          <Link
-            to={`/form/settings/edit/${val.row.original.formID}/integrations`}
-            type="button"
-            className="flx"
-            aria-label="actions"
-          >
-            <CodeSnippetIcn size="18" />
-            &nbsp;
-            Integrations
-          </Link>
 
           <button type="button" onClick={() => showDelModal(val.row.original.formID, val.row.index)}>
             <TrashIcn size={16} />
@@ -365,7 +325,7 @@ function AllFroms() {
         const themeVars = JCOF.parse(data.themeVars)
         const style = JCOF.parse(data.style)
         const {
-          workFlows, reports, layout, nestedLayout, form_name, form_id, formSettings, fields, breakpointSize, additional, builderSettings,
+          workFlows, reports, layout, nestedLayout, formInfo, form_name, form_id, formSettings, fields, breakpointSize, additional, builderSettings,
         } = data
         const staticStyles = data.staticStyles || {}
 
@@ -378,6 +338,7 @@ function AllFroms() {
           reports,
           layout,
           nestedLayout,
+          formInfo,
           form_name,
           form_id,
           formSettings,

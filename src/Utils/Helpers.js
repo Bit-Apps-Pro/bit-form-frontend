@@ -2,8 +2,11 @@
 
 import { mutate } from 'swr'
 import { getAtom, setAtom } from '../GlobalStates/BitStore'
+import { $activeBuilderStep } from '../GlobalStates/FormBuilderStates'
 import {
-  $additionalSettings, $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formAbandonment, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId,
+  $additionalSettings, $allLayouts,
+  $bits,
+  $breakpoint, $breakpointSize, $builderHelperStates, $builderHistory, $builderHookStates, $builderRightPanelScroll, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $draggableModal, $draggingField, $fieldLabels, $fields, $flags, $formAbandonment, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded, $layouts, $mailTemplates, $nestedLayouts, $newFormId, $reportId,
   $reportSelector,
   $reports,
   $selectedFieldId, $unsplashImgUrl, $unsplashMdl, $updateBtn, $workflows,
@@ -16,7 +19,7 @@ import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColors
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
-import { addToBuilderHistory, isValidJsonString, prepareLayout } from './FormBuilderHelper'
+import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
 import atomicStyleGenarate, { generateNestedLayoutCSSText } from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
 import { JCOF } from './globalHelpers'
@@ -34,8 +37,10 @@ export const hideWpMenu = () => {
 }
 
 export const isObjectEmpty = (obj) => obj
-  && Object.keys(obj).length === 0
   && Object.getPrototypeOf(obj) === Object.prototype
+  && Object.keys(obj).length === 0
+
+export const isObject = obj => Object.getPrototypeOf(obj) === Object.prototype
 
 export const showWpMenu = () => {
   document.getElementsByTagName('body')[0].style.overflow = 'auto'
@@ -568,7 +573,7 @@ export const getStatesToReset = () => [
   $flags,
   $integrations,
   $isNewThemeStyleLoaded,
-  $layouts,
+  $allLayouts,
   $nestedLayouts,
   $mailTemplates,
   $reports,
@@ -579,6 +584,7 @@ export const getStatesToReset = () => [
   $unsplashImgUrl,
   $workflows,
   $formAbandonment,
+  $activeBuilderStep,
 
   $lightThemeColors,
   $darkThemeColors,
@@ -631,7 +637,7 @@ export const setFormReponseDataToStates = (responseData) => {
     addToBuilderHistory({ state: { fields: responseData.form_content.fields } }, false, 0)
   }
   if (!formsSessionDataFound) {
-    setAtom($formInfo, oldInfo => ({ ...oldInfo, formName: responseData.form_content.form_name }))
+    setAtom($formInfo, oldInfo => ({ ...oldInfo, ...responseData.form_content.formInfo, formName: responseData.form_content.form_name }))
   }
   setAtom($workflows, responseData.workFlows)
   setAtom($additionalSettings, responseData.additional)
@@ -683,10 +689,20 @@ export const setStyleRelatedStates = ({ themeVars, themeColors, styles }) => {
 
 export const generateAndSaveAtomicCss = currentFormId => {
   const styles = getAtom($styles)
-  const lay = getAtom($layouts)
+  const allLayouts = getAtom($allLayouts)
   const builderHelperStates = getAtom($builderHelperStates)
   const isStyleNotLoaded = isObjectEmpty(styles) || styles === undefined
-  const sortedLayout = prepareLayout(lay, builderHelperStates.respectLGLayoutOrder)
+  let sortedLayout = []
+  if (Array.isArray(allLayouts)) {
+    sortedLayout = allLayouts.reduce((acc, lay) => {
+      const sorted = prepareLayout(lay.layout, builderHelperStates.respectLGLayoutOrder)
+      const newLayout = { ...lay, layout: sorted }
+      acc.push(newLayout)
+      return acc
+    }, [])
+  } else {
+    sortedLayout = prepareLayout(allLayouts, builderHelperStates.respectLGLayoutOrder)
+  }
   if (isStyleNotLoaded) {
     const { sortedNestedLayouts } = generateNestedLayoutCSSText()
     return { layouts: sortedLayout, nestedLayouts: sortedNestedLayouts }
@@ -790,6 +806,7 @@ export const generateUpdateFormData = (savedFormId) => {
     ...(savedFormId && { currentReport }),
     layout: layouts,
     nestedLayouts,
+    formInfo,
     fields,
     // saveStyle && style obj
     form_name: formName,

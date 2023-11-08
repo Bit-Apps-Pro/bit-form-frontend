@@ -1,9 +1,11 @@
 import { diff } from 'deep-object-diff'
 import merge from 'deepmerge-alt'
 import { parse, stringify } from 'jcof'
+import toast from 'react-hot-toast'
 import { getAtom } from '../GlobalStates/BitStore'
 import { $fields } from '../GlobalStates/GlobalStates'
-import { deepCopy } from './Helpers'
+import { deepCopy, isObject, isObjectEmpty } from './Helpers'
+import { __ } from './i18nwrap'
 
 export function observeElement(element, property, callback, delay = 0) {
   const elementPrototype = Object.getPrototypeOf(element)
@@ -31,7 +33,7 @@ export function observeElement(element, property, callback, delay = 0) {
   }
 }
 
-export const loadScript = ({ src, integrity, id, scriptInGrid = false, attr, callback = null }) => new Promise((resolve) => {
+export const loadScript = ({ src, integrity, id, scriptInGrid = false, attr = {}, callback = null }) => new Promise((resolve) => {
   const script = document.createElement('script')
   script.src = src
   if (integrity) {
@@ -192,17 +194,23 @@ export function getOneLvlObjDiff(currentObj, targetObj) {
   merge multiple nested object
 */
 export function mergeNestedObj(...args) {
+  let opts = {}
+  const lastArg = args[args.length - 1]
+  if (typeof lastArg === 'object' && 'arrays' in lastArg && lastArg.arrays === 'concat') {
+    opts = lastArg
+    args.pop()
+  }
   if (
     args.length === 2
     && typeof args[0] === 'object'
     && typeof args[1] === 'object'
   ) {
-    return merge(...args)
+    return merge(args[0], args[1], opts)
   }
   let mergedObj = {}
   for (let i = 0; i < args.length - 1; i += 1) {
     if (typeof args[i] === 'object') {
-      mergedObj = merge(mergedObj, merge(args[i], args[i + 1]))
+      mergedObj = merge(mergedObj, merge(args[i], args[i + 1], opts), opts)
     }
   }
   return mergedObj
@@ -259,4 +267,36 @@ export function getObjectDiff(...args) {
 export const JCOF = {
   stringify,
   parse,
+}
+
+const toastCopyResp = prom => prom.then(() => toast.success(__('Copied on clipboard.')))
+  .catch(() => toast.error(__('Failed to Copy, Try Again.')))
+
+export const copyToClipboard = ({ value, ref: copyInput }) => {
+  if (!copyInput?.current) return
+  copyInput.current.focus()
+  copyInput.current.select()
+  if (navigator.clipboard && window.isSecureContext) {
+    const val = value || document.getSelection()
+    const resp = navigator.clipboard.writeText(val)
+    return toastCopyResp(resp)
+  }
+  const resp = new Promise((res, rej) => {
+    if (document.execCommand('copy')) res()
+    else rej()
+  })
+  return toastCopyResp(resp)
+}
+
+export const removeEmptyObjectValues = (stylesObj = {}) => {
+  const newStyles = {}
+  Object.keys(stylesObj).forEach(st => {
+    if (isObjectEmpty(stylesObj[st])) return
+    if (isObject(stylesObj[st])) {
+      newStyles[st] = removeEmptyObjectValues(stylesObj[st])
+    } else if (stylesObj[st]) {
+      newStyles[st] = stylesObj[st]
+    }
+  })
+  return newStyles
 }

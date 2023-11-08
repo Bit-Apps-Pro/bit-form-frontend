@@ -1,4 +1,81 @@
 const tutorialLinks = {
+  singleEntry: {
+    title: 'Allow only one entry for each IP address.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#allow-single-entry-for-each-ip-address',
+  },
+  requiredLoggedInUser: {
+    title: 'Allow only logged in users to submit the form.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#allow-only-logged-in-users-to-submit-the-form',
+  },
+  preventEmptySubmission: {
+    title: 'This will prevent empty form submission.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#disallow-empty-form-submission',
+  },
+  validateFocusLost: {
+    title: 'This will validate the field when the user leaves the field.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#validate-form-input-for-focus-lost',
+  },
+  disableEntryStoring: {
+    title: 'This will disable storing the user entry in the database.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#disable-entry-storing-in-wordpress-database',
+  },
+  recaptchaV3: {
+    title: 'This will enable reCAPTCHA v3.',
+    link: 'https://bitapps.pro/docs/bit-form/integrations/recaptcha-v3-integrations/',
+  },
+  honeypot: {
+    title: `Honeypot protection provides security mechanisms to protect your site from form submission by spam bots. 
+    If spam bot activity is detected, form submission is blocked.`,
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#honeypot',
+  },
+  limitEntry: {
+    title: 'This will limit the number of entries.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#disable-this-form-after-limited-entry',
+  },
+  limitPeriod: {
+    title: 'this will limit the form submission for specific period.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#limit-form-submission-period',
+  },
+  blockedIp: {
+    title: 'This will block the specific IP address from submitting the form.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#blocked-ip-list',
+  },
+  allowedIp: {
+    title: 'This will allow the specific IP address to submit the form.',
+    link: 'https://bitapps.pro/docs/bit-form/form-settings/#allowed-ip-list',
+  },
+  googleAdds: {
+    title: 'This will enable Google Ads conversion tracking.',
+    link: 'https://bitapps.pro/docs/bit-form/integrations/google-ads-integrations/',
+  },
+  confirmationDoc: {
+    title: 'How to Configure Confirmation Message/Redirect page',
+    link: 'https://bitapps.pro/docs/bit-form/confirmation-message/',
+  },
+  conditionalLogic: {
+    title: 'How to Configure Conditional Logic',
+    link: 'https://youtu.be/OjBgk_QuGsk',
+  },
+  conditionalLogicDoc: {
+    title: 'How to Configure Conditional Logic',
+    link: 'https://bitapps.pro/docs/bit-form/conditional-logic/',
+  },
+  integrations: {
+    title: 'How to Setup Integrations',
+    link: 'https://youtu.be/vHnwV3Tekr8',
+  },
+  integrationsDoc: {
+    title: 'How to Setup Integrations',
+    link: 'https://bitapps.pro/docs/bit-form/integrations/',
+  },
+  emailTemplates: {
+    title: 'How to Configure Email Templates',
+    link: 'https://youtu.be/HpMUF5EO-Gg',
+  },
+  emailTemplatesDoc: {
+    title: 'How to Configure Email Templates',
+    link: 'https://bitapps.pro/docs/bit-form/email-tempalate/',
+  },
   acf: {
     title: 'How to Setup ACF integration',
     link: 'https://www.youtube.com/watch?v=zu0zB4OgE20&ab_channel=BitApps',
@@ -68,7 +145,7 @@ const tutorialLinks = {
     link: 'https://www.youtube.com/watch?v=81Uu2Rbmm0Y&ab_channel=BitApps',
   },
   sendinblue: {
-    title: 'How to Setup SendinBlue integration',
+    title: 'How to Setup Brevo(SendinBlue) integration',
     link: 'https://www.youtube.com/watch?v=DLWvKoPbbN8&ab_channel=BitApps',
   },
   telegram: {
@@ -147,6 +224,22 @@ const tutorialLinks = {
     title: 'How to Configure Double Opt-In',
     link: 'https://docs.form.bitapps.pro/wpbitform-double-opt-in',
   },
+  formAbandonment: {
+    title: 'How to Configure Form Abandonment',
+    link: 'https://youtu.be/JCo2PsZBsVk',
+  },
+  formAbandonmentDoc: {
+    title: 'How to Configure Form Abandonment',
+    link: 'https://docs.form.bitapps.pro/wpbitform-double-opt-in',
+  },
+  pdfTemplate: {
+    title: 'How to Configure PDF Template',
+    link: 'https://youtu.be/rE2LB-oYbE8',
+  },
+  pdfTemplateDoc: {
+    title: 'How to Configure PDF Template',
+    link: 'https://bitapps.pro/docs/bit-form/pdf-attachment/',
+  },
   flowmattic: {
     title: 'How to Setup FlowMattic integration',
     link: '#',
@@ -186,6 +279,14 @@ const tutorialLinks = {
   sureTriggers: {
     title: 'How to Setup Sure Triggers integration',
     link: '#',
+  },
+  authSettings: {
+    title: 'How to Configure WP User Registration',
+    link: 'https://www.youtube.com/watch?v=_uo7hsIB0dM',
+  },
+  authSettingsDoc: {
+    title: 'How to Configure WP User Registration',
+    link: 'https://bitapps.pro/docs/bit-form/wp-auth/',
   },
 }
 export default tutorialLinks

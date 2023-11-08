@@ -173,6 +173,11 @@ export default function inputWrapperClasses(fk) {
     },
     [`.${fk}-err-wrp`]: {
       transition: 'all .3s',
+      display: 'grid',
+      'grid-template-rows': '0fr',
+    },
+    [`.${fk}-err-inner`]: {
+      overflow: 'hidden',
     },
     [`.${fk}-err-msg`]: {
       'background-color': 'var(--err-bg, none)',

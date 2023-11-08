@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom'
 import { $fields } from '../../../GlobalStates/GlobalStates'
 import CloseIcn from '../../../Icons/CloseIcn'
 import { addToBuilderHistory } from '../../../Utils/FormBuilderHelper'
-import { deepCopy } from '../../../Utils/Helpers'
+import { IS_PRO, deepCopy } from '../../../Utils/Helpers'
 import tippyHelperMsg from '../../../Utils/StaticData/tippyHelperMsg'
 import { __ } from '../../../Utils/i18nwrap'
 import FieldStyle from '../../../styles/FieldStyle.style'
@@ -69,6 +69,7 @@ function RatingFieldSettings() {
   }
 
   const handleEditOptions = newOpts => {
+    if (!IS_PRO) return
     const allFields = create(fields, draft => {
       draft[fldKey].opt = newOpts
     })
@@ -287,11 +288,12 @@ function RatingFieldSettings() {
             lblKey="lbl"
             valKey="val"
             imgKey="img"
-            isRating={fieldData.typ === 'rating'}
+            isRating={fieldData.typ}
             type="rating"
             showUpload
             // hideNDisabledOptions
             onlyVisualOptionsTab
+            isPro
           />
         </div>
       </Modal>

@@ -15,14 +15,17 @@ const setFieldValue = (props, field, val) => {
   const { contentId } = props
   const fldData = props.fields[field]
   const { fieldName, typ } = fldData
-  if (typ === 'radio') {
-    select(contentId, `input[name="${fieldName}"][value="${val}"]`).checked = true
+  const inpType = fldData.inpType || ''
+
+  if (typ === 'radio' || inpType === 'radio') {
+    select(contentId, `input[name^="${fieldName}"][value="${val}"]`).checked = true
     return
   }
 
-  if (typ === 'check') {
-    const vals = val.split(',')
-    selectAll(contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
+  if (typ === 'check' || inpType === 'checkbox') {
+    const regex = new RegExp(`,|${props.configs.bf_separator}`, 'g')
+    const vals = val.split(regex)
+    selectAll(contentId, `input[name^="${fieldName}"][name$="[]"]`).forEach((el) => {
       el.checked = vals.includes(el.value)
     })
     return
@@ -72,13 +75,13 @@ const setDisabled = (fldKey, props, val) => {
     props.inits[initPropKey].disabled = val
   } else {
     if (typ === 'check') {
-      selectAll(props.contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
+      selectAll(props.contentId, `input[name^="${fieldName}"][name$="[]"]`).forEach((el) => {
         el.disabled = val
       })
       return
     }
     if (typ === 'radio') {
-      selectAll(props.contentId, `input[name="${fieldName}"]`).forEach((el) => {
+      selectAll(props.contentId, `input[name^="${fieldName}"]`).forEach((el) => {
         el.disabled = val
       })
       return
@@ -108,11 +111,13 @@ const setReadonly = (fldKey, props, val) => {
 }
 
 const setActionValue = (actionDetail, props, fieldValues) => {
+  const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
   if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
-    const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
     // setFieldValue(props.contentId, props.fields[actionDetail.field], actionValue)
     const actionDetlsFld = actionDetail.field
     setFieldValue(props, actionDetlsFld, actionValue)
+  } else if (actionDetail.val !== undefined && actionDetail.field === '_bf_step_no') {
+    if (props?.inits?.multi_step_form) props.inits.multi_step_form.step = actionValue
   }
 }
 

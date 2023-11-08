@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai'
 import { useParams } from 'react-router-dom'
 import { $fields } from '../GlobalStates/GlobalStates'
-import { getUploadedFilesArr, isValidJsonString, splitFileLink, splitFileName } from '../Utils/FormBuilderHelper'
+import { getUploadedFilesArr, isValidJsonString } from '../Utils/FormBuilderHelper'
 import { __ } from '../Utils/i18nwrap'
 import Modal from './Utilities/Modal'
 import Table from './Utilities/Table'
@@ -20,7 +20,7 @@ function RepeaterDataTable(props) {
       accessor: fieldKey,
       fieldType: fldData.typ,
       minWidth: 50,
-      ...(fldData.typ?.match(/^(file-up|check|select)$/) && {
+      ...(fldData.typ?.match(/^(file-up|check|select|image-select)$/) && {
         Cell: (row) => {
           if (
             row.cell.value !== null
@@ -33,14 +33,14 @@ function RepeaterDataTable(props) {
                   {getUploadedFilesArr(row.cell.value).map((itm, i) => (
                     <TableFileLink
                       key={`file-n-${row.cell.row.index + i}`}
-                      fname={splitFileName(itm)}
-                      link={`${bits.baseDLURL}formID=${formID}&entryID=${entryId}&fileID=${splitFileLink(itm)}`}
+                      fname={itm}
+                      link={`${bits.baseDLURL}formID=${formID}&entryID=${entryId}&fileID=${itm}`}
                     />
                   ))}
                 </>
               )
             }
-            if (fldData.typ === 'check' || fldData.typ === 'select') {
+            if (fldData.typ === 'check' || fldData.typ === 'select' || fldData.typ === 'image-select') {
               try {
                 if (Array.isArray(row.cell.value)) return row.cell.value.join(', ')
                 const vals = typeof row.cell.value === 'string'

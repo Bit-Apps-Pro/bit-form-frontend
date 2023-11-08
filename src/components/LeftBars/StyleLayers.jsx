@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
+import { useAtomValue } from 'jotai'
 import { memo } from 'react'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useAtomValue } from 'jotai'
+import { $allLayouts } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import TweaksIcn from '../../Icons/TweaksIcn'
 import { getFieldsBasedOnLayoutOrder } from '../../Utils/FormBuilderHelper'
@@ -19,6 +20,9 @@ import NavBtn from './NavBtn'
 function StyleLayers() {
   const { css } = useFela()
   const styles = useAtomValue($styles)
+  const allLayouts = useAtomValue($allLayouts)
+  const formLayouts = Array.isArray(allLayouts) ? allLayouts : [allLayouts]
+  const isMultiStep = formLayouts.length > 1
   const navigate = useNavigate()
   const { formID, formType, '*': rightBar } = useParams()
   const fieldKey = rightBar.split('/')[2]
@@ -56,6 +60,90 @@ function StyleLayers() {
             highlightSelector="[data-dev-_frm]"
             offset="3"
           />
+
+          {isMultiStep && (
+            <LayerAccordion
+              childrenAccodin
+              onClick={() => styleHandler('multi-step/quick-tweaks')}
+              offset="6"
+              title="Multi Step"
+              highlightSelector="[data-dev-stp-cntnr]"
+              route="multi-step/quick-tweaks"
+            >
+              <NavBtn
+                route="multi-step/stp-hdr-wrpr"
+                label="Step Header Wrapper"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-hdr-wrpr]"
+              />
+              <NavBtn
+                route="multi-step/stp-hdr"
+                label="Step Header"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-hdr]"
+              />
+              <NavBtn
+                route="multi-step/stp-icn-cntn"
+                label="Header Icon"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-icn-cntn]"
+              />
+              <NavBtn
+                route="multi-step/stp-hdr-lbl"
+                label="Header Label"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-hdr-lbl]"
+              />
+              <NavBtn
+                route="multi-step/stp-hdr-sub-titl"
+                label="Header Subtitle"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-hdr-sub-titl]"
+              />
+              <NavBtn
+                route="multi-step/stp-wrpr"
+                label="Step Wrapper"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-wrpr]"
+              />
+              <NavBtn
+                route="multi-step/stp-progress-wrpr"
+                label="Progress Wrapper"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-progress-wrpr]"
+              />
+              <NavBtn
+                route="multi-step/stp-progress-bar"
+                label="Progress Bar"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-progress-bar]"
+              />
+              <NavBtn
+                route="multi-step/stp-cntn"
+                label="Step Content"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-cntnt]"
+              />
+              <NavBtn
+                route="multi-step/stp-btn-wrpr"
+                label="Button Wrapper"
+                offset="3.5"
+                highlightSelector="[data-dev-stp-btn-wrpr]"
+              />
+              <NavBtn
+                route="multi-step/prev-step-btn"
+                label="Prevous Button"
+                offset="3.5"
+                highlightSelector="[data-dev-prev-step-btn]"
+              />
+              <NavBtn
+                route="multi-step/next-step-btn"
+                label="Next Button"
+                offset="3.5"
+                highlightSelector="[data-dev-next-step-btn]"
+              />
+            </LayerAccordion>
+          )}
           <NavBtn
             route="field-containers"
             label="Field Containers"

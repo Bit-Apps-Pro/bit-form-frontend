@@ -43,26 +43,24 @@ const changelogInfo = {
       },
     },
   },
-  '2.3.0': {
-    date: '01 August, 2023',
+  '2.6.0': {
+    date: '23 October, 2023',
     changes: {
       added: {
         label: 'Added',
         list: [
           {
-            label: 'New Field',
+            label: (<b>Landing Page</b>),
             tag: 'new',
             list: [
-              'Signature Field - Collect signatures from your wp users to store in DB as PNG, JPG or SVG and use it in the Email or PDF templates.',
+              'Share the form with a distraction free page link, commonly named as: Standalone Form / Form Pages / Direct Share.',
             ],
           },
           {
-            label: 'Features',
+            label: (<b>Form Preview</b>),
+            tag: 'new',
             list: [
-              {
-                label: 'Piping - Use the form field values as the Label, Sub title & Helper text of other form fields via our advanced conditional logics to make your form more dynamic.',
-                tag: 'new',
-              },
+              'Preview your form changes from the builder without any short code or embedding into page.',
             ],
           },
         ],
@@ -70,10 +68,9 @@ const changelogInfo = {
       fixed: {
         label: 'Fixed',
         list: [
-          'Phone number field validation message issue of validate on focus out option',
-          'Razorpay payment field triggers the form submit actions before the payment is completed',
-          'Form is not saving by giving the error of Form is empty when the form has only the section fields (rather it has fields inside the section field)',
-          'Dropdown field not selecting the options when user is not logged in because of the Comet Cache plugin',
+          'Currency field options hide not working issue.',
+          'ACF integration not working in Bit Form FREE version.',
+          'Number field validation error if the value is 0.',
         ],
       },
     },

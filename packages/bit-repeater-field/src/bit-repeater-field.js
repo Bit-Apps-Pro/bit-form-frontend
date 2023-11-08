@@ -253,7 +253,7 @@ export default class BitRepeaterField {
     this.#setHeight(replacedElement, true)
     this.#initializeCustomFields(this.#rowNumber)
     this.#handleButtonEnableDisable()
-    if (!this.#isReset) scrollToFld(replacedElement)
+    if (!this.#isReset) scrollToElm(replacedElement)
     this.#rowNumber += 1
   }
 
@@ -267,7 +267,7 @@ export default class BitRepeaterField {
     this.#removeRowIndex(rowNumber)
     this.#removeCustomFieldInstances(rowNumber)
     this.#handleButtonEnableDisable()
-    if (parent.previousElementSibling && !this.#isReset) scrollToFld(parent.previousElementSibling)
+    if (parent.previousElementSibling && !this.#isReset) scrollToElm(parent.previousElementSibling)
   }
 
   #handleAddToEnd(e) {
@@ -398,10 +398,10 @@ export default class BitRepeaterField {
           } else if (props.inits[fieldKey]) {
             props.inits[fieldKey].value = fldValues
           }
-        } else if (['radio', 'check'].includes(fldTyp)) {
+        } else if (['radio', 'check', 'image-select'].includes(fldTyp)) {
           const fldValues = Array.isArray(fieldValue) ? fieldValue : (fieldValue?.split(props?.configs?.bf_separator) || [])
           // radio buttons, checkboxes
-          if (fldTyp === 'check') fldName += '[]'
+          if (fldTyp === 'check' || (fldTyp === 'image-select' && fieldData.inpType === 'checkbox')) fldName += '[]'
           const field = this.#selectAll(`input[name="${fldName}"]`, row)
           field.forEach(f => {
             if (fldValues.includes(f.value)) {

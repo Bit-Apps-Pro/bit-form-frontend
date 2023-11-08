@@ -26,5 +26,11 @@ const tippyHelperMsg = {
   clrBtn: __('You can add or remove Clear button form Signature Field. You can toggle this option to add or remove the Clear button.'),
   ratingLbl: __('This allows to show the rating message on hover. You can toggle this option to show or hide the rating message on hover.'),
   ratingSelectTip: __('This allows to show the rating message on rating selected. You can toggle this option to show or hide the rating message on rating selected.'),
+  imageMultipleImage: __('By enabling this feature, you will enable to select multiple image.'),
+  imageOptLbl: __('By enabling this feature, you will be hide image label.'),
+  showHeaderIcon: __('This allows to show the header icon. You can toggle this option to show or hide the header icon.'),
+  stemBtnSettings: __('This allows to show the stem button settings. You can toggle this option to show or hide the stem button settings.'),
+  stepLbl: __('This allows to show the step label. You can toggle this option to show or hide the step label.'),
+  stepSubtitle: __('This allows to show the step subtitle. You can toggle this option to show or hide the step subtitle.'),
 }
 export default tippyHelperMsg

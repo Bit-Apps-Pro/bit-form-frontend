@@ -1,5 +1,5 @@
-export default async function isFormValidatedWithoutError(formContentId) {
-  if (typeof validateForm !== 'undefined' && !validateForm({ form: formContentId })) {
+export default async function isFormValidatedWithoutError(formContentId, { step } = {}) {
+  if (typeof validateForm !== 'undefined' && !validateForm({ form: formContentId }, { step })) {
     return new Promise((_, reject) => {
       reject(new Error('Form is not valid'))
     })
@@ -19,6 +19,9 @@ export default async function isFormValidatedWithoutError(formContentId) {
   }
   if (props.GCLID) {
     formData.set('GCLID', props.GCLID)
+  }
+  if (step) {
+    formData.set('form-current-step', step)
   }
   const hidden = []
   Object.entries(props?.fields || {}).forEach((fld) => {

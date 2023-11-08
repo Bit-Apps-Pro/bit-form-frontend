@@ -35,8 +35,17 @@ export default function StripeFieldSettings() {
   const isDynamicAmount = fieldData.config?.amountType === 'dynamic'
 
   const { css } = useFela()
-
+  console.log({ fieldData })
   const handleInput = (name, value) => {
+    console.log({ value })
+    console.log(name)
+    if (value === 'split') {
+      deleteNestedObj(fieldData, 'config->address->defaultValues->name')
+    }
+    if (value === 'full') {
+      deleteNestedObj(fieldData, 'config->address->defaultValues->firstName')
+      deleteNestedObj(fieldData, 'config->address->defaultValues->lastName')
+    }
     if (value) {
       assignNestedObj(fieldData, name, value)
     } else {
@@ -62,7 +71,7 @@ export default function StripeFieldSettings() {
         addFormUpdateError({
           fieldKey: fldKey,
           errorKey: 'stripeAmountFldMissing',
-          errorMsg: __('Stripe Dyanmic Amount Field is not Selected'),
+          errorMsg: __('Stripe Dynamic Amount Field is not Selected'),
           errorUrl: `field-settings/${fldKey}`,
         })
       }
@@ -363,6 +372,22 @@ export default function StripeFieldSettings() {
               </div>
 
               <FieldSettingsDivider />
+
+              <div className={css(ut.ml2, ut.mr2, ut.p1)}>
+                <label htmlFor="description">
+                  <b>
+                    {__('Description')}
+                    {' '}
+                  </b>
+                  <AutoResizeInput
+                    id="description"
+                    aria-label="Stripe description text"
+                    placeholder="Type text here..."
+                    value={fieldData.config.options?.description}
+                    changeAction={e => handleInput('config->options->description', e.target.value)}
+                  />
+                </label>
+              </div>
               <div className={css(ut.ml2, ut.mr2, ut.p1)}>
                 <label htmlFor="recap-thm">
                   <b>

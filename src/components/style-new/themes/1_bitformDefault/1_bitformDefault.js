@@ -1,9 +1,10 @@
 /* eslint-disable camelcase */
 
-import { cleanObj } from '../../../../Utils/globalHelpers'
+import { getAtom } from '../../../../GlobalStates/BitStore'
+import { $allLayouts } from '../../../../GlobalStates/GlobalStates'
 import { msgDefaultConfig } from '../../../../Utils/StaticData/form-templates/defaultConfirmation'
+import { cleanObj, mergeNestedObj } from '../../../../Utils/globalHelpers'
 import confirmMsgCssStyles from '../../../ConfirmMessage/confirmMsgCssStyles'
-import inputWrapperClasses from '../common/inputWrapperClasses'
 import advancedFileUp_1_bitformDefault from './advancedFileUp_1_bitformDefault'
 import buttonStyle_1_bitformDefault from './buttonStyle_1_bitformDefault'
 import checkboxNradioStyle_1_bitformDefault from './checkboxNradioStyle_1_bitformDefault'
@@ -14,19 +15,21 @@ import dividerStyle_1_bitformDefault from './dividerStyle_1_bitformDefault'
 import dropdownStyle_1_BitformDefault from './dropdownStyle_1_bitformDefault'
 import fileUploadStyle_1_BitformDefault from './fileUpload_1_bitformDefault'
 import htmlStyle_1_bitformDefault from './htmlStyle_1_bitformDefault'
+import imageSelectStyle_1_bitformDefault from './imageSelectStyle_1_bitformDefault'
 import imageStyle_1_bitformDefault from './imageStyle_1_bitformDefault'
+import multiStepStyle_1_bitformDefault from './multiStepStyle_1_bitformDefaullt'
 import paypalStyle_1_BitformDefault from './paypalStyle_1_BitformDefault'
 import phoneNumberStyle_1_bitformDefault from './phoneNumberStyle_1_bitformDefault'
+import ratingStyle_1_bitformDefault from './ratingStyle_1_bitformDefault'
 import razorpayStyle_1_BitformDefault from './razorpayStyle_1_BitformDefault'
 import recaptchaStyle_1_bitformDefault from './recaptchaStyle_1_bitformDefault'
 import repeaterStyle_1_bitformDefault from './repeaterStyle_1_bitformDefault'
 import sectionStyle_1_bitformDefault from './sectionStyle_1_bitformDefault'
 import selectStyle_1_BitformDefault from './selectStyle_1_bitformDefault'
+import signatureStyle_1_bitformDefault from './signatureStyle_1_bitformDefault'
+import stripeStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
 import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
-import stripeStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
-import ratingStyle_1_bitformDefault from './ratingStyle_1_bitformDefault'
-import signatureStyle_1_bitformDefault from './signatureStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -120,7 +123,9 @@ export default function bitformDefaultTheme({
       return repeater({ type, fk, breakpoint, colorScheme })
     case 'rating':
       return rating({ type, fk, breakpoint, colorScheme })
-    default:
+    case 'image-select':
+      return imageSelect({ type, fk, direction, breakpoint, colorScheme })
+    default: {
       fieldsArr?.map(([fieldKey, fieldData]) => {
         lgLightFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'light', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
         lgDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'lg', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
@@ -130,12 +135,16 @@ export default function bitformDefaultTheme({
         smDarkFieldStyles[fieldKey] = bitformDefaultTheme({ fieldKey, type: fieldData.typ, breakpoint: 'sm', colorScheme: 'dark', textOptions: { fldPrefix: !!fieldData.prefixIcn, fldSuffix: !!fieldData.suffixIcn }, buttonOptions: { align: fieldData.align, txtAlign: fieldData.txtAlign, btnTyp: fieldData.btnTyp, fulW: fieldData.fulW } })
       })
 
+      const allLayouts = getAtom($allLayouts)
+      const isMultiStep = Array.isArray(allLayouts) && allLayouts.length > 1
+      const multiStepStyle = isMultiStep ? multiStepStyle_1_bitformDefault({ formId, breakpoint, direction, colorScheme }) : {}
+
       return {
         lgLightStyles: {
           theme: 'bitformDefault',
           fieldsSize: 'medium',
           font: defaultFont,
-          form: defaultLgLightform({ formId }),
+          form: mergeNestedObj(defaultLgLightform({ formId }), multiStepStyle),
           fields: lgLightFieldStyles,
           confirmations: lgLightConfMsg,
         },
@@ -145,6 +154,7 @@ export default function bitformDefaultTheme({
         smLightStyles: cleanObj({ form: {}, fields: smLightFieldStyles, confirmations: {} }),
         smDarkStyles: cleanObj({ form: {}, fields: smDarkFieldStyles, confirmations: {} }),
       }
+    }
   }
 }
 
@@ -617,6 +627,18 @@ const rating = ({ type, fk, direction, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: ratingStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const imageSelect = ({ type, fk, direction, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: imageSelectStyle_1_bitformDefault({ fk, direction, breakpoint, colorScheme }),
     }
   }
   return {}

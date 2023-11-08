@@ -23,11 +23,8 @@ const FormAbandonment = () => {
     ['bitforms_get_form_abandonment_config', formID],
     { formID },
     {
-      fetchCondition: IS_PRO,
+      fetchCondition: IS_PRO && isObjectEmpty(abandonmentConf),
       onSuccess: data => setAbandonmentConf(data),
-      onMount: data => {
-        if (isObjectEmpty(abandonmentConf)) setAbandonmentConf(data)
-      },
     },
   )
 
@@ -81,10 +78,10 @@ const FormAbandonment = () => {
       </div>
       <h5 className="mt-3">
         How to setup Form Abandonment & save partial form progress:
-        <a href={tutorialLinks.doubleOptIn.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
+        <a href={tutorialLinks.formAbandonment.link} target="_blank" rel="noreferrer" className="yt-txt ml-1 mr-1">
           YouTube
         </a>
-        <a href={tutorialLinks.doubleOptInDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
+        <a href={tutorialLinks.formAbandonmentDoc.link} target="_blank" rel="noreferrer" className="doc-txt">
           Documentation
         </a>
       </h5>

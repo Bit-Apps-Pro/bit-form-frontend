@@ -5,18 +5,21 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
   StrictMode,
   createRef,
-  startTransition,
   useCallback,
   useDeferredValue,
   useEffect,
-  useReducer, useRef, useState,
+  useReducer,
+  useState,
 } from 'react'
+
 import { useParams } from 'react-router-dom'
 import { Bar, Container, Section } from 'react-simple-resizer'
-import { $isDraggable } from '../GlobalStates/FormBuilderStates'
 import {
   $alertModal,
-  $bits, $breakpoint, $breakpointSize, $builderHelperStates, $builderHookStates, $builderSettings, $flags, $isNewThemeStyleLoaded, $newFormId, $proModal
+  $bits, $breakpoint, $breakpointSize,
+  $builderHookStates, $builderSettings,
+  $flags, $isNewThemeStyleLoaded,
+  $newFormId, $proModal,
 } from '../GlobalStates/GlobalStates'
 import { $savedStylesAndVars } from '../GlobalStates/SavedStylesAndVars'
 import { $staticStylesState } from '../GlobalStates/StaticStylesState'
@@ -24,9 +27,8 @@ import { $allStyles, $styles } from '../GlobalStates/StylesState'
 import { $allThemeColors } from '../GlobalStates/ThemeColorsState'
 import { $allThemeVars } from '../GlobalStates/ThemeVarsState'
 import { RenderPortal } from '../RenderPortal'
-import { addToBuilderHistory, builderBreakpoints, calculateFormGutter } from '../Utils/FormBuilderHelper'
+import { addToBuilderHistory } from '../Utils/FormBuilderHelper'
 import { bitCipher, isObjectEmpty, multiAssign } from '../Utils/Helpers'
-import bitsFetch from '../Utils/bitsFetch'
 import css2json from '../Utils/css2json'
 import { JCOF, select } from '../Utils/globalHelpers'
 import j2c from '../Utils/j2c.es6'
@@ -36,11 +38,13 @@ import { defaultTheme } from '../components/CompSettings/StyleCustomize/ThemePro
 import GridLayoutLoader from '../components/Loaders/GridLayoutLoader'
 import StyleLayerLoader from '../components/Loaders/StyleLayerLoader'
 import ToolbarLoader from '../components/Loaders/ToolbarLoader'
+import BuilderStepTabs from '../components/MultiStep/BuilderStepTabs'
 import OptionToolBar from '../components/OptionToolBar'
 import RenderCssInPortal from '../components/RenderCssInPortal'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import ProModal from '../components/Utilities/ProModal'
 import RenderThemeVarsAndFormCSS from '../components/style-new/RenderThemeVarsAndFormCSS'
+import useSWROnce from '../hooks/useSWROnce'
 
 const ToolBar = loadable(() => import('../components/LeftBars/Toolbar'), { fallback: <ToolbarLoader /> })
 const StyleLayers = loadable(() => import('../components/LeftBars/StyleLayers'), { fallback: <StyleLayerLoader /> })
@@ -91,8 +95,7 @@ const FormBuilder = ({ isLoading }) => {
   const builderHookStates = useAtomValue($builderHookStates)
   const { styleMode } = useAtomValue($flags)
   const [v1Style, styleDispatch] = useReducer(styleReducer, defaultTheme(formID))
-  const [styleSheet, setStyleSheet] = useState(j2c.sheet(v1Style))
-  const [styleLoading, setStyleLoading] = useState(true)
+  const [styleLoading, setStyleLoading] = useState(!isNewForm)
   const bits = useAtomValue($bits)
   const [builderPointerEventNone, setBuilderPointerEventNone] = useState(false)
   const conRef = createRef(null)
@@ -102,80 +105,63 @@ const FormBuilder = ({ isLoading }) => {
   const setAllThemeColors = useSetAtom($allThemeColors)
   const setAllThemeVars = useSetAtom($allThemeVars)
   const setAllStyles = useSetAtom($allStyles)
-  const styles = useAtomValue($styles)
   const setSavedStylesAndVars = useSetAtom($savedStylesAndVars)
   const setBuilderSettings = useSetAtom($builderSettings)
-  const builderHelperStates = useAtomValue($builderHelperStates)
-  const setIsDraggable = useSetAtom($isDraggable)
-
-  const [isFetchingV2Styles, setIsFetchingV2Styles] = useState(true)
-  const isV2Form = useRef(true)
-  // eslint-disable-next-line no-console
-
+  const styles = useAtomValue($styles)
   const { forceBuilderWidthToLG } = builderHookStates
 
-  useEffect(() => {
-    if (isNewForm) setStyleLoading(false)
-
-    if (!isNewForm && !isNewThemeStyleLoaded) {
-      bitsFetch({ formID }, 'bitforms_form_helpers_state')
-        .then(({ data }) => {
-          setIsFetchingV2Styles(false)
-          const fetchedBuilderHelperStates = data?.[0]?.builder_helper_state
-          const oldStyles = fetchedBuilderHelperStates || {}
-          if (!isNewForm && (!fetchedBuilderHelperStates || isObjectEmpty(oldStyles))) {
-            isV2Form.current = false
-          }
-          if (isV2Form.current && !isNewForm && isObjectEmpty(styles)) {
-            const { themeVars: allThemeVarsStr, themeColors: allThemeColorsStr, style: allStylesStr, staticStyles: staticStylesStr } = oldStyles
-            const allThemeVars = JCOF.parse(allThemeVarsStr)
-            const allThemeColors = JCOF.parse(allThemeColorsStr)
-            const allStyles = JCOF.parse(allStylesStr)
-            if (staticStylesStr) {
-              const staticStyles = JCOF.parse(staticStylesStr)
-              setStaticStylesState(staticStyles)
-            }
-
-            setAllThemeVars(allThemeVars)
-            setAllThemeColors(allThemeColors)
-            setAllStyles(allStyles)
-            setSavedStylesAndVars({ allThemeVars, allThemeColors, allStyles })
-            setBreakpointSize(oldStyles.breakpointSize)
-            setBuilderSettings(oldStyles.builderSettings)
-            addToBuilderHistory({ state: { allThemeVars, allThemeColors, allStyles } }, false, 0)
-            setStyleLoading(false)
-            setIsNewThemeStyleLoaded(true)
-          } else if (!isFetchingV2Styles && !isNewForm) {
-            // declare new theme exist , no need old theme functions
-            setOldExistingStyle()
-          }
-        })
-    }
-
-    if (!isObjectEmpty(styles)) {
+  useSWROnce(['bitforms_form_helpers_state', formID], { formID }, {
+    fetchCondition: !isNewForm,
+    onSuccess: data => {
       setStyleLoading(false)
+      if (!isObjectEmpty(styles)) return
+      handleStyleStates(data)
+    },
+  })
+
+  const handleStyleStates = data => {
+    const fetchedBuilderHelperStates = data?.[0]?.builder_helper_state
+    const oldStyles = fetchedBuilderHelperStates || {}
+    const { themeVars: allThemeVarsStr, themeColors: allThemeColorsStr, style: allStylesStr, staticStyles: staticStylesStr } = oldStyles
+    const allThemeVars = JCOF.parse(allThemeVarsStr)
+    const allThemeColors = JCOF.parse(allThemeColorsStr)
+    const allStyles = JCOF.parse(allStylesStr)
+    if (staticStylesStr) {
+      const staticStyles = JCOF.parse(staticStylesStr)
+      setStaticStylesState(staticStyles)
     }
 
-    if (isV2Form.current && isNewForm && !isObjectEmpty(styles)) {
+    setAllThemeVars(allThemeVars)
+    setAllThemeColors(allThemeColors)
+    setAllStyles(allStyles)
+    setSavedStylesAndVars({ allThemeVars, allThemeColors, allStyles })
+    setBreakpointSize(oldStyles.breakpointSize)
+    setBuilderSettings(oldStyles.builderSettings)
+    addToBuilderHistory({ state: { allThemeVars, allThemeColors, allStyles } }, false, 0)
+    setIsNewThemeStyleLoaded(true)
+  }
+
+  useEffect(() => {
+    if (isNewForm) {
       setTimeout(() => {
         select('#update-btn').click()
       }, 100)
     }
   }, [])
 
-  useEffect(() => {
-    if (!isNewThemeStyleLoaded) {
-      if (brkPoint === 'md') {
-        const st = v1Style['@media only screen and (max-width:600px)'] || v1Style['@media only screen and (max-width: 600px)']
-        setStyleSheet(j2c.sheet(merge(v1Style, st)))
-      } else if (brkPoint === 'sm') {
-        const st = v1Style['@media only screen and (max-width:400px)'] || v1Style['@media only screen and (max-width: 400px)']
-        setStyleSheet(j2c.sheet(merge(v1Style, st)))
-      } else if (brkPoint === 'lg') {
-        setStyleSheet(j2c.sheet(v1Style))
-      }
-    }
-  }, [brkPoint, v1Style])
+  // useEffect(() => {
+  //   if (!isNewThemeStyleLoaded) {
+  //     if (brkPoint === 'md') {
+  //       const st = v1Style['@media only screen and (max-width:600px)'] || v1Style['@media only screen and (max-width: 600px)']
+  //       setStyleSheet(j2c.sheet(merge(v1Style, st)))
+  //     } else if (brkPoint === 'sm') {
+  //       const st = v1Style['@media only screen and (max-width:400px)'] || v1Style['@media only screen and (max-width: 400px)']
+  //       setStyleSheet(j2c.sheet(merge(v1Style, st)))
+  //     } else if (brkPoint === 'lg') {
+  //       setStyleSheet(j2c.sheet(v1Style))
+  //     }
+  //   }
+  // }, [brkPoint, v1Style])
 
   useEffect(() => { setbrkPoint('lg') }, [forceBuilderWidthToLG])
 
@@ -302,23 +288,23 @@ const FormBuilder = ({ isLoading }) => {
 
   const handleResize = (paneWidth) => {
     setGridWidth(paneWidth)
-    const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
+    // const w = calculateFormGutter(isNewThemeStyleLoaded ? styles.form : v1Style, formID)
 
-    const gw = Math.round(paneWidth - w) // inner left-right padding
-    if (gw < builderBreakpoints.md) {
-      setbrkPoint('sm')
-      if (builderHelperStates.respectLGLayoutOrder) {
-        startTransition(() => { setIsDraggable(false) })
-      }
-    } else if (gw >= builderBreakpoints.md && gw < builderBreakpoints.lg) {
-      setbrkPoint('md')
-      if (builderHelperStates.respectLGLayoutOrder) {
-        startTransition(() => { setIsDraggable(false) })
-      }
-    } else if (gw >= builderBreakpoints.lg) {
-      setbrkPoint('lg')
-      startTransition(() => { setIsDraggable(true) })
-    }
+    // const gw = Math.round(paneWidth - w) // inner left-right padding
+    // if (gw < builderBreakpoints.md) {
+    //   setbrkPoint('sm')
+    //   if (builderHelperStates.respectLGLayoutOrder) {
+    //     startTransition(() => { setIsDraggable(false) })
+    //   }
+    // } else if (gw >= builderBreakpoints.md && gw < builderBreakpoints.lg) {
+    //   setbrkPoint('md')
+    //   if (builderHelperStates.respectLGLayoutOrder) {
+    //     startTransition(() => { setIsDraggable(false) })
+    //   }
+    // } else if (gw >= builderBreakpoints.lg) {
+    //   setbrkPoint('lg')
+    //   startTransition(() => { setIsDraggable(true) })
+    // }
   }
 
   const clsAlertMdl = () => {
@@ -332,7 +318,7 @@ const FormBuilder = ({ isLoading }) => {
       <OptionToolBar
         setShowToolbar={setShowToolbar}
         showToolBar={showToolBar}
-        isV2Form={isV2Form.current}
+        isV2Form
       />
       <DraggableModal setBuilderPointerEventNone={setBuilderPointerEventNone} />
       <Container
@@ -357,6 +343,7 @@ const FormBuilder = ({ isLoading }) => {
           minSize={320}
           defaultSize={BUILDER_WIDTH}
         >
+          <BuilderStepTabs />
           <StrictMode>
             {!isLoading && !styleLoading ? (
               <RenderPortal
@@ -365,7 +352,6 @@ const FormBuilder = ({ isLoading }) => {
               >
                 <RenderThemeVarsAndFormCSS />
                 <RenderCssInPortal />
-                {!isNewThemeStyleLoaded && !isNewForm && <style>{styleSheet}</style>}
                 <GridLayout
                   style={styleProvider()}
                   gridWidth={deferedGridWidth}

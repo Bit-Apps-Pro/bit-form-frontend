@@ -1,6 +1,6 @@
-import { getAtom } from "../../GlobalStates/BitStore"
-import { $fields, $nestedLayouts } from "../../GlobalStates/GlobalStates"
-import { makeFieldsArrByLabel } from "../../Utils/Helpers"
+import { getAtom } from '../../GlobalStates/BitStore'
+import { $allLayouts, $fields, $formInfo, $nestedLayouts } from '../../GlobalStates/GlobalStates'
+import { makeFieldsArrByLabel } from '../../Utils/Helpers'
 
 /* eslint-disable import/prefer-default-export */
 export const accessToNested = (obj, path = '') => {
@@ -12,10 +12,16 @@ export const accessToNested = (obj, path = '') => {
   return paths.length ? obj[paths[lastIndex]] : obj
 }
 
-export const extraFields = [{
-  key: '_bf_form',
-  name: 'Form',
-}]
+export const extraFields = [
+  {
+    key: '_bf_form',
+    name: 'Form',
+  },
+  {
+    key: '_bf_step_no',
+    name: 'Step No.',
+  },
+]
 
 const flatAllLogics = lgcs => {
   const flatLogics = []
@@ -29,8 +35,22 @@ const flatAllLogics = lgcs => {
   return flatLogics
 }
 
+const getStepBtns = () => {
+  const allLayouts = getAtom($allLayouts)
+  const isMultiStep = Array.isArray(allLayouts) && allLayouts.length > 1
+  const formInfo = getAtom($formInfo)
+  const btnSettings = isMultiStep ? formInfo.multiStepSettings.btnSettings : {}
+  const { show, prevBtn, nextBtn } = btnSettings
+  if (!show) return {}
+  return {
+    [prevBtn.key]: { ...prevBtn },
+    [nextBtn.key]: { ...nextBtn },
+  }
+}
+
 export const filterFormFields = condGrp => {
-  const fields = getAtom($fields)
+  const allFields = getAtom($fields)
+  const fields = { ...allFields, ...getStepBtns() }
   const nestedLayouts = getAtom($nestedLayouts)
   const formFields = makeFieldsArrByLabel(fields, [])
   const logicFlds = flatAllLogics(condGrp.logics || [])

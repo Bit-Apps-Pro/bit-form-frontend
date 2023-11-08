@@ -2,14 +2,31 @@
 let contentId
 let fields
 let fieldKeysByName = {}
-export default function validateForm({ form, input }) {
+let errors = []
+export default function validateForm({ form, input }, { step } = {}) {
   if (form) contentId = form
   else if (input?.form?.id) [, contentId] = input.form.id.split('form-')
   const props = window?.bf_globals?.[contentId]
   if (typeof props === 'undefined') return false
   let formEntries = {}
+  errors = []
   const bfSeparator = props.configs.bf_separator
-  fields = props.fields
+  if (step) {
+    let layout = props.layout[step - 1]
+    if (!layout) return false
+    layout = layout?.layout || layout
+    const fldKeys = layout.lg.map(l => l.i)
+    const nestedLayout = props.nestedLayout || {}
+    Object.entries(nestedLayout).forEach(([key, lay]) => {
+      if (fldKeys.includes(key)) {
+        const flds = lay.lg.map(l => l.i)
+        fldKeys.push(...flds)
+      }
+    })
+    fields = fldKeys.reduce((acc, key) => ({ ...acc, [key]: props.fields[key] }), {})
+  } else {
+    fields = props.fields
+  }
   const { modifiedFields } = props
   if (modifiedFields) Object.assign(fields, modifiedFields)
   if (form) {
@@ -39,7 +56,7 @@ export default function validateForm({ form, input }) {
       const fldType = fldData.typ
       const fldValue = typeof formEntries[fldName] === 'string' ? formEntries[fldName].trim() : formEntries[fldName]
 
-      const fldDiv = bfSelect(`#form-${contentId}${selector} .${fldKey}.fld-hide`)
+      const fldDiv = bfSelect(`#form-${contentId} ${selector} .${fldKey}.fld-hide`)
       if (fldDiv) {
         generateErrMsg('', fldKey, fldData, selector)
         continue
@@ -64,7 +81,7 @@ export default function validateForm({ form, input }) {
       else if (fldType === 'email' && typeof emailFldValidation !== 'undefined') errKey = emailFldValidation(fldValue, fldData)
       else if (fldType === 'url' && typeof urlFldValidation !== 'undefined') errKey = urlFldValidation(fldValue, fldData)
       else if (fldType === 'decision-box' && typeof dcsnbxFldValidation !== 'undefined') errKey = dcsnbxFldValidation(fldValue, fldData)
-      else if ((fldType === 'check' || fldType === 'select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData, bfSeparator)
+      else if ((fldType === 'check' || fldType === 'select' || fldType === 'image-select') && typeof checkMinMaxOptions !== 'undefined') errKey = checkMinMaxOptions(fldValue, fldData, bfSeparator)
       else if (fldType === 'file-up' && typeof fileupFldValidation !== 'undefined') errKey = fileupFldValidation(fldValue, fldData)
       else if (fldType === 'advanced-file-up' && typeof advanceFileUpFldValidation !== 'undefined') errKey = advanceFileUpFldValidation(getFieldInstance(fldKey), fldData)
       else if (fldType === 'phone-number' && typeof phoneNumberFldValidation !== 'undefined') errKey = phoneNumberFldValidation(getFieldInstance(fldKey), fldData)
@@ -75,6 +92,7 @@ export default function validateForm({ form, input }) {
       if (errKey) formCanBeSubmitted = false
     }
   }
+  moveToFirstErrFld(props, errors)
   return formCanBeSubmitted
 }
 
@@ -116,20 +134,40 @@ const generateErrMsg = (errKey, fldKey, fldData, selector = '') => {
   const errWrp = bfSelect(`#form-${contentId} ${selector} .${fldKey}-err-wrp`)
   const errTxt = bfSelect(`.${fldKey}-err-txt`, errWrp)
   const errMsg = bfSelect(`.${fldKey}-err-msg`, errWrp)
+  let isErrWrpGrid = false
+  try {
+    isErrWrpGrid = getComputedStyle(errWrp).display === 'grid'
+    if (isErrWrpGrid) {
+      errWrp.style.removeProperty('opacity')
+      errWrp.style.removeProperty('height')
+      errMsg.style.removeProperty('display')
+    }
+  } catch (_) {
+    isErrWrpGrid = false
+  }
 
   if (errTxt && 'err' in (fldData || {})) {
     if (errKey && fldData?.err?.[errKey]?.show) {
-      errMsg.style.removeProperty('display')
       errTxt.innerHTML = fldData.err[errKey].custom ? fldData.err[errKey].msg : fldData.err[errKey].dflt
-      setStyleProperty(errWrp, 'height', `${errTxt.parentElement.scrollHeight}px`)
-      setStyleProperty(errWrp, 'opacity', 1)
-      const fld = bfSelect(`#form-${contentId} ${selector} .btcd-fld-itm.${fldKey}`)
-      scrollToFld(fld)
+      if (!isErrWrpGrid) {
+        setTimeout(() => {
+          errMsg.style.removeProperty('display')
+          setStyleProperty(errWrp, 'height', `${errTxt.offsetHeight}px`)
+          setStyleProperty(errWrp, 'opacity', 1)
+        }, 100)
+      } else {
+        setStyleProperty(errWrp, 'grid-template-rows', '1fr')
+      }
+      errors.push(fldKey)
     } else {
       errTxt.innerHTML = ''
-      setStyleProperty(errMsg, 'display', 'none')
-      setStyleProperty(errWrp, 'height', 0)
-      setStyleProperty(errWrp, 'opacity', 0)
+      if (!isErrWrpGrid) {
+        setStyleProperty(errWrp, 'height', 0)
+        setStyleProperty(errWrp, 'opacity', 0)
+        setStyleProperty(errMsg, 'display', 'none')
+      } else {
+        setStyleProperty(errWrp, 'grid-template-rows', '0fr')
+      }
     }
   }
 }

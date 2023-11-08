@@ -14,7 +14,7 @@ export default function titleStyle_1_bitformDefault({ fk, breakpoint, colorSchem
         // 'font-family': 'var(--g-font-family)',
         'text-align': 'center',
         color: 'var(--global-font-color) !important',
-        'word-break': 'break-all',
+        'word-break': 'break-word',
         display: 'flex',
         'align-items': 'center',
       },

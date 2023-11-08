@@ -23,8 +23,8 @@ export default function BreakpointSizeControl() {
 
   const toggleRespectOrder = () => {
     startTransition(() => {
-      if (builderHelperStates.respectLGLayoutOrder) setIsDraggable(true)
-      else if (breakpoint !== 'lg') setIsDraggable(false)
+      if (builderHelperStates.respectLGLayoutOrder && breakpoint !== 'lg') setIsDraggable(false)
+      else setIsDraggable(true)
     })
     setBuilderHelperStates(prv => ({ ...prv, respectLGLayoutOrder: !prv.respectLGLayoutOrder }))
   }
