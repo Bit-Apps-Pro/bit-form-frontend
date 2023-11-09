@@ -12,7 +12,7 @@ import Modal from './Utilities/Modal'
 export default function ChangelogToggle() {
   const [bits, setBits] = useAtom($bits)
   const [show, setShow] = useState(bits.changelogVersion !== bits.version)
-  const currentChangelog = '2.6.0'
+  const currentChangelog = '2.7.0'
   const currenChangelog = changelogInfo[currentChangelog]
   const { css } = useFela()
 
@@ -22,7 +22,6 @@ export default function ChangelogToggle() {
       version: bits.version,
     }, 'bitforms_changelog_version')
       .then(() => {
-        console.log('done')
         setBits(prevBits => ({ ...prevBits, changelogVersion: prevBits.version }))
       })
   }
