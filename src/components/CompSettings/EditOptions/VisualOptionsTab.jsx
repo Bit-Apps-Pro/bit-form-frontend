@@ -1,8 +1,9 @@
 import { arrayMoveImmutable } from 'array-move'
+import { useAtomValue } from 'jotai'
 import { create } from 'mutative'
 import { useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'jotai'
+import { $bits, $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 import CloseEyeIcn from '../../../Icons/CloseEyeIcn'
 import CloseIcn from '../../../Icons/CloseIcn'
 import CopyIcn from '../../../Icons/CopyIcn'
@@ -12,9 +13,9 @@ import EyeOffIcon from '../../../Icons/EyeOffIcon'
 import NoneIcn from '../../../Icons/NoneIcn'
 import PlusIcn from '../../../Icons/PlusIcn'
 import TrashIcn from '../../../Icons/TrashIcn'
-import ut from '../../../styles/2.utilities'
 import { deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
+import ut from '../../../styles/2.utilities'
 import Btn from '../../Utilities/Btn'
 import CheckBox from '../../Utilities/CheckBox'
 import Modal from '../../Utilities/Modal'
@@ -23,7 +24,6 @@ import Tip from '../../Utilities/Tip'
 import TipGroup from '../../Utilities/Tip/TipGroup'
 import IconsModal from '../IconsModal'
 import { flattenOptions, newOptKey } from './editOptionsHelper'
-import { $bits, $fields, $selectedFieldId } from '../../../GlobalStates/GlobalStates'
 
 const SortableElm = ({
   value, optIndx, type, option, setOption, lblKey, valKey, imgKey, setScrolIndex, isRating, optKey, checkByDefault, showUpload = false, hideNDisabledOptions,
@@ -452,15 +452,17 @@ export default function VisualOptionsTab({
     <>
       <SortableList onSortEnd={onSortEnd} useDragHandle>
         <div className={css(optionStyle.labelWapper)}>
+          {(type === 'image-select' || type === 'rating') && <span className={css(optionStyle.imageLabel)}>Image</span>}
           <span className={css(optionStyle.propLabel)}>Label</span>
           <span className={css(optionStyle.propLabel, { ml: 10 })}>Value</span>
           <div className={css({ flxi: 'align-center', ml: 5 })}>
-            {checkByDefault && <span className={css(optionStyle.propLabel, { ml: 10 })}>Check</span>}
+            {checkByDefault && <span className={css(optionStyle.checkLabel)}>Check</span>}
             {type === 'check' && <span className={css(optionStyle.checkLabel)}>Require</span>}
             {(type === 'check' || type === 'radio') && <span className={css(optionStyle.checkLabel)}>Disable</span>}
           </div>
         </div>
         <div className={css(optionStyle.scroll)}>
+          {console.log('option', option)}
           {option.map((_, index) => (
             <SortableItem
               key={`sortable-${option[index].id}`}
@@ -519,6 +521,7 @@ export default function VisualOptionsTab({
 const optionStyle = {
   labelWapper: { p: '5px 30px 0px', fs: 14, fw: 500 },
   propLabel: { dy: 'inline-block', ta: 'center', w: 200 },
+  imageLabel: { dy: 'inline-block', ta: 'center', w: 50, mr: 30 },
   checkLabel: { dy: 'inline-block', ta: 'center', w: 50, ow: 'hidden', to: 'ellipsis' },
   disabled: { bd: 'hsla(0, 11%, 93%, 100%)' },
   list: { width: '100%', height: 300 },
