@@ -22,7 +22,7 @@ export default function Piechart({ dataList, field, title, viewType }) {
     },
     series: [
       {
-        name: 'Access From',
+        name: title,
         type: 'pie',
         radius: '80%',
         data,
