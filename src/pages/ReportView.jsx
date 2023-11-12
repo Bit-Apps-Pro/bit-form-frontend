@@ -24,7 +24,7 @@ export default function ReportView() {
   const [isloading, setisloading] = useState(true)
   const [fromDate, setFromDate] = useState()
   const [toDate, setToDate] = useState()
-  const [refreshResp, setRefreshResp] = useState(0)
+  const [refreshResp, setRefreshResp] = useState(1)
   const [checkedStatus, setCheckedStatus] = useState(['0', '1', '2', '3', '9'])
   const fields = useAtomValue($fields)
   const [reportedFields, setReportedFields] = useState(() => filterDefaultReportedFields(fields))
@@ -40,6 +40,8 @@ export default function ReportView() {
     if (allResp.length < 1) {
       setisloading(true)
     }
+
+    if (!refreshResp) return
 
     bitsFetch(
       {
@@ -59,6 +61,7 @@ export default function ReportView() {
     })
     setFromDate(entriesFilterByDate?.start_date)
     setToDate(entriesFilterByDate?.end_date)
+    setRefreshResp(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formID, refreshResp])
 
