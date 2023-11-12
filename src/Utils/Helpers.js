@@ -19,7 +19,7 @@ import { $darkThemeColors, $lightThemeColors } from '../GlobalStates/ThemeColors
 import { $themeVarsLgDark, $themeVarsLgLight, $themeVarsMdDark, $themeVarsMdLight, $themeVarsSmDark, $themeVarsSmLight } from '../GlobalStates/ThemeVarsState'
 import confirmMsgCssStyles from '../components/ConfirmMessage/confirmMsgCssStyles'
 import { updateGoogleFontUrl } from '../components/style-new/styleHelpers'
-import { addToBuilderHistory, prepareLayout } from './FormBuilderHelper'
+import { addToBuilderHistory, isValidJsonString, prepareLayout } from './FormBuilderHelper'
 import atomicStyleGenarate, { generateNestedLayoutCSSText } from './atomicStyleGenarate'
 import bitsFetch from './bitsFetch'
 import { JCOF } from './globalHelpers'
