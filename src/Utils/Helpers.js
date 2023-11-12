@@ -892,17 +892,28 @@ export const generateReportData = (allResp, fields, filterOptions) => {
     }
     if (checkedStatus.includes(respObj.__entry_status)) {
       reportedFields.forEach((fieldKey) => {
+        const optionsObj = (fields[fieldKey].opt || []).reduce((acc, opt) => {
+          const { val, lbl } = opt
+          return {
+            ...acc,
+            [val || lbl]: lbl,
+          }
+        }
+          , {})
+
         let entryData = respObj[fieldKey]
         entryData = isValidJsonString(entryData) ? JSON.parse(entryData) : entryData
         if (entryData) {
           if (Array.isArray(entryData)) {
             entryData.forEach((data) => {
-              if (data) {
-                existCheckOrPush(fieldData, fieldKey, data)
+              const optionLabelData = optionsObj[data] || data
+              if (optionLabelData) {
+                existCheckOrPush(fieldData, fieldKey, optionLabelData)
               }
             })
           } else {
-            existCheckOrPush(fieldData, fieldKey, entryData)
+            const optionLabelData = optionsObj[entryData] || entryData
+            existCheckOrPush(fieldData, fieldKey, optionLabelData)
           }
         }
       })
