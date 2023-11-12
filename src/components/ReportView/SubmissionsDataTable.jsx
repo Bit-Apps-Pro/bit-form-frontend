@@ -1,7 +1,17 @@
-import ReactEcharts from 'echarts-for-react'
+import ReactEChartsCore from 'echarts-for-react/lib/core'
+import { BarChart } from 'echarts/charts'
+import { GridComponent, TitleComponent, TooltipComponent } from 'echarts/components'
+import * as echarts from 'echarts/core'
+import {
+  CanvasRenderer,
+} from 'echarts/renderers'
 import { useFela } from 'react-fela'
 import { getAllDateLabel } from '../../Utils/Helpers'
 import ut from '../../styles/2.utilities'
+
+echarts.use(
+  [TitleComponent, TooltipComponent, GridComponent, BarChart, CanvasRenderer],
+)
 
 const SubmissionsDataTable = ({ data, filterOption }) => {
   console.log('SubmissionsDataTable Rendered', data, filterOption)
@@ -50,7 +60,7 @@ const SubmissionsDataTable = ({ data, filterOption }) => {
       <span className={css(ut.title)}>Submission Stats</span>
       <hr />
       <div className={css(style.tableWrap)}>
-        <ReactEcharts option={option} />
+        <ReactEChartsCore echarts={echarts} option={option} />
       </div>
     </div>
   )

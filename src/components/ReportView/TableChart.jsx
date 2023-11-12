@@ -11,18 +11,22 @@ export default function TableChart({ dataList }) {
   return (
     <div className={css(style.mainWrap)}>
       <table className={css(style.table)}>
-        <tr>
-          <th>Option Label</th>
-          <th>Count/Value</th>
-          <th>%</th>
-        </tr>
-        {data.map((val, key) => (
-          <tr key={val.label}>
-            <td>{val.label}</td>
-            <td>{val.value}</td>
-            <td>{val.percentage}</td>
+        <thead>
+          <tr>
+            <th>Option Label</th>
+            <th>Count/Value</th>
+            <th>%</th>
           </tr>
-        ))}
+        </thead>
+        <tbody>
+          {data.map((val) => (
+            <tr key={val.label}>
+              <td>{val.label}</td>
+              <td>{val.value}</td>
+              <td>{val.percentage}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   )

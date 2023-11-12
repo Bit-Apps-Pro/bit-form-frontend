@@ -231,7 +231,9 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
             content={(<ReportsList availableReports={availableReports} setAvailableReports={setAvailableReports} setAvailableReport={setAvailableReport} reportFetchById={reportFetchById} setReportIndex={setReportIndex} setReportUpdate={setReportUpdate} setProModal={setProModal} confMdl={confMdl} setconfMdl={setconfMdl} setshowMdl={setshowMdl} />)}
           >
             <button className={css(tableStyle.tableActionBtn)} type="button">
-              <MoreVerticalIcn size="14" />
+              <Tip msg="View all reports">
+                <MoreVerticalIcn size="14" />
+              </Tip>
             </button>
           </Tippy>
 
@@ -278,13 +280,14 @@ export default function FldEntriesByCondition({ fetchData, setRefreshResp }) {
           </Modal>
         </div>
 
-        <Tip msg="Add new filter">
+        <Tip msg="Add new report">
           <button
-            className={css(tableStyle.tableActionBtn)}
+            className={css(tableStyle.tableActionBtn, { w: '100%', gp: 5 })}
             onClick={createNewReport}
             type="button"
           >
             <PlusIcn size={16} />
+            Create Report
           </button>
         </Tip>
 

@@ -2,13 +2,13 @@
 import ReactEChartsCore from 'echarts-for-react/lib/core'
 import { PieChart } from 'echarts/charts'
 import * as echarts from 'echarts/core'
-import { GridComponent, TooltipComponent, TitleComponent, DatasetComponent } from 'echarts/components'
+import { GridComponent, TooltipComponent, TitleComponent, LegendComponent } from 'echarts/components'
 import {
   CanvasRenderer,
 } from 'echarts/renderers'
 
 echarts.use(
-  [TitleComponent, TooltipComponent, GridComponent, PieChart, CanvasRenderer],
+  [TitleComponent, TooltipComponent, GridComponent, LegendComponent, PieChart, CanvasRenderer],
 )
 export default function Piechart({ dataList, field, title, viewType }) {
   const data = dataList.map((item) => ({ name: item.label, value: item.value }))
