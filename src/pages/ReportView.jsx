@@ -33,8 +33,6 @@ export default function ReportView() {
   const navigate = useNavigate()
   const currentReport = useAtomValue($reportSelector)
 
-  console.log({ currentReport })
-
   const fetchData = useCallback(({
     pageSize, pageIndex, sortBy, filters, globalFilter, conditions, entriesFilterByDate,
   }) => {
@@ -43,7 +41,6 @@ export default function ReportView() {
       setisloading(true)
     }
 
-    console.log('fetching data')
     bitsFetch(
       {
         id: formID,
@@ -78,6 +75,7 @@ export default function ReportView() {
     }
     fetchData({
       entriesFilterByDate,
+      conditions: currentReport?.details?.conditions,
     })
   }, [fetchData])
 
