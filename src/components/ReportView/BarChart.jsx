@@ -17,6 +17,9 @@ export default function Barchart({ dataList, field, title, viewType }) {
   const xAxis = {
     type: 'category',
     data: labels,
+    axisTick: {
+      alignWithLabel: true,
+    },
   }
   const yAxis = {
     type: 'value',
@@ -44,7 +47,7 @@ export default function Barchart({ dataList, field, title, viewType }) {
     yAxis,
     series: [
       {
-        name: title,
+        name: 'Total',
         type: 'bar',
         barWidth: '60%',
         data,

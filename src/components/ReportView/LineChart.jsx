@@ -38,7 +38,7 @@ export default function Barchart({ dataList, field, title }) {
     yAxis,
     series: [
       {
-        name: title,
+        name: 'Total',
         type: 'line',
         barWidth: '60%',
         data,

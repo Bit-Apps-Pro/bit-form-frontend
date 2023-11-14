@@ -34,20 +34,20 @@ export default function FieldReport({ title, data }) {
               <PieChartIcn />
             </button>
           </Tip>
-          <Tip msg="Horizontal Bar Chart">
+          <Tip msg="Vertical Bar Chart">
             <button
               type="button"
-              aria-label="horizonal-bar-button"
+              aria-label="vertical-bar-button"
               className={`${css(ut.icnBtn, ut.icn_hover, style.icnBtn)} ${viewType === 'hBar' && 'active'}`}
               onClick={() => setViewType('hBar')}
             >
               <BarChartIcn />
             </button>
           </Tip>
-          <Tip msg="Vertical Bar Chart">
+          <Tip msg="Horizontal Bar Chart">
             <button
               type="button"
-              aria-label="vertical-bar-button"
+              aria-label="horizontal-bar-button"
               className={`${css(ut.icnBtn, ut.icn_hover, style.icnBtn)} ${viewType === 'vBar' && 'active'}`}
               onClick={() => setViewType('vBar')}
             >
@@ -108,6 +108,7 @@ const style = {
     dy: 'flex',
     w: '100%',
     jc: 'space-between',
+    gp: 10,
   },
   chartBody: {
     w: '60%',
