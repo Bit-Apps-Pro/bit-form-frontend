@@ -80,6 +80,7 @@
     "react-time-picker": "6.5.0",
     "react-timekeeper": "^2.2.1",
     "react-tiny-virtual-list": "^2.2.0",
+    "react-to-print": "^2.14.15",
     "react-transition-group": "^4.4.5",
     "sortablejs": "^1.15.0",
     "swr": "^2.2.2",
