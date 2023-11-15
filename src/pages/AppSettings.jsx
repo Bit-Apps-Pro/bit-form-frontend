@@ -90,7 +90,7 @@ function AppSettingsPage() {
         <Route path="/app-settings/api" element={<Apikey />} />
         <Route path="/app-settings/payments" element={<Payments />} /> */}
         {/* <Route path="app-settings/*"> */}
-        <Route index path="recaptcha" element={<Captcha />} />
+        <Route index path="recaptcha/*" element={<Captcha />} />
         <Route path="gclid" element={<GCLID />} />
         <Route path="smtp" element={<SMTP />} />
         <Route path="cpt" element={<Cpt />} />
