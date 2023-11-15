@@ -18,14 +18,14 @@ const setFieldValue = (props, field, val) => {
   const inpType = fldData.inpType || ''
 
   if (typ === 'radio' || inpType === 'radio') {
-    select(contentId, `input[name="${fieldName}"][value="${val}"]`).checked = true
+    select(contentId, `input[name^="${fieldName}"][value="${val}"]`).checked = true
     return
   }
 
   if (typ === 'check' || inpType === 'checkbox') {
     const regex = new RegExp(`,|${props.configs.bf_separator}`, 'g')
     const vals = val.split(regex)
-    selectAll(contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
+    selectAll(contentId, `input[name^="${fieldName}"][name$="[]"]`).forEach((el) => {
       el.checked = vals.includes(el.value)
     })
     return
@@ -75,13 +75,13 @@ const setDisabled = (fldKey, props, val) => {
     props.inits[initPropKey].disabled = val
   } else {
     if (typ === 'check') {
-      selectAll(props.contentId, `input[name="${fieldName}[]"]`).forEach((el) => {
+      selectAll(props.contentId, `input[name^="${fieldName}"][name$="[]"]`).forEach((el) => {
         el.disabled = val
       })
       return
     }
     if (typ === 'radio') {
-      selectAll(props.contentId, `input[name="${fieldName}"]`).forEach((el) => {
+      selectAll(props.contentId, `input[name^="${fieldName}"]`).forEach((el) => {
         el.disabled = val
       })
       return

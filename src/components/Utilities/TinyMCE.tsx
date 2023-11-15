@@ -2,14 +2,15 @@
 
 /* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
-import '../../resource/css/tinymce.css'
+import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
 import { loadScript } from '../../Utils/globalHelpers'
+import '../../resource/css/tinymce.css'
 
 export default function TinyMCE({
   id,
   value,
   formFields,
-  SmartTagField,
+  smartTags = true,
   onChangeHandler,
   toolbarMnu,
   menubar,
@@ -86,7 +87,7 @@ export default function TinyMCE({
             icon: false,
             menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/) && ({ text: i.name, onClick() { editor.insertContent(insertFieldKey(i)) } })),
           })
-          SmartTagField && editor.addButton('addSmartField', {
+          smartTags && editor.addButton('addSmartField', {
             text: 'Smart Tag Fields',
             tooltip: 'Add Smart Tag Field Value in Message',
             type: 'menubutton',
@@ -140,7 +141,7 @@ type TinyMCEProps = {
   id: string
   value: string
   formFields?: FieldType[]
-  SmartTagField?: SmartTagType[]
+  smartTags?: boolean
   onChangeHandler: (e: any) => void
   toolbarMnu?: string
   menubar?: string

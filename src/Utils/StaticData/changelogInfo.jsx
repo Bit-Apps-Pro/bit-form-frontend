@@ -43,24 +43,17 @@ const changelogInfo = {
       },
     },
   },
-  '2.6.0': {
-    date: '23 October, 2023',
+  '2.7.0': {
+    date: '07 November, 2023',
     changes: {
       added: {
         label: 'Added',
         list: [
           {
-            label: (<b>Landing Page</b>),
+            label: (<b>Image Select Field</b>),
             tag: 'new',
             list: [
-              'Share the form with a distraction free page link, commonly named as: Standalone Form / Form Pages / Direct Share.',
-            ],
-          },
-          {
-            label: (<b>Form Preview</b>),
-            tag: 'new',
-            list: [
-              'Preview your form changes from the builder without any short code or embedding into page.',
+              'Visually apealing radio / checkbox style image select field.',
             ],
           },
         ],
@@ -68,9 +61,8 @@ const changelogInfo = {
       fixed: {
         label: 'Fixed',
         list: [
-          'Currency field options hide not working issue.',
-          'ACF integration not working in Bit Form FREE version.',
-          'Number field validation error if the value is 0.',
+          'Active Campaign integrations issue for over 20 tags.',
+          'Multi Step Form not submits if progress bar is hidden.',
         ],
       },
     },

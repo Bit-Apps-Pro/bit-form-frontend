@@ -48,7 +48,6 @@ function EditGroundhogg({ formFields, setIntegration, integrations, allIntegURL 
       <IntegrationStepThree
         edit
         saveConfig={() => saveIntegConfig(integrations, setIntegration, allIntegURL, groundhoggConf, history, id, 1)}
-        disabled={(groundhoggConf.mainAction === '2' ? isDisabled : (!((groundhoggConf.field_map?.length >= 2)))) || isLoading}
       />
       <br />
     </div>

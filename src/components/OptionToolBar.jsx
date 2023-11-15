@@ -82,6 +82,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
       navigate(`${path}/theme-customize/quick-tweaks`, { replace: true })
     }
     removeUnuseStylesAndUpdateState()
+    reCalculateFldHeights()
   }
 
   const formFieldButtonHandler = () => {
@@ -97,6 +98,7 @@ export default function OptionToolBar({ showToolBar, setShowToolbar, isV2Form })
       navigate(`${path}/fields-list`, { replace: true })
     }
     removeUnuseStylesAndUpdateState()
+    reCalculateFldHeights()
   }
 
   const handleRightPanel = (currentActive) => {

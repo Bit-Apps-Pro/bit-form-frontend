@@ -107,7 +107,9 @@ function ImageSelectFieldSettings() {
       type: 'image_columns_update',
       state: { fields: allFields, styles: newStyles, fldKey },
     })
-    reCalculateFldHeights(fldKey)
+    setTimeout(() => {
+      reCalculateFldHeights(fldKey)
+    }, 100)
   }
   if (isDev) {
     window.selectedFieldData = fieldData
@@ -207,7 +209,6 @@ function ImageSelectFieldSettings() {
         title={__('Item Size')}
         className={css(FieldStyle.fieldSection)}
         isPro
-        proProperty="optionColumn"
         tip={__("Specify item's minimum size (in pixels)")}
       >
         <div className={css(FieldStyle.placeholder)}>
@@ -232,7 +233,6 @@ function ImageSelectFieldSettings() {
         title={__('Check Position')}
         className={css(FieldStyle.fieldSection)}
         isPro
-        proProperty="optionColumn"
         tip={__('Specify the check position.')}
       >
         <div className={css(style.tikPosIcn)}>

@@ -7,6 +7,7 @@ import { Link, NavLink, Route, Routes, useLocation } from 'react-router-dom'
 import logo from '../logo.svg'
 import { $bits, $unsplashMdl } from './GlobalStates/GlobalStates'
 import { __ } from './Utils/i18nwrap'
+import CashbackModal from './components/CashbackModal'
 import ChangelogToggle from './components/ChangelogToggle'
 import UnsplashImageViewer from './components/CompSettings/StyleCustomize/UnsplashImageViewer'
 import BuilderLoader from './components/Loaders/BuilderLoader'
@@ -100,6 +101,7 @@ export default function App() {
               </nav>
             </div>
             <div className="flx flx-center">
+              <CashbackModal />
               <ChangelogToggle />
               {bits.canRollbackToV1 && (
                 <RollbackButton />
