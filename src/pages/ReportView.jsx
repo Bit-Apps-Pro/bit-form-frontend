@@ -5,7 +5,9 @@ import { useFela } from 'react-fela'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useReactToPrint } from 'react-to-print'
 import { $fields, $reportSelector } from '../GlobalStates/GlobalStates'
+import PrintIcon from '../Icons/PrintIcon'
 import { dateTimeFormatter, generateReportData, getLastNthDate, isObjectEmpty, makeFieldsArrByLabel } from '../Utils/Helpers'
+import filterFieldTypesForReport from '../Utils/StaticData/filterFieldTypesForReport'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
 import Loader from '../components/Loaders/Loader'
@@ -18,8 +20,6 @@ import Cooltip from '../components/Utilities/Cooltip'
 import DropDown from '../components/Utilities/DropDown'
 import TableCheckBox from '../components/Utilities/TableCheckBox'
 import ut from '../styles/2.utilities'
-import Tip from '../components/Utilities/Tip'
-import PrintIcon from '../Icons/PrintIcon'
 
 const FieldReport = loadable(() => import('../components/ReportView/FieldReport'), { fallback: <Loader className="g-c" style={{ height: 300, width: 500 }} /> })
 
@@ -109,7 +109,7 @@ export default function ReportView() {
   }
 
   const firstResp = allResp?.[0] || {}
-  const allFields = makeFieldsArrByLabel(fields)
+  const allFields = makeFieldsArrByLabel(fields, [], filterFieldTypesForReport)
   const fieldOption = allFields.filter(fld => fld.key in firstResp && firstResp[fld.key] !== null).map((fld) => ({ label: fld.name, value: fld.key })) || []
 
   const setAllowedReportedFields = (val) => {
