@@ -63,7 +63,7 @@ export default function CaptchaList() {
 
         {captcha?.map((captch, i) => (
           <Link
-            to={`${pathname}/${captch.type}`}
+            to={`${pathname}/${captch.path}`}
             role="button"
             className={css(style.itegCard)}
             key={`captch-${i + 3}`}
@@ -103,7 +103,7 @@ export default function CaptchaList() {
             <div className={`${css(style.actionWrp)} action-wrp`}>
               <Tip msg={__('Edit')}>
                 <Link
-                  to={`${pathname}/${captch.type}`}
+                  to={`${pathname}/${captch.path}`}
                   className={`${css(style.actionBtn)}`}
                   type="button"
                 >

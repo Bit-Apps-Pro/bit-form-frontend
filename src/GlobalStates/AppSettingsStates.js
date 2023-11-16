@@ -28,6 +28,20 @@ const getReCaptchaState = ver => {
   }
 }
 
+const getTurnstileState = () => {
+  if (!window.bits) return {}
+  if (window.bits?.allFormSettings?.turnstileCaptcha) {
+    const { turnstileCaptcha } = window.bits.allFormSettings
+    if (Array.isArray(turnstileCaptcha)) return turnstileCaptcha[0]
+    return turnstileCaptcha
+  }
+  return {
+    siteKey: '',
+    secretKey: '',
+  }
+}
+
 export const $payments = atom(paymentsState())
 export const $reCaptchaV2 = atom(getReCaptchaState('v2'))
 export const $reCaptchaV3 = atom(getReCaptchaState('v3'))
+export const $turnstile = atom(getTurnstileState())
