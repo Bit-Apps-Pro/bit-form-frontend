@@ -24,7 +24,12 @@ export default function GoogleCaptcha({ ver }) {
   const saveCaptcha = version => {
     setLoading(true)
     const reCaptcha = version === 'v2' ? reCaptchaV2 : reCaptchaV3
-    bitsFetch({ version, reCaptcha }, 'bitforms_save_grecaptcha')
+    const data = {
+      reCaptcha,
+      integrationName: 'google reCaptcha',
+      integrationType: version === 'v2' ? 'gReCaptcha' : 'gReCaptchaV3',
+    }
+    bitsFetch(data, 'bitforms_save_grecaptcha')
       .then(res => {
         if (res !== undefined && res.success) {
           if (res.data && res.data.id) {
@@ -55,6 +60,7 @@ export default function GoogleCaptcha({ ver }) {
 
   // remove http & https from site url
   const siteURL = bits.siteURL.replace(/(^\w+:|^)\/\//, '')
+
   return (
     <div>
       <SnackMsg snack={snack} setSnackbar={setSnack} />
@@ -133,7 +139,7 @@ export default function GoogleCaptcha({ ver }) {
           className={`${css(app.btn)} btn-md f-right blue`}
           disabled={loading}
         >
-          {__('Save')}
+          {(ver === 'v2' ? reCaptchaV2?.id : reCaptchaV3?.id) ? __('Update') : __('Save')}
           {loading && <LoaderSm size={20} clr="#fff" className="ml-2" />}
         </button>
       </div>
