@@ -11,7 +11,7 @@ import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ChevronDownIcn from '../../Icons/ChevronDownIcn'
-import TrunstileIcn from '../../Icons/CloudflareIcn'
+import TurnstileIcn from '../../Icons/CloudflareIcn'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import CurrencyIcn from '../../Icons/CurrencyIcn'
@@ -624,38 +624,38 @@ export const toolsList = [
       },
     },
   },
-  {
-    name: __('Math Captcha'),
-    keywords: 'ReCaptcha, Math, MathCaptcha, spam protection, bot protection',
-    icn: <MathOperatorsIcn size="22" stroke={1} />,
-    pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
-    elm: {
-      typ: 'math-captcha',
-      valid: {},
-      config: {
-        theme: 'light',
-        size: 'normal',
-      },
-    },
-  },
-  {
-    name: __('hCaptcha'),
-    keywords: 'ReCaptcha, hCaptcha, Captcha, spam protection, bot protection',
-    icn: <HCaptchaIcn size="23" stroke={1} />,
-    pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
-    elm: {
-      typ: 'hcaptcha',
-      valid: {},
-      config: {
-        theme: 'light',
-        size: 'normal',
-      },
-    },
-  },
+  // {
+  //   name: __('Math Captcha'),
+  //   keywords: 'ReCaptcha, Math, MathCaptcha, spam protection, bot protection',
+  //   icn: <MathOperatorsIcn size="22" stroke={1} />,
+  //   pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+  //   elm: {
+  //     typ: 'math-captcha',
+  //     valid: {},
+  //     config: {
+  //       theme: 'light',
+  //       size: 'normal',
+  //     },
+  //   },
+  // },
+  // {
+  //   name: __('hCaptcha'),
+  //   keywords: 'ReCaptcha, hCaptcha, Captcha, spam protection, bot protection',
+  //   icn: <HCaptchaIcn size="23" stroke={1} />,
+  //   pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+  //   elm: {
+  //     typ: 'hcaptcha',
+  //     valid: {},
+  //     config: {
+  //       theme: 'light',
+  //       size: 'normal',
+  //     },
+  //   },
+  // },
   {
     name: __('Turnstile'),
-    keywords: 'ReCaptcha, hCaptcha, Captcha, Turnstile, clowdflare, spam protection, bot protection',
-    icn: <TrunstileIcn size="23" stroke={1} />,
+    keywords: 'ReCaptcha, hCaptcha, Captcha, Turnstile, cloudflare, spam protection, bot protection',
+    icn: <TurnstileIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     elm: {
       typ: 'turnstile',
@@ -663,6 +663,7 @@ export const toolsList = [
       config: {
         theme: 'light',
         size: 'normal',
+        language: 'auto',
       },
     },
   },
