@@ -31,6 +31,7 @@ import TextArea from './Fields/TextArea'
 import TextField from './Fields/TextField'
 import TitleField from './Fields/TitleField'
 import ImageSelectField from './Fields/ImageSelectField'
+import TurnstileField from './Fields/TurnstileField'
 
 // import NewDropDown from './Fields/NewDropDown'
 /*
@@ -124,6 +125,8 @@ function MapComponents({
       return <SignatureField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'image-select':
       return <ImageSelectField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
+    case 'turnstile':
+      return <TurnstileField fieldKey={fieldKey} styleClasses={styles.fields[fieldKey]?.classes} formID={formID} attr={atts} onBlurHandler={onBlurHandler} resetFieldValue={resetFieldValue} />
     case 'blank':
       return <div className="blnk-blk drag" />
     default:
