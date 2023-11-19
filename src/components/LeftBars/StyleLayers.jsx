@@ -989,7 +989,7 @@ function StyleLayers() {
                   />
                 </>
               )}
-              {!fldData.typ.match(/^(button|divider|title|image|html|razorpay|paypal|recaptcha|section|repeater)$/) && (
+              {!fldData.typ.match(/^(button|divider|title|image|html|razorpay|paypal|recaptcha|section|repeater|turnstile)$/) && (
                 <NavBtn
                   subRoute={fldKey}
                   route="err-msg"

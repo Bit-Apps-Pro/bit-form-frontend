@@ -60,6 +60,7 @@ import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
+import CloudflareIcn from '../../Icons/CloudflareIcn'
 
 export const toolsList = [
   {
@@ -655,13 +656,13 @@ export const toolsList = [
   {
     name: __('Turnstile'),
     keywords: 'ReCaptcha, hCaptcha, Captcha, Turnstile, cloudflare, spam protection, bot protection',
-    icn: <TurnstileIcn size="20" />,
+    icn: <CloudflareIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
     elm: {
       typ: 'turnstile',
       valid: {},
       config: {
-        theme: 'light',
+        theme: 'auto',
         size: 'normal',
         language: 'auto',
       },

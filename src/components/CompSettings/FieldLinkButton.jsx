@@ -41,6 +41,7 @@ import WeekIcn from '../../Icons/WeekIcn'
 import { ucFirst } from '../../Utils/Helpers'
 import { selectInGrid } from '../../Utils/globalHelpers'
 import { __ } from '../../Utils/i18nwrap'
+import CloudflareIcn from '../../Icons/CloudflareIcn'
 
 export default function FieldLinkBtn({ icn, title, subTitle, fieldKey }) {
   const { formType, formID } = useParams()
@@ -129,6 +130,7 @@ const FieldIcon = icon => {
     rating: <ReviewStarIcn size="18" />,
     signature: <SignaturePenIcn size="18" />,
     'image-select': <ImageSelectIcn size="16" />,
+    turnstile: <CloudflareIcn size="16" />,
   }
   return icons[icon]
 }

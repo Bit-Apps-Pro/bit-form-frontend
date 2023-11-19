@@ -1190,6 +1190,12 @@ const editorConfig = {
       properties: { ...fieldWrpCssProps },
     },
   },
+  turnstile: {
+    'fld-wrp': {
+      states: ['hover'],
+      properties: { ...fieldWrpCssProps },
+    },
+  },
   'html-select': {
     ...textFldCssProps,
     'slct-optn': {
