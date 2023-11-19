@@ -1,6 +1,6 @@
 // import ReactEcharts from 'echarts-for-react'
 import ReactEChartsCore from 'echarts-for-react/lib/core'
-import { BarChart as BarEChart } from 'echarts/charts'
+import { LineChart as LineEChart } from 'echarts/charts'
 import { GridComponent, TitleComponent, TooltipComponent } from 'echarts/components'
 import * as echarts from 'echarts/core'
 import {
@@ -8,27 +8,18 @@ import {
 } from 'echarts/renderers'
 
 echarts.use(
-  [TitleComponent, TooltipComponent, GridComponent, BarEChart, CanvasRenderer],
+  [TitleComponent, TooltipComponent, GridComponent, LineEChart, CanvasRenderer],
 )
 
-export default function Barchart({ dataList, field, title, viewType }) {
+export default function Barchart({ dataList, field, title }) {
   const data = dataList.map((item) => item.value)
   const labels = dataList.map((item) => item.label)
   const xAxis = {
     type: 'category',
     data: labels,
-    axisTick: {
-      alignWithLabel: true,
-    },
   }
   const yAxis = {
     type: 'value',
-  }
-  if (viewType === 'vBar') {
-    xAxis.type = 'value'
-    delete xAxis.data
-    yAxis.type = 'category'
-    yAxis.data = labels
   }
   const option = {
     tooltip: {
@@ -48,7 +39,7 @@ export default function Barchart({ dataList, field, title, viewType }) {
     series: [
       {
         name: 'Total',
-        type: 'bar',
+        type: 'line',
         barWidth: '60%',
         data,
       },

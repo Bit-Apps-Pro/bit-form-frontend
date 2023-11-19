@@ -191,6 +191,16 @@ export default function signatureStyle_1_bitformDefault({ fk, type, breakpoint, 
         'pointer-events': 'none',
         opacity: '0.5',
       },
+      [`.${fk}-signature-iframe`]: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        opacity: 0,
+        'pointer-events': 'none',
+        border: 'none',
+      },
     }
   }
   return {}

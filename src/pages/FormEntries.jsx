@@ -621,10 +621,11 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
               setRefreshResp={setRefreshResp}
             />
           )}
+          leftHeaderClasses={css(app.leftHeader)}
           rightHeader={(
             <>
-              <Btn className={css(ut.mr1)} size="sm" onClick={() => navigate(`/form/report-view/${formType}/${formID}`)}>
-                {__('Analytics Report')}
+              <Btn className={css(ut.mr2)} size="sm" onClick={() => navigate(`/form/report-view/${formType}/${formID}`)}>
+                {__('View Analytics Report')}
               </Btn>
               <ExportImportMenu
                 data={allResp}

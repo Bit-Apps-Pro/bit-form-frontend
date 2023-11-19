@@ -20,6 +20,8 @@ export default class BitSignatureField {
 
   #document = null
 
+  #window = null
+
   #fieldKey = null
 
   #signatureFld = null
@@ -34,6 +36,8 @@ export default class BitSignatureField {
 
   constructor(selector, config) {
     this.#document = config.document || document
+
+    this.#window = config.window || window
     if (typeof selector === 'string') {
       this.#signatureFldWrp = this.#document.querySelector(selector)
     } else {
@@ -65,10 +69,11 @@ export default class BitSignatureField {
     this.#redoButton = this.#select(`.${this.#fieldKey}-redo-btn`)
     this.#signatureFld = this.#select(`.${this.#fieldKey}-signature-fld`)
     this.#canvas.style.cursor = `url(${this.#assetsURL}pen.ico), crosshair`
+    const signatureIframe = this.#select(`.${this.#fieldKey}-signature-iframe`)
 
     this.#signaturePad = new SignaturePad(this.#canvas, this.#options)
 
-    window.onresize = this.resizeCanvas
+    signatureIframe.contentWindow.addEventListener('resize', () => { this.resizeCanvas() })
 
     this.resizeCanvas()
     this.#clearCanvas()
@@ -106,7 +111,7 @@ export default class BitSignatureField {
   }
 
   resizeCanvas() {
-    const ratio = Math.max(window.devicePixelRatio || 1, 1)
+    const ratio = Math.max(this.#window.devicePixelRatio || 1, 1)
 
     this.#canvas.width = this.#canvas.offsetWidth * ratio
     this.#canvas.height = this.#canvas.offsetHeight * ratio

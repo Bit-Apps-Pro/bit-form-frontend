@@ -1,18 +1,16 @@
-import { useState, useRef } from 'react'
+import { useAtomValue } from 'jotai'
+import { useState } from 'react'
 import { DateRange } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 import { useFela } from 'react-fela'
-import { useAtomValue } from 'jotai'
 import { hideAll } from 'tippy.js'
 import { $reportSelector } from '../../GlobalStates/GlobalStates'
 import CalendarIcn from '../../Icons/CalendarIcn'
-import CloseIcn from '../../Icons/CloseIcn'
-import ut from '../../styles/2.utilities'
-import tableStyle from '../../styles/table.style'
 import { dateTimeFormatter, getLastNthDate } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
-import Btn from '../Utilities/Btn'
+import ut from '../../styles/2.utilities'
+import tableStyle from '../../styles/table.style'
 import Downmenu from '../Utilities/Downmenu'
 import Tip from '../Utilities/Tip'
 
@@ -71,7 +69,7 @@ export default function DateFilter({ fetchData, className }) {
       <Downmenu>
         <div className="flx">
           {(isFiniteDate(data.startDate) && isFiniteDate(data.endDate)) && (
-            <div className="btcd-custom-date-range white ml-2">
+            <div className="btcd-custom-date-range white">
               <span className="m-a">
                 &nbsp;
                 {`${dateTimeFormatter(data.startDate, 'Y-m-d')}  to  ${dateTimeFormatter(data.endDate, 'Y-m-d')}`}
@@ -100,12 +98,13 @@ export default function DateFilter({ fetchData, className }) {
         </div>
         <div style={{ minHeight: '200px !important' }} className={css(tableStyle.dataRange, style.calenderWrap)}>
           <div className={css(style.preDefDateWrap)}>
-            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(7)}>Last 1 Week</span>
-            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(14)}>Last 2 Week</span>
-            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(30)}>Last 1 Month</span>
-            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(60)}>Last 2 Month</span>
-            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(91)}>Last 3 Month</span>
-            <span className={css(style.preDefDate)} onClick={() => setPredefinedDate(182)}>Last 6 Month</span>
+            <button type="button" className={css(style.preDefDate)} onClick={() => setPredefinedDate(7)}>Last 1 Week</button>
+            <button type="button" className={css(style.preDefDate)} onClick={() => setPredefinedDate(14)}>Last 2 Week</button>
+            <button type="button" className={css(style.preDefDate)} onClick={() => setPredefinedDate(30)}>Last 1 Month</button>
+            <button type="button" className={css(style.preDefDate)} onClick={() => setPredefinedDate(60)}>Last 2 Month</button>
+            <button type="button" className={css(style.preDefDate)} onClick={() => setPredefinedDate(91)}>Last 3 Month</button>
+            <button type="button" className={css(style.preDefDate)} onClick={() => setPredefinedDate(182)}>Last 6 Month</button>
+            <button type="button" className={css(style.preDefDate)} onClick={() => setPredefinedDate(365)}>Last 1 Year</button>
           </div>
           <DateRange
             onChange={item => dateChangeAction(item.date)}
@@ -143,6 +142,7 @@ const style = {
     mr: 5,
   },
   preDefDate: {
+    b: 0,
     p: 5,
     bd: '#f0f0f1',
     brs: 5,
