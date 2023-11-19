@@ -186,8 +186,6 @@ export default function SignatureField({ fieldKey, attr, formID, styleClasses })
               </button>
             )}
           </div>
-
-          <iframe title="Signature Iframe" className={`${fieldKey}-signature-iframe`} />
         </div>
       </InputWrapper>
     </>
