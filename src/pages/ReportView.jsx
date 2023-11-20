@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useReactToPrint } from 'react-to-print'
 import { $fields, $reportSelector } from '../GlobalStates/GlobalStates'
 import PrintIcon from '../Icons/PrintIcon'
-import { dateTimeFormatter, generateReportData, getLastNthDate, isObjectEmpty, makeFieldsArrByLabel } from '../Utils/Helpers'
+import { IS_PRO, dateTimeFormatter, generateReportData, getLastNthDate, isObjectEmpty, makeFieldsArrByLabel } from '../Utils/Helpers'
 import filterFieldTypesForReport from '../Utils/StaticData/filterFieldTypesForReport'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
@@ -20,6 +20,8 @@ import Cooltip from '../components/Utilities/Cooltip'
 import DropDown from '../components/Utilities/DropDown'
 import TableCheckBox from '../components/Utilities/TableCheckBox'
 import ut from '../styles/2.utilities'
+import ProBadgeOverlay from '../components/CompSettings/StyleCustomize/ChildComp/ProBadgeOverlay'
+import ProOverlay from '../components/CompSettings/StyleCustomize/ChildComp/ProOverlay'
 
 const FieldReport = loadable(() => import('../components/ReportView/FieldReport'), { fallback: <Loader className="g-c" style={{ height: 300, width: 500 }} /> })
 
@@ -156,6 +158,9 @@ export default function ReportView() {
                 />
               ))
             }
+            {!Object.entries(reportData?.fieldData).length && (
+              <p>Please select fields to view reports individually</p>
+            )}
           </div>
           <div className={`${css(style.printFooter)} print-footer`}>
             Thank you for using Bit Form. If you like the plugin, please give us a
@@ -191,18 +196,23 @@ export default function ReportView() {
                 ))
               }
             </div>
-            <DropDown
-              className={`w-10 ${css(style.msl)}`}
-              titleClassName={css(ut.sectionTitle)}
-              title={__('Select Fields for Report:')}
-              isMultiple
-              addable
-              options={fieldOption}
-              placeholder={__('Select Field')}
-              jsonValue
-              action={setAllowedReportedFields}
-              value={reportedFields}
-            />
+            <div className={css({ pn: 'relative' })}>
+              {!IS_PRO && <ProBadgeOverlay />}
+              <DropDown
+                className={`w-10 ${css(style.msl)}`}
+                titleClassName={css(ut.sectionTitle)}
+                title={__('Select Fields for Report:')}
+                isMultiple
+                addable
+                options={fieldOption}
+                placeholder={__('Select Field')}
+                jsonValue
+                action={setAllowedReportedFields}
+                value={reportedFields}
+                disabled={!IS_PRO}
+              />
+            </div>
+
           </div>
           <div className="other-option">
             <h4 className={css(ut.mt3, ut.mb1)}>Other Info</h4>
