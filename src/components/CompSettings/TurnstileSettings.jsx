@@ -26,13 +26,13 @@ export default function TurnstileSettings() {
   const [styles, setStyles] = useAtom($styles)
   const [fields, setFields] = useAtom($fields)
   const fieldData = deepCopy(fields[fldKey])
-  const { theme, size, language } = fieldData.config
+  const { theme, size, language, appearance } = fieldData.config
   const fldStyleObj = styles?.fields?.[fldKey]
   const { fieldType, classes } = fldStyleObj
   const wrpCLass = `.${fldKey}-fld-wrp`
   const { 'justify-content': alignment } = classes[wrpCLass] || ''
 
-  function setConfigValue(propName, value) {
+  const setConfigValue = (propName, value) => {
     fieldData.config[propName] = value
     // eslint-disable-next-line no-param-reassign
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
@@ -125,6 +125,30 @@ export default function TurnstileSettings() {
             {turnstileLanguage.map((item) => (
               <option key={item.code} value={item.code}>{item.name}</option>
             ))}
+
+          </select>
+        </div>
+      </SimpleAccordion>
+      <FieldSettingsDivider />
+
+      <SimpleAccordion
+        id="language-stng"
+        title={__('Appearance')}
+        className={css(FieldStyle.fieldSection)}
+        open
+      >
+        <div className={css(FieldStyle.placeholder)}>
+          <select
+            data-testid="turnstile-appearance"
+            className={css(FieldStyle.input)}
+            aria-label="appearance for Turnstile Field"
+            placeholder="Select appearance here..."
+            value={appearance}
+            onChange={e => setConfigValue('appearance', e.target.value)}
+          >
+            <option value="always">Always (default)</option>
+            <option value="execute">Execute</option>
+            <option value="interaction-only">Interaction Only</option>
 
           </select>
         </div>

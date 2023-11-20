@@ -665,6 +665,7 @@ export const toolsList = [
         theme: 'auto',
         size: 'normal',
         language: 'auto',
+        appearance: 'always',
       },
     },
   },
