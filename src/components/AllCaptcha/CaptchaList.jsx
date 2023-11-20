@@ -6,6 +6,8 @@ import EditIcn from '../../Icons/EditIcn'
 import { __ } from '../../Utils/i18nwrap'
 import style from '../../styles/integrations.style'
 import Tip from '../Utilities/Tip'
+import recaptcha from '../../resource/img/grecaptcha.svg'
+import cloudflare from '../../resource/img/cloudflare.svg'
 
 export default function CaptchaList() {
   const { css } = useFela()
@@ -19,7 +21,7 @@ export default function CaptchaList() {
     {
       name: 'reCaptcha V2',
       type: 'reCaptchaV2',
-      logo: '',
+      logo: recaptcha,
       path: 'reCaptchaV2',
       siteKey: reCaptchaV2?.siteKey,
       secretKey: reCaptchaV2?.secretKey,
@@ -27,7 +29,7 @@ export default function CaptchaList() {
     {
       name: 'reCaptcha V3',
       type: 'reCaptchaV3',
-      logo: '',
+      logo: recaptcha,
       path: 'reCaptchaV3',
       siteKey: reCaptchaV3?.siteKey,
       secretKey: reCaptchaV3?.secretKey,
@@ -41,7 +43,7 @@ export default function CaptchaList() {
     {
       name: 'Turnstile',
       type: 'Cloudflare Turnstile',
-      logo: '',
+      logo: cloudflare,
       path: 'turnstile',
       siteKey: turnstile?.siteKey,
       secretKey: turnstile?.secretKey,
@@ -71,7 +73,7 @@ export default function CaptchaList() {
             <img
               src={captch.logo}
               alt={captch.type}
-              className={css(style.integLogo)}
+              className={css(style.integLogo, { w: 60, h: 60 })}
             />
             <div className="py-1" title={`${captch.name} | ${captch.type}`}>
               <div className={css(style.integTitle)}>
