@@ -14,7 +14,6 @@ const style = {
     pn: 'relative',
     tn: 'border .2s, transform .2s',
     ':hover': {
-      tm: 'translateY(-3px)',
       bcr: 'var(--blue)',
       '& .action-wrp': { dy: 'inline-block!important' },
     },
@@ -53,6 +52,8 @@ const style = {
   integSubtitle: {
     fs: 12,
     cr: 'var(--b-11-50)',
+    dy: 'inline-block',
+    mb: 5,
   },
   actionWrp: {
     pn: 'absolute',
