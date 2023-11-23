@@ -48,26 +48,25 @@ export default function CaptchaList() {
       siteKey: turnstile?.siteKey,
       secretKey: turnstile?.secretKey,
     },
-
   ]
 
   const subStr = str => {
     const len = str.length
     const first = str.substring(0, 5)
     const last = str.substring(len - 5, len)
-    return `${first}*****${last}`
+    return (`${first}*****${last}`)
   }
+
   return (
     <div>
       <h2>{__('reCaptcha Settings')}</h2>
       <div className="btcd-hr" />
-      <div className={`pos-rel ${css(style.integWrp)}`}>
-
+      <div className={`pos-rel ${css(style.integWrp, { flx: 'between', ai: 'normal', flxp: 1 })}`}>
         {captcha?.map((captch, i) => (
           <Link
             to={`${pathname}/${captch.path}`}
             role="button"
-            className={css(style.itegCard)}
+            className={css(style.itegCard, { mr: 0, w: '32%' })}
             key={`captch-${i + 3}`}
           >
             <img
@@ -75,7 +74,7 @@ export default function CaptchaList() {
               alt={captch.type}
               className={css(style.integLogo, { w: 60, h: 60 })}
             />
-            <div className="py-1" title={`${captch.name} | ${captch.type}`}>
+            <div title={`${captch.name} | ${captch.type}`}>
               <div className={css(style.integTitle)}>
                 {captch.name}
               </div>
@@ -98,7 +97,7 @@ export default function CaptchaList() {
               )}
               {(!captch.siteKey && !captch.secretKey) && (
                 <div className={css({ fs: 14, cr: 'red' })}>
-                  Please Configure
+                  Not Configured
                 </div>
               )}
             </div>
