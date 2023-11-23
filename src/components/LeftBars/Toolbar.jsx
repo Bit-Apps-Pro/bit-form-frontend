@@ -661,6 +661,9 @@ export const toolsList = [
     elm: {
       typ: 'turnstile',
       valid: {},
+      layout: {
+        autoHeight: 1,
+      },
       config: {
         theme: 'auto',
         size: 'normal',
