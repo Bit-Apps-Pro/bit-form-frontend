@@ -4,7 +4,7 @@ const style = {
     dy: 'flex',
     ai: 'start',
     flxp: 1,
-    gap: '5px',
+    gap: '10px',
   },
   itegCard: {
     w: 240,
