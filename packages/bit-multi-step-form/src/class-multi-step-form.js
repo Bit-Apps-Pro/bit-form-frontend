@@ -138,7 +138,7 @@ export default class BitMultiStepForm {
     if (!stepLayout) return
     const firstFldKey = stepLayout.layout.lg[0].i
     const fldElm = this.#select(`.btcd-fld-itm.${firstFldKey}`)
-    if (fldElm) scrollToElm(fldElm)
+    if (fldElm) scrollToElm(fldElm, { immediate: true })
   }
 
   #handleStepHeaderChanges(step) {

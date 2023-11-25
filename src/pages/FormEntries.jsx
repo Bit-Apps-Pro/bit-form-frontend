@@ -1,15 +1,15 @@
 /* eslint-disable no-use-before-define */
 import { useAtomValue, useSetAtom } from 'jotai'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 import { useFela } from 'react-fela'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
-  $bits, $fieldLabels, $forms, $nestedLayouts, $reportId,
+  $bits, $fieldLabels, $fields, $forms, $nestedLayouts, $reportId,
   $reportSelector,
   $reports,
 } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
-import { getUploadedFilesArr, splitFileLink, splitFileName } from '../Utils/FormBuilderHelper'
+import { getUploadedFilesArr } from '../Utils/FormBuilderHelper'
 import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
@@ -20,6 +20,7 @@ import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
 import RepeaterDataTable from '../components/RepeaterDataTable'
 import EntriesFilter from '../components/Report/EntriesFilter'
 import FldEntriesByCondition from '../components/Report/FldEntriesByCondition'
+import Btn from '../components/Utilities/Btn'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
 import SnackMsg from '../components/Utilities/SnackMsg'
@@ -27,9 +28,8 @@ import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
 import noData from '../resource/img/nodata.svg'
-import app from '../styles/app.style'
 import ut from '../styles/2.utilities'
-import Btn from '../components/Utilities/Btn'
+import app from '../styles/app.style'
 
 function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const allLabels = useAtomValue($fieldLabels)
@@ -58,10 +58,12 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const rowSl = useRef(0)
   const navigate = useNavigate()
   const { css } = useFela()
+  const fields = useAtomValue($fields)
   const filterFieldType = ['divider', 'image', 'title', 'section']
 
   useEffect(() => {
     const repeatedFieldKeys = Object.entries(nestedLayouts).reduce((acc, [key, val]) => {
+      if (fields[key].typ !== 'repeater') return acc
       val.lg.forEach((itm) => {
         acc.push(itm.i)
       })
