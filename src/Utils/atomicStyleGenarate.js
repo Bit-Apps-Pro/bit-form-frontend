@@ -72,6 +72,12 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
     smDarkStyles: stylesSmDark, // eslint-disable-line prefer-const
   } = removeUnusedStyles()
 
+  // TODO: REMOVE THIS BLOCK OF CODE, IF JCOF IS REFACTORED FOR OBJECTS
+  const { lgLightStyles: staticLgLightStyles, mdLightStyles: staticMdLightStyles, smLightStyles: staticSmLightStyles } = styleMergeWithAtomicClasses
+  if (Array.isArray(staticLgLightStyles.form)) staticLgLightStyles.form = {}
+  if (Array.isArray(staticMdLightStyles.form)) staticMdLightStyles.form = {}
+  if (Array.isArray(staticSmLightStyles.form)) staticSmLightStyles.form = {}
+  // *** END OF BLOCK
   stylesLgLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
   stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
   stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
