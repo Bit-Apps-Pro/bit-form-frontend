@@ -32,6 +32,7 @@ import signature_0_noStyle from './signature_0_noStyle'
 import stripeStyle_0_noStyle from './stripeStyle_0_noStyle'
 import textStyle_0_noStyle from './textStyle_0_noStyle'
 import titleStyle_0_noStyle from './titleStyle_0_noStyle'
+import turnstileStyle_0_noStyle from './turnstileStyle_0_noStyle'
 
 export default function noStyleTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId,
@@ -95,6 +96,8 @@ export default function noStyleTheme({
       return country({ type, fk, direction, breakpoint, colorScheme })
     case 'recaptcha':
       return recaptcha({ type, fk, breakpoint, colorScheme })
+    case 'turnstile':
+      return turnstile({ type, fk, breakpoint, colorScheme })
     case 'file-up':
       return fileUp({ type, fk, breakpoint, colorScheme })
     case 'html-select':
@@ -587,6 +590,18 @@ const recaptcha = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: recaptchaStyle_0_noStyle({ fk, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const turnstile = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'noStyle',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: turnstileStyle_0_noStyle({ fk, breakpoint, colorScheme }),
     }
   }
   return {}
