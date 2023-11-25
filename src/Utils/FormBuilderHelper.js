@@ -1,7 +1,8 @@
 /* eslint-disable no-continue */
 /* eslint-disable no-param-reassign */
+import parse from 'html-react-parser'
 import { create } from 'mutative'
-import { $payments, $reCaptchaV2 } from '../GlobalStates/AppSettingsStates'
+import { $payments, $reCaptchaV2, $turnstile } from '../GlobalStates/AppSettingsStates'
 import { getAtom, setAtom } from '../GlobalStates/BitStore'
 import {
   $additionalSettings,
@@ -230,6 +231,7 @@ const FIELDS_EXTRA_ATTR = {
   stripe: { pro: true, onlyOne: true, setDefaultPayConfig: true },
   'advanced-file-up': { pro: true },
   recaptcha: { onlyOne: true },
+  turnstile: { onlyOne: true },
   submit: { onlyOne: true },
   reset: { onlyOne: true },
   signature: { pro: true },
@@ -243,11 +245,16 @@ const FIELD_FILTER = {
 export const checkFieldsExtraAttr = (field, parentField) => {
   const paymentsIntegs = getAtom($payments)
   const reCaptchaV2 = getAtom($reCaptchaV2)
+  const turnstile = getAtom($turnstile)
   // eslint-disable-next-line no-undef
   const allFields = getAtom($fields)
   const additionalSettings = getAtom($additionalSettings)
+  const bits = getAtom($bits)
+  const bitformBaseUrl = `${bits.siteURL}${bits.baseURL}`
   if (field.lbl === 'Select Country' && !IS_PRO) {
-    return { validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.') }
+    return {
+      validType: 'pro', msg: __('Country Field available in Pro version of Bit Form.'),
+    }
   }
 
   if (field.typ === 'recaptcha' && additionalSettings?.enabled?.recaptchav3) {
@@ -255,7 +262,11 @@ export const checkFieldsExtraAttr = (field, parentField) => {
   }
 
   if (field.typ === 'recaptcha' && (!reCaptchaV2?.secretKey || !reCaptchaV2?.siteKey)) {
-    return { validType: 'keyEmpty', msg: __('To use ReCaptchaV2, you must set site key and secret from app settings') }
+    return { validType: 'keyEmpty', msg: parse(__(`<p>To use reCaptchav2, you must set site key and secret from <a href="${bitformBaseUrl}/app-settings/recaptcha/reCaptchaV2" target="_blank">app settings</a>. After completing the setup, please refresh this page to use the reCaptchav2.</p>`)) }
+  }
+
+  if (field.typ === 'turnstile' && (!turnstile?.secretKey || !turnstile?.siteKey)) {
+    return { validType: 'keyEmpty', msg: parse(__(`<p>To use Turnstile, you must set site key and secret from <a href="${bitformBaseUrl}/app-settings/recaptcha/turnstile">app settings</a>. After completing the setup, please refresh this page to use the turnstile.</p>`)) }
   }
 
   // eslint-disable-next-line no-undef
@@ -922,14 +933,6 @@ export const generateSessionKey = key => {
 }
 
 export async function addToSessionStorage(key, value, { strType } = {}) {
-  return false
-  if (!key) return
-  let newVal = value
-  if (typeof value !== 'string') {
-    if (strType === 'json') newVal = JSON.stringify(value)
-    if (strType === 'jcof') newVal = JCOF.stringify(value)
-  }
-  sessionStorage.setItem(key, newVal)
 }
 
 export const getSessionStorageStates = (key, { strType } = {}) => {
