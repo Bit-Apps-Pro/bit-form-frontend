@@ -658,6 +658,7 @@ export const toolsList = [
     keywords: 'ReCaptcha, hCaptcha, Captcha, Turnstile, cloudflare, spam protection, bot protection',
     icn: <CloudflareIcn size="20" />,
     pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+    new: true,
     elm: {
       typ: 'turnstile',
       valid: {},
@@ -1061,7 +1062,6 @@ export const toolsList = [
     keywords: 'Image, Image select, Radio button, Choice, Single Choice, Radio Group, Check Box, Mark, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
     icn: <ImageSelectIcn size="20" />,
     pos: { h: 140, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'image-select',
       lbl: __('Image Select'),
