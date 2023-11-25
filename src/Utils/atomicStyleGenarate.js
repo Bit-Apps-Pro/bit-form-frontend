@@ -78,9 +78,9 @@ export default function atomicStyleGenarate({ sortedLayout, atomicClassSuffix = 
   if (Array.isArray(staticMdLightStyles.form)) staticMdLightStyles.form = {}
   if (Array.isArray(staticSmLightStyles.form)) staticSmLightStyles.form = {}
   // *** END OF BLOCK
-  stylesLgLight = mergeNestedObj(stylesLgLight, styleMergeWithAtomicClasses.lgLightStyles)
-  stylesMdLight = mergeNestedObj(stylesMdLight, styleMergeWithAtomicClasses.mdLightStyles)
-  stylesSmLight = mergeNestedObj(stylesSmLight, styleMergeWithAtomicClasses.smLightStyles)
+  stylesLgLight = mergeNestedObj(stylesLgLight, staticLgLightStyles)
+  stylesMdLight = mergeNestedObj(stylesMdLight, staticMdLightStyles)
+  stylesSmLight = mergeNestedObj(stylesSmLight, staticSmLightStyles)
 
   const themeVarsLgLight = getAtom($themeVarsLgLight)
   const themeVarsMdLight = getAtom($themeVarsMdLight)
