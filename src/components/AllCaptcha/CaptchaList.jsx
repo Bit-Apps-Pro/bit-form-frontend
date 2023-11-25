@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai'
 import { useFela } from 'react-fela'
 import { Link, useLocation } from 'react-router-dom'
+import { useState } from 'react'
 import { $reCaptchaV2, $reCaptchaV3, $turnstile } from '../../GlobalStates/AppSettingsStates'
 import EditIcn from '../../Icons/EditIcn'
 import { __ } from '../../Utils/i18nwrap'
@@ -16,6 +17,7 @@ export default function CaptchaList() {
   const reCaptchaV2 = useAtomValue($reCaptchaV2)
   const reCaptchaV3 = useAtomValue($reCaptchaV3)
   const turnstile = useAtomValue($turnstile)
+  const [searchTxt, setSearchTxt] = useState('')
 
   const captcha = [
     {
@@ -50,6 +52,8 @@ export default function CaptchaList() {
     },
   ]
 
+  const availableCaptchas = captcha.filter(c => c.name.toLowerCase().includes(searchTxt) || c.type.toLowerCase().includes(searchTxt))
+
   const subStr = str => {
     const len = str.length
     const first = str.substring(0, 5)
@@ -61,8 +65,15 @@ export default function CaptchaList() {
     <div>
       <h2>{__('reCaptcha Settings')}</h2>
       <div className="btcd-hr" />
-      <div className={`pos-rel ${css(style.integWrp, { flx: 'between', ai: 'normal', flxp: 1 })}`}>
-        {captcha?.map((captch, i) => (
+      <input
+        aria-label="Search..."
+        type="search"
+        className="btcd-paper-inp w-5 mt-3"
+        onChange={e => setSearchTxt(e.target.value.toLowerCase())}
+        placeholder="Search..."
+      />
+      <div className={`pos-rel ${css(style.integWrp, { flx: 1, ai: 'normal', flxp: 1 })}`}>
+        {availableCaptchas?.map((captch, i) => (
           <Link
             to={`${pathname}/${captch.path}`}
             role="button"
