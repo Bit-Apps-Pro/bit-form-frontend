@@ -1,4 +1,4 @@
-import parse from 'html-react-parser';
+import parse from 'html-react-parser'
 
 export default function RenderHtml({ html }) {
   try {
