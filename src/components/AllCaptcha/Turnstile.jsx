@@ -175,7 +175,7 @@ export default function Turnstile() {
           </p>
         </div>
         <div className="mt-2">
-          <span>{__('Preview')}</span>
+          {/* <span>{__('Preview')}</span> */}
           <div className="turnstile-wrp" ref={turnstileWrapElmRef}>
             <div className="turnstile-captcha-preview" />
           </div>
