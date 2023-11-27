@@ -68,6 +68,30 @@ const changelogInfo = {
       },
     },
   },
+  '2.9.0': {
+    date: '27 November, 2023',
+    changes: {
+      added: {
+        label: 'Added',
+        list: [
+          {
+            label: (<b>Cloudflare Turnstile</b>),
+            tag: 'new',
+            list: [
+              'Protect your form from spam and bots with Cloudflare Turnstile captcha',
+            ],
+          },
+        ],
+      },
+      coming: {
+        label: <b>Coming Soon</b>,
+        list: [
+          'Conversational Form',
+          'Frontend Entry View, Edit & Delete (CRUD)',
+        ],
+      },
+    },
+  },
 }
 
 export default changelogInfo
