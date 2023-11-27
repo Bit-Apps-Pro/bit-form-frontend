@@ -24,4 +24,8 @@ export default function bfReset(contentId, customHook = false) {
   if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
     window?.grecaptcha?.reset()
   }
+
+  if (props.turnstileSiteKey) {
+    window?.turnstile?.reset()
+  }
 }

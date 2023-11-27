@@ -10,7 +10,6 @@ export default function TurnstileField({ fieldKey, styleClasses }) {
   const { styleMode } = useAtomValue($flags)
   const isHidden = fieldData.hidden?.includes(breakpoint) || false
 
-  console.log(fieldData)
   return (
     <>
       <RenderStyle styleClasses={styleClasses} />
