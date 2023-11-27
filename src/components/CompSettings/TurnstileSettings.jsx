@@ -147,9 +147,7 @@ export default function TurnstileSettings() {
             onChange={e => setConfigValue('appearance', e.target.value)}
           >
             <option value="always">Always (default)</option>
-            <option value="execute">Execute</option>
             <option value="interaction-only">Interaction Only</option>
-
           </select>
         </div>
       </SimpleAccordion>
