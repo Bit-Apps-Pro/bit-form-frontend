@@ -16,7 +16,7 @@ export const packagesFileLists = {
   'bit-filepond-plugin-image-validate-size': ['bit-filepond-plugin-image-validate-size'],
   'bit-filepond-plugin-media-preview': ['bit-filepond-plugin-media-preview'],
   'bit-form-abandonment': ['bit-form-abandonment', 'saveFormProgress', 'setFieldValues', 'autoSavePartial'],
-  'bit-frontend': ['hidden-token-field', 'bitsFetchFront', 'submit-form', 'customFieldsReset', 'advancedFileHandle', 'decisionFldHandle', 'validate-focus', 'bitform-init', 'bitform-elementor'],
+  'bit-frontend': ['hidden-token-field', 'bitsFetchFront', 'submit-form', 'customFieldsReset', 'advancedFileHandle', 'decisionFldHandle', 'validate-focus', 'bitform-init', 'bitform-elementor', 'resetPlaceholders'],
   'bit-helpers': ['observeElm', 'bfSelect', 'bfReset', 'setBFMsg', 'bfValidationErrMsg', 'setHiddenFld', 'paymentSubmitResponse', 'isFormValidatedWithoutError', 'setStyleProperty', 'scrollToElm', 'moveToFirstErrFld', 'getFldKeyAndRowIndx'],
   'bit-page-lifecycle': ['bit-page-lifecycle'],
   'bit-paypal-field': ['bit-paypal-field'],

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useFela } from 'react-fela'
 import toast from 'react-hot-toast'
-import app from '../../styles/app.style'
 import bitsFetch from '../../Utils/bitsFetch'
 import { __ } from '../../Utils/i18nwrap'
+import app from '../../styles/app.style'
 import LoaderSm from '../Loaders/LoaderSm'
 import CheckBox from '../Utilities/CheckBox'
 
@@ -86,7 +86,7 @@ export default function SMTPConfigForm({ mail, setMail, status, smtpStatus }) {
       <small className="d-blk mt-3">
         <a
           className="btcd-link"
-          href="https://docs.form.bitapps.pro/wpbitform-form-settings#smtp-configuration"
+          href="https://bitapps.pro/docs/bit-form/form-settings/#smtp-configuration"
           target="_blank"
           rel="noreferrer"
         >
