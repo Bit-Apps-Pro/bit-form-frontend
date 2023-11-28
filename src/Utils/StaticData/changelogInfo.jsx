@@ -83,6 +83,12 @@ const changelogInfo = {
           },
         ],
       },
+      fixed: {
+        label: 'Fixed',
+        list: [
+          'Forms not updating for type issue',
+        ],
+      },
       coming: {
         label: <b>Coming Soon</b>,
         list: [
