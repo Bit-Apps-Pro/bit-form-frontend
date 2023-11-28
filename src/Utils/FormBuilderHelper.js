@@ -15,7 +15,7 @@ import { $themeColors } from '../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../GlobalStates/ThemeVarsState'
 import { addDefaultStyleClasses, sortArrOfObjByMultipleProps } from '../components/style-new/styleHelpers'
 import { IS_PRO, deepCopy } from './Helpers'
-import paymentFields from './StaticData/paymentFields'
+import { filterFieldTypesForRepeater, filterFieldTypesForSectionField } from './StaticData/allStaticArrays'
 import proHelperData from './StaticData/proHelperData'
 import { JCOF, mergeNestedObj, selectInGrid } from './globalHelpers'
 import { compactResponsiveLayouts } from './gridLayoutHelper'
@@ -238,8 +238,8 @@ const FIELDS_EXTRA_ATTR = {
 }
 
 const FIELD_FILTER = {
-  section: ['section', 'repeater'],
-  repeater: ['repeater', 'section', 'button', 'recaptcha', 'advanced-file-up', 'decision-box', ...paymentFields],
+  section: filterFieldTypesForSectionField,
+  repeater: filterFieldTypesForRepeater,
 }
 
 export const checkFieldsExtraAttr = (field, parentField) => {

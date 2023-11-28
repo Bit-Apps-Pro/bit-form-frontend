@@ -3,6 +3,7 @@
 /* eslint-disable no-undef */
 import { useEffect, useState } from 'react'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
+import { filterFieldTypesForTinyMce } from '../../Utils/StaticData/allStaticArrays'
 import { loadScript } from '../../Utils/globalHelpers'
 import '../../resource/css/tinymce.css'
 
@@ -85,7 +86,7 @@ export default function TinyMCE({
             tooltip: 'Add Form Field Value in Message',
             type: 'menubutton',
             icon: false,
-            menu: formFields?.map(i => !i.type.match(/^(file-up|recaptcha|section|divider|image|advanced-file-up|)$/) && ({ text: i.name, onClick() { editor.insertContent(insertFieldKey(i)) } })),
+            menu: formFields?.map(i => !filterFieldTypesForTinyMce.includes(i.type) && ({ text: i.name, onClick() { editor.insertContent(insertFieldKey(i)) } })),
           })
           smartTags && editor.addButton('addSmartField', {
             text: 'Smart Tag Fields',
