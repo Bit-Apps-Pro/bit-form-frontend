@@ -10,6 +10,7 @@ import { IS_PRO, dateTimeFormatter, generateReportData, getLastNthDate, isObject
 import filterFieldTypesForReport from '../Utils/StaticData/filterFieldTypesForReport'
 import bitsFetch from '../Utils/bitsFetch'
 import { __ } from '../Utils/i18nwrap'
+import ProBadgeOverlay from '../components/CompSettings/StyleCustomize/ChildComp/ProBadgeOverlay'
 import Loader from '../components/Loaders/Loader'
 import LoaderSm from '../components/Loaders/LoaderSm'
 import FldEntriesByCondition from '../components/Report/FldEntriesByCondition'
@@ -20,8 +21,6 @@ import Cooltip from '../components/Utilities/Cooltip'
 import DropDown from '../components/Utilities/DropDown'
 import TableCheckBox from '../components/Utilities/TableCheckBox'
 import ut from '../styles/2.utilities'
-import ProBadgeOverlay from '../components/CompSettings/StyleCustomize/ChildComp/ProBadgeOverlay'
-import ProOverlay from '../components/CompSettings/StyleCustomize/ChildComp/ProOverlay'
 
 const FieldReport = loadable(() => import('../components/ReportView/FieldReport'), { fallback: <Loader className="g-c" style={{ height: 300, width: 500 }} /> })
 
@@ -279,7 +278,7 @@ const style = {
   },
   check: {
     m: '5px 0',
-    dy: 'table',
+    dy: 'table !important',
   },
   fieldReportWrap: {
     m: '1rem 0',
