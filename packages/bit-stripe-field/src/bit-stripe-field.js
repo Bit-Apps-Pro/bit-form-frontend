@@ -90,6 +90,7 @@ export default class BitStripeField {
     this.#stripeBtnSpanner = this.#querySelector('.stripe-btn-spinner')
 
     this.#addEvent(stripeBtn, 'click', () => {
+      stripeBtn.disabled = true
       this.#stripeBtnSpanner.classList.remove('d-none')
       this.#handleOnClick(this.#contentId)
         .then(response => {
@@ -288,6 +289,8 @@ export default class BitStripeField {
           bfValidationErrMsg(result, this.#contentId)
           paySpinner.classList.add('d-none')
         }
+        const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
+        stripeBtn.disabled = false
       })
     })
   }
