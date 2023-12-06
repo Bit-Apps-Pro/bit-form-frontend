@@ -1,15 +1,17 @@
+import { useAtomValue } from 'jotai'
 import { useEffect, useState } from 'react'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import LoaderSm from '../../Loaders/LoaderSm'
+
+// Change this preset version & create a tag in github with new version
+const PRESET_VERSION = 1.1
+const PRESET_URL = `https://cdn.jsdelivr.net/gh/Bit-Apps-Pro/bitforms-static@v${PRESET_VERSION}/options-presets.json`
 
 export default function PresetsImportOptions({ importOpts, setImportOpts }) {
   const bits = useAtomValue($bits)
   const { isPro } = bits
   const [loading, setLoading] = useState(false)
-  const presetVersion = 1.1
-  const presetURL = 'https://static.bitapps.pro/bitform/options-presets.json'
 
   useEffect(() => {
     if (!isPro) return
@@ -19,9 +21,9 @@ export default function PresetsImportOptions({ importOpts, setImportOpts }) {
       oldPresets = JSON.parse(oldPresets)
     }
 
-    if (!oldPresets || (oldPresets && Number(oldPresets.version) < presetVersion)) {
+    if (!oldPresets || (oldPresets && Number(oldPresets.version) < PRESET_VERSION)) {
       setLoading(true)
-      fetch(presetURL)
+      fetch(PRESET_URL)
         .then(resp => resp.json())
         .then(res => {
           if (res.data) {
