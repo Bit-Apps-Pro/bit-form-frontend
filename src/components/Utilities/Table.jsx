@@ -318,7 +318,7 @@ function Table(props) {
                     && (
                       <button
                         onClick={showBulkDupMdl}
-                        className="icn-btn btcd-icn-lg tooltip"
+                        className="icn-btn btcd-icn-sm tooltip"
                         style={{ '--tooltip-txt': '"Duplicate"' }}
                         aria-label="icon-btn"
                         type="button"
@@ -328,7 +328,7 @@ function Table(props) {
                     )}
                   <button
                     onClick={showDelModal}
-                    className="icn-btn btcd-icn-lg tooltip"
+                    className="icn-btn btcd-icn-sm tooltip"
                     style={{ '--tooltip-txt': '"Delete"' }}
                     aria-label="icon-btn"
                     type="button"
