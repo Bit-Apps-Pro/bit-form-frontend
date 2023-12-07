@@ -1,73 +1,56 @@
-// Initialize a cancelable timeoutId within the IIFE to preserve it between calls
-let timeoutId
-
-export default function scrollToElm(elm, { immediate = false } = {}) {
-  const scrollTo = () => {
-    // Check if the element is inside a modal or scrollable div
-    let parent = elm.parentElement
-
-    while (parent) {
-      const computedStyle = getComputedStyle(parent)
-
-      // Check if the parent is an absolute positioned modal or a scrollable container
-      if (
-        computedStyle.position === 'absolute'
-        || computedStyle.overflow === 'auto'
-        || computedStyle.overflow === 'scroll'
-      ) {
-        if (!isElementInViewport(elm, parent)) {
-          // Calculate the relative position of elm with respect to parent
-          const rectElm = elm.getBoundingClientRect()
-          const rectParent = parent.getBoundingClientRect()
-
-          // Calculate the scroll offsets
-          const scrollLeft = rectElm.left - rectParent.left + parent.scrollLeft
-          const scrollTop = rectElm.top - rectParent.top + parent.scrollTop
-
-          // Scroll to the element's position within the parent
-          parent.scrollTo({
-            top: scrollTop,
-            left: scrollLeft,
-            behavior: 'smooth',
-          })
-        }
-      }
-
-      parent = parent.parentElement
-    }
-
-    // If no special parent found or the element is not already in the viewport, scroll the window to the element
-    if (!isElementInViewport(elm, document.documentElement)) {
-      elm.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
-    }
-
-    timeoutId = 0
+function debounce(func, delay) {
+  let timer
+  const debouncedFunction = function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(() => func(...args), delay)
   }
 
-  // Clear the previous timeout (if any) before setting a new one
-  clearTimeout(timeoutId)
-
-  if (immediate) {
-    scrollTo()
-    return
+  debouncedFunction.cancel = function () {
+    clearTimeout(timer)
   }
 
-  // Set a new timeout for debounce with a delay of 300 milliseconds
-  timeoutId = setTimeout(() => {
-    scrollTo()
-  }, 10)
+  return debouncedFunction
 }
 
-function isElementInViewport(element, container) {
-  const elementRect = element.getBoundingClientRect()
-  const containerRect = container === document.documentElement
-    ? { top: 0, left: 0, bottom: window.innerHeight, right: window.innerWidth }
-    : container.getBoundingClientRect()
+function isInViewport(element, threshold = 10) {
+  const rect = element.getBoundingClientRect()
+  const windowHeight = window.innerHeight || document.documentElement.clientHeight
+  const windowWidth = window.innerWidth || document.documentElement.clientWidth
 
   return (
-    elementRect.top >= containerRect.top
-    && elementRect.left >= containerRect.left
-    && elementRect.bottom <= containerRect.bottom
-    && elementRect.right <= containerRect.right
+    rect.top >= threshold
+    && rect.left >= threshold
+    && rect.bottom <= windowHeight - threshold
+    && rect.right <= windowWidth - threshold
   )
+}
+
+function scrollToParentIfNeeded(element) {
+  let parent = element.parentElement
+  while (parent && parent !== document.body) {
+    if (parent.scrollHeight > parent.clientHeight || parent.scrollWidth > parent.clientWidth) {
+      parent.scrollIntoView({ behavior: 'smooth' })
+      break
+    }
+    parent = parent.parentElement
+  }
+}
+
+const internalScrollToElm = function (elm) {
+  if (!isInViewport(elm)) {
+    scrollToParentIfNeeded(elm)
+    elm.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
+  }
+}
+
+const debouncedScrollToElm = debounce(internalScrollToElm, 300)
+
+export default function scrollToElement(elm, { immediate = false } = {}) {
+  debouncedScrollToElm.cancel()
+
+  if (immediate) {
+    internalScrollToElm(elm)
+  } else {
+    debouncedScrollToElm(elm)
+  }
 }
