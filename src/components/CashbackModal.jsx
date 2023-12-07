@@ -50,6 +50,13 @@ export default function CashbackModal() {
               &nbsp;
               for your time & effort.
             </p>
+            <div className="review-tips">
+              <span>Suggestions on how you may write the review:</span>
+              <ol>
+                <li>What features do you like most in Bit Form?</li>
+                <li>Which software did you previously used for these features?</li>
+              </ol>
+            </div>
           </div>
         </div>
         <div className="footer-wrapper">
