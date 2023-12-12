@@ -338,8 +338,7 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
         />
       ),
     })
-    const filteredEntryLabels = filteredEntryLabelsForTable(cols)
-    setTableColumns(filteredEntryLabels)
+    setTableColumns(cols)
     setEntryLabels(cols)
   }
 
@@ -522,11 +521,6 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     }
     return allResp?.[rowDtl.idx]?.[entry.accessor]
   }
-
-  const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => {
-    const ignoreLbls = ['__user_id', '__user_ip', '__referer', '__user_device', '__created_at', '__updated_at']
-    return !ignoreLbls.includes(lbl.accessor) && !filterFieldType.includes(lbl.fieldType)
-  })
 
   return (
     <div id="form-res">

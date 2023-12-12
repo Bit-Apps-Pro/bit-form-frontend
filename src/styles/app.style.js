@@ -6,7 +6,7 @@ const app = {
     flx: 'center-between',
   },
   leftHeader: {
-    w: '580px !important',
+    w: '780px !important',
   },
   inte_sm: {
     pn: 'relative',

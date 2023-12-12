@@ -2,10 +2,10 @@
 /* eslint-disable no-param-reassign */
 import ColorPicker from '@atomik-color/component'
 import { str2Color } from '@atomik-color/core'
+import { useAtom } from 'jotai'
 import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
-import { useAtom } from 'jotai'
 import { $styles } from '../../GlobalStates/StylesState'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
 import { $themeVars } from '../../GlobalStates/ThemeVarsState'
@@ -13,13 +13,13 @@ import ut from '../../styles/2.utilities'
 import boxSizeControlStyle from '../../styles/boxSizeControl.style'
 import Grow from '../CompSettings/StyleCustomize/ChildComp/Grow'
 import StyleSegmentControl from '../Utilities/StyleSegmentControl'
-import { hsva2hsla } from './colorHelpers'
 import ColorPreview from './ColorPreview'
+import { hsva2hsla } from './colorHelpers'
 
-function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
+function SimpleColorPickerMenuV2({ action, value, objectPaths, canSetVariable }) {
   const { css } = useFela()
   const [themeVars, setThemeVars] = useAtom($themeVars)
-  const [color, setColor] = useState()
+  const [color, setColor] = useState(() => str2Color(value.replace('!important', '').trim()))
   const isColorVar = typeof color === 'string'
   const [controller, setController] = useState(isColorVar ? 'Var' : 'Custom')
   const [themeColors, setThemeColors] = useAtom($themeColors)
@@ -48,7 +48,6 @@ function SimpleColorPickerMenuV2({ action, objectPaths, canSetVariable }) {
   useEffect(() => {
     if (isColorVar) return
     if (!action.type) return
-
     switch (action.type) {
       case 'global-accent-color':
       case 'global-font-color':
