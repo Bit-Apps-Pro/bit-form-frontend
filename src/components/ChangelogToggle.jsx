@@ -12,7 +12,7 @@ import Modal from './Utilities/Modal'
 export default function ChangelogToggle() {
   const [bits, setBits] = useAtom($bits)
   const [show, setShow] = useState(bits.changelogVersion !== bits.version)
-  const currentChangelog = '2.7.0'
+  const currentChangelog = '2.9.0'
   const currenChangelog = changelogInfo[currentChangelog]
   const { css } = useFela()
 
@@ -169,6 +169,10 @@ const styles = {
   },
   fixed: {
     bd: '#FFD000',
+    c: '#24292e',
+  },
+  coming: {
+    bd: '#00ffe9',
     c: '#24292e',
   },
 }

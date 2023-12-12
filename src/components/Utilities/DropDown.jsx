@@ -4,7 +4,7 @@ import 'react-multiple-select-dropdown-lite/dist/index.css'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 
 function DropDown({
-  options, placeholder, action, className, isMultiple, allowCustomOpt, value, addable, titleClassName, title, jsonValue,
+  options, placeholder, action, className, isMultiple, allowCustomOpt, value, addable, titleClassName, title, jsonValue, disabled = false,
 }) {
   const { css } = useFela()
   const [val, setVal] = useState(value)
@@ -17,7 +17,7 @@ function DropDown({
   }, [value, options, jsonValue])
 
   return (
-    <div className={`${titleClassName}`}>
+    <div className={titleClassName}>
       <span>{title}</span>
       <MultiSelect
         width="100%"
@@ -29,6 +29,7 @@ function DropDown({
         placeholder={placeholder}
         jsonValue={jsonValue}
         options={options || []}
+        disabled={disabled}
       />
     </div>
   )

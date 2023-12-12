@@ -1,7 +1,7 @@
 // Initialize a cancelable timeoutId within the IIFE to preserve it between calls
 let timeoutId
 
-export default function scrollToElm(elm) {
+export default function scrollToElm(elm, { immediate = false } = {}) {
   const scrollTo = () => {
     // Check if the element is inside a modal or scrollable div
     let parent = elm.parentElement
@@ -40,10 +40,17 @@ export default function scrollToElm(elm) {
     if (!isElementInViewport(elm, document.documentElement)) {
       elm.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' })
     }
+
+    timeoutId = 0
   }
 
   // Clear the previous timeout (if any) before setting a new one
   clearTimeout(timeoutId)
+
+  if (immediate) {
+    scrollTo()
+    return
+  }
 
   // Set a new timeout for debounce with a delay of 300 milliseconds
   timeoutId = setTimeout(() => {

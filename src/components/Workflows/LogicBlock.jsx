@@ -8,6 +8,7 @@ import TrashIcn from '../../Icons/TrashIcn'
 import { IS_PRO } from '../../Utils/Helpers'
 import conditionalLogicsList from '../../Utils/StaticData/ConditionalLogicsList'
 import { SmartTagField } from '../../Utils/StaticData/SmartTagField'
+import filterFieldTypesForLogicBlock from '../../Utils/StaticData/allStaticArrays'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 import CalculatorField from '../Utilities/CalculationField/CalculatorField'
@@ -146,7 +147,7 @@ function LogicBlock({
               <option value="">{__('Select Form Field')}</option>
               {!!formFields.length && (
                 <optgroup label="Form Fields">
-                  {formFields.map(itm => !itm.type.match(/^(file-up|recaptcha)$/)
+                  {formFields.map(itm => !filterFieldTypesForLogicBlock.includes(itm.type)
                     && <option key={`ff-lb-${itm.key}`} value={itm.key}>{itm.name}</option>)}
                 </optgroup>
               )}

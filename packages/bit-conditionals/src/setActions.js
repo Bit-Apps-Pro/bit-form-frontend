@@ -121,6 +121,32 @@ const setActionValue = (actionDetail, props, fieldValues) => {
   }
 }
 
+const setPlaceholder = (actionDetail, props, fieldValues) => {
+  // check field type
+  const actionValue = actionDetail.val ? replaceWithField(actionDetail.val, fieldValues, props, rowIndex) : ''
+  const fieldKey = actionDetail.field
+  const fldData = props.fields[fieldKey]
+  const { typ } = fldData
+  if (typ === 'select') {
+    const elm = select(props.contentId, `.${fieldKey}-selected-opt-lbl`)
+    if (elm.childElementCount === 0) {
+      elm.textContent = actionValue
+    }
+  } else if (typ === 'html-select') {
+    const elm = select(props.contentId, `.${fieldKey}-slct-optn:first-child`)
+    if (elm) elm.textContent = actionValue
+  } else if (typ === 'currency') {
+    const elm = select(props.contentId, `.${fieldKey}-currency-amount-input`)
+    if (elm) elm.placeholder = actionValue
+  } else if (typ === 'phone-number') {
+    const elm = select(props.contentId, `.${fieldKey}-phone-number-input`)
+    if (elm) elm.placeholder = actionValue
+  } else if (actionDetail.val !== undefined && props.fields[actionDetail.field]) {
+    const elm = select(props.contentId, `.${fieldKey}-fld`)
+    if (elm) elm.placeholder = actionValue
+  }
+}
+
 const getHeight = (selector) => {
   const fld = window.getComputedStyle(selector)
   let heightCount = 0
@@ -241,6 +267,8 @@ export const setActions = (actionDetail, fldKey, props, fieldValues, rowIndx) =>
           setTextContent(actionDetail, props, fieldValues)
         }
         break
+      case 'placeholder':
+        return setPlaceholder(actionDetail, props, fieldValues)
       default:
         break
     }

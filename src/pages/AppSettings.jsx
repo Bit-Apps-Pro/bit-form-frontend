@@ -1,7 +1,7 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
 // import Cpt from '../components/Cpt/Cpt'
 import Apikey from '../components/Apikey'
-import Captcha from '../components/Captcha'
+import Captcha from '../components/CaptchaRoutes'
 import Cpt from '../components/Cpt/Cpt'
 import GCLID from '../components/GCLID'
 import General from '../components/General'
@@ -18,6 +18,7 @@ import SettingsIcn from '../Icons/SettingsIcn'
 import { __ } from '../Utils/i18nwrap'
 import Pdf from '../components/Pdf'
 import PdfIcn from '../Icons/PdfIcn'
+import CaptchaRoutes from '../components/CaptchaRoutes'
 
 function AppSettingsPage() {
   return (
@@ -90,7 +91,7 @@ function AppSettingsPage() {
         <Route path="/app-settings/api" element={<Apikey />} />
         <Route path="/app-settings/payments" element={<Payments />} /> */}
         {/* <Route path="app-settings/*"> */}
-        <Route index path="recaptcha" element={<Captcha />} />
+        <Route index path="recaptcha/*" element={<CaptchaRoutes />} />
         <Route path="gclid" element={<GCLID />} />
         <Route path="smtp" element={<SMTP />} />
         <Route path="cpt" element={<Cpt />} />

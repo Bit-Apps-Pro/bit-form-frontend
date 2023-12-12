@@ -30,6 +30,7 @@ import signatureStyle_1_bitformDefault from './signatureStyle_1_bitformDefault'
 import stripeStyle_1_BitformDefault from './stripeStyle_1_BitformDefault'
 import textStyle_1_bitformDefault from './textStyle_1_bitformDefault'
 import titleStyle_1_bitformDefault from './titleStyle_1_bitformDefault'
+import turnstileStyle_1_bitformDefault from './turnstileStyle_1_bitformDefault'
 
 export default function bitformDefaultTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -103,6 +104,8 @@ export default function bitformDefaultTheme({
       return country({ type, fk, direction, breakpoint, colorScheme })
     case 'recaptcha':
       return recaptcha({ type, fk, breakpoint, colorScheme })
+    case 'turnstile':
+      return turnstile({ type, fk, breakpoint, colorScheme })
     case 'file-up':
       return fileUp({ type, fk, breakpoint, colorScheme })
     case 'html-select':
@@ -786,6 +789,18 @@ const recaptcha = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: recaptchaStyle_1_bitformDefault({ fk, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const turnstile = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'bitformDefault',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: turnstileStyle_1_bitformDefault({ fk, breakpoint, colorScheme }),
     }
   }
   return {}

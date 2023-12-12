@@ -1,9 +1,9 @@
 import loadable from '@loadable/component'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
+import { useResetAtom } from 'jotai/utils'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useResetAtom } from 'jotai/utils'
 import bitIcn from '../../logo.svg'
 import {
   $additionalSettings, $allLayouts, $breakpoint, $breakpointSize, $builderHelperStates, $builderSettings, $colorScheme, $confirmations, $customCodes, $deletedFldKey, $fieldLabels, $fields, $formId, $formInfo, $integrations, $isNewThemeStyleLoaded,
@@ -23,6 +23,7 @@ import { addToBuilderHistory, getSessionStorageStates } from '../Utils/FormBuild
 import { clearAllSWRCache, getStatesToReset, hideWpMenu, showWpMenu } from '../Utils/Helpers'
 import templateProvider from '../Utils/StaticData/form-templates/templateProvider'
 import bitsFetch from '../Utils/bitsFetch'
+import FormPreviewBtn from '../components/FormPreviewBtn'
 import BuilderLoader from '../components/Loaders/BuilderLoader'
 import Loader from '../components/Loaders/Loader'
 import PublishBtn from '../components/PublishBtn'
@@ -31,11 +32,11 @@ import UpdateButton from '../components/UpdateButton'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import SegmentControl from '../components/Utilities/SegmentControl'
 import navbar from '../styles/navbar.style'
-import FormPreviewBtn from '../components/FormPreviewBtn'
 
 const FormBuilder = loadable(() => import('./FormBuilder'), { fallback: <BuilderLoader /> })
 const FormEntries = loadable(() => import('./FormEntries'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 const FormSettings = loadable(() => import('./FormSettings'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
+const ReportView = loadable(() => import('./ReportView'), { fallback: <Loader style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh' }} /> })
 
 function FormDetails() {
   let componentMounted = true
@@ -353,6 +354,7 @@ function FormDetails() {
         />
         <RouteByParams page="builder" formType formID render={<FormBuilder isLoading={isLoading} />} />
         <RouteByParams page="settings" formType formID render={<FormSettings />} />
+        <RouteByParams page="report-view" formType formID render={<ReportView />} />
       </div>
     </div>
   )

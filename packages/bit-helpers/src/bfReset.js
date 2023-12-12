@@ -9,6 +9,7 @@ export default function bfReset(contentId, customHook = false) {
   const props = window.bf_globals[contentId]
   bfSelect(`#form-${contentId}`).reset()
   localStorage.setItem('bf-entry-id', '')
+  typeof resetPlaceholders !== 'undefined' && resetPlaceholders(props)
   typeof customFieldsReset !== 'undefined' && customFieldsReset(props)
   typeof resetOtherOpt !== 'undefined' && resetOtherOpt()
   window.bf_globals[contentId].modifiedFields = props.fields
@@ -23,5 +24,9 @@ export default function bfReset(contentId, customHook = false) {
 
   if (props.gRecaptchaSiteKey && props.gRecaptchaVersion === 'v2') {
     window?.grecaptcha?.reset()
+  }
+
+  if (props.turnstileSiteKey) {
+    window?.turnstile?.reset()
   }
 }

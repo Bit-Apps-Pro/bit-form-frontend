@@ -70,14 +70,10 @@ export default class BitSignatureField {
     this.#signatureFld = this.#select(`.${this.#fieldKey}-signature-fld`)
     this.#canvas.style.cursor = `url(${this.#assetsURL}pen.ico), crosshair`
 
+    const signatureIframe = this.#select(`.${this.#fieldKey}-signature-iframe`)
+    if (signatureIframe) signatureIframe.contentWindow.addEventListener('resize', () => { this.resizeCanvas() })
+
     this.#signaturePad = new SignaturePad(this.#canvas, this.#options)
-
-    this.#window.addEventListener('resize', () => { this.resizeCanvas() })
-
-    // this.#canvas.addEventListener('resize', () => {
-    //   console.log('canvas resizing')
-    //   this.resizeCanvas()
-    // })
 
     this.resizeCanvas()
     this.#clearCanvas()

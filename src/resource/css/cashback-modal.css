@@ -41,10 +41,17 @@
   align-items: center;
   text-align: justify;
   padding: 15px;
+  font-size: 13px;
 }
 
 .cashback-modal .details {
   margin: 0;
+}
+
+.cashback-modal .review-tips span {
+  display: inline-block;
+  margin-top: 15px;
+  font-weight: 500;
 }
 
 .cashback-modal .footer-wrapper {

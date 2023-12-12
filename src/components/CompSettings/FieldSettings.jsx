@@ -25,6 +25,7 @@ const PhoneNumberFieldSettings = loadable(() => import('./PhoneNumberFieldSettin
 const RadioCheckSettings = loadable(() => import('./RadioCheckSettings'), { fallback: <FieldSettingsLoader /> })
 const RazorpayFieldSettings = loadable(() => import('./RazorpayFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const ReCaptchaSettings = loadable(() => import('./ReCaptchaSettings'), { fallback: <FieldSettingsLoader /> })
+const TurnstileSettings = loadable(() => import('./TurnstileSettings'), { fallback: <FieldSettingsLoader /> })
 const TextFieldSettings = loadable(() => import('./TextFieldSettings'), { fallback: <FieldSettingsLoader /> })
 const TitleSettings = loadable(() => import('./TitleSettings'), { fallback: <FieldSettingsLoader /> })
 const RepeaterFieldSettings = loadable(() => import('./RepeaterFieldSettings'), { fallback: <FieldSettingsLoader /> })
@@ -70,6 +71,7 @@ export default function FieldSettings() {
     case 'file-up': return <FileUploadSettings />
     case 'advanced-file-up': return <AdvanceFileUpSettings />
     case 'recaptcha': return <ReCaptchaSettings />
+    case 'turnstile': return <TurnstileSettings />
     case 'decision-box': return <DecisionBoxSettings />
     case 'html': return <HtmlFieldSettings />
     case 'button': return <ButtonSettings />

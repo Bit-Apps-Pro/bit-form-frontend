@@ -5,6 +5,9 @@ const app = {
     px: 20,
     flx: 'center-between',
   },
+  leftHeader: {
+    w: '580px !important',
+  },
   inte_sm: {
     pn: 'relative',
     w: 110,

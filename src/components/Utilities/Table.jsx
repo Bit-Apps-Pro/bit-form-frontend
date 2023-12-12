@@ -1,5 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-props-no-spreading */
+import { useAtom, useAtomValue } from 'jotai'
 import { forwardRef, memo, useEffect, useRef, useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars-2'
 import { useFela } from 'react-fela'
@@ -8,7 +9,6 @@ import {
   useColumnOrder, useFilters, useFlexLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable,
 } from 'react-table'
 import { useSticky } from 'react-table-sticky'
-import { useAtom, useAtomValue } from 'jotai'
 import { $reportId, $reportSelector } from '../../GlobalStates/GlobalStates'
 import ChevronDoubleIcn from '../../Icons/ChevronDoubleIcn'
 import ChevronLeft from '../../Icons/ChevronLeft'
@@ -84,7 +84,7 @@ function ColumnHide({ cols, setCols, tableCol, tableAllCols }) {
 function Table(props) {
   const [confMdl, setconfMdl] = useState({ show: false, btnTxt: '' })
   const {
-    columns, data, fetchData, refreshResp, report, rightHeader, leftHeader,
+    columns, data, fetchData, refreshResp, report, rightHeader, leftHeader, leftHeaderClasses,
   } = props
   const [currentReportData, updateReportData] = useAtom($reportSelector)
   const reportId = useAtomValue($reportId)
@@ -287,7 +287,7 @@ function Table(props) {
         btnClass={confMdl.btnClass}
       />
       <div className="flx flx-between mt-1 mr-2">
-        <div className="btcd-t-actions">
+        <div className={`btcd-t-actions ${leftHeaderClasses}`}>
           <div className="flx" style={{ marginLeft: 7 }}>
 
             {props.columnHidable && (

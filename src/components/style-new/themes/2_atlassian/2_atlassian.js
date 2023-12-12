@@ -31,6 +31,7 @@ import signatureStyle_2_atlassian from './signatureStyle_2_atlassian'
 import stripeStyle_2_atlassian from './stripeStyle_2_atlassian'
 import textStyle_2_atlassian from './textStyle_2_atlassian'
 import titleStyle_2_atlassian from './titleStyle_2_atlassian'
+import turnstileStyle_2_atlassian from './turnstileStyle_2_atlassian'
 
 export default function atlassianTheme({
   type, fieldKey: fk, direction, fieldsArr, breakpoint = 'lg', colorScheme = 'light', formId, textOptions = {}, buttonOptions = {},
@@ -100,6 +101,8 @@ export default function atlassianTheme({
       return country({ type, fk, direction, breakpoint, colorScheme })
     case 'recaptcha':
       return recaptcha({ type, fk, breakpoint, colorScheme })
+    case 'turnstile':
+      return turnstile({ type, fk, breakpoint, colorScheme })
     case 'file-up':
       return fileUp({ type, fk, breakpoint, colorScheme })
     case 'html-select':
@@ -454,6 +457,18 @@ const recaptcha = ({ type, fk, breakpoint, colorScheme }) => {
       overrideGlobalTheme: [],
       fieldSize: 'medium',
       classes: recaptchaStyle_2_atlassian({ fk, breakpoint, colorScheme }),
+    }
+  }
+  return {}
+}
+const turnstile = ({ type, fk, breakpoint, colorScheme }) => {
+  if (breakpoint === 'lg' && colorScheme === 'light') {
+    return {
+      theme: 'atlassian',
+      fieldType: type,
+      overrideGlobalTheme: [],
+      fieldSize: 'medium',
+      classes: turnstileStyle_2_atlassian({ fk, breakpoint, colorScheme }),
     }
   }
   return {}

@@ -43,17 +43,42 @@ const changelogInfo = {
       },
     },
   },
-  '2.7.0': {
-    date: '07 November, 2023',
+  '2.8.0': {
+    date: '18 November, 2023',
     changes: {
       added: {
         label: 'Added',
         list: [
           {
-            label: (<b>Image Select Field</b>),
+            label: (<b> Form Analytics Report / Visual Report</b>),
             tag: 'new',
             list: [
-              'Visually apealing radio / checkbox style image select field.',
+              'Analyze your entry submission stats with Pie Chart, Bar Chart, & Line Chart including advanced field reports.',
+            ],
+          },
+        ],
+      },
+      coming: {
+        label: <b>Coming Soon</b>,
+        list: [
+          'Conversational Form.',
+          'Frontend Entry View, Edit & Delete (CRUD).',
+          ' Cloudflare Turnstile reCaptcha.',
+        ],
+      },
+    },
+  },
+  '2.9.0': {
+    date: '27 November, 2023',
+    changes: {
+      added: {
+        label: 'Added',
+        list: [
+          {
+            label: (<b>Cloudflare Turnstile</b>),
+            tag: 'new',
+            list: [
+              'Protect your form from spam and bots with Cloudflare Turnstile captcha',
             ],
           },
         ],
@@ -61,8 +86,14 @@ const changelogInfo = {
       fixed: {
         label: 'Fixed',
         list: [
-          'Active Campaign integrations issue for over 20 tags.',
-          'Multi Step Form not submits if progress bar is hidden.',
+          'Forms not updating for type issue',
+        ],
+      },
+      coming: {
+        label: <b>Coming Soon</b>,
+        list: [
+          'Conversational Form',
+          'Frontend Entry View, Edit & Delete (CRUD)',
         ],
       },
     },

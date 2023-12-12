@@ -5,6 +5,7 @@ import { useFela } from 'react-fela'
 import { $fields, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
 import TrashIcn from '../../Icons/TrashIcn'
 import { IS_PRO } from '../../Utils/Helpers'
+import placeholderAllowTypes from '../../Utils/StaticData/placeholderAllowTypes'
 import { __ } from '../../Utils/i18nwrap'
 import Button from '../Utilities/Button'
 import CalculatorField from '../Utilities/CalculationField/CalculatorField'
@@ -108,6 +109,7 @@ function ActionBlock({
   const isNotSubmitAction = actionType !== 'onsubmit'
   const isNotValidateAction = actionType !== 'onvalidate'
   const isDecisionBox = fields[action.field]?.typ === 'decision-box'
+  const isAllowPlaceholder = placeholderAllowTypes.includes(fields[action.field]?.typ)
   const isForm = action.field === '_bf_form'
 
   return (
@@ -168,13 +170,14 @@ function ActionBlock({
               {fldType === 'select' && <option value="activelist">{__('Active List')}</option>}
               {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value={isDecisionBox ? 'ct' : 'lbl'}>{__('Label')}</option>}
               {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField) && <option value="sub-titl">{__('Sub Title')}</option>}
+              {isAllowPlaceholder && <option value="placeholder">{__('Placeholder')}</option>}
               {(isNotSubmitAction && isNotValidateAction && isNotFileUpField && isNotButtonField && !isTitleField) && <option value="hlp-txt">{__('Helper Text')}</option>}
               {isTitleField && <option value="title">{__('Title')}</option>}
             </>
           )}
       </MtSelect>
 
-      {(['value', 'activelist', 'lbl', 'ct', 'sub-titl', 'hlp-txt', 'title'].includes(action.action)) && (
+      {(['value', 'activelist', 'lbl', 'ct', 'sub-titl', 'hlp-txt', 'title', 'placeholder'].includes(action.action)) && (
         <>
           <div className={css({ w: 100, flx: 'align-center', h: 35, mt: 5 })}>
             <div className={css({ w: '100%', bd: '#b9c5ff', h: '0.5px' })} />

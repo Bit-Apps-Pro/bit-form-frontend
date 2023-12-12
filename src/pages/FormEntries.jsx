@@ -1,14 +1,15 @@
 /* eslint-disable no-use-before-define */
 import { useAtomValue, useSetAtom } from 'jotai'
 import { memo, useCallback, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useFela } from 'react-fela'
+import { useNavigate, useParams } from 'react-router-dom'
 import {
-  $bits, $fieldLabels, $forms, $nestedLayouts, $reportId,
+  $bits, $fieldLabels, $fields, $forms, $nestedLayouts, $reportId,
   $reportSelector,
   $reports,
 } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
-import { getUploadedFilesArr, splitFileLink, splitFileName } from '../Utils/FormBuilderHelper'
+import { getUploadedFilesArr } from '../Utils/FormBuilderHelper'
 import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
@@ -19,6 +20,7 @@ import ExportImportMenu from '../components/ExportImport/ExportImportMenu'
 import RepeaterDataTable from '../components/RepeaterDataTable'
 import EntriesFilter from '../components/Report/EntriesFilter'
 import FldEntriesByCondition from '../components/Report/FldEntriesByCondition'
+import Btn from '../components/Utilities/Btn'
 import ConfirmModal from '../components/Utilities/ConfirmModal'
 import Drawer from '../components/Utilities/Drawer'
 import SnackMsg from '../components/Utilities/SnackMsg'
@@ -26,13 +28,15 @@ import Table from '../components/Utilities/Table'
 import TableAction from '../components/Utilities/TableAction'
 import TableFileLink from '../components/Utilities/TableFileLink'
 import noData from '../resource/img/nodata.svg'
+import ut from '../styles/2.utilities'
+import app from '../styles/app.style'
 
 function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const allLabels = useAtomValue($fieldLabels)
   const nestedLayouts = useAtomValue($nestedLayouts)
   const [snack, setSnackbar] = useState({ show: false, msg: '' })
   const [isloading, setisloading] = useState(isFetching)
-  const { formID } = useParams()
+  const { formType, formID } = useParams()
   const fetchIdRef = useRef(0)
   const [pageCount, setPageCount] = useState(0)
   const [showEditMdl, setShowEditMdl] = useState(false)
@@ -52,10 +56,14 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
   const reports = useAtomValue($reports)
   const rprtIndx = reports.findIndex(r => r?.id && r.id.toString() === reportId?.id?.toString())
   const rowSl = useRef(0)
+  const navigate = useNavigate()
+  const { css } = useFela()
+  const fields = useAtomValue($fields)
   const filterFieldType = ['divider', 'image', 'title', 'section']
 
   useEffect(() => {
     const repeatedFieldKeys = Object.entries(nestedLayouts).reduce((acc, [key, val]) => {
+      if (fields[key].typ !== 'repeater') return acc
       val.lg.forEach((itm) => {
         acc.push(itm.i)
       })
@@ -615,8 +623,12 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
               setRefreshResp={setRefreshResp}
             />
           )}
+          leftHeaderClasses={css(app.leftHeader)}
           rightHeader={(
             <>
+              <Btn className={css(ut.mr2)} size="sm" onClick={() => navigate(`/form/report-view/${formType}/${formID}`)}>
+                {__('View Analytics Report')}
+              </Btn>
               <ExportImportMenu
                 data={allResp}
                 cols={entryLabels}

@@ -11,6 +11,7 @@ import AtoZSortIcn from '../../Icons/AtoZSortIcn'
 import BtnIcn from '../../Icons/BtnIcn'
 import CheckBoxIcn from '../../Icons/CheckBoxIcn'
 import ChevronDownIcn from '../../Icons/ChevronDownIcn'
+import TurnstileIcn from '../../Icons/CloudflareIcn'
 import CodeSnippetIcn from '../../Icons/CodeSnippetIcn'
 import ColorPickerIcn from '../../Icons/ColorPickerIcn'
 import CurrencyIcn from '../../Icons/CurrencyIcn'
@@ -21,9 +22,11 @@ import DividerIcn from '../../Icons/DividerIcn'
 import DropDownIcn from '../../Icons/DropDownIcn'
 import FileUploadIcn from '../../Icons/FileUploadIcn'
 import FlagIcn from '../../Icons/FlagIcn'
+import HCaptchaIcn from '../../Icons/HCaptchaIcn'
 import ImageSelectIcn from '../../Icons/ImageSelectIcn'
 import ImgFldIcn from '../../Icons/ImgFldIcn'
 import MailIcn from '../../Icons/MailIcn'
+import MathOperatorsIcn from '../../Icons/MathOperatorsIcn'
 import MonthIcn from '../../Icons/MonthIcn'
 import NumberIcn from '../../Icons/NumberIcn'
 import PasswordIcn from '../../Icons/PasswordIcn'
@@ -57,6 +60,7 @@ import ProBadge from '../Utilities/ProBadge'
 import RenderHtml from '../Utilities/RenderHtml'
 import { searchKey } from '../style-new/styleHelpers'
 import Tools from './Tools'
+import CloudflareIcn from '../../Icons/CloudflareIcn'
 
 export const toolsList = [
   {
@@ -621,6 +625,54 @@ export const toolsList = [
       },
     },
   },
+  // {
+  //   name: __('Math Captcha'),
+  //   keywords: 'ReCaptcha, Math, MathCaptcha, spam protection, bot protection',
+  //   icn: <MathOperatorsIcn size="22" stroke={1} />,
+  //   pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+  //   elm: {
+  //     typ: 'math-captcha',
+  //     valid: {},
+  //     config: {
+  //       theme: 'light',
+  //       size: 'normal',
+  //     },
+  //   },
+  // },
+  // {
+  //   name: __('hCaptcha'),
+  //   keywords: 'ReCaptcha, hCaptcha, Captcha, spam protection, bot protection',
+  //   icn: <HCaptchaIcn size="23" stroke={1} />,
+  //   pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+  //   elm: {
+  //     typ: 'hcaptcha',
+  //     valid: {},
+  //     config: {
+  //       theme: 'light',
+  //       size: 'normal',
+  //     },
+  //   },
+  // },
+  {
+    name: __('Turnstile'),
+    keywords: 'ReCaptcha, hCaptcha, Captcha, Turnstile, cloudflare, spam protection, bot protection',
+    icn: <CloudflareIcn size="20" />,
+    pos: { h: 80, w: 60, i: 'shadow_block', minW: 20 },
+    new: true,
+    elm: {
+      typ: 'turnstile',
+      valid: {},
+      layout: {
+        autoHeight: 1,
+      },
+      config: {
+        theme: 'auto',
+        size: 'normal',
+        language: 'auto',
+        appearance: 'always',
+      },
+    },
+  },
   {
     name: 'Button',
     keywords: 'Button, Submit, Submit Button, Submit Form, click, click button',
@@ -1010,7 +1062,6 @@ export const toolsList = [
     keywords: 'Image, Image select, Radio button, Choice, Single Choice, Radio Group, Check Box, Mark, Option, Select, Choice, Multiple, Multiple Choice, Multiple Select, Multiple Option',
     icn: <ImageSelectIcn size="20" />,
     pos: { h: 140, w: 60, i: 'shadow_block' },
-    new: true,
     elm: {
       typ: 'image-select',
       lbl: __('Image Select'),
