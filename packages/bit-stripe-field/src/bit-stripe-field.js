@@ -47,6 +47,8 @@ export default class BitStripeField {
 
   #address = null
 
+  #stripeBtn = null
+
   constructor(selector, config) {
     console.log({ config })
     if (typeof selector === 'string') {
@@ -76,6 +78,7 @@ export default class BitStripeField {
   }
 
   init() {
+    this.#stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
     this.#initField()
     // this.#submitPayment()
   }
@@ -86,11 +89,11 @@ export default class BitStripeField {
   }
 
   #initField() {
-    const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
+    // const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
     this.#stripeBtnSpanner = this.#querySelector('.stripe-btn-spinner')
 
-    this.#addEvent(stripeBtn, 'click', () => {
-      stripeBtn.disabled = true
+    this.#addEvent(this.#stripeBtn, 'click', () => {
+      this.#stripeBtn.disabled = true
       this.#stripeBtnSpanner.classList.remove('d-none')
       this.#handleOnClick(this.#contentId)
         .then(response => {
@@ -289,14 +292,19 @@ export default class BitStripeField {
           bfValidationErrMsg(result, this.#contentId)
           paySpinner.classList.add('d-none')
         }
-        const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
-        stripeBtn.disabled = false
+        // const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
+        this.#stripeBtn.disabled = false
       })
     })
   }
 
   async #handleOnClick(contentId) {
-    try { await isFormValidatedWithoutError(contentId) } catch (_) { return Promise.reject() }
+    try {
+      await isFormValidatedWithoutError(contentId)
+    } catch (_) {
+      this.#stripeBtn.disabled = false
+      return Promise.reject()
+    }
     const progressData = await saveFormProgress(contentId)
     const savedFormData = progressData?.[contentId]
     if (!savedFormData?.success) return Promise.reject()
