@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { terser } from 'rollup-plugin-terser'
-import resolve from '@rollup/plugin-node-resolve'
 import babel from '@rollup/plugin-babel'
-import serve from 'rollup-plugin-serve'
+import resolve from '@rollup/plugin-node-resolve'
 import livereload from 'rollup-plugin-livereload'
+import serve from 'rollup-plugin-serve'
+import { terser } from 'rollup-plugin-terser'
 import { getPackageFileList } from './package-helpers'
 
 export default function generateRollupConfig() {
@@ -16,7 +16,7 @@ export default function generateRollupConfig() {
   const terserOptions = {
     compress: {
       passes: 10,
-      drop_console: false,
+      drop_console: true,
     },
     output: {
       comments: false,
