@@ -117,6 +117,11 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
         'outline-offset': 0,
       },
 
+      [`.${fk}-stripe-wrp .stripe-pay-btn:disabled`]: {
+        background: '#7ca5e7',
+        transform: 'none',
+      },
+
       [`.${fk}-err-wrp`]: {
         ...inputWrpStyle[`.${fk}-err-wrp`],
       },
