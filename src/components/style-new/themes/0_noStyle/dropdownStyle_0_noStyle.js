@@ -109,7 +109,7 @@ export default function dropdownStyle_0_noStyle({ fk, direction, breakpoint, col
 
       [`.${fk}-selected-opt-lbl .chip-lbl`]: {
         'font-size': '13px',
-        color: 'var(--global-font-color)',
+        color: 'var(--fld-inp-c)',
       },
 
       [`.${fk}-selected-opt-lbl .chip-clear-btn`]: {
@@ -123,7 +123,7 @@ export default function dropdownStyle_0_noStyle({ fk, direction, breakpoint, col
         height: '17px',
         width: '17px',
         'background-color': 'var(--bg-20) !important',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
       },
 
       [`.${fk}-selected-opt-lbl .chip-clear-btn:hover`]: {
@@ -168,7 +168,7 @@ export default function dropdownStyle_0_noStyle({ fk, direction, breakpoint, col
         width: '16px',
         height: '16px',
         'border-radius': '50% !important',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
       },
 
       [`.${fk}-selected-opt-clear-btn:hover`]: {

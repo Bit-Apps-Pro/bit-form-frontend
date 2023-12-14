@@ -41,7 +41,7 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         cursor: 'pointer',
         display: 'flex',
         'align-items': 'center',
-        color: 'var(--global-font-color)',
+        color: 'var(--fld-inp-c)',
         // background: 'var(--global-bg-color)',
         padding: '5px',
         // 'border-color': 'var(--ck-bdr-c)important',
@@ -52,6 +52,8 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
       [`.${fk}-ct`]: {
         // unused css
         'font-size': 'var(--fld-fs)',
+        'font-weight': 'var(--fld-f-w)',
+        'font-style': 'var(--fld-f-style)',
         // 'font-family': 'var(--g-font-family)',
         // 'line-height': 'initial',
         // color: 'var(--global-font-color) !important',
@@ -115,7 +117,9 @@ export default function checkboxNradioStyle_1_bitformDefault({ fk, type, directi
         'border-radius': 'var(--g-bdr-rad) !important',
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
-        color: 'var(--global-font-color) !important',
+        'font-weight': 'var(--fld-f-w) !important',
+        'font-style': 'var(--fld-f-style) !important',
+        color: 'var(--fld-inp-c) !important',
         padding: '10px 8px !important',
         'line-height': '1.4 !important',
         // height: type === 'textarea' ? 'calc(100% - 30px)' : '40px',

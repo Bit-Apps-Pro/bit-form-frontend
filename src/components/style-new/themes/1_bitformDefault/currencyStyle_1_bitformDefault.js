@@ -177,9 +177,12 @@ export default function currencyStyle_1_BitformDefault({ fk, breakpoint, colorSc
         ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
         ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
         'font-size': 'var(--fld-fs) !important',
+        'font-weight': 'var(--fld-f-w) !important',
+        'font-style': 'var(--fld-f-style) !important',
         // 'font-family': 'var(--g-font-family)',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
         'background-color': 'transparent',
+        'line-height': '1.4 !important',
       },
 
       // /* Chrome, Safari, Edge, Opera */
