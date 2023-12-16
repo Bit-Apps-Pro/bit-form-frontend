@@ -1,8 +1,8 @@
-import { useFela } from 'react-fela'
 import { useAtomValue } from 'jotai'
+import { useFela } from 'react-fela'
 import { $themeColors } from '../../GlobalStates/ThemeColorsState'
-import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
+import ut from '../../styles/2.utilities'
 import BorderControl from './BorderControl'
 import FontSizeControl from './FontSizeControl'
 import FontWeightAndStyleControl from './FontWeightAndStyleControl'
@@ -14,7 +14,7 @@ import ThemeStylePropertyBlock from './ThemeStylePropertyBlock'
 export default function InputCustomizer() {
   const { css } = useFela()
   const themeColors = useAtomValue($themeColors)
-  const { '--global-fld-bg-color': fldBg } = themeColors
+  const { '--global-fld-bg-color': fldBg, '--fld-inp-c': fldInpC } = themeColors
 
   return (
     <div className={css(ut.m10)}>
@@ -25,6 +25,26 @@ export default function InputCustomizer() {
         stateObjName="themeColors"
         propertyPath="--global-fld-bg-color"
         modalId="global-fld-bg-color"
+      />
+      <SimpleColorPicker
+        title="Text Color"
+        subtitle="Input Text Color"
+        value={fldInpC}
+        stateObjName="themeColors"
+        propertyPath="--fld-inp-c"
+        modalId="fld-c"
+      />
+
+      <FontSizeControl
+        stateObjName="themeVars"
+        propertyPath="--fld-fs"
+        id="fld-fs"
+      />
+
+      <FontWeightAndStyleControl
+        fontWeightVar="--fld-f-w"
+        fontStyleVar="--fld-f-style"
+        id="fld-font"
       />
 
       <ThemeStylePropertyBlock label="Border">
@@ -41,12 +61,6 @@ export default function InputCustomizer() {
           />
         </div>
       </ThemeStylePropertyBlock>
-
-      <FontSizeControl
-        stateObjName="themeVars"
-        propertyPath="--fld-fs"
-        id="fld-fs"
-      />
 
       <div className={css(ut.flxcb, ut.mt2)}>
         <span className={css(ut.fw500)}>{__('Spacing')}</span>

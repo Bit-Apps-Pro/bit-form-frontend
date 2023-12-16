@@ -200,8 +200,8 @@ export const defaultLgLightThemeVars = {
   '--fld-lbl-bdr-width': '', // field label border width
   '--fld-lbl-bdr-rad': '', // field label border radius
   '--fld-lbl-pn': '', // field label position
-  '--fld-font-w': 500, // field font weight
-  '--fld-font-style': '', // field font style
+  '--fld-f-w': 500, // field font weight
+  '--fld-f-style': 'normal', // field font style
 
   '--req-smbl-m': '', // Required Symbol Margin
   '--req-smbl-p': '', // Required Symbol Padding
@@ -389,7 +389,7 @@ export const defaultLightThemeColors = {
   '--sub-titl-sh': '', // subtitle box shadow
   '--sub-titl-bdr-clr': '', // subtitle border color
 
-  '--fld-c': 'var(--global-font-color)', // field text color
+  '--fld-inp-c': 'var(--global-font-color)', // field text color
 
   '--hlp-txt-bg': '', // helper text background color
   '--hlp-txt-c': 'hsla(var(--gfh), var(--gfs), var(--gfl), 0.7)', // helpertext color
