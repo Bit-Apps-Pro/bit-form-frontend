@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import babel from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
+import terser from '@rollup/plugin-terser'
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
-import { terser } from 'rollup-plugin-terser'
 import { getPackageFileList } from './package-helpers'
 
 export default function generateRollupConfig() {

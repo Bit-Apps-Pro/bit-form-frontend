@@ -167,7 +167,8 @@ export default class BitPhoneNumberField {
     navigator.geolocation.getCurrentPosition(pos => {
       const { latitude, longitude } = pos.coords
       const { protocol } = this.#window.location
-      fetch(`${protocol}//${this.#countryByGeoApiURL}&lat=${latitude}&lng=${longitude}`)
+      const subDomain = protocol === 'https:' ? `${protocol}//secure` : `${protocol}//api`
+      fetch(`${subDomain}.geonames.org/countryCodeJSON?username=bitcodezoho1&lat=${latitude}&lng=${longitude}`)
         .then(resp => resp.json())
         .then(data => {
           this.setSelectedCountryItem(data.countryCode)

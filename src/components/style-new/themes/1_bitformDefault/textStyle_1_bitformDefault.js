@@ -1,5 +1,5 @@
-import inputWrapperClasses from '../common/inputWrapperClasses'
 import { paddingGenerator } from '../../styleHelpers'
+import inputWrapperClasses from '../common/inputWrapperClasses'
 
 /* eslint-disable camelcase */
 export default function textStyle_1_bitformDefault({ fk, type, breakpoint, colorScheme, fldPrefix, fldSuffix }) {
@@ -24,7 +24,9 @@ export default function textStyle_1_bitformDefault({ fk, type, breakpoint, color
         'border-radius': 'var(--g-bdr-rad) !important',
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
-        color: 'var(--global-font-color) !important',
+        'font-weight': 'var(--fld-f-w) !important',
+        'font-style': 'var(--fld-f-style) !important',
+        color: 'var(--fld-inp-c) !important',
         padding: inpPadding,
         margin: 'var(--fld-m)!important',
         'line-height': '1.4 !important',

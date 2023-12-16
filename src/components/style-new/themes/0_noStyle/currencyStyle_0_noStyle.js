@@ -173,8 +173,9 @@ export default function currencyStyle_0_noStyle({ fk, breakpoint, colorScheme, d
         ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
         ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
         'font-size': 'var(--fld-fs) !important',
-        // 'font-family': 'var(--g-font-family)',
-        color: 'var(--global-font-color) !important',
+        'font-weight': 'var(--fld-f-w) !important',
+        'font-style': 'var(--fld-f-style) !important',
+        color: 'var(--fld-inp-c) !important',
         'background-color': 'transparent',
       },
 

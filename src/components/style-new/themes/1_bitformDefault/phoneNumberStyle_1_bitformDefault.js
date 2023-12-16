@@ -186,9 +186,13 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
         ...direction !== 'rtl' && { padding: '8px 26px 8px 8px !important' },
         ...direction === 'rtl' && { padding: '8px 8px 8px 26px !important' },
         'font-size': 'var(--fld-fs) !important',
+        'font-weight': 'var(--fld-f-w) !important',
+        'font-style': 'var(--fld-f-style) !important',
         'font-family': 'inherit',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
         'background-color': 'transparent',
+        'line-height': '1.4 !important',
+        // height: '38px',
       },
 
       [`.${fk}-phone-number-input::placeholder`]: {
@@ -224,7 +228,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
         position: 'absolute',
         top: '50%',
         transform: 'translateY(-50%)',
-        color: 'var(--global-font-color)',
+        color: 'var(--fld-inp-c)',
         ...direction !== 'rtl' && { left: '13px' },
         ...direction === 'rtl' && { right: '13px' },
       },
@@ -241,7 +245,7 @@ export default function phoneNumberStyle_1_bitformDefault({ fk, direction, break
         'background-color': 'var(--bg-5)',
         'font-family': 'inherit',
         'font-size': '1rem',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
       },
 
       [`.${fk}-opt-search-input::placeholder`]: {

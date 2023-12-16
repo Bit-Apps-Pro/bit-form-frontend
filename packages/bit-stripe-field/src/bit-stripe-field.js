@@ -271,6 +271,7 @@ export default class BitStripeField {
     const elements = this.#elements
 
     this.#addEvent(submitBtn, 'click', () => {
+      submitBtn.disabled = true
       const paySpinner = this.#querySelector('.pay-spinner')
       paySpinner.classList.remove('d-none')
       this.#stripInstance.confirmPayment({
@@ -283,6 +284,7 @@ export default class BitStripeField {
           paySpinner.classList.add('d-none')
           this.#onApproveHandler(res.paymentIntent)
           this.#paymentElement.clear()
+          submitBtn.disabled = false
         } else {
           const result = {
             data: {
@@ -291,6 +293,7 @@ export default class BitStripeField {
           }
           bfValidationErrMsg(result, this.#contentId)
           paySpinner.classList.add('d-none')
+          submitBtn.disabled = false
         }
         // const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
         this.#stripeBtn.disabled = false
