@@ -1,13 +1,14 @@
+import { useAtom, useAtomValue } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
 import MultiSelect from 'react-multiple-select-dropdown-lite'
 import { useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'jotai'
 import { $payments } from '../../GlobalStates/AppSettingsStates'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import { addFormUpdateError, addToBuilderHistory, deleteNestedObj, removeFormUpdateError } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
 import { currencyCodes, layouts, localeCodes, paymentMethodType, themes } from '../../Utils/StaticData/StripeData'
+import allCountries from '../../Utils/StaticData/countries.json'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
 import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
@@ -16,14 +17,13 @@ import CheckBox from '../Utilities/CheckBox'
 import Cooltip from '../Utilities/Cooltip'
 import RenderHtml from '../Utilities/RenderHtml'
 import SingleInput from '../Utilities/SingleInput'
+import SingleToggle from '../Utilities/SingleToggle'
 import { assignNestedObj } from '../style-new/styleHelpers'
 import AutoResizeInput from './CompSettingsUtils/AutoResizeInput'
 import FieldHideSettings from './CompSettingsUtils/FieldHideSettings'
 import FieldSettingsDivider from './CompSettingsUtils/FieldSettingsDivider'
 import SimpleAccordion from './StyleCustomize/ChildComp/SimpleAccordion'
 import FieldSettingTitle from './StyleCustomize/FieldSettingTitle'
-import allCountries from '../../Utils/StaticData/countries.json'
-import SingleToggle from '../Utilities/SingleToggle'
 
 export default function StripeFieldSettings() {
   const { fieldKey: fldKey } = useParams()
@@ -35,10 +35,7 @@ export default function StripeFieldSettings() {
   const isDynamicAmount = fieldData.config?.amountType === 'dynamic'
 
   const { css } = useFela()
-  console.log({ fieldData })
   const handleInput = (name, value) => {
-    console.log({ value })
-    console.log(name)
     if (value === 'split') {
       deleteNestedObj(fieldData, 'config->address->defaultValues->name')
     }
@@ -463,12 +460,11 @@ export default function StripeFieldSettings() {
                   </select>
                 </div>
               )}
+              <FieldSettingsDivider />
             </>
           )}
         </>
       )}
-
-      <FieldSettingsDivider />
 
       <SimpleAccordion
         id="adtnl-stng"
@@ -745,6 +741,8 @@ export default function StripeFieldSettings() {
       <FieldSettingsDivider />
 
       <FieldHideSettings />
+
+      <FieldSettingsDivider />
     </div>
   )
 }
