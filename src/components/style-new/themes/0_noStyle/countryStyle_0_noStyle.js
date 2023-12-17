@@ -24,7 +24,8 @@ export default function countryStyle_0_noStyle({ fk, direction, breakpoint, colo
         'border-radius': 'var(--g-bdr-rad) !important',
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
-        // 'font-family': 'var(--g-font-family)',
+        'font-weight': 'var(--fld-f-w) !important',
+        'font-style': 'var(--fld-f-style) !important',
         color: 'var(--global-font-color) !important',
         overflow: 'hidden',
         display: 'flex',
@@ -126,7 +127,7 @@ export default function countryStyle_0_noStyle({ fk, direction, breakpoint, colo
         width: '16px',
         height: '16px', // unused css
         'border-radius': '50% !important',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
       },
 
       [`.${fk}-inp-clr-btn:hover`]: {

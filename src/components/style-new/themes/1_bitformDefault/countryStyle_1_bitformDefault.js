@@ -24,8 +24,10 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         'border-radius': 'var(--g-bdr-rad) !important',
         'border-width': 'var(--g-bdr-width) !important',
         'font-size': 'var(--fld-fs) !important',
+        'font-weight': 'var(--fld-f-w) !important',
+        'font-style': 'var(--fld-f-style) !important',
         // 'font-family': 'var(--g-font-family)',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
         overflow: 'hidden',
         display: 'flex',
         'flex-direction': 'column',
@@ -129,7 +131,7 @@ export default function countryStyle_1_BitformDefault({ fk, direction, breakpoin
         width: '16px',
         height: '16px', // unused css
         'border-radius': '50% !important',
-        color: 'var(--global-font-color) !important',
+        color: 'var(--fld-inp-c) !important',
       },
 
       [`.${fk}-inp-clr-btn:hover`]: {
