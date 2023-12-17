@@ -379,6 +379,7 @@ export default class BitStripeField {
     stripeFldElm.classList.add('d-none')
     stripeFldElm.innerHTML = ''
     this.#stripeWrpSelector.innerHTML = ''
+    this.#stripeBtn.disabled = false
     if (stripeAuthWrpElm) stripeAuthWrpElm.innerHTML = ''
     if (stripeAddrWrpElm) stripeAddrWrpElm.innerHTML = ''
     this.#detachAllEvents()
