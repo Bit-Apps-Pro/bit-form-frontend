@@ -338,7 +338,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
         />
       ),
     })
-    setTableColumns(cols)
+    const filteredEntryLabels = filteredEntryLabelsForTable(cols)
+    setTableColumns(filteredEntryLabels)
     setEntryLabels(cols)
   }
 
@@ -450,6 +451,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     },
     [rowDtl],
   )
+
+  const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => !filterFieldType.includes(lbl.fieldType))
 
   const filterEntryLabels = () => entryLabels.filter(el => !['sl', 'table_ac'].includes(el.accessor) && !filterFieldType.includes(el.fieldType))
 
