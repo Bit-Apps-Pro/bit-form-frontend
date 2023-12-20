@@ -131,7 +131,9 @@ export default function stripeStyle_1_BitformDefault({ fk, breakpoint, colorSche
       [`.${fk}-err-txt`]: {
         ...inputWrpStyle[`.${fk}-err-txt`],
       },
-
+      [`.${fk}-err-inner`]: {
+        ...inputWrpStyle[`.${fk}-err-inner`],
+      },
     }
   }
   return {}
