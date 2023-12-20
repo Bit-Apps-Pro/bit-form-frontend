@@ -284,7 +284,6 @@ export default class BitStripeField {
           paySpinner.classList.add('d-none')
           this.#onApproveHandler(res.paymentIntent)
           this.#paymentElement.clear()
-          submitBtn.disabled = false
         } else {
           const result = {
             data: {
@@ -293,9 +292,12 @@ export default class BitStripeField {
           }
           bfValidationErrMsg(result, this.#contentId)
           paySpinner.classList.add('d-none')
-          submitBtn.disabled = false
         }
-        // const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
+        submitBtn.disabled = false
+        this.#stripeBtn.disabled = false
+      }).finally(() => {
+        paySpinner.classList.add('d-none')
+        submitBtn.disabled = false
         this.#stripeBtn.disabled = false
       })
     })
@@ -379,6 +381,7 @@ export default class BitStripeField {
     stripeFldElm.classList.add('d-none')
     stripeFldElm.innerHTML = ''
     this.#stripeWrpSelector.innerHTML = ''
+    this.#stripeBtn.disabled = false
     if (stripeAuthWrpElm) stripeAuthWrpElm.innerHTML = ''
     if (stripeAddrWrpElm) stripeAddrWrpElm.innerHTML = ''
     this.#detachAllEvents()
