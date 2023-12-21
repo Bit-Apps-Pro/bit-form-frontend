@@ -9,7 +9,7 @@ import {
   $reports,
 } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
-import { getUploadedFilesArr } from '../Utils/FormBuilderHelper'
+import { getUploadedFilesArr, isValidJsonString } from '../Utils/FormBuilderHelper'
 import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
@@ -505,10 +505,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
       )
     }
     if (entry.fieldType === 'check' || entry.fieldType === 'select' || entry.fieldType === 'image-select') {
-      return (
-        allResp[rowDtl.idx]?.[entry.accessor]
-        && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
-      )
+      const value = isValidJsonString(allResp[rowDtl.idx]?.[entry.accessor]) ? JSON.parse(allResp[rowDtl.idx]?.[entry.accessor]) : allResp[rowDtl.idx]?.[entry.accessor]?.replace(/\[|\]|"/g, '')
+      return Array.isArray(value) ? value.toString() : value
     }
 
     if (entry.accessor === '__user_id') {
