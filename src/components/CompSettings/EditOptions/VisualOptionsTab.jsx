@@ -378,7 +378,6 @@ export default function VisualOptionsTab({
   useEffect(() => { setOption(flattenOptions(options, optKey)) }, [options])
 
   const bits = useAtomValue($bits)
-  console.log({ type })
   const addOption = () => {
     const { img } = option[0]
     const tmpOption = [...option]
@@ -462,7 +461,6 @@ export default function VisualOptionsTab({
           </div>
         </div>
         <div className={css(optionStyle.scroll)}>
-          {console.log('option', option)}
           {option.map((_, index) => (
             <SortableItem
               key={`sortable-${option[index].id}`}
