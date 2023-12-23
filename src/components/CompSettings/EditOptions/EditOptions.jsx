@@ -10,7 +10,7 @@ import VisualOptionsTab from './VisualOptionsTab'
 import { convertOptionsToText, convertTextToOptions, flattenOptions, formatOptions } from './editOptionsHelper'
 
 export default function EditOptions({
-  optionMdl, options, setOptions, type, lblKey, valKey, imgKey, isPro, isRating, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false,
+  optionMdl, options, setOptions, type, lblKey, valKey, imgKey, isPro, isRating, checkByDefault = true, hasGroup, showUpload = false, onlyVisualOptionsTab = false, hideNDisabledOptions = false, customType, setCustomType,
 }) {
   const optKey = useRef(1)
   const { css } = useFela()
@@ -104,6 +104,8 @@ export default function EditOptions({
               valKey={valKey}
               setEditOptionType={setEditOptionType}
               isPro
+              customType={customType}
+              setCustomType={setCustomType}
             />
           )}
         </>

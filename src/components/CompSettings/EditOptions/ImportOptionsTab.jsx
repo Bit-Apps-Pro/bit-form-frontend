@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'jotai'
-import { $fields } from '../../../GlobalStates/GlobalStates'
-import { deepCopy, IS_PRO } from '../../../Utils/Helpers'
+import { IS_PRO, deepCopy } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
 import ImportOptions from '../ImportOptions'
 
-export default function ImportOptionsTab({ setOptions, lblKey, valKey, setEditOptionType, isPro }) {
+export default function ImportOptionsTab({
+  setOptions, lblKey, valKey, setEditOptionType, isPro, customType, setCustomType,
+}) {
   const { fieldKey: fldKey } = useParams()
-  const fields = useAtomValue($fields)
-  const fieldData = deepCopy(fields[fldKey])
   const [importOpts, setImportOpts] = useState({})
-  const dataSrc = fieldData?.customType?.type || 'fileupload'
+  const copyCustomType = deepCopy(customType)
+  const dataSrc = copyCustomType?.type || 'fileupload'
   let fieldObject = null
   let disabled = false
-  if (fieldData?.customType?.type) {
-    fieldObject = fieldData?.customType
+  if (copyCustomType?.type) {
+    fieldObject = copyCustomType
     disabled = true
   }
 
@@ -36,7 +35,7 @@ export default function ImportOptionsTab({ setOptions, lblKey, valKey, setEditOp
           </div>
         </div>
       )}
-      <ImportOptions setOptions={setOptions} importOpts={importOpts} setImportOpts={setImportOpts} lblKey={lblKey} valKey={valKey} setEditOptionType={setEditOptionType} />
+      <ImportOptions setOptions={setOptions} importOpts={importOpts} setImportOpts={setImportOpts} lblKey={lblKey} valKey={valKey} setEditOptionType={setEditOptionType} customType={customType} setCustomType={setCustomType} />
     </div>
   )
 }

@@ -1,23 +1,23 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-param-reassign */
+import { useAtom, useAtomValue } from 'jotai'
 import { create } from 'mutative'
 import { memo, useEffect, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom, useAtomValue } from 'jotai'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import { $styles } from '../../GlobalStates/StylesState'
 import CloseIcn from '../../Icons/CloseIcn'
-import FieldStyle from '../../styles/FieldStyle.style'
-import { isDev } from '../../Utils/config'
 import { addToBuilderHistory, reCalculateFldHeights, setRequired } from '../../Utils/FormBuilderHelper'
 import { deepCopy } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
 import tippyHelperMsg from '../../Utils/StaticData/tippyHelperMsg'
-import { assignNestedObj } from '../style-new/styleHelpers'
+import { isDev } from '../../Utils/config'
+import { __ } from '../../Utils/i18nwrap'
+import FieldStyle from '../../styles/FieldStyle.style'
 import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import SingleToggle from '../Utilities/SingleToggle'
+import { assignNestedObj } from '../style-new/styleHelpers'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
 import ErrorMessageSettings from './CompSettingsUtils/ErrorMessageSettings'
 import FieldDisabledSettings from './CompSettingsUtils/FieldDisabledSettings'
@@ -192,6 +192,10 @@ function RadioCheckSettings() {
   }
   if (isDev) {
     window.selectedFieldData = fieldData
+  }
+
+  const handleCustomType = newCustomType => {
+    setFields(allFields => create(allFields, draft => { draft[fldKey].customType = newCustomType }))
   }
   return (
     <div className="">
@@ -473,6 +477,8 @@ function RadioCheckSettings() {
           lblKey="lbl"
           valKey="val"
           type={fieldData.typ}
+          customType={fieldData.customType}
+          setCustomType={handleCustomType}
         />
       </Modal>
       {/* <Modal

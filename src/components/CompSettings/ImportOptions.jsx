@@ -1,22 +1,24 @@
+import { useAtomValue } from 'jotai'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtomValue } from 'jotai'
 import { $bits, $fields } from '../../GlobalStates/GlobalStates'
 import BackIcn from '../../Icons/BackIcn'
-import app from '../../styles/app.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import app from '../../styles/app.style'
 import CheckBox from '../Utilities/CheckBox'
 import { formatOptions } from './EditOptions/editOptionsHelper'
 import AcfFieldOptions, { generateAcfOptions } from './ImportOptionsComps/AcfFieldOptions'
 import FileUploadImportOptions from './ImportOptionsComps/FileUploadImportOptions'
-import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './ImportOptionsComps/importOptionsHelpers'
 import PostTypeImportOptions, { generatePostOptions } from './ImportOptionsComps/PostTypeImportOptions'
 import PresetsImportOptions from './ImportOptionsComps/PresetsImportOptions'
 import TaxonomyImportOption, { generateTermsOptions } from './ImportOptionsComps/TaxonomyImportOption'
 import UserImportOption, { generateUserOptions } from './ImportOptionsComps/UserImportOption'
+import { generateNewFileUploadedOptions, generateNewPresetsOptions } from './ImportOptionsComps/importOptionsHelpers'
 
-export default function ImportOptions({ setOptions, importOpts, setImportOpts, lblKey, valKey, setEditOptionType }) {
+export default function ImportOptions({
+  setOptions, importOpts, setImportOpts, lblKey, valKey, setEditOptionType, customType, setCustomType,
+}) {
   const bits = useAtomValue($bits)
   const { isPro } = bits
   const { css } = useFela()
@@ -88,9 +90,13 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
       disabled = true
       fieldObject = fieldData?.customType
     }
+    if (dataSrc === 'fileupload' || dataSrc === 'presets') {
+      fieldData.customType = null
+    }
     // eslint-disable-next-line no-param-reassign
     setOptions(formatOptions(fieldData.opt, lblKey))
     setImportOpts({ dataSrc, fieldObject, disabled })
+    setCustomType(fieldData?.customType)
     setEditOptionType('Visual')
   }
 
@@ -100,7 +106,7 @@ export default function ImportOptions({ setOptions, importOpts, setImportOpts, l
     <div className="mt-2">
       <div>
         <b>Data Source</b>
-        <select data-testid="imprt-optns-data-src" name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc} disabled={importOpts?.disabled}>
+        <select data-testid="imprt-optns-data-src" name="dataSrc" className="btcd-paper-inp mt-1" onChange={handleInput} value={importOpts.dataSrc}>
           <option value="fileupload">File Upload</option>
           <option value="presets">Presets</option>
           <option value="post">Posts</option>

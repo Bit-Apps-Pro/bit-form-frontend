@@ -1,13 +1,13 @@
+import { useAtom } from 'jotai'
 import { create } from 'mutative'
 import { useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom } from 'jotai'
 import { $fields } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
-import FieldStyle from '../../styles/FieldStyle.style'
 import { deepCopy } from '../../Utils/Helpers'
 import { __ } from '../../Utils/i18nwrap'
+import FieldStyle from '../../styles/FieldStyle.style'
 import Btn from '../Utilities/Btn'
 import Modal from '../Utilities/Modal'
 import AdminLabelSettings from './CompSettingsUtils/AdminLabelSettings'
@@ -36,6 +36,10 @@ export default function HtmlSelectSettings() {
 
   const handleOptions = newOpts => {
     setFields(allFields => create(allFields, draft => { draft[fldKey].opt = newOpts }))
+  }
+
+  const handleCustomType = newCustomType => {
+    setFields(allFields => create(allFields, draft => { draft[fldKey].customType = newCustomType }))
   }
   return (
     <>
@@ -141,6 +145,8 @@ export default function HtmlSelectSettings() {
           valKey="val"
           type="radio"
           hasGroup
+          customType={fieldData.customType}
+          setCustomType={handleCustomType}
         />
         {/* </div> */}
       </Modal>
