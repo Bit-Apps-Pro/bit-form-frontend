@@ -1,6 +1,6 @@
+import { useAtomValue } from 'jotai'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -58,6 +58,7 @@ export default function TaxonomyImportOption({ importOpts, setImportOpts }) {
             }
           } else {
             const { fieldObject } = { ...tmpOpts }
+            tmpOpts.fieldObject.fieldType = 'taxanomy_field'
             const { orderBy, order, taxanomy } = { ...fieldObject?.filter }
             tmpOpts.data = allCategoreis?.filter(item => item.taxonomy === taxanomy)
             const sortFieldData = sortByField(tmpOpts.data, orderBy, order)

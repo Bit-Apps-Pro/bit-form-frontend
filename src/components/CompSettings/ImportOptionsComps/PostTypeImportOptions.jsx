@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
+import { useAtomValue } from 'jotai'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -11,7 +11,7 @@ export const generatePostOptions = (importOpts, lblKey, valKey) => {
   const { data, lbl, vlu } = importOpts
   if (!data || !lbl || !vlu) return []
   const presets = data
-  return presets.map(op => ({ [lblKey]: (op[lbl]).trim(), [valKey]: (op[vlu]).trim() }))
+  return presets.map(op => ({ [lblKey]: (op[lbl])?.trim(), [valKey]: (op[vlu])?.trim() }))
 }
 
 export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
@@ -57,6 +57,7 @@ export default function PostTypeImportOptions({ importOpts, setImportOpts }) {
             }
           } else {
             const { fieldObject } = { ...tmpOpts }
+            tmpOpts.fieldObject.fieldType = 'post_field'
             const { orderBy, order, postType, postStatus } = { ...fieldObject?.filter }
             const sortFieldData = sortByField(tmpOpts.data, orderBy, order)
             if (postStatus !== 'all') {

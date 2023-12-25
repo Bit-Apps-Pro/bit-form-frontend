@@ -65,11 +65,11 @@ export default function ImportOptions({
       tmpOpts = { show: true }
     }
     tmpOpts.fieldObject = fieldObject
+    if (tmpOpts.fieldObject) tmpOpts.fieldObject.type = value
     tmpOpts.disabled = disabled
     tmpOpts[name] = value
     setImportOpts({ ...tmpOpts })
   }
-
   const handleImport = () => {
     const opts = replaceAllValsCommas(generateNewOptions())
 
