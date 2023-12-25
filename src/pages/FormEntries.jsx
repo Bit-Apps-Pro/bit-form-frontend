@@ -9,7 +9,7 @@ import {
   $reports,
 } from '../GlobalStates/GlobalStates'
 import SettingsIcn from '../Icons/SettingsIcn'
-import { getUploadedFilesArr } from '../Utils/FormBuilderHelper'
+import { getUploadedFilesArr, isValidJsonString } from '../Utils/FormBuilderHelper'
 import { deepCopy, formatIpNumbers } from '../Utils/Helpers'
 import { formsReducer } from '../Utils/Reducers'
 import bitsFetch from '../Utils/bitsFetch'
@@ -338,7 +338,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
         />
       ),
     })
-    setTableColumns(cols)
+    const filteredEntryLabels = filteredEntryLabelsForTable(cols)
+    setTableColumns(filteredEntryLabels)
     setEntryLabels(cols)
   }
 
@@ -451,6 +452,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
     [rowDtl],
   )
 
+  const filteredEntryLabelsForTable = lbls => lbls.filter(lbl => !filterFieldType.includes(lbl.fieldType))
+
   const filterEntryLabels = () => entryLabels.filter(el => !['sl', 'table_ac'].includes(el.accessor) && !filterFieldType.includes(el.fieldType))
 
   const drawerEntryMap = (entry) => {
@@ -502,10 +505,8 @@ function FormEntries({ allResp, setAllResp, isloading: isFetching }) {
       )
     }
     if (entry.fieldType === 'check' || entry.fieldType === 'select' || entry.fieldType === 'image-select') {
-      return (
-        allResp[rowDtl.idx]?.[entry.accessor]
-        && allResp[rowDtl.idx][entry.accessor].replace(/\[|\]|"/g, '')
-      )
+      const value = isValidJsonString(allResp[rowDtl.idx]?.[entry.accessor]) ? JSON.parse(allResp[rowDtl.idx]?.[entry.accessor]) : allResp[rowDtl.idx]?.[entry.accessor]?.replace(/\[|\]|"/g, '')
+      return Array.isArray(value) ? value.toString() : value
     }
 
     if (entry.accessor === '__user_id') {

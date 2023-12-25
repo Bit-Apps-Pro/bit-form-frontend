@@ -299,6 +299,9 @@ const style = {
     w: '25%',
     p: '1rem',
     pr: 0,
+    h: 'calc(100vh - 85px)',
+    owy: 'scroll',
+    owx: 'hidden',
   },
   printWarp: {
     flx: 'center',

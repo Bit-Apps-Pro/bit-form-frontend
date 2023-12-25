@@ -1,7 +1,7 @@
 /* eslint-disable prefer-destructuring */
+import { useAtomValue } from 'jotai'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { __ } from '../../../Utils/i18nwrap'
 import SnackMsg from '../../Utilities/SnackMsg'
@@ -49,8 +49,12 @@ export default function AcfFieldOptions({ importOpts, setImportOpts }) {
             }
           } else {
             const { fieldObject } = { ...tmpOpts }
+            tmpOpts.fieldObject.fieldType = 'acf_options'
             const { fieldkey } = { ...fieldObject?.filter }
-            const filder = tmpOpts.groups?.find(item => item?.key === fieldkey)
+            const filder = tmpOpts.groups?.find(item => {
+              if (fieldkey) return item?.key === fieldkey
+              return true
+            })
             tmpOpts.options = Object.entries(filder?.choices)
             tmpOpts.keys = Object.keys(tmpOpts.options)
             tmpOpts.vlu = tmpOpts?.keys[tmpOpts?.vlu]
@@ -79,7 +83,10 @@ export default function AcfFieldOptions({ importOpts, setImportOpts }) {
     tmpOpts.fieldObject.filter[name] = value
     const options = localStorage.getItem('bf-options-acf_field_op')
     const fieldkey = tmpOpts.fieldObject?.filter?.fieldkey
-    const filder = JSON.parse(options)?.find(item => item?.key === fieldkey)
+    const filder = JSON.parse(options)?.find(item => {
+      if (fieldkey) return item?.key === fieldkey
+      return true
+    })
     tmpOpts.options = Object.entries(filder?.choices)
     tmpOpts.keys = Object.keys(tmpOpts.options)
     tmpOpts.vlu = tmpOpts?.keys[tmpOpts?.vlu]

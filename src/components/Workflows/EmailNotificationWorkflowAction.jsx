@@ -1,9 +1,9 @@
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { useFela } from 'react-fela'
-import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { $bits, $fieldsArr, $mailTemplates, $pdfTemplates, $updateBtn, $workflows } from '../../GlobalStates/GlobalStates'
-import ut from '../../styles/2.utilities'
 import { __ } from '../../Utils/i18nwrap'
+import ut from '../../styles/2.utilities'
 import DropDown from '../Utilities/DropDown'
 import TableCheckBox from '../Utilities/TableCheckBox'
 
@@ -55,13 +55,11 @@ export default function EmailNotificationWorkflowAction({
   }
 
   const setEmailSetting = (typ, value) => {
-    console.log({ typ, value })
     const tmpWorkflows = create(workflows, draftWorkflow => {
       const { success: draftSuccessActions } = draftWorkflow[lgcGrpInd].conditions[condGrpInd].actions
       const findEmailActions = draftSuccessActions.find(val => val.type === actionKey)
       if (findEmailActions) findEmailActions.details[typ] = value
     })
-    console.log({ tmpWorkflows })
     setWorkflows(tmpWorkflows)
     setUpdateBtn(prevState => ({ ...prevState, unsaved: true }))
   }

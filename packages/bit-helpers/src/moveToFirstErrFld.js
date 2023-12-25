@@ -1,8 +1,8 @@
 export default function moveToFirstErrFld(props, fldKeys = []) {
   const layouts = props?.layout || {}
   const nestedLayouts = props?.nestedLayout || {}
-  const isMultiStep = Array.isArray(layouts)
-  const lays = isMultiStep ? layouts : [{ layout: layouts }]
+  const isMultiStep = Array.isArray(layouts) && layouts.length > 1
+  const lays = Array.isArray(layouts) ? layouts : [{ layout: layouts }]
   let fldMinStep = -1
   const fldKeysBasedOnLayOrder = lays.reduce((fldAcc, lay, layIndx) => {
     const layKeys = lay.layout.lg.reduce((layAcc, l) => {
@@ -25,7 +25,7 @@ export default function moveToFirstErrFld(props, fldKeys = []) {
     if (fldKey === fk) {
       const selector = rowIndx ? `.rpt-index-${rowIndx}` : ''
       const fld = bfSelect(`#form-${props.contentId} ${selector} .btcd-fld-itm.${fldKey}`)
-      scrollToElm(fld, true)
+      scrollToElm(fld)
       return true
     }
     return false

@@ -1,20 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { useAtom, useSetAtom } from 'jotai'
 import { create } from 'mutative'
 import { Fragment, useState } from 'react'
 import { useFela } from 'react-fela'
 import { useParams } from 'react-router-dom'
-import { useAtom, useSetAtom } from 'jotai'
 import { $fields, $proModal } from '../../GlobalStates/GlobalStates'
 import CloseIcn from '../../Icons/CloseIcn'
 import EditIcn from '../../Icons/EditIcn'
 import TrashIcn from '../../Icons/TrashIcn'
+import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
+import { IS_PRO, deepCopy } from '../../Utils/Helpers'
+import proHelperData from '../../Utils/StaticData/proHelperData'
+import { isDev } from '../../Utils/config'
+import { __ } from '../../Utils/i18nwrap'
 import ut from '../../styles/2.utilities'
 import FieldStyle from '../../styles/FieldStyle.style'
-import { isDev } from '../../Utils/config'
-import { addToBuilderHistory } from '../../Utils/FormBuilderHelper'
-import { deepCopy, IS_PRO } from '../../Utils/Helpers'
-import { __ } from '../../Utils/i18nwrap'
-import proHelperData from '../../Utils/StaticData/proHelperData'
 import Btn from '../Utilities/Btn'
 import CheckBox from '../Utilities/CheckBox'
 import Modal from '../Utilities/Modal'
@@ -78,6 +78,13 @@ export default function DropdownFieldSettings() {
     const allFields = create(fields, draft => { draft[fldKey] = fieldData })
     setFields(allFields)
     addToBuilderHistory({ event: `${propNameLabel[name]} ${val ? 'On' : 'Off'}: ${fieldData.lbl || adminLabel || fldKey}`, type: `${name}_change`, state: { fields: allFields, fldKey } })
+  }
+
+  const setCustomType = (customType) => {
+    setFields(allFields => create(allFields, draft => {
+      if (!draft[fldKey].customTypeList) draft[fldKey].customTypeList = []
+      draft[fldKey].customTypeList[currentOptList] = customType
+    }))
   }
 
   const toggleSearchPlaceholder = (e) => {
@@ -547,6 +554,8 @@ export default function DropdownFieldSettings() {
             type="radio"
             hasGroup
             showUpload={optionIcon}
+            customType={fieldData?.customTypeList?.[currentOptList]}
+            setCustomType={setCustomType}
           />
         </div>
       </Modal>

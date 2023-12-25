@@ -50,7 +50,6 @@ export default class BitStripeField {
   #stripeBtn = null
 
   constructor(selector, config) {
-    console.log({ config })
     if (typeof selector === 'string') {
       this.#stripeWrpSelector = document.querySelector(selector)
     } else {
@@ -98,7 +97,6 @@ export default class BitStripeField {
       this.#handleOnClick(this.#contentId)
         .then(response => {
           if (response) {
-            console.log({ response })
             this.#stripeComponent()
             // stripeBtnSpanner.classList.add('d-none')
           }
@@ -119,7 +117,6 @@ export default class BitStripeField {
       Object.keys(address).map(addressFldKey => {
         addressObj[addressFldKey] = this.#getDynamicValue(address[addressFldKey])
       })
-      console.log({ addressObj })
       return addressObj
     }
   }
@@ -203,8 +200,6 @@ export default class BitStripeField {
         confData.shipping.address = this.#getAddressValue()
       }
 
-      console.log(confData)
-
       bitsFetchFront(this.#contentId, confData, 'bitforms_get_stripe_secret_key')
         .then(res => {
           const { success, data } = res
@@ -279,12 +274,10 @@ export default class BitStripeField {
         confirmParams: {},
         redirect: 'if_required',
       }).then(res => {
-        console.log({ res })
         if (res?.paymentIntent?.status === 'succeeded') {
           paySpinner.classList.add('d-none')
           this.#onApproveHandler(res.paymentIntent)
           this.#paymentElement.clear()
-          submitBtn.disabled = false
         } else {
           const result = {
             data: {
@@ -293,9 +286,10 @@ export default class BitStripeField {
           }
           bfValidationErrMsg(result, this.#contentId)
           paySpinner.classList.add('d-none')
-          submitBtn.disabled = false
         }
-        // const stripeBtn = this.#querySelector(`.${this.#fieldKey}-stripe-btn`)
+      }).finally(() => {
+        paySpinner.classList.add('d-none')
+        submitBtn.disabled = false
         this.#stripeBtn.disabled = false
       })
     })
@@ -379,6 +373,7 @@ export default class BitStripeField {
     stripeFldElm.classList.add('d-none')
     stripeFldElm.innerHTML = ''
     this.#stripeWrpSelector.innerHTML = ''
+    this.#stripeBtn.disabled = false
     if (stripeAuthWrpElm) stripeAuthWrpElm.innerHTML = ''
     if (stripeAddrWrpElm) stripeAddrWrpElm.innerHTML = ''
     this.#detachAllEvents()

@@ -1,6 +1,6 @@
+import { useAtomValue } from 'jotai'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useAtomValue } from 'jotai'
 import { $bits } from '../../../GlobalStates/GlobalStates'
 import { sortByField } from '../../../Utils/Helpers'
 import { __ } from '../../../Utils/i18nwrap'
@@ -50,6 +50,7 @@ export default function UserImportOption({ importOpts, setImportOpts }) {
             }
           } else {
             const { fieldObject } = { ...tmpOpts }
+            tmpOpts.fieldObject.fieldType = 'user_field'
             const { orderBy, order, role } = { ...fieldObject?.filter }
             const sortFieldData = sortByField(tmpOpts.data, orderBy, order)
             if (role !== 'all') tmpOpts.data = sortFieldData?.filter(item => item.role[0] === role)
