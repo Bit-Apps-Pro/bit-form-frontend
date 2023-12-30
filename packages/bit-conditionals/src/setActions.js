@@ -71,16 +71,17 @@ const setDisabled = (fldKey, props, val) => {
   const fldData = props.fields[fldKey]
   const { fieldName, typ } = fldData
   const initPropKey = getInitPropertyName(fldKey, props)
+  const inpType = fldData.inpType || ''
   if (props.inits && props.inits[initPropKey]) {
     props.inits[initPropKey].disabled = val
   } else {
-    if (typ === 'check') {
+    if (typ === 'check' || inpType === 'checkbox') {
       selectAll(props.contentId, `input[name^="${fieldName}"][name$="[]"]`).forEach((el) => {
         el.disabled = val
       })
       return
     }
-    if (typ === 'radio') {
+    if (typ === 'radio' || inpType === 'radio') {
       selectAll(props.contentId, `input[name^="${fieldName}"]`).forEach((el) => {
         el.disabled = val
       })
