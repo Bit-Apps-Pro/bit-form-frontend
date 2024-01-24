@@ -1,1 +1,0 @@
-# bit-rating-field
